@@ -11,15 +11,15 @@ class PhysicsEntity:
         self.type = e_type
         self.pos = list(pos)
         self.size = size
-        self.velocity = [0, 0]
+        self.velocity = [0, 0, 0, 0]
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         
         self.action = ''
         self.anim_offset = (-3, -3)
-        self.flip = False
+        self.flip = [False, False]
         self.set_action('idle')
         
-        self.last_movement = [0, 0]
+        self.last_movement = [0, 0, 0, 0]
     
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -57,15 +57,19 @@ class PhysicsEntity:
                     entity_rect.top = rect.bottom
                     self.collisions['up'] = True
                 self.pos[1] = entity_rect.y
+        
                 
         if movement[0] > 0:
-            self.flip = False
+            self.flip[0] = False
         if movement[0] < 0:
-            self.flip = True
+            self.flip[0] = True
+        if movement[1] < 0:
+            self.flip[1] = False
+        if movement[1] > 0:
+            self.flip[1] = True            
             
         self.last_movement = movement
         
-        self.velocity[1] = min(5, self.velocity[1] + 0.1)
         
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
@@ -73,6 +77,6 @@ class PhysicsEntity:
         self.animation.update()
         
     def render(self, surf, offset=(0, 0)):
-        surf.blit(pygame.transform.flip(self.animation.img(), self.flip, False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
+        surf.blit(pygame.transform.flip(self.animation.img(), self.flip[0], self.flip[1]), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
 

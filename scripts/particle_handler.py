@@ -3,7 +3,7 @@ import math
 import random
 from scripts.particle import Particle
 
-class Leaf:
+class Particle_Handler:
 
     def Leaf_Movement(self, render_scroll):
         for particle in self.particles.copy():

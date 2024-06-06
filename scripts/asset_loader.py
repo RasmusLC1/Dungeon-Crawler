@@ -1,14 +1,18 @@
 import pygame
-from scripts.utils import load_image, load_images, Animation
+from scripts.utils import load_image, load_images, Animation, get_tiles_from_sheet
 
 class Asset_Loader:
     def asset_list(self):
         self.assets = {
-            'decor': load_images('tiles/decor'),
-            'grass': load_images('tiles/grass'),
-            'large_decor': load_images('tiles/large_decor'),
-            'grass_test': load_images('tiles/grass_test'),
-            'stone': load_images('tiles/stone'),
+            'spawners': load_images('tiles/spawners'),
+            'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 4, 0, 64, 16, 16),
+            'door' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 4, 0, 80, 16, 16),
+            'torch' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 4, 0, 96, 16, 16),
+            'spike' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 6, 0, 112, 16, 16),
+            'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 6, 0, 128, 16, 16),
+            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 144, 16, 16),
+            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 144, 16, 16),
+            'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 160, 16, 32),
             'player': load_image('entities/player.png'),
             'background': load_image('background.png'),
             'clouds': load_images('clouds'),
@@ -23,8 +27,9 @@ class Asset_Loader:
             'particle/particle': Animation(load_images('particles/particle'), img_dur=6, loop=False),
             'gun': load_image('gun.png'),
             'projectile': load_image('projectile.png'),
-        }
 
+        }
+            
     def sound_effects(self):
         self.sfx ={
             'jump' : pygame.mixer.Sound('data/sfx/jump.wav'),
