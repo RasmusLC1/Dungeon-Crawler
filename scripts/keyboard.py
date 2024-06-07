@@ -12,9 +12,9 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_s:
                 self.movement[3] = True
             if key_press.key == pygame.K_SPACE:
-                self.player.Dash(offset)
+                self.player.Shooting(offset)
             if key_press.key == pygame.K_x:
-                pass
+                self.player.Dash(offset)
         if key_press.type == pygame.KEYUP:
             if key_press.key == pygame.K_a:
                 self.movement[0] = False

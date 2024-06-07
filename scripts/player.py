@@ -1,5 +1,7 @@
 from scripts.entities import PhysicsEntity
 from scripts.particle import Particle
+from scripts.spark import Spark
+
 import random
 import math
 import pygame
@@ -57,19 +59,41 @@ class Player(PhysicsEntity):
                     self.velocity[1] *= 0.1
                 pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))   
-    
+
+    def Shooting(self, offset=(0, 0)):
+        self.Mouse_Handler()
+        self.stored_position = self.pos.copy()
+        self.stored_position[0] -= offset[0]
+        self.stored_position[1] -= offset[1]
+        direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+
+        if direction.length() > 0:  # Ensure the vector is not zero-length before normalizing
+            direction.normalize_ip()
+            self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery], [direction.x * 3, direction.y * 3], 0])
+            for i in range(4):
+                self.game.sparks.append(Spark(self.game.projectiles[-1][0], random.random() - 0.5 + math.pi, 2 + random.random()))
+            
+
+
     def Dash(self, offset=(0, 0)):
-        if not self.dashing: 
-            self.mpos = pygame.mouse.get_pos()
-            self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
+        if not self.dashing:
+            self.Mouse_Handler()
             self.stored_position = self.pos.copy()
             self.stored_position[0] -= offset[0]
             self.stored_position[1] -= offset[1]
             self.dashing = 60
 
+    def Mouse_Handler(self):
+        self.mpos = pygame.mouse.get_pos()
+        self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
 
 
     def render(self, surf, offset=(0, 0)):
         if abs(self.dashing) <= 50:
             super().render(surf, offset=offset)
+        
+        if self.flip[0]:
+            surf.blit(pygame.transform.flip(self.game.assets['gun'], True, False), (self.rect().centerx - self.game.assets['gun'].get_width() - offset[0], self.rect().centery - offset[1]))
+        else:
+            surf.blit(self.game.assets['gun'], (self.rect().centerx - offset[0], self.rect().centery -offset[1]))
         

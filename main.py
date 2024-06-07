@@ -50,6 +50,7 @@ class Game:
         self.particles = []
         self.sparks = []
         self.scroll = [0, 0]
+        self.projectiles = []
 
 
 
@@ -85,6 +86,21 @@ class Game:
                 particle.render(self.display, offset = render_scroll)
                 if kill:
                     self.particles.remove(particle)
+
+            # [[x, y], direction, timer]
+            for projectile in self.projectiles.copy():
+                projectile[0][0] += projectile[1][0]
+                projectile[0][1] += projectile[1][1]
+                projectile[2] += 1
+                img = self.assets['projectile']
+                self.display.blit(img, (projectile[0][0] - img.get_width() / self.render_scale - render_scroll[0], projectile[0][1] - img.get_height() / self.render_scale - render_scroll[1]))
+                if self.tilemap.solid_check(projectile[0]):
+                    self.projectiles.remove(projectile)
+                    # for i in range(4):
+                        # self.sparks.append(Spark(projectile[0], random.random() - 0.5 + (math.pi if projectile[1] > 0 else 0), 2 + random.random()))
+                    
+                elif projectile[2] > 360:
+                    self.projectiles.remove(projectile)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
