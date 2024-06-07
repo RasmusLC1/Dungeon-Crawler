@@ -21,10 +21,12 @@ from scripts.particle_handler import Particle_Handler
 class Game:
     def __init__(self):
         pygame.init()
-
+        self.render_scale = 4
         pygame.display.set_caption('Dungeons of Madness')
-        self.screen = pygame.display.set_mode((900, 900),0,32)
-        self.display = pygame.Surface((320, 240))
+        self.screen_height = 1280
+        self.screen_width = 960
+        self.screen = pygame.display.set_mode((1280, 960))
+        self.display = pygame.Surface((self.screen_height/self.render_scale, self.screen_width/self.render_scale))
 
         self.clock = pygame.time.Clock()
         
@@ -38,6 +40,7 @@ class Game:
         self.level = 0
         self.load_level(self.level)
         self.scroll = [0, 0]
+        self.mpos = 0
 
         
         
@@ -87,7 +90,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                Keyboard_Handler.keyboard_Input(self, event)
+                Keyboard_Handler.keyboard_Input(self, event, offset = render_scroll)
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
             pygame.display.update()

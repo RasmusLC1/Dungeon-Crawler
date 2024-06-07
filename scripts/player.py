@@ -2,6 +2,7 @@ from scripts.entities import PhysicsEntity
 from scripts.particle import Particle
 import random
 import math
+import pygame
 
 
 class Player(PhysicsEntity):
@@ -10,78 +11,64 @@ class Player(PhysicsEntity):
         self.jumps = 1
         self.wall_slide = False
         self.dashing = 0
+        self.stored_position = 0
     
     def update(self, tilemap, movement=(0, 0)):
         super().update(tilemap, movement=movement)
-        
 
+        
+        self.Dashing_Update()
+
+        if self.velocity[0] > 0:
+            self.velocity[0] = max(self.velocity[0] - 0.1, 0)
+        else:
+            self.velocity[0] = min(self.velocity[0] + 0.1, 0)
+
+        if self.velocity[1] > 0:
+            self.velocity[1] = max(self.velocity[1] - 0.1, 0)
+        else:
+            self.velocity[1] = min(self.velocity[1] + 0.1, 0)
 
             
-        self.wall_slide = False
-        if (self.collisions['right'] or self.collisions['left']):
-            self.wall_slide = True
-            self.velocity[1] = min(self.velocity[1], 0.5)
-            if self.collisions['right']:
-                self.flip[0] = False
-            else:
-                self.flip[0] = True
-            self.set_action('wall_slide')
-        
-        if not self.wall_slide:
-            if movement[0] != 0:
-                self.set_action('run')
-            else:
-                self.set_action('idle')
+    def Dashing_Update(self):
         if abs(self.dashing) in {60, 50}:
             for i in range(20):
                 angle = random.random() * math.pi * 2
                 speed = random.random() * 0.5 + 0.5
                 pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
+
         if self.dashing > 0:
             self.dashing = max(0, self.dashing - 1)
-        if self.dashing < 0:
-            self.dashing = min(0, self.dashing + 1)
-        if abs(self.dashing) > 50:
-            self.velocity[0] = abs(self.dashing) / self.dashing * 8
-            if abs(self.dashing) == 51:
-                self.velocity[0] *= 0.1
-            pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
-            self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
+
+
+        if self.dashing > 50:
+            direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+            if direction.length() > 0:  # Ensure the vector is not zero-length before normalizing
+                direction.normalize_ip()
+
+                dashing_speed = self.dashing / 5 
+
+                self.velocity[0] = direction.x * dashing_speed
+                self.velocity[1] = direction.y * dashing_speed
                 
-        if self.velocity[0] > 0:
-            self.velocity[0] = max(self.velocity[0] - 0.1, 0)
-        else:
-            self.velocity[0] = min(self.velocity[0] + 0.1, 0)
+                if abs(self.dashing) == 51:
+                    self.velocity[0] *= 0.1
+                    self.velocity[1] *= 0.1
+                pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
+                self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))   
     
+    def Dash(self, offset=(0, 0)):
+        self.mpos = pygame.mouse.get_pos()
+        self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
+        self.stored_position = self.pos.copy()
+        self.stored_position[0] -= offset[0]
+        self.stored_position[1] -= offset[1]
+        self.dashing = 60
+
+
+
     def render(self, surf, offset=(0, 0)):
         if abs(self.dashing) <= 50:
             super().render(surf, offset=offset)
-            
-    def jump(self):
-        if self.wall_slide:
-            if self.flip[0] and self.last_movement[0] < 0:
-                self.velocity[0] = 3.5
-                self.velocity[1] = -2.5
-                self.air_time = 5
-                self.jumps = max(0, self.jumps - 1)
-                return True
-            elif not self.flip[0] and self.last_movement[0] > 0:
-                self.velocity[0] = -3.5
-                self.velocity[1] = -2.5
-                self.air_time = 5
-                self.jumps = max(0, self.jumps - 1)
-                return True
-                
-        elif self.jumps:
-            self.velocity[1] = -3
-            self.jumps -= 1
-            self.air_time = 5
-            return True
-    
-    def Dash(self):
-        if not self.dashing:
-            if self.flip[0]:
-                self.dashing = -60
-            else:
-                self.dashing = 60
+        

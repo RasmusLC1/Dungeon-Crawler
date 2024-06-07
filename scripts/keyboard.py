@@ -1,7 +1,7 @@
 import pygame
 
 class Keyboard_Handler:
-    def keyboard_Input(self, key_press):
+    def keyboard_Input(self, key_press, offset=(0, 0)):
         if key_press.type == pygame.KEYDOWN:
             if key_press.key == pygame.K_a:
                 self.movement[0] = True
@@ -12,7 +12,7 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_s:
                 self.movement[3] = True
             if key_press.key == pygame.K_SPACE:
-                self.player.Dash()
+                self.player.Dash(offset)
             if key_press.key == pygame.K_x:
                 pass
         if key_press.type == pygame.KEYUP:
