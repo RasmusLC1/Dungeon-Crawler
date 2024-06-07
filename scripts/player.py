@@ -59,12 +59,13 @@ class Player(PhysicsEntity):
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))   
     
     def Dash(self, offset=(0, 0)):
-        self.mpos = pygame.mouse.get_pos()
-        self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
-        self.stored_position = self.pos.copy()
-        self.stored_position[0] -= offset[0]
-        self.stored_position[1] -= offset[1]
-        self.dashing = 60
+        if not self.dashing: 
+            self.mpos = pygame.mouse.get_pos()
+            self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
+            self.stored_position = self.pos.copy()
+            self.stored_position[0] -= offset[0]
+            self.stored_position[1] -= offset[1]
+            self.dashing = 60
 
 
 
