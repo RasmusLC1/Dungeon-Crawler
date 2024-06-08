@@ -5,7 +5,6 @@ import math
 
 class Projectile_Handler:
     def Projectile_Update(self, render_scale, offset = (0,0)):
-        # [[x, y], direction, timer]
         for projectile in self.projectiles.copy():
             projectile.update()
 

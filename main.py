@@ -15,6 +15,7 @@ from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
+from scripts.spike import Spike
 
 
 
@@ -53,11 +54,16 @@ class Game:
         self.sparks = []
         self.scroll = [0, 0]
         self.projectiles = []
-
+        self.spikes = []
+        # Spike initialisation
+        for spike_tile in self.tilemap.extract([('spike', 0)], True):
+            self.spikes.append(Spike(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height()), 3))
+        
+        # Spawner initialisation
         for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
             if spawner['variant'] == 0:
                 self.player.pos = spawner['pos']
-                self.player.air_time = 0
+
 
 
 
@@ -65,11 +71,16 @@ class Game:
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]))
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
+            for spike in self.spikes:
+                spike.Update()
 
         
     def Render(self, render_scroll):
 
         self.tilemap.render(self.display, offset=render_scroll)
+        
+        for spike in self.spikes:
+            spike.Render(self.display, offset=render_scroll)
         self.player.render(self.display, offset=render_scroll)
 
         
@@ -86,11 +97,6 @@ class Game:
 
             Game.Render(self, render_scroll)
             Game.Update(self, render_scroll)
-            
-
-            
-
-            
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

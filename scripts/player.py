@@ -33,6 +33,12 @@ class Player(PhysicsEntity):
         else:
             self.velocity[1] = min(self.velocity[1] + 0.1, 0)
 
+    def Damage_Taken(self, damage):
+        self.health -= damage
+        print("DAMAGE")
+        print(self.health)
+
+
             
     def Dashing_Update(self):
         if abs(self.dashing) in {60, 50}:
@@ -74,7 +80,6 @@ class Player(PhysicsEntity):
             position = [self.rect().centerx - 7, self.rect().centery]
             velocity = [direction.x * 3, direction.y * 3]
             self.game.projectiles.append(Projectile(self.game, 'bullet', position, velocity, 0))
-            # self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery], [direction.x * 3, direction.y * 3], 0])
             
 
 
