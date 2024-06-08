@@ -20,14 +20,18 @@ class Editor:
         
         self.assets = {
             'spawners': load_images('tiles/spawners'),
-            'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 4, 0, 64, 16, 16),
-            'door' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 4, 0, 80, 16, 16),
-            'torch' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 4, 0, 96, 16, 16),
-            'spike' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 6, 0, 112, 16, 16),
-            'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 6, 0, 128, 16, 16),
-            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 144, 16, 16),
-            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 144, 16, 16),
-            'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 160, 16, 32),
+            'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 64, 16, 16),
+            'door' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 80, 16, 16),
+            'torch' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 96, 16, 16),
+            'spike' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16),
+            'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 128, 16, 16),
+            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 144, 16, 16),
+            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 144, 16, 16),
+            'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 1, 0, 0, 160, 16, 32),
+            'LeftWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 0, 0, 16, 16),
+            'RightWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 80, 0, 16, 16),
+            'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
+            'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
         }
         
         self.movement = [False, False, False, False]
