@@ -1,6 +1,7 @@
 from scripts.entities import PhysicsEntity
 from scripts.particle import Particle
 from scripts.spark import Spark
+from scripts.projectile import Projectile
 
 import random
 import math
@@ -14,6 +15,7 @@ class Player(PhysicsEntity):
         self.wall_slide = False
         self.dashing = 0
         self.stored_position = 0
+        self.health = 3
     
     def update(self, tilemap, movement=(0, 0)):
         super().update(tilemap, movement=movement)
@@ -69,9 +71,10 @@ class Player(PhysicsEntity):
 
         if direction.length() > 0:  # Ensure the vector is not zero-length before normalizing
             direction.normalize_ip()
-            self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery], [direction.x * 3, direction.y * 3], 0])
-            for i in range(4):
-                self.game.sparks.append(Spark(self.game.projectiles[-1][0], random.random() - 0.5 + math.pi, 2 + random.random()))
+            position = [self.rect().centerx - 7, self.rect().centery]
+            velocity = [direction.x * 3, direction.y * 3]
+            self.game.projectiles.append(Projectile(self.game, 'bullet', position, velocity, 0))
+            # self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery], [direction.x * 3, direction.y * 3], 0])
             
 
 
@@ -96,4 +99,6 @@ class Player(PhysicsEntity):
             surf.blit(pygame.transform.flip(self.game.assets['gun'], True, False), (self.rect().centerx - self.game.assets['gun'].get_width() - offset[0], self.rect().centery - offset[1]))
         else:
             surf.blit(self.game.assets['gun'], (self.rect().centerx - offset[0], self.rect().centery -offset[1]))
+
+        
         

@@ -32,6 +32,7 @@ class Editor:
             'RightWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 80, 0, 16, 16),
             'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
             'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
+            'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 16, 16, 16, 16),
         }
         
         self.movement = [False, False, False, False]
@@ -62,7 +63,6 @@ class Editor:
             self.scroll[1] += (self.movement[3] - self.movement[2]) * 2
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
             
-            self.tilemap.render(self.display, offset=render_scroll)
             
             current_tile_img = self.assets[self.tile_list[self.tile_group]][self.tile_variant].copy()
             current_tile_img.set_alpha(100)
@@ -161,9 +161,8 @@ class Editor:
           
 
             font = pygame.font.Font('freesansbold.ttf', 16)
-            text = font.render(self.tile_list[self.tile_group], True, (255, 255, 255))
-   
-            
+            self.tilemap.render(self.display, offset=render_scroll)
+            text = font.render(self.tile_list[self.tile_group], True, (255, 255, 255))            
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
             self.screen.blit(text, (150, 0))
             pygame.display.update()

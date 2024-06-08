@@ -14,6 +14,7 @@ from scripts.tilemap import Tilemap
 from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
+from scripts.projectile_handler import Projectile_Handler
 
 
 
@@ -47,23 +48,30 @@ class Game:
 
     def load_level(self, map_id):
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
+        
         self.particles = []
         self.sparks = []
         self.scroll = [0, 0]
         self.projectiles = []
 
+        for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
+            if spawner['variant'] == 0:
+                self.player.pos = spawner['pos']
+                self.player.air_time = 0
 
 
-    def Update(self):
+
+    def Update(self, render_scroll):
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]))
+            Particle_Handler.particle_update(self, render_scroll)
+            Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
 
         
     def Render(self, render_scroll):
-        self.player.render(self.display, offset=render_scroll)
 
         self.tilemap.render(self.display, offset=render_scroll)
+        self.player.render(self.display, offset=render_scroll)
 
-        
         
     def run(self):
         
@@ -71,36 +79,18 @@ class Game:
         while True:
             self.display.blit(self.assets['background'], (0, 0))
 
-
-            Game.Update(self)
             self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
             
-            Game.Render(self, render_scroll)
-            
-            
-            for particle in self.particles.copy():
-                kill = particle.update()
-                particle.render(self.display, offset=render_scroll)
-                particle.render(self.display, offset = render_scroll)
-                if kill:
-                    self.particles.remove(particle)
 
-            # [[x, y], direction, timer]
-            for projectile in self.projectiles.copy():
-                projectile[0][0] += projectile[1][0]
-                projectile[0][1] += projectile[1][1]
-                projectile[2] += 1
-                img = self.assets['projectile']
-                self.display.blit(img, (projectile[0][0] - img.get_width() / self.render_scale - render_scroll[0], projectile[0][1] - img.get_height() / self.render_scale - render_scroll[1]))
-                if self.tilemap.solid_check(projectile[0]):
-                    self.projectiles.remove(projectile)
-                    # for i in range(4):
-                        # self.sparks.append(Spark(projectile[0], random.random() - 0.5 + (math.pi if projectile[1] > 0 else 0), 2 + random.random()))
-                    
-                elif projectile[2] > 360:
-                    self.projectiles.remove(projectile)
+            Game.Render(self, render_scroll)
+            Game.Update(self, render_scroll)
+            
+
+            
+
+            
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
