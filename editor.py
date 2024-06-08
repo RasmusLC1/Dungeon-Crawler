@@ -158,10 +158,14 @@ class Editor:
                         self.movement[3] = False
                     if event.key == pygame.K_LSHIFT:
                         self.shift = False
+          
 
-            
+            font = pygame.font.Font('freesansbold.ttf', 16)
+            text = font.render(self.tile_list[self.tile_group], True, (255, 255, 255))
+   
             
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
+            self.screen.blit(text, (150, 0))
             pygame.display.update()
             self.clock.tick(60)
 
