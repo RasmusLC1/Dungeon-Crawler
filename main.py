@@ -66,7 +66,7 @@ class Game:
 
         # Spawner initialisation
         for trap in self.tilemap.extract([('BearTrap', 0)]):
-            self.bear_traps.append(Bear_Trap(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), 3))
+            self.bear_traps.append(Bear_Trap(self, trap['pos'], (10, 5), 3))
 
 
 
