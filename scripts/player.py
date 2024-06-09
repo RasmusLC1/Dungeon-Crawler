@@ -17,9 +17,9 @@ class Player(PhysicsEntity):
         self.stored_position = 0
         
     
-    def update(self, tilemap, movement=(0, 0)):
+    def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().update(tilemap, movement=movement)
-        self.Dashing_Update()
+        self.Dashing_Update(offset)
             
 
         if self.velocity[0] > 0:
@@ -32,14 +32,13 @@ class Player(PhysicsEntity):
         else:
             self.velocity[1] = min(self.velocity[1] + 0.1, 0)
 
-        self.stored_position = self.pos
 
     
 
 
 
             
-    def Dashing_Update(self):
+    def Dashing_Update(self, offset=(0, 0)):
         if abs(self.dashing) in {60, 50}:
             for i in range(20):
                 angle = random.random() * math.pi * 2
@@ -52,6 +51,9 @@ class Player(PhysicsEntity):
 
 
         if self.dashing > 50:
+            self.stored_position = self.pos.copy()
+            self.stored_position[0] -= offset[0]
+            self.stored_position[1] -= offset[1]
             direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
             if direction.length() > 0:  # Ensure the vector is not zero-length before normalizing
                 direction.normalize_ip()
@@ -66,6 +68,8 @@ class Player(PhysicsEntity):
                     self.velocity[1] *= 0.1
                 pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))   
+
+
 
     def Shooting(self, offset=(0, 0)):
         self.Mouse_Handler()

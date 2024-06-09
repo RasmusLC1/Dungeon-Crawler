@@ -34,7 +34,7 @@ def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, s
     while current_iteration_x <= versions_x:
         y_holder = starting_y
         while current_iteration_y <= versions_y:
-            images.append(get_tile_image_from_sheet(sheet, starting_x, starting_y, size_x, size_y, (0,0,0)))
+            images.append(get_tile_image_from_sheet(sheet, starting_x, starting_y, size_x, size_y, (255,255,255)))
             starting_y += size_y
             current_iteration_y += 1
         starting_x += size_x
