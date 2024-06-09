@@ -1,26 +1,22 @@
+from scripts.traps.trap import Trap
 import random
 import math
 import pygame
 
-class Bear_Trap:
-    def __init__(self, game, pos, size, speed):
-        self.game = game
-        self.pos = pos
-        self.speed = speed
-        self.size = size
-        self.Cooldown = 0
-        self.animation = 0
-        self.animation_cooldown = 0
+
+class Bear_Trap(Trap):
+    def __init__(self, game, pos, size):
+        super().__init__(game, pos, size)
 
     def Update(self):
         if self.Cooldown > 0:
             self.Cooldown -= 1
 
-        if self.rect().colliderect(self.game.player.rect()) and self.Cooldown == 0:
+        if self.rect().colliderect(self.game.player.rect()) and self.Cooldown == 0 and not self.game.player.dashing:
             if not self.game.player.dashing:
                 self.game.player.Damage_Taken(2)
                 self.game.player.Snare(100)
-                self.Cooldown = 400
+                self.Cooldown = 300
             
         if self.Cooldown:
             if not self.animation_cooldown:
@@ -28,7 +24,6 @@ class Bear_Trap:
                 self.animation_cooldown = 10
 
             self.animation_cooldown -= 1
-            self.Cooldown -= 1
         
         if self.Cooldown < 200:
             self.animation = 0
@@ -36,5 +31,3 @@ class Bear_Trap:
     def rect(self):
         return pygame.Rect(self.pos[0]+10, self.pos[1]+10, self.size[0], self.size[1])
     
-    def Render(self, surf, offset=(0, 0)):
-        surf.blit(self.game.assets['BearTrap'][self.animation], (self.pos[0] - offset[0], self.pos[1] - offset[1]))

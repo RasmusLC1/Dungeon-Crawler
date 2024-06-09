@@ -15,8 +15,9 @@ from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
-from scripts.spike import Spike
-from scripts.bear_trap import Bear_Trap
+from scripts.traps.spike import Spike
+from scripts.traps.bear_trap import Bear_Trap
+from scripts.traps.spike_pit import Spike_Pit
 
 
 
@@ -55,18 +56,23 @@ class Game:
         self.projectiles = []
         self.spikes = []
         self.bear_traps = []
-        # Spike initialisation
-        for spike_tile in self.tilemap.extract([('spike', 0)], True):
-            self.spikes.append(Spike(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height()), 3))
-        
+        self.spike_pits = []
         # Spawner initialisation
         for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
             if spawner['variant'] == 0:
                 self.player.pos = spawner['pos']
 
+        # Spike initialisation
+        for spike_tile in self.tilemap.extract([('spike', 0)], True):
+            self.spikes.append(Spike(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height())))
+        
+
         # Spawner initialisation
         for trap in self.tilemap.extract([('BearTrap', 0)]):
-            self.bear_traps.append(Bear_Trap(self, trap['pos'], (10, 5), 3))
+            self.bear_traps.append(Bear_Trap(self, trap['pos'], (10, 5)))
+
+        for spike_pit in self.tilemap.extract([('PitTrap', 0)], True):
+            self.spike_pits.append(Spike_Pit(self, spike_pit['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height())))
 
 
 
@@ -80,16 +86,21 @@ class Game:
             for bear_trap in self.bear_traps:
                 bear_trap.Update()
 
+            for spike_pit in self.spike_pits:
+                spike_pit.Update()
         
     def Render(self, render_scroll):
 
         self.tilemap.render(self.display, offset=render_scroll)
         
         for spike in self.spikes:
-            spike.Render(self.display, offset=render_scroll)
+            spike.Render(self.display, 'spike', offset=render_scroll)
 
         for bear_trap in self.bear_traps:
-            bear_trap.Render(self.display, offset=render_scroll)
+            bear_trap.Render(self.display, 'BearTrap', offset=render_scroll)
+
+        for spike_pit in self.spike_pits:
+            spike_pit.Render(self.display, 'PitTrap', offset=render_scroll)
 
         self.player.render(self.display, offset=render_scroll)
 
