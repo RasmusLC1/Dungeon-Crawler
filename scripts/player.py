@@ -15,13 +15,12 @@ class Player(PhysicsEntity):
         self.wall_slide = False
         self.dashing = 0
         self.stored_position = 0
-        self.health = 3
+        
     
     def update(self, tilemap, movement=(0, 0)):
         super().update(tilemap, movement=movement)
-
-        
         self.Dashing_Update()
+            
 
         if self.velocity[0] > 0:
             self.velocity[0] = max(self.velocity[0] - 0.1, 0)
@@ -33,10 +32,10 @@ class Player(PhysicsEntity):
         else:
             self.velocity[1] = min(self.velocity[1] + 0.1, 0)
 
-    def Damage_Taken(self, damage):
-        self.health -= damage
-        print("DAMAGE")
-        print(self.health)
+        self.stored_position = self.pos
+
+    
+
 
 
             

@@ -33,6 +33,7 @@ class Editor:
             'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
             'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
             'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 16, 16, 16, 16),
+            'BearTrap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
         }
         
         self.movement = [False, False, False, False]
@@ -71,20 +72,21 @@ class Editor:
             mpos = (mpos[0] / RENDER_SCALE, mpos[1] / RENDER_SCALE)
             tile_pos = (int((mpos[0] + self.scroll[0]) // self.tilemap.tile_size), int((mpos[1] + self.scroll[1]) // self.tilemap.tile_size))
             
+            self.tilemap.render(self.display, offset=render_scroll)
             if self.ongrid:
                 self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size - self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))
             else:
                 self.display.blit(current_tile_img, mpos)
             
-            
+            offgrid_list = ['spawners', 'BearTrap']
 
 
             # Placing tiles on the grid
             if self.clicking and self.ongrid:
-                if (self.tile_list[self.tile_group] == 'spawners'):
-                    ongrid_holder = self.ongrid
+                if (self.tile_list[self.tile_group] in offgrid_list):
                     self.ongrid = False
                 else:
+                    self.ongrid = True
                     self.tilemap.tilemap[str(tile_pos[0]) + ';' + str(tile_pos[1])] = {'type': self.tile_list[self.tile_group], 'variant': self.tile_variant, 'pos': tile_pos}
             if self.right_clicking:
                 tile_loc = str(tile_pos[0]) + ';' + str(tile_pos[1])
@@ -96,7 +98,6 @@ class Editor:
                     if tile_r.collidepoint(mpos):
                         self.tilemap.offgrid_tiles.remove(tile)
             
-            self.display.blit(current_tile_img, (5, 5))
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -161,7 +162,7 @@ class Editor:
           
 
             font = pygame.font.Font('freesansbold.ttf', 16)
-            self.tilemap.render(self.display, offset=render_scroll)
+            self.display.blit(current_tile_img, (5, 5))
             text = font.render(self.tile_list[self.tile_group], True, (255, 255, 255))            
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
             self.screen.blit(text, (150, 0))

@@ -16,6 +16,7 @@ from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
 from scripts.spike import Spike
+from scripts.bear_trap import Bear_Trap
 
 
 
@@ -43,9 +44,7 @@ class Game:
         self.load_level(self.level)
         self.scroll = [0, 0]
         self.mpos = 0
-
-        
-        
+   
 
     def load_level(self, map_id):
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
@@ -55,6 +54,7 @@ class Game:
         self.scroll = [0, 0]
         self.projectiles = []
         self.spikes = []
+        self.bear_traps = []
         # Spike initialisation
         for spike_tile in self.tilemap.extract([('spike', 0)], True):
             self.spikes.append(Spike(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height()), 3))
@@ -64,6 +64,9 @@ class Game:
             if spawner['variant'] == 0:
                 self.player.pos = spawner['pos']
 
+        # Spawner initialisation
+        for trap in self.tilemap.extract([('BearTrap', 0)]):
+            self.bear_traps.append(Bear_Trap(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), 3))
 
 
 
@@ -74,6 +77,9 @@ class Game:
             for spike in self.spikes:
                 spike.Update()
 
+            for bear_trap in self.bear_traps:
+                bear_trap.Update()
+
         
     def Render(self, render_scroll):
 
@@ -81,6 +87,10 @@ class Game:
         
         for spike in self.spikes:
             spike.Render(self.display, offset=render_scroll)
+
+        for bear_trap in self.bear_traps:
+            bear_trap.Render(self.display, offset=render_scroll)
+
         self.player.render(self.display, offset=render_scroll)
 
         

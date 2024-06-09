@@ -13,6 +13,9 @@ class PhysicsEntity:
         self.size = size
         self.velocity = [0, 0, 0, 0]
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
+
+        self.health = 3
+        self.snared = 0
         
         self.action = ''
         self.anim_offset = (-3, -3)
@@ -34,6 +37,10 @@ class PhysicsEntity:
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         
         frame_movement = (movement[0]*2 + self.velocity[0], movement[1]*2 + self.velocity[1])
+
+        if self.snared:
+            self.snared -= 1
+            frame_movement = (0, 0)
         
         self.pos[0] += frame_movement[0]
         entity_rect = self.rect()
@@ -76,7 +83,15 @@ class PhysicsEntity:
             self.velocity[1] = 0
             
         self.animation.update()
-        
+    def Damage_Taken(self, damage):
+        self.health -= damage
+        print("DAMAGE")
+        print(self.health)
+
+    def Snare(self, snare_time):
+        self.snared = snare_time
+        print("SNARED")
+            
     def render(self, surf, offset=(0, 0)):
         surf.blit(pygame.transform.flip(self.animation.img(), self.flip[0], self.flip[1]), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
