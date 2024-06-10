@@ -15,12 +15,7 @@ from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
-from scripts.traps.spike import Spike
-from scripts.traps.bear_trap import Bear_Trap
-from scripts.traps.spike_pit import Spike_Pit
-from scripts.traps.top_push_trap import Top_Push_Trap
-
-
+from scripts.traps.trap_handler import Trap_Handler
 
 
 class Game:
@@ -55,30 +50,8 @@ class Game:
         self.sparks = []
         self.scroll = [0, 0]
         self.projectiles = []
-        self.spikes = []
-        self.bear_traps = []
-        self.spike_pits = []
-        self.top_pushers = []
-        # Spawner initialisation
-        for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
-            if spawner['variant'] == 0:
-                self.player.pos = spawner['pos']
-
-        # Spike initialisation
-        for spike_tile in self.tilemap.extract([('spike', 0)], True):
-            self.spikes.append(Spike(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height())))
+        Trap_Handler.__init__(self)
         
-        # top pusher initialisation
-        for top_push in self.tilemap.extract([('TopPush', 0)]):
-            self.top_pushers.append(Top_Push_Trap(self, top_push['pos'], (self.assets[top_push['type']][0].get_width(), self.assets[top_push['type']][0].get_height())))
-
-        # Bear Trap initialisation
-        for trap in self.tilemap.extract([('BearTrap', 0)]):
-            self.bear_traps.append(Bear_Trap(self, trap['pos'], (10, 5)))
-
-        # Spike pit initialisation
-        for spike_pit in self.tilemap.extract([('PitTrap', 0)], True):
-            self.spike_pits.append(Spike_Pit(self, spike_pit['pos'], (self.assets[spike_pit['type']][0].get_width(), self.assets[spike_pit['type']][0].get_height())))
 
 
 
@@ -86,34 +59,13 @@ class Game:
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
-            for spike in self.spikes:
-                spike.Update()
-
-            for bear_trap in self.bear_traps:
-                bear_trap.Update()
-
-            for spike_pit in self.spike_pits:
-                spike_pit.Update()
-
-            for top_pusher in self.top_pushers:
-                top_pusher.Update()
+            Trap_Handler.Update(self)
         
     def Render(self, render_scroll):
 
         self.tilemap.render(self.display, offset=render_scroll)
         
-        for spike in self.spikes:
-            spike.Render(self.display, 'spike', offset=render_scroll)
-
-        for bear_trap in self.bear_traps:
-            bear_trap.Render(self.display, 'BearTrap', offset=render_scroll)
-
-        for spike_pit in self.spike_pits:
-            spike_pit.Render(self.display, 'PitTrap', offset=render_scroll)
-        
-        for top_pusher in self.top_pushers:
-            top_pusher.Render(self.display, 'TopPush', offset=render_scroll)
-
+        Trap_Handler.Render(self, render_scroll)
 
         self.player.render(self.display, offset=render_scroll)
 
