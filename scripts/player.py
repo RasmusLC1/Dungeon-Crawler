@@ -21,6 +21,7 @@ class Player(PhysicsEntity):
         self.active_weapon = 'gun'
 
         self.coins = 0
+        self.shootin_cooldown = 0
         
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
@@ -37,6 +38,9 @@ class Player(PhysicsEntity):
             self.velocity[1] = max(self.velocity[1] - 0.1, 0)
         else:
             self.velocity[1] = min(self.velocity[1] + 0.1, 0)
+
+        if self.shootin_cooldown:
+            self.shootin_cooldown -= 1
             
     def Dashing_Update(self, offset=(0, 0)):
         if abs(self.dashing) in {60, 50}:
@@ -85,11 +89,15 @@ class Player(PhysicsEntity):
         self.coins += coins
         print("COINS")
         print(self.coins)
+        print(coins)
         
 
     def Shooting(self, offset=(0, 0)):
-        if not self.ammo:
+        
+        if not self.ammo or self.shootin_cooldown:
             return
+        
+        self.shootin_cooldown = 20
         self.Mouse_Handler()
         self.stored_position = self.pos.copy()
         self.stored_position[0] -= offset[0]

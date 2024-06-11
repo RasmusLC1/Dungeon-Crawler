@@ -32,6 +32,7 @@ class Asset_Loader:
             'gun': load_image('gun.png'),
             'projectile': load_image('projectile.png'),
             'heart': load_image('heart.png'),
+            'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13),
 
         }
             

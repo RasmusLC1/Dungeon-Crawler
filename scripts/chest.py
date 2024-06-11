@@ -6,8 +6,7 @@ class Chest:
         i = 0
         while i < 5:
             self.version = i
-            test = random.randint(0, 10)
-            if test < 5:
+            if random.randint(0, 10) < 5:
                 break
             i += 1
         self.game = game
@@ -22,16 +21,17 @@ class Chest:
         if self.rect().colliderect(self.game.player.rect()):
             loot_type = random.randint(0, 3)
             loot_amount = random.randint(1, 3)
+            version_modifier = self.version * 3 + 1
             if loot_type == 0:
-                if not self.game.player.Healing(loot_amount * self.version):
+                if not self.game.player.Healing(loot_amount * version_modifier):
                     self.Update()
             elif loot_type == 1:
-                if not self.game.player.Ammo_Change(loot_amount * self.version):
+                if not self.game.player.Ammo_Change(loot_amount * version_modifier):
                     self.Update()
             elif loot_type == 2:
-                self.game.player.Coin_Change(loot_amount * 3 * self.version)
+                self.game.player.Coin_Change(loot_amount * 3 * version_modifier)
             elif loot_type == 3:
-                if not self.game.player.Healing(loot_amount * self.version):
+                if not self.game.player.Healing(loot_amount * version_modifier):
                     self.Update()
 
             self.empty = True

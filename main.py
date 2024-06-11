@@ -16,8 +16,9 @@ from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
-from scripts.health_bar import Health_Bar
-from scripts.ammo_bar import Ammo_Bar
+from scripts.interface.health_bar import Health_Bar
+from scripts.interface.ammo_bar import Ammo_Bar
+from scripts.interface.coins import Coins
 from scripts.chest import Chest
 
 
@@ -61,6 +62,8 @@ class Game:
 
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
+        Coins.__init__(self)
+
 
         
 
@@ -76,6 +79,8 @@ class Game:
                 chest.Update()
                 if chest.empty:
                     self.chests.remove(chest)
+
+            Coins.Update(self)
     
     
 
@@ -88,6 +93,7 @@ class Game:
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Ammo_Bar(self)
+        Coins.Render(self)
         for chest in self.chests:
             chest.Render(self.display, render_scroll)
         
