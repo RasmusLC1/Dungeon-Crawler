@@ -18,6 +18,7 @@ class Player(PhysicsEntity):
         self.max_health = self.health
         self.max_ammo = 30
         self.ammo = 10
+        self.active_weapon = 'gun'
         
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
@@ -101,10 +102,11 @@ class Player(PhysicsEntity):
         if abs(self.dashing) <= 50:
             super().render(surf, offset=offset)
         
+        # Render active weapon
         if self.flip[0]:
-            surf.blit(pygame.transform.flip(self.game.assets['gun'], True, False), (self.rect().centerx - self.game.assets['gun'].get_width() - offset[0], self.rect().centery - offset[1]))
+            surf.blit(pygame.transform.flip(self.game.assets[self.active_weapon], True, False), (self.rect().centerx - self.game.assets[self.active_weapon].get_width() - offset[0], self.rect().centery - offset[1]))
         else:
-            surf.blit(self.game.assets['gun'], (self.rect().centerx - offset[0], self.rect().centery -offset[1]))
+            surf.blit(self.game.assets[self.active_weapon], (self.rect().centerx - offset[0], self.rect().centery -offset[1]))
 
         
         

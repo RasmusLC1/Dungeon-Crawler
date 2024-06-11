@@ -53,6 +53,8 @@ class Game:
         self.scroll = [0, 0]
         self.projectiles = []
         Trap_Handler.__init__(self)
+        Ammo_Bar.__init__(self)
+        Health_Bar.__init__(self)
         
 
 

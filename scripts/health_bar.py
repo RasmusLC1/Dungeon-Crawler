@@ -1,6 +1,11 @@
 import pygame
 
 class Health_Bar:
+    def __init__(self):
+        self.scaled_heart = pygame.transform.scale(self.assets['heart'], (12, 12))
+
+
+    
     def normalize_health(current_health, max_health, bar_length):
         # Calculate the normalization factor
         normalization_factor = bar_length / max_health
@@ -12,9 +17,6 @@ class Health_Bar:
     
     def Health_Bar(self):
         bar_length=80
-        # Define the color and rectangle dimensions
-        green = (0, 255, 0)  # RGB color for green
-        red = (255, 0, 0)  # RGB color for green
         rect_x = 20
         rect_y = self.screen_height / self.render_scale - 20
         normalised_health = Health_Bar.normalize_health(self.player.health, self.player.max_health, bar_length)
@@ -30,5 +32,6 @@ class Health_Bar:
         
         # Use self.display consistently if it's the initialized display surface
         self.display.blit(text, (rect_x, rect_y - 10))
-        pygame.draw.rect(self.display, green, (rect_x, rect_y, normalised_health, rect_height))
-        pygame.draw.rect(self.display, red, (rect_x + normalised_health, rect_y, bar_length-normalised_health, rect_height))
+        pygame.draw.rect(self.display, (0, 255, 0), (rect_x, rect_y, normalised_health, rect_height))
+        pygame.draw.rect(self.display, (255, 0, 0), (rect_x + normalised_health, rect_y, bar_length-normalised_health, rect_height))
+        self.display.blit(self.scaled_heart, (rect_x + 40, rect_y - 12))
