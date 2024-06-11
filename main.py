@@ -16,6 +16,7 @@ from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
+from scripts.health_bar import Health_Bar
 
 
 class Game:
@@ -23,10 +24,10 @@ class Game:
         pygame.init()
         self.render_scale = 4
         pygame.display.set_caption('Dungeons of Madness')
-        self.screen_height = 1280
-        self.screen_width = 960
+        self.screen_width = 1280
+        self.screen_height = 960
         self.screen = pygame.display.set_mode((1280, 960))
-        self.display = pygame.Surface((self.screen_height/self.render_scale, self.screen_width/self.render_scale))
+        self.display = pygame.Surface((self.screen_width/self.render_scale, self.screen_height/self.render_scale))
 
         self.clock = pygame.time.Clock()
         
@@ -60,7 +61,9 @@ class Game:
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             Trap_Handler.Update(self)
-        
+    
+    
+
     def Render(self, render_scroll):
 
         self.tilemap.render(self.display, offset=render_scroll)
@@ -68,11 +71,14 @@ class Game:
         Trap_Handler.Render(self, render_scroll)
 
         self.player.render(self.display, offset=render_scroll)
+        Health_Bar.Health_Bar(self)
+        
+
 
         
     def run(self):
         
-
+        
         while True:
             self.display.blit(self.assets['background'], (0, 0))
 

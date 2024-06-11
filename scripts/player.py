@@ -15,6 +15,7 @@ class Player(PhysicsEntity):
         self.wall_slide = False
         self.dashing = 0
         self.stored_position = 0
+        self.max_health = self.health
         
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
@@ -31,12 +32,6 @@ class Player(PhysicsEntity):
             self.velocity[1] = max(self.velocity[1] - 0.1, 0)
         else:
             self.velocity[1] = min(self.velocity[1] + 0.1, 0)
-
-
-    
-
-
-
             
     def Dashing_Update(self, offset=(0, 0)):
         if abs(self.dashing) in {60, 50}:

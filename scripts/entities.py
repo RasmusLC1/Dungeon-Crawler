@@ -14,7 +14,7 @@ class PhysicsEntity:
         self.velocity = [0, 0, 0, 0]
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
-        self.health = 3
+        self.health = 100
         self.snared = 0
         
         self.action = ''
