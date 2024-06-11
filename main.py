@@ -17,6 +17,7 @@ from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.health_bar import Health_Bar
+from scripts.ammo_bar import Ammo_Bar
 
 
 class Game:
@@ -72,6 +73,7 @@ class Game:
 
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
+        Ammo_Bar.Ammo_Bar(self)
         
 
 

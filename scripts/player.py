@@ -16,6 +16,8 @@ class Player(PhysicsEntity):
         self.dashing = 0
         self.stored_position = 0
         self.max_health = self.health
+        self.max_ammo = 30
+        self.ammo = 10
         
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
@@ -67,6 +69,8 @@ class Player(PhysicsEntity):
 
 
     def Shooting(self, offset=(0, 0)):
+        if not self.ammo:
+            return
         self.Mouse_Handler()
         self.stored_position = self.pos.copy()
         self.stored_position[0] -= offset[0]
@@ -78,8 +82,7 @@ class Player(PhysicsEntity):
             position = [self.rect().centerx - 7, self.rect().centery]
             velocity = [direction.x * 3, direction.y * 3]
             self.game.projectiles.append(Projectile(self.game, 'bullet', position, velocity, 0))
-            
-
+        self.ammo -= 1
 
     def Dash(self, offset=(0, 0)):
         if not self.dashing:
