@@ -2,7 +2,7 @@ import pygame
 
 class Health_Bar:
     def __init__(self):
-        self.scaled_heart = pygame.transform.scale(self.assets['heart'], (12, 12))
+        self.scaled_heart = pygame.transform.scale(self.assets['heart'], (10, 12))
 
 
     

@@ -15,6 +15,7 @@ class PhysicsEntity:
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.health = 100
+        self.max_health = self.health
         self.snared = 0
         
         self.action = ''
@@ -83,10 +84,23 @@ class PhysicsEntity:
             self.velocity[1] = 0
             
         self.animation.update()
+
     def Damage_Taken(self, damage):
         self.health -= damage
         print("DAMAGE")
         print(self.health)
+
+    def Healing(self, healing):
+        if self.health + healing < self.max_health:
+            self.health += healing
+            return True
+        elif self.health == self.max_health:
+            return False
+        else:
+            self.health = self.max_health
+            return True
+
+    
 
     def Snare(self, snare_time):
         self.snared = snare_time

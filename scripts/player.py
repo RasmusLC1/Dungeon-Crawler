@@ -15,10 +15,12 @@ class Player(PhysicsEntity):
         self.wall_slide = False
         self.dashing = 0
         self.stored_position = 0
-        self.max_health = self.health
+        
         self.max_ammo = 30
         self.ammo = 10
         self.active_weapon = 'gun'
+
+        self.coins = 0
         
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
@@ -67,7 +69,23 @@ class Player(PhysicsEntity):
                 pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))   
 
-
+    def Ammo_Change(self, ammo):
+        print("AMMO")
+        print(self.ammo)
+        if self.ammo + ammo < self.max_ammo:
+            self.ammo += ammo
+            return True
+        elif self.ammo == self.max_ammo:
+            return False
+        else:
+            self.ammo = self.max_ammo
+            return True
+        
+    def Coin_Change(self, coins):
+        self.coins += coins
+        print("COINS")
+        print(self.coins)
+        
 
     def Shooting(self, offset=(0, 0)):
         if not self.ammo:

@@ -34,7 +34,7 @@ class Trap_Handler:
 
     def Update(self):
         for spike in self.spikes:
-                spike.Update()
+            spike.Update()
 
         for bear_trap in self.bear_traps:
             bear_trap.Update()
