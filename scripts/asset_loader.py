@@ -12,6 +12,7 @@ class Asset_Loader:
             'BearTrap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
             'PitTrap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16),
             'TopPush' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16),
+            'Lava' : get_tiles_from_sheet('traps/lava.png', 2, 0, 0, 0, 16, 16),
             'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 128, 16, 16),
             'Chest' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 5, 0, 0, 128, 16, 16),
             'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 144, 16, 16),
@@ -33,6 +34,7 @@ class Asset_Loader:
             'projectile': load_image('projectile.png'),
             'heart': load_image('heart.png'),
             'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13),
+            'fire': get_tiles_from_sheet('fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16),
 
         }
             
