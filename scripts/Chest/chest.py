@@ -17,6 +17,7 @@ class Chest:
         self.loot_amount = 0
         self.text_cooldown = 0
         self.text_animation = 0
+        self.text_color = (255, 255, 255)
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -29,33 +30,32 @@ class Chest:
             if self.loot_type == 0:
                 if not self.game.player.Healing(self.loot_amount):
                     self.Update()
+                else:
+                    self.text_color  = (255, 0, 0)
             elif self.loot_type == 1:
                 if not self.game.player.Ammo_Change(self.loot_amount):
                     self.Update()
+                else:
+                    self.text_color  = (129, 133, 137)     
             elif self.loot_type == 2:
                 self.loot_amount *= 3
                 self.game.player.Coin_Change(self.loot_amount)
+                self.text_color  = (255,223,0)  
             elif self.loot_type == 3:
                 if not self.game.player.Healing(self.loot_amount):
                     self.Update()
+                else:
+                    self.text_color  = (255, 0, 0)
+
             self.empty = True
             self.text_cooldown = 30
 
     def Render_text(self, surf, offset = (0,0)):
-        color = (255, 255, 255)
-        if self.loot_type == 0:
-            color = (255, 0, 0)
-        elif self.loot_type == 1:
-            color = (129, 133, 137)   
-        elif self.loot_type == 2:
-            color = (255,223,0)  
-        elif self.loot_type == 3:
-            color = (255, 0, 0)
         try:
             font = pygame.font.Font('freesansbold.ttf', 10)
         except Exception as e:
             print(f"Font load error: {e}")
-        text = font.render(str(self.loot_amount), True, color)
+        text = font.render(str(self.loot_amount), True, self.text_color)
         surf.blit(text, (self.pos[0] - offset[0], self.pos[1] - offset[1] - self.text_animation))
         self.text_animation += 1
         self.text_cooldown -= 1
