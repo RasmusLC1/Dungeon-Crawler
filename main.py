@@ -14,7 +14,7 @@ from scripts.traps.trap_handler import Trap_Handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.coins import Coins
-from scripts.chest import Chest
+from scripts.Chest.Chest_handler import Chest_Handler
 
 
 class Game:
@@ -49,10 +49,8 @@ class Game:
         self.sparks = []
         self.scroll = [0, 0]
         self.projectiles = []
-        self.chests = []
         Trap_Handler.__init__(self)
-        for chest in self.tilemap.extract([('Chest', 0)]):
-            self.chests.append(Chest(self, chest['pos'], (self.assets[chest['type']][0].get_width(), self.assets[chest['type']][0].get_height())))  
+        Chest_Handler.__init__(self)
 
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
@@ -63,10 +61,7 @@ class Game:
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             Trap_Handler.Update(self)
-            for chest in self.chests:
-                chest.Update()
-                if chest.empty:
-                    self.chests.remove(chest)
+            Chest_Handler.Update(self)
 
             Coins.Update(self)
     
@@ -77,13 +72,14 @@ class Game:
         self.tilemap.render(self.display, offset=render_scroll)
         
         Trap_Handler.Render(self, render_scroll)
+        Chest_Handler.Render(self, render_scroll)
 
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Ammo_Bar(self)
         Coins.Render(self)
-        for chest in self.chests:
-            chest.Render(self.display, render_scroll)
+
+        
         
 
 
