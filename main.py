@@ -1,18 +1,13 @@
 import sys
 
 import pygame
-import random
-import math
-import os
+
 
 from scripts.utils import load_image, load_images, Animation
 from scripts.asset_loader import Asset_Loader
 from scripts.keyboard import Keyboard_Handler
-from scripts.entities import PhysicsEntity
 from scripts.player import Player
 from scripts.tilemap import Tilemap
-from scripts.particle import Particle
-from scripts.spark import Spark
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
@@ -57,24 +52,17 @@ class Game:
         self.chests = []
         Trap_Handler.__init__(self)
         for chest in self.tilemap.extract([('Chest', 0)]):
-            self.chests.append(Chest(self, chest['pos'], (self.assets[chest['type']][0].get_width(), self.assets[chest['type']][0].get_height())))
-            
+            self.chests.append(Chest(self, chest['pos'], (self.assets[chest['type']][0].get_width(), self.assets[chest['type']][0].get_height())))  
 
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
-
-
-        
-
-
 
     def Update(self, render_scroll):
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             Trap_Handler.Update(self)
-
             for chest in self.chests:
                 chest.Update()
                 if chest.empty:
@@ -100,9 +88,7 @@ class Game:
 
 
         
-    def run(self):
-        
-        
+    def run(self):  
         while True:
             self.display.blit(self.assets['background'], (0, 0))
 
@@ -110,7 +96,6 @@ class Game:
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
             
-
             Game.Render(self, render_scroll)
             Game.Update(self, render_scroll)
 
