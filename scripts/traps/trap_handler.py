@@ -3,6 +3,7 @@ from scripts.traps.bear_trap import Bear_Trap
 from scripts.traps.spike_pit import Spike_Pit
 from scripts.traps.top_push_trap import Top_Push_Trap
 from scripts.traps.lava import Lava
+from scripts.traps.fire_trap import Fire_Trap
 
 
 
@@ -13,6 +14,7 @@ class Trap_Handler:
         self.spike_pits = []
         self.top_pushers = []
         self.lava_tiles = []
+        self.fire_traps = []
         # Spawner initialisation
         for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
             if spawner['variant'] == 0:
@@ -37,6 +39,9 @@ class Trap_Handler:
         for lava in self.tilemap.extract([('Lava', 0)], True):
             self.lava_tiles.append(Lava(self, lava['pos'], (self.assets[lava['type']][0].get_width(), self.assets[lava['type']][0].get_height())))
 
+        for fire_trap in self.tilemap.extract([('Fire_Trap', 0)]):
+            self.fire_traps.append(Fire_Trap(self, fire_trap['pos'], (29, 22)))
+
     def Update(self):
         for spike in self.spikes:
             spike.Update()
@@ -53,6 +58,9 @@ class Trap_Handler:
         for lava in self.lava_tiles:
             lava.Update()
 
+        for fire_trap in self.fire_traps:
+            fire_trap.Update()
+
     def Render(self, offset = (0,0)):
         for spike in self.spikes:
             spike.Render(self.display, 'spike', offset)
@@ -68,3 +76,6 @@ class Trap_Handler:
 
         for lava in self.lava_tiles:
             lava.Render(self.display, 'Lava', offset)
+        
+        for fire_trap in self.fire_traps:
+            fire_trap.Render(self.display, 'Fire_Trap', offset)
