@@ -114,6 +114,7 @@ class Weapon_Generator:
                         range += 1
         weapon = Weapon(weapon_type, damage, shooting_rate, knockback, range, critical_chance, upgrades)
         self.game.player.weapons.append(weapon)
+        return weapon_type
 
     def Get_Weapon_Tier():
         i = 1

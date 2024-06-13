@@ -3,8 +3,9 @@ from scripts.Chest.chest import Chest
 class Chest_Handler:
     def __init__(self):
         self.chests = []
+        depth = 3
         for chest in self.tilemap.extract([('Chest', 0)]):
-            self.chests.append(Chest(self, chest['pos'], (self.assets[chest['type']][0].get_width(), self.assets[chest['type']][0].get_height())))  
+            self.chests.append(Chest(self, chest['pos'], (self.assets[chest['type']][0].get_width(), self.assets[chest['type']][0].get_height()), depth))  
 
 
     def Update(self):

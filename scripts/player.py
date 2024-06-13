@@ -76,8 +76,6 @@ class Player(PhysicsEntity):
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))   
 
     def Ammo_Change(self, ammo):
-        print("AMMO")
-        print(self.ammo)
         if self.ammo + ammo < self.max_ammo:
             self.ammo += ammo
             return True
@@ -89,9 +87,7 @@ class Player(PhysicsEntity):
         
     def Coin_Change(self, coins):
         self.coins += coins
-        print("COINS")
-        print(self.coins)
-        print(coins)
+        
         
 
     def Shooting(self, offset=(0, 0)):
