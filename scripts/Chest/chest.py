@@ -1,5 +1,7 @@
 import pygame
 import random
+from scripts.weapon_generator import Weapon_Generator
+
 
 class Chest:
     def __init__(self, game, pos, size):
@@ -36,16 +38,17 @@ class Chest:
                 if not self.game.player.Ammo_Change(self.loot_amount):
                     self.Update()
                 else:
-                    self.text_color  = (129, 133, 137)     
+                    self.text_color  = (129, 133, 137)    
             elif self.loot_type == 2:
                 self.loot_amount *= 3
                 self.game.player.Coin_Change(self.loot_amount)
                 self.text_color  = (255,223,0)  
             elif self.loot_type == 3:
-                if not self.game.player.Healing(self.loot_amount):
+                if self.version <= 2:
                     self.Update()
                 else:
-                    self.text_color  = (255, 0, 0)
+                    Weapon_Generator.Generate_Weapon(self, self.loot_amount)
+                    self.text_color  = (255, 255, 255)
 
             self.empty = True
             self.text_cooldown = 30

@@ -2,6 +2,7 @@ from scripts.entities import PhysicsEntity
 from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile import Projectile
+from scripts.weapon_generator import Weapon_Generator, Weapon
 
 import random
 import math
@@ -23,6 +24,7 @@ class Player(PhysicsEntity):
         self.coins = 0
         self.shootin_cooldown = 0
         
+        self.weapons = []
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().update(tilemap, movement=movement)
@@ -112,6 +114,8 @@ class Player(PhysicsEntity):
         self.ammo -= 1
 
     def Dash(self, offset=(0, 0)):
+        for weapon in self.weapons:
+            print(weapon)
         if not self.dashing:
             self.Mouse_Handler()
             self.stored_position = self.pos.copy()
