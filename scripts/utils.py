@@ -4,17 +4,20 @@ import pygame
 
 BASE_IMG_PATH = 'data/images/'
 
+# Load a single PNG
 def load_image(path):
     img = pygame.image.load(BASE_IMG_PATH + path).convert()
     img.set_colorkey((0, 0, 0))
     return img
 
+# Load all PNGs in a path
 def load_images(path):
     images = []
     for img_name in sorted(os.listdir(BASE_IMG_PATH + path)):
         images.append(load_image(path + '/' + img_name))
     return images
 
+# Get a single tile from a sheet
 def get_tile_image_from_sheet(sheet, pos_x, pos_y, width, height, color):
     # Load the entire sprite sheet
     sheet.set_colorkey(color)
@@ -26,17 +29,21 @@ def get_tile_image_from_sheet(sheet, pos_x, pos_y, width, height, color):
     
     return tile_image
 
+# Get a defined range of sprites from a sheet
 def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, size_x, size_y):
     sheet = pygame.image.load(BASE_IMG_PATH + path).convert_alpha()
     images = []
+    # Setup for double while loop
     current_iteration_x = 0
     current_iteration_y = 0
     while current_iteration_x <= versions_x:
         y_holder = starting_y
         while current_iteration_y <= versions_y:
+            # Go through the tiles from the sheet on the x and y location, with a given size, filter out white colour
             images.append(get_tile_image_from_sheet(sheet, starting_x, starting_y, size_x, size_y, (255,255,255)))
             starting_y += size_y
             current_iteration_y += 1
+        # Increment the position and current iteration
         starting_x += size_x
         current_iteration_x += 1
         current_iteration_y = 0

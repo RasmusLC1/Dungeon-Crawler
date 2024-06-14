@@ -31,6 +31,7 @@ class Weapon_Generator:
         weapon_type = Weapon_Generator.Get_Weapon_Type(weapon_tier)
         adjusted_weapon_tier = loot_amount * weapon_tier
         print("Weapon Tier" + str(adjusted_weapon_tier))
+        # Get weapon effects, giving small chance to get extra values
         i = 0
         while i < adjusted_weapon_tier:
             i += 1
@@ -41,22 +42,26 @@ class Weapon_Generator:
                     damage += 1
                     if effect < 5:
                         damage += 1
+                        i -= 1
             elif effect <= 60:
                 shooting_rate += 1
                 if effect < 45:
                     shooting_rate += 1
                     if effect < 35:
                         shooting_rate += 1
+                        i -= 1
             elif effect <= 80:
                 critical_chance += 1
                 if effect < 70:
                     critical_chance += 1
                     if effect < 65:
                         critical_chance += 1
+                        i -= 1
             elif effect <= 90:
                 knockback += 1
                 if effect < 85:
                     knockback += 1
+                    i -= 1
             elif effect == 91 and not upgrades.__contains__('poision'):
                 i += 5
                 if i < loot_amount:
@@ -112,7 +117,10 @@ class Weapon_Generator:
                     range += 1
                     if effect <= 100:
                         range += 1
+                        i -= 1
+        # Generate weapon with attributes just found
         weapon = Weapon(weapon_type, damage, shooting_rate, knockback, range, critical_chance, upgrades)
+        # Assign weapon to player
         self.game.player.weapons.append(weapon)
         return weapon_type
 

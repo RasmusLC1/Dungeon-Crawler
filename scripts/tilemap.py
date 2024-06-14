@@ -14,6 +14,7 @@ AUTOTILE_MAP = {
     tuple(sorted([(1, 0), (-1, 0), (0, 1), (0, -1)])): 8,
 }
 
+# Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
 PHYSICS_TILES = {'wall', 'door', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall'}
 AUTOTILE_TYPES = {'floor'}
@@ -24,15 +25,17 @@ class Tilemap:
         self.tile_size = tile_size
         self.tilemap = {}
         self.offgrid_tiles = []
-        
+    
+
     def extract(self, id_pairs, keep=False):
         matches = []
+        # Offgrid tiles
         for tile in self.offgrid_tiles.copy():
             if (tile['type'], tile['variant']) in id_pairs:
                 matches.append(tile.copy())
                 if not keep:
                     self.offgrid_tiles.remove(tile)
-                    
+        # On grid tiles            
         for loc in self.tilemap:
             tile = self.tilemap[loc]
             if (tile['type'], tile['variant']) in id_pairs:
@@ -42,9 +45,9 @@ class Tilemap:
                 matches[-1]['pos'][1] *= self.tile_size
                 if not keep:
                     del self.tilemap[loc]
-        
         return matches
     
+    # Get surrounding tiles
     def tiles_around(self, pos):
         tiles = []
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
@@ -67,13 +70,15 @@ class Tilemap:
         self.tilemap = map_data['tilemap']
         self.tile_size = map_data['tile_size']
         self.offgrid_tiles = map_data['offgrid']
-        
+    
+    # Check for collision with solid tiles
     def solid_check(self, pos):
         tile_loc = str(int(pos[0] // self.tile_size)) + ';' + str(int(pos[1] // self.tile_size))
         if tile_loc in self.tilemap:
             if self.tilemap[tile_loc]['type'] in PHYSICS_TILES:
                 return self.tilemap[tile_loc]
     
+    # Check for physics tiles
     def physics_rects_around(self, pos):
         rects = []
         for tile in self.tiles_around(pos):
@@ -81,6 +86,7 @@ class Tilemap:
                 rects.append(pygame.Rect(tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size, self.tile_size, self.tile_size))
         return rects
     
+    # Automatically assign tiles
     def autotile(self):
         for loc in self.tilemap:
             tile = self.tilemap[loc]
@@ -93,16 +99,15 @@ class Tilemap:
             neighbors = tuple(sorted(neighbors))
             if (tile['type'] in AUTOTILE_TYPES) and (neighbors in AUTOTILE_MAP):
                 tile['variant'] = AUTOTILE_MAP[neighbors]
-                
+
+
+    # Convert screen coordinates to isometric grid coordinates
     def tile_isometric_to_grid(x, y):
-        # Convert screen coordinates to isometric grid coordinates
         grid_x = (x // 10 + y // 5) // 2
         grid_y = (y // 5 - x // 10) // 2
         return int(grid_x), int(grid_y)
 
     def render(self, surf, offset=(0, 0)):
-        
-            
         for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
             for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):
                 # iso_x, iso_y = Tilemap.tile_isometric_to_grid(x,y)

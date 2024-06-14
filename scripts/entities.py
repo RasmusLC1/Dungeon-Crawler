@@ -32,8 +32,7 @@ class PhysicsEntity:
         self.fire_animation = 0
         self.fire_animation_cooldown = 0
 
-
-        self.poisoned = 0
+        self.poisoned = 1
         self.poisoned_cooldown = 0
 
         
@@ -49,12 +48,12 @@ class PhysicsEntity:
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         
-        self.frame_movement = (movement[0]*2 + self.velocity[0], movement[1]*2 + self.velocity[1])
 
         
         
-        self.Update_Status_Effects()
         
+        self.frame_movement = (movement[0]*2/self.poisoned + self.velocity[0], movement[1]*2/self.poisoned + self.velocity[1])
+        self.Update_Status_Effects()
         self.Movement(movement, tilemap)
         
             
@@ -126,6 +125,7 @@ class PhysicsEntity:
     def Update_Status_Effects(self):
         self.OnFire()
         self.Snare()
+        self.Poisoned()
 
     def Set_Snare(self, snare_time):
         self.snared = snare_time
@@ -140,8 +140,6 @@ class PhysicsEntity:
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
 
     def OnFire(self):
-        
-
         if self.fire_cooldown:
             self.fire_cooldown -= 1
         else:
@@ -166,11 +164,14 @@ class PhysicsEntity:
     def Poisoned(self):
         if self.poisoned_cooldown:
             self.poisoned_cooldown -= 1
-        if not self.poisoned_cooldown and self.poisoned:
+
+        if not self.poisoned_cooldown and self.poisoned > 1:
+            damage = random.randint(1, 2)
+            self.Damage_Taken(damage)
             self.poisoned_cooldown = random.randint(20, 30)
+            self.poisoned -= 1
         
-        if self.poisoned:
-            pass
+            
 
 
 
