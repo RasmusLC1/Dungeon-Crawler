@@ -1,4 +1,5 @@
 from scripts.traps.spike import Spike
+from scripts.traps.spike_poisoned import Spike_Poisoned
 from scripts.traps.bear_trap import Bear_Trap
 from scripts.traps.spike_pit import Spike_Pit
 from scripts.traps.top_push_trap import Top_Push_Trap
@@ -10,6 +11,7 @@ from scripts.traps.fire_trap import Fire_Trap
 class Trap_Handler:
     def __init__(self):
         self.spikes = []
+        self.spikes_poison = []
         self.bear_traps = []
         self.spike_pits = []
         self.top_pushers = []
@@ -24,6 +26,10 @@ class Trap_Handler:
         for spike_tile in self.tilemap.extract([('spike', 0)], True):
             self.spikes.append(Spike(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height())))
         
+        # Spike initialisation
+        for spike_tile in self.tilemap.extract([('spike_poison', 0)], True):
+            self.spikes_poison.append(Spike_Poisoned(self, spike_tile['pos'], (self.assets[spike_tile['type']][0].get_width(), self.assets[spike_tile['type']][0].get_height())))
+       
         # top pusher initialisation
         for top_push in self.tilemap.extract([('TopPush', 0)]):
             self.top_pushers.append(Top_Push_Trap(self, top_push['pos'], (self.assets[top_push['type']][0].get_width(), self.assets[top_push['type']][0].get_height())))
@@ -46,6 +52,9 @@ class Trap_Handler:
         for spike in self.spikes:
             spike.Update()
 
+        for spike_poison in self.spikes_poison:
+            spike_poison.Update()
+
         for bear_trap in self.bear_traps:
             bear_trap.Update()
 
@@ -64,6 +73,9 @@ class Trap_Handler:
     def Render(self, offset = (0,0)):
         for spike in self.spikes:
             spike.Render(self.display, 'spike', offset)
+        
+        for spike_poison in self.spikes_poison:
+            spike_poison.Render(self.display, 'spike_poison', offset)
 
         for bear_trap in self.bear_traps:
             bear_trap.Render(self.display, 'BearTrap', offset)

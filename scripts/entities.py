@@ -34,6 +34,8 @@ class PhysicsEntity:
 
         self.poisoned = 1
         self.poisoned_cooldown = 0
+        self.poison_animation = 0
+        self.poison_animation_cooldown = 0
 
         
     
@@ -142,8 +144,7 @@ class PhysicsEntity:
     def OnFire(self):
         if self.fire_cooldown:
             self.fire_cooldown -= 1
-        else:
-            if self.is_on_fire:
+        elif self.is_on_fire:
                 damage = random.randint(1, 3)
                 self.Damage_Taken(damage)
                 self.is_on_fire -= 1
@@ -166,13 +167,18 @@ class PhysicsEntity:
             self.poisoned_cooldown -= 1
 
         if not self.poisoned_cooldown and self.poisoned > 1:
-            damage = random.randint(1, 2)
-            self.Damage_Taken(damage)
-            self.poisoned_cooldown = random.randint(20, 30)
+            self.Damage_Taken(self.poisoned)
+            self.poisoned_cooldown = random.randint(50, 70)
             self.poisoned -= 1
-        
-            
 
+        if self.poison_animation_cooldown:
+            self.poison_animation_cooldown -= 1
+        else:
+            self.poison_animation_cooldown = 30
+            if self.poison_animation >= 2:
+                self.poison_animation = 0
+            else:
+                self.poison_animation += 1
 
 
             
@@ -180,10 +186,13 @@ class PhysicsEntity:
         surf.blit(pygame.transform.flip(self.animation.img(), self.flip[0], self.flip[1]), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         if self.is_on_fire:
             fire_image = self.game.assets['fire'][self.fire_animation].convert_alpha()
-
             # Set the opacity to 70%
             fire_image.set_alpha(179)
-            if self.flip[0]:
-                surf.blit(pygame.transform.flip(fire_image, True, False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + 5))
-            else:
-                surf.blit(fire_image, (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + 5))
+            surf.blit(pygame.transform.flip(fire_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + 5))
+        if self.poisoned > 1:
+            poison_image = self.game.assets['poison'][self.poison_animation].convert_alpha()
+            # Set the opacity to 70%
+            poison_image.set_alpha(179)
+            poison_image = pygame.transform.scale(poison_image, (12, 12))
+            surf.blit(pygame.transform.flip(poison_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + 5))
+            

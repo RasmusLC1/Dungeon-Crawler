@@ -24,6 +24,7 @@ class Editor:
             'door' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 80, 16, 16),
             'torch' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 96, 16, 16),
             'spike' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16),
+            'spike_poison' : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 16, 16),
             'Fire_Trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 32, 40),
             'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 128, 16, 16),
             'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 144, 16, 16),
@@ -82,7 +83,7 @@ class Editor:
             else:
                 self.display.blit(current_tile_img, mpos)
             
-            offgrid_list = ['spawners', 'BearTrap', 'TopPush', 'Chest', 'Fire_Trap']
+            offgrid_list = ['spawners', 'BearTrap', 'TopPush', 'Chest', 'Fire_Trap', 'spike_poison']
 
 
             # Placing tiles on the grid
