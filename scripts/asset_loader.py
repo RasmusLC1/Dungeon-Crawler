@@ -47,8 +47,9 @@ class Asset_Loader:
             'particle/particle': Animation(load_images('particles/particle'), img_dur=6, loop=False),
             'heart': load_image('heart.png'),
             'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13),
-            'fire': get_tiles_from_sheet('particles/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16),
-            'poison': get_tiles_from_sheet('particles/poison.png', 2, 0, 0, 0, 16, 16),
+            'fire': get_tiles_from_sheet('particles/effects/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16),
+            'poison': get_tiles_from_sheet('particles/effects/poison.png', 2, 0, 0, 0, 16, 16),
+            'frozen': get_tiles_from_sheet('particles/effects/frozen.png', 2, 0, 0, 0, 16, 16),
         }
         self.assets.update(effect_assets)
     

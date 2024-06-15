@@ -41,9 +41,10 @@ class PhysicsEntity:
         self.poison_animation_cooldown = 0
 
         self.is_on_ice = 0
-        self.frozen = 0
+        self.frozen = 5
         self.frozen_cooldown = 0
         self.frozen_animation = 0
+        self.frozen_animation_cooldown = 0
 
         self.status_effects = Status_Effect_Handler(self)
     
@@ -114,7 +115,6 @@ class PhysicsEntity:
 
     def Damage_Taken(self, damage):
         self.health -= damage
-        print("DAMAGE")
         print(self.health)
 
     def Healing(self, healing):
@@ -149,10 +149,10 @@ class PhysicsEntity:
         self.snared = snare_time
     
     def Set_Poisoned(self, poisoned):
-        self.poisoned = max(random.randint(poisoned, poisoned * 2), self.poisoned)
+        self.poisoned =  max(random.randint(2, poisoned), self.poisoned)
             
     def Set_Frozen(self, freeze):
-        self.frozen = max(random.randint(freeze, freeze * 2), self.frozen)
+        self.frozen = max(3, freeze)
 
     def Set_On_Fire(self, fire_time):
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
@@ -166,5 +166,6 @@ class PhysicsEntity:
         surf.blit(pygame.transform.flip(self.animation.img(), self.flip[0], self.flip[1]), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
+        self.status_effects.render_frozen(self.game, surf, offset)
 
             

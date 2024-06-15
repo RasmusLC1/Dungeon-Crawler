@@ -12,8 +12,6 @@ class Status_Effect_Handler:
             self.entity.snared -= 1
             self.entity.frame_movement = (0, 0)
 
-    
-
     def OnFire(self):
         if self.entity.fire_cooldown:
             self.entity.fire_cooldown -= 1
@@ -42,7 +40,7 @@ class Status_Effect_Handler:
         if self.entity.poisoned_cooldown:
             self.entity.poisoned_cooldown -= 1
 
-        if not self.entity.poisoned_cooldown and self.entity.poisoned > 1:
+        if not self.entity.poisoned_cooldown:
             self.entity.Damage_Taken(self.entity.poisoned)
             self.entity.poisoned_cooldown = random.randint(50, 70)
             self.entity.poisoned -= 1
@@ -62,14 +60,14 @@ class Status_Effect_Handler:
     
 
     def Frozen(self):
-        if not self.entity.frozen:
+        if self.entity.frozen <= 1:
+            self.entity.frozen = 0
             return
-        if self.entity.frozen_cooldown:
+        elif self.entity.frozen_cooldown:
             self.entity.frozen_cooldown -= 1
 
-        if not self.entity.frozen_cooldown and self.entity.frozen > 1:
-            self.entity.Damage_Taken(self.entity.frozen)
-            self.entity.frozen_cooldown = random.randint(50, 70)
+        if not self.entity.frozen_cooldown:
+            self.entity.frozen_cooldown = random.randint(100, 120)
             self.entity.frozen -= 1
         self.entity.Slow_Down(self.entity.frozen)
         self.Frozen_Animation()
@@ -98,3 +96,11 @@ class Status_Effect_Handler:
             poison_image.set_alpha(179)
             poison_image = pygame.transform.scale(poison_image, (12, 12))
             surf.blit(pygame.transform.flip(poison_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + 5))
+
+    def render_frozen(self, game, surf, offset=(0, 0)):
+        if self.entity.frozen:
+            frozen_image = game.assets['frozen'][self.entity.frozen_animation].convert_alpha()
+            # Set the opacity to 70%
+            frozen_image.set_alpha(179)
+            frozen_image = pygame.transform.scale(frozen_image, (12, 12))
+            surf.blit(pygame.transform.flip(frozen_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + 5))
