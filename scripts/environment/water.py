@@ -6,9 +6,8 @@ import pygame
 
 class Water(Trap):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size)
+        super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 2)
-        self.type = type
 
     def Update(self):
         if self.rect().colliderect(self.game.player.rect()):
@@ -19,7 +18,7 @@ class Water(Trap):
             elif self.type == 'deep_water':
                 self.game.player.Slow_Down(8)
 
-
+    def Animation_Update(self):
         if self.animation_cooldown > 0:
             self.animation_cooldown -= 1
 

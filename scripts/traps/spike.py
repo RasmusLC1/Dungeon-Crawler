@@ -5,8 +5,8 @@ import math
 import pygame
 
 class Spike(Trap):
-    def __init__(self, game, pos, size):
-        super().__init__(game, pos, size)
+    def __init__(self, game, pos, size, type):
+        super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 5)
 
     def Update(self):
@@ -17,7 +17,8 @@ class Spike(Trap):
             if not self.game.player.dashing:
                 self.game.player.Damage_Taken(2)
                 self.Cooldown = 100
-
+                
+    def Animation_Update(self):
         if self.animation_cooldown > 0:
             self.animation_cooldown -= 1
 

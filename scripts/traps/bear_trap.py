@@ -5,8 +5,8 @@ import pygame
 
 
 class Bear_Trap(Trap):
-    def __init__(self, game, pos, size):
-        super().__init__(game, pos, size)
+    def __init__(self, game, pos, size, type):
+        super().__init__(game, pos, size, type)
 
     def Update(self):
         if self.Cooldown > 0:

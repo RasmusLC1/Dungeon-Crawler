@@ -5,14 +5,14 @@ import math
 import pygame
 
 class Spike_Pit(Trap):
-    def __init__(self, game, pos, size):
-        super().__init__(game, pos, size)
+    def __init__(self, game, pos, size, type):
+        super().__init__(game, pos, size, type)
 
     def Update(self):
         # Resetting Trap
         if self.Cooldown > 0:
             self.Cooldown -= 1
-        
+  
         # Trigger trap animation and snare
         if self.rect().colliderect(self.game.player.rect()) and not self.Cooldown and not self.game.player.dashing:
             if not self.game.player.dashing:

@@ -5,8 +5,8 @@ import math
 import pygame
 
 class Fire_Trap(Trap):
-    def __init__(self, game, pos, size):
-        super().__init__(game, pos, size)
+    def __init__(self, game, pos, size, type):
+        super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 13)
 
     def Update(self):
@@ -17,7 +17,8 @@ class Fire_Trap(Trap):
             if not self.game.player.dashing:
                 self.game.player.Set_On_Fire(3)
                 self.Cooldown = 100
-
+                
+    def Animation_Update(self):
         if self.animation_cooldown > 0:
             self.animation_cooldown -= 1
 
