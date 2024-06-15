@@ -15,7 +15,7 @@ class Spike_Poisoned(Trap):
         if self.rect().colliderect(self.game.player.rect()) and self.Cooldown == 0 and self.animation > 8 and self.animation < 12 and not self.game.player.dashing:
             if not self.game.player.dashing:
                 self.game.player.Damage_Taken(2)
-                self.game.player.Set_Poisoned(3)
+                self.game.player.Set_Poisoned(random.randint(3,4))
                 self.Cooldown = 100
 
         if self.animation_cooldown > 0:

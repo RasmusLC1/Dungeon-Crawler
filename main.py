@@ -30,7 +30,8 @@ class Game:
         self.clock = pygame.time.Clock()
         
         self.movement = [False, False, False, False]
-        Asset_Loader.asset_list(self)
+        self.assets = {}
+        Asset_Loader.Run_All(self)
 
         self.player = Player(self, (50, 50), (8, 15))
         self.tilemap = Tilemap(self, tile_size=16)

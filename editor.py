@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from scripts.utils import load_images, load_image, get_tiles_from_sheet
+import scripts.asset_loader
 from scripts.tilemap import Tilemap
 from scripts.asset_loader import Asset_Loader
 
@@ -18,28 +19,12 @@ class Editor:
 
         self.clock = pygame.time.Clock()
         
-        self.assets = {
-            'spawners': load_images('tiles/spawners'),
-            'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 64, 16, 16),
-            'door' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 80, 16, 16),
-            'torch' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 96, 16, 16),
-            'spike' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16),
-            'spike_poison' : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 16, 16),
-            'Fire_Trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 32, 40),
-            'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 128, 16, 16),
-            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 144, 16, 16),
-            'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 1, 0, 0, 160, 16, 32),
-            'LeftWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 0, 0, 16, 16),
-            'RightWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 80, 0, 16, 16),
-            'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
-            'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
-            'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 16, 16, 16, 16),
-            'Chest' : get_tiles_from_sheet('chest.png', 5, 0, 0, 128, 16, 16),
-            'BearTrap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
-            'PitTrap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16),
-            'TopPush' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16),
-            'Lava' : get_tiles_from_sheet('traps/lava.png', 2, 0, 0, 0, 16, 16),
-        }
+        self.assets = {}
+        Asset_Loader.Asset_Tile_List(self)
+        Asset_Loader.Asset_Trap_List(self)
+        Asset_Loader.Asset_Objects_List(self)
+        Asset_Loader.Asset_Environment_List(self)
+        
         
         self.movement = [False, False, False, False]
         
