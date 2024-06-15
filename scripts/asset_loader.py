@@ -71,6 +71,9 @@ class Asset_Loader:
     def Asset_Environment_List(self):
         Environment_assets = {
             'Lava' : get_tiles_from_sheet('environment/lava.png', 2, 0, 0, 0, 16, 16),
+            'shallow_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
+            'medium_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
+            'deep_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
         }
         self.assets.update(Environment_assets)
             
@@ -93,3 +96,5 @@ class Asset_Loader:
         sheet = pygame.image.load('data/images/tiles/' + file_name).convert_alpha()
         sheet.set_colorkey(color)
         return sheet
+
+    

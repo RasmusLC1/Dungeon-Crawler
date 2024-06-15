@@ -3,7 +3,8 @@ from scripts.traps.spike_poisoned import Spike_Poisoned
 from scripts.traps.bear_trap import Bear_Trap
 from scripts.traps.spike_pit import Spike_Pit
 from scripts.traps.top_push_trap import Top_Push_Trap
-from scripts.traps.lava import Lava
+from scripts.environment.lava import Lava
+from scripts.environment.water import Water
 from scripts.traps.fire_trap import Fire_Trap
 
 
@@ -16,6 +17,7 @@ class Trap_Handler:
         self.spike_pits = []
         self.top_pushers = []
         self.lava_tiles = []
+        self.water_tiles = []
         self.fire_traps = []
         # Spawner initialisation
         for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
@@ -45,6 +47,15 @@ class Trap_Handler:
         for lava in self.tilemap.extract([('Lava', 0)], True):
             self.lava_tiles.append(Lava(self, lava['pos'], (self.assets[lava['type']][0].get_width(), self.assets[lava['type']][0].get_height())))
 
+        for water in self.tilemap.extract([('shallow_water', 0)], True):
+            self.water_tiles.append(Water(self, water['pos'], (self.assets[water['type']][0].get_width(), self.assets[water['type']][0].get_height()), 'shallow_water'))
+
+        for water in self.tilemap.extract([('medium_water', 0)], True):
+            self.water_tiles.append(Water(self, water['pos'], (self.assets[water['type']][0].get_width(), self.assets[water['type']][0].get_height()), 'medium_water'))
+
+        for water in self.tilemap.extract([('deep_water', 0)], True):
+            self.water_tiles.append(Water(self, water['pos'], (self.assets[water['type']][0].get_width(), self.assets[water['type']][0].get_height()), 'deep_water'))
+
         for fire_trap in self.tilemap.extract([('Fire_Trap', 0)]):
             self.fire_traps.append(Fire_Trap(self, fire_trap['pos'], (29, 22)))
 
@@ -67,6 +78,9 @@ class Trap_Handler:
         for lava in self.lava_tiles:
             lava.Update()
 
+        for water in self.water_tiles:
+            water.Update()
+
         for fire_trap in self.fire_traps:
             fire_trap.Update()
 
@@ -88,6 +102,9 @@ class Trap_Handler:
 
         for lava in self.lava_tiles:
             lava.Render(self.display, 'Lava', offset)
+
+        for water in self.water_tiles:
+            water.Render(self.display, offset)
         
         for fire_trap in self.fire_traps:
             fire_trap.Render(self.display, 'Fire_Trap', offset)

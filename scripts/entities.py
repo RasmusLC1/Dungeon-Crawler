@@ -17,6 +17,7 @@ class PhysicsEntity:
         self.health = 100
         self.max_health = self.health
         self.snared = 0
+        self.slow_down = 1
 
         
         self.action = ''
@@ -53,8 +54,7 @@ class PhysicsEntity:
 
         
         
-        
-        self.frame_movement = (movement[0]*2/self.poisoned + self.velocity[0], movement[1]*2/self.poisoned + self.velocity[1])
+        self.frame_movement = (movement[0]*2/self.slow_down + self.velocity[0], movement[1]*2/self.slow_down + self.velocity[1])
         self.Update_Status_Effects()
         self.Movement(movement, tilemap)
         
@@ -170,6 +170,7 @@ class PhysicsEntity:
             self.Damage_Taken(self.poisoned)
             self.poisoned_cooldown = random.randint(50, 70)
             self.poisoned -= 1
+        self.Slow_Down(self.poisoned)
 
         if self.poison_animation_cooldown:
             self.poison_animation_cooldown -= 1
@@ -179,6 +180,9 @@ class PhysicsEntity:
                 self.poison_animation = 0
             else:
                 self.poison_animation += 1
+    
+    def Slow_Down(self, effect):
+        self.slow_down = max(1, effect)
 
 
             
