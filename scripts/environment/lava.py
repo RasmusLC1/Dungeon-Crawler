@@ -9,15 +9,20 @@ class Lava(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 2)
 
-    def Update(self):
+    def Update(self, entity):
         if self.Cooldown > 0:
             self.Cooldown -= 1
 
-        if self.rect().colliderect(self.game.player.rect()) and self.Cooldown == 0 and not self.game.player.dashing:
-            if not self.game.player.dashing:
-                self.game.player.Set_On_Fire(5)
-                self.Cooldown = 100
-                
+        if self.rect().colliderect(entity.rect()):
+            entity.Slow_Down(3)
+            if self.Cooldown == 0:
+                if entity.type == 'player':
+                    if entity.dashing:
+                        return
+                entity.Set_On_Fire(5)
+                entity.Damage_Taken(5)
+                self.Cooldown = 20
+
     def Animation_Update(self):
         if self.animation_cooldown > 0:
             self.animation_cooldown -= 1

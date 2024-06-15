@@ -9,14 +9,14 @@ class Water(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 2)
 
-    def Update(self):
-        if self.rect().colliderect(self.game.player.rect()):
+    def Update(self, entity):
+        if self.rect().colliderect(entity.rect()):
             if self.type == 'shallow_water':
-                self.game.player.Slow_Down(2)
+                entity.Slow_Down(2)
             elif self.type == 'medium_water':
-                self.game.player.Slow_Down(4)
+                entity.Slow_Down(4)
             elif self.type == 'deep_water':
-                self.game.player.Slow_Down(8)
+                entity.Slow_Down(8)
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

@@ -8,21 +8,24 @@ class Spike_Pit(Trap):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type)
 
-    def Update(self):
+    def Update(self, entity):
         # Resetting Trap
         if self.Cooldown > 0:
             self.Cooldown -= 1
   
         # Trigger trap animation and snare
-        if self.rect().colliderect(self.game.player.rect()) and not self.Cooldown and not self.game.player.dashing:
-            if not self.game.player.dashing:
-                self.game.player.Damage_Taken(5)
-                self.Cooldown = 100
-                if not self.animation:
-                    self.animation = 1
-                    self.game.player.Set_Snare(50)
-                else:
-                    self.game.player.Set_Snare(25)
+        if self.rect().colliderect(entity.rect()) and not self.Cooldown:
+            if entity.type == 'player':
+                if entity.dashing:
+                    return
+                
+            entity.Damage_Taken(5)
+            self.Cooldown = 100
+            if not self.animation:
+                self.animation = 1
+                entity.Set_Snare(50)
+            else:
+                entity.Set_Snare(25)
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]-5, self.size[1]-5)

@@ -8,15 +8,17 @@ class Spike_Poisoned(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 13)
 
-    def Update(self):
+    def Update(self, entity):
         if self.Cooldown > 0:
             self.Cooldown -= 1
 
-        if self.rect().colliderect(self.game.player.rect()) and self.Cooldown == 0 and self.animation > 8 and self.animation < 12 and not self.game.player.dashing:
-            if not self.game.player.dashing:
-                self.game.player.Damage_Taken(2)
-                self.game.player.Set_Poisoned(random.randint(3,4))
-                self.Cooldown = 100
+        if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 8 and self.animation < 12:
+            if entity.type == 'player':
+                if entity.dashing:
+                    return
+            entity.Damage_Taken(2)
+            entity.Set_Poisoned(random.randint(3,4))
+            self.Cooldown = 100
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

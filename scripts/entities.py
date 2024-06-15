@@ -1,9 +1,10 @@
 import math
 import random
-
 import pygame
 
 from scripts.particle import Particle
+from scripts.traps.trap_handler import Trap_Handler
+
 
 class PhysicsEntity:
     def __init__(self, game, e_type, pos, size):
@@ -18,7 +19,7 @@ class PhysicsEntity:
         self.max_health = self.health
         self.snared = 0
         self.slow_down = 1
-
+        self.nearby_traps = []
         
         self.action = ''
         self.anim_offset = (-3, -3)
@@ -64,6 +65,8 @@ class PhysicsEntity:
             self.velocity[1] = 0
             
         self.animation.update()
+        self.Update_Traps()
+
 
     def Movement(self, movement, tilemap):
         self.pos[0] += self.frame_movement[0]
@@ -101,6 +104,11 @@ class PhysicsEntity:
             self.flip[1] = True            
             
         self.last_movement = movement
+
+    def Update_Traps(self):
+        self.nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, 20)
+        for trap in self.nearby_traps:
+            trap.Update(self)
 
     def Damage_Taken(self, damage):
         self.health -= damage

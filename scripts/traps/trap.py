@@ -12,7 +12,7 @@ class Trap:
         self.animation_cooldown = 0
         self.type = type
 
-    def Update(self):
+    def Update(self, entity):
         pass
 
     def Animation_Update(self):

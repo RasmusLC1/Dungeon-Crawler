@@ -13,6 +13,7 @@ import math
 class Trap_Handler:
     def __init__(self):
         self.traps = []
+        self.nearby_traps = []
         self.environment = []
         # Spawner initialisation
         for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
@@ -54,10 +55,6 @@ class Trap_Handler:
         for trap in self.tilemap.extract([('Fire_Trap', 0)]):
             self.traps.append(Fire_Trap(self, trap['pos'], (29, 22), trap['type']))
 
-    def Update(self):
-        for trap in self.traps:
-            trap.Update()
-            # trap.Animation_Update()
 
     def find_nearby_traps(self, player_pos, max_distance):
         nearby_traps = []
@@ -67,10 +64,14 @@ class Trap_Handler:
             if distance < max_distance:
                 nearby_traps.append(trap)
         return nearby_traps
+    
+    def Update(self):
+        self.nearby_traps = Trap_Handler.find_nearby_traps(self, self.player.pos, self.screen_width)
+        for trap in self.nearby_traps:
+            trap.Animation_Update()
             
 
     def Render(self, offset = (0,0)):
-        pass
-        # for trap in self.traps:
-        #     trap.Render(self.display, offset)
+        for trap in self.nearby_traps:
+            trap.Render(self.display, offset)
 
