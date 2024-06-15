@@ -6,6 +6,7 @@ from scripts.traps.top_push_trap import Top_Push_Trap
 from scripts.environment.lava import Lava
 from scripts.environment.water import Water
 from scripts.traps.fire_trap import Fire_Trap
+import math
 
 
 
@@ -56,10 +57,20 @@ class Trap_Handler:
     def Update(self):
         for trap in self.traps:
             trap.Update()
-            trap.Animation_Update()
+            # trap.Animation_Update()
+
+    def find_nearby_traps(self, player_pos, max_distance):
+        nearby_traps = []
+        for trap in self.traps:  # Assuming self.traps is a list of traps
+            # Calculate the Euclidean distance
+            distance = math.sqrt((player_pos[0] - trap.pos[0]) ** 2 + (player_pos[1] - trap.pos[1]) ** 2)
+            if distance < max_distance:
+                nearby_traps.append(trap)
+        return nearby_traps
             
 
     def Render(self, offset = (0,0)):
-        for trap in self.traps:
-            trap.Render(self.display, offset)
+        pass
+        # for trap in self.traps:
+        #     trap.Render(self.display, offset)
 

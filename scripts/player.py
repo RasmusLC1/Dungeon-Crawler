@@ -3,6 +3,7 @@ from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile import Projectile
 from scripts.weapon_generator import Weapon_Generator, Weapon
+from scripts.traps.trap_handler import Trap_Handler
 
 import random
 import math
@@ -25,6 +26,7 @@ class Player(PhysicsEntity):
         self.shootin_cooldown = 0
         
         self.weapons = []
+        self.nearby_traps = []
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().update(tilemap, movement=movement)
@@ -43,6 +45,13 @@ class Player(PhysicsEntity):
 
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
+
+        self.Update_Traps()
+    
+    def Update_Traps(self):
+        self.nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, self.game.screen_width)
+        for trap in self.nearby_traps:
+            trap.Animation_Update()
             
     def Dashing_Update(self, offset=(0, 0)):
         if abs(self.dashing) in {60, 50}:
@@ -125,6 +134,8 @@ class Player(PhysicsEntity):
 
 
     def render(self, surf, offset=(0, 0)):
+        for trap in self.nearby_traps:
+            trap.Render(surf, offset)
         if abs(self.dashing) <= 50:
             super().render(surf, offset=offset)
         
@@ -134,5 +145,4 @@ class Player(PhysicsEntity):
         else:
             surf.blit(self.game.assets[self.active_weapon], (self.rect().centerx - offset[0], self.rect().centery -offset[1]))
 
-        
         
