@@ -77,9 +77,9 @@ class Asset_Loader:
             'shallow_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
             'medium_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
             'deep_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
-            'shallow_ice' : get_tiles_from_sheet('environment/water.png', 2, 0, 112, 0, 16, 16),
-            'medium_ice' : get_tiles_from_sheet('environment/water.png', 2, 0, 112, 16, 16, 16),
-            'deep_ice' : get_tiles_from_sheet('environment/water.png', 2, 0, 112, 32, 16, 16),            
+            'shallow_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 0, 16, 16),
+            'medium_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 16, 16, 16),
+            'deep_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 32, 16, 16),            
         }
         self.assets.update(Environment_assets)
             

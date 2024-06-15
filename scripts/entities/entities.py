@@ -4,6 +4,7 @@ import pygame
 
 from scripts.particle import Particle
 from scripts.traps.trap_handler import Trap_Handler
+from scripts.entities.effects import Status_Effect_Handler
 
 
 class PhysicsEntity:
@@ -25,9 +26,8 @@ class PhysicsEntity:
         self.anim_offset = (-3, -3)
         self.flip = [False, False]
         self.set_action('idle')
-        self.frame_movement = (0, 0)
-        self.last_frame_movement = (0, 0)
-        self.last_movement = [0, 0, 0, 0]
+        self.frame_movement = (0.0, 0.0)
+        self.last_frame_movement = (0.0, 0.0)
 
         # Status Effects
         self.is_on_fire = 0
@@ -35,12 +35,17 @@ class PhysicsEntity:
         self.fire_animation = 0
         self.fire_animation_cooldown = 0
 
-        self.poisoned = 1
+        self.poisoned = 0
         self.poisoned_cooldown = 0
         self.poison_animation = 0
         self.poison_animation_cooldown = 0
 
-        self.is_on_ice = 0  
+        self.is_on_ice = 0
+        self.frozen = 0
+        self.frozen_cooldown = 0
+        self.frozen_animation = 0
+
+        self.status_effects = Status_Effect_Handler(self)
     
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -54,14 +59,13 @@ class PhysicsEntity:
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         
         self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
-        self.Update_Traps()
         self.Update_Status_Effects()
+        self.Update_Traps()
   
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
             
         self.animation.update()
-        self.friction = 2
 
         self.Movement(movement, tilemap)
 
@@ -98,9 +102,10 @@ class PhysicsEntity:
         if movement[1] < 0:
             self.flip[1] = False
         if movement[1] > 0:
-            self.flip[1] = True            
+            self.flip[1] = True
+        self.last_frame_movement = self.frame_movement
+         
             
-        self.last_movement = movement
 
     def Update_Traps(self):
         self.nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, 20)
@@ -125,73 +130,33 @@ class PhysicsEntity:
     def Push(self, x_direction, y_direction):
         self.pos[0] += x_direction
         self.pos[1] += y_direction
-        print("PUSHED")
-
-    def Update_Status_Effects(self):
-        self.OnFire()
-        self.Snare()
-        self.Poisoned()
-
-    def Set_Snare(self, snare_time):
-        self.snared = snare_time
-        print("SNARED")
 
     def On_Ice(self):
-        if self.is_on_ice:
-            self.frame_movement = self.last_frame_movement
-            self.is_on_ice -= 1
-        else:
-            self.last_frame_movement = self.frame_movement
+        if not self.is_on_ice:
             self.is_on_ice = 10
+        else:
+            self.is_on_ice -= 1
+            self.frame_movement = self.last_frame_movement 
 
-    def Snare(self):
-        if self.snared:
-            self.snared -= 1
-            self.frame_movement = (0, 0)
+    def Update_Status_Effects(self):
+        self.friction = 2
+        self.status_effects.OnFire()
+        self.status_effects.Snare()
+        self.status_effects.Poisoned()
+        self.status_effects.Frozen()
+    
+    def Set_Snare(self, snare_time):
+        self.snared = snare_time
+    
+    def Set_Poisoned(self, poisoned):
+        self.poisoned = max(random.randint(poisoned, poisoned * 2), self.poisoned)
+            
+    def Set_Frozen(self, freeze):
+        self.frozen = max(random.randint(freeze, freeze * 2), self.frozen)
 
     def Set_On_Fire(self, fire_time):
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
 
-    def OnFire(self):
-        if self.fire_cooldown:
-            self.fire_cooldown -= 1
-        elif self.is_on_fire:
-                damage = random.randint(1, 3)
-                self.Damage_Taken(damage)
-                self.is_on_fire -= 1
-                self.fire_cooldown = random.randint(30, 50)
-
-        if self.fire_animation_cooldown:
-            self.fire_animation_cooldown -= 1
-        else:
-            self.fire_animation_cooldown = 15
-            if self.fire_animation >= 7:
-                self.fire_animation = 0
-            else:
-                self.fire_animation += 1
-
-    def Set_Poisoned(self, poisoned):
-        self.poisoned = max(random.randint(poisoned, poisoned * 2), self.poisoned)
-
-    def Poisoned(self):
-        if self.poisoned_cooldown:
-            self.poisoned_cooldown -= 1
-
-        if not self.poisoned_cooldown and self.poisoned > 1:
-            self.Damage_Taken(self.poisoned)
-            self.poisoned_cooldown = random.randint(50, 70)
-            self.poisoned -= 1
-        self.Slow_Down(self.poisoned)
-
-        if self.poison_animation_cooldown:
-            self.poison_animation_cooldown -= 1
-        else:
-            self.poison_animation_cooldown = 30
-            if self.poison_animation >= 2:
-                self.poison_animation = 0
-            else:
-                self.poison_animation += 1
-    
     def Slow_Down(self, effect):
         self.friction = max(2, effect)
 
@@ -199,15 +164,7 @@ class PhysicsEntity:
             
     def render(self, surf, offset=(0, 0)):
         surf.blit(pygame.transform.flip(self.animation.img(), self.flip[0], self.flip[1]), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-        if self.is_on_fire:
-            fire_image = self.game.assets['fire'][self.fire_animation].convert_alpha()
-            # Set the opacity to 70%
-            fire_image.set_alpha(179)
-            surf.blit(pygame.transform.flip(fire_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + 5))
-        if self.poisoned > 1:
-            poison_image = self.game.assets['poison'][self.poison_animation].convert_alpha()
-            # Set the opacity to 70%
-            poison_image.set_alpha(179)
-            poison_image = pygame.transform.scale(poison_image, (12, 12))
-            surf.blit(pygame.transform.flip(poison_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + 5))
+        self.status_effects.render_fire(self.game, surf, offset)
+        self.status_effects.render_poison(self.game, surf, offset)
+
             

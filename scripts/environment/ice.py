@@ -7,7 +7,7 @@ import pygame
 class Ice(Trap):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type)
-        self.animation = random.randint(0, 2)
+        self.animation = random.randint(0, 1)
 
     def Update(self, entity):
         if self.rect().colliderect(entity.rect()):
