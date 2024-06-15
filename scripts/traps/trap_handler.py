@@ -5,6 +5,7 @@ from scripts.traps.spike_pit import Spike_Pit
 from scripts.traps.top_push_trap import Top_Push_Trap
 from scripts.environment.lava import Lava
 from scripts.environment.water import Water
+from scripts.environment.ice import Ice
 from scripts.traps.fire_trap import Fire_Trap
 import math
 
@@ -51,6 +52,15 @@ class Trap_Handler:
 
         for trap in self.tilemap.extract([('deep_water', 0)], True):
             self.traps.append(Water(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
+
+        for trap in self.tilemap.extract([('shallow_ice', 0)], True):
+            self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
+
+        for trap in self.tilemap.extract([('medium_ice', 0)], True):
+            self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
+
+        for trap in self.tilemap.extract([('deep_ice', 0)], True):
+            self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
         for trap in self.tilemap.extract([('Fire_Trap', 0)]):
             self.traps.append(Fire_Trap(self, trap['pos'], (29, 22), trap['type']))

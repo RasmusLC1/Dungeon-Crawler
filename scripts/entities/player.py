@@ -1,7 +1,7 @@
-from scripts.entities import PhysicsEntity
+from scripts.entities.entities import PhysicsEntity
 from scripts.particle import Particle
 from scripts.spark import Spark
-from scripts.projectile import Projectile
+from scripts.projectile.projectile import Projectile
 from scripts.weapon_generator import Weapon_Generator, Weapon
 
 import random

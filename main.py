@@ -6,10 +6,10 @@ import pygame
 from scripts.utils import load_image, load_images, Animation
 from scripts.asset_loader import Asset_Loader
 from scripts.keyboard import Keyboard_Handler
-from scripts.player import Player
+from scripts.entities.player import Player
 from scripts.tilemap import Tilemap
 from scripts.particle_handler import Particle_Handler
-from scripts.projectile_handler import Projectile_Handler
+from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar

@@ -3,12 +3,16 @@ from scripts.utils import load_image, load_images, Animation, get_tiles_from_she
 
 class Asset_Loader:
     def Run_All(self):
+        Asset_Loader.Asset_Background_List(self)
         Asset_Loader.Asset_Tile_List(self)
         Asset_Loader.Asset_Trap_List(self)
         Asset_Loader.Asset_Effect_List(self)
         Asset_Loader.Asset_Entities_List(self)
         Asset_Loader.Asset_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
+    def Asset_Background_List(self):
+        background_assets = {'background': load_image('background.png'),}
+        self.assets.update(background_assets)
 
     def Asset_Tile_List(self):
         tiles_assets = {
@@ -22,7 +26,6 @@ class Asset_Loader:
             'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
             'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
             'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 16, 16, 16, 16),
-            'background': load_image('background.png'),
         }
         self.assets.update(tiles_assets)
 
@@ -74,6 +77,9 @@ class Asset_Loader:
             'shallow_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
             'medium_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
             'deep_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
+            'shallow_ice' : get_tiles_from_sheet('environment/water.png', 2, 0, 112, 0, 16, 16),
+            'medium_ice' : get_tiles_from_sheet('environment/water.png', 2, 0, 112, 16, 16, 16),
+            'deep_ice' : get_tiles_from_sheet('environment/water.png', 2, 0, 112, 32, 16, 16),            
         }
         self.assets.update(Environment_assets)
             

@@ -13,12 +13,12 @@ class PhysicsEntity:
         self.pos = list(pos)
         self.size = size
         self.velocity = [0, 0, 0, 0]
+        self.friction = 2
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.health = 100
         self.max_health = self.health
         self.snared = 0
-        self.slow_down = 1
         self.nearby_traps = []
         
         self.action = ''
@@ -26,6 +26,7 @@ class PhysicsEntity:
         self.flip = [False, False]
         self.set_action('idle')
         self.frame_movement = (0, 0)
+        self.last_frame_movement = (0, 0)
         self.last_movement = [0, 0, 0, 0]
 
         # Status Effects
@@ -39,7 +40,7 @@ class PhysicsEntity:
         self.poison_animation = 0
         self.poison_animation_cooldown = 0
 
-        
+        self.is_on_ice = 0  
     
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -52,21 +53,17 @@ class PhysicsEntity:
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         
-
-        
-        
-        self.frame_movement = (movement[0]*2/self.slow_down + self.velocity[0], movement[1]*2/self.slow_down + self.velocity[1])
+        self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
+        self.Update_Traps()
         self.Update_Status_Effects()
-        self.Movement(movement, tilemap)
-        
-            
-        
+  
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
             
         self.animation.update()
-        self.Update_Traps()
+        self.friction = 2
 
+        self.Movement(movement, tilemap)
 
     def Movement(self, movement, tilemap):
         self.pos[0] += self.frame_movement[0]
@@ -125,8 +122,6 @@ class PhysicsEntity:
             self.health = self.max_health
             return True            
 
-
-
     def Push(self, x_direction, y_direction):
         self.pos[0] += x_direction
         self.pos[1] += y_direction
@@ -140,6 +135,14 @@ class PhysicsEntity:
     def Set_Snare(self, snare_time):
         self.snared = snare_time
         print("SNARED")
+
+    def On_Ice(self):
+        if self.is_on_ice:
+            self.frame_movement = self.last_frame_movement
+            self.is_on_ice -= 1
+        else:
+            self.last_frame_movement = self.frame_movement
+            self.is_on_ice = 10
 
     def Snare(self):
         if self.snared:
@@ -190,7 +193,7 @@ class PhysicsEntity:
                 self.poison_animation += 1
     
     def Slow_Down(self, effect):
-        self.slow_down = max(1, effect)
+        self.friction = max(2, effect)
 
 
             
