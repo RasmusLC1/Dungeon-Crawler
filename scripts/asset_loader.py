@@ -8,7 +8,7 @@ class Asset_Loader:
         Asset_Loader.Asset_Trap_List(self)
         Asset_Loader.Asset_Effect_List(self)
         Asset_Loader.Asset_Entities_List(self)
-        Asset_Loader.Asset_Objects_List(self)
+        Asset_Loader.Asset_Interative_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
     def Asset_Background_List(self):
         background_assets = {'background': load_image('background.png'),}
@@ -55,19 +55,24 @@ class Asset_Loader:
     
     def Asset_Entities_List(self):
         entities_assets = {
-            'player': load_image('entities/player.png'),
-            'enemy/idle': Animation(load_images('entities/enemy/idle'), img_dur=6),
-            'enemy/run': Animation(load_images('entities/enemy/run'), img_dur=4),
-            'player/idle': Animation(load_images('entities/player/idle'), img_dur=6),
-            'player/run': Animation(load_images('entities/player/run'), img_dur=4),
+            'player_down': get_tiles_from_sheet('entities/player.png', 1, 0, 0, 0, 20, 30),
+            'player_side': get_tiles_from_sheet('entities/player.png', 1, 0, 40, 0, 20, 30),
+            'player_up': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 0, 20, 30),
+            
             'gun': load_image('gun.png'),
             'projectile': load_image('projectile.png'),
         }
         self.assets.update(entities_assets)
 
-    def Asset_Objects_List(self):
+    def Asset_Interative_Objects_List(self):
         Objects_assets = {
             'Chest' : get_tiles_from_sheet('chest.png', 8, 0, 0, 0, 16, 16),
+        }
+        self.assets.update(Objects_assets)
+
+
+    def Asset_Objects_List(self):
+        Objects_assets = {
             'spawners': load_images('tiles/spawners'),    
         }
         self.assets.update(Objects_assets)

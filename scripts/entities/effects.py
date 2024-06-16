@@ -67,7 +67,7 @@ class Status_Effect_Handler:
             self.entity.frozen_cooldown -= 1
 
         if not self.entity.frozen_cooldown:
-            self.entity.frozen_cooldown = random.randint(100, 120)
+            self.entity.frozen_cooldown = random.randint(160, 200)
             self.entity.frozen -= 1
         self.entity.Slow_Down(self.entity.frozen)
         self.Frozen_Animation()

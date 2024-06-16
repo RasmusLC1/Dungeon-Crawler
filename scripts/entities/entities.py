@@ -17,6 +17,8 @@ class PhysicsEntity:
         self.friction = 2
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
+        self.animation_state = 'up'
+
         self.health = 100
         self.max_health = self.health
         self.snared = 0
@@ -25,7 +27,7 @@ class PhysicsEntity:
         self.action = ''
         self.anim_offset = (-3, -3)
         self.flip = [False, False]
-        self.set_action('idle')
+        self.set_action('up')
         self.frame_movement = (0.0, 0.0)
         self.last_frame_movement = (0.0, 0.0)
 
@@ -41,7 +43,7 @@ class PhysicsEntity:
         self.poison_animation_cooldown = 0
 
         self.is_on_ice = 0
-        self.frozen = 5
+        self.frozen = 0 
         self.frozen_cooldown = 0
         self.frozen_animation = 0
         self.frozen_animation_cooldown = 0
@@ -54,7 +56,8 @@ class PhysicsEntity:
     def set_action(self, action):
         if action != self.action:
             self.action = action
-            self.animation = self.game.assets[self.type + '/' + self.action].copy()
+            self.animation = self.type + '_' + self.action
+            print(self.animation)
         
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
@@ -66,7 +69,6 @@ class PhysicsEntity:
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
             
-        self.animation.update()
 
         self.Movement(movement, tilemap)
 
@@ -97,13 +99,18 @@ class PhysicsEntity:
         
                 
         if movement[0] > 0:
-            self.flip[0] = False
-        if movement[0] < 0:
             self.flip[0] = True
+            self.set_action('side')
+        if movement[0] < 0:
+            self.flip[0] = False
+            self.set_action('side')
         if movement[1] < 0:
+            self.set_action('up')
             self.flip[1] = False
         if movement[1] > 0:
             self.flip[1] = True
+            self.set_action('down')
+
         self.last_frame_movement = self.frame_movement
          
             
@@ -163,9 +170,10 @@ class PhysicsEntity:
 
             
     def render(self, surf, offset=(0, 0)):
-        surf.blit(pygame.transform.flip(self.animation.img(), self.flip[0], self.flip[1]), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
+        entity_image = self.game.assets[self.animation][0]
+        entity_image = pygame.transform.scale(entity_image, (16, 23))
+
+        surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)
-
-            
