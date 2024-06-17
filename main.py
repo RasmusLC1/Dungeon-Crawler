@@ -75,6 +75,8 @@ class Game:
 
             for enemy in self.enemies:
                 enemy.update(self.tilemap)
+                if enemy.health <= 0:
+                    self.enemies.remove(enemy)
 
             Coins.Update(self)
     

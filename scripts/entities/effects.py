@@ -98,7 +98,7 @@ class Status_Effect_Handler:
         if self.entity.wet_animation_cooldown:
             self.entity.wet_animation_cooldown -= 1
         else:
-            self.entity.wet_animation_cooldown = 4
+            self.entity.wet_animation_cooldown = 10
             if self.entity.wet_animation >= 10:
                 self.entity.wet_animation = 0
             else:

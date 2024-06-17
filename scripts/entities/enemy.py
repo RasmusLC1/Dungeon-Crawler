@@ -8,23 +8,20 @@ class Enemy(PhysicsEntity):
         super().__init__(game, type, pos, size)
         self.animation = 'decrepit_bones'
         self.walking = 0
+        self.health = 30
         self.movement_cooldown = 0
-
+        self.direction = (0,0,0,0)
     
     def update(self, tilemap, movement=(0, 0)):
-        if self.walking:
-            if tilemap.solid_check((self.rect().centerx + (-7 if self.flip[0] else 7), self.pos[1] + 23)):
-                if (self.collisions['right'] or self.collisions['left']):
-                    self.flip[0] = not self.flip[0]
-                else:
-                    movement = (movement[0] - 0.5 if self.flip[0] else 0.5, movement[1])
-            else:
-                self.flip[0] = not self.flip[0]
-
+        movement = self.direction
+        if self.movement_cooldown:
+            self.movement_cooldown -= 1
+        else:
+            self.direction = (random.randint(-1, 1) / 10,random.randint(-1, 1) / 10)
+            self.movement_cooldown = 100
             self.walking = max(0, self.walking-1)
-            
-        elif random.random() < 0.01:
-            self.walking = random.randint(30, 120)
+        # else: 
+        #     self.walking = random.randint(30, 120)
         
         super().update(tilemap, movement = movement)
         self.animation = 'decrepit_bones'
