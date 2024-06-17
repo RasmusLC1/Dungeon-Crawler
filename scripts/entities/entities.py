@@ -48,6 +48,11 @@ class PhysicsEntity:
         self.frozen_animation = 0
         self.frozen_animation_cooldown = 0
 
+        self.wet = 0 
+        self.wet_cooldown = 0
+        self.wet_animation = 0
+        self.wet_animation_cooldown = 0
+
         self.status_effects = Status_Effect_Handler(self)
     
     def rect(self):
@@ -151,6 +156,7 @@ class PhysicsEntity:
         self.status_effects.Snare()
         self.status_effects.Poisoned()
         self.status_effects.Frozen()
+        self.status_effects.Wet()
     
     def Set_Snare(self, snare_time):
         self.snared = snare_time
@@ -159,9 +165,18 @@ class PhysicsEntity:
         self.poisoned =  max(random.randint(2, poisoned), self.poisoned)
             
     def Set_Frozen(self, freeze):
+        if self.wet:
+            freeze *= 2
         self.frozen = max(3, freeze)
 
+    def Set_Wet(self, wet):
+        if self.is_on_fire:
+            self.is_on_fire = 0
+        self.wet = max(2, wet)
+
     def Set_On_Fire(self, fire_time):
+        if self.wet:
+            return
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
 
     def Slow_Down(self, effect):
@@ -177,3 +192,4 @@ class PhysicsEntity:
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)
+        self.status_effects.render_wet(self.game, surf, offset)

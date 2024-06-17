@@ -50,6 +50,7 @@ class Asset_Loader:
             'fire': get_tiles_from_sheet('particles/effects/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16),
             'poison': get_tiles_from_sheet('particles/effects/poison.png', 2, 0, 0, 0, 16, 16),
             'frozen': get_tiles_from_sheet('particles/effects/frozen.png', 2, 0, 0, 0, 16, 16),
+            'wet': get_tiles_from_sheet('particles/effects/wet.png', 1, 0, 0, 0, 13, 17),
         }
         self.assets.update(effect_assets)
     

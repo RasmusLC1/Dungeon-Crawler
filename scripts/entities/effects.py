@@ -81,6 +81,29 @@ class Status_Effect_Handler:
                 self.entity.frozen_animation = 0
             else:
                 self.entity.frozen_animation += 1
+
+    def Wet(self):
+        print(self.entity.wet)
+        if self.entity.wet <= 1:
+            self.entity.wet = 0
+            return
+        elif self.entity.wet_cooldown:
+            self.entity.wet_cooldown -= 1
+
+        if not self.entity.wet_cooldown:
+            self.entity.wet_cooldown = random.randint(160, 200)
+            self.entity.wet -= 1
+        self.Wet_Animation()
+
+    def Wet_Animation(self):
+        if self.entity.wet_animation_cooldown:
+            self.entity.wet_animation_cooldown -= 1
+        else:
+            self.entity.wet_animation_cooldown = 4
+            if self.entity.wet_animation >= 10:
+                self.entity.wet_animation = 0
+            else:
+                self.entity.wet_animation += 1
     
     def render_fire(self, game, surf, offset=(0, 0)):
         if self.entity.is_on_fire:
@@ -104,3 +127,11 @@ class Status_Effect_Handler:
             frozen_image.set_alpha(179)
             frozen_image = pygame.transform.scale(frozen_image, (12, 12))
             surf.blit(pygame.transform.flip(frozen_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + 5))
+
+    def render_wet(self, game, surf, offset=(0, 0)):
+        if self.entity.wet:
+            wet_image = game.assets['wet'][0].convert_alpha()
+            # Set the opacity to 70%
+            wet_image.set_alpha(179)
+            wet_image = pygame.transform.scale(wet_image, (10, 10))
+            surf.blit(pygame.transform.flip(wet_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + self.entity.wet_animation + 3))

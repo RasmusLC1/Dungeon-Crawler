@@ -17,6 +17,7 @@ class Water(Trap):
                 entity.Slow_Down(8)
             elif self.type == 'deep_water':
                 entity.Slow_Down(16)
+        entity.Set_Wet(2)
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

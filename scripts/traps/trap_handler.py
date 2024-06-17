@@ -35,7 +35,7 @@ class Trap_Handler:
 
         # Bear Trap initialisation
         for trap in self.tilemap.extract([('BearTrap', 0)]):
-            self.traps.append(Bear_Trap(self, trap['pos'], (10, 5), trap['type']))
+            self.traps.append(Bear_Trap(self, trap['pos'], (16, 16), trap['type']))
 
         # Spike pit initialisation
         for trap in self.tilemap.extract([('PitTrap', 0)], True):
