@@ -7,7 +7,7 @@ BASE_IMG_PATH = 'data/images/'
 # Load a single PNG
 def load_image(path):
     img = pygame.image.load(BASE_IMG_PATH + path).convert()
-    img.set_colorkey((0, 0, 0))
+    img.set_colorkey((255,255,255))
     return img
 
 # Load all PNGs in a path

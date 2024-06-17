@@ -27,7 +27,7 @@ class PhysicsEntity:
         self.action = ''
         self.anim_offset = (-3, -3)
         self.flip = [False, False]
-        self.set_action('up')
+        self.set_action('')
         self.frame_movement = (0.0, 0.0)
         self.last_frame_movement = (0.0, 0.0)
 
@@ -62,7 +62,6 @@ class PhysicsEntity:
         if action != self.action:
             self.action = action
             self.animation = self.type + '_' + self.action
-            print(self.animation)
         
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
@@ -127,7 +126,6 @@ class PhysicsEntity:
 
     def Damage_Taken(self, damage):
         self.health -= damage
-        print(self.health)
 
     def Healing(self, healing):
         if self.health + healing < self.max_health:
@@ -167,11 +165,14 @@ class PhysicsEntity:
     def Set_Frozen(self, freeze):
         if self.wet:
             freeze *= 2
+            self.wet = 0
         self.frozen = max(3, freeze)
 
     def Set_Wet(self, wet):
         if self.is_on_fire:
             self.is_on_fire = 0
+        if self.frozen:
+            self.frozen -= 1
         self.wet = max(2, wet)
 
     def Set_On_Fire(self, fire_time):

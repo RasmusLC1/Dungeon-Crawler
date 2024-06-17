@@ -23,6 +23,7 @@ class Editor:
         Asset_Loader.Asset_Tile_List(self)
         Asset_Loader.Asset_Trap_List(self)
         Asset_Loader.Asset_Objects_List(self)
+        Asset_Loader.Asset_Interative_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
         
         

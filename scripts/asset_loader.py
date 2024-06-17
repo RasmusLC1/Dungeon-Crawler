@@ -10,6 +10,7 @@ class Asset_Loader:
         Asset_Loader.Asset_Entities_List(self)
         Asset_Loader.Asset_Interative_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
+        Asset_Loader.Asset_Objects_List(self)
     def Asset_Background_List(self):
         background_assets = {'background': load_image('background.png'),}
         self.assets.update(background_assets)
@@ -59,6 +60,7 @@ class Asset_Loader:
             'player_down': get_tiles_from_sheet('entities/player.png', 1, 0, 0, 0, 20, 30),
             'player_side': get_tiles_from_sheet('entities/player.png', 1, 0, 40, 0, 20, 30),
             'player_up': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 0, 20, 30),
+            'decrepit_bones': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 0, 16, 16),
             
             'gun': load_image('gun.png'),
             'projectile': load_image('projectile.png'),

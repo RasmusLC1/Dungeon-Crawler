@@ -15,6 +15,7 @@ from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.coins import Coins
 from scripts.Chest.Chest_handler import Chest_Handler
+from scripts.entities.enemy import Enemy
 
 
 class Game:
@@ -50,12 +51,20 @@ class Game:
         self.sparks = []
         self.scroll = [0, 0]
         self.projectiles = []
+        self.enemies = []
+
+        for enemy in self.tilemap.extract([('spawners', 1)]):
+            self.enemies.append(Enemy(self, enemy['pos'],  (self.assets[enemy['type']][0].get_width(), self.assets[enemy['type']][0].get_height()), 'DecrepitBones'))
+            pass
+
+
         Trap_Handler.__init__(self)
         Chest_Handler.__init__(self)
-
+ 
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
+        
 
     def Update(self, render_scroll):
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
@@ -63,6 +72,9 @@ class Game:
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             Trap_Handler.Update(self)
             Chest_Handler.Update(self)
+
+            for enemy in self.enemies:
+                enemy.update(self.tilemap)
 
             Coins.Update(self)
     
@@ -80,7 +92,8 @@ class Game:
         Ammo_Bar.Ammo_Bar(self)
         Coins.Render(self)
 
-        
+        for enemy in self.enemies:
+            enemy.render(self.display, offset=render_scroll)
         
 
 

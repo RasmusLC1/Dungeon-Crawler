@@ -83,7 +83,6 @@ class Status_Effect_Handler:
                 self.entity.frozen_animation += 1
 
     def Wet(self):
-        print(self.entity.wet)
         if self.entity.wet <= 1:
             self.entity.wet = 0
             return

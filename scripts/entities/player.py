@@ -20,6 +20,8 @@ class Player(PhysicsEntity):
         self.max_ammo = 30
         self.ammo = 10
         self.active_weapon = 'gun'
+        self.set_action('up')
+
 
         self.coins = 0
         self.shootin_cooldown = 0

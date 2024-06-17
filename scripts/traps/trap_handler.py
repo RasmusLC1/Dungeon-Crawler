@@ -16,10 +16,12 @@ class Trap_Handler:
         self.traps = []
         self.nearby_traps = []
         self.environment = []
+
         # Spawner initialisation
-        for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
-            if spawner['variant'] == 0:
-                self.player.pos = spawner['pos']
+        for spawner in self.tilemap.extract([('spawners', 0)]):
+            self.player.pos = spawner['pos']
+
+        
 
         # Spike initialisation
         for trap in self.tilemap.extract([('spike', 0)], True):

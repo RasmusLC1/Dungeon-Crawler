@@ -29,13 +29,12 @@ class Tilemap:
 
     def extract(self, id_pairs, keep=False):
         matches = []
-        # Offgrid tiles
         for tile in self.offgrid_tiles.copy():
             if (tile['type'], tile['variant']) in id_pairs:
                 matches.append(tile.copy())
                 if not keep:
                     self.offgrid_tiles.remove(tile)
-        # On grid tiles            
+                    
         for loc in self.tilemap:
             tile = self.tilemap[loc]
             if (tile['type'], tile['variant']) in id_pairs:
@@ -45,6 +44,7 @@ class Tilemap:
                 matches[-1]['pos'][1] *= self.tile_size
                 if not keep:
                     del self.tilemap[loc]
+        
         return matches
     
     # Get surrounding tiles
