@@ -1,6 +1,7 @@
 import sys
 
 import pygame
+import json
 
 
 from scripts.utils import load_image, load_images, Animation
@@ -17,11 +18,14 @@ from scripts.interface.coins import Coins
 from scripts.Chest.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 
+import numpy as np
+
 
 class Game:
     def __init__(self):
         pygame.init()
         self.render_scale = 4
+        
         pygame.display.set_caption('Dungeons of Madness')
         self.screen_width = 1280
         self.screen_height = 960
@@ -42,11 +46,39 @@ class Game:
         self.load_level(self.level)
         self.scroll = [0, 0]
         self.mpos = 0
-   
+
+        rows = 100  # Number of rows
+        cols = 100  # Number of columns
+
+        # Create a 2D array with all elements initialized to None
+        self.test_array = np.zeros((rows, cols), dtype=int)
+
+    def tilemap_2d(self):
+        for loc in self.tilemap:
+            tile = self.tilemap[loc]
+            print(tile['type'])
 
     def load_level(self, map_id):
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
-        
+        tile_map = []  # This will be a list of lists, each representing a row.
+
+        for x in range(20):
+            row = []  # Create an empty row for each new line of x
+            for y in range(20):
+                tile = self.tilemap.extract_On_Location([x, y])
+                if not tile:
+                    row.append(None)  # Append None or a placeholder if no tile is found
+                else:
+                    row.append(tile)  # Append the tile itself
+            tile_map.append(row)  # Append the completed row to the tile_map
+
+            if not any(row):  # If the row is full of Nones or empty, stop adding new rows
+                break
+
+        # Printing the map
+        for row in tile_map:
+            print(row)
+            
         self.particles = []
         self.sparks = []
         self.scroll = [0, 0]
@@ -64,7 +96,6 @@ class Game:
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
-        
 
     def Update(self, render_scroll):
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)

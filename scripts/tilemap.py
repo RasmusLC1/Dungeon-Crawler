@@ -47,6 +47,18 @@ class Tilemap:
         
         return matches
     
+    def extract_On_Location(self, Location):
+        matches = ''
+        for tile in self.offgrid_tiles.copy():
+            if (tile['pos'])== Location:
+                matches = tile['type']
+                    
+        for loc in self.tilemap:
+            tile = self.tilemap[loc]
+            if (tile['pos']) == Location:
+                matches = tile['type']
+        return matches
+    
     # Get surrounding tiles
     def tiles_around(self, pos):
         tiles = []
@@ -106,6 +118,8 @@ class Tilemap:
         grid_x = (x // 10 + y // 5) // 2
         grid_y = (y // 5 - x // 10) // 2
         return int(grid_x), int(grid_y)
+    
+    
 
     def render(self, surf, offset=(0, 0)):
         for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
@@ -120,3 +134,5 @@ class Tilemap:
 
         for tile in self.offgrid_tiles:
             surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1]))
+
+    

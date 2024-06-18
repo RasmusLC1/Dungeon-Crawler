@@ -37,7 +37,7 @@ class Asset_Loader:
             'BearTrap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
             'PitTrap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16),
             'TopPush' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16),
-            'Fire_Trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 32, 40),
+            'Fire_Trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 16, 20),
         }
 
         self.assets.update(trap_assets)
