@@ -103,10 +103,10 @@ class PhysicsEntity:
         
                 
         if movement[0] > 0:
-            self.flip[0] = True
+            self.flip[0] = False
             self.set_action('side')
         if movement[0] < 0:
-            self.flip[0] = False
+            self.flip[0] = True
             self.set_action('side')
         if movement[1] < 0:
             self.set_action('up')

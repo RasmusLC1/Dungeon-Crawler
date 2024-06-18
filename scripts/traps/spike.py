@@ -19,6 +19,7 @@ class Spike(Trap):
                     return
             entity.Damage_Taken(2)
             self.Cooldown = 100
+            
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

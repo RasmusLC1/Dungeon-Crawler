@@ -65,7 +65,7 @@ class Trap_Handler:
             self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
         for trap in self.tilemap.extract([('Fire_Trap', 0)]):
-            self.traps.append(Fire_Trap(self, trap['pos'], (29, 22), trap['type']))
+            self.traps.append(Fire_Trap(self, trap['pos'], (20, 20), trap['type']))
 
 
     def find_nearby_traps(self, player_pos, max_distance):
