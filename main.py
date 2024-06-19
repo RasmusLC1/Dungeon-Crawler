@@ -2,6 +2,7 @@ import sys
 
 import pygame
 import json
+import math
 
 
 from scripts.utils import load_image, load_images, Animation
@@ -63,10 +64,9 @@ class Game:
             line_count = sum(1 for line in file)
         return line_count
 
-    def load_level(self, map_id):
-        self.tilemap.load('data/maps/' + str(map_id) + '.json')
+    def Setup_Map(self):
         tile_map = []  # This will be a list of lists, each representing a row.
-        
+
         f = open('data/maps/0.json', 'r')
         map_data = json.load(f)
         f.close()
@@ -107,11 +107,25 @@ class Game:
             if not any(row):  # If the row is full of Nones or empty, stop adding new rows
                 break
             tile_map.append(row)
+        # Set traps in the tile_map
+        for trap in self.traps:
+            x_low = math.floor(trap.pos[0]//16) - min_x
+            y_low = math.floor(trap.pos[1]//16) - min_y
+            if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
+                tile_map[x_low][y_low] = 1
+
+
         transposed_map = [list(row) for row in zip(*tile_map)]
+
 
         # Printing the map
         for row in transposed_map:
             print(row)
+
+
+    def load_level(self, map_id):
+        self.tilemap.load('data/maps/' + str(map_id) + '.json')
+        
             
         self.particles = []
         self.sparks = []
@@ -130,6 +144,8 @@ class Game:
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
+        Game.Setup_Map(self)
+
 
     def Update(self, render_scroll):
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)

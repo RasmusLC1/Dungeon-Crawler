@@ -69,8 +69,7 @@ class Editor:
             else:
                 self.display.blit(current_tile_img, mpos)
             
-            offgrid_list = ['spawners', 'TopPush', 'Chest', ]
-            traps_list = ['BearTrap', 'Fire_Trap', 'spike_poison']
+            offgrid_list = ['spawners', 'TopPush', 'Chest', 'BearTrap', 'Fire_Trap', 'spike_poison']
 
 
             # Placing tiles on the grid

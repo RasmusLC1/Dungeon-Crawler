@@ -24,47 +24,47 @@ class Trap_Handler:
         
 
         # Spike initialisation
-        for trap in self.tilemap.extract([('spike', 0)], True):
+        for trap in self.tilemap.extract([('spike', 0)].copy(), True):
             self.traps.append(Spike(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
         
         # Spike initialisation
-        for trap in self.tilemap.extract([('spike_poison', 0)], True):
+        for trap in self.tilemap.extract([('spike_poison', 0)].copy(), True):
             self.traps.append(Spike_Poisoned(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
        
         # top pusher initialisation
-        for trap in self.tilemap.extract([('TopPush', 0)]):
+        for trap in self.tilemap.extract([('TopPush', 0)].copy()):
             self.traps.append(Top_Push_Trap(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
         # Bear Trap initialisation
-        for trap in self.tilemap.extract([('BearTrap', 0)]):
+        for trap in self.tilemap.extract([('BearTrap', 0)].copy()):
             self.traps.append(Bear_Trap(self, trap['pos'], (16, 16), trap['type']))
 
         # Spike pit initialisation
-        for trap in self.tilemap.extract([('PitTrap', 0)], True):
+        for trap in self.tilemap.extract([('PitTrap', 0)].copy(), True):
             self.traps.append(Spike_Pit(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('Lava', 0)], True):
+        for trap in self.tilemap.extract([('Lava', 0)].copy(), True):
             self.traps.append(Lava(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('shallow_water', 0)], True):
+        for trap in self.tilemap.extract([('shallow_water', 0)].copy(), True):
             self.traps.append(Water(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('medium_water', 0)], True):
+        for trap in self.tilemap.extract([('medium_water', 0)].copy(), True):
             self.traps.append(Water(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('deep_water', 0)], True):
+        for trap in self.tilemap.extract([('deep_water', 0)].copy(), True):
             self.traps.append(Water(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('shallow_ice', 0)], True):
+        for trap in self.tilemap.extract([('shallow_ice', 0)].copy(), True):
             self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('medium_ice', 0)], True):
+        for trap in self.tilemap.extract([('medium_ice', 0)].copy(), True):
             self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('deep_ice', 0)], True):
+        for trap in self.tilemap.extract([('deep_ice', 0)].copy(), True):
             self.traps.append(Ice(self, trap['pos'], (self.assets[trap['type']][0].get_width(), self.assets[trap['type']][0].get_height()), trap['type']))
 
-        for trap in self.tilemap.extract([('Fire_Trap', 0)]):
+        for trap in self.tilemap.extract([('Fire_Trap', 0)].copy()):
             self.traps.append(Fire_Trap(self, trap['pos'], (16, 16), trap['type']))
 
 
