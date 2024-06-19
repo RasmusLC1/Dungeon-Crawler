@@ -18,6 +18,7 @@ from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.coins import Coins
 from scripts.Chest.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
+from scripts.a_star import A_Star
 
 import numpy as np
 
@@ -64,63 +65,7 @@ class Game:
             line_count = sum(1 for line in file)
         return line_count
 
-    def Setup_Map(self):
-        tile_map = []  # This will be a list of lists, each representing a row.
-
-        f = open('data/maps/0.json', 'r')
-        map_data = json.load(f)
-        f.close()
-
-        # Assuming 'tilemap' is a dictionary with nested dictionaries
-        tilemap = map_data['tilemap']
-        min_x = 9999
-        max_x = -9999
-        min_y = 9999
-        max_y = -9999
-        for key, value in tilemap.items():
-            
-            pos_x = value['pos'][0]  # Extract the y value from the position
-            if pos_x < min_x:
-                min_x = pos_x
-            if pos_x > max_x:
-                max_x = pos_x
-
-            pos_y = value['pos'][1]  # Extract the y value from the position
-            if pos_y < min_y:
-                min_y = pos_y
-            if pos_y > max_y:
-                max_y = pos_y
-        print(min_x)
-        print(max_x)
-        print(min_y)
-        print(max_y)
-
-        for x in range(min_x, max_x+1):
-            row = []
-            for y in range(min_y, max_y+1):
-                tile = self.tilemap.extract_On_Location([x, y])
-                location = 1
-                if tile == 'Floor':
-                    location = 0
-                
-                row.append(location)
-            if not any(row):  # If the row is full of Nones or empty, stop adding new rows
-                break
-            tile_map.append(row)
-        # Set traps in the tile_map
-        for trap in self.traps:
-            x_low = math.floor(trap.pos[0]//16) - min_x
-            y_low = math.floor(trap.pos[1]//16) - min_y
-            if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
-                tile_map[x_low][y_low] = 1
-
-
-        transposed_map = [list(row) for row in zip(*tile_map)]
-
-
-        # Printing the map
-        for row in transposed_map:
-            print(row)
+    
 
 
     def load_level(self, map_id):
@@ -144,7 +89,9 @@ class Game:
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
-        Game.Setup_Map(self)
+        A_Star.Setup_Map(self)
+        A_Star.a_star_search(self, [2,2], [6, 12])
+
 
 
     def Update(self, render_scroll):

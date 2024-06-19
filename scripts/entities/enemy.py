@@ -1,6 +1,7 @@
 from scripts.entities.entities import PhysicsEntity
 import random
 import pygame
+from scripts.a_star import A_Star
 
 
 
@@ -19,6 +20,7 @@ class Enemy(PhysicsEntity):
         self.direction_y_holder = 0
     
     def update(self, tilemap, movement=(0, 0)):
+        
         
         if self.running:
             self.running -= 1
