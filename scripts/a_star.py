@@ -68,21 +68,21 @@ class A_Star:
             y_low = math.floor(trap.pos[1]//16) - self.min_y
             if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
                 tile_map[x_low][y_low] = 1
+                tile_map[x_low+1][y_low] = 1
+                tile_map[x_low-1][y_low] = 1
+                tile_map[x_low][y_low+1] = 1
+                tile_map[x_low][y_low-1] = 1
 
 
         self.map = [list(row) for row in zip(*tile_map)]
-        print("COLUMN AND ROW")
-        print(self.row, self.col)
+
         # Printing the map
         for row in self.map:
             print(row)
 
     # Check if a cell is valid (within the grid)
     def is_valid(self, row, col):
-        print("ROW AND SELF.ROW")
-        print(row, self.row)
-        print("COL AND SELF.COL")
-        print(col, self.col)
+        
         return (row >= 0) and (row < self.row) and (col >= 0) and (col < self.col)
 
     # Check if a cell is unblocked

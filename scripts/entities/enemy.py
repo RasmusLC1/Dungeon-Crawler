@@ -26,12 +26,31 @@ class Enemy(PhysicsEntity):
         self.des_y = 0
     
     def update(self, tilemap, movement=(0, 0)):
+        
+        self.Path_Finding()
+        movement = self.direction
+        
+        super().update(tilemap, movement = movement)
+        self.animation = 'decrepit_bones'
+        
+        
+
+        if abs(self.game.player.dashing) >= 50:
+            if self.rect().colliderect(self.game.player.rect()):
+                self.game.player.Damage_Taken(5)
+                return True
+        
+    def Path_Finding(self):
+        if (abs(self.pos[0]) - abs(self.game.player.pos[0]) < 40 and abs(self.pos[1]) - abs(self.game.player.pos[1]) < 40):
+            self.direction = pygame.math.Vector2((self.game.player.pos[0] - self.pos[0]), (self.game.player.pos[1] - self.pos[1]))
+            self.direction.normalize_ip()
+            self.direction[0] /= 4
+            self.direction[1] /= 4
+            print(self.direction)
+            return
         if not self.pathfinding_cooldown:
             self.path.clear()
-            self.src_x = round(self.pos[0] / 16) - self.game.min_x + 1
-            self.src_y = round(self.pos[1] / 16) - self.game.min_y + 1
-            self.des_x = round(self.game.player.pos[0] / 16) - self.game.min_x + 1
-            self.des_y = round(self.game.player.pos[1] / 16) - self.game.min_y + 1
+            self.Calculate_Position()
             
             A_Star.a_star_search(self.game, self, [self.src_y, self.src_x], [self.des_y, self.des_x])
             
@@ -39,7 +58,6 @@ class Enemy(PhysicsEntity):
         else:
             self.pathfinding_cooldown -= 1
         # Print the path
-        
         if self.path:
             i = 0
             target = (self.src_y, self.src_x)
@@ -48,8 +66,8 @@ class Enemy(PhysicsEntity):
                     target = self.path[i + 1]
                     break
             
-            direction_x = 0.1
-            direction_y = 0.1
+            direction_x = 0.1 
+            direction_y = 0.1 
             if (self.src_y, self.src_x) != (self.des_y, self.des_x):
                 print("NEXT POSITION IS")
                 print(target)
@@ -66,22 +84,17 @@ class Enemy(PhysicsEntity):
             else:
                 self.direction = (0,0)
             self.direction = pygame.math.Vector2(direction_x, direction_y)
+            return
         
         if not self.path:
             self.Moving_Random()
 
-        movement = self.direction
-
-        
-        super().update(tilemap, movement = movement)
-        self.animation = 'decrepit_bones'
-        
-        
-
-        if abs(self.game.player.dashing) >= 50:
-            if self.rect().colliderect(self.game.player.rect()):
-                self.game.player.Damage_Taken(5)
-                return True
+            
+    def Calculate_Position(self):
+        self.src_x = round(self.pos[0] / 16) - self.game.min_x 
+        self.src_y = round(self.pos[1] / 16) - self.game.min_y 
+        self.des_x = round(self.game.player.pos[0] / 16) - self.game.min_x 
+        self.des_y = round(self.game.player.pos[1] / 16) - self.game.min_y 
 
     def Moving_Random(self):
         if self.running:
