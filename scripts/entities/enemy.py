@@ -29,13 +29,12 @@ class Enemy(PhysicsEntity):
         if not self.pathfinding_cooldown:
             self.path.clear()
             self.src_x = round(self.pos[0] / 16) - self.game.min_x + 1
-            self.src_y = round(self.pos[1] / 16)-1 - self.game.min_y + 1
-            self.des_x = round(self.game.player.pos[0] / 16)-1 - self.game.min_x + 1
-            self.des_y = round(self.game.player.pos[1] / 16)-1 - self.game.min_y + 1
+            self.src_y = round(self.pos[1] / 16) - self.game.min_y + 1
+            self.des_x = round(self.game.player.pos[0] / 16) - self.game.min_x + 1
+            self.des_y = round(self.game.player.pos[1] / 16) - self.game.min_y + 1
             
             A_Star.a_star_search(self.game, self, [self.src_y, self.src_x], [self.des_y, self.des_x])
-            if self.path:
-                
+            
             self.pathfinding_cooldown = 100
         else:
             self.pathfinding_cooldown -= 1
@@ -52,7 +51,10 @@ class Enemy(PhysicsEntity):
             direction_x = 0.1
             direction_y = 0.1
             if (self.src_y, self.src_x) != (self.des_y, self.des_x):
-                
+                print("NEXT POSITION IS")
+                print(target)
+                print("X value")
+                print(self.src_x, self.src_y)
                 if target[1] == self.src_x:
                     direction_x = 0
                 elif target[1] < self.src_x:

@@ -46,14 +46,9 @@ class A_Star:
                 self.min_y = pos_y
             if pos_y > self.max_y:
                 self.max_y = pos_y
-        print(self.min_x)
-        print(self.max_x)
-        print(self.min_y)
-        print(self.max_y)
-        self.row = self.max_x - self.min_x + 1
-        self.col = self.max_y - self.min_y + 1
-        print("X LENGTH")
-        print(self.row, self.col)
+
+        self.row = self.max_y - self.min_y + 1
+        self.col = self.max_x - self.min_x + 1
         for x in range(self.min_x, self.max_x+1):
             row = []
             for y in range(self.min_y, self.max_y+1):
@@ -84,6 +79,10 @@ class A_Star:
 
     # Check if a cell is valid (within the grid)
     def is_valid(self, row, col):
+        print("ROW AND SELF.ROW")
+        print(row, self.row)
+        print("COL AND SELF.COL")
+        print(col, self.col)
         return (row >= 0) and (row < self.row) and (col >= 0) and (col < self.col)
 
     # Check if a cell is unblocked
@@ -126,6 +125,8 @@ class A_Star:
 
     # Implement the A* search algorithm
     def a_star_search(self, enemy, src, dest):
+        print("DESTINATION")
+        print(dest)
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
             print("Source or destination is invalid")
