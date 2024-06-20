@@ -88,6 +88,7 @@ class A_Star:
 
     # Check if a cell is unblocked
     def is_unblocked(self, row, col):
+        print(row, col)
         return self.map[row][col] == 0
 
     # Check if a cell is the destination
@@ -99,32 +100,32 @@ class A_Star:
         return ((row - dest[0]) ** 2 + (col - dest[1]) ** 2) ** 0.5
 
     # Trace the path from source to destination
-    def trace_path(cell_details, dest):
+    def trace_path(enemy, cell_details, dest):
         print("The Path is ")
-        path = []
         row = dest[0]
         col = dest[1]
 
         # Trace the path from destination to source using parent cells
         while not (cell_details[row][col].parent_i == row and cell_details[row][col].parent_j == col):
-            path.append((row, col))
+            enemy.path.append((row, col))
             temp_row = cell_details[row][col].parent_i
             temp_col = cell_details[row][col].parent_j
             row = temp_row
             col = temp_col
 
         # Add the source cell to the path
-        path.append((row, col))
+        enemy.path.append((row, col))
         # Reverse the path to get the path from source to destination
-        path.reverse()
+        enemy.path.reverse()
 
         # Print the path
-        for i in path:
-            print("->", i, end=" ")
-        print()
+        # for i in path:
+        #     print("->", i, end=" ")
+        # print()
+        
 
     # Implement the A* search algorithm
-    def a_star_search(self, src, dest):
+    def a_star_search(self, enemy, src, dest):
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
             print("Source or destination is invalid")
@@ -171,7 +172,6 @@ class A_Star:
             i = p[1]
             j = p[2]
             closed_list[i][j] = True
-
             # For each direction, check the successors
             directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
             for dir in directions:
@@ -187,7 +187,7 @@ class A_Star:
                         cell_details[new_i][new_j].parent_j = j
                         print("The destination cell is found")
                         # Trace and print the path from source to destination
-                        A_Star.trace_path(cell_details, dest)
+                        A_Star.trace_path(enemy, cell_details, dest)
                         found_dest = True
                         return
                     else:
@@ -206,7 +206,7 @@ class A_Star:
                             cell_details[new_i][new_j].h = h_new
                             cell_details[new_i][new_j].parent_i = i
                             cell_details[new_i][new_j].parent_j = j
-
+        
         # If the destination is not found after visiting all cells
         if not found_dest:
             print("Failed to find the destination cell")

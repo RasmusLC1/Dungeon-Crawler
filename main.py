@@ -90,7 +90,6 @@ class Game:
         Health_Bar.__init__(self)
         Coins.__init__(self)
         A_Star.Setup_Map(self)
-        A_Star.a_star_search(self, [2,2], [6, 12])
 
 
 

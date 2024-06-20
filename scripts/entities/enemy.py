@@ -18,10 +18,70 @@ class Enemy(PhysicsEntity):
         self.running = 0
         self.direction_x_holder = 0
         self.direction_y_holder = 0
+        self.pathfinding_cooldown = 0
+        self.path = []
+        self.src_x = 0
+        self.src_y = 0
+        self.des_x = 0
+        self.des_y = 0
     
     def update(self, tilemap, movement=(0, 0)):
+        if not self.pathfinding_cooldown:
+            self.path.clear()
+            self.src_x = round(self.pos[0] / 16) - self.game.min_x + 1
+            self.src_y = round(self.pos[1] / 16)-1 - self.game.min_y + 1
+            self.des_x = round(self.game.player.pos[0] / 16)-1 - self.game.min_x + 1
+            self.des_y = round(self.game.player.pos[1] / 16)-1 - self.game.min_y + 1
+            
+            A_Star.a_star_search(self.game, self, [self.src_y, self.src_x], [self.des_y, self.des_x])
+            if self.path:
+                
+            self.pathfinding_cooldown = 100
+        else:
+            self.pathfinding_cooldown -= 1
+        # Print the path
+        
+        if self.path:
+            i = 0
+            target = (self.src_y, self.src_x)
+            for i in range(len(self.path) - 1):
+                if (self.src_y, self.src_x) == self.path[i]:
+                    target = self.path[i + 1]
+                    break
+            
+            direction_x = 0.1
+            direction_y = 0.1
+            if (self.src_y, self.src_x) != (self.des_y, self.des_x):
+                
+                if target[1] == self.src_x:
+                    direction_x = 0
+                elif target[1] < self.src_x:
+                    direction_x *= -1
+                if target[0] == self.src_y:
+                    direction_y = 0
+                elif target[0] < self.src_y:
+                    direction_y *= -1
+            else:
+                self.direction = (0,0)
+            self.direction = pygame.math.Vector2(direction_x, direction_y)
+        
+        if not self.path:
+            self.Moving_Random()
+
+        movement = self.direction
+
+        
+        super().update(tilemap, movement = movement)
+        self.animation = 'decrepit_bones'
         
         
+
+        if abs(self.game.player.dashing) >= 50:
+            if self.rect().colliderect(self.game.player.rect()):
+                self.game.player.Damage_Taken(5)
+                return True
+
+    def Moving_Random(self):
         if self.running:
             self.running -= 1
         else:
@@ -54,20 +114,7 @@ class Enemy(PhysicsEntity):
                     self.direction = (self.direction_x, self.direction_y)
                     break
 
-        movement = self.direction
-
-        
-        super().update(tilemap, movement = movement)
-        self.animation = 'decrepit_bones'
-        
-        
-
-        if abs(self.game.player.dashing) >= 50:
-            if self.rect().colliderect(self.game.player.rect()):
-                self.game.player.Damage_Taken(5)
-                return True
-            
     def Future_Rect(self, direction):
-             return pygame.Rect(self.pos[0] + direction[0]*10, self.pos[1] + direction[1]*10, self.size[0], self.size[1])
+             return pygame.Rect(self.pos[0] + direction[0]*16, self.pos[1] + direction[1]*16, self.size[0], self.size[1])
 
     
