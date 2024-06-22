@@ -19,6 +19,7 @@ from scripts.interface.coins import Coins
 from scripts.Chest.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.a_star import A_Star
+from scripts.inventory import Inventory
 
 import numpy as np
 
@@ -42,6 +43,8 @@ class Game:
 
         self.player = Player(self, (50, 50), (8, 15))
         self.tilemap = Tilemap(self, tile_size=16)
+
+        Inventory.__init__(self)
 
 
         self.level = 0
@@ -107,6 +110,9 @@ class Game:
 
             for item in self.items:
                 item.Update()
+                if not item.active:
+                    self.items.remove(item)
+
 
             Coins.Update(self)
     
@@ -119,10 +125,6 @@ class Game:
         Trap_Handler.Render(self, render_scroll)
         Chest_Handler.Render(self, render_scroll)
 
-        self.player.render(self.display, offset=render_scroll)
-        Health_Bar.Health_Bar(self)
-        Ammo_Bar.Ammo_Bar(self)
-        Coins.Render(self)
 
         for item in self.items:
             item.render(self.display, offset = render_scroll)
@@ -130,6 +132,11 @@ class Game:
         for enemy in self.enemies:
             enemy.render(self.display, offset=render_scroll)
         
+        self.player.render(self.display, offset=render_scroll)
+        Health_Bar.Health_Bar(self)
+        Ammo_Bar.Ammo_Bar(self)
+        Coins.Render(self)
+        Inventory.render(self, self.display)
 
 
         

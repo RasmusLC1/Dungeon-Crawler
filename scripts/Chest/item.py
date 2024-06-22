@@ -6,7 +6,7 @@ class Item:
         self.type = type
         self.quality = quality
         self.pos = pos
-        self.active = False
+        self.active = True
         self.animation = 0
         self.animation_cooldown = 0
         self.size = (8,8)
@@ -14,7 +14,9 @@ class Item:
 
     def Update(self):
         if self.rect().colliderect(self.game.player.rect()):
-            print("TEST")
+            self.game.inventory.append(self)
+            self.active = False
+
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
