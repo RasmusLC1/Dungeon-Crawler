@@ -44,7 +44,7 @@ class Game:
         self.player = Player(self, (50, 50), (8, 15))
         self.tilemap = Tilemap(self, tile_size=16)
 
-        Inventory.__init__(self)
+        self.inventory = Inventory(self)
 
 
         self.level = 0
@@ -113,7 +113,7 @@ class Game:
                 if not item.active:
                     self.items.remove(item)
 
-
+            self.inventory.Update()
             Coins.Update(self)
     
     
@@ -136,7 +136,7 @@ class Game:
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Ammo_Bar(self)
         Coins.Render(self)
-        Inventory.render(self, self.display)
+        self.inventory.render(self.display)
 
 
         

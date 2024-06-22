@@ -37,7 +37,8 @@ class Chest:
                 #     self.Update()
                 # else:
                 #     self.text_color  = (255, 0, 0)
-                self.game.items.append(Item(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), 'red_full', 'normal'))
+                for i in range(10):
+                    self.game.items.append(Item(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), 'red_full', 'normal'))
             elif self.loot_type == 1:
                 print("AMMO")
                 if not self.game.player.Ammo_Change(self.loot_amount):
