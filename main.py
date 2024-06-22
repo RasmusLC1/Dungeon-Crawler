@@ -71,7 +71,7 @@ class Game:
     def load_level(self, map_id):
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
         
-            
+        self.items = []
         self.particles = []
         self.sparks = []
         self.scroll = [0, 0]
@@ -105,6 +105,9 @@ class Game:
                 if enemy.health <= 0:
                     self.enemies.remove(enemy)
 
+            for item in self.items:
+                item.Update()
+
             Coins.Update(self)
     
     
@@ -120,6 +123,9 @@ class Game:
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Ammo_Bar(self)
         Coins.Render(self)
+
+        for item in self.items:
+            item.render(self.display, offset = render_scroll)
 
         for enemy in self.enemies:
             enemy.render(self.display, offset=render_scroll)

@@ -1,6 +1,7 @@
 import pygame
 import random
 from scripts.weapon_generator import Weapon_Generator
+from scripts.Chest.item import Item
 
 
 class Chest:
@@ -27,15 +28,16 @@ class Chest:
 
     def Update(self):
         if self.rect().colliderect(self.game.player.rect()):
-            self.loot_type = random.randint(0, 3)
+            self.loot_type = random.randint(0, 0)
             version_modifier = self.version * 3 + 1
             self.loot_amount = random.randint(1, 3) * version_modifier
             if self.loot_type == 0:
                 print("HEALTH")
-                if not self.game.player.Healing(self.loot_amount):
-                    self.Update()
-                else:
-                    self.text_color  = (255, 0, 0)
+                # if not self.game.player.Healing(self.loot_amount):
+                #     self.Update()
+                # else:
+                #     self.text_color  = (255, 0, 0)
+                self.game.items.append(Item(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), 'red_full', 'normal'))
             elif self.loot_type == 1:
                 print("AMMO")
                 if not self.game.player.Ammo_Change(self.loot_amount):
