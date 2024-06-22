@@ -87,7 +87,6 @@ class A_Star:
 
     # Check if a cell is unblocked
     def is_unblocked(self, row, col):
-        print(row, col)
         return self.map[row][col] == 0
 
     # Check if a cell is the destination
@@ -100,7 +99,6 @@ class A_Star:
 
     # Trace the path from source to destination
     def trace_path(enemy, cell_details, dest):
-        print("The Path is ")
         row = dest[0]
         col = dest[1]
 
@@ -125,21 +123,16 @@ class A_Star:
 
     # Implement the A* search algorithm
     def a_star_search(self, enemy, src, dest):
-        print("DESTINATION")
-        print(dest)
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
-            print("Source or destination is invalid")
             return
 
         # Check if the source and destination are unblocked
         if not A_Star.is_unblocked(self, src[0], src[1]) or not A_Star.is_unblocked(self, dest[0], dest[1]):
-            print("Source or the destination is blocked")
             return
 
         # Check if we are already at the destination
         if A_Star.is_destination(src[0], src[1], dest):
-            print("We are already at the destination")
             return
         
         
@@ -186,8 +179,6 @@ class A_Star:
                         # Set the parent of the destination cell
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
-                        print("The destination cell is found")
-                        # Trace and print the path from source to destination
                         A_Star.trace_path(enemy, cell_details, dest)
                         found_dest = True
                         return
@@ -207,9 +198,6 @@ class A_Star:
                             cell_details[new_i][new_j].h = h_new
                             cell_details[new_i][new_j].parent_i = i
                             cell_details[new_i][new_j].parent_j = j
-        
-        # If the destination is not found after visiting all cells
-        if not found_dest:
-            print("Failed to find the destination cell")
+
 
 

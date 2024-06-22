@@ -11,6 +11,9 @@ class Asset_Loader:
         Asset_Loader.Asset_Interative_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
         Asset_Loader.Asset_Objects_List(self)
+        Asset_Loader.Asset_Potion_List(self)
+
+        
     def Asset_Background_List(self):
         background_assets = {'background': load_image('background.png'),}
         self.assets.update(background_assets)
@@ -91,6 +94,18 @@ class Asset_Loader:
             'deep_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 32, 16, 16),            
         }
         self.assets.update(Environment_assets)
+
+    def Asset_Potion_List(self):
+        potion_assets = {
+            'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 16, 16),
+            'red_full' : get_tiles_from_sheet('Potions/Redpotions/red_full.png', 2, 2, 0, 0, 16, 16),
+            'red_half' : get_tiles_from_sheet('Potions/Redpotions/red_half.png', 2, 2, 0, 0, 16, 16),
+            'red_low' : get_tiles_from_sheet('Potions/Redpotions/red_low.png', 2, 2, 0, 0, 16, 16),
+            'blue_full' : get_tiles_from_sheet('Potions/Bluepotions/blue_full.png', 2, 2, 0, 0, 16, 16),
+            'blue_half' : get_tiles_from_sheet('Potions/Bluepotions/blue_half.png', 2, 2, 0, 0, 16, 16),
+            'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 16, 16),
+        }
+        self.assets.update(potion_assets)
             
     def sound_effects(self):
         self.sfx ={
