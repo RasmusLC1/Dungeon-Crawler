@@ -15,7 +15,7 @@ class Mouse_Handler:
             # Check for left click (button 1)
             if key_press.button == 1:
                 self.left_click = True
-                self.click_pos = ((key_press.pos[0] / 4) - offset[0], (key_press.pos[1] / 4) - offset[1])
+                self.click_pos = ((key_press.pos[0] / 4), (key_press.pos[1] / 4))
                 
                 print("Left Mouse Button Clicked at position", self.click_pos)
             # Check for right click (button 3)
@@ -34,12 +34,11 @@ class Mouse_Handler:
                 self.click_pos = 0
         if key_press.type == pygame.MOUSEMOTION:
             if self.left_click == True:
-                self.mouse_rel = key_press.rel
                 x = key_press.pos[0] / 4 + offset[0]
                 y = key_press.pos[1] / 4 + offset[1]
                 self.mpos = (x, y)
-                for item in self.game.items:  # Assuming you have a list of items
-                    item.Move(self.mpos)
+                # for item in self.game.items:  # Assuming you have a list of items
+                #     item.Move(self.mpos)
             
 
 

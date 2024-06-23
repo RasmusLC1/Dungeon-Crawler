@@ -1,5 +1,6 @@
 import pygame
 from scripts.Chest.item import Item
+import copy
 
 class Inventory:
     def __init__(self, game):
@@ -19,15 +20,24 @@ class Inventory:
                     self.inventory[j][i].Update_Animation()
                     if self.game.mouse.left_click:
                         if self.inventory[j][i].rect().colliderect(self.game.mouse.mouse_rect()):
-                            self.active_item = self.inventory[j][i]
+                            self.active_item = Inventory.clone(self.inventory[j][i])
+                            self.active_item.active = True
+                            self.game.items.append(self.active_item)
                             self.inventory[j][i] = None
                     if not self.game.mouse.left_click:
                         self.active_item = None
         if self.active_item:
-            self.active_item.Move(self.game.mouse.mouse_rel)
-            self.active_item.render(self.game.display, offset)
-            print(self.active_item.pos)
-        
+            self.active_item.Move(self.game.mouse.mpos)
+    
+    
+    def clone(self):
+        # Create a new instance of Item with the same attributes
+        new_item = Item(self.game, self.pos, self.type, self.quality)
+        new_item.active = self.active
+        new_item.animation = self.animation
+        new_item.animation_cooldown = self.animation_cooldown
+        new_item.size = self.size
+        return new_item
 
     def Add_Item(self, item):
         for j in range(self.y_size):

@@ -28,7 +28,7 @@ class Item:
     
     def Move(self, mouse_pos):
         # print(mouse_pos)
-        self.rect().move_ip(mouse_pos)
+        # self.rect().move_ip(mouse_pos)
         self.pos = mouse_pos
 
     def rect(self):
