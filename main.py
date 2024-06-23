@@ -7,7 +7,8 @@ import math
 
 from scripts.utils import load_image, load_images, Animation
 from scripts.asset_loader import Asset_Loader
-from scripts.keyboard import Keyboard_Handler
+from scripts.input.keyboard import Keyboard_Handler
+from scripts.input.mouse import Mouse_Handler
 from scripts.entities.player import Player
 from scripts.tilemap import Tilemap
 from scripts.particle_handler import Particle_Handler
@@ -19,7 +20,7 @@ from scripts.interface.coins import Coins
 from scripts.Chest.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.a_star import A_Star
-from scripts.inventory import Inventory
+from scripts.Chest.inventory import Inventory
 
 import numpy as np
 
@@ -45,12 +46,12 @@ class Game:
         self.tilemap = Tilemap(self, tile_size=16)
 
         self.inventory = Inventory(self)
+        self.mouse = Mouse_Handler(self)
 
 
         self.level = 0
         self.load_level(self.level)
         self.scroll = [0, 0]
-        self.mpos = 0
 
         rows = 100  # Number of rows
         cols = 100  # Number of columns
@@ -155,6 +156,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                self.mouse.Mouse_Input(event, render_scroll)
                 Keyboard_Handler.keyboard_Input(self, event, offset = render_scroll)
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))

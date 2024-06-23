@@ -1,5 +1,6 @@
-import pygame
 import random
+import math
+import pygame
 
 class Item:
     def __init__(self, game, pos, type, quality):
@@ -24,7 +25,11 @@ class Item:
         else:
             self.animation_cooldown = 50
             self.animation = random.randint(0,8)
-            
+    
+    def Move(self, mouse_pos):
+        # print(mouse_pos)
+        self.rect().move_ip(mouse_pos)
+        self.pos = mouse_pos
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
