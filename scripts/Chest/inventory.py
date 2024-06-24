@@ -11,33 +11,53 @@ class Inventory:
         self.size = (10, 10)
         self.active_item = None
         self.item_clicked = 0
+        self.saved_position = (0,0)
         
         self.inventory = [[None for _ in range(self.x_size)] for _ in range(self.y_size)]
 
-    def Update(self, offset=(0, 0)):
+    def Update(self, offset = (0,0)):
+        Inventory.Active_Item(self, offset)
+        
         for j in range(self.y_size):
             for i in range(self.x_size):
                 if self.inventory[j][i]:
                     self.inventory[j][i].Update_Animation()
-                    # print(self.game.mouse.hold_down_left)
                     if self.game.mouse.left_click:
                         if self.inventory[j][i].rect().colliderect(self.game.mouse.mouse_rect()):
                             self.item_clicked += 1
                             if self.game.mouse.hold_down_left > 10:
                                 self.active_item = Inventory.clone(self.inventory[j][i])
                                 self.active_item.active = True
-                                self.game.items.append(self.active_item)
+                                # self.game.items.append(self.active_item)
+                                self.saved_position = (j,i)
                                 self.inventory[j][i] = None
                             
 
-                    if not self.game.mouse.left_click and self.item_clicked:
+                    
+    def Active_Item(self, offset = (0,0)):
+        if self.active_item:
+            item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse, self.game.player.pos, self.game.tilemap)
+            if item_out_of_bounds == False:
+                self.active_item.render_out_of_bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
+                if self.game.mouse.left_click == False:
+                    x = self.saved_position[1] * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 40
+                    y = self.saved_position[0] * self.size[0] + self.game.screen_height / self.game.render_scale - 25
+                    self.active_item.pos = (x,y)
+                    self.inventory[self.saved_position[0]][self.saved_position[1]] = self.active_item
+            else:
+                self.active_item.render(self.game.display, offset)  
+
+                self.active_item.Move(self.game.mouse.mpos)
+
+
+            if not self.game.mouse.left_click and self.item_clicked:
                         if self.item_clicked < 30 and self.game.mouse.hold_down_left < 5:
                             print("ACTIVATE")
                         else:
                             self.active_item = None
-                        self.item_clicked = 0
-        if self.active_item:
-            self.active_item.Move(self.game.mouse, self.game.player.pos, self.game.tilemap)
+                        self.item_clicked = 0  
+
+        
     
     
     def clone(self):

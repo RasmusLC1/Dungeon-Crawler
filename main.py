@@ -62,7 +62,6 @@ class Game:
     def tilemap_2d(self):
         for loc in self.tilemap:
             tile = self.tilemap[loc]
-            print(tile['type'])
 
     def count_lines_in_json_file(file_path):
         with open(file_path, 'r') as file:
@@ -114,7 +113,7 @@ class Game:
                 if not item.active:
                     self.items.remove(item)
 
-            self.inventory.Update()
+            self.inventory.Update(render_scroll)
             Coins.Update(self)
     
     

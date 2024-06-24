@@ -18,7 +18,6 @@ class Mouse_Handler:
             self.hold_down_left += 1
         elif not self.left_click and self.hold_down_left:
             self.hold_down_left = 0
-            print(self.hold_down_left)
 
         if key_press.type == pygame.MOUSEBUTTONDOWN:
             # Check for left click (button 1)
