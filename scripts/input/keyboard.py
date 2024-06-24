@@ -11,6 +11,9 @@ class Keyboard_Handler:
                 self.movement[2] = True
             if key_press.key == pygame.K_s:
                 self.movement[3] = True
+            if key_press.key == pygame.K_e:
+                for item in self.items:
+                    item.Pick_Up()
             if key_press.key == pygame.K_SPACE:
                 self.player.Shooting(offset)
             if key_press.key == pygame.K_x:

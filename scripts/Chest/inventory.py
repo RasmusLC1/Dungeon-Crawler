@@ -10,6 +10,7 @@ class Inventory:
         self.available_pos = []
         self.size = (10, 10)
         self.active_item = None
+        self.item_clicked = 0
         
         self.inventory = [[None for _ in range(self.x_size)] for _ in range(self.y_size)]
 
@@ -18,16 +19,25 @@ class Inventory:
             for i in range(self.x_size):
                 if self.inventory[j][i]:
                     self.inventory[j][i].Update_Animation()
+                    # print(self.game.mouse.hold_down_left)
                     if self.game.mouse.left_click:
                         if self.inventory[j][i].rect().colliderect(self.game.mouse.mouse_rect()):
-                            self.active_item = Inventory.clone(self.inventory[j][i])
-                            self.active_item.active = True
-                            self.game.items.append(self.active_item)
-                            self.inventory[j][i] = None
-                    if not self.game.mouse.left_click:
-                        self.active_item = None
+                            self.item_clicked += 1
+                            if self.game.mouse.hold_down_left > 10:
+                                self.active_item = Inventory.clone(self.inventory[j][i])
+                                self.active_item.active = True
+                                self.game.items.append(self.active_item)
+                                self.inventory[j][i] = None
+                            
+
+                    if not self.game.mouse.left_click and self.item_clicked:
+                        if self.item_clicked < 30 and self.game.mouse.hold_down_left < 5:
+                            print("ACTIVATE")
+                        else:
+                            self.active_item = None
+                        self.item_clicked = 0
         if self.active_item:
-            self.active_item.Move(self.game.mouse.mpos)
+            self.active_item.Move(self.game.mouse, self.game.player.pos, self.game.tilemap)
     
     
     def clone(self):
