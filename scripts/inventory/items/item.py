@@ -66,15 +66,13 @@ class Item:
         
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
-    # Render item with fadeout
+    # Render item with fadeout if it's in an illegal position
     def render_out_of_bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
         # Calclate distance between player and mouse
-        distance = 100 - math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2)
+        distance = max(20, 100 - math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2))
         item_image = self.game.assets[self.type][self.animation].convert_alpha()
         item_image.set_alpha(distance)
         item_image = pygame.transform.scale(item_image, self.size)
 
-
-        
         # Render on Mouse position as the item position is not being updated
         surf.blit(item_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))

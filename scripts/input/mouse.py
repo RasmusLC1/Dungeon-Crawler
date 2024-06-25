@@ -5,8 +5,9 @@ class Mouse_Handler:
         self.right_click = False
         self.left_click = False
         self.game = game
-        self.click_pos = (0,0)
+        self.click_pos = (0, 0)
         self.mpos = (0, 0)
+        self.mpos_not_offset = (0, 0)
         self.mouse_rel = (0, 0)
         self.hold_down_left = 0
         self.hold_down_right = 0
@@ -43,10 +44,13 @@ class Mouse_Handler:
                 x = key_press.pos[0] / 4 + offset[0]
                 y = key_press.pos[1] / 4 + offset[1]
                 self.mpos = (x, y)
-                # for item in self.game.items:  # Assuming you have a list of items
-                #     item.Move(self.mpos)
+                self.mpos_not_offset = key_press.pos
             
 
 
-    def mouse_rect(self):
+    def rect_click(self):
         return pygame.Rect(self.click_pos[0], self.click_pos[1], 1, 1)    
+    
+    def rect_pos(self, offset):
+        # print(self.mpos)
+        return pygame.Rect(self.mpos[0] - offset[0], self.mpos[1]  - offset[1], 1, 1)  
