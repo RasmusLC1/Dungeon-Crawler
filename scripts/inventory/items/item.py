@@ -12,6 +12,8 @@ class Item:
         self.animation = 0
         self.animation_cooldown = 0
         self.size = (8,8)
+        self.amount = 0
+        self.max_amount = 10
 
 
     def Update(self):
@@ -28,6 +30,9 @@ class Item:
         else:
             self.animation_cooldown = 50
             self.animation = random.randint(0,8)
+
+    def Increase_Amount(self):
+        self.amount += 1
     
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap):

@@ -1,4 +1,4 @@
-from scripts.Chest.chest import Chest
+from scripts.inventory.chest import Chest
 
 class Chest_Handler:
     def __init__(self):

@@ -1,5 +1,5 @@
 import pygame
-from scripts.Chest.item import Item
+from scripts.inventory.items.item import Item
 import copy
 
 class Inventory:
@@ -8,7 +8,7 @@ class Inventory:
         self.y_size = 2
         self.game = game
         self.available_pos = []
-        self.size = (10, 10)
+        self.size = (12, 12)
         self.active_item = None
         self.item_clicked = 0
         self.saved_position = (0,0)
@@ -80,6 +80,15 @@ class Inventory:
 
     # Add item to the inventory
     def Add_Item(self, item):
+        if item.max_amount > 1:
+            for j in range(self.y_size):
+                for i in range(self.x_size):
+                    if self.inventory[j][i]:
+                        if self.inventory[j][i].type == item.type and self.inventory[j][i].amount < self.inventory[j][i].max_amount:
+                            self.inventory[j][i].Increase_Amount()
+                            print(self.inventory[j][i].amount)
+
+
         for j in range(self.y_size):
             for i in range(self.x_size):
                 if not self.inventory[j][i]:
@@ -94,7 +103,7 @@ class Inventory:
     def render(self, surf):
         light_grey = (211, 211, 211)
         black = (0, 0, 0)
-        box_surface = pygame.Surface((8, 8))
+        box_surface = pygame.Surface(self.size)
         box_surface.fill(light_grey)
         box_surface.set_alpha(179)
         for j in range(self.y_size):
@@ -105,3 +114,15 @@ class Inventory:
                 pygame.draw.rect(surf, black, pygame.Rect(x, y, self.size[0], self.size[1]), 1)
                 if self.inventory[j][i]:
                     self.inventory[j][i].render(surf, (0, 0))
+                    if self.inventory[j][i].amount > 1:
+                        try:
+                            font = pygame.font.Font('freesansbold.ttf', 10)
+                        except Exception as e:
+                            print(f"Font load error: {e}")
+                            font = pygame.font.SysFont('freesans', 10)  # Fallback font
+                        text_color = (255, 255, 255)  # White text
+                        shadow_color = (0, 0, 0)  # Black shadow
+                        text_shadow = font.render(str(self.inventory[j][i].amount), False, shadow_color)
+                        surf.blit(text_shadow, (x + 6, y + 3))
+                        text = font.render(str(self.inventory[j][i].amount), False, text_color)
+                        surf.blit(text, (x + 5, y + 2))

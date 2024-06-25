@@ -17,10 +17,10 @@ from scripts.traps.trap_handler import Trap_Handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.coins import Coins
-from scripts.Chest.Chest_handler import Chest_Handler
+from scripts.inventory.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.a_star import A_Star
-from scripts.Chest.inventory import Inventory
+from scripts.inventory.inventory import Inventory
 
 import numpy as np
 
@@ -137,6 +137,8 @@ class Game:
         Ammo_Bar.Ammo_Bar(self)
         Coins.Render(self)
         self.inventory.render(self.display)
+        for particle in self.particles:
+            particle.render(self.display, render_scroll)
 
 
         

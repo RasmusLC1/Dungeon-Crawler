@@ -1,7 +1,7 @@
 import pygame
 import random
 from scripts.weapon_generator import Weapon_Generator
-from scripts.Chest.item import Item
+from scripts.inventory.items.item import Item
 
 
 class Chest:
