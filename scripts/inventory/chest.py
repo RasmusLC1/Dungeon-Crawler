@@ -2,6 +2,7 @@ import pygame
 import random
 from scripts.weapon_generator import Weapon_Generator
 from scripts.inventory.items.item import Item
+from scripts.inventory.items.health_potion import Health_Potion
 
 
 class Chest:
@@ -37,8 +38,8 @@ class Chest:
                 #     self.Update()
                 # else:
                 #     self.text_color  = (255, 0, 0)
-                for i in range(20):
-                    self.game.items.append(Item(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), 'red_full', 'normal'))
+                for i in range(3):
+                    self.game.items.append(Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3)))
             elif self.loot_type == 1:
                 print("AMMO")
                 if not self.game.player.Ammo_Change(self.loot_amount):

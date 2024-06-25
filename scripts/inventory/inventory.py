@@ -1,7 +1,7 @@
 import pygame
 from scripts.inventory.items.item import Item
 from scripts.inventory.inventory_slot import Inventory_Slot
-import copy
+from copy import copy
 
 class Inventory:
     def __init__(self, game):
@@ -33,7 +33,7 @@ class Inventory:
                     if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
                         self.item_clicked += 1
                         if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
-                            self.active_item = Inventory.clone(inventory_slot.item)
+                            self.active_item = copy(inventory_slot.item)
                             self.active_item.active = True
                             inventory_slot.Set_Active()
 
@@ -106,32 +106,42 @@ class Inventory:
                 self.item_clicked = 0  
                 return
 
-    
-    
-    # Create a new instance of Item with the same attributes
-    def clone(self):
-        new_item = Item(self.game, self.pos, self.type, self.quality)
-        new_item.active = self.active
-        new_item.animation = self.animation
-        new_item.animation_cooldown = self.animation_cooldown
-        new_item.size = self.size
-        return new_item
+    def Overflow(self, item):
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                inventory_slot.Add_Item(item)
+
+                return True
+        return False
 
     # Add item to the inventory
     def Add_Item(self, item):
+
         if item.max_amount > 1:
             for inventory_slot in self.inventory:
                 if inventory_slot.item:
                     if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
-                        inventory_slot.item.Increase_Amount()
+                        current_amount = inventory_slot.item.amount + item.amount
+                        inventory_slot.item.Increase_Amount(item.amount)
+                        # Handle overflow and send it to the new available position
+                        if current_amount > inventory_slot.item.max_amount:
+                            new_amount = current_amount - inventory_slot.item.max_amount
+                            new_item = copy(item)
+                            new_item.Update()
+                            new_item.Set_Amount(new_amount)
+                            if not self.Overflow(new_item):
+                                self.game.items.add(new_item)
+                        self.game.items.remove(item)
+                        inventory_slot.item.Update()
                         return
         i = 0
         j = 0
-
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
                 self.game.items.remove(item)
+                inventory_slot.item.Update()
+
                 return True
             # 2d array simulation for position
             i += 1

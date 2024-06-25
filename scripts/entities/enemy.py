@@ -42,6 +42,8 @@ class Enemy(PhysicsEntity):
         # Player is close, so the enemy charge directly
         if (abs(self.pos[0]) - abs(self.game.player.pos[0]) < 40 and abs(self.pos[1]) - abs(self.game.player.pos[1]) < 40):
             self.direction = pygame.math.Vector2((self.game.player.pos[0] - self.pos[0]), (self.game.player.pos[1] - self.pos[1]))
+            if not self.direction:
+                return
             self.direction.normalize_ip()
             self.direction[0] /= 4
             self.direction[1] /= 4

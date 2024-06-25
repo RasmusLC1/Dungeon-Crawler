@@ -109,7 +109,6 @@ class Game:
                     self.enemies.remove(enemy)
 
             for item in self.items:
-                item.Update()
                 if not item.active:
                     self.items.remove(item)
 

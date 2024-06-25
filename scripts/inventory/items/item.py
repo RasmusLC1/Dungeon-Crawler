@@ -3,23 +3,27 @@ import math
 import pygame
 
 class Item:
-    def __init__(self, game, pos, type, quality):
+    def __init__(self, game, pos, amount):
         self.game = game
-        self.type = type
-        self.quality = quality
+        self.type = ''
+        self.sub_type = ''
         self.pos = pos
         self.active = True
         self.animation = 0
         self.animation_cooldown = 0
-        self.size = (8,8)
-        self.amount = 0
-        self.max_amount = 10
+        self.size = (10,10)
+        self.amount = amount
+        self.max_amount = 0
+        
 
+    def Activate(self):
+        pass
 
     def Update(self):
         pass
 
     def Pick_Up(self):
+        
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.inventory.Add_Item(self):
                 self.active = False
@@ -31,15 +35,22 @@ class Item:
             self.animation_cooldown = 50
             self.animation = random.randint(0,8)
 
-    def Increase_Amount(self):
-        self.amount += 1
+
+    def Distance(self, player_pos, mouse_pos):
+        return math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2)
+    
+    def Set_Amount(self, amount):
+        self.amount = min(self.max_amount, amount)
+    
+    def Increase_Amount(self, amount):
+        self.amount = min(self.max_amount, self.amount + amount)
     
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap):
 
-        distance = math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2)
+        
         # Check if distance is legal, update to account for player strength later
-        if distance < 40:
+        if self.Distance(player_pos, mouse_pos) < 40:
             # Check if it it touches a floor tile
             for rect in tilemap.floor_rects_around(mouse_pos):
                 if not self.rect().colliderect(rect):
@@ -62,15 +73,15 @@ class Item:
     
     # Rener legal position
     def render(self, surf, offset=(0, 0)):
-        item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], self.size)
+        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)
         
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
     # Render item with fadeout if it's in an illegal position
     def render_out_of_bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
         # Calclate distance between player and mouse
-        distance = max(20, 100 - math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2))
-        item_image = self.game.assets[self.type][self.animation].convert_alpha()
+        distance = max(20, 100 - self.Distance(player_pos, mouse_pos))
+        item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         item_image.set_alpha(distance)
         item_image = pygame.transform.scale(item_image, self.size)
 
