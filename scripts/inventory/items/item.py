@@ -1,17 +1,18 @@
 import random
 import math
 import pygame
+from scripts.entities.entities import PhysicsEntity
 
-class Item:
-    def __init__(self, game, pos, amount):
+
+
+class Item(PhysicsEntity):
+    def __init__(self, game, type, pos, amount):
+        super().__init__(game, type, pos, (10,10))
         self.game = game
-        self.type = ''
         self.sub_type = ''
-        self.pos = pos
         self.active = True
         self.animation = 0
         self.animation_cooldown = 0
-        self.size = (10,10)
         self.amount = amount
         self.max_amount = 0
         
@@ -67,9 +68,6 @@ class Item:
     def Move(self, new_pos):
             self.pos = new_pos
 
-
-    def rect(self):
-        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
     
     # Rener legal position
     def render(self, surf, offset=(0, 0)):

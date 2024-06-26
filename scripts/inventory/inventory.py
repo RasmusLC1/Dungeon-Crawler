@@ -110,6 +110,7 @@ class Inventory:
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
+                inventory_slot.item.Update()
 
                 return True
         return False
@@ -120,6 +121,7 @@ class Inventory:
         if item.max_amount > 1:
             for inventory_slot in self.inventory:
                 if inventory_slot.item:
+                    inventory_slot.item.Update()
                     if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
                         current_amount = inventory_slot.item.amount + item.amount
                         inventory_slot.item.Increase_Amount(item.amount)
@@ -127,8 +129,8 @@ class Inventory:
                         if current_amount > inventory_slot.item.max_amount:
                             new_amount = current_amount - inventory_slot.item.max_amount
                             new_item = copy(item)
-                            new_item.Update()
                             new_item.Set_Amount(new_amount)
+                            # Add item to item list if there is no room
                             if not self.Overflow(new_item):
                                 self.game.items.add(new_item)
                         self.game.items.remove(item)

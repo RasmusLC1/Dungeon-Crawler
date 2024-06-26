@@ -2,8 +2,8 @@ from scripts.inventory.items.item import Item
 
 
 class Health_Potion(Item):
-    def __init__(self, game, pos, amount):
-        super().__init__(game, pos, amount)
+    def __init__(self, game, type, pos, amount):
+        super().__init__(game, type, pos, amount)
         self.Update()
         self.max_amount = 3
         self.type = 'health_potion'

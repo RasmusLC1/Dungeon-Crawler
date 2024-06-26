@@ -1,4 +1,5 @@
 from scripts.entities.entities import PhysicsEntity
+from scripts.entities.moving_entity import Moving_Entity
 from scripts.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile.projectile import Projectile
@@ -9,7 +10,7 @@ import math
 import pygame
 
 
-class Player(PhysicsEntity):
+class Player(Moving_Entity):
     def __init__(self, game, pos, size):
         super().__init__(game, 'player', pos, size)
         self.jumps = 1

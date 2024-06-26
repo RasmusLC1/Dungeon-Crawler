@@ -1,11 +1,13 @@
 from scripts.entities.entities import PhysicsEntity
+from scripts.entities.moving_entity import Moving_Entity
+
 import random
 import pygame
 from scripts.a_star import A_Star
 
 
 
-class Enemy(PhysicsEntity):
+class Enemy(Moving_Entity):
     def __init__(self, game, pos, size, type):
         super().__init__(game, type, pos, size)
         self.animation = 'decrepit_bones'
