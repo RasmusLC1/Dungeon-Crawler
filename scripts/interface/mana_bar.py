@@ -14,7 +14,7 @@ class Ammo_Bar:
         
         return normalized_health
     
-    def Attack_Recharge_Bar(self):
+    def Ammo_Bar(self):
         bar_length=80
         rect_x = self.screen_width / self.render_scale - bar_length - 20
         rect_y = self.screen_height / self.render_scale - 20

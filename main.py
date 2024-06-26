@@ -133,7 +133,7 @@ class Game:
         
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
-        Ammo_Bar.Ammo_Bar(self)
+        Ammo_Bar.Attack_Recharge_Bar(self)
         Coins.Render(self)
         self.inventory.render(self.display)
         for particle in self.particles:

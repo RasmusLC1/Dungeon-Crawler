@@ -41,20 +41,27 @@ class Inventory:
                             self.active_item.picked_up = True
                             inventory_slot.Set_Active(True)
                             return
-                    
-        if self.game.mouse.hold_down_left < 5 and self.game.mouse.hold_down_left > 0 and not self.game.mouse.left_click:
-            if self.clicked_inventory_slot:
-                self.clicked_inventory_slot.item.Activate()
-                self.clicked_inventory_slot.Update()
-                self.clicked_inventory_slot = None
-
+        self.Item_Click()
+        return
+        
+        
+    
+    # Handle clicking items
+    def Item_Click(self):
+        if not self.game.mouse.left_click:
+            if self.game.mouse.hold_down_left < 5 and self.game.mouse.hold_down_left > 0:
+                if self.clicked_inventory_slot:
+                    self.clicked_inventory_slot.item.Activate()
+                    self.clicked_inventory_slot.Update()
+                    self.clicked_inventory_slot = None
+        return
                             
     def Return_Item(self):
         # Return the item to Inventory
-        for inventory_slot in self.inventory:
-            if inventory_slot.active:
-                inventory_slot.Set_Active(False)
+            if self.clicked_inventory_slot.active:
+                self.clicked_inventory_slot.Set_Active(False)
                 self.active_item = None
+                self.clicked_inventory_slot = None
                 return  
 
     def Move_Item(self, offset):
@@ -65,11 +72,12 @@ class Inventory:
         if self.game.mouse.left_click == False:
             self.game.items.append(self.active_item)
             self.active_item = None
-            for inventory_slot in self.inventory:
-                if inventory_slot.active:
-                    inventory_slot.Set_Active(False)
-                    inventory_slot.item = None
-                    return                
+            if self.clicked_inventory_slot.active:
+                self.clicked_inventory_slot.Set_Active(False)
+                self.clicked_inventory_slot.item = None
+                self.clicked_inventory_slot = None
+                
+        return                
 
     def Move_Item_To_New_Slot(self, offset):
         Move_item = False

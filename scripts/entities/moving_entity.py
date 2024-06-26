@@ -19,8 +19,13 @@ class Moving_Entity(PhysicsEntity):
 
         self.health = 100
         self.max_health = self.health
+        self.mana = 0
+        self.max_mana = 100
         self.snared = 0
+
         self.nearby_traps = []
+        self.nearby_enemies = []
+        self.player_hit = False
         
         self.action = ''
         self.anim_offset = (-3, -3)
@@ -51,6 +56,7 @@ class Moving_Entity(PhysicsEntity):
         self.wet_animation = 0
         self.wet_animation_cooldown = 0
 
+
         self.status_effects = Status_Effect_Handler(self)
     
     # Set new action for animation
@@ -65,7 +71,11 @@ class Moving_Entity(PhysicsEntity):
         
         self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
         self.Update_Status_Effects()
+
+
         self.Update_Traps()
+        self.Nearby_Enemies(20)
+
   
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
@@ -76,6 +86,10 @@ class Moving_Entity(PhysicsEntity):
     # Movement handling
     # TODO Cleanp
     def Movement(self, movement, tilemap):
+        if self.Collision_Detection():
+            return
+
+
         self.pos[0] += self.frame_movement[0]
         entity_rect = self.rect()
         for rect in tilemap.physics_rects_around(self.pos):
@@ -115,13 +129,36 @@ class Moving_Entity(PhysicsEntity):
             self.set_action('down')
 
         self.last_frame_movement = self.frame_movement
-         
+
+    def Collision_Detection(self):
+        future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
+        for enemy in self.nearby_enemies:
+            if enemy.rect().colliderect(self.rect_future(future_pos)):
+                if not self.type == 'player':
+                    return True
+        if not self.type == 'player': 
+            if self.game.player.rect().colliderect(self.rect_future(future_pos)):
+                self.player_hit = True
+                return True
             
+        return False
+
+
+    def rect_future(self, future_pos):
+        return pygame.Rect(future_pos[0], future_pos[1], self.size[0], self.size[1])     
+    
     # Update only the nearby traps
     def Update_Traps(self):
         self.nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, 20)
         for trap in self.nearby_traps:
             trap.Update(self)
+
+    def Nearby_Enemies(self, max_distance):
+        self.nearby_enemies.clear()
+        for enemy in self.game.enemies:
+            distance = math.sqrt((self.pos[0] - enemy.pos[0]) ** 2 + (self.pos[1] - enemy.pos[1]) ** 2)
+            if distance < max_distance and not enemy == self:
+                self.nearby_enemies.append(enemy)
 
     def Damage_Taken(self, damage):
         self.health -= damage
@@ -133,6 +170,12 @@ class Moving_Entity(PhysicsEntity):
         if self.health >= self.max_health:
             return False     
         self.health = min(self.max_health, self.health + healing)
+        return True
+    
+    def Increase_Mana(self, added_mana):
+        if self.mana >= self.max_mana:
+            return False     
+        self.mana = min(self.max_mana, self.mana + added_mana)
         return True
         
     # Push the entity in the given direction
