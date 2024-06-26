@@ -22,6 +22,7 @@ class Player(Moving_Entity):
         self.ammo = 10
         self.active_weapon = 'gun'
         self.set_action('up')
+        self.mana = 5
 
 
         self.coins = 0

@@ -16,6 +16,7 @@ from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
+from scripts.interface.mana_bar import Mana_Bar
 from scripts.interface.coins import Coins
 from scripts.inventory.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
@@ -90,6 +91,7 @@ class Game:
         Chest_Handler.__init__(self)
  
         Ammo_Bar.__init__(self)
+        Mana_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
         A_Star.Setup_Map(self)
@@ -134,6 +136,7 @@ class Game:
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)
+        Mana_Bar.Mana_Bar(self)
         Coins.Render(self)
         self.inventory.render(self.display)
         for particle in self.particles:

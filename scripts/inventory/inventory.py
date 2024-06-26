@@ -76,7 +76,7 @@ class Inventory:
                 self.clicked_inventory_slot.Set_Active(False)
                 self.clicked_inventory_slot.item = None
                 self.clicked_inventory_slot = None
-                
+
         return                
 
     def Move_Item_To_New_Slot(self, offset):
@@ -151,7 +151,8 @@ class Inventory:
                             new_item.Set_Amount(new_amount)
                             # Add item to item list if there is no room
                             if not self.Overflow(new_item):
-                                self.game.items.add(new_item)
+                                new_item.Update()
+                                self.game.items.append(new_item)
                         self.game.items.remove(item)
                         inventory_slot.item.Update()
                         return

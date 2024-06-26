@@ -17,7 +17,7 @@ class Ammo_Bar:
     def Attack_Recharge_Bar(self):
         bar_length=80
         rect_x = self.screen_width / self.render_scale - bar_length - 20
-        rect_y = self.screen_height / self.render_scale - 20
+        rect_y = self.screen_height / self.render_scale - 30
         normalised_cooldown = Ammo_Bar.normalize_health(self.player.shootin_cooldown, 20, bar_length)
         rect_height = 5
         # Ensure the font is loaded correctly
@@ -32,5 +32,5 @@ class Ammo_Bar:
         # Use self.display consistently if it's the initialized display surface
         self.display.blit(text, (rect_x, rect_y - 10))
         pygame.draw.rect(self.display, (255, 0, 0), (rect_x, rect_y, normalised_cooldown, rect_height))
-        pygame.draw.rect(self.display, (0, 0, 255), (rect_x + normalised_cooldown, rect_y, bar_length-normalised_cooldown, rect_height))
+        pygame.draw.rect(self.display, (155, 155, 155), (rect_x + normalised_cooldown, rect_y, bar_length-normalised_cooldown, rect_height))
         self.display.blit(self.scaled_weapon_image, (rect_x + 40, rect_y - 12))

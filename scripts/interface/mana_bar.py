@@ -1,6 +1,6 @@
 import pygame
 
-class Ammo_Bar:
+class Mana_Bar:
     def __init__(self):
         self.scaled_weapon_image = pygame.transform.scale(self.assets[self.player.active_weapon], (10, 10))
 
@@ -14,11 +14,11 @@ class Ammo_Bar:
         
         return normalized_health
     
-    def Ammo_Bar(self):
+    def Mana_Bar(self):
         bar_length=80
         rect_x = self.screen_width / self.render_scale - bar_length - 20
-        rect_y = self.screen_height / self.render_scale - 20
-        normalised_cooldown = Ammo_Bar.normalize_health(self.player.shootin_cooldown, 20, bar_length)
+        rect_y = self.screen_height / self.render_scale - 10
+        normalised_cooldown = Mana_Bar.normalize_health(self.player.mana, self.player.max_mana, bar_length)
         rect_height = 5
         # Ensure the font is loaded correctly
         try:
@@ -26,11 +26,11 @@ class Ammo_Bar:
         except Exception as e:
             print(f"Font load error: {e}")
             font = pygame.font.SysFont('freesans', 10)  # Fallback font
-
-        text = font.render(str(self.player.ammo) + '/' + str(self.player.max_ammo), True, (255, 255, 255))
+        
+        text = font.render(str(self.player.mana) + '/' + str(self.player.max_mana), True, (255, 255, 255))
         
         # Use self.display consistently if it's the initialized display surface
         self.display.blit(text, (rect_x, rect_y - 10))
-        pygame.draw.rect(self.display, (255, 0, 0), (rect_x, rect_y, normalised_cooldown, rect_height))
-        pygame.draw.rect(self.display, (0, 0, 255), (rect_x + normalised_cooldown, rect_y, bar_length-normalised_cooldown, rect_height))
-        self.display.blit(self.scaled_weapon_image, (rect_x + 40, rect_y - 12))
+        # Use self.display consistently if it's the initialized display surface
+        pygame.draw.rect(self.display, (0, 0, 255), (rect_x, rect_y, normalised_cooldown, rect_height))
+        pygame.draw.rect(self.display, (255, 0, 0), (rect_x + normalised_cooldown, rect_y, bar_length-normalised_cooldown, rect_height))
