@@ -9,7 +9,11 @@ class Health_Potion(Item):
         self.type = 'health_potion'
 
     def Activate(self):
-        pass
+        if self.game.player.Healing(10):
+            self.amount -= 1
+        if self.amount <= 0:
+            self.used = True
+        self.Update()
     
     def Update(self):
         print(self.amount)

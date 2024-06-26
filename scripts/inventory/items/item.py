@@ -10,7 +10,8 @@ class Item(PhysicsEntity):
         super().__init__(game, type, pos, (10,10))
         self.game = game
         self.sub_type = ''
-        self.active = True
+        self.used = False
+        self.picked_up = True
         self.animation = 0
         self.animation_cooldown = 0
         self.amount = amount
@@ -27,7 +28,7 @@ class Item(PhysicsEntity):
         
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.inventory.Add_Item(self):
-                self.active = False
+                self.picked_up = False
 
     def Update_Animation(self):
         if self.animation_cooldown:

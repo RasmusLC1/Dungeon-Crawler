@@ -8,6 +8,7 @@ class Inventory_Slot():
         self.item = item
         Inventory_Slot.Setup_Inventory_Texture(self)
         self.active = False
+        self.activate_counter = 0
         
     def Setup_Inventory_Texture(self):
         light_grey = (211, 211, 211)
@@ -15,13 +16,27 @@ class Inventory_Slot():
         self.box_surface.fill(light_grey)
         self.box_surface.set_alpha(179)
 
-    def Set_Active(self):
-        self.active = not self.active
+    def Set_Active(self, status):
+        self.active = status
 
     def Update(self):
-        pass
+        if self.active:
+            self.activate_counter += 1
+            return
+        
+        if self.activate_counter < 10 and self.activate_counter > 1:
+            print("TEST")
+
+            self.item.Activate()
+            self.activate_counter = 0
+        if self.item.used:
+            self.item = None
+
+
+        return
 
     def Add_Item(self, item):
+        item.active = True
         self.item = item
         self.item.Move(self.pos)
 

@@ -109,7 +109,7 @@ class Game:
                     self.enemies.remove(enemy)
 
             for item in self.items:
-                if not item.active:
+                if not item.picked_up:
                     self.items.remove(item)
 
             self.inventory.Update(render_scroll)

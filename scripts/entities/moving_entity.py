@@ -53,12 +53,13 @@ class Moving_Entity(PhysicsEntity):
 
         self.status_effects = Status_Effect_Handler(self)
     
-    
+    # Set new action for animation
     def set_action(self, action):
         if action != self.action:
             self.action = action
             self.animation = self.type + '_' + self.action
-        
+
+    # Update the entity 
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         
@@ -71,7 +72,9 @@ class Moving_Entity(PhysicsEntity):
             
 
         self.Movement(movement, tilemap)
-
+    
+    # Movement handling
+    # TODO Cleanp
     def Movement(self, movement, tilemap):
         self.pos[0] += self.frame_movement[0]
         entity_rect = self.rect()
@@ -114,7 +117,7 @@ class Moving_Entity(PhysicsEntity):
         self.last_frame_movement = self.frame_movement
          
             
-
+    # Update only the nearby traps
     def Update_Traps(self):
         self.nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, 20)
         for trap in self.nearby_traps:
@@ -122,21 +125,23 @@ class Moving_Entity(PhysicsEntity):
 
     def Damage_Taken(self, damage):
         self.health -= damage
+        if self.health <= 0:
+            print("GAME OVER")
 
+    # Return true if healing was successfull
     def Healing(self, healing):
-        if self.health + healing < self.max_health:
-            self.health += healing
-            return True
-        elif self.health == self.max_health:
-            return False
-        else:
-            self.health = self.max_health
-            return True            
-
+        if self.health >= self.max_health:
+            return False     
+        self.health = min(self.max_health, self.health + healing)
+        return True
+        
+    # Push the entity in the given direction
     def Push(self, x_direction, y_direction):
         self.pos[0] += x_direction
         self.pos[1] += y_direction
 
+    # Ice mechanic
+    # TODO Improve
     def On_Ice(self):
         if not self.is_on_ice:
             self.is_on_ice = 10
@@ -144,6 +149,7 @@ class Moving_Entity(PhysicsEntity):
             self.is_on_ice -= 1
             self.frame_movement = self.last_frame_movement 
 
+    # Handle status effects
     def Update_Status_Effects(self):
         self.friction = 2
         self.status_effects.OnFire()
@@ -152,18 +158,22 @@ class Moving_Entity(PhysicsEntity):
         self.status_effects.Frozen()
         self.status_effects.Wet()
     
+    #set snare effect
     def Set_Snare(self, snare_time):
         self.snared = snare_time
     
+    #set poison effect
     def Set_Poisoned(self, poisoned):
         self.poisoned =  max(random.randint(2, poisoned), self.poisoned)
-            
+
+    #set frozen effect
     def Set_Frozen(self, freeze):
         if self.wet:
             freeze *= 2
             self.wet = 0
         self.frozen = max(3, freeze)
 
+    # Set wet effect
     def Set_Wet(self, wet):
         if self.is_on_fire:
             self.is_on_fire = 0
@@ -171,16 +181,19 @@ class Moving_Entity(PhysicsEntity):
             self.frozen -= 1
         self.wet = max(2, wet)
 
+    #set Fire effect
     def Set_On_Fire(self, fire_time):
         if self.wet:
             return
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
 
+    # Slow the entity down by increasing friction
     def Slow_Down(self, effect):
         self.friction = max(2, effect)
 
 
-            
+    # Render entity
+    # TODO split the entity rendering into body parts to work better with weapons
     def render(self, surf, offset=(0, 0)):
         entity_image = self.game.assets[self.animation][0]
         entity_image = pygame.transform.scale(entity_image, (16, 23))
