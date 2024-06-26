@@ -49,8 +49,6 @@ class Item(PhysicsEntity):
     
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap):
-
-        
         # Check if distance is legal, update to account for player strength later
         if self.Distance(player_pos, mouse_pos) < 40:
             # Check if it it touches a floor tile
@@ -62,6 +60,7 @@ class Item(PhysicsEntity):
                 if self.rect().colliderect(rect):
                     return False
             return True
+        
         else:
             return False
     
@@ -72,8 +71,7 @@ class Item(PhysicsEntity):
     
     # Rener legal position
     def render(self, surf, offset=(0, 0)):
-        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)
-        
+        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
     # Render item with fadeout if it's in an illegal position

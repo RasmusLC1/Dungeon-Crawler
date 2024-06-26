@@ -12,6 +12,8 @@ class Inventory:
         self.size = (10, 10)
         self.active_item = None
         self.item_clicked = 0
+        self.click_cooldown = 0
+        self.clicked_inventory_slot = None
         
         self.inventory = []
         self.Setup()
@@ -25,24 +27,26 @@ class Inventory:
 
     def Update(self, offset = (0,0)):
         Inventory.Active_Item(self, offset)
+
         for inventory_slot in self.inventory:
             if inventory_slot.item:
                 inventory_slot.item.Update_Animation()
                 if self.game.mouse.left_click:
                     # Check for collision with inventory slot
                     if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
-                        inventory_slot.Set_Active(True)
+                        self.clicked_inventory_slot = inventory_slot
                         self.item_clicked += 1
                         if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
                             self.active_item = copy(inventory_slot.item)
-                            self.active_item.active = True
-                
-                
-                inventory_slot.Update()
-                if inventory_slot.active:
-                    if not self.game.mouse.left_click:
-                        inventory_slot.Set_Active(False)
-
+                            self.active_item.picked_up = True
+                            inventory_slot.Set_Active(True)
+                            return
+                    
+        if self.game.mouse.hold_down_left < 5 and self.game.mouse.hold_down_left > 0 and not self.game.mouse.left_click:
+            if self.clicked_inventory_slot:
+                self.clicked_inventory_slot.item.Activate()
+                self.clicked_inventory_slot.Update()
+                self.clicked_inventory_slot = None
 
                             
     def Return_Item(self):
@@ -103,7 +107,15 @@ class Inventory:
                 self.Move_Item(offset)
                 return
 
-        return
+
+            # Clicking on item
+            if not self.game.mouse.left_click and self.item_clicked:
+                if self.item_clicked < 30 and self.game.mouse.hold_down_left < 5:
+                    print("ACTIVATE")
+                else:
+                    self.active_item = None
+                self.item_clicked = 0  
+                return
 
     def Overflow(self, item):
         for inventory_slot in self.inventory:
@@ -117,7 +129,6 @@ class Inventory:
     # Add item to the inventory
     def Add_Item(self, item):
 
-        # Increment the amount in the inventory slot
         if item.max_amount > 1:
             for inventory_slot in self.inventory:
                 if inventory_slot.item:
@@ -136,7 +147,6 @@ class Inventory:
                         self.game.items.remove(item)
                         inventory_slot.item.Update()
                         return
-        # Assign new item
         i = 0
         j = 0
         for inventory_slot in self.inventory:
@@ -159,4 +169,3 @@ class Inventory:
     def render(self, surf):
         for inventory_slot in self.inventory:
             inventory_slot.render(surf)
-

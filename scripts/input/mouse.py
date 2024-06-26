@@ -28,7 +28,6 @@ class Mouse_Handler:
             # Check for right click (button 3)
             if key_press.button == 3:
                 self.right_click = True
-                self.click_pos = (key_press.pos[0] / 4, key_press.pos[1] / 4)
                 self.hold_down_right += 1
         if key_press.type == pygame.MOUSEBUTTONUP:
             # Check for left click (button 1)
@@ -38,7 +37,6 @@ class Mouse_Handler:
             # Check for right click (button 3)
             if key_press.button == 3:
                 self.right_click = False
-                self.click_pos = 0
         if key_press.type == pygame.MOUSEMOTION:
             if self.left_click == True:
                 x = key_press.pos[0] / 4 + offset[0]
