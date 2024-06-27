@@ -23,12 +23,6 @@ class Inventory_Slot():
         if self.active:
             self.activate_counter += 1
             return
-        
-        if self.activate_counter < 10 and self.activate_counter > 1:
-            print("TEST")
-
-            self.item.Activate()
-            self.activate_counter = 0
         if self.item.used:
             self.item = None
 

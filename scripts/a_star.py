@@ -19,6 +19,7 @@ class A_Star:
             self.row = 0
             self.col = 0
             self.map = []
+
     def Setup_Map(self):
         tile_map = []  # This will be a list of lists, each representing a row.
 
@@ -76,9 +77,7 @@ class A_Star:
 
         self.map = [list(row) for row in zip(*tile_map)]
 
-        # Printing the map
-        for row in self.map:
-            print(row)
+        
 
     # Check if a cell is valid (within the grid)
     def is_valid(self, row, col):

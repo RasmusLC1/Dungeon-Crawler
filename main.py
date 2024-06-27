@@ -21,9 +21,13 @@ from scripts.interface.coins import Coins
 from scripts.inventory.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.a_star import A_Star
+from scripts.light_handler import Light_Handler
 from scripts.inventory.inventory import Inventory
 
 import numpy as np
+
+import pygame
+from pygame.locals import *
 
 
 class Game:
@@ -59,6 +63,11 @@ class Game:
 
         # Create a 2D array with all elements initialized to None
         self.test_array = np.zeros((rows, cols), dtype=int)
+        # self.light_handler = Light_Handler(self)
+
+        
+
+
 
     def tilemap_2d(self):
         for loc in self.tilemap:
@@ -68,9 +77,6 @@ class Game:
         with open(file_path, 'r') as file:
             line_count = sum(1 for line in file)
         return line_count
-
-    
-
 
     def load_level(self, map_id):
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
@@ -95,6 +101,11 @@ class Game:
         Health_Bar.__init__(self)
         Coins.__init__(self)
         A_Star.Setup_Map(self)
+        # self.light_handler.Setup_Shadow_Map()
+
+        # Printing the map
+        # for row in self.shadow_map:
+        #     print(row)
 
 
 
@@ -116,6 +127,12 @@ class Game:
 
             self.inventory.Update(render_scroll)
             Coins.Update(self)
+            # self.light_handler.Update(render_scroll)
+
+            
+
+    
+
     
     
 
@@ -141,6 +158,7 @@ class Game:
         self.inventory.render(self.display)
         for particle in self.particles:
             particle.render(self.display, render_scroll)
+
 
 
         

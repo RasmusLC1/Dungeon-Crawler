@@ -16,7 +16,6 @@ class Health_Potion(Item):
         self.Update()
     
     def Update(self):
-        print(self.amount)
         if self.amount == 1:
             self.sub_type = 'red_low'
         elif self.amount == 2:

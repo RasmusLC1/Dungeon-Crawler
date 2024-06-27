@@ -116,15 +116,6 @@ class Inventory:
                 return
 
 
-            # Clicking on item
-            if not self.game.mouse.left_click and self.item_clicked:
-                if self.item_clicked < 30 and self.game.mouse.hold_down_left < 5:
-                    print("ACTIVATE")
-                else:
-                    self.active_item = None
-                self.item_clicked = 0  
-                return
-
     def Overflow(self, item):
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
