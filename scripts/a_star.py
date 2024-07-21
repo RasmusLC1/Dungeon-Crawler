@@ -54,14 +54,18 @@ class A_Star:
             row = []
             for y in range(self.min_y, self.max_y+1):
                 tile = self.tilemap.extract_On_Location([x, y])
-                location = 1
                 if tile == 'Floor':
                     location = 0
+                else:
+                    location = 1
                 
                 row.append(location)
             if not any(row):  # If the row is full of Nones or empty, stop adding new rows
                 break
             tile_map.append(row)
+
+        # for row in tile_map:
+        #     print(row)
         
         # Set traps in the tile_map
         for trap in self.traps:

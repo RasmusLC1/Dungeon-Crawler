@@ -32,6 +32,9 @@ class Health_Bar:
         
         # Use self.display consistently if it's the initialized display surface
         self.display.blit(text, (rect_x, rect_y - 10))
-        pygame.draw.rect(self.display, (0, 255, 0), (rect_x, rect_y, normalised_health, rect_height))
-        pygame.draw.rect(self.display, (255, 0, 0), (rect_x + normalised_health, rect_y, bar_length-normalised_health, rect_height))
+        # Draw healthy
+        pygame.draw.rect(self.display, (0, 255, 0), (rect_x - 10, rect_y, normalised_health, rect_height))
+        # Draw damage
+        pygame.draw.rect(self.display, (255, 0, 0), (rect_x - 10 + normalised_health, rect_y, bar_length-normalised_health, rect_height))
+        # Draw Heart
         self.display.blit(self.scaled_heart, (rect_x + 40, rect_y - 12))

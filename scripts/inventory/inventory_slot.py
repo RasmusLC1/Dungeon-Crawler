@@ -32,7 +32,7 @@ class Inventory_Slot():
     def Add_Item(self, item):
         item.active = True
         self.item = item
-        self.item.Move(self.pos)
+        self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])

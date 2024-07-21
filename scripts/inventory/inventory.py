@@ -6,10 +6,10 @@ from copy import copy
 class Inventory:
     def __init__(self, game):
         self.x_size = 7
-        self.y_size = 2
+        self.y_size = 1
         self.game = game
         self.available_pos = []
-        self.size = (10, 10)
+        self.size = (17, 17)
         self.active_item = None
         self.item_clicked = 0
         self.click_cooldown = 0
@@ -21,9 +21,9 @@ class Inventory:
     def Setup(self):
         for j in range(self.y_size):
             for i in range(self.x_size):
-                x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 40
-                y = j * self.size[0] + self.game.screen_height / self.game.render_scale - 25
-                self.inventory.append(Inventory_Slot(self.game, (x, y), (10, 10), None))
+                x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 65
+                y = j * self.size[0] + self.game.screen_height / self.game.render_scale - 20
+                self.inventory.append(Inventory_Slot(self.game, (x, y), self.size, None))
 
     def Update(self, offset = (0,0)):
         Inventory.Active_Item(self, offset)
