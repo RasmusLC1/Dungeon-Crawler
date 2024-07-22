@@ -70,6 +70,26 @@ class Tilemap:
                 tiles.append(self.tilemap[check_loc])
         return tiles
     
+    # Get actual tile
+    def Current_Tile(self, pos):
+        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
+        check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
+        if check_loc in self.tilemap:
+            return self.tilemap[check_loc]
+        else:
+            return None
+        
+    # Check for collision on relevant tile
+    def Collision_Check(self, pos):
+        tile = self.Current_Tile(pos)
+        if not tile:
+            return False
+        if tile['type'] == 'Floor':
+            return True
+        else:
+            return False
+
+    
     def save(self, path):
         f = open(path, 'w')
         json.dump({'tilemap': self.tilemap, 'tile_size': self.tile_size, 'offgrid': self.offgrid_tiles}, f)

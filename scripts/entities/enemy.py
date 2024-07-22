@@ -26,6 +26,7 @@ class Enemy(Moving_Entity):
         self.src_y = 0
         self.des_x = 0
         self.des_y = 0
+        self.search_radius = 100
     
     def update(self, tilemap, movement=(0, 0)):
         
@@ -42,7 +43,7 @@ class Enemy(Moving_Entity):
         
     def Path_Finding(self):
         # Player is close, so the enemy charge directly
-        if (abs(self.pos[0]) - abs(self.game.player.pos[0]) < 40 and abs(self.pos[1]) - abs(self.game.player.pos[1]) < 40):
+        if (abs(self.pos[0]) - abs(self.game.player.pos[0]) < self.search_radius and abs(self.pos[1]) - abs(self.game.player.pos[1]) < self.search_radius):
             self.direction = pygame.math.Vector2((self.game.player.pos[0] - self.pos[0]), (self.game.player.pos[1] - self.pos[1]))
             if not self.direction:
                 return
@@ -53,11 +54,11 @@ class Enemy(Moving_Entity):
         # Calculate a new shortest path
         if not self.pathfinding_cooldown:
             self.path.clear()
-            self.Calculate_Position()
+            # self.Calculate_Position()
             
-            A_Star.a_star_search(self.game, self, [self.src_y, self.src_x], [self.des_y, self.des_x])
+            A_Star.a_star_search(self.game, self, self.pos, self.game.player.pos)
             
-            self.pathfinding_cooldown = 100
+            self.pathfinding_cooldown = 50
         else:
             self.pathfinding_cooldown -= 1
         # Pathfinding
@@ -89,11 +90,11 @@ class Enemy(Moving_Entity):
             self.Moving_Random()
 
             
-    def Calculate_Position(self):
-        self.src_x = round(self.pos[0] / 16) - self.game.min_x 
-        self.src_y = round(self.pos[1] / 16) - self.game.min_y 
-        self.des_x = round(self.game.player.pos[0] / 16) - self.game.min_x 
-        self.des_y = round(self.game.player.pos[1] / 16) - self.game.min_y 
+    # def Calculate_Position(self):
+    #     self.src_x = round(self.pos[0] / 16) - self.game.min_x 
+    #     self.src_y = round(self.pos[1] / 16) - self.game.min_y 
+    #     self.des_x = round(self.game.player.pos[0] / 16) - self.game.min_x 
+    #     self.des_y = round(self.game.player.pos[1] / 16) - self.game.min_y 
 
     def Moving_Random(self):
         if self.running:

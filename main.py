@@ -178,6 +178,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 self.mouse.Mouse_Input(event, render_scroll)
+
                 Keyboard_Handler.keyboard_Input(self, event, offset = render_scroll)
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
