@@ -26,7 +26,6 @@ class Enemy(Moving_Entity):
         self.src_y = 0
         self.des_x = 0
         self.des_y = 0
-        self.search_radius = 100
     
     def update(self, tilemap, movement=(0, 0)):
         
@@ -43,7 +42,7 @@ class Enemy(Moving_Entity):
         
     def Path_Finding(self):
         # Player is close, so the enemy charge directly
-        if (abs(self.pos[0]) - abs(self.game.player.pos[0]) < self.search_radius and abs(self.pos[1]) - abs(self.game.player.pos[1]) < self.search_radius):
+        if (abs(self.pos[0]) - abs(self.game.player.pos[0]) < 100 and abs(self.pos[1]) - abs(self.game.player.pos[1]) < 100):
             self.direction = pygame.math.Vector2((self.game.player.pos[0] - self.pos[0]), (self.game.player.pos[1] - self.pos[1]))
             if not self.direction:
                 return
@@ -54,11 +53,10 @@ class Enemy(Moving_Entity):
         # Calculate a new shortest path
         if not self.pathfinding_cooldown:
             self.path.clear()
-            # self.Calculate_Position()
             
-            A_Star.a_star_search(self.game, self, self.pos, self.game.player.pos)
+            self.game.a_star.a_star_search(self, self.pos, self.game.player.pos)
             
-            self.pathfinding_cooldown = 50
+            self.pathfinding_cooldown = 100
         else:
             self.pathfinding_cooldown -= 1
         # Pathfinding

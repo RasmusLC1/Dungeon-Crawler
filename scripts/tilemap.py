@@ -60,6 +60,15 @@ class Tilemap:
                 matches = tile['type']
         return matches
     
+    def Get_Pos(self):
+        positions = []
+        for tile in self.tilemap.values():
+            positions.append(tile['pos'])
+        return positions
+    
+    def Get_Tile_Size(self):
+        return self.tile_size
+    
     # Get surrounding tiles
     def tiles_around(self, pos):
         tiles = []
@@ -75,7 +84,7 @@ class Tilemap:
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
         check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
         if check_loc in self.tilemap:
-            return self.tilemap[check_loc]
+            return self.tilemap[check_loc]['type']
         else:
             return None
         

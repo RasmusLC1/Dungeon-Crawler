@@ -20,68 +20,51 @@ class A_Star:
             self.col = 0
             self.map = []
 
-    def Setup_Map(self):
-        tile_map = []  # This will be a list of lists, each representing a row.
+    
 
-        f = open('data/maps/0.json', 'r')
-        map_data = json.load(f)
-        f.close()
+    def Setup_TileMap(self, game):
+        self.map.clear()
+        # Extract all pos values
+        positions = game.tilemap.Get_Pos()
 
-        # Assuming 'tilemap' is a dictionary with nested dictionaries
-        tilemap = map_data['tilemap']
-        self.min_x = 9999
-        self.max_x = -9999
-        self.min_y = 9999
-        self.max_y = -9999
-        
-        for key, value in tilemap.items():
-            
-            pos_x = value['pos'][0]  # Extract the y value from the position
-            if pos_x < self.min_x:
-                self.min_x = pos_x
-            if pos_x > self.max_x:
-                self.max_x = pos_x
+        # Separate x and y coordinates
+        x_coords = [pos[0] for pos in positions]
+        y_coords = [pos[1] for pos in positions]
 
-            pos_y = value['pos'][1]  # Extract the y value from the position
-            if pos_y < self.min_y:
-                self.min_y = pos_y
-            if pos_y > self.max_y:
-                self.max_y = pos_y
+        # Find min and max for x and y coordinates
+        self.min_x = min(x_coords)
+        self.max_x = max(x_coords)
+        self.min_y = min(y_coords)
+        self.max_y = max(y_coords)
 
         self.row = self.max_y - self.min_y + 1
         self.col = self.max_x - self.min_x + 1
-        for x in range(self.min_x, self.max_x+1):
+
+        # Print the results
+        print("x range:", [self.min_x, self.max_x])
+        print("y range:", [self.min_y, self.max_y])
+        print("ROW AND COLUMN", (self.row, self.col))
+
+        tilesize = game.tilemap.Get_Tile_Size()
+
+        for y in range(self.min_y, self.max_y + 1):
             row = []
-            for y in range(self.min_y, self.max_y+1):
-                tile = self.tilemap.extract_On_Location([x, y])
+            for x in range(self.min_x, self.max_x + 1):
+                tile_type = game.tilemap.Current_Tile((x * tilesize, y * tilesize))
                 location = 1
-                if tile == 'Floor':
+                if tile_type == 'Floor':
                     location = 0
-                
                 row.append(location)
-            if not any(row):  # If the row is full of Nones or empty, stop adding new rows
-                break
-            tile_map.append(row)
-        
-        # Set traps in the tile_map
-        for trap in self.traps:
-            x_low = math.floor(trap.pos[0]//16) - self.min_x
-            y_low = math.floor(trap.pos[1]//16) - self.min_y
-            if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
-                tile_map[x_low][y_low] = 1
-                tile_map[x_low+1][y_low] = 1
-                tile_map[x_low-1][y_low] = 1
-                tile_map[x_low][y_low+1] = 1
-                tile_map[x_low][y_low-1] = 1
+            self.map.append(row)
 
-
-        self.map = [list(row) for row in zip(*tile_map)]
+        # Print the map to debug
+        for row in self.map:
+            print(row)
 
         
 
     # Check if a cell is valid (within the grid)
     def is_valid(self, row, col):
-        
         return (row >= 0) and (row < self.row) and (col >= 0) and (col < self.col)
 
     # Check if a cell is unblocked
@@ -89,7 +72,7 @@ class A_Star:
         return self.map[row][col] == 0
 
     # Check if a cell is the destination
-    def is_destination(row, col, dest):
+    def is_destination(self, row, col, dest):
         return row == dest[0] and col == dest[1]
 
     # Calculate the heuristic value of a cell (Euclidean distance to destination)
@@ -122,17 +105,28 @@ class A_Star:
 
     # Implement the A* search algorithm
     def a_star_search(self, enemy, src, dest):
+        tilesize = enemy.game.tilemap.Get_Tile_Size()
+        adjusted_x_src = int(src[0] // tilesize)
+        adjusted_y_src = int(src[1] // tilesize)
+        
+        adjusted_x_dest = int(dest[0] // tilesize)
+        adjusted_y_dest = int(dest[1] // tilesize)
+        # print(self.is_valid(adjusted_x_src, adjusted_y_src))
+        # print(self.row, self.col)
         # Check if the source and destination are valid
-        if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
+        if not self.is_valid(adjusted_x_src, adjusted_y_src) or not self.is_valid(adjusted_x_dest, adjusted_y_dest):
             return
 
         # Check if the source and destination are unblocked
-        if not A_Star.is_unblocked(self, src[0], src[1]) or not A_Star.is_unblocked(self, dest[0], dest[1]):
+        if not self.is_unblocked(adjusted_x_src, adjusted_y_src) or not self.is_unblocked(adjusted_x_dest, adjusted_y_dest):
             return
+        
 
         # Check if we are already at the destination
-        if A_Star.is_destination(src[0], src[1], dest):
+        if self.is_destination(adjusted_x_src, adjusted_y_src, dest):
             return
+        
+
         
         
         # Initialize the closed list (visited cells)
@@ -141,8 +135,8 @@ class A_Star:
         cell_details = [[A_Star() for _ in range(self.col)] for _ in range(self.row)]
 
         # Initialize the start cell details
-        i = src[0]
-        j = src[1]
+        i = adjusted_x_src
+        j = adjusted_y_src
         cell_details[i][j].f = 0
         cell_details[i][j].g = 0
         cell_details[i][j].h = 0
@@ -172,14 +166,17 @@ class A_Star:
                 new_j = j + dir[1]
                 
                 # If the successor is valid, unblocked, and not visited
-                if A_Star.is_valid(self, new_i, new_j) and A_Star.is_unblocked(self, new_i, new_j) and not closed_list[new_i][new_j]:
+                if self.is_valid(new_i, new_j) and self.is_unblocked(new_i, new_j) and not closed_list[new_i][new_j]:
                     # If the successor is the destination
-                    if A_Star.is_destination(new_i, new_j, dest):
+                    # TODO Unable to verify the destination
+                    if self.is_destination(new_i * tilesize, new_j * tilesize, dest):
+                        print("TEST")
                         # Set the parent of the destination cell
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
                         A_Star.trace_path(enemy, cell_details, dest)
                         found_dest = True
+
                         return
                     else:
                         # Calculate the new f, g, and h values

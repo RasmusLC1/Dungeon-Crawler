@@ -53,6 +53,8 @@ class Game:
         self.inventory = Inventory(self)
         self.mouse = Mouse_Handler(self)
 
+        self.a_star = A_Star()
+
 
         self.level = 0
         self.load_level(self.level)
@@ -100,7 +102,9 @@ class Game:
         Mana_Bar.__init__(self)
         Health_Bar.__init__(self)
         Coins.__init__(self)
-        A_Star.Setup_Map(self)
+        
+        self.a_star.Setup_TileMap(self)
+        # A_Star.Setup_Map(self)
         # self.light_handler.Setup_Shadow_Map()
 
         # Printing the map
