@@ -12,92 +12,71 @@ class A_Star:
             self.f = float('inf') # Total cost of the cell (g + h)
             self.g = float('inf') # Cost from start to this cell
             self.h = 0 # Heuristic cost from this cell to destination
-            # self.x_min = 0
-            # self.y_min = 0
-            # self.x_max = 0
-            # self.y_max = 0
+            self.x_min = 0
+            self.y_min = 0
+            self.x_max = 0
+            self.y_max = 0
             self.row = 0
             self.col = 0
             self.map = []
 
-    # def Setup_Map(self):
-    #     tile_map = []  # This will be a list of lists, each representing a row.
+    
 
-    #     f = open('data/maps/0.json', 'r')
-    #     map_data = json.load(f)
-    #     f.close()
+    def Setup_TileMap(self, game):
+        self.map.clear()
+        # Extract all pos values
+        positions = game.tilemap.Get_Pos()
 
-    #     # Assuming 'tilemap' is a dictionary with nested dictionaries
-    #     tilemap = map_data['tilemap']
-    #     self.min_x = 9999
-    #     self.max_x = -9999
-    #     self.min_y = 9999
-    #     self.max_y = -9999
-        
-    #     for key, value in tilemap.items():
-            
-    #         pos_x = value['pos'][0]  # Extract the y value from the position
-    #         if pos_x < self.min_x:
-    #             self.min_x = pos_x
-    #         if pos_x > self.max_x:
-    #             self.max_x = pos_x
+        # Separate x and y coordinates
+        x_coords = [pos[0] for pos in positions]
+        y_coords = [pos[1] for pos in positions]
 
-    #         pos_y = value['pos'][1]  # Extract the y value from the position
-    #         if pos_y < self.min_y:
-    #             self.min_y = pos_y
-    #         if pos_y > self.max_y:
-    #             self.max_y = pos_y
+        # Get tilesize
+        tilesize = game.tilemap.Get_Tile_Size()
+        # Find min and max for x and y coordinates
+        self.min_x = min(x_coords) * tilesize
+        self.max_x = max(x_coords) * tilesize
+        self.min_y = min(y_coords) * tilesize
+        self.max_y = max(y_coords) * tilesize
 
-    #     self.row = self.max_y - self.min_y + 1
-    #     self.col = self.max_x - self.min_x + 1
-    #     for x in range(self.min_x, self.max_x+1):
-    #         row = []
-    #         for y in range(self.min_y, self.max_y+1):
-    #             tile = self.tilemap.extract_On_Location([x, y])
-    #             if tile == 'Floor':
-    #                 location = 0
-    #             else:
-    #                 location = 1
-                
-    #             row.append(location)
-    #         if not any(row):  # If the row is full of Nones or empty, stop adding new rows
-    #             break
-    #         tile_map.append(row)
+        self.row = self.max_y - self.min_y + 1
+        self.col = self.max_x - self.min_x + 1
 
-    #     # for row in tile_map:
-    #     #     print(row)
-        
-    #     # Set traps in the tile_map
-    #     for trap in self.traps:
-    #         x_low = math.floor(trap.pos[0]//16) - self.min_x
-    #         y_low = math.floor(trap.pos[1]//16) - self.min_y
-    #         if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
-    #             tile_map[x_low][y_low] = 1
-    #             tile_map[x_low+1][y_low] = 1
-    #             tile_map[x_low-1][y_low] = 1
-    #             tile_map[x_low][y_low+1] = 1
-    #             tile_map[x_low][y_low-1] = 1
+        # Print the results
+        print("x range:", [self.min_x, self.max_x])
+        print("y range:", [self.min_y, self.max_y])
+        print("ROW AND COLUMN", (self.row, self.col))
 
+        tilesize = game.tilemap.Get_Tile_Size()
 
-    #     self.map = [list(row) for row in zip(*tile_map)]
+        for y in range(self.min_y, self.max_y + 1):
+            row = []
+            for x in range(self.min_x, self.max_x + 1):
+                tile_type = game.tilemap.Current_Tile((x, y))
+                location = 1
+                if tile_type == 'Floor':
+                    location = 0
+                row.append(location)
+            self.map.append(row)
+
+        # Print the map to debug
+        with open('output.txt', 'w') as file:
+            for row in self.map:
+                file.write(f"{row}\n")
 
         
 
     # Check if a cell is valid (within the grid)
-    def is_valid(self, pos):
-        # print(pos)
-        return self.tilemap.Collision_Check(pos)
+    def is_valid(self, row, col):
+        return (row >= 0) and (row < self.row) and (col >= 0) and (col < self.col)
 
     # Check if a cell is unblocked
-    def is_unblocked(self, pos):
-        return self.tilemap.Collision_Check(pos)
+    def is_unblocked(self, row, col):
+        return self.map[row][col] == 0
 
     # Check if a cell is the destination
-    def is_destination(pos, dest):
-        if abs(pos[0] - dest[0]) < 5 and abs(pos[1] - dest[1]) < 5:
-            return True
-        else:
-            return False
+    def is_destination(self, row, col, dest):
+        return row == dest[0] and col == dest[1]
 
     # Calculate the heuristic value of a cell (Euclidean distance to destination)
     def calculate_h_value(row, col, dest):
@@ -118,9 +97,6 @@ class A_Star:
 
         # Add the source cell to the path
         enemy.path.append((row, col))
-        print("GET PATH")
-        print(row)
-        print(col)
         # Reverse the path to get the path from source to destination
         enemy.path.reverse()
 
@@ -132,30 +108,41 @@ class A_Star:
 
     # Implement the A* search algorithm
     def a_star_search(self, enemy, src, dest):
-        # # Check if the source and destination are valid
-        # if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
-        #     return
+        tilesize = enemy.game.tilemap.Get_Tile_Size()
+        int_src_x = int(src[0])
+        int_src_y = int(src[1])
+        int_dest_x = int(dest[0])
+        int_dest_y = int(dest[1])
+        
+        # print(self.row, self.col)
+        # Check if the source and destination are valid
+        if not self.is_valid(int_src_x, int_src_y) or not self.is_valid(int_dest_x, int_dest_y):
+            return
 
-        # # Check if the source and destination are unblocked
-        # if not A_Star.is_unblocked(self, src[0], src[1]) or not A_Star.is_unblocked(self, dest[0], dest[1]):
-        #     return
+        print(int_src_x, int_src_y)
+        # Check if the source and destination are unblocked
+        if not self.is_unblocked(int_src_x, int_src_y) or not self.is_unblocked(int_dest_x, int_dest_y):
+            return
+        
 
         # Check if we are already at the destination
-        if A_Star.is_destination(enemy.pos, self.player.pos):
+        if self.is_destination(int_src_x, int_src_y, dest):
             return
+        
+
         
         
         # Initialize the closed list (visited cells)
-        closed_list = [[False for _ in range(enemy.search_radius*3 + (int)(src[1]))] for _ in range(enemy.search_radius*3 + (int)(src[0]))]
+        closed_list = [[False for _ in range(self.col)] for _ in range(self.row)]
         # Initialize the details of each cell
-        cell_details = [[A_Star() for _ in range(enemy.search_radius*3 + (int)(src[1]))] for _ in range(enemy.search_radius*3 + (int)(src[0]))]
+        cell_details = [[A_Star() for _ in range(self.col)] for _ in range(self.row)]
 
         # Initialize the start cell details
-        i = (int)(src[0])
-        j = (int)(src[1])
-        cell_details[i][j].f = (int)(0)
-        cell_details[i][j].g = (int)(0)
-        cell_details[i][j].h = (int)(0)
+        i = int_src_x
+        j = int_src_y
+        cell_details[i][j].f = 0
+        cell_details[i][j].g = 0
+        cell_details[i][j].h = 0
         cell_details[i][j].parent_i = i
         cell_details[i][j].parent_j = j
 
@@ -176,32 +163,34 @@ class A_Star:
             j = p[2]
             closed_list[i][j] = True
             # For each direction, check the successors
-            directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+            directions = [(0, 16), (0, -16), (16, 0), (-16, 0), (16, 16), (16, -16), (-16, 16), (-16, -16)]
             for dir in directions:
                 new_i = i + dir[0]
                 new_j = j + dir[1]
+                
                 # If the successor is valid, unblocked, and not visited
-                if A_Star.is_valid(self, (new_i, new_j)) and A_Star.is_unblocked(self, (new_i, new_j)) and not closed_list[new_i][new_j]:
+                if self.is_valid(new_i, new_j) and self.is_unblocked(new_i, new_j) and not closed_list[new_i][new_j]:
                     # If the successor is the destination
-                    print(A_Star.is_destination((new_i, new_j), dest))
-                    if A_Star.is_destination((new_i, new_j), dest):
+                    # TODO Unable to verify the destination
+                    if self.is_destination(new_i, new_j, dest):
                         # Set the parent of the destination cell
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
                         A_Star.trace_path(enemy, cell_details, dest)
                         found_dest = True
+
                         return
                     else:
                         # Calculate the new f, g, and h values
-                        g_new = cell_details[i][j].g + 1
+                        g_new = cell_details[i][j].g + 1.0
                         h_new = A_Star.calculate_h_value(new_i, new_j, dest)
                         f_new = g_new + h_new
 
                         # If the cell is not in the open list or the new f value is smaller
                         if cell_details[new_i][new_j].f == float('inf') or cell_details[new_i][new_j].f > f_new:
-                            # # Add the cell to the open list
+                            # Add the cell to the open list
                             heapq.heappush(open_list, (f_new, new_i, new_j))
-                            # # Update the cell details
+                            # Update the cell details
                             cell_details[new_i][new_j].f = f_new
                             cell_details[new_i][new_j].g = g_new
                             cell_details[new_i][new_j].h = h_new
