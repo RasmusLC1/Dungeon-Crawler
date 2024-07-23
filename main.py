@@ -67,6 +67,7 @@ class Game:
         self.test_array = np.zeros((rows, cols), dtype=int)
         # self.light_handler = Light_Handler(self)
 
+
         
 
 

@@ -21,65 +21,106 @@ class A_Star:
             self.map = []
 
     def Setup_Map(self, game):
-        tile_map = []  # This will be a list of lists, each representing a row.
 
-        f = open('data/maps/0.json', 'r')
-        map_data = json.load(f)
-        f.close()
+        self.map.clear()
+        # Extract all pos values
+        positions = game.tilemap.Get_Pos()
 
-        # Assuming 'tilemap' is a dictionary with nested dictionaries
-        tilemap = map_data['tilemap']
-        self.min_x = 9999
-        self.max_x = -9999
-        self.min_y = 9999
-        self.max_y = -9999
+        # Separate x and y coordinates
+        x_coords = [pos[0] for pos in positions]
+        y_coords = [pos[1] for pos in positions]
+
         
-        for key, value in tilemap.items():
-            
-            pos_x = value['pos'][0]  # Extract the y value from the position
-            if pos_x < self.min_x:
-                self.min_x = pos_x
-            if pos_x > self.max_x:
-                self.max_x = pos_x
-
-            pos_y = value['pos'][1]  # Extract the y value from the position
-            if pos_y < self.min_y:
-                self.min_y = pos_y
-            if pos_y > self.max_y:
-                self.max_y = pos_y
+        # Find min and max for x and y coordinates
+        self.min_x = min(x_coords)
+        self.max_x = max(x_coords)
+        self.min_y = min(y_coords)
+        self.max_y = max(y_coords)
 
         self.row = self.max_y - self.min_y + 1
         self.col = self.max_x - self.min_x + 1
-        for x in range(self.min_x, self.max_x+1):
+
+        # Print the results
+        print("x range:", [self.min_x, self.max_x])
+        print("y range:", [self.min_y, self.max_y])
+        print("ROW AND COLUMN", (self.row, self.col))
+
+        tilesize = game.tilemap.Get_Tile_Size()
+
+        for y in range(self.min_y, self.max_y + 1):
             row = []
-            for y in range(self.min_y, self.max_y+1):
-                tile = game.tilemap.extract_On_Location([x, y])
-                if tile == 'Floor':
+            for x in range(self.min_x, self.max_x + 1):
+                tile_type = game.tilemap.Current_Tile((x * tilesize, y * tilesize))
+                location = 1
+                if tile_type == 'Floor':
                     location = 0
-                else:
-                    location = 1
-                
                 row.append(location)
-            if not any(row):  # If the row is full of Nones or empty, stop adding new rows
-                break
-            tile_map.append(row)
+            self.map.append(row)
 
-        # for row in tile_map:
-        #     print(row)
+        # Print the map to debug
+        with open('output.txt', 'w') as file:
+            for row in self.map:
+                file.write(f"{row}\n")
+
+        # tile_map = []  # This will be a list of lists, each representing a row.
+
+        # f = open('data/maps/0.json', 'r')
+        # map_data = json.load(f)
+        # f.close()
+
+        # # Assuming 'tilemap' is a dictionary with nested dictionaries
+        # tilemap = map_data['tilemap']
+        # self.min_x = 9999
+        # self.max_x = -9999
+        # self.min_y = 9999
+        # self.max_y = -9999
         
-        # Set traps in the tile_map
-        for trap in game.traps:
-            x_low = math.floor(trap.pos[0]//16) - self.min_x
-            y_low = math.floor(trap.pos[1]//16) - self.min_y
-            if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
-                tile_map[x_low][y_low] = 1
-                tile_map[x_low+1][y_low] = 1
-                tile_map[x_low-1][y_low] = 1
-                tile_map[x_low][y_low+1] = 1
-                tile_map[x_low][y_low-1] = 1
+        # for key, value in tilemap.items():
+            
+        #     pos_x = value['pos'][0]  # Extract the y value from the position
+        #     if pos_x < self.min_x:
+        #         self.min_x = pos_x
+        #     if pos_x > self.max_x:
+        #         self.max_x = pos_x
+
+        #     pos_y = value['pos'][1]  # Extract the y value from the position
+        #     if pos_y < self.min_y:
+        #         self.min_y = pos_y
+        #     if pos_y > self.max_y:
+        #         self.max_y = pos_y
+
+        # self.row = self.max_y - self.min_y + 1
+        # self.col = self.max_x - self.min_x + 1
+        # for x in range(self.min_x, self.max_x+1):
+        #     row = []
+        #     for y in range(self.min_y, self.max_y+1):
+        #         tile = game.tilemap.extract_On_Location([x, y])
+        #         if tile == 'Floor':
+        #             location = 0
+        #         else:
+        #             location = 1
+                
+        #         row.append(location)
+        #     if not any(row):  # If the row is full of Nones or empty, stop adding new rows
+        #         break
+        #     tile_map.append(row)
+
+        # # for row in tile_map:
+        # #     print(row)
+        
+        # # Set traps in the tile_map
+        # for trap in game.traps:
+        #     x_low = math.floor(trap.pos[0]//16) - self.min_x
+        #     y_low = math.floor(trap.pos[1]//16) - self.min_y
+        #     if 0 <= x_low < len(tile_map) and 0 <= y_low < len(tile_map[0]):
+        #         tile_map[x_low][y_low] = 1
+        #         tile_map[x_low+1][y_low] = 1
+        #         tile_map[x_low-1][y_low] = 1
+        #         tile_map[x_low][y_low+1] = 1
+        #         tile_map[x_low][y_low-1] = 1
 
 
-        self.map = [list(row) for row in zip(*tile_map)]
+        # self.map = [list(row) for row in zip(*tile_map)]
 
         
 
@@ -182,7 +223,6 @@ class A_Star:
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
                         A_Star.trace_path(enemy, cell_details, dest)
-                        found_dest = True
                         return
                     else:
                         # Calculate the new f, g, and h values
