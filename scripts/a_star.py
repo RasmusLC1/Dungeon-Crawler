@@ -210,10 +210,18 @@ class A_Star:
             j = p[2]
             closed_list[i][j] = True
             # For each direction, check the successors
-            directions = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
-            for dir in directions:
+            directions_straight = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            directions_diagonal = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+            
+            wall_hit = False
+
+
+            for dir in directions_straight:
                 new_i = i + dir[0]
                 new_j = j + dir[1]
+
+                if not A_Star.is_unblocked(self, new_i, new_j):
+                    wall_hit = True
 
                 # If the successor is valid, unblocked, and not visited
                 if A_Star.is_valid(self, new_i, new_j) and A_Star.is_unblocked(self, new_i, new_j) and not closed_list[new_i][new_j]:
@@ -240,5 +248,38 @@ class A_Star:
                             cell_details[new_i][new_j].h = h_new
                             cell_details[new_i][new_j].parent_i = i
                             cell_details[new_i][new_j].parent_j = j
+                    
+
+                if not wall_hit:
+                    for dir in directions_diagonal:
+                        new_i = i + dir[0]
+                        new_j = j + dir[1]
+
+                        # If the successor is valid, unblocked, and not visited
+                        if A_Star.is_valid(self, new_i, new_j) and A_Star.is_unblocked(self, new_i, new_j) and not closed_list[new_i][new_j]:
+                            # If the successor is the destination
+                            if A_Star.is_destination(new_i, new_j, dest):
+                                # Set the parent of the destination cell
+                                cell_details[new_i][new_j].parent_i = i
+                                cell_details[new_i][new_j].parent_j = j
+                                A_Star.trace_path(enemy, cell_details, dest)
+                                return
+                            else:
+                                # Calculate the new f, g, and h values
+                                g_new = cell_details[i][j].g + 1.0
+                                h_new = A_Star.calculate_h_value(new_i, new_j, dest)
+                                f_new = g_new + h_new
+
+                                # If the cell is not in the open list or the new f value is smaller
+                                if cell_details[new_i][new_j].f == float('inf') or cell_details[new_i][new_j].f > f_new:
+                                    # Add the cell to the open list
+                                    heapq.heappush(open_list, (f_new, new_i, new_j))
+                                    # Update the cell details
+                                    cell_details[new_i][new_j].f = f_new
+                                    cell_details[new_i][new_j].g = g_new
+                                    cell_details[new_i][new_j].h = h_new
+                                    cell_details[new_i][new_j].parent_i = i
+                                    cell_details[new_i][new_j].parent_j = j
+            
 
 
