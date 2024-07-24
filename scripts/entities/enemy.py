@@ -49,32 +49,15 @@ class Enemy(Moving_Entity):
         
     def Path_Finding(self):
         # print(self.stuck_time)
-        if self.pos_holder_timer:
-            self.pos_holder_timer -= 1
-        else:
-            self.pos_holder = self.pos.copy()
-            self.pos_holder_timer = 200
+        self.Position_Holder()
 
-        if self.stuck_timer > 20:
-            self.stuck = True
-            self.random_movement_cooldown = 0
-            self.stuck_timer = 0
-
-        if self.stuck:
-            self.Moving_Random()
-            if self.random_movement_cooldown <= 0:
-                self.stuck = False
+        if self.Stuck_Check():
             return
-        
+
+        if self.Charging():
+            return
 
         
-        # Player is close, so the enemy charge directly
-        if (abs(self.pos[0] - self.game.player.pos[0]) < 5 and abs(self.pos[1] - self.game.player.pos[1]) < 5):
-            self.direction = pygame.math.Vector2((self.game.player.pos[0] - self.pos[0]), (self.game.player.pos[1] - self.pos[1]))
-            self.direction.normalize_ip()
-            self.direction[0] /= 4
-            self.direction[1] /= 4
-            return
         # Calculate a new shortest path
         if not self.pathfinding_cooldown:
             self.path.clear()
@@ -88,8 +71,11 @@ class Enemy(Moving_Entity):
         if len(self.path) > 1:
             # Calculate the updated position
             self.Calculate_Position()
-                # Assign the target to be the next position
+            # Assign the target to be the next position
             target = self.path[1]
+            # Move the entity away from walls
+            self.Corner_Handling()
+
             # Check if enemy has reached target, pop the first element and set direction to 0
             if (self.src_y, self.src_x) == target:
                 self.direction = (0,0)
@@ -120,11 +106,70 @@ class Enemy(Moving_Entity):
                 return
         # If there is no path, move at random
         else:
-            print(self.direction)
+            self.Moving_Random()
 
-            # self.Moving_Random()
+    # Move the entity if they're to close to a wall
+    def Corner_Handling(self):
+        target_x_pos = (self.src_x + self.game.a_star.min_x) * 16
+        target_y_pos = (self.src_y + self.game.a_star.min_y) * 16
+        if not self.game.tilemap.Current_Tile((target_x_pos, target_y_pos + 16)) == 'Floor':
+            # Change the path to be a list, so it can be modified and
+            # set the path goal up to avoid clash with wall
+            path_list = list(self.path[1])
+            path_list[1] += 0.5
+            self.path[1] = tuple(path_list)
 
-            
+        elif not self.game.tilemap.Current_Tile((target_x_pos, target_y_pos - 16)) == 'Floor':
+            path_list = list(self.path[1])
+            path_list[1] -= 0.5
+            self.path[1] = tuple(path_list)
+
+        if not self.game.tilemap.Current_Tile((target_x_pos + 16, target_y_pos)) == 'Floor':
+            path_list = list(self.path[1])
+            path_list[0] -= 0.5
+            self.path[1] = tuple(path_list)
+        elif not self.game.tilemap.Current_Tile((target_x_pos - 16, target_y_pos)) == 'Floor':
+            path_list = list(self.path[1])
+            path_list[0] += 0.5
+            self.path[1] = tuple(path_list)
+
+    def Charging(self):
+        # Player is close, so the enemy charge directly
+        if (abs(self.pos[0] - self.game.player.pos[0]) < 5 and abs(self.pos[1] - self.game.player.pos[1]) < 5):
+            self.direction = pygame.math.Vector2((self.game.player.pos[0] - self.pos[0]), (self.game.player.pos[1] - self.pos[1]))
+            self.direction.normalize_ip()
+            self.direction[0] /= 4
+            self.direction[1] /= 4
+            return True
+        
+        return False
+
+    def Position_Holder(self):
+        # Save the entity's position every 200 ticks
+        if self.pos_holder_timer:
+            self.pos_holder_timer -= 1
+        else:
+            self.pos_holder = self.pos.copy()
+            self.pos_holder_timer = 200
+
+
+    def Stuck_Check(self):
+        
+        # Check if the entity is stuck for 20 ticks
+        if self.stuck_timer > 20:
+            self.stuck = True
+            self.random_movement_cooldown = 0
+            self.stuck_timer = 0
+
+        if self.stuck:
+            self.Moving_Random()
+            if self.random_movement_cooldown <= 0:
+                self.stuck = False
+            return True
+        
+        return False
+        
+
     def Calculate_Position(self):
         self.src_x = round(self.pos[0] / 16) - self.game.a_star.min_x 
         self.src_y = round(self.pos[1] / 16) - self.game.a_star.min_y 
@@ -135,7 +180,6 @@ class Enemy(Moving_Entity):
 
 
     def Moving_Random(self):
-        print("TEST")
 
         if self.running:
             self.running -= 1

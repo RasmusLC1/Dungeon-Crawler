@@ -48,24 +48,16 @@ class Tilemap:
         
         return matches
     
-    def extract_On_Location(self, Location):
-        matches = ''
-        for tile in self.offgrid_tiles.copy():
-            if (tile['pos'])== Location:
-                matches = tile['type']
-                    
-        for loc in self.tilemap:
-            tile = self.tilemap[loc]
-            if (tile['pos']) == Location:
-                matches = tile['type']
-        return matches
+   
     
+    # Get the position of tiles in the tilemap
     def Get_Pos(self):
         positions = []
         for tile in self.tilemap.values():
             positions.append(tile['pos'])
         return positions
     
+    # Get the tile size
     def Get_Tile_Size(self):
         return self.tile_size
     
@@ -79,7 +71,7 @@ class Tilemap:
                 tiles.append(self.tilemap[check_loc])
         return tiles
     
-    # Get actual tile
+    # Check what tile is in a given position
     def Current_Tile(self, pos):
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
         check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
