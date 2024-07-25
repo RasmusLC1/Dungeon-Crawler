@@ -195,8 +195,8 @@ class Enemy(Moving_Entity):
             for trap in self.nearby_traps:
                 if self.rect().colliderect(trap.rect()):
                     
-                    self.direction_x = self.direction_x_holder * 4
-                    self.direction_y = self.direction_y_holder * 4
+                    self.direction_x = self.direction_x_holder * 2
+                    self.direction_y = self.direction_y_holder * 2
                     self.direction = (self.direction_x, self.direction_y)
                 else:
                     if self.Future_Rect(self.direction).colliderect(trap.rect()):

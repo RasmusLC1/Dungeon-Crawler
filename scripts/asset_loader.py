@@ -60,10 +60,22 @@ class Asset_Loader:
     
     def Asset_Entities_List(self):
         entities_assets = {
-            'player_down': get_tiles_from_sheet('entities/player.png', 1, 0, 0, 0, 20, 30),
-            'player_side': get_tiles_from_sheet('entities/player.png', 1, 0, 40, 0, 20, 30),
-            'player_up': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 0, 20, 30),
-            'decrepit_bones': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 0, 16, 16),
+            'player_down_head': get_tiles_from_sheet('entities/player.png', 1, 0, 0, 0, 20, 16),
+            'player_down_body': get_tiles_from_sheet('entities/player.png', 1, 0, 0, 16, 20, 12),
+            'player_down_legs': get_tiles_from_sheet('entities/player.png', 1, 0, 0, 28, 20, 4),
+
+            'player_side_head': get_tiles_from_sheet('entities/player.png', 1, 0, 40, 0, 20, 16),
+            'player_side_body': get_tiles_from_sheet('entities/player.png', 1, 0, 40, 16, 20, 12),
+            'player_side_legs': get_tiles_from_sheet('entities/player.png', 1, 0, 40, 28, 20, 4),
+
+            'player_up_head': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 0, 20, 16),
+            'player_up_body': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 16, 20, 12),
+            'player_up_legs': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 28, 20, 4),
+            
+
+            'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 0, 16, 8),
+            'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 8, 16, 6),
+            'decrepit_bones_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 14, 16, 2),
             
             'gun': load_image('gun.png'),
             'projectile': load_image('projectile.png'),
