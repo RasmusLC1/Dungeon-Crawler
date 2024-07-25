@@ -117,6 +117,7 @@ class Player(Moving_Entity):
         self.ammo -= 1
 
     def Dash(self, offset=(0, 0)):
+        print(self.game.inventory.Get_Inventory_Length())
         for weapon in self.weapons:
             print(weapon)
         if not self.dashing:

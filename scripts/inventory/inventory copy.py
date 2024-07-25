@@ -18,7 +18,6 @@ class Inventory:
         self.inventory = []
         self.Setup()
 
-    # Configure the inventory when Initialiased
     def Setup(self):
         for j in range(self.y_size):
             for i in range(self.x_size):
@@ -26,9 +25,8 @@ class Inventory:
                 y = j * self.size[0] + self.game.screen_height / self.game.render_scale - 20
                 self.inventory.append(Inventory_Slot(self.game, (x, y), self.size, None))
 
-    # General Update function
     def Update(self, offset = (0,0)):
-        self.Active_Item(offset)
+        Inventory.Active_Item(self, offset)
 
         for inventory_slot in self.inventory:
             if inventory_slot.item:
@@ -38,16 +36,15 @@ class Inventory:
                     if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
                         self.clicked_inventory_slot = inventory_slot
                         self.item_clicked += 1
-                        # Activates when mouse has been held down for 10 ticks and the inventory slot is not active anymore 
                         if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
-                            # Copy the item and pick it up
                             self.active_item = copy(inventory_slot.item)
                             self.active_item.picked_up = True
                             inventory_slot.Set_Active(True)
                             return
         self.Item_Click()
         return
-
+        
+        
     
     # Handle clicking items
     def Item_Click(self):
@@ -57,19 +54,16 @@ class Inventory:
                     self.clicked_inventory_slot.item.Activate()
                     self.clicked_inventory_slot.Update()
                     self.clicked_inventory_slot = None
-                    
         return
-                   
-    # Return the item to it's previous Inventory slot and deactivate
-    # the item and inventory slot
+                            
     def Return_Item(self):
-        if self.clicked_inventory_slot:
-            self.clicked_inventory_slot.Set_Active(False)
-            self.active_item = None
-            self.clicked_inventory_slot = None
-        return  
+        # Return the item to Inventory
+            if self.clicked_inventory_slot.active:
+                self.clicked_inventory_slot.Set_Active(False)
+                self.active_item = None
+                self.clicked_inventory_slot = None
+                return  
 
-    # Move the item around
     def Move_Item(self, offset):
         # Render legal item position and move it
         self.active_item.render(self.game.display, offset)  
@@ -79,11 +73,11 @@ class Inventory:
             if not self.active_item.Place_Down():
                 self.game.items.append(self.active_item)
             self.active_item = None
-            # Set the inventory to be inactive again
-            if self.clicked_inventory_slot:
+            if self.clicked_inventory_slot.active:
                 self.clicked_inventory_slot.Set_Active(False)
                 self.clicked_inventory_slot.item = None
                 self.clicked_inventory_slot = None
+
         return                
 
     def Move_Item_To_New_Slot(self, offset):
@@ -134,7 +128,6 @@ class Inventory:
 
     # Add item to the inventory
     def Add_Item(self, item):
-        # Check if an item can more than one charge, example healthpotion is 3
         if item.max_amount > 1:
             for inventory_slot in self.inventory:
                 if inventory_slot.item:

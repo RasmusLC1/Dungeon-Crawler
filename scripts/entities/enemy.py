@@ -17,7 +17,6 @@ class Enemy(Moving_Entity):
         self.direction = (0,0,0,0)
         self.direction_x = 0
         self.direction_y = 0
-        self.running = 0
         self.direction_x_holder = 0
         self.direction_y_holder = 0
         self.pos_holder = (0,0)
@@ -181,13 +180,7 @@ class Enemy(Moving_Entity):
 
     def Moving_Random(self):
 
-        if self.running:
-            self.running -= 1
-            self.direction_x = max(1.5, self.direction_x * 2)
-            self.direction_y *= max(1.5, self.direction_y * 2)
-        else:
-            
-            self.direction = (self.direction_x, self.direction_y)
+        self.direction = (self.direction_x, self.direction_y)
         if self.random_movement_cooldown:
             self.random_movement_cooldown -= 1
         else:
@@ -205,7 +198,6 @@ class Enemy(Moving_Entity):
                     self.direction_x = self.direction_x_holder * 4
                     self.direction_y = self.direction_y_holder * 4
                     self.direction = (self.direction_x, self.direction_y)
-                    self.running = 3
                 else:
                     if self.Future_Rect(self.direction).colliderect(trap.rect()):
                         self.direction_x *= -1
