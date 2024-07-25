@@ -23,9 +23,9 @@ class Spike_Pit(Trap):
             self.Cooldown = 100
             if not self.animation:
                 self.animation = 1
-                entity.Set_Snare(50)
+                entity.Set_Effect('Snare', 50)
             else:
-                entity.Set_Snare(25)
+                entity.Set_Effect('Snare', 25)
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]-5, self.size[1]-5)

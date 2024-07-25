@@ -70,7 +70,8 @@ class Inventory:
         self.active_item.Move(self.game.mouse.mpos)
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
-            self.game.items.append(self.active_item)
+            if not self.active_item.Place_Down():
+                self.game.items.append(self.active_item)
             self.active_item = None
             if self.clicked_inventory_slot.active:
                 self.clicked_inventory_slot.Set_Active(False)
@@ -127,7 +128,6 @@ class Inventory:
 
     # Add item to the inventory
     def Add_Item(self, item):
-
         if item.max_amount > 1:
             for inventory_slot in self.inventory:
                 if inventory_slot.item:

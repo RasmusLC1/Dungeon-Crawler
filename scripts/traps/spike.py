@@ -18,6 +18,7 @@ class Spike(Trap):
                 if entity.dashing:
                     return
             entity.Damage_Taken(2)
+            entity.Set_Effect('Slow_Down', 4)
             self.Cooldown = 100
             
 

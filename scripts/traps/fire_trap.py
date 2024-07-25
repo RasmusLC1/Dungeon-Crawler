@@ -18,7 +18,7 @@ class Fire_Trap(Trap):
                 if entity.dashing:
                     return
                 
-            entity.Set_On_Fire(3)
+            entity.Set_Effect('Fire', 3)
             self.Cooldown = 100
                 
     def Animation_Update(self):

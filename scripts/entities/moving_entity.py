@@ -201,28 +201,52 @@ class Moving_Entity(PhysicsEntity):
         self.status_effects.Frozen()
         self.status_effects.Wet()
     
+    def Set_Effect(self, effect, duration):
+        if effect == 'Snare':
+            self.Set_Snare(duration)
+        elif effect == 'Poison':
+            self.Set_Poisoned(duration)
+        elif effect == 'Freeze':
+            self.Set_Frozen(duration)
+        elif effect == 'Fire':
+            self.Set_On_Fire(duration)
+        elif effect == 'Wet':
+            self.Set_Wet(duration)
+        elif effect == 'Dry':
+            self.Set_Dry(duration)
+        elif effect == 'Slow_Down':
+            self.Slow_Down(duration)
+        else:
+            print("EFFECT MISSING", effect)
+            exit()
+
     #set snare effect
     def Set_Snare(self, snare_time):
         self.snared = snare_time
     
     #set poison effect
-    def Set_Poisoned(self, poisoned):
-        self.poisoned =  max(random.randint(2, poisoned), self.poisoned)
+    def Set_Poisoned(self, poison_time):
+        self.poisoned =  max(random.randint(2, poison_time), self.poisoned)
 
     #set frozen effect
-    def Set_Frozen(self, freeze):
+    def Set_Frozen(self, freeze_time):
         if self.wet:
-            freeze *= 2
+            freeze_time *= 2
             self.wet = 0
-        self.frozen = max(3, freeze)
+        self.frozen = max(3, freeze_time)
 
     # Set wet effect
-    def Set_Wet(self, wet):
+    def Set_Wet(self, wet_time):
         if self.is_on_fire:
             self.is_on_fire = 0
         if self.frozen:
             self.frozen -= 1
-        self.wet = max(2, wet)
+        self.wet = max(2, wet_time)
+    
+    def Set_Dry(self, drying):
+        self.wet = max(0, self.wet - drying)
+        print(self.wet)
+
 
     #set Fire effect
     def Set_On_Fire(self, fire_time):

@@ -2,6 +2,8 @@ import random
 import math
 import pygame
 from scripts.entities.entities import PhysicsEntity
+from scripts.traps.trap_handler import Trap_Handler
+
 
 
 
@@ -16,6 +18,7 @@ class Item(PhysicsEntity):
         self.animation_cooldown = 0
         self.amount = amount
         self.max_amount = 0
+        self.damaged = False
         
 
     def Activate(self):
@@ -25,7 +28,6 @@ class Item(PhysicsEntity):
         pass
 
     def Pick_Up(self):
-        
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.inventory.Add_Item(self):
                 self.picked_up = False
@@ -67,7 +69,19 @@ class Item(PhysicsEntity):
     # Update position
     def Move(self, new_pos):
             self.pos = new_pos
+            
 
+    def Place_Down(self):
+        nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, 20)
+        for trap in nearby_traps:
+            trap.Update(self)
+            if self.damaged:
+                return True
+            
+        return False
+
+    def Damage_Taken(self, damage):
+        self.damaged = True
     
     # Rener legal position
     def render(self, surf, offset=(0, 0)):

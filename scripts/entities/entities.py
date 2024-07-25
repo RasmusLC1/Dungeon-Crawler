@@ -22,6 +22,11 @@ class PhysicsEntity:
     def update(self):
         pass
 
+    def Damage_Taken(self, damage):
+        pass
+
+    def Set_Effect(self, effect, duration):
+        pass
 
     def render(self, surf, offset=(0, 0)):
         pass
