@@ -183,9 +183,10 @@ class Enemy(Moving_Entity):
 
         if self.running:
             self.running -= 1
+            self.direction_x = max(1.5, self.direction_x * 2)
+            self.direction_y *= max(1.5, self.direction_y * 2)
         else:
-            self.direction_x / 2
-            self.direction_y / 2
+            
             self.direction = (self.direction_x, self.direction_y)
         if self.random_movement_cooldown:
             self.random_movement_cooldown -= 1
@@ -198,19 +199,19 @@ class Enemy(Moving_Entity):
             self.walking = max(0, self.walking-1)
 
 
-        for trap in self.nearby_traps:
-            if self.rect().colliderect(trap.rect()):
-                
-                self.direction_x = self.direction_x_holder * 4
-                self.direction_y = self.direction_y_holder * 4
-                self.direction = (self.direction_x, self.direction_y)
-                self.running = 3
-            else:
-                if self.Future_Rect(self.direction).colliderect(trap.rect()):
-                    self.direction_x *= -1
-                    self.direction_y *= -1
+            for trap in self.nearby_traps:
+                if self.rect().colliderect(trap.rect()):
+                    
+                    self.direction_x = self.direction_x_holder * 4
+                    self.direction_y = self.direction_y_holder * 4
                     self.direction = (self.direction_x, self.direction_y)
-                    break
+                    self.running = 3
+                else:
+                    if self.Future_Rect(self.direction).colliderect(trap.rect()):
+                        self.direction_x *= -1
+                        self.direction_y *= -1
+                        self.direction = (self.direction_x, self.direction_y)
+                        break
 
         self.direction = pygame.math.Vector2(self.direction_x, self.direction_y)
         
