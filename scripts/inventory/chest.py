@@ -24,6 +24,7 @@ class Chest:
         self.text_animation = 0
         self.text_color = (255, 255, 255)
         self.weapon_type = ''
+        self.active = 0
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -54,6 +55,12 @@ class Chest:
             self.empty = True
             self.text_cooldown = 30
 
+    def Set_Active(self, duration):
+        self.active = duration
+    
+    def Reduce_Active(self):
+        self.active -= 1
+
     def Render_text(self, surf, offset = (0,0)):
         try:
             font = pygame.font.Font('freesansbold.ttf', 10)
@@ -68,9 +75,9 @@ class Chest:
         self.text_cooldown -= 1
 
 
-
-
     def Render(self, surf, offset = (0,0)):
-
-        surf.blit(self.game.assets['Chest'][self.version], (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
+        chest_image = self.game.assets['Chest'][self.version]
+        chest_image.set_alpha(alpha_value)
+        surf.blit(chest_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
     

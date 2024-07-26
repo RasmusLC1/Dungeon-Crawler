@@ -226,36 +226,4 @@ class Enemy(Moving_Entity):
     def Future_Rect(self, direction):
              return pygame.Rect(self.pos[0] + direction[0]*16, self.pos[1] + direction[1]*16, self.size[0], self.size[1])
 
-    # Render entity
-    def render(self, surf, offset=(0, 0)):
-        # Load and scale the entity images
-        entity_image_head = self.game.assets[self.animation + '_head'][0]
-        entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
-
-        entity_image_body = self.game.assets[self.animation + '_body'][0]
-        entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
-
-        entity_image_legs = self.game.assets[self.animation + '_legs'][0]
-        entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
-
-        # Calculate the transparency based on the entity's activeness
-        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
-
-        # Apply the alpha value to the images
-        entity_image_head.set_alpha(alpha_value)
-        entity_image_body.set_alpha(alpha_value)
-        entity_image_legs.set_alpha(alpha_value)
-
-        # Blit the entity images onto the main surface
-        surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 9))
-        surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-        surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 12))
-
-        # Render status effects
-        self.status_effects.render_fire(self.game, surf, offset)
-        self.status_effects.render_poison(self.game, surf, offset)
-        self.status_effects.render_frozen(self.game, surf, offset)
-        self.status_effects.render_wet(self.game, surf, offset)
+    

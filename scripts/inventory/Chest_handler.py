@@ -1,11 +1,12 @@
 from scripts.inventory.chest import Chest
+import math
 
 class Chest_Handler:
-    def __init__(self):
+    def __init__(self, game):
         self.chests = []
         depth = 3
-        for chest in self.tilemap.extract([('Chest', 0)]):
-            self.chests.append(Chest(self, chest['pos'], (self.assets[chest['type']][0].get_width(), self.assets[chest['type']][0].get_height()), depth))  
+        for chest in game.tilemap.extract([('Chest', 0)]):
+            self.chests.append(Chest(game, chest['pos'], (game.assets[chest['type']][0].get_width(), game.assets[chest['type']][0].get_height()), depth))  
 
 
     def Update(self):
@@ -16,9 +17,18 @@ class Chest_Handler:
                 else:
                     chest.Update()
 
-    def Render(self, render_scroll):
-         for chest in self.chests:
+    def find_nearby_chests(self, player_pos, max_distance):
+        nearby_chests = []
+        for chest in self.chests:  # Assuming self.traps is a list of traps
+            # Calculate the Euclidean distance
+            distance = math.sqrt((player_pos[0] - chest.pos[0]) ** 2 + (player_pos[1] - chest.pos[1]) ** 2)
+            if distance < max_distance:
+                nearby_chests.append(chest)
+        return nearby_chests
+
+    def Render(self, active_chests, surf, render_scroll = (0, 0)):
+         for chest in active_chests:
             if not chest.text_cooldown:
-                chest.Render(self.display, render_scroll)
+                chest.Render(surf, render_scroll)
             else:
-                chest.Render_text(self.display, render_scroll)
+                chest.Render_text(surf, render_scroll)

@@ -6,6 +6,7 @@ class Ray_Caster():
         self.tiles = []
         self.enemies = []
         self.traps = []
+        self.chests = []
         self.game = game
         self.default_activity = 700
 
@@ -24,14 +25,22 @@ class Ray_Caster():
             if enemy.active:
                 enemy.Reduce_Active()
             else:
-
                 self.enemies.remove(enemy)
             distance = math.sqrt((game.player.pos[0] - enemy.pos[0]) ** 2 + (game.player.pos[1] - enemy.pos[0]) ** 2)
             if abs(distance) > 300:
                 enemy.Set_Active(0)
                 self.enemies.remove(enemy)
 
-        print(len(self.enemies))
+
+        for chest in self.chests:
+            if chest.active:
+                chest.Reduce_Active()
+            else:
+                self.chests.remove(chest)
+            distance = math.sqrt((game.player.pos[0] - chest.pos[0]) ** 2 + (game.player.pos[1] - chest.pos[0]) ** 2)
+            if abs(distance) > 300:
+                chest.Set_Active(0)
+                self.chests.remove(chest)
             
 
                 
@@ -57,6 +66,7 @@ class Ray_Caster():
         # Find nearby Enemies
         self.game.player.nearby_enemies.clear()
         self.game.player.Nearby_Enemies(200)
+        nearby_chests = self.game.chest_handler.find_nearby_chests(self.game.player.pos, 200)
 
 
         # Look for tiles that hit the rays
@@ -70,10 +80,11 @@ class Ray_Caster():
                     if not tile['active']:
                         tile['active'] = self.default_activity
                         self.tiles.append(tile)
-                        if tile['type'] == 'BottomWall' or tile['type'] == 'TopWall' or tile['type'] == 'RightWall' or tile['type'] == 'LeftWall':
-                            break
                     else:
                         tile['active'] = self.default_activity
+
+                    if tile['type'] == 'BottomWall' or tile['type'] == 'TopWall' or tile['type'] == 'RightWall' or tile['type'] == 'LeftWall':
+                            break
 
                 for enemy in self.game.player.nearby_enemies:
                     # Check if enemy is already in the enemy list
@@ -83,6 +94,14 @@ class Ray_Caster():
                             self.enemies.append(enemy)
                         else:
                             enemy.Set_Active(255)
+
+                for chest in nearby_chests:
+                    if self.rect((pos_x, pos_y)).colliderect(chest.rect()):
+                        if not chest.active:
+                            chest.Set_Active(255)
+                            self.chests.append(chest)
+                        else:
+                            chest.Set_Active(255)
 
                         
                 # pygame.draw.line(surf, (255, 255, 255), (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1]), (pos_x, pos_y), 1)

@@ -55,7 +55,6 @@ class Game:
         self.ray_caster = Ray_Caster(self)
         self.a_star = A_Star()
 
-
         self.level = 0
         self.load_level(self.level)
         self.scroll = [0, 0]
@@ -97,7 +96,7 @@ class Game:
 
 
         Trap_Handler.__init__(self)
-        Chest_Handler.__init__(self)
+        self.chest_handler = Chest_Handler(self)
  
         Ammo_Bar.__init__(self)
         Mana_Bar.__init__(self)
@@ -122,7 +121,7 @@ class Game:
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             Trap_Handler.Update(self)
-            Chest_Handler.Update(self)
+            self.chest_handler.Update()
 
             for enemy in self.enemies:
                 enemy.update(self.tilemap)
@@ -148,8 +147,8 @@ class Game:
         self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
         
-        Trap_Handler.Render(self, render_scroll)
-        Chest_Handler.Render(self, render_scroll)
+        # Trap_Handler.Render(self, render_scroll)
+        self.chest_handler.Render(self.ray_caster.chests, self.display, render_scroll)
 
 
         for item in self.items:

@@ -42,10 +42,20 @@ Ice arrow, ice effect, if it touches water it freezes the water
 Poison arrow, poison effect, if it touches water it poisons it
 Electric arrow, electric effect, triggers traps and electrifies water
 
-Armour
+Armour:
 Lighter armour less noise but less protection
 Heavy armour movement penalty
 Different types of armour to protect against different elements
+
+Movements:
+X Teleport to a given destination, has x amount of charges
+Run, double run speed for a short duration
+Roll, avoid damage and roll in the direction of the mouse
+Block, block damage, if the player has shield block all damage, if not then it only blocks melee
+Jump, can jump over 2 blocks with light armour, 1 with medium and 0 with heavy, takes stamina
+Swim in deep water, can't cross if in heavy armour
+Push certain objects and block
+
 
 Enemies
 Each enemy has an intelligence level and personality that determines it's ability to think
