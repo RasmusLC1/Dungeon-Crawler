@@ -26,6 +26,8 @@ class Enemy(Moving_Entity):
         self.stuck_timer = 0
         self.stuck = False
 
+        self.corner_handling_cooldown = 0
+
 
     def update(self, tilemap, movement=(0, 0)):
         self.Path_Finding()
@@ -43,7 +45,6 @@ class Enemy(Moving_Entity):
         self.direction_y_holder = self.direction_y
         
     def Path_Finding(self):
-        # print(self.stuck_time)
         self.Position_Holder()
 
         if self.Stuck_Check():
@@ -75,6 +76,8 @@ class Enemy(Moving_Entity):
             if (self.src_y, self.src_x) == target:
                 self.direction = (0,0)
                 self.path.pop(0)
+                self.corner_handling_cooldown = 0
+
             else:   
                 # Calculate Direction
                 self.direction_x = 0.1 
@@ -97,6 +100,7 @@ class Enemy(Moving_Entity):
                         self.stuck_timer += 1
                     else:
                         self.stuck_timer = 0
+                self.corner_handling_cooldown = 1
 
                 return
         # If there is no path, move at random
@@ -105,27 +109,32 @@ class Enemy(Moving_Entity):
 
     # Move the entity if they're to close to a wall
     def Corner_Handling(self):
+        # Timer for how often cornerhandling should be done
+        if self.corner_handling_cooldown:
+            return
+
+        
         target_x_pos = (self.src_x + self.game.a_star.min_x) * 16
         target_y_pos = (self.src_y + self.game.a_star.min_y) * 16
         if not self.game.tilemap.Current_Tile_Type((target_x_pos, target_y_pos + 16)) == 'Floor':
             # Change the path to be a list, so it can be modified and
             # set the path goal up to avoid clash with wall
             path_list = list(self.path[1])
-            path_list[1] += 0.5
+            path_list[1] += 1
             self.path[1] = tuple(path_list)
 
         elif not self.game.tilemap.Current_Tile_Type((target_x_pos, target_y_pos - 16)) == 'Floor':
             path_list = list(self.path[1])
-            path_list[1] -= 0.5
+            path_list[1] -= 1
             self.path[1] = tuple(path_list)
 
         if not self.game.tilemap.Current_Tile_Type((target_x_pos + 16, target_y_pos)) == 'Floor':
             path_list = list(self.path[1])
-            path_list[0] -= 0.5
+            path_list[0] -= 1
             self.path[1] = tuple(path_list)
         elif not self.game.tilemap.Current_Tile_Type((target_x_pos - 16, target_y_pos)) == 'Floor':
             path_list = list(self.path[1])
-            path_list[0] += 0.5
+            path_list[0] += 1
             self.path[1] = tuple(path_list)
 
     def Charging(self):

@@ -34,7 +34,7 @@ class Moving_Entity(PhysicsEntity):
         self.player_hit = False
         
         self.action = ''
-        self.anim_offset = (-3, -3)
+        self.anim_offset = (0, 0)
         self.flip = [False, False]
         self.set_action('')
         self.frame_movement = (0.0, 0.0)

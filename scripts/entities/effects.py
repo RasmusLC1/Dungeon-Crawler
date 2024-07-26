@@ -109,7 +109,7 @@ class Status_Effect_Handler:
             fire_image = game.assets['fire'][self.entity.fire_animation].convert_alpha()
             # Set the opacity to 70%
             fire_image.set_alpha(179)
-            surf.blit(pygame.transform.flip(fire_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + 5))
+            surf.blit(pygame.transform.flip(fire_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
 
     def render_poison(self, game, surf, offset=(0, 0)):
         if self.entity.poisoned:
@@ -117,7 +117,7 @@ class Status_Effect_Handler:
             # Set the opacity to 70%
             poison_image.set_alpha(179)
             poison_image = pygame.transform.scale(poison_image, (12, 12))
-            surf.blit(pygame.transform.flip(poison_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + 5))
+            surf.blit(pygame.transform.flip(poison_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
 
     def render_frozen(self, game, surf, offset=(0, 0)):
         if self.entity.frozen:
@@ -125,7 +125,7 @@ class Status_Effect_Handler:
             # Set the opacity to 70%
             frozen_image.set_alpha(179)
             frozen_image = pygame.transform.scale(frozen_image, (12, 12))
-            surf.blit(pygame.transform.flip(frozen_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + 5))
+            surf.blit(pygame.transform.flip(frozen_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
 
     def render_wet(self, game, surf, offset=(0, 0)):
         if self.entity.wet:
@@ -133,4 +133,4 @@ class Status_Effect_Handler:
             # Set the opacity to 70%
             wet_image.set_alpha(179)
             wet_image = pygame.transform.scale(wet_image, (10, 10))
-            surf.blit(pygame.transform.flip(wet_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + self.entity.wet_animation + 3))
+            surf.blit(pygame.transform.flip(wet_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + self.entity.wet_animation - 5))

@@ -19,6 +19,7 @@ class A_Star:
             self.row = 0
             self.col = 0
             self.map = []
+            self.path = []
 
     def Setup_Map(self, game):
 
@@ -81,28 +82,50 @@ class A_Star:
         return ((row - dest[0]) ** 2 + (col - dest[1]) ** 2) ** 0.5
 
     # Trace the path from source to destination
-    def trace_path(enemy, cell_details, dest):
+    def trace_path(self, enemy, cell_details, dest):
+        self.path.clear()
         row = dest[0]
         col = dest[1]
 
         # Trace the path from destination to source using parent cells
         while not (cell_details[row][col].parent_i == row and cell_details[row][col].parent_j == col):
-            enemy.path.append((row, col))
+            # enemy.path.append((row, col))
+            self.path.append((row, col))
+
             temp_row = cell_details[row][col].parent_i
             temp_col = cell_details[row][col].parent_j
             row = temp_row
             col = temp_col
 
         # Add the source cell to the path
-        enemy.path.append((row, col))
+        self.path.append((row, col))
         # Reverse the path to get the path from source to destination
-        enemy.path.reverse()
+        self.path.reverse()
 
         # Print the path
         # for i in path:
         #     print("->", i, end=" ")
         # print()
-        
+
+    def Check_For_Walls(self, enemy):
+        if not self.path:
+            return
+        for point in self.path:
+            row = point[1]
+            col = point[0]
+            if self.map[point[0]][point[1] + 1] == 1 and not self.map[point[0]][point[1] - 1] == 1:
+                row = point[1] - 1
+            elif self.map[point[0]][point[1] - 1] == 1 and not self.map[point[0]][point[1] + 1] == 1:
+                row = point[1] + 1
+
+            if self.map[point[0] + 1][point[1]] == 1 and not self.map[point[0] - 1][point[1]] == 1:
+                col = point[0] - 1
+            elif self.map[point[0] - 1][point[1]] == 1 and not self.map[point[0] + 1][point[1]] == 1:
+                col = point[0] + 1
+
+            enemy.path.append((col, row))
+        return
+    
 
     # Implement the A* search algorithm
     def a_star_search(self, enemy, src, dest):
@@ -169,7 +192,8 @@ class A_Star:
                         # Set the parent of the destination cell
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
-                        A_Star.trace_path(enemy, cell_details, dest)
+                        self.trace_path(enemy, cell_details, dest)
+                        self.Check_For_Walls(enemy)
                         return
                     else:
                         # Calculate the new f, g, and h values
@@ -201,7 +225,7 @@ class A_Star:
                                 # Set the parent of the destination cell
                                 cell_details[new_i][new_j].parent_i = i
                                 cell_details[new_i][new_j].parent_j = j
-                                A_Star.trace_path(enemy, cell_details, dest)
+                                self.trace_path(enemy, cell_details, dest)
                                 return
                             else:
                                 # Calculate the new f, g, and h values
