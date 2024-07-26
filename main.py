@@ -23,6 +23,7 @@ from scripts.entities.enemy import Enemy
 from scripts.a_star import A_Star
 from scripts.light_handler import Light_Handler
 from scripts.inventory.inventory import Inventory
+from scripts.ray_caster import Ray_Caster 
 
 import numpy as np
 
@@ -35,7 +36,6 @@ class Game:
         pygame.init()
         self.render_scale = 4
         
-        pygame.display.set_caption('Dungeons of Madness')
         self.screen_width = 1280
         self.screen_height = 960
         self.screen = pygame.display.set_mode((1280, 960))
@@ -48,11 +48,11 @@ class Game:
         Asset_Loader.Run_All(self)
 
         self.player = Player(self, (50, 50), (8, 15))
-        self.tilemap = Tilemap(self, tile_size=16)
 
+        self.tilemap = Tilemap(self, tile_size=16)
         self.inventory = Inventory(self)
         self.mouse = Mouse_Handler(self)
-
+        self.ray_caster = Ray_Caster(self)
         self.a_star = A_Star()
 
 
@@ -115,6 +115,9 @@ class Game:
 
 
     def Update(self, render_scroll):
+            fps = int(self.clock.get_fps())
+            pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
+            
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
@@ -137,13 +140,11 @@ class Game:
             
 
     
-
-    
     
 
     def Render(self, render_scroll):
 
-        self.tilemap.render(self.display, offset=render_scroll)
+        self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
         
         Trap_Handler.Render(self, render_scroll)
         Chest_Handler.Render(self, render_scroll)
@@ -163,6 +164,9 @@ class Game:
         self.inventory.render(self.display)
         for particle in self.particles:
             particle.render(self.display, render_scroll)
+
+        self.ray_caster.Ray_Caster(self.display, render_scroll)
+
 
 
 

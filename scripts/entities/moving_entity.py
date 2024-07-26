@@ -17,6 +17,12 @@ class Moving_Entity(PhysicsEntity):
 
         self.animation_state = 'up'
 
+        self.direction = (0,0,0,0)
+        self.direction_x = 0
+        self.direction_y = 0
+        self.direction_x_holder = 0
+        self.direction_y_holder = 0
+
         self.health = 100
         self.max_health = self.health
         self.mana = 0
@@ -68,6 +74,9 @@ class Moving_Entity(PhysicsEntity):
     # Update the entity 
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
+
+        self.direction_x = movement[0]
+        self.direction_y = movement[1]
         
         self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
         self.Update_Status_Effects()
@@ -271,9 +280,9 @@ class Moving_Entity(PhysicsEntity):
         entity_image_legs = self.game.assets[self.animation + '_legs'][0]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
 
-        surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 12))
-        surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 9))
+        surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
+        surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 12))
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)

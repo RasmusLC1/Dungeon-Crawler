@@ -14,11 +14,7 @@ class Enemy(Moving_Entity):
         self.walking = 0
         self.health = 30
         self.random_movement_cooldown = 0
-        self.direction = (0,0,0,0)
-        self.direction_x = 0
-        self.direction_y = 0
-        self.direction_x_holder = 0
-        self.direction_y_holder = 0
+        
         self.pos_holder = (0,0)
         self.pathfinding_cooldown = 0
         self.path = []
@@ -111,23 +107,23 @@ class Enemy(Moving_Entity):
     def Corner_Handling(self):
         target_x_pos = (self.src_x + self.game.a_star.min_x) * 16
         target_y_pos = (self.src_y + self.game.a_star.min_y) * 16
-        if not self.game.tilemap.Current_Tile((target_x_pos, target_y_pos + 16)) == 'Floor':
+        if not self.game.tilemap.Current_Tile_Type((target_x_pos, target_y_pos + 16)) == 'Floor':
             # Change the path to be a list, so it can be modified and
             # set the path goal up to avoid clash with wall
             path_list = list(self.path[1])
             path_list[1] += 0.5
             self.path[1] = tuple(path_list)
 
-        elif not self.game.tilemap.Current_Tile((target_x_pos, target_y_pos - 16)) == 'Floor':
+        elif not self.game.tilemap.Current_Tile_Type((target_x_pos, target_y_pos - 16)) == 'Floor':
             path_list = list(self.path[1])
             path_list[1] -= 0.5
             self.path[1] = tuple(path_list)
 
-        if not self.game.tilemap.Current_Tile((target_x_pos + 16, target_y_pos)) == 'Floor':
+        if not self.game.tilemap.Current_Tile_Type((target_x_pos + 16, target_y_pos)) == 'Floor':
             path_list = list(self.path[1])
             path_list[0] -= 0.5
             self.path[1] = tuple(path_list)
-        elif not self.game.tilemap.Current_Tile((target_x_pos - 16, target_y_pos)) == 'Floor':
+        elif not self.game.tilemap.Current_Tile_Type((target_x_pos - 16, target_y_pos)) == 'Floor':
             path_list = list(self.path[1])
             path_list[0] += 0.5
             self.path[1] = tuple(path_list)
@@ -188,15 +184,24 @@ class Enemy(Moving_Entity):
             self.direction_y = random.randint(-1, 1) / 10
             
             self.direction = (self.direction_x, self.direction_y)
-            self.random_movement_cooldown = 100
+            self.random_movement_cooldown = 20
             self.walking = max(0, self.walking-1)
 
 
             for trap in self.nearby_traps:
                 if self.rect().colliderect(trap.rect()):
-                    
-                    self.direction_x = self.direction_x_holder * 2
-                    self.direction_y = self.direction_y_holder * 2
+                    # Run away in in the same direction the enemy was moving previously
+                    # Use min and max to prevent it teleporting
+                    if self.direction_x_holder < 0:
+                        self.direction_x = max(-0.4, self.direction_x_holder * 4)
+                    else:
+                        self.direction_x = min(0.4, self.direction_x_holder * 4)
+
+                    if self.direction_y_holder < 0:
+                        self.direction_y = max(-0.4, self.direction_y_holder * 4)
+                    else:
+                        self.direction_y = min(0.4, self.direction_y_holder * 4)
+
                     self.direction = (self.direction_x, self.direction_y)
                 else:
                     if self.Future_Rect(self.direction).colliderect(trap.rect()):

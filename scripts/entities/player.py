@@ -48,6 +48,8 @@ class Player(Moving_Entity):
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
 
+        self.Set_Direction_Holder()
+
     
     
             
@@ -131,11 +133,18 @@ class Player(Moving_Entity):
         self.mpos = pygame.mouse.get_pos()
         self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
 
+    def Set_Direction_Holder(self):
+        if self.direction_x or self.direction_y:
+            self.direction_x_holder = self.direction_x
+            self.direction_y_holder = self.direction_y
+            
 
     def render(self, surf, offset=(0, 0)):
         
         if abs(self.dashing) <= 50:
             super().render(surf, offset=offset)
+        
+
         
         # Render active weapon
         # if self.flip[0]:

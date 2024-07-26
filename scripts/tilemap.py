@@ -71,8 +71,8 @@ class Tilemap:
                 tiles.append(self.tilemap[check_loc])
         return tiles
     
-    # Check what tile is in a given position
-    def Current_Tile(self, pos):
+    # Check what tile type is in a given position
+    def Current_Tile_Type(self, pos):
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
         check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
         if check_loc in self.tilemap:
@@ -80,9 +80,18 @@ class Tilemap:
         else:
             return None
         
+    # Check what tile is in a given position and return the full tile
+    def Current_Tile(self, pos):
+        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
+        check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
+        if check_loc in self.tilemap:
+            return self.tilemap[check_loc]
+        else:
+            return None
+        
     # Check for collision on relevant tile
     def Collision_Check(self, pos):
-        tile = self.Current_Tile(pos)
+        tile = self.Current_Tile_Type(pos)
         if not tile:
             return False
         if tile['type'] == 'Floor':
@@ -165,4 +174,7 @@ class Tilemap:
         for tile in self.offgrid_tiles:
             surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1]))
 
-    
+    def render_tiles(self, tiles, surf, offset=(0, 0)):
+        for tile in tiles:
+            if tile:
+                surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))
