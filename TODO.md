@@ -13,6 +13,7 @@ Loot has weight which will slow you down, also lowers your initiative in combat
 Each dungeon layer has roughly same difficulty, but you need to conserve resources to proceed further down
 X Use A* for path finding
 X Dropping item, triggers trap
+X Raytracer that limits players vision, so enemies can sneak up from behind
 Enviorement effects and physics to solve puzzles in the dungeon
 Each section has at least 1 random combat from a pool of possible mobs based on enviorement, frost section as frost enemies
 Each layer draws a random theme, fire for example, then it draws from the tech theme for example
@@ -75,6 +76,9 @@ Slime, splits into smaller slimes when health is low
 Ushabity, boss mob, sentry that waits for the player and attacks, high damage and defence
 Gargoyle, sentry that waits for players and blends into the envoirement
 Living plant, waits for the player and tries to ambush them, also attacks normal enemies, basically a trap
+Armadillos that dig and pop out of the ground to surprise you
+Goblins swarm attack, cowardly
+Elementals, rock, ice, fire, electric, metal
 
 
 

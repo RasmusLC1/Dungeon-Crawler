@@ -145,6 +145,7 @@ class Game:
 
     def Render(self, render_scroll):
 
+        self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
         
         Trap_Handler.Render(self, render_scroll)
@@ -154,7 +155,7 @@ class Game:
         for item in self.items:
             item.render(self.display, offset = render_scroll)
 
-        for enemy in self.enemies:
+        for enemy in self.ray_caster.enemies:
             enemy.render(self.display, offset=render_scroll)
         
         self.player.render(self.display, offset=render_scroll)
@@ -166,7 +167,6 @@ class Game:
         for particle in self.particles:
             particle.render(self.display, render_scroll)
 
-        self.ray_caster.Ray_Caster(self.display, render_scroll)
 
 
 

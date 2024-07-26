@@ -62,6 +62,8 @@ class Moving_Entity(PhysicsEntity):
         self.wet_animation = 0
         self.wet_animation_cooldown = 0
 
+        self.active = 0
+
 
         self.status_effects = Status_Effect_Handler(self)
     
@@ -83,6 +85,7 @@ class Moving_Entity(PhysicsEntity):
 
 
         self.Update_Traps()
+        self.nearby_enemies.clear()
         self.Nearby_Enemies(20)
 
   
@@ -267,9 +270,13 @@ class Moving_Entity(PhysicsEntity):
     def Slow_Down(self, effect):
         self.friction = max(2, effect)
 
+    def Set_Active(self, duration):
+        self.active = duration
+
+    def Reduce_Active(self):
+        self.active -= 1
 
     # Render entity
-    # TODO split the entity rendering into body parts to work better with weapons
     def render(self, surf, offset=(0, 0)):
         entity_image_head = self.game.assets[self.animation + '_head'][0]
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
