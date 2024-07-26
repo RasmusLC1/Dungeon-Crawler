@@ -135,6 +135,7 @@ class Game:
 
             self.inventory.Update(render_scroll)
             Coins.Update(self)
+            self.ray_caster.Update(self)
             # self.light_handler.Update(render_scroll)
 
             

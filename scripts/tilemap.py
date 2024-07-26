@@ -1,6 +1,7 @@
 import json
 
 import pygame
+import math
 
 AUTOTILE_MAP = {
     tuple(sorted([(1, 0), (0, 1)])): 0,
@@ -177,4 +178,26 @@ class Tilemap:
     def render_tiles(self, tiles, surf, offset=(0, 0)):
         for tile in tiles:
             if tile:
-                surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))
+                # Get the tile surface from the assets
+                tile_surface = self.game.assets[tile['type']][tile['variant']].copy()
+                
+                # Adjust the tile activeness calculation
+                tile_activeness = max(0, min(255, 700 - tile['active']))
+                
+                # Apply a non-linear scaling for a smoother transition
+                scaled_activeness = 255 * (1 - math.exp(-tile_activeness / 255))
+                
+                # Calculate the darkening factor based on light and scaled activeness
+                tile_darken_factor = scaled_activeness * (1 - tile['light'])
+                
+                # Create a darkening surface with an alpha channel
+                darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)
+                darkening_surface.fill((0, 0, 0, int(tile_darken_factor)))
+                
+                # Blit the darkening surface onto the tile surface
+                tile_surface.blit(darkening_surface, (0, 0))
+                
+                # Blit the darkened tile surface onto the main surface
+                surf.blit(tile_surface, (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))
+
+
