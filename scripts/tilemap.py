@@ -186,7 +186,7 @@ class Tilemap:
                 tile_activeness = max(0, min(255, 700 - tile['active']))
                 
                 # Apply a non-linear scaling for a smoother transition
-                tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 100))
+                tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
 
                 if tile['light'] > 0:
                     light_level = min(255, tile['light'] * 25)

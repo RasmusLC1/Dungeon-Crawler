@@ -65,6 +65,8 @@ class Moving_Entity(PhysicsEntity):
 
         self.active = 0
 
+        self.light_level = 0
+
 
         self.status_effects = Status_Effect_Handler(self)
     
@@ -286,25 +288,46 @@ class Moving_Entity(PhysicsEntity):
 
     # Render entity
     def render(self, surf, offset=(0, 0)):
+        new_light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
+
+        if self.light_level < new_light_level:
+            self.light_level += 5
+        elif self.light_level > new_light_level:
+            self.light_level -= 5
+        self.light_level = abs(self.light_level - 255)
+        self.light_level = max(75, 255 - self.light_level)
+
         # Load and scale the entity images
-        entity_image_head = self.game.assets[self.animation + '_head'][0]
+        entity_image_head = self.game.assets[self.animation + '_head'][0].convert_alpha()
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
 
-        entity_image_body = self.game.assets[self.animation + '_body'][0]
+        entity_image_body = self.game.assets[self.animation + '_body'][0].convert_alpha()
         entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
 
-        entity_image_legs = self.game.assets[self.animation + '_legs'][0]
+        entity_image_legs = self.game.assets[self.animation + '_legs'][0].convert_alpha()
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
-
-        # Calculate the transparency based on the entity's activeness
-        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
-
-        # Apply the alpha value to the images
+        
+        alpha_value = max(0, min(255, self.active)) 
         entity_image_head.set_alpha(alpha_value)
         entity_image_body.set_alpha(alpha_value)
         entity_image_legs.set_alpha(alpha_value)
+        print(alpha_value)
+         # Create a darkening surface with lighter alpha value
+        dark_surface_head = pygame.Surface(entity_image_head.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))  # Adjust the alpha value to be closer to 255
 
-        # Blit the entity images onto the main surface
+        dark_surface_body = pygame.Surface(entity_image_body.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_body.fill((self.light_level, self.light_level, self.light_level, 255))  # Adjust the alpha value to be closer to 255
+
+        dark_surface_legs = pygame.Surface(entity_image_legs.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_legs.fill((self.light_level, self.light_level, self.light_level, 255))  # Adjust the alpha value to be closer to 255
+
+
+        # Apply darkening effect using BLEND_RGBA_MULT
+        entity_image_head.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        entity_image_body.blit(dark_surface_body, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        entity_image_legs.blit(dark_surface_legs, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+
         surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), 
                 (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 9))
         surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), 
@@ -317,3 +340,37 @@ class Moving_Entity(PhysicsEntity):
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)
         self.status_effects.render_wet(self.game, surf, offset)
+
+    # # Render entity
+    # def render(self, surf, offset=(0, 0)):
+    #     # Load and scale the entity images
+    #     entity_image_head = self.game.assets[self.animation + '_head'][0]
+    #     entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
+
+    #     entity_image_body = self.game.assets[self.animation + '_body'][0]
+    #     entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
+
+    #     entity_image_legs = self.game.assets[self.animation + '_legs'][0]
+    #     entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
+
+    #     # Calculate the transparency based on the entity's activeness
+    #     alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
+
+    #     # Apply the alpha value to the images
+    #     entity_image_head.set_alpha(alpha_value)
+    #     entity_image_body.set_alpha(alpha_value)
+    #     entity_image_legs.set_alpha(alpha_value)
+
+    #     # Blit the entity images onto the main surface
+    #     surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), 
+    #             (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 9))
+    #     surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), 
+    #             (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
+    #     surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), 
+    #             (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 12))
+
+    #     # Render status effects
+    #     self.status_effects.render_fire(self.game, surf, offset)
+    #     self.status_effects.render_poison(self.game, surf, offset)
+    #     self.status_effects.render_frozen(self.game, surf, offset)
+    #     self.status_effects.render_wet(self.game, surf, offset)

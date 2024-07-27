@@ -30,25 +30,26 @@ class Ray_Caster():
                 enemy.Reduce_Active()
             else:
                 self.enemies.remove(enemy)
-            distance = math.sqrt((game.player.pos[0] - enemy.pos[0]) ** 2 + (game.player.pos[1] - enemy.pos[0]) ** 2)
+            distance = math.sqrt((game.player.pos[0] - enemy.pos[0]) ** 2 + (game.player.pos[1] - enemy.pos[1]) ** 2)
             if abs(distance) > 300:
+                print(abs(distance))
                 enemy.Set_Active(0)
                 self.enemies.remove(enemy)
 
 
         for chest in self.chests:
-            if not chest:
-                break
             if chest.active:
                 chest.Reduce_Active()
             else:
                 self.chests.remove(chest)
-            distance = math.sqrt((game.player.pos[0] - chest.pos[0]) ** 2 + (game.player.pos[1] - chest.pos[0]) ** 2)
+                return
+            distance = abs(math.sqrt((game.player.pos[0] - chest.pos[0]) ** 2 + (game.player.pos[1] - chest.pos[1]) ** 2))
             if abs(distance) > 300:
                 chest.Set_Active(0)
                 self.chests.remove(chest)
             if chest.empty:
                 self.chests.remove(chest)
+                return
             
         for trap in self.traps:
             if trap.active:
@@ -120,18 +121,18 @@ class Ray_Caster():
                     # Check if enemy is already in the enemy list
                     if self.rect((pos_x, pos_y)).colliderect(enemy.rect()):
                         if not enemy.active:
-                            enemy.Set_Active(255)
+                            enemy.Set_Active(300)
                             self.enemies.append(enemy)
                         else:
-                            enemy.Set_Active(255)
+                            enemy.Set_Active(300)
 
                 for chest in self.game.player.nearby_chests:
                     if self.rect((pos_x, pos_y)).colliderect(chest.rect()):
                         if not chest.active:
-                            chest.Set_Active(255)
+                            chest.Set_Active(self.default_activity)
                             self.chests.append(chest)
                         else:
-                            chest.Set_Active(255)
+                            chest.Set_Active(self.default_activity)
                 
                 
 

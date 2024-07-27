@@ -157,11 +157,11 @@ class Game:
         for item in self.items:
             item.render(self.display, offset = render_scroll)
 
-        for enemy in self.ray_caster.enemies:
-            enemy.render(self.display, offset=render_scroll)
-
         for trap in self.ray_caster.traps:
             trap.render(self.display, offset=render_scroll)
+
+        for enemy in self.ray_caster.enemies:
+            enemy.render(self.display, offset=render_scroll)
         
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
