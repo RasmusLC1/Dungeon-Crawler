@@ -95,7 +95,7 @@ class Game:
             pass
 
 
-        Trap_Handler.__init__(self)
+        self.trap_handler = Trap_Handler(self)
         self.chest_handler = Chest_Handler(self)
  
         Ammo_Bar.__init__(self)
@@ -120,7 +120,7 @@ class Game:
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
             Particle_Handler.particle_update(self, render_scroll)
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
-            Trap_Handler.Update(self)
+            self.trap_handler.Update()
             self.chest_handler.Update()
 
             for enemy in self.enemies:
@@ -156,6 +156,9 @@ class Game:
 
         for enemy in self.ray_caster.enemies:
             enemy.render(self.display, offset=render_scroll)
+
+        for trap in self.ray_caster.traps:
+            trap.render(self.display, offset=render_scroll)
         
         self.player.render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)

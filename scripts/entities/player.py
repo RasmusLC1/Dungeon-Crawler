@@ -23,6 +23,7 @@ class Player(Moving_Entity):
         self.active_weapon = 'gun'
         self.set_action('up')
         self.mana = 5
+        self.nearby_chests = []
 
 
         self.coins = 0
@@ -136,6 +137,9 @@ class Player(Moving_Entity):
         if self.direction_x or self.direction_y:
             self.direction_x_holder = self.direction_x
             self.direction_y_holder = self.direction_y
+
+    def Find_Nearby_Chests(self, range):
+        self.nearby_chests = self.game.chest_handler.find_nearby_chests(self.pos, range)
             
 
     # Render player

@@ -30,6 +30,7 @@ class Moving_Entity(PhysicsEntity):
         self.snared = 0
 
         self.nearby_traps = []
+        self.nearby_traps_cooldown = 0
         self.nearby_enemies = []
         self.player_hit = False
         
@@ -161,9 +162,16 @@ class Moving_Entity(PhysicsEntity):
     
     # Update only the nearby traps
     def Update_Traps(self):
-        self.nearby_traps = Trap_Handler.find_nearby_traps(self.game, self.pos, 20)
+        if not self.nearby_traps_cooldown:
+            self.Find_Nearby_Traps(40)
+            self.nearby_traps_cooldown = 10
+        else:
+            self.nearby_traps_cooldown -= 1
         for trap in self.nearby_traps:
             trap.Update(self)
+
+    def Find_Nearby_Traps(self, distance):
+        self.nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, distance)
 
     def Nearby_Enemies(self, max_distance):
         self.nearby_enemies.clear()

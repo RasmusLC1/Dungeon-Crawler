@@ -35,12 +35,12 @@ class Asset_Loader:
 
     def Asset_Trap_List(self):
         trap_assets = {
-            'spike' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16),
-            'spike_poison' : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 16, 16),
-            'BearTrap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
-            'PitTrap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16),
-            'TopPush' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16),
-            'Fire_Trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 16, 20),
+            'spike_trap' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16),
+            'spike_poison_trap' : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 16, 16),
+            'Bear_trap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
+            'Pit_trap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16),
+            'Top_trap' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16),
+            'Fire_trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 16, 20),
         }
 
         self.assets.update(trap_assets)
@@ -97,10 +97,10 @@ class Asset_Loader:
 
     def Asset_Environment_List(self):
         Environment_assets = {
-            'Lava' : get_tiles_from_sheet('environment/lava.png', 2, 0, 0, 0, 16, 16),
-            'shallow_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
-            'medium_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
-            'deep_water' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
+            'Lava_trap' : get_tiles_from_sheet('environment/lava.png', 2, 0, 0, 0, 16, 16),
+            'shallow_water_trap' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
+            'medium_water_trap' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
+            'deep_water_trap' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
             'shallow_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 0, 16, 16),
             'medium_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 16, 16, 16),
             'deep_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 32, 16, 16),            
