@@ -83,6 +83,7 @@ class Trap_Handler:
         for trap in self.nearby_traps:
             trap.Animation_Update()
             
+            
 
     def Render(self, offset = (0,0)):
         for trap in self.nearby_traps:

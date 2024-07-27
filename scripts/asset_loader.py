@@ -97,13 +97,13 @@ class Asset_Loader:
 
     def Asset_Environment_List(self):
         Environment_assets = {
-            'Lava_trap' : get_tiles_from_sheet('environment/lava.png', 2, 0, 0, 0, 16, 16),
-            'shallow_water_trap' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
-            'medium_water_trap' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
-            'deep_water_trap' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
-            'shallow_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 0, 16, 16),
-            'medium_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 16, 16, 16),
-            'deep_ice' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 32, 16, 16),            
+            'Lava_env' : get_tiles_from_sheet('environment/lava.png', 2, 0, 0, 0, 16, 16),
+            'shallow_water_env' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 0, 16, 16),
+            'medium_water_env' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 16, 16, 16),
+            'deep_water_env' : get_tiles_from_sheet('environment/water.png', 2, 0, 32, 32, 16, 16),
+            'shallow_ice_env' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 0, 16, 16),
+            'medium_ice_env' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 16, 16, 16),
+            'deep_ice_env' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 32, 16, 16),            
         }
         self.assets.update(Environment_assets)
 

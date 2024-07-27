@@ -96,24 +96,23 @@ class Ray_Caster():
                 if tile:
                     if not tile['active']:
                         tile['active'] = self.default_activity
-                        if 'trap' in tile['type']:
-
-                            for trap in self.game.trap_handler.nearby_traps:
-                                print("TEST")
-                                # Check if enemy is already in the enemy list
-                                if self.rect((pos_x, pos_y)).colliderect(trap.rect()):
-                                    if not trap.active:
-                                        trap.Set_Active(255)
-                                        self.traps.append(trap)
-                                    else:
-                                        trap.Set_Active(255)
-                        else:
+                        if not 'trap' in tile['type']:
                             self.tiles.append(tile)
                     else:
                         tile['active'] = self.default_activity
 
-                    if tile['type'] == 'BottomWall' or tile['type'] == 'TopWall' or tile['type'] == 'RightWall' or tile['type'] == 'LeftWall':
+                    if 'Wall' in tile['type']:
                             break
+                
+                for trap in self.game.trap_handler.nearby_traps:
+                    # Check if enemy is already in the enemy list
+                    if self.rect((pos_x, pos_y)).colliderect(trap.rect()):
+
+                        if not trap.active:
+                            trap.Set_Active(self.default_activity)
+                            self.traps.append(trap)
+                        else:
+                            trap.Set_Active(self.default_activity)
 
                 for enemy in self.game.player.nearby_enemies:
                     # Check if enemy is already in the enemy list
