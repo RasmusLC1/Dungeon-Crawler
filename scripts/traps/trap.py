@@ -40,7 +40,7 @@ class Trap:
         scaled_activeness = 255 * (1 - math.exp(-tile_activeness / 255))
         
         # Calculate the darkening factor based on light and scaled activeness
-        tile_darken_factor = scaled_activeness * (1 - self.light)
+        tile_darken_factor = max(0, min(255, scaled_activeness * (1 - self.light)))
         
         # Create a darkening surface with an alpha channel
         darkening_surface = pygame.Surface(self.size, flags=pygame.SRCALPHA)

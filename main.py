@@ -14,6 +14,7 @@ from scripts.tilemap import Tilemap
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
+from scripts.lights import light_handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.mana_bar import Mana_Bar
@@ -21,7 +22,7 @@ from scripts.interface.coins import Coins
 from scripts.inventory.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.a_star import A_Star
-from scripts.light_handler import Light_Handler
+from scripts.lights.light_handler import Light_Handler
 from scripts.inventory.inventory import Inventory
 from scripts.ray_caster import Ray_Caster 
 
@@ -94,7 +95,8 @@ class Game:
             self.enemies.append(Enemy(self, enemy['pos'],  (self.assets[enemy['type']][0].get_width(), self.assets[enemy['type']][0].get_height()), 'DecrepitBones'))
             pass
 
-
+        # Setup handlers
+        self.light_handler = Light_Handler(self)
         self.trap_handler = Trap_Handler(self)
         self.chest_handler = Chest_Handler(self)
  
@@ -122,6 +124,7 @@ class Game:
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             self.trap_handler.Update()
             self.chest_handler.Update()
+            self.light_handler.Update()
 
             for enemy in self.enemies:
                 enemy.update(self.tilemap)

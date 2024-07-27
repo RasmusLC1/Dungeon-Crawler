@@ -186,11 +186,14 @@ class Tilemap:
                 tile_activeness = max(0, min(255, 700 - tile['active']))
                 
                 # Apply a non-linear scaling for a smoother transition
-                scaled_activeness = 255 * (1 - math.exp(-tile_activeness / 255))
-                
-                # Calculate the darkening factor based on light and scaled activeness
-                tile_darken_factor = scaled_activeness * (1 - tile['light'])
-                
+                tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 100))
+
+                if tile['light'] > 0:
+                    light_level = min(255, tile['light'] * 25)
+                else:
+                    light_level = 1
+                tile_darken_factor = max(0, min(200, tile_darken_factor - light_level))
+
                 # Create a darkening surface with an alpha channel
                 darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)
                 darkening_surface.fill((0, 0, 0, int(tile_darken_factor)))

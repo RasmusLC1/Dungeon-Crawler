@@ -37,6 +37,8 @@ class Ray_Caster():
 
 
         for chest in self.chests:
+            if not chest:
+                break
             if chest.active:
                 chest.Reduce_Active()
             else:
