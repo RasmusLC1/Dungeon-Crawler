@@ -267,7 +267,6 @@ class Moving_Entity(PhysicsEntity):
     
     def Set_Dry(self, drying):
         self.wet = max(0, self.wet - drying)
-        print(self.wet)
 
 
     #set Fire effect
@@ -288,8 +287,9 @@ class Moving_Entity(PhysicsEntity):
 
     # Render entity
     def render(self, surf, offset=(0, 0)):
-        new_light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
 
+        # Set the light level based on the tile that the entity is placed on
+        new_light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
         if self.light_level < new_light_level:
             self.light_level += 5
         elif self.light_level > new_light_level:
@@ -297,30 +297,31 @@ class Moving_Entity(PhysicsEntity):
         self.light_level = abs(self.light_level - 255)
         self.light_level = max(75, 255 - self.light_level)
 
-        # Load and scale the entity images
-        entity_image_head = self.game.assets[self.animation + '_head'][0].convert_alpha()
+        # Load and scale the entity images, split to allow better animation
+        entity_image_head = self.game.assets[self.animation + '_head'][0]
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
 
-        entity_image_body = self.game.assets[self.animation + '_body'][0].convert_alpha()
+        entity_image_body = self.game.assets[self.animation + '_body'][0]
         entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
 
-        entity_image_legs = self.game.assets[self.animation + '_legs'][0].convert_alpha()
+        entity_image_legs = self.game.assets[self.animation + '_legs'][0]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
         
+        # Set the alpha value to make the entity fade out
         alpha_value = max(0, min(255, self.active)) 
         entity_image_head.set_alpha(alpha_value)
         entity_image_body.set_alpha(alpha_value)
         entity_image_legs.set_alpha(alpha_value)
-        print(alpha_value)
-         # Create a darkening surface with lighter alpha value
+
+         # Create a darkening surface that is affected by darkness
         dark_surface_head = pygame.Surface(entity_image_head.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))  # Adjust the alpha value to be closer to 255
+        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))  
 
         dark_surface_body = pygame.Surface(entity_image_body.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_body.fill((self.light_level, self.light_level, self.light_level, 255))  # Adjust the alpha value to be closer to 255
+        dark_surface_body.fill((self.light_level, self.light_level, self.light_level, 255))
 
         dark_surface_legs = pygame.Surface(entity_image_legs.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_legs.fill((self.light_level, self.light_level, self.light_level, 255))  # Adjust the alpha value to be closer to 255
+        dark_surface_legs.fill((self.light_level, self.light_level, self.light_level, 255))
 
 
         # Apply darkening effect using BLEND_RGBA_MULT

@@ -20,7 +20,8 @@ class Light():
                 if current_x_pos**2 + current_y_pos**2 <= diameter:
                     tile = self.game.tilemap.Current_Tile((x * 16, y * 16))
                     if tile:
-                        tile['light'] = self.light_level - current_x_pos - current_y_pos
+                        new_light_level = self.light_level - current_x_pos - current_y_pos
+                        tile['light'] = max(tile['light'], new_light_level)
                         if 'Wall' in tile['type']:
                             break
                 
