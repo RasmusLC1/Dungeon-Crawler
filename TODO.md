@@ -20,10 +20,14 @@ Game Ideas
     Noice attracts enemies
 
 # Engine Features:
+    # Tile systsem
     # Use A* for path finding
+    # Inventory System
     # Dropping item, triggers trap
     # Raytracer that limits players vision, so enemies can sneak up from behind
     # Light engine
+    Level editor
+    Dungeon generator
 
 # Weapons:
     Bow, can press button, different arrows that can do certain things

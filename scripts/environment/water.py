@@ -10,7 +10,6 @@ class Water(Trap):
         self.animation = random.randint(0, 2)
 
     def Update(self, entity):
-        print(self.size)
         if self.rect().colliderect(entity.rect()):
             if self.type == 'shallow_water':
                 entity.Set_Effect('Slow_Down', 4)

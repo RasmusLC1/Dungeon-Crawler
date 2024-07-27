@@ -3,7 +3,7 @@ from scripts.entities.moving_entity import Moving_Entity
 
 import random
 import pygame
-from scripts.a_star import A_Star
+from scripts.engine.a_star import A_Star
 
 
 

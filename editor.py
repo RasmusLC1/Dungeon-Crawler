@@ -4,7 +4,7 @@ import pygame
 
 from scripts.utils import load_images, load_image, get_tiles_from_sheet
 import scripts.asset_loader
-from scripts.tilemap import Tilemap
+from scripts.engine.tilemap import Tilemap
 from scripts.asset_loader import Asset_Loader
 
 RENDER_SCALE = 2.0

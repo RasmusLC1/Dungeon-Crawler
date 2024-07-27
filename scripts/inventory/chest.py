@@ -25,8 +25,7 @@ class Chest:
         self.text_color = (255, 255, 255)
         self.weapon_type = ''
         self.active = 0
-        self.light_level = 0
-        self.Initialise_Light_Level()
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -76,12 +75,6 @@ class Chest:
         self.text_animation += 1
         self.text_cooldown -= 1
 
-    def Initialise_Light_Level(self):
-        # Set the light level based on the tile that the entity is placed on
-        self.light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
-
-        self.light_level = abs(self.light_level - 255)
-        self.light_level = max(75, 255 - self.light_level)
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on

@@ -10,7 +10,7 @@ from scripts.asset_loader import Asset_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.entities.player import Player
-from scripts.tilemap import Tilemap
+from scripts.engine.tilemap import Tilemap
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
@@ -21,10 +21,10 @@ from scripts.interface.mana_bar import Mana_Bar
 from scripts.interface.coins import Coins
 from scripts.inventory.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
-from scripts.a_star import A_Star
+from scripts.engine.a_star import A_Star
 from scripts.lights.light_handler import Light_Handler
 from scripts.inventory.inventory import Inventory
-from scripts.ray_caster import Ray_Caster 
+from scripts.engine.ray_caster import Ray_Caster 
 
 import numpy as np
 

@@ -4,13 +4,13 @@ class Light():
         self.light_level = light_level
         self.pos = pos
         self.Setup_Tile_Light()
+
         
     def Setup_Tile_Light(self):
         x_position = int(self.pos[0] // 16)
         y_position = int(self.pos[1] // 16)
         radius = int(self.light_level / 2)
         diameter = radius**2
-        distance_from_source = self.light_level
         iteration = 0
         for y in range(y_position - radius, y_position + radius + 1):
             for x in range(x_position - radius, x_position + radius + 1):
@@ -24,6 +24,9 @@ class Light():
                         tile['light'] = max(tile['light'], new_light_level)
                         if 'Wall' in tile['type']:
                             break
+
+    
+
                 
             
 
