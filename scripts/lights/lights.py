@@ -12,6 +12,12 @@ class Light():
         radius = int(self.light_level / 2)
         diameter = radius**2
         iteration = 0
+        # Light on the tile the light source is located
+        tile = self.game.tilemap.Current_Tile(self.pos)
+        if tile:
+            tile['light'] = max(tile['light'], self.light_level)
+            if 'Wall' in tile['type']:
+                return
         for y in range(y_position - radius, y_position + radius + 1):
             for x in range(x_position - radius, x_position + radius + 1):
                 iteration += 1
