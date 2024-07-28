@@ -18,12 +18,15 @@ class Trap_Handler:
         self.environment = []
         self.game = game
 
+        # TODO: Create seperate spawner class
         # Spawner initialisation
-        for spawner in game.tilemap.extract([('spawners', 0)]):
-            game.player.pos = spawner['pos']
+        for spawner in self.game.tilemap.extract([('spawners', 0)]):
+            self.game.player.pos = spawner['pos']
 
+        self.Initialise()
         
 
+    def Initialise(self):
         # Spike initialisation
         for trap in self.game.tilemap.extract([('spike_trap', 0)].copy(), True):
             self.traps.append(Spike(self.game, trap['pos'], (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height()), trap['type']))
@@ -85,7 +88,7 @@ class Trap_Handler:
             
             
 
-    def Render(self, offset = (0,0)):
-        for trap in self.nearby_traps:
-            trap.Render(self.display, offset)
+    def Render(self, traps, surf, offset = (0,0)):
+        for trap in traps:
+            trap.render(surf, offset)
 

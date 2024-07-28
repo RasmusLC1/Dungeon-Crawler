@@ -63,9 +63,7 @@ class Moving_Entity(PhysicsEntity):
         self.wet_animation = 0
         self.wet_animation_cooldown = 0
 
-        self.active = 0
-
-        self.light_level = 0
+        
 
 
         self.status_effects = Status_Effect_Handler(self)
@@ -279,12 +277,7 @@ class Moving_Entity(PhysicsEntity):
     def Slow_Down(self, effect):
         self.friction = max(2, effect)
 
-    def Set_Active(self, duration):
-        self.active = duration
-
-    def Reduce_Active(self):
-        self.active -= 1
-
+    
     # Render entity
     def render(self, surf, offset=(0, 0)):
 

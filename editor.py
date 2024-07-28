@@ -25,6 +25,7 @@ class Editor:
         Asset_Loader.Asset_Objects_List(self)
         Asset_Loader.Asset_Interative_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
+        Asset_Loader.Asset_Decoration_List(self)
         
         
         self.movement = [False, False, False, False]
@@ -69,7 +70,7 @@ class Editor:
             else:
                 self.display.blit(current_tile_img, mpos)
             
-            offgrid_list = ['spawners', 'TopPush', 'Chest', 'BearTrap', 'Fire_Trap', 'spike_poison']
+            offgrid_list = ['spawners', 'TopPush', 'Chest', 'BearTrap', 'Fire_Trap', 'spike_poison', 'torch']
 
 
             # Placing tiles on the grid

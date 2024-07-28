@@ -12,6 +12,7 @@ class Asset_Loader:
         Asset_Loader.Asset_Environment_List(self)
         Asset_Loader.Asset_Objects_List(self)
         Asset_Loader.Asset_Potion_List(self)
+        Asset_Loader.Asset_Decoration_List(self)
 
         
     def Asset_Background_List(self):
@@ -106,6 +107,13 @@ class Asset_Loader:
             'deep_ice_env' : get_tiles_from_sheet('environment/water.png', 1, 0, 112, 32, 16, 16),            
         }
         self.assets.update(Environment_assets)
+
+    def Asset_Decoration_List(self):
+        decoration_assets = {
+            'torch': get_tiles_from_sheet('decoration/torch.png', 8, 0, 0, 0, 16, 16),
+        }
+        self.assets.update(decoration_assets)
+
 
     def Asset_Potion_List(self):
         potion_assets = {

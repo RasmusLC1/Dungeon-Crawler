@@ -14,6 +14,7 @@ from scripts.engine.tilemap import Tilemap
 from scripts.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
+from scripts.decoration.decoration_handler import Decoration_Handler
 from scripts.lights import light_handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
@@ -99,6 +100,7 @@ class Game:
         self.light_handler = Light_Handler(self)
         self.trap_handler = Trap_Handler(self)
         self.chest_handler = Chest_Handler(self)
+        self.decoration_handler = Decoration_Handler(self)
  
         Ammo_Bar.__init__(self)
         Mana_Bar.__init__(self)
@@ -125,6 +127,7 @@ class Game:
             self.trap_handler.Update()
             self.chest_handler.Update()
             self.light_handler.Update()
+            self.decoration_handler.Update()
 
             for enemy in self.enemies:
                 enemy.update(self.tilemap)
@@ -151,14 +154,13 @@ class Game:
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
         
         # Trap_Handler.Render(self, render_scroll)
+        self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
         self.chest_handler.Render(self.ray_caster.chests, self.display, render_scroll)
-
+        self.decoration_handler.Render(self.ray_caster.decorations, self.display, render_scroll)
+        
 
         for item in self.items:
             item.render(self.display, offset = render_scroll)
-
-        for trap in self.ray_caster.traps:
-            trap.render(self.display, offset=render_scroll)
 
         for enemy in self.ray_caster.enemies:
             enemy.render(self.display, offset=render_scroll)

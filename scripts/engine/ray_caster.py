@@ -7,6 +7,7 @@ class Ray_Caster():
         self.enemies = []
         self.traps = []
         self.chests = []
+        self.decorations = []
         self.traps = []
         self.nearby_traps = []
         self.nearby_cooldown = 0
@@ -91,6 +92,15 @@ class Ray_Caster():
                 else:
                     chest.Set_Active(self.default_activity)
     
+    def Check_Decoration(self, pos):
+        for decoration in self.game.decoration_handler.nearby_decoration:
+            if self.rect(pos).colliderect(decoration.rect()):
+                if not decoration.active:
+                    decoration.Set_Active(self.default_activity)
+                    self.decorations.append(decoration)
+                else:
+                    decoration.Set_Active(self.default_activity)
+
     def Check_Tile(self, pos):
         tile = self.game.tilemap.Current_Tile(pos)
         if tile:
@@ -119,16 +129,10 @@ class Ray_Caster():
         
         # Check the tile the player is standing on
         self.Check_Tile(self.game.player.pos)
-        # tile = self.game.tilemap.Current_Tile((self.game.player.pos[0], self.game.player.pos[1]))
-        # if tile and not tile['active']:
-        #     tile['active'] = self.default_activity
-        #     self.tiles.append(tile)
-        # else:
-        #     tile['active'] = self.default_activity
-
         self.Check_Trap(self.game.player.pos)
         self.Check_Enemy(self.game.player.pos)
         self.Check_Chest(self.game.player.pos)
+        self.Check_Decoration(self.game.player.pos)
 
         # Find nearby Enemies
         if not self.nearby_cooldown:
@@ -154,6 +158,7 @@ class Ray_Caster():
                 self.Check_Trap((pos_x, pos_y))
                 self.Check_Enemy((pos_x, pos_y))
                 self.Check_Chest((pos_x, pos_y))
+                self.Check_Decoration((pos_x, pos_y))
 
 
                 
