@@ -21,7 +21,7 @@ class Particle:
 
         return kill
     
-    def render(self, surf, offset=(0, 0)):
+    def Render(self, surf, offset=(0, 0)):
         img = self.animation.img()
         img = pygame.transform.scale(img, (3,3))
 

@@ -64,7 +64,7 @@ class Editor:
             mpos = (mpos[0] / RENDER_SCALE, mpos[1] / RENDER_SCALE)
             tile_pos = (int((mpos[0] + self.scroll[0]) // self.tilemap.tile_size), int((mpos[1] + self.scroll[1]) // self.tilemap.tile_size))
             
-            self.tilemap.render(self.display, offset=render_scroll)
+            self.tilemap.Render(self.display, offset=render_scroll)
             if self.ongrid:
                 self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size - self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))
             else:

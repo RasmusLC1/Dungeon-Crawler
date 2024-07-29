@@ -30,4 +30,4 @@ class Decoration_Handler():
 
     def Render(self, decorations, surf, render_scroll = (0, 0)):
         for decoration in decorations:
-            decoration.render(surf, render_scroll)
+            decoration.Render(surf, render_scroll)

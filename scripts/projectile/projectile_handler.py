@@ -9,7 +9,7 @@ class Projectile_Handler:
             projectile.update()
 
             img = self.assets['projectile']
-            projectile.render(self.display, render_scale, img, offset)
+            projectile.Render(self.display, render_scale, img, offset)
             if self.tilemap.solid_check(projectile.pos):
                 self.projectiles.remove(projectile)
                 

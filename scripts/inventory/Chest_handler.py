@@ -3,10 +3,12 @@ import math
 
 class Chest_Handler:
     def __init__(self, game):
+        self.game = game
         self.chests = []
         depth = 3
         for chest in game.tilemap.extract([('Chest', 0)]):
-            self.chests.append(Chest(game, chest['pos'], (game.assets[chest['type']][0].get_width(), game.assets[chest['type']][0].get_height()), depth))  
+            size = (game.assets[chest['type']][0].get_width(), game.assets[chest['type']][0].get_height())
+            self.chests.append(Chest(game, chest['pos'], size, chest['type'], depth))  
 
 
     def Update(self):

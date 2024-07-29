@@ -15,7 +15,7 @@ from scripts.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
-from scripts.lights import light_handler
+from scripts.engine.lights import light_handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.mana_bar import Mana_Bar
@@ -23,7 +23,7 @@ from scripts.interface.coins import Coins
 from scripts.inventory.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.engine.a_star import A_Star
-from scripts.lights.light_handler import Light_Handler
+from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.inventory import Inventory
 from scripts.engine.ray_caster import Ray_Caster 
 
@@ -100,8 +100,8 @@ class Game:
                 self.enemies.append(Enemy(self, spawner['pos'],  (self.assets[spawner['type']][0].get_width(), self.assets[spawner['type']][0].get_height()), 'DecrepitBones'))
 
         self.trap_handler = Trap_Handler(self)
-        self.chest_handler = Chest_Handler(self)
         self.decoration_handler = Decoration_Handler(self)
+        self.chest_handler = Chest_Handler(self)
  
         Ammo_Bar.__init__(self)
         Mana_Bar.__init__(self)
@@ -156,19 +156,19 @@ class Game:
         
 
         for item in self.items:
-            item.render(self.display, offset = render_scroll)
+            item.Render(self.display, offset = render_scroll)
 
         for enemy in self.ray_caster.enemies:
-            enemy.render(self.display, offset=render_scroll)
+            enemy.Render(self.display, offset=render_scroll)
         
-        self.player.render(self.display, offset=render_scroll)
+        self.player.Render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)
         Mana_Bar.Mana_Bar(self)
         Coins.Render(self)
-        self.inventory.render(self.display)
+        self.inventory.Render(self.display)
         for particle in self.particles:
-            particle.render(self.display, render_scroll)
+            particle.Render(self.display, render_scroll)
 
 
 

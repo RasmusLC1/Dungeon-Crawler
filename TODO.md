@@ -43,6 +43,15 @@ Game Ideas
     magic Staff, improved spells but poor melee damage, different staffs for different lores of magic
     Torch, emits light and be be used to set enemies on fire, relatively low damage
 
+# Potions
+    # Health
+    # Mana
+    Stamina
+    Invisibility
+    Light
+    Damage
+    Poison
+
 # Arrows:
     Rope arrow, allows you to cross traps
     Fire arrow, lights enemies on fire and lights up the envoirement
@@ -97,6 +106,7 @@ Game Ideas
     Armadillos that dig and pop out of the ground to surprise you
     Goblins swarm attack, cowardly
     Elementals, rock, ice, fire, electric, metal
+    Lurker in the dark, lowers light level around it, tries to sneak attack, vulnable to light
 
 
 

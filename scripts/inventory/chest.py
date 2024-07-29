@@ -4,19 +4,21 @@ from scripts.weapon_generator import Weapon_Generator
 from scripts.inventory.items.item import Item
 from scripts.inventory.items.health_potion import Health_Potion
 from scripts.inventory.items.mana_potion import Mana_Potion
+from scripts.decoration.decoration import Decoration
 
 
-class Chest:
-    def __init__(self, game, pos, size, depth):
+class Chest(Decoration):
+    def __init__(self, game, pos, size, type, depth):
+        super().__init__(game, pos, size, type)
         i = 0
         while i < 9:
             self.version = i
             if random.randint(depth, max(depth + 5, 10)) < max(depth + 2, 5):
                 break
             i += 1
-        self.game = game
-        self.pos = pos
-        self.size = size
+        # self.game = game
+        # self.pos = pos
+        # self.size = size
         self.loot_type = 0
         self.empty = False
         self.loot_amount = 0
@@ -62,7 +64,7 @@ class Chest:
     def Reduce_Active(self):
         self.active -= 1
 
-    def Render_text(self, surf, offset = (0,0)):
+    def render_text(self, surf, offset = (0,0)):
         try:
             font = pygame.font.Font('freesansbold.ttf', 10)
         except Exception as e:
@@ -76,35 +78,42 @@ class Chest:
         self.text_cooldown -= 1
 
 
-    def Update_Light_Level(self):
-        # Set the light level based on the tile that the entity is placed on
-        new_light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
-        if self.light_level == new_light_level:
-            pass
-        elif self.light_level < new_light_level:
-            self.light_level += 5
-        elif self.light_level > new_light_level:
-            self.light_level -= 5
-        self.light_level = abs(self.light_level - 255)
-        self.light_level = max(75, 255 - self.light_level)
+    # def Update_Light_Level(self):
+    #     # Set the light level based on the tile that the entity is placed on
+    #     new_light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
+    #     if self.light_level == new_light_level:
+    #         pass
+    #     elif self.light_level < new_light_level:
+    #         self.light_level += 5
+    #     elif self.light_level > new_light_level:
+    #         self.light_level -= 5
+    #     self.light_level = abs(self.light_level - 255)
+    #     self.light_level = max(75, 255 - self.light_level)
 
-    def Render(self, surf, offset = (0,0)):
-        # Set image
-        chest_image = self.game.assets['Chest'][self.version].convert_alpha()
+    #     if self.light_level <= 75:
+    #         return False
+    #     else:
+    #         return True
 
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
-        chest_image.set_alpha(alpha_value)
+    # def Render(self, surf, offset = (0,0)):
+    #     if not self.Update_Light_Level():
+    #         return
+    #     # Set image
+    #     chest_image = self.game.assets['Chest'][self.version].convert_alpha()
 
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(chest_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+    #     # Set alpha value to make chest fade out
+    #     alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
+    #     chest_image.set_alpha(alpha_value)
 
-        # Blit the chest layer on top the dark layer
-        chest_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+    #     # Blit the dark layer
+    #     dark_surface_head = pygame.Surface(chest_image.get_size(), pygame.SRCALPHA).convert_alpha()
+    #     dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+
+    #     # Blit the chest layer on top the dark layer
+    #     chest_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         
-        # Render the chest
-        surf.blit(chest_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+    #     # Render the chest
+    #     surf.blit(chest_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
     

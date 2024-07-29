@@ -25,7 +25,7 @@ class Player(Moving_Entity):
         self.mana = 5
         self.nearby_chests = []
 
-        self.light_level = 2
+        self.light_level = 6
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
@@ -151,7 +151,7 @@ class Player(Moving_Entity):
             
 
     # Render player
-    def render(self, surf, offset=(0, 0)):
+    def Render(self, surf, offset=(0, 0)):
         
         if abs(self.dashing) >= 50:
             return

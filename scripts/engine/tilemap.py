@@ -163,7 +163,7 @@ class Tilemap:
     
     
     # Render function that shows the entire screen
-    def render(self, surf, offset=(0, 0)):
+    def Render(self, surf, offset=(0, 0)):
         for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
             for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):
                 # iso_x, iso_y = Tilemap.tile_isometric_to_grid(x,y)
@@ -194,7 +194,7 @@ class Tilemap:
                     light_level = min(255, tile['light'] * 25)
                 else:
                     light_level = 1
-                tile_darken_factor = max(0, min(200, tile_darken_factor - light_level))
+                tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))
 
                 # Create a darkening surface with an alpha channel
                 darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)

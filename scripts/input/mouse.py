@@ -1,5 +1,4 @@
 import pygame
-from scripts.lights import light_handler
 
 
 

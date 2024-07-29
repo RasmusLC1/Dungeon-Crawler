@@ -113,8 +113,7 @@ class Ray_Caster():
 
             if 'Wall' in tile['type']:
                 return False
-            if tile['light'] <= 0:
-                return False
+            
             
         return True
 
@@ -159,13 +158,6 @@ class Ray_Caster():
                 self.Check_Enemy((pos_x, pos_y))
                 self.Check_Chest((pos_x, pos_y))
                 self.Check_Decoration((pos_x, pos_y))
-
-
-                
-
-                
-                
-                
 
                         
                 # pygame.draw.line(surf, (255, 255, 255), (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1]), (pos_x, pos_y), 1)

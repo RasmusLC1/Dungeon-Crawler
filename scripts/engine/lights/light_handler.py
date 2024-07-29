@@ -1,4 +1,4 @@
-from scripts.lights.lights import Light
+from scripts.engine.lights.lights import Light
 
 class Light_Handler():
     def __init__(self, game):

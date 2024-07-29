@@ -90,5 +90,5 @@ class Trap_Handler:
 
     def Render(self, traps, surf, offset = (0,0)):
         for trap in traps:
-            trap.render(surf, offset)
+            trap.Render(surf, offset)
 

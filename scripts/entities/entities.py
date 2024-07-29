@@ -36,5 +36,5 @@ class PhysicsEntity:
     def Set_Effect(self, effect, duration):
         pass
 
-    def render(self, surf, offset=(0, 0)):
+    def Render(self, surf, offset=(0, 0)):
         pass

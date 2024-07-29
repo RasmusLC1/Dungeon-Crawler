@@ -29,7 +29,7 @@ class Trap:
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
     
-    def render(self, surf, offset=(0, 0)):
+    def Render(self, surf, offset=(0, 0)):
         # Get the tile surface from the assets
         tile_surface = self.game.assets[self.type][self.animation].copy()
         
@@ -38,12 +38,13 @@ class Trap:
             
         # Apply a non-linear scaling for a smoother transition
         tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
+
         tile = self.game.tilemap.Current_Tile(self.pos)
         if tile['light'] > 0:
             light_level = min(255, tile['light'] * 25)
         else:
             light_level = 1
-        tile_darken_factor = max(0, min(200, tile_darken_factor - light_level))
+        tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))
         
         # Create a darkening surface with an alpha channel
         darkening_surface = pygame.Surface(self.size, flags=pygame.SRCALPHA)

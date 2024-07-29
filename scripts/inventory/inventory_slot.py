@@ -37,9 +37,9 @@ class Inventory_Slot():
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
-    def render(self, surf):
+    def Render(self, surf):
         black = (0, 0, 0)
         surf.blit(self.box_surface, self.pos)
         pygame.draw.rect(surf, black, self.rect(), 1)
         if self.item and not self.active:
-            self.item.render(surf)
+            self.item.Render(surf)

@@ -72,7 +72,7 @@ class Inventory:
     # Move the item around
     def Move_Item(self, offset):
         # Render legal item position and move it
-        self.active_item.render(self.game.display, offset)  
+        self.active_item.Render(self.game.display, offset)  
         self.active_item.Move(self.game.mouse.mpos)
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
@@ -173,6 +173,6 @@ class Inventory:
         
 
 
-    def render(self, surf):
+    def Render(self, surf):
         for inventory_slot in self.inventory:
-            inventory_slot.render(surf)
+            inventory_slot.Render(surf)
