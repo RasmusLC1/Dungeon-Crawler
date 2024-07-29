@@ -11,7 +11,6 @@ class Decoration(PhysicsEntity):
         self.type = type
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
-        print(self.light_level)
         self.animation = 0
         self.max_animation = 0
         self.animation_cooldown = 0
@@ -61,7 +60,6 @@ class Decoration(PhysicsEntity):
         if self.light_level < new_light_level:
             self.light_level += 5
         elif self.light_level > new_light_level:
-            print(new_light_level)
             self.light_level -= 5
         self.light_level = abs(self.light_level - 255)
         # 75 is the darkest level we want

@@ -1,3 +1,5 @@
+import math
+
 class Light():
     def __init__(self, game, pos, light_level):
         self.game = game
@@ -6,7 +8,6 @@ class Light():
         self.tiles = []
         self.Setup_Tile_Light()
 
-    # Light on the tile the light source is located
     def Setup_Under_entity_Light(self):
         tile = self.game.tilemap.Current_Tile(self.pos)
         if tile:
@@ -18,28 +19,40 @@ class Light():
         else:
             return
 
-    # Use raycaster instead to prevent wall conflicts
+    def Check_Tile(self, tile):
+        if not tile:
+            return False
+        if 'Wall' in tile['type']:
+            return False
+        return True
+
     def Setup_Tile_Light(self):
-        self.Setup_Under_entity_Light()
-        x_position = int(self.pos[0] // 16)
-        y_position = int(self.pos[1] // 16)
-        radius = int(self.light_level // 2)
-        radius_squared = radius**2
-        
-        for y in range(y_position - radius, y_position + radius + 1):
-            for x in range(x_position - radius, x_position + radius + 1):
-                current_x_pos = x - x_position
-                current_y_pos = y - y_position
-                distance_squared = current_x_pos**2 + current_y_pos**2
-                if distance_squared <= radius_squared:
-                    tile = self.game.tilemap.Current_Tile((x * 16, y * 16))
-                    if tile:
-                        new_light_level = self.light_level - int((distance_squared**0.5))
-                        if new_light_level > tile['light']:                            
-                            tile['light'] = new_light_level
-                            self.tiles.append(tile)
-                        if 'Wall' in tile['type']:
-                            break
+        num_lines = 80
+        spread_angle = 360
+        angle_increment = spread_angle / num_lines
+        base_angle = 0
+
+        tile = self.game.tilemap.Current_Tile(self.pos)
+        if self.Check_Tile(tile):
+            if self.light_level > tile['light']:
+                tile['light'] = self.light_level
+                self.tiles.append(tile)
+
+        for j in range(num_lines):
+            angle = base_angle + math.radians(j * angle_increment)
+            for i in range(1, self.light_level + 1):
+                pos_x = self.pos[0] + math.cos(angle) * 16 * i
+                pos_y = self.pos[1] + math.sin(angle) * 16 * i
+
+                tile = self.game.tilemap.Current_Tile((pos_x, pos_y))
+
+                if not self.Check_Tile(tile):
+                    break
+
+                new_light_level = max(0, self.light_level - i)
+                if new_light_level > tile['light']:
+                    tile['light'] = new_light_level
+                    self.tiles.append(tile)
 
     def Move_Light(self, pos):
         self.pos = pos
@@ -53,7 +66,7 @@ class Light():
             return False
         for tile in self.tiles:
             tile['light'] = 0
-            
+
         self.tiles.clear()
         return True
 

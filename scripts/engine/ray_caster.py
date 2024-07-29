@@ -34,7 +34,6 @@ class Ray_Caster():
                 self.enemies.remove(enemy)
             distance = math.sqrt((game.player.pos[0] - enemy.pos[0]) ** 2 + (game.player.pos[1] - enemy.pos[1]) ** 2)
             if abs(distance) > self.inactive_distance:
-                print(abs(distance))
                 enemy.Set_Active(0)
                 self.enemies.remove(enemy)
 
