@@ -25,11 +25,17 @@ class Player(Moving_Entity):
         self.mana = 5
         self.nearby_chests = []
 
+        self.light_level = 2
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+
 
         self.coins = 0
         self.shootin_cooldown = 0
         
         self.weapons = []
+
+
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().update(tilemap, movement=movement)
@@ -50,6 +56,8 @@ class Player(Moving_Entity):
             self.shootin_cooldown -= 1
 
         self.Set_Direction_Holder()
+        if self.light_source:
+            self.light_source.Move_Light(self.pos)
 
     
     

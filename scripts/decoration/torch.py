@@ -10,5 +10,5 @@ class Torch(Decoration):
 
 
         self.light_level = 10
-        self.game.light_handler.Add_Light(self.pos, self.light_level)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)

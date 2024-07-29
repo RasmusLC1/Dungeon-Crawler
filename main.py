@@ -48,8 +48,8 @@ class Game:
         self.movement = [False, False, False, False]
         self.assets = {}
         Asset_Loader.Run_All(self)
+        self.player = None
 
-        self.player = Player(self, (50, 50), (8, 15))
 
         self.tilemap = Tilemap(self, tile_size=16)
         self.inventory = Inventory(self)
@@ -66,8 +66,6 @@ class Game:
 
         # Create a 2D array with all elements initialized to None
         self.test_array = np.zeros((rows, cols), dtype=int)
-        # self.light_handler = Light_Handler(self)
-
 
         
 
@@ -84,6 +82,9 @@ class Game:
 
     def load_level(self, map_id):
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
+         # Setup handlers
+        self.light_handler = Light_Handler(self)
+        
         
         self.items = []
         self.particles = []
@@ -91,13 +92,13 @@ class Game:
         self.scroll = [0, 0]
         self.projectiles = []
         self.enemies = []
+        for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
+            if spawner['variant'] == 0:
+                self.player = Player(self, spawner['pos'], (8, 16))
 
-        for enemy in self.tilemap.extract([('spawners', 1)]):
-            self.enemies.append(Enemy(self, enemy['pos'],  (self.assets[enemy['type']][0].get_width(), self.assets[enemy['type']][0].get_height()), 'DecrepitBones'))
-            pass
+            else:
+                self.enemies.append(Enemy(self, spawner['pos'],  (self.assets[spawner['type']][0].get_width(), self.assets[spawner['type']][0].get_height()), 'DecrepitBones'))
 
-        # Setup handlers
-        self.light_handler = Light_Handler(self)
         self.trap_handler = Trap_Handler(self)
         self.chest_handler = Chest_Handler(self)
         self.decoration_handler = Decoration_Handler(self)
@@ -108,8 +109,8 @@ class Game:
         Coins.__init__(self)
         
         self.a_star.Setup_Map(self)
-        # A_Star.Setup_Map(self)
-        # self.light_handler.Setup_Shadow_Map()
+
+
 
         # Printing the map
         # for row in self.shadow_map:
@@ -141,11 +142,6 @@ class Game:
             self.inventory.Update(render_scroll)
             Coins.Update(self)
             self.ray_caster.Update(self)
-            # self.light_handler.Update(render_scroll)
-
-            
-
-    
     
 
     def Render(self, render_scroll):

@@ -1,4 +1,7 @@
 import pygame
+from scripts.lights import light_handler
+
+
 
 class Mouse_Handler:
     def __init__(self, game):
@@ -11,6 +14,7 @@ class Mouse_Handler:
         self.mouse_rel = (0, 0)
         self.hold_down_left = 0
         self.hold_down_right = 0
+
 
 
     def Mouse_Input(self, key_press, offset=(0, 0)):
