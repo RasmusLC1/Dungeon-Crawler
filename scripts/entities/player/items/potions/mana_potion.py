@@ -1,15 +1,15 @@
-from scripts.inventory.items.item import Item
+from scripts.entities.player.items.item import Item
 
 
-class Health_Potion(Item):
+class Mana_Potion(Item):
     def __init__(self, game, pos, amount):
-        self.type = 'health_potion'
-        super().__init__(game, type, pos, amount)
+        self.type = 'mana_potion'
+        super().__init__(game, self.type, pos, amount)
         self.Update()
         self.max_amount = 3
 
     def Activate(self):
-        if self.game.player.Healing(10):
+        if self.game.player.Increase_Mana(10):
             self.amount -= 1
         if self.amount <= 0:
             self.used = True
@@ -17,8 +17,8 @@ class Health_Potion(Item):
     
     def Update(self):
         if self.amount == 1:
-            self.sub_type = 'red_low'
+            self.sub_type = 'blue_low'
         elif self.amount == 2:
-            self.sub_type = 'red_half'
+            self.sub_type = 'blue_half'
         elif self.amount == 3:
-            self.sub_type = 'red_full'
+            self.sub_type = 'blue_full'

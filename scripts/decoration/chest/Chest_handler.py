@@ -1,4 +1,4 @@
-from scripts.inventory.chest import Chest
+from scripts.decoration.chest.chest import Chest
 import math
 
 class Chest_Handler:

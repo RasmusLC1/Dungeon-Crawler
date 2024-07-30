@@ -13,6 +13,7 @@ class Asset_Loader:
         Asset_Loader.Asset_Objects_List(self)
         Asset_Loader.Asset_Potion_List(self)
         Asset_Loader.Asset_Decoration_List(self)
+        Asset_Loader.Asset_Weapons_List(self)
 
         
     def Asset_Background_List(self):
@@ -82,6 +83,12 @@ class Asset_Loader:
             'projectile': load_image('projectile.png'),
         }
         self.assets.update(entities_assets)
+
+    def Asset_Weapons_List(self):
+        Weapons_assets = {
+            'sword' : get_tiles_from_sheet('weapons/sword.png', 1, 0, 0, 0, 16, 16),
+        }
+        self.assets.update(Weapons_assets)
 
     def Asset_Interative_Objects_List(self):
         Objects_assets = {

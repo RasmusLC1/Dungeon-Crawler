@@ -6,12 +6,12 @@ import math
 
 
 from scripts.utils import load_image, load_images, Animation
-from scripts.asset_loader import Asset_Loader
+from scripts.engine.asset_loader import Asset_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
-from scripts.entities.player import Player
+from scripts.entities.player.player import Player
 from scripts.engine.tilemap import Tilemap
-from scripts.particle_handler import Particle_Handler
+from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
@@ -20,7 +20,7 @@ from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.mana_bar import Mana_Bar
 from scripts.interface.coins import Coins
-from scripts.inventory.Chest_handler import Chest_Handler
+from scripts.decoration.chest.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler

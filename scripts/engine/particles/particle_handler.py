@@ -1,7 +1,7 @@
 import pygame
 import math
 import random
-from scripts.particle import Particle
+from scripts.engine.particles.particle import Particle
 
 class Particle_Handler:
 

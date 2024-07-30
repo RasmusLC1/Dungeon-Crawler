@@ -1,5 +1,5 @@
 import pygame
-from scripts.inventory.items.item import Item
+from scripts.entities.player.items.item import Item
 from scripts.inventory.inventory_slot import Inventory_Slot
 from copy import copy
 

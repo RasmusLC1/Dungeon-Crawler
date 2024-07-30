@@ -2,7 +2,7 @@ import math
 import random
 import pygame
 
-from scripts.particle import Particle
+from scripts.engine.particles.particle import Particle
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.entities.effects import Status_Effect_Handler
 from scripts.entities.entities import PhysicsEntity
@@ -278,21 +278,7 @@ class Moving_Entity(PhysicsEntity):
         self.friction = max(2, effect)
 
 
-    def Update_Light_Level(self):
-        # Set the light level based on the tile that the entity is placed on
-        new_light_level = min(255, self.game.tilemap.Current_Tile(self.pos)['light'] * 30)
-        if self.light_level < new_light_level:
-            self.light_level += 5
-        elif self.light_level > new_light_level:
-            self.light_level -= 5
-        self.light_level = abs(self.light_level - 255)
-        # 75 is the darkest level we want
-        self.light_level = max(75, 255 - self.light_level)
-
-        if self.light_level <= 75:
-            return False
-        else:
-            return True
+    
     
     # Render entity
     def Render(self, surf, offset=(0, 0)):

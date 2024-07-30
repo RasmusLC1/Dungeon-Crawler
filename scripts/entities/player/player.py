@@ -1,6 +1,6 @@
 from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
-from scripts.particle import Particle
+from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile.projectile import Projectile
 from scripts.weapon_generator import Weapon_Generator, Weapon
@@ -25,7 +25,7 @@ class Player(Moving_Entity):
         self.mana = 5
         self.nearby_chests = []
 
-        self.light_level = 6
+        self.light_level = 4
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
