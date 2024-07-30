@@ -27,7 +27,7 @@ class Inventory:
                 self.inventory.append(Inventory_Slot(self.game, (x, y), self.size, None))
 
     # General Update function
-    def Update(self, offset = (0,0)):
+    def Update(self, offset=(0, 0)):
         self.Active_Item(offset)
 
         for inventory_slot in self.inventory:
@@ -48,7 +48,6 @@ class Inventory:
         self.Item_Click()
         return
 
-    
     # Handle clicking items
     def Item_Click(self):
         if not self.game.mouse.left_click:
@@ -59,8 +58,8 @@ class Inventory:
                     self.clicked_inventory_slot = None
                     
         return
-                   
-    # Return the item to it's previous Inventory slot and deactivate
+
+    # Return the item to its previous Inventory slot and deactivate
     # the item and inventory slot
     def Return_Item(self):
         if self.clicked_inventory_slot:
@@ -77,14 +76,17 @@ class Inventory:
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
             if not self.active_item.Place_Down():
-                self.game.items.append(self.active_item)
+                print(f"Placing item: {self.active_item} at {self.game.mouse.mpos}")
+                self.game.item_handler.Add_Item(self.active_item)
+                self.game.entities_render.append(self.active_item)
+
             self.active_item = None
             # Set the inventory to be inactive again
             if self.clicked_inventory_slot:
                 self.clicked_inventory_slot.Set_Active(False)
                 self.clicked_inventory_slot.item = None
                 self.clicked_inventory_slot = None
-        return                
+        return
 
     def Move_Item_To_New_Slot(self, offset):
         Move_item = False
@@ -95,7 +97,7 @@ class Inventory:
                 if not inventory_slot.item:
                     inventory_slot.Add_Item(self.active_item)
                     Move_item = True
-        # Delete the item from the current inventory slot of we were able to move it
+        # Delete the item from the current inventory slot if we were able to move it
         if Move_item:
             for inventory_slot in self.inventory:
                 if inventory_slot.active:
@@ -105,7 +107,7 @@ class Inventory:
         return False
 
     # Active item is an item being dragged
-    def Active_Item(self, offset = (0,0)):
+    def Active_Item(self, offset=(0, 0)):
         # Check if there is an active item
         if self.active_item:
             # Check for out of bounds
@@ -122,19 +124,17 @@ class Inventory:
                 self.Move_Item(offset)
                 return
 
-
     def Overflow(self, item):
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
                 inventory_slot.item.Update()
-
                 return True
         return False
 
     # Add item to the inventory
     def Add_Item(self, item):
-        # Check if an item can more than one charge, example healthpotion is 3
+        # Check if an item can have more than one charge, example health potion is 3
         if item.max_amount > 1:
             for inventory_slot in self.inventory:
                 if inventory_slot.item:
@@ -150,8 +150,8 @@ class Inventory:
                             # Add item to item list if there is no room
                             if not self.Overflow(new_item):
                                 new_item.Update()
-                                self.game.items.append(new_item)
-                        self.game.items.remove(item)
+                                self.game.item_handler.Add_Item(new_item)
+                        self.game.item_handler.Remove_Item(item)
                         inventory_slot.item.Update()
                         return True
         i = 0
@@ -159,9 +159,8 @@ class Inventory:
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
-                self.game.items.remove(item)
+                self.game.item_handler.Remove_Item(item)
                 inventory_slot.item.Update()
-
                 return True
             # 2d array simulation for position
             i += 1
@@ -170,8 +169,6 @@ class Inventory:
                 j += 1
 
         return False
-        
-
 
     def Render(self, surf):
         for inventory_slot in self.inventory:

@@ -15,6 +15,7 @@ from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
+from scripts.entities.player.items.item_handler import Item_Handler
 from scripts.engine.lights import light_handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
@@ -82,7 +83,6 @@ class Game:
         self.light_handler = Light_Handler(self)
         
         
-        self.items = []
         self.particles = []
         self.sparks = []
         self.scroll = [0, 0]
@@ -98,6 +98,7 @@ class Game:
         self.trap_handler = Trap_Handler(self)
         self.decoration_handler = Decoration_Handler(self)
         self.chest_handler = Chest_Handler(self)
+        self.item_handler = Item_Handler(self)
  
         Ammo_Bar.__init__(self)
         Mana_Bar.__init__(self)
@@ -127,15 +128,12 @@ class Game:
             self.chest_handler.Update()
             self.light_handler.Update()
             self.decoration_handler.Update()
+            self.item_handler.Update()
 
             for enemy in self.enemies:
                 enemy.update(self.tilemap)
                 if enemy.health <= 0:
                     self.enemies.remove(enemy)
-
-            for item in self.items:
-                if not item.picked_up:
-                    self.items.remove(item)
 
             self.inventory.Update(render_scroll)
             Coins.Update(self)
@@ -143,33 +141,15 @@ class Game:
     
 
     def Render(self, render_scroll):
-
-        
-
         self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
-        
-        
-        
-        
+
         self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
 
         self.entities_render.sort(key=lambda entity: entity.pos[1])
         for entity in self.entities_render:
             entity.Render(self.display, render_scroll)
 
-
-        # self.chest_handler.Render(self.ray_caster.chests, self.display, render_scroll)
-        # self.decoration_handler.Render(self.ray_caster.decorations, self.display, render_scroll)
-        
-
-        # for item in self.items:
-        #     item.Render(self.display, offset = render_scroll)
-
-        # for enemy in self.ray_caster.enemies:
-        #     enemy.Render(self.display, offset=render_scroll)
-        
-        # self.player.Render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)
         Mana_Bar.Mana_Bar(self)

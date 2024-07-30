@@ -29,6 +29,7 @@ class Item(PhysicsEntity):
 
     def Pick_Up(self):
         if self.rect().colliderect(self.game.player.rect()):
+            print(self.pos)
             if self.game.inventory.Add_Item(self):
                 self.picked_up = False
                 self.game.entities_render.remove(self)

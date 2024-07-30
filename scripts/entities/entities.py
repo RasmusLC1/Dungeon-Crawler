@@ -16,6 +16,29 @@ class PhysicsEntity:
         self.active = 0
         self.light_level = 0
         self.game.entities_render.append(self)
+
+        # Status Effects
+        self.is_on_fire = 0
+        self.fire_cooldown = 0
+        self.fire_animation = 0
+        self.fire_animation_cooldown = 0
+
+        self.poisoned = 0
+        self.poisoned_cooldown = 0
+        self.poison_animation = 0
+        self.poison_animation_cooldown = 0
+
+        self.is_on_ice = 0
+        self.frozen = 0 
+        self.frozen_cooldown = 0
+        self.frozen_animation = 0
+        self.frozen_animation_cooldown = 0
+
+        self.wet = 0 
+        self.wet_cooldown = 0
+        self.wet_animation = 0
+        self.wet_animation_cooldown = 0
+
         
     
     def rect(self):
@@ -36,6 +59,36 @@ class PhysicsEntity:
 
     def Set_Effect(self, effect, duration):
         pass
+
+    #set poison effect
+    def Set_Poisoned(self, poison_time):
+        self.poisoned =  max(random.randint(2, poison_time), self.poisoned)
+
+    #set frozen effect
+    def Set_Frozen(self, freeze_time):
+        if self.wet:
+            freeze_time *= 2
+            self.wet = 0
+        self.frozen = max(3, freeze_time)
+
+    # Set wet effect
+    def Set_Wet(self, wet_time):
+        if self.is_on_fire:
+            self.is_on_fire = 0
+        if self.frozen:
+            self.frozen -= 1
+        self.wet = max(2, wet_time)
+    
+    def Set_Dry(self, drying):
+        self.wet = max(0, self.wet - drying)
+
+
+    #set Fire effect
+    def Set_On_Fire(self, fire_time):
+        if self.wet:
+            return
+        self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
+
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on

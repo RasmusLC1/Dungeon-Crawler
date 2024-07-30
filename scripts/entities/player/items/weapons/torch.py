@@ -1,10 +1,10 @@
-from scripts.decoration.decoration import Decoration
+from scripts.entities.player.items.weapons.weapon import Weapon
 import random
 
 
-class Torch(Decoration):
+class Torch(Weapon):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type)
+        super().__init__(game, pos, size, type, 3, 3, 2)
         self.max_animation = 7
         self.aniamtion = random.randint(0, self.max_animation)
 

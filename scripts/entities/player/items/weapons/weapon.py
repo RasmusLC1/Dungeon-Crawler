@@ -2,9 +2,9 @@ import pygame
 from scripts.entities.player.items.item import Item
 from scripts.entities.entities import PhysicsEntity
 
-class weapon(Item):
+class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range):
-        super.__init__(game, type, pos, size)
+        super().__init__(game, type, pos, size)
         self.damage = damage
         self.speed = speed
         self.range = range

@@ -25,8 +25,6 @@ class Inventory_Slot():
             return
         if self.item.used:
             self.item = None
-
-
         return
 
     def Add_Item(self, item):

@@ -35,9 +35,12 @@ class Chest(Decoration):
             self.loot_amount = random.randint(1, 3) * version_modifier
             self.loot_type = random.randint(0, 3)
             if self.loot_type == 0:
-                    self.game.items.append(Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3)))
+                    item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
+                    self.game.item_handler.Add_Item(item)
             elif self.loot_type == 1:
-                    self.game.items.append(Mana_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3)))
+                    item = Mana_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
+                    self.game.item_handler.Add_Item(item)
+
 
             elif self.loot_type == 2:
                 print("COIN")
