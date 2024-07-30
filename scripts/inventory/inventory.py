@@ -153,7 +153,7 @@ class Inventory:
                                 self.game.items.append(new_item)
                         self.game.items.remove(item)
                         inventory_slot.item.Update()
-                        return
+                        return True
         i = 0
         j = 0
         for inventory_slot in self.inventory:

@@ -16,9 +16,6 @@ class Chest(Decoration):
             if random.randint(depth, max(depth + 5, 10)) < max(depth + 2, 5):
                 break
             i += 1
-        # self.game = game
-        # self.pos = pos
-        # self.size = size
         self.loot_type = 0
         self.empty = False
         self.loot_amount = 0

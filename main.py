@@ -59,7 +59,7 @@ class Game:
 
         self.level = 0
         self.scroll = [0, 0]
-        self.entities = []
+        self.entities_render = []
 
         self.load_level(self.level)
 
@@ -154,14 +154,8 @@ class Game:
         
         self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
 
-        self.entities.clear()
-        self.entities.extend(self.chest_handler.chests)
-        self.entities.extend(self.decoration_handler.decorations)
-        self.entities.extend(self.items)
-        self.entities.extend(self.enemies)
-        self.entities.append(self.player)  # Assuming player is a single entity
-        self.entities.sort(key=lambda entity: entity.pos[1])
-        for entity in self.entities:
+        self.entities_render.sort(key=lambda entity: entity.pos[1])
+        for entity in self.entities_render:
             entity.Render(self.display, render_scroll)
 
 

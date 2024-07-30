@@ -31,6 +31,7 @@ class Item(PhysicsEntity):
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.inventory.Add_Item(self):
                 self.picked_up = False
+                self.game.entities_render.remove(self)
 
     def Update_Animation(self):
         if self.animation_cooldown:

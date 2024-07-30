@@ -15,6 +15,7 @@ class PhysicsEntity:
         self.size = size
         self.active = 0
         self.light_level = 0
+        self.game.entities_render.append(self)
         
     
     def rect(self):
