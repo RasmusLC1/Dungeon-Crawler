@@ -58,14 +58,10 @@ class Game:
         self.a_star = A_Star()
 
         self.level = 0
-        self.load_level(self.level)
         self.scroll = [0, 0]
+        self.entities = []
 
-        rows = 100  # Number of rows
-        cols = 100  # Number of columns
-
-        # Create a 2D array with all elements initialized to None
-        self.test_array = np.zeros((rows, cols), dtype=int)
+        self.load_level(self.level)
 
         
 
@@ -110,6 +106,8 @@ class Game:
         
         self.a_star.Setup_Map(self)
 
+        
+
 
 
         # Printing the map
@@ -146,22 +144,38 @@ class Game:
 
     def Render(self, render_scroll):
 
+        
+
         self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
         
-        # Trap_Handler.Render(self, render_scroll)
+        
+        
+        
         self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
-        self.chest_handler.Render(self.ray_caster.chests, self.display, render_scroll)
-        self.decoration_handler.Render(self.ray_caster.decorations, self.display, render_scroll)
+
+        self.entities.clear()
+        self.entities.extend(self.chest_handler.chests)
+        self.entities.extend(self.decoration_handler.decorations)
+        self.entities.extend(self.items)
+        self.entities.extend(self.enemies)
+        self.entities.append(self.player)  # Assuming player is a single entity
+        self.entities.sort(key=lambda entity: entity.pos[1])
+        for entity in self.entities:
+            entity.Render(self.display, render_scroll)
+
+
+        # self.chest_handler.Render(self.ray_caster.chests, self.display, render_scroll)
+        # self.decoration_handler.Render(self.ray_caster.decorations, self.display, render_scroll)
         
 
-        for item in self.items:
-            item.Render(self.display, offset = render_scroll)
+        # for item in self.items:
+        #     item.Render(self.display, offset = render_scroll)
 
-        for enemy in self.ray_caster.enemies:
-            enemy.Render(self.display, offset=render_scroll)
+        # for enemy in self.ray_caster.enemies:
+        #     enemy.Render(self.display, offset=render_scroll)
         
-        self.player.Render(self.display, offset=render_scroll)
+        # self.player.Render(self.display, offset=render_scroll)
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)
         Mana_Bar.Mana_Bar(self)

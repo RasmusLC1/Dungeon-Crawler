@@ -81,6 +81,14 @@ class Chest(Decoration):
     
 
     def Render(self, surf, offset = (0,0)):
+        if self.empty:
+            return
+        
+        if self.text_cooldown:
+            self.Render_text(surf, offset)
+            return
+        
+
         if not self.Update_Light_Level():
             return
         # Set image
