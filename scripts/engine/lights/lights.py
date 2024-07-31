@@ -5,6 +5,7 @@ class Light():
         self.game = game
         self.light_level = light_level
         self.pos = pos
+        self.pos_holder = pos
         self.tiles = []
         self.Setup_Tile_Light()
 
@@ -25,6 +26,9 @@ class Light():
         if 'Wall' in tile['type']:
             return False
         return True
+    
+    def Update_Position(self, pos):
+        self.pos = pos
 
     def Setup_Tile_Light(self):
         num_lines = 80
@@ -32,6 +36,7 @@ class Light():
         angle_increment = spread_angle / num_lines
         base_angle = 0
 
+        # Setup light_level under the light itself
         tile = self.game.tilemap.Current_Tile(self.pos)
         if self.Check_Tile(tile):
             if self.light_level > tile['light']:
@@ -54,6 +59,7 @@ class Light():
                     tile['light'] = new_light_level
                     self.tiles.append(tile)
 
+
     def Move_Light(self, pos):
         self.pos = pos
         if self.Delete_Light():
@@ -66,9 +72,10 @@ class Light():
             return False
         for tile in self.tiles:
             tile['light'] = 0
-
+            print("TEST")
         self.tiles.clear()
         return True
 
     def Update(self):
-        pass
+        self.tiles.clear()
+        self.Setup_Tile_Light()

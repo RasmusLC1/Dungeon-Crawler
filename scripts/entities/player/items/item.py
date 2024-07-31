@@ -70,7 +70,7 @@ class Item(PhysicsEntity):
     
     # Update position
     def Move(self, new_pos):
-            self.pos = new_pos
+        self.pos = new_pos
             
 
     def Place_Down(self):

@@ -126,7 +126,6 @@ class Game:
             Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             self.trap_handler.Update()
             self.chest_handler.Update()
-            self.light_handler.Update()
             self.decoration_handler.Update()
             self.item_handler.Update()
 

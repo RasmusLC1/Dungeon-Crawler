@@ -17,7 +17,9 @@ class Mouse_Handler:
 
 
     def Mouse_Input(self, key_press, offset=(0, 0)):
-
+        tile = self.game.tilemap.Current_Tile(self.mpos)
+        if tile:
+            print(tile['light'])
         if self.left_click:
             self.hold_down_left += 1
         elif not self.left_click and self.hold_down_left:

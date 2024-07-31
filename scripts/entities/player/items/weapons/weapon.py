@@ -8,17 +8,26 @@ class Weapon(Item):
         self.damage = damage
         self.speed = speed
         self.range = range
+        # Can be expanded to damaged or dirty versions of weapons later
+        self.sub_type = self.type
 
 
     # def Update(self):
     #     pass
 
+    def Render_In_Inventory(self, surf, offset=(0, 0)):
+        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
+        surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
     def Render(self, surf, offset=(0, 0)):
+        if not self.picked_up:
+            self.Render_In_Inventory(surf, offset)
+
         if not self.Update_Light_Level():
             return
         
         # Set image
-        weapon_image = self.game.assets[self.type][self.animation].convert_alpha()
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))

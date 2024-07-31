@@ -25,7 +25,7 @@ class Player(Moving_Entity):
         self.mana = 5
         self.nearby_chests = []
 
-        self.light_level = 4
+        self.light_level = 0
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 

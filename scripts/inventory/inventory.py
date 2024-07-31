@@ -76,7 +76,6 @@ class Inventory:
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
             if not self.active_item.Place_Down():
-                print(f"Placing item: {self.active_item} at {self.game.mouse.mpos}")
                 self.game.item_handler.Add_Item(self.active_item)
                 self.game.entities_render.append(self.active_item)
 
