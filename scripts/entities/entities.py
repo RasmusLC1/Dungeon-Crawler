@@ -95,7 +95,8 @@ class PhysicsEntity:
         tile = self.game.tilemap.Current_Tile(self.pos)
         if not tile:
             return True
-        
+        if tile['light'] == self.light_level:
+            return True
         new_light_level = min(255, tile['light'] * 30)
         if self.light_level < new_light_level:
             self.light_level += 5

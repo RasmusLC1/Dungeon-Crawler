@@ -8,8 +8,8 @@ from scripts.traps.trap_handler import Trap_Handler
 
 
 class Item(PhysicsEntity):
-    def __init__(self, game, type, pos, amount):
-        super().__init__(game, type, pos, (10,10))
+    def __init__(self, game, type, pos, size, amount):
+        super().__init__(game, type, pos, size)
         self.game = game
         self.sub_type = ''
         self.used = False
@@ -19,6 +19,7 @@ class Item(PhysicsEntity):
         self.amount = amount
         self.max_amount = 0
         self.damaged = False
+        self.max_animation = 0
         
 
     def Activate(self):
@@ -29,7 +30,6 @@ class Item(PhysicsEntity):
 
     def Pick_Up(self):
         if self.rect().colliderect(self.game.player.rect()):
-            print(self.pos)
             if self.game.inventory.Add_Item(self):
                 self.picked_up = False
                 self.game.entities_render.remove(self)
@@ -39,7 +39,7 @@ class Item(PhysicsEntity):
             self.animation_cooldown -= 1
         else:
             self.animation_cooldown = 50
-            self.animation = random.randint(0,8)
+            self.animation = random.randint(0,self.max_animation)
 
 
     def Distance(self, player_pos, mouse_pos):

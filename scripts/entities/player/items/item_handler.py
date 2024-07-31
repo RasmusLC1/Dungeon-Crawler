@@ -6,14 +6,15 @@ class Item_Handler():
     def __init__(self, game):
         self.game = game
         self.items = []
-        self.nearby_decoration = []
+        self.nearby_items = []
         self.Initialise()
 
     def Initialise(self):
         # top pusher initialisation
+        # pass
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
-            pass
-            self.items.append(Torch(self.game, torch['pos'], (self.game.assets[torch['type']][0].get_width(), self.game.assets[torch['type']][0].get_height()), torch['type']))
+            self.items.append(Torch(self.game, torch['pos'], (16, 16), torch['type']))
+
 
     def Add_Item(self, item):
         self.items.append(item)
@@ -25,15 +26,16 @@ class Item_Handler():
 
 
     def find_nearby_item(self, player_pos, max_distance):
-        nearby_decoration = []
-        for decoration in self.items:
+        nearby_items = []
+        for item in self.items:
             # Calculate the Euclidean distance
-            distance = math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2)
+            distance = math.sqrt((player_pos[0] - item.pos[0]) ** 2 + (player_pos[1] - item.pos[1]) ** 2)
             if distance < max_distance:
-                nearby_decoration.append(decoration)
-        return nearby_decoration
+                nearby_items.append(item)
+        return nearby_items
 
     def Update(self):
+        self.nearby_items = self.find_nearby_item(self.game.player.pos, 200)
         for item in self.items:
             item.Update_Animation()
             if not item.picked_up:

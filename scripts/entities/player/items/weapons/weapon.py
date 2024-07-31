@@ -4,15 +4,14 @@ from scripts.entities.entities import PhysicsEntity
 
 class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range):
-        super().__init__(game, type, pos, size)
+        super().__init__(game, type, pos, size, 1)
         self.damage = damage
         self.speed = speed
         self.range = range
-        self.picked_up = False
 
 
-    def Update(self):
-        pass
+    # def Update(self):
+    #     pass
 
     def Render(self, surf, offset=(0, 0)):
         if not self.Update_Light_Level():

@@ -150,6 +150,7 @@ class Game:
         for entity in self.entities_render:
             entity.Render(self.display, render_scroll)
 
+
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)
         Mana_Bar.Mana_Bar(self)

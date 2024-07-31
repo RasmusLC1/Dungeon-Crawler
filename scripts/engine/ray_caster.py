@@ -100,6 +100,16 @@ class Ray_Caster():
                 else:
                     decoration.Set_Active(self.default_activity)
 
+    def Check_Items(self, pos):
+        for item in self.game.item_handler.nearby_items:
+            if self.rect(pos).colliderect(item.rect()):
+
+                if not item.active:
+                    item.Set_Active(self.default_activity)
+                    self.decorations.append(item)
+                else:
+                    item.Set_Active(self.default_activity)
+
     def Check_Tile(self, pos):
         tile = self.game.tilemap.Current_Tile(pos)
         if tile:
@@ -130,6 +140,7 @@ class Ray_Caster():
         self.Check_Trap(self.game.player.pos)
         self.Check_Enemy(self.game.player.pos)
         self.Check_Chest(self.game.player.pos)
+        self.Check_Items(self.game.player.pos)
         self.Check_Decoration(self.game.player.pos)
 
         # Find nearby Enemies
@@ -157,6 +168,7 @@ class Ray_Caster():
                 self.Check_Enemy((pos_x, pos_y))
                 self.Check_Chest((pos_x, pos_y))
                 self.Check_Decoration((pos_x, pos_y))
+                self.Check_Items((pos_x, pos_y))
 
                         
                 # pygame.draw.line(surf, (255, 255, 255), (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1]), (pos_x, pos_y), 1)

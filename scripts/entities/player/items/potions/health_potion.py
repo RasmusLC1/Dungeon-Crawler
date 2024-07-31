@@ -4,9 +4,10 @@ from scripts.entities.player.items.item import Item
 class Health_Potion(Item):
     def __init__(self, game, pos, amount):
         self.type = 'health_potion'
-        super().__init__(game, type, pos, amount)
+        super().__init__(game, type, pos, (10,10), amount)
         self.Update()
         self.max_amount = 3
+        self.max_animation = 4
 
     def Activate(self):
         if self.game.player.Healing(10):

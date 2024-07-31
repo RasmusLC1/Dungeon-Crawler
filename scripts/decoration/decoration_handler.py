@@ -10,10 +10,10 @@ class Decoration_Handler():
         self.Initialise()
 
     def Initialise(self):
+        pass
         # top pusher initialisation
-        for torch in self.game.tilemap.extract([('torch', 0)].copy()):
-            pass
-            # self.decorations.append(Torch(self.game, torch['pos'], (self.game.assets[torch['type']][0].get_width(), self.game.assets[torch['type']][0].get_height()), torch['type']))
+        # for torch in self.game.tilemap.extract([('torch', 0)].copy()):
+        #     self.decorations.append(Torch(self.game, torch['pos'], (self.game.assets[torch['type']][0].get_width(), self.game.assets[torch['type']][0].get_height()), torch['type']))
 
     def find_nearby_decoration(self, player_pos, max_distance):
         nearby_decoration = []
