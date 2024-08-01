@@ -3,13 +3,14 @@ from scripts.entities.player.items.item import Item
 from scripts.entities.entities import PhysicsEntity
 
 class Weapon(Item):
-    def __init__(self, game, pos, size, type, damage, speed, range):
+    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
         super().__init__(game, type, pos, size, 1)
         self.damage = damage
         self.speed = speed
         self.range = range
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
+        self.weapon_class = weapon_class
 
 
     # def Update(self):

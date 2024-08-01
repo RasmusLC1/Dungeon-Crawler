@@ -6,6 +6,8 @@ class Inventory_Slot():
         self.pos = pos
         self.size = size
         self.item = item
+        self.background = None
+        self.Inventory_type = None
         Inventory_Slot.Setup_Inventory_Texture(self)
         self.active = False
         self.activate_counter = 0
@@ -31,6 +33,9 @@ class Inventory_Slot():
         item.active = True
         self.item = item
         self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
+    
+    def Add_Background(self, background):
+        self.background = background
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -39,5 +44,9 @@ class Inventory_Slot():
         black = (0, 0, 0)
         surf.blit(self.box_surface, self.pos)
         pygame.draw.rect(surf, black, self.rect(), 1)
+        if self.background:
+            background_image = pygame.transform.scale(self.background, (17,17))  
+            surf.blit(background_image, self.pos)
+
         if self.item and not self.active:
             self.item.Render(surf)

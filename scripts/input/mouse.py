@@ -40,6 +40,8 @@ class Mouse_Handler:
             # Check for right click (button 3)
             if key_press.button == 3:
                 self.right_click = False
+            if key_press.button == 4 or key_press.button == 5:
+                self.game.weapon_inventory.Increment_inventory()
         if key_press.type == pygame.MOUSEMOTION:
             if self.left_click == True:
                 x = key_press.pos[0] / 4 + offset[0]

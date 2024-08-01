@@ -7,7 +7,7 @@ import pygame
 
 class Torch(Weapon):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 1, 1, 1)
+        super().__init__(game, pos, size, type, 1, 1, 1, 'one_handed_melee')
         self.max_animation = 7
         self.aniamtion = random.randint(0, self.max_animation)
         self.light_level = 8

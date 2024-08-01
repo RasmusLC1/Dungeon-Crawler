@@ -26,6 +26,7 @@ from scripts.entities.enemy import Enemy
 from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.inventory import Inventory
+from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
 
 import numpy as np
@@ -54,6 +55,9 @@ class Game:
 
         self.tilemap = Tilemap(self, tile_size=16)
         self.inventory = Inventory(self)
+        # TODO: PLACEHOLDER CODE, Implement proper class system later
+        self.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
+        self.weapon_inventory = Weapon_Inventory_Handler(self, 'warrior', self.proffeciency)
         self.mouse = Mouse_Handler(self)
         self.ray_caster = Ray_Caster(self)
         self.a_star = A_Star()
@@ -155,6 +159,7 @@ class Game:
         Mana_Bar.Mana_Bar(self)
         Coins.Render(self)
         self.inventory.Render(self.display)
+        self.weapon_inventory.Render(self.display)
         for particle in self.particles:
             particle.Render(self.display, render_scroll)
 

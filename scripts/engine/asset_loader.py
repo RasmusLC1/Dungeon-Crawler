@@ -14,6 +14,7 @@ class Asset_Loader:
         Asset_Loader.Asset_Potion_List(self)
         Asset_Loader.Asset_Decoration_List(self)
         Asset_Loader.Asset_Weapons_List(self)
+        Asset_Loader.Asset_Weapon_Inventory(self)
 
         
     def Asset_Background_List(self):
@@ -90,6 +91,15 @@ class Asset_Loader:
             'torch': get_tiles_from_sheet('weapons/torch.png', 8, 0, 0, 0, 16, 16),
         }
         self.assets.update(Weapons_assets)
+
+    def Asset_Weapon_Inventory(self):
+        Weapon_Inventory_assets = {
+            'sword_shield' : get_tiles_from_sheet('weapon_inventory/sword_shield.png', 2, 0, 0, 0, 17, 17),
+            'duel_wield' : get_tiles_from_sheet('weapon_inventory/Duel_wield.png', 2, 0, 0, 0, 17, 17),
+            'bow_arrow' : get_tiles_from_sheet('weapon_inventory/Bow_Arrow.png', 2, 0, 0, 0, 17, 17),
+        }
+        self.assets.update(Weapon_Inventory_assets)
+
 
     def Asset_Interative_Objects_List(self):
         Objects_assets = {
