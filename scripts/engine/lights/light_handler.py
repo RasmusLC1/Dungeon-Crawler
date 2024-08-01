@@ -16,14 +16,23 @@ class Light_Handler():
         self.lights.append(light)
         return light
     
-    def find_nearby_Lights(self, center_pos, max_distance):
+    def Find_Nearby_Lights(self, center_pos, max_distance):
+        def distance_from_center(light, center_pos):
+            pos = light.pos
+            return math.sqrt((pos[0] - center_pos[0]) ** 2 + (pos[1] - center_pos[1]) ** 2)
+        
         nearby_lights = []
-        print(len(self.lights))
         for light in self.lights:
+            if light.picked_up:
+                continue
             # Calculate the Euclidean distance
             distance = math.sqrt((center_pos[0] - light.pos[0]) ** 2 + (center_pos[1] - light.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_lights.append(light)
+        
+        # Sort the lights based on their distance from the center position in descending order
+        nearby_lights = sorted(nearby_lights, key=lambda light: distance_from_center(light, center_pos), reverse=True)
+        
         return nearby_lights
     
     def Move_Light(self, pos, light_source):
@@ -36,7 +45,7 @@ class Light_Handler():
         light_source.Setup_Tile_Light()
 
         # Update all nearby lights after moving
-        nearby_lights = self.find_nearby_Lights(light_source.pos, 100)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos, 100)
         for light in nearby_lights:
             light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources
 
@@ -46,12 +55,18 @@ class Light_Handler():
         light_source.Delete_Light()
 
         # Update all nearby lights after moving
-        nearby_lights = self.find_nearby_Lights(light_source.pos_holder, 100)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 100)
         for light in nearby_lights:
             light.Delete_Light()  # Recalculate the light for the nearby light sources
 
+        
+
+    def Restore_Light(self, light_source):
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 100)
+
         for light in nearby_lights:
             light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources
+
 
 
 

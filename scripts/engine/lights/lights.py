@@ -7,6 +7,8 @@ class Light():
         self.pos = pos
         self.pos_holder = pos
         self.tiles = []
+        self.picked_up = False
+        self.active = True
         self.Setup_Tile_Light()
 
     def Setup_Under_entity_Light(self):
@@ -31,6 +33,7 @@ class Light():
         self.pos = pos
 
     def Setup_Tile_Light(self):
+        
         num_lines = 80
         spread_angle = 360
         angle_increment = spread_angle / num_lines
@@ -58,10 +61,13 @@ class Light():
                 if new_light_level > tile['light']:
                     tile['light'] = new_light_level
                     self.tiles.append(tile)
-
+    
+    
 
     def Move_Light(self, pos):
         self.pos = pos
+        if not self.active:
+            return
         if self.Delete_Light():
             self.Setup_Tile_Light()
         else:
@@ -72,7 +78,6 @@ class Light():
             return False
         for tile in self.tiles:
             tile['light'] = 0
-            print("TEST")
         self.tiles.clear()
         return True
 

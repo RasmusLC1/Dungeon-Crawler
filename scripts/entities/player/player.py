@@ -25,7 +25,8 @@ class Player(Moving_Entity):
         self.mana = 5
         self.nearby_chests = []
 
-        self.light_level = 0
+        self.light_level = 5
+        self.light_cooldown = 0
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
@@ -57,9 +58,18 @@ class Player(Moving_Entity):
 
         self.Set_Direction_Holder()
         if self.light_source:
-            self.light_source.Move_Light(self.pos)
+            # Update all the light's around the player
+            # Do it only when the player light has been activated to prevent lag
+            if not self.light_source.active:
+                self.game.light_handler.Remove_Light(self.light_source)
+                self.game.light_handler.Restore_Light(self.light_source)
+                self.Set_Light_State(True)
+            else:
+                self.light_source.Move_Light(self.pos)
 
-    
+
+    def Set_Light_State(self, state):
+        self.light_source.active = state
     
             
     def Dashing_Update(self, offset=(0, 0)):
