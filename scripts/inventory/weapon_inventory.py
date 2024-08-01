@@ -12,11 +12,13 @@ class Weapon_Inventory():
     def Setup_Inventory(self, type):
         # Create a new inventory list for this setup
         inventory = []
-        weapon_class = ''
-        if type == 'sword_shield':
-            weapon_class = 'melee'
+        weapon_class = []
+        if type == 'left_right':
+            weapon_class.insert(0, 'left_hand')
+            weapon_class.insert(1, 'right_hand')
         if type == 'bow_arrow':
-            weapon_class = 'ranged'
+            weapon_class.insert(0, 'bow')
+            weapon_class.insert(1, 'arrow')
         else:
             print("WEAPON_CLASS NOT FOUND")
 
@@ -25,7 +27,7 @@ class Weapon_Inventory():
             inventory_slot = Inventory_Slot(self.game, (x, 5), self.size, None)
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)
-            inventory_slot.Inventory_type = weapon_class
+            inventory_slot.Inventory_type = weapon_class[i]
             inventory.append(inventory_slot)
 
         return inventory

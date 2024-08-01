@@ -97,6 +97,7 @@ class Asset_Loader:
             'sword_shield' : get_tiles_from_sheet('weapon_inventory/sword_shield.png', 2, 0, 0, 0, 17, 17),
             'duel_wield' : get_tiles_from_sheet('weapon_inventory/Duel_wield.png', 2, 0, 0, 0, 17, 17),
             'bow_arrow' : get_tiles_from_sheet('weapon_inventory/Bow_Arrow.png', 2, 0, 0, 0, 17, 17),
+            'left_right' : get_tiles_from_sheet('weapon_inventory/left_right.png', 2, 0, 0, 0, 17, 17),
         }
         self.assets.update(Weapon_Inventory_assets)
 

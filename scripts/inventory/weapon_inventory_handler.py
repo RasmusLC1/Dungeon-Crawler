@@ -17,7 +17,7 @@ class Weapon_Inventory_Handler():
         self.Add_Inventory_Slot()
 
     def Add_Inventory_Slot(self):
-        self.inventories.insert(0, self.weapon_inventory.Setup_Inventory('sword_shield'))
+        self.inventories.insert(0, self.weapon_inventory.Setup_Inventory('left_right'))
         self.inventories.insert(1, self.weapon_inventory.Setup_Inventory('bow_arrow'))
 
 

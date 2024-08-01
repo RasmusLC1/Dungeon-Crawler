@@ -110,7 +110,7 @@ class Inventory:
         # Check if there is an active item
         if self.active_item:
             # Check for out of bounds
-            item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap)
+            item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
             if item_out_of_bounds == False:
                 if self.game.mouse.left_click == False:       
                     if self.Move_Item_To_New_Slot(offset):

@@ -34,6 +34,9 @@ class Inventory_Slot():
         self.item = item
         self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
     
+    def Remove_Item(self):
+        self.item = None
+
     def Add_Background(self, background):
         self.background = background
 
@@ -44,7 +47,7 @@ class Inventory_Slot():
         black = (0, 0, 0)
         surf.blit(self.box_surface, self.pos)
         pygame.draw.rect(surf, black, self.rect(), 1)
-        if self.background:
+        if self.background and not self.item:
             background_image = pygame.transform.scale(self.background, (17,17))  
             surf.blit(background_image, self.pos)
 

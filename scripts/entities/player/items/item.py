@@ -52,7 +52,7 @@ class Item(PhysicsEntity):
         self.amount = min(self.max_amount, self.amount + amount)
     
     # Check for out of bounds, return true if valid, else false
-    def Move_Legal(self, mouse_pos, player_pos, tilemap):
+    def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
         # Check if distance is legal, update to account for player strength later
         if self.Distance(player_pos, mouse_pos) < 40:
             # Check if it it touches a floor tile
@@ -85,8 +85,9 @@ class Item(PhysicsEntity):
     def Damage_Taken(self, damage):
         self.damaged = True
     
-    # Rener legal position
+    # Render legal position
     def Render(self, surf, offset=(0, 0)):
+        print(self.picked_up)
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
