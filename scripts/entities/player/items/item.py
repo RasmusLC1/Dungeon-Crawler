@@ -34,6 +34,15 @@ class Item(PhysicsEntity):
                 self.picked_up = False
                 self.game.entities_render.remove(self)
 
+    def Place_Down(self):
+        nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, 20)
+        for trap in nearby_traps:
+            trap.Update(self)
+            if self.damaged:
+                return True
+        self.picked_up = True
+        return False
+
     def Update_Animation(self):
         if self.animation_cooldown:
             self.animation_cooldown -= 1
@@ -73,21 +82,13 @@ class Item(PhysicsEntity):
         self.pos = new_pos
             
 
-    def Place_Down(self):
-        nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, 20)
-        for trap in nearby_traps:
-            trap.Update(self)
-            if self.damaged:
-                return True
-            
-        return False
+    
 
     def Damage_Taken(self, damage):
         self.damaged = True
     
     # Render legal position
     def Render(self, surf, offset=(0, 0)):
-        print(self.picked_up)
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 

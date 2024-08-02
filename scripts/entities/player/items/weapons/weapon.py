@@ -35,17 +35,19 @@ class Weapon(Item):
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
-        if self.equipped:
+        # Check if the weapon can be moved to the weapon inventory
+        if self.picked_up:
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-            if self.Move_To_Other_Inventory(weapon_inventory, self.game.inventory.inventory, offset):
-                self.equipped = False
+            if self.equipped:
+                if self.Move_To_Other_Inventory(weapon_inventory, self.game.inventory.inventory, offset):
+                    self.equipped = False
+                    return False
+            else:
+                if self.Move_To_Other_Inventory(self.game.inventory.inventory, weapon_inventory, offset):
+                    self.equipped = True
+                    return False
 
-        else:
-            active_inventory = self.game.weapon_inventory.active_inventory
-            weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-            if self.Move_To_Other_Inventory(self.game.inventory.inventory, weapon_inventory, offset):
-                self.equipped = True
 
 
         # Check if distance is legal, update to account for player strength later
@@ -62,6 +64,12 @@ class Weapon(Item):
         
         else:
             return False
+        
+    def Place_Down(self):
+        super().Place_Down()
+        self.equipped = False
+        return False
+
 
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  

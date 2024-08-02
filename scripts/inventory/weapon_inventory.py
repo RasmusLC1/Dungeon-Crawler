@@ -62,9 +62,7 @@ class Weapon_Inventory():
                             return
         self.Item_Click()
         return
-    
-    def TEST(self):
-        print("TEST")
+
 
     # Handle clicking items
     def Item_Click(self):

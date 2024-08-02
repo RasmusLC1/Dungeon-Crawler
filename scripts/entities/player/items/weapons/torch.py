@@ -27,17 +27,14 @@ class Torch(Weapon):
                 self.game.entities_render.remove(self)
 
     def Place_Down(self):
-        # Check for traps to trigger
-        self.in_inventory = False
-        nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, 20)
-        for trap in nearby_traps:
-            trap.Update(self)
-            if self.damaged:
-                return True
+        # Parent class Place_down function
+        super().Place_Down()
+
         
         # Set the player light to False to trigger a general update of the light
         # levels around the player and move the torch light to the new location
         self.game.player.Set_Light_State(False)
         self.light_source.Move_Light(self.pos)
         self.light_source.picked_up = False
+        
         return False
