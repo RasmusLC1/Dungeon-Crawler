@@ -9,24 +9,44 @@ class Weapon(Item):
         self.speed = speed
         self.range = range
         self.in_inventory = False
+        self.equipped = False
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         self.weapon_class = weapon_class
 
+
+    # Add weapons from a sending inventory to a receiving inventory
+    # Example: weapon_inventory (sending) -> inventory (receiving) 
+    def Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset = (0,0)):
+        if self.game.mouse.left_click:
+            return
+        
+        for inventory_slot in receiving_inventory:
+            if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
+                if not inventory_slot.active:
+                    for weapon_inventory_slot in sending_inventory:
+                        if weapon_inventory_slot.active:
+                            inventory_slot.Add_Item(self)
+                            weapon_inventory_slot.Remove_Item()
+                            return True             
+        return False
+
+
+
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
-        if self.game.mouse.left_click == False:
+        if self.equipped:
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-            for weapon_inventory_slot in weapon_inventory:
-                if weapon_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                    if weapon_inventory_slot.Inventory_type == 'left_hand' or 'right_hand':
-                        print("SUCCESS")
-                        if not weapon_inventory_slot.active:
-                            for inventory_slot in self.game.inventory.inventory:
-                                if inventory_slot.active:
-                                    weapon_inventory_slot.Add_Item(self)
-                                    inventory_slot.Remove_Item()
+            if self.Move_To_Other_Inventory(weapon_inventory, self.game.inventory.inventory, offset):
+                self.equipped = False
+
+        else:
+            active_inventory = self.game.weapon_inventory.active_inventory
+            weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
+            if self.Move_To_Other_Inventory(self.game.inventory.inventory, weapon_inventory, offset):
+                self.equipped = True
+
 
         # Check if distance is legal, update to account for player strength later
         if self.Distance(player_pos, mouse_pos) < 40:

@@ -139,6 +139,7 @@ class Game:
                     self.enemies.remove(enemy)
 
             self.inventory.Update(render_scroll)
+            self.weapon_inventory.Update(render_scroll)
             Coins.Update(self)
             self.ray_caster.Update(self)
     

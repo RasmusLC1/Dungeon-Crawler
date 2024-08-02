@@ -7,7 +7,6 @@ class Weapon_Inventory_Handler():
 
     def __init__(self, game, player_class, proffeciency):
         self.game = game
-        self.weapon_inventory = Weapon_Inventory(game)
         self.inventories = []
         self.active_inventory = 0
         self.max_inventories = 2
@@ -17,9 +16,14 @@ class Weapon_Inventory_Handler():
         self.Add_Inventory_Slot()
 
     def Add_Inventory_Slot(self):
-        self.inventories.insert(0, self.weapon_inventory.Setup_Inventory('left_right'))
-        self.inventories.insert(1, self.weapon_inventory.Setup_Inventory('bow_arrow'))
+        self.inventories.append(Weapon_Inventory(self.game, 'left_right'))
+        self.inventories.append(Weapon_Inventory(self.game, 'bow_arrow'))
 
+
+    def Update(self, offset=(0, 0)):
+        self.inventories[self.active_inventory].Update(offset)
+        # print(self.inventories[self.active_inventory])
+        
 
     def Add_Weapon_To_Inventory(self, weapon):
         # If the player is unable to pick up the Weapon
