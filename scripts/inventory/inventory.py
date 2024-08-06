@@ -4,9 +4,9 @@ from scripts.inventory.inventory_slot import Inventory_Slot
 from copy import copy
 
 class Inventory:
-    def __init__(self, game):
-        self.x_size = 7
-        self.y_size = 1
+    def __init__(self, game, x_size, y_size):
+        self.x_size = x_size
+        self.y_size = y_size
         self.game = game
         self.available_pos = []
         self.size = (17, 17)
@@ -16,15 +16,7 @@ class Inventory:
         self.clicked_inventory_slot = None
         
         self.inventory = []
-        self.Setup()
 
-    # Configure the inventory when Initialiased
-    def Setup(self):
-        for j in range(self.y_size):
-            for i in range(self.x_size):
-                x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 65
-                y = j * self.size[0] + self.game.screen_height / self.game.render_scale - 20
-                self.inventory.append(Inventory_Slot(self.game, (x, y), self.size, None))
 
     # General Update function
     def Update(self, offset=(0, 0)):
@@ -63,6 +55,7 @@ class Inventory:
     # Handle double clicking behaviour, return True if valid double click
     def Item_Double_Click(self):
         if self.game.mouse.double_click:
+            print(self.clicked_inventory_slot.item.type)
             self.clicked_inventory_slot.Update()
             self.clicked_inventory_slot = None
             return True

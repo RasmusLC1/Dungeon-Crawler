@@ -1,10 +1,10 @@
-from scripts.entities.player.items.item import Item
+from scripts.entities.player.items.potions.potion import Potion
 
 
-class Mana_Potion(Item):
+
+class Mana_Potion(Potion):
     def __init__(self, game, pos, amount):
-        self.type = 'mana_potion'
-        super().__init__(game, self.type, pos, (10,10), amount)
+        super().__init__(game, 'mana_potion', pos, amount)
         self.Update()
         self.max_amount = 3
         self.max_animation = 4

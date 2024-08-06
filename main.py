@@ -25,7 +25,7 @@ from scripts.decoration.chest.Chest_handler import Chest_Handler
 from scripts.entities.enemy import Enemy
 from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler
-from scripts.inventory.inventory import Inventory
+from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
 
@@ -54,7 +54,7 @@ class Game:
 
 
         self.tilemap = Tilemap(self, tile_size=16)
-        self.inventory = Inventory(self)
+        self.inventory = Item_Inventory(self)
         # TODO: PLACEHOLDER CODE, Implement proper class system later
         self.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
         self.weapon_inventory = Weapon_Inventory_Handler(self, 'warrior', self.proffeciency)

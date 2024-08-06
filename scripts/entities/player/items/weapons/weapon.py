@@ -4,7 +4,7 @@ from scripts.entities.entities import PhysicsEntity
 
 class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
-        super().__init__(game, type, pos, size, 1)
+        super().__init__(game, type, 'weapon', pos, size, 1)
         self.damage = damage
         self.speed = speed
         self.range = range
@@ -23,12 +23,17 @@ class Weapon(Item):
         
         for inventory_slot in receiving_inventory:
             if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                if not inventory_slot.active:
-                    for weapon_inventory_slot in sending_inventory:
-                        if weapon_inventory_slot.active:
-                            inventory_slot.Add_Item(self)
-                            weapon_inventory_slot.Remove_Item()
-                            return True             
+                if self.Send_To_Inventory(inventory_slot, sending_inventory):
+                    return True             
+        return False
+    
+    def Send_To_Inventory(self, inventory_slot, sending_inventory):
+        if not inventory_slot.active:
+            for weapon_inventory_slot in sending_inventory:
+                if weapon_inventory_slot.active:
+                    inventory_slot.Add_Item(self)
+                    weapon_inventory_slot.Remove_Item()
+                    return True
         return False
 
 

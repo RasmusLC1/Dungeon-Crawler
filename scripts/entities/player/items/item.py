@@ -8,9 +8,10 @@ from scripts.traps.trap_handler import Trap_Handler
 
 
 class Item(PhysicsEntity):
-    def __init__(self, game, type, pos, size, amount):
+    def __init__(self, game, type, category, pos, size, amount):
         super().__init__(game, type, pos, size)
         self.game = game
+        self.category = category
         self.sub_type = ''
         self.used = False
         self.picked_up = True
