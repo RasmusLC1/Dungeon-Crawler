@@ -142,6 +142,8 @@ class Game:
             self.weapon_inventory.Update(render_scroll)
             Coins.Update(self)
             self.ray_caster.Update(self)
+
+            self.mouse.Mouse_Update()
     
 
     def Render(self, render_scroll):
