@@ -22,18 +22,14 @@ class Inventory:
         self.Active_Item(offset)
 
         for inventory_slot in self.inventory:
-            
             if not self.Update_Inventory_Slot_Item_Animation(inventory_slot):
                 continue
-
             # Check if the mouse has been clicked, if no we skip that inventory
             # slot if no continue to next inventory slot
             if not self.game.mouse.left_click:
                 continue
-
             if not self.Inventory_Slot_Collision(inventory_slot):
                 continue
-            
             if self.Pickup_Item_To_Move(inventory_slot):
                 return
             
@@ -44,9 +40,10 @@ class Inventory:
     # the inventory slot is not active anymore 
     def Pickup_Item_To_Move(self, inventory_slot):
         if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
-            # Copy the item and pick it up
-            self.active_item = copy(inventory_slot.item)
+            # Move the item
+            self.active_item = inventory_slot.item
             self.active_item.picked_up = True
+            inventory_slot.item = None
             inventory_slot.Set_Active(True)
             return True
         return False
@@ -82,7 +79,7 @@ class Inventory:
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
             if self.clicked_inventory_slot.item.category == 'weapon':
                 self.clicked_inventory_slot.Set_Active(True)
-
+                self.game.mouse.Reset_Double_Click()
                 return True
             
         return False
@@ -92,18 +89,14 @@ class Inventory:
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 return inventory_slot
-            
         else:
             return None
-    
-
     
     # Handle single clicking behaviour, return True if valid click
     def Item_Single_Click(self):
         if not self.clicked_inventory_slot.item:
             return
         if not self.game.mouse.single_click_delay and not self.game.mouse.double_click:
-            print(self.game.mouse.hold_down_left)
             if self.game.mouse.hold_down_left < 5 and self.game.mouse.hold_down_left > 0:
                 # if not self.game.mouse.single_click_delay:
                 self.clicked_inventory_slot.item.Activate()
@@ -118,13 +111,19 @@ class Inventory:
     # the item and inventory slot
     def Return_Item(self):
         if self.clicked_inventory_slot:
-            self.clicked_inventory_slot.Set_Active(False)
-            self.active_item = None
-            self.clicked_inventory_slot = None
-        return  
+            # Ensure the slot is not active when returning the item
+            if not self.clicked_inventory_slot.item:  # Ensure slot is empty before returning item
+                self.Move_Item(self.active_item, self.clicked_inventory_slot)
+                
+                self.active_item = None
+                self.clicked_inventory_slot = None
+            else:
+                # Handle the case where the slot is occupied (e.g., deny return or swap)
+                print("Error: Slot already occupied when trying to return item.")
+        return
 
     # Move the item around
-    def Move_Item(self, offset):
+    def Drag_Item(self, offset):
         # Render legal item position and move it
         self.active_item.Render(self.game.display, offset)  
         self.active_item.Move(self.game.mouse.mpos)
@@ -143,40 +142,55 @@ class Inventory:
         return
 
     def Move_Item_To_New_Slot(self, offset):
-        Move_item = False
         for inventory_slot in self.inventory:
             # Collision with other inventory slots
             if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                # Check if it contains an item and add the item there if it's empty
-                if not inventory_slot.item:
-                    inventory_slot.Add_Item(self.active_item)
-                    Move_item = True
-        # Delete the item from the current inventory slot if we were able to move it
-        if Move_item:
-            for inventory_slot in self.inventory:
-                if inventory_slot.active:
-                    inventory_slot.Set_Active(False)
-                    inventory_slot.item = None
+                if self.Move_Item(self.active_item, inventory_slot):
+                    self.clicked_inventory_slot.item = None  # Clear the original slot
+                    self.clicked_inventory_slot.Set_Active(False)  # Deactivate original slot
+                    self.active_item = None  # Clear active item
                     return True
         return False
+    
+    # Method to move an item into a slot
+    def Move_Item(self, item, inventory_slot):
+        if not inventory_slot.item:
+            item.picked_up = False  # Ensure the item is marked as not picked up
+            inventory_slot.Add_Item(item)  # Place the item in the inventory slot
+            inventory_slot.Set_Active(False)  # Deactivate the slot after placing the item
+            return True
+        return False
 
+    # Method to remove an item from the inventory
+    def Remove_Item(self, item, move_item):
+        if not move_item:
+            return False
+
+        for sending_slot in self.inventory:
+            if sending_slot.item == item:
+                sending_slot.Set_Active(False)  # Deactivate the slot
+                sending_slot.item = None  # Remove the item from the slot
+                return True
+
+        return False
     # Active item is an item being dragged
     def Active_Item(self, offset=(0, 0)):
         # Check if there is an active item
-        if self.active_item:
-            # Check for out of bounds
-            item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
-            if item_out_of_bounds == False:
-                if self.game.mouse.left_click == False:       
-                    if self.Move_Item_To_New_Slot(offset):
-                        return    
-                    self.Return_Item()
-                    return
-                
-                self.active_item.render_out_of_bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
-            else:
-                self.Move_Item(offset)
+        if not self.active_item:
+            return
+        # Check for out of bounds
+        item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
+        if item_out_of_bounds == False:
+            if self.game.mouse.left_click == False:       
+                if self.Move_Item_To_New_Slot(offset):
+                    return   
+                self.Return_Item()
                 return
+            
+            self.active_item.render_out_of_bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
+        else:
+            self.Drag_Item(offset)
+            return
 
     def Overflow(self, item):
         for inventory_slot in self.inventory:

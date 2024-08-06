@@ -35,6 +35,5 @@ class Weapon_Inventory(Inventory):
         if not super().Item_Double_Click():
             return
         self.clicked_inventory_slot.item.Handle_Double_Click(self, self.game.item_inventory)
-        self.clicked_inventory_slot.Set_Active(False)
 
     

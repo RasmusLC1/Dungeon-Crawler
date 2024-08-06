@@ -20,6 +20,13 @@ class Inventory_Slot():
 
     def Set_Active(self, status):
         self.active = status
+        
+    def Reset_Inventory_Slot(self):
+        self.item = None
+        self.active = False
+        self.activate_counter = 0
+
+
 
     def Update(self):
         if self.active:

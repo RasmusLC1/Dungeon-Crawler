@@ -21,7 +21,8 @@ class Item_Inventory(Inventory):
     def Item_Double_Click(self):
         if not super().Item_Double_Click():
             return
-        self.clicked_inventory_slot.item.Handle_Double_Click(self, self.game.weapon_inventory.inventories[self.game.weapon_inventory.active_inventory])
-        self.clicked_inventory_slot.Set_Active(False)
+        active_inventory = self.game.weapon_inventory.active_inventory
+        weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
+        self.clicked_inventory_slot.item.Handle_Double_Click(self, weapon_inventory)
         
 

@@ -63,6 +63,11 @@ class Mouse_Handler:
             self.double_click -= 1
         if self.single_click_delay:
             self.single_click_delay -= 1
+
+    def Reset_Double_Click(self):
+        self.time_since_last_click = 0  
+        self.double_click = 0  
+        self.single_click_delay = 0  
             
 
         
@@ -80,5 +85,4 @@ class Mouse_Handler:
         return pygame.Rect(self.click_pos[0], self.click_pos[1], 1, 1)    
     
     def rect_pos(self, offset):
-        # print(self.mpos)
         return pygame.Rect(self.mpos[0] - offset[0], self.mpos[1]  - offset[1], 1, 1)  

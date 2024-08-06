@@ -23,25 +23,27 @@ class Weapon(Item):
         
         for receiving_inventory_slot in receiving_inventory:
             if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory):
+                if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory, receiving_inventory):
                     return True             
         return False
     
     def Handle_Double_Click(self, sending_inventory, receiving_inventory):
         recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
-        if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory):
+        if not recieving_inventory_slot:
+            return False
+        if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory, receiving_inventory):
             return True     
 
     
-    def Send_To_Inventory(self, inventory_slot, sending_inventory):
-        if inventory_slot.active:
-            return False
-        for weapon_inventory_slot in sending_inventory:
-            if weapon_inventory_slot.active:
-                print("TEST")
-                inventory_slot.Add_Item(self)
-                weapon_inventory_slot.Remove_Item()
-                return True
+    def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
+        # Attempt to move the item to the receiving inventory slot
+        move_successful = receiving_inventory.Move_Item(self, inventory_slot)
+        
+        # If the move was successful, remove it from the sending inventory
+        if move_successful:
+            sending_inventory.Remove_Item(self, move_successful)
+            return True
+        
         return False
 
     def Move_Inventory_Check(self, offset = (0,0)):
@@ -50,11 +52,11 @@ class Weapon(Item):
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
             if self.equipped:
-                if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory.inventory, offset):
+                if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory, offset):
                     self.equipped = False
                     return False
             else:
-                if self.Move_To_Other_Inventory(self.game.item_inventory.inventory, weapon_inventory, offset):
+                if self.Move_To_Other_Inventory(self.game.item_inventory, weapon_inventory, offset):
                     self.equipped = True
                     return False
 
