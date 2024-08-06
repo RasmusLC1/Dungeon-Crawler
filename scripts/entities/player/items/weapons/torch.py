@@ -17,7 +17,7 @@ class Torch(Weapon):
     # Pick up the torch and update the general light in the area
     def Pick_Up(self):
         if self.rect().colliderect(self.game.player.rect()):
-            if self.game.inventory.Add_Item(self):
+            if self.game.item_inventory.Add_Item(self):
                 self.in_inventory = True
                 self.light_source.picked_up = True
                 self.game.player.Set_Light_State(False)

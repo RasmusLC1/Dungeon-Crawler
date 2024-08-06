@@ -1,5 +1,4 @@
 import pygame
-from scripts.entities.player.items.item import Item
 from scripts.inventory.inventory_slot import Inventory_Slot
 from scripts.inventory.inventory import Inventory
 from copy import copy
@@ -31,6 +30,11 @@ class Weapon_Inventory(Inventory):
             inventory_slot.Inventory_type = weapon_class[i]
             self.inventory.append(inventory_slot)  # Add to instance's inventory
 
-    # Implement the __iter__ method to make the class iterable
-    def __iter__(self):
-        return iter(self.inventory)
+    
+    def Item_Double_Click(self):
+        if not super().Item_Double_Click():
+            return
+        self.clicked_inventory_slot.item.Handle_Double_Click(self, self.game.item_inventory)
+        self.clicked_inventory_slot.Set_Active(False)
+
+    

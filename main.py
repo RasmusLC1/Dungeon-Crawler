@@ -54,7 +54,7 @@ class Game:
 
 
         self.tilemap = Tilemap(self, tile_size=16)
-        self.inventory = Item_Inventory(self)
+        self.item_inventory = Item_Inventory(self)
         # TODO: PLACEHOLDER CODE, Implement proper class system later
         self.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
         self.weapon_inventory = Weapon_Inventory_Handler(self, 'warrior', self.proffeciency)
@@ -138,7 +138,7 @@ class Game:
                 if enemy.health <= 0:
                     self.enemies.remove(enemy)
 
-            self.inventory.Update(render_scroll)
+            self.item_inventory.Update(render_scroll)
             self.weapon_inventory.Update(render_scroll)
             Coins.Update(self)
             self.ray_caster.Update(self)
@@ -161,7 +161,7 @@ class Game:
         Ammo_Bar.Attack_Recharge_Bar(self)
         Mana_Bar.Mana_Bar(self)
         Coins.Render(self)
-        self.inventory.Render(self.display)
+        self.item_inventory.Render(self.display)
         self.weapon_inventory.Render(self.display)
         for particle in self.particles:
             particle.Render(self.display, render_scroll)

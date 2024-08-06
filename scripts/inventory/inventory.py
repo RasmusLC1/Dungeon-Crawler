@@ -14,7 +14,6 @@ class Inventory:
         self.item_clicked = 0
         self.click_cooldown = 0
         self.clicked_inventory_slot = None
-        
         self.inventory = []
 
 
@@ -23,23 +22,50 @@ class Inventory:
         self.Active_Item(offset)
 
         for inventory_slot in self.inventory:
-            if inventory_slot.item:
-                inventory_slot.item.Update_Animation()
-                if self.game.mouse.left_click:
-                    # Check for collision with inventory slot
-                    if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
-                        self.clicked_inventory_slot = inventory_slot
-                        self.item_clicked += 1
-                        # Activates when mouse has been held down for 10 ticks and the inventory slot is not active anymore 
-                        if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
-                            # Copy the item and pick it up
-                            self.active_item = copy(inventory_slot.item)
-                            self.active_item.picked_up = True
-                            inventory_slot.Set_Active(True)
-                            return
+            
+            if not self.Update_Inventory_Slot_Item_Animation(inventory_slot):
+                continue
+
+            # Check if the mouse has been clicked, if no we skip that inventory
+            # slot if no continue to next inventory slot
+            if not self.game.mouse.left_click:
+                continue
+
+            if not self.Inventory_Slot_Collision(inventory_slot):
+                continue
+            
+            if self.Pickup_Item_To_Move(inventory_slot):
+                return
+            
         self.Item_Click()
         return
 
+    # Activates when mouse has been held down for 10 ticks and
+    # the inventory slot is not active anymore 
+    def Pickup_Item_To_Move(self, inventory_slot):
+        if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
+            # Copy the item and pick it up
+            self.active_item = copy(inventory_slot.item)
+            self.active_item.picked_up = True
+            inventory_slot.Set_Active(True)
+            return True
+        return False
+
+    # Check for collision with inventory slot, if no collision return False
+    def Inventory_Slot_Collision(self, inventory_slot):
+        if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
+            self.clicked_inventory_slot = inventory_slot
+            self.item_clicked += 1
+            return True
+        
+        return False
+
+    # Update the animation of the item, return False if no item
+    def Update_Inventory_Slot_Item_Animation(self, inventory_slot):
+        if inventory_slot.item:
+            inventory_slot.item.Update_Animation()
+            return True
+        return False
 
      # Handle clicking items
     def Item_Click(self):
@@ -49,21 +75,33 @@ class Inventory:
                     return
                 if self.Item_Single_Click():
                     return
-                    
         return
     
     # Handle double clicking behaviour, return True if valid double click
     def Item_Double_Click(self):
-        if self.game.mouse.double_click:
-            print(self.clicked_inventory_slot.item.type)
-            self.clicked_inventory_slot.Update()
-            self.clicked_inventory_slot = None
-            return True
-        
+        if self.game.mouse.double_click and self.clicked_inventory_slot.item:
+            if self.clicked_inventory_slot.item.category == 'weapon':
+                self.clicked_inventory_slot.Set_Active(True)
+
+                return True
+            
         return False
+
+
+    def Find_Available_Inventory_Slot(self):
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                return inventory_slot
+            
+        else:
+            return None
+    
+
     
     # Handle single clicking behaviour, return True if valid click
     def Item_Single_Click(self):
+        if not self.clicked_inventory_slot.item:
+            return
         if not self.game.mouse.single_click_delay and not self.game.mouse.double_click:
             print(self.game.mouse.hold_down_left)
             if self.game.mouse.hold_down_left < 5 and self.game.mouse.hold_down_left > 0:
@@ -186,6 +224,10 @@ class Inventory:
 
         return False
 
+    # Implement the __iter__ method to make the class iterable
+    def __iter__(self):
+        return iter(self.inventory)
+    
     def Render(self, surf):
         for inventory_slot in self.inventory:
             inventory_slot.Render(surf)

@@ -29,9 +29,10 @@ class Item(PhysicsEntity):
     def Update(self):
         pass
 
+
     def Pick_Up(self):
         if self.rect().colliderect(self.game.player.rect()):
-            if self.game.inventory.Add_Item(self):
+            if self.game.item_inventory.Add_Item(self):
                 self.picked_up = False
                 self.game.entities_render.remove(self)
 
@@ -81,9 +82,7 @@ class Item(PhysicsEntity):
     # Update position
     def Move(self, new_pos):
         self.pos = new_pos
-            
 
-    
 
     def Damage_Taken(self, damage):
         self.damaged = True

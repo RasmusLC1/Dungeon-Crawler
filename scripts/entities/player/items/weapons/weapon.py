@@ -21,52 +21,50 @@ class Weapon(Item):
         if self.game.mouse.left_click:
             return
         
-        for inventory_slot in receiving_inventory:
-            if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                if self.Send_To_Inventory(inventory_slot, sending_inventory):
+        for receiving_inventory_slot in receiving_inventory:
+            if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
+                if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory):
                     return True             
         return False
     
+    def Handle_Double_Click(self, sending_inventory, receiving_inventory):
+        recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
+        if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory):
+            return True     
+
+    
     def Send_To_Inventory(self, inventory_slot, sending_inventory):
-        if not inventory_slot.active:
-            for weapon_inventory_slot in sending_inventory:
-                if weapon_inventory_slot.active:
-                    inventory_slot.Add_Item(self)
-                    weapon_inventory_slot.Remove_Item()
-                    return True
+        if inventory_slot.active:
+            return False
+        for weapon_inventory_slot in sending_inventory:
+            if weapon_inventory_slot.active:
+                print("TEST")
+                inventory_slot.Add_Item(self)
+                weapon_inventory_slot.Remove_Item()
+                return True
         return False
 
-
-
-    # Check for out of bounds, return true if valid, else false
-    def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
+    def Move_Inventory_Check(self, offset = (0,0)):
         # Check if the weapon can be moved to the weapon inventory
         if self.picked_up:
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
             if self.equipped:
-                if self.Move_To_Other_Inventory(weapon_inventory, self.game.inventory.inventory, offset):
+                if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory.inventory, offset):
                     self.equipped = False
                     return False
             else:
-                if self.Move_To_Other_Inventory(self.game.inventory.inventory, weapon_inventory, offset):
+                if self.Move_To_Other_Inventory(self.game.item_inventory.inventory, weapon_inventory, offset):
                     self.equipped = True
                     return False
 
-
-
-        # Check if distance is legal, update to account for player strength later
-        if self.Distance(player_pos, mouse_pos) < 40:
-            # Check if it it touches a floor tile
-            for rect in tilemap.floor_rects_around(mouse_pos):
-                if not self.rect().colliderect(rect):
-                    return False
-            # Check for walls
-            for rect in tilemap.physics_rects_around(mouse_pos):
-                if self.rect().colliderect(rect):
-                    return False
+    # Check for out of bounds, return true if valid, else false
+    def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
+        # Check if the weapon can be moved to the weapon inventory
+        if self.Move_Inventory_Check(offset):
+            return False
+        if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):
             return True
-        
         else:
             return False
         

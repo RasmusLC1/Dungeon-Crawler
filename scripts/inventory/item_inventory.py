@@ -18,4 +18,10 @@ class Item_Inventory(Inventory):
                 self.inventory.append(Inventory_Slot(self.game, (x, y), self.size, None))
 
 
+    def Item_Double_Click(self):
+        if not super().Item_Double_Click():
+            return
+        self.clicked_inventory_slot.item.Handle_Double_Click(self, self.game.weapon_inventory.inventories[self.game.weapon_inventory.active_inventory])
+        self.clicked_inventory_slot.Set_Active(False)
+        
 
