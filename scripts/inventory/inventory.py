@@ -227,6 +227,7 @@ class Inventory:
                         self.game.item_handler.Remove_Item(item)
                         inventory_slot.item.Update()
                         return True
+                    
         i = 0
         j = 0
         for inventory_slot in self.inventory:
@@ -242,6 +243,7 @@ class Inventory:
                 j += 1
 
         return False
+
 
     # Implement the __iter__ method to make the class iterable
     def __iter__(self):

@@ -7,7 +7,7 @@ class Inventory_Slot():
         self.size = size
         self.item = item
         self.background = None
-        self.Inventory_type = None
+        self.inventory_type = None
         Inventory_Slot.Setup_Inventory_Texture(self)
         self.active = False
         self.activate_counter = 0

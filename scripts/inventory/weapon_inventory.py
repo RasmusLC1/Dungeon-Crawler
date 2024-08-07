@@ -27,7 +27,7 @@ class Weapon_Inventory(Inventory):
             inventory_slot = Inventory_Slot(self.game, (x, 5), self.size, None)
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)
-            inventory_slot.Inventory_type = weapon_class[i]
+            inventory_slot.inventory_type = weapon_class[i]
             self.inventory.append(inventory_slot)  # Add to instance's inventory
 
     def Update(self, offset=(0, 0)):

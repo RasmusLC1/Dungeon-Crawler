@@ -10,6 +10,7 @@ class Weapon(Item):
         self.range = range
         self.in_inventory = False
         self.equipped = False
+        self.inventory_type = None
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         self.weapon_class = weapon_class
@@ -41,6 +42,7 @@ class Weapon(Item):
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
         # If the move was successful, remove it from the sending inventory
         if move_successful:
+            self.inventory_type = inventory_slot.inventory_type
             sending_inventory.Remove_Item(self, move_successful)
             return True
         
@@ -79,8 +81,51 @@ class Weapon(Item):
         self.equipped = False
         return False
 
+    def Render_Equipped(self, surf, offset = (0,0)):
+        equipped_offset = self.Find_Equipped_Offset()
+        
+        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], (self.size[0], self.size[1]))  
+        surf.blit(item_image, (self.game.player.pos[0] - offset[0] + equipped_offset[0], self.game.player.pos[1] - offset[1] - equipped_offset[1]))
+
+    def Find_Equipped_Offset(self):
+        if self.inventory_type == 'left_hand':
+            # Looking Up
+            if self.game.player.direction_y_holder < 0:
+                return (-6, 5)
+            # Looking down
+            if self.game.player.direction_y_holder > 0:
+                return (8, 5)
+            # Looking right
+            if self.game.player.direction_x_holder > 0:
+                return (3, 5)
+            # Looking left
+            if self.game.player.direction_x_holder < 0:
+                return (0, 5)
+            return (0,0)
+        elif self.inventory_type == 'right_hand':
+            if self.game.player.direction_y_holder < 0:
+                return (6, 5)
+            # Looking down
+            if self.game.player.direction_y_holder > 0:
+                return (-8, 5)
+            # Looking right
+            if self.game.player.direction_x_holder > 0:
+                return (3, 5)
+            # Looking left
+            if self.game.player.direction_x_holder < 0:
+                return (0, 5)
+            return (0,0)
+        elif self.inventory_type == 'bow':
+            return (0,0)
+        elif self.inventory_type == 'arrow':
+            return (0,0)
+        else:
+            print("OFFSET NOT FOUND")
+        return (0,0)
+        
 
     def Render_In_Inventory(self, surf, offset=(0, 0)):
+        
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 

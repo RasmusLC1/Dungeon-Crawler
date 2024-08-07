@@ -162,7 +162,7 @@ class Game:
         Mana_Bar.Mana_Bar(self)
         Coins.Render(self)
         self.item_inventory.Render(self.display)
-        self.weapon_inventory.Render(self.display)
+        self.weapon_inventory.Render(self.display, render_scroll)
         for particle in self.particles:
             particle.Render(self.display, render_scroll)
 
