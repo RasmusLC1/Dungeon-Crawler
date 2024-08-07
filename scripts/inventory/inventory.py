@@ -113,8 +113,7 @@ class Inventory:
         if self.clicked_inventory_slot:
             # Ensure the slot is not active when returning the item
             if not self.clicked_inventory_slot.item:  # Ensure slot is empty before returning item
-                self.Move_Item(self.active_item, self.clicked_inventory_slot)
-                
+                self.Move_Item(self.active_item, self.clicked_inventory_slot)                
                 self.active_item = None
                 self.clicked_inventory_slot = None
             else:
@@ -142,6 +141,10 @@ class Inventory:
         return
 
     def Move_Item_To_New_Slot(self, offset):
+        if self.active_item.move_inventory:
+            self.active_item.move_inventory = False
+            self.active_item = None  # Clear active item
+            return True
         for inventory_slot in self.inventory:
             # Collision with other inventory slots
             if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
@@ -173,6 +176,8 @@ class Inventory:
                 return True
 
         return False
+    
+    
     # Active item is an item being dragged
     def Active_Item(self, offset=(0, 0)):
         # Check if there is an active item

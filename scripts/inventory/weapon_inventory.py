@@ -30,6 +30,14 @@ class Weapon_Inventory(Inventory):
             inventory_slot.Inventory_type = weapon_class[i]
             self.inventory.append(inventory_slot)  # Add to instance's inventory
 
+    def Update(self, offset=(0, 0)):
+        super().Update(offset)
+        # for inventory_slot in self.inventory:
+            # print(inventory_slot.pos)
+            # if inventory_slot.item:
+            #     print(inventory_slot.item.picked_up)
+            # print(inventory_slot.active)
+
     
     def Item_Double_Click(self):
         if not super().Item_Double_Click():

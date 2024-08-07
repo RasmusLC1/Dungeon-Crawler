@@ -15,6 +15,7 @@ class Item(PhysicsEntity):
         self.sub_type = ''
         self.used = False
         self.picked_up = True
+        self.move_inventory = False
         self.animation = 0
         self.animation_cooldown = 0
         self.amount = amount

@@ -37,8 +37,8 @@ class Weapon(Item):
     
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
         # Attempt to move the item to the receiving inventory slot
-        move_successful = receiving_inventory.Move_Item(self, inventory_slot)
-        
+
+        move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
         # If the move was successful, remove it from the sending inventory
         if move_successful:
             sending_inventory.Remove_Item(self, move_successful)
@@ -54,16 +54,20 @@ class Weapon(Item):
             if self.equipped:
                 if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory, offset):
                     self.equipped = False
-                    return False
+                    return True
             else:
                 if self.Move_To_Other_Inventory(self.game.item_inventory, weapon_inventory, offset):
                     self.equipped = True
-                    return False
+                    return True
+                
+        return False
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
         # Check if the weapon can be moved to the weapon inventory
         if self.Move_Inventory_Check(offset):
+            self.picked_up = False
+            self.move_inventory = True
             return False
         if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):
             return True
@@ -81,6 +85,7 @@ class Weapon(Item):
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
     def Render(self, surf, offset=(0, 0)):
+
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
         if self.in_inventory:
