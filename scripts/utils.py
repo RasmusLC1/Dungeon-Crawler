@@ -18,19 +18,20 @@ def load_images(path):
     return images
 
 # Get a single tile from a sheet
-def get_tile_image_from_sheet(sheet, pos_x, pos_y, width, height, color):
-    # Load the entire sprite sheet
-    sheet.set_colorkey(color)
-    
+def get_tile_image_from_sheet(sheet, pos_x, pos_y, width, height, color=None):
     # Create a new surface for the specific tile
     tile_image = pygame.Surface((width, height), pygame.SRCALPHA).convert_alpha()
     tile_image.blit(sheet, (0, 0), (pos_x, pos_y, width, height))
-    tile_image.set_colorkey(color)
+    
+    # Apply color key if provided
+    if color:
+        tile_image.set_colorkey(color)
     
     return tile_image
 
+
 # Get a defined range of sprites from a sheet
-def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, size_x, size_y):
+def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, size_x, size_y, color = None):
     sheet = pygame.image.load(BASE_IMG_PATH + path).convert_alpha()
     images = []
     # Setup for double while loop
@@ -40,7 +41,7 @@ def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, s
         y_holder = starting_y
         while current_iteration_y <= versions_y:
             # Go through the tiles from the sheet on the x and y location, with a given size, filter out white colour
-            images.append(get_tile_image_from_sheet(sheet, starting_x, starting_y, size_x, size_y, (255,255,255)))
+            images.append(get_tile_image_from_sheet(sheet, starting_x, starting_y, size_x, size_y, color))
             starting_y += size_y
             current_iteration_y += 1
         # Increment the position and current iteration

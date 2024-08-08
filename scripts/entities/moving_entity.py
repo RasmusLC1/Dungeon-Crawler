@@ -119,6 +119,8 @@ class Moving_Entity(PhysicsEntity):
         if movement[1] > 0:
             self.flip[1] = True
             self.set_action('down')
+        else:
+            self.set_action('idle')
 
         self.last_frame_movement = self.frame_movement
 

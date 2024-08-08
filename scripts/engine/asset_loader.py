@@ -20,6 +20,7 @@ class Asset_Loader:
     def Asset_Background_List(self):
         background_assets = {'background': load_image('background.png'),}
         self.assets.update(background_assets)
+        self.white = (255,255,255)
 
     def Asset_Tile_List(self):
         tiles_assets = {
@@ -38,12 +39,12 @@ class Asset_Loader:
 
     def Asset_Trap_List(self):
         trap_assets = {
-            'spike_trap' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16),
-            'spike_poison_trap' : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 16, 16),
-            'Bear_trap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32),
-            'Pit_trap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16),
-            'Top_trap' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16),
-            'Fire_trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 16, 20),
+            'spike_trap' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 112, 16, 16, self.white),
+            'spike_poison_trap' : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 16, 16, self.white),
+            'Bear_trap' : get_tiles_from_sheet('traps/Bear_Trap.png', 3, 0, 0, 0, 32, 32, self.white),
+            'Pit_trap' : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 16, 16, self.white),
+            'Top_trap' : get_tiles_from_sheet('traps/Push_Trap_Front.png', 10, 0, 0, 0, 16, 16, self.white),
+            'Fire_trap' : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 16, 20, self.white),
         }
 
         self.assets.update(trap_assets)
@@ -53,11 +54,11 @@ class Asset_Loader:
             'particle/leaf': Animation(load_images('particles/leaf'), img_dur=20, loop=False),
             'particle/particle': Animation(load_images('particles/particle'), img_dur=6, loop=False),
             'heart': load_image('heart.png'),
-            'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13),
-            'fire': get_tiles_from_sheet('particles/effects/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16),
-            'poison': get_tiles_from_sheet('particles/effects/poison.png', 2, 0, 0, 0, 16, 16),
-            'frozen': get_tiles_from_sheet('particles/effects/frozen.png', 2, 0, 0, 0, 16, 16),
-            'wet': get_tiles_from_sheet('particles/effects/wet.png', 1, 0, 0, 0, 13, 17),
+            'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13, self.white),
+            'fire': get_tiles_from_sheet('particles/effects/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16, self.white),
+            'poison': get_tiles_from_sheet('particles/effects/poison.png', 2, 0, 0, 0, 16, 16, self.white),
+            'frozen': get_tiles_from_sheet('particles/effects/frozen.png', 2, 0, 0, 0, 16, 16, self.white),
+            'wet': get_tiles_from_sheet('particles/effects/wet.png', 1, 0, 0, 0, 13, 17, self.white),
         }
         self.assets.update(effect_assets)
     
@@ -75,6 +76,9 @@ class Asset_Loader:
             'player_up_body': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 16, 20, 12),
             'player_up_legs': get_tiles_from_sheet('entities/player.png', 1, 0, 80, 28, 20, 4),
             
+            'player_idle_head': get_tiles_from_sheet('entities/player/idle.png', 4, 0, 0, 0, 16, 8),
+            'player_idle_body': get_tiles_from_sheet('entities/player/idle.png', 4, 0, 0, 8, 16, 6),
+            'player_idle_legs': get_tiles_from_sheet('entities/player/idle.png', 4, 0, 0, 14, 16, 2),
 
             'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 0, 16, 8),
             'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 8, 16, 6),
@@ -88,7 +92,7 @@ class Asset_Loader:
     def Asset_Weapons_List(self):
         Weapons_assets = {
             'sword' : get_tiles_from_sheet('weapons/sword.png', 1, 0, 0, 0, 16, 16),
-            'torch': get_tiles_from_sheet('weapons/torch.png', 8, 0, 0, 0, 16, 16),
+            'torch': get_tiles_from_sheet('weapons/torch.png', 8, 0, 0, 0, 16, 16, self.white),
         }
         self.assets.update(Weapons_assets)
 
@@ -104,7 +108,7 @@ class Asset_Loader:
 
     def Asset_Interative_Objects_List(self):
         Objects_assets = {
-            'Chest' : get_tiles_from_sheet('chest.png', 8, 0, 0, 0, 16, 16),
+            'Chest' : get_tiles_from_sheet('chest.png', 8, 0, 0, 0, 16, 16, self.white),
         }
         self.assets.update(Objects_assets)
 
@@ -135,13 +139,13 @@ class Asset_Loader:
 
     def Asset_Potion_List(self):
         potion_assets = {
-            'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 16, 16),
-            'red_full' : get_tiles_from_sheet('Potions/Redpotions/red_full.png', 2, 2, 0, 0, 16, 16),
-            'red_half' : get_tiles_from_sheet('Potions/Redpotions/red_half.png', 2, 2, 0, 0, 16, 16),
-            'red_low' : get_tiles_from_sheet('Potions/Redpotions/red_low.png', 2, 2, 0, 0, 16, 16),
-            'blue_full' : get_tiles_from_sheet('Potions/Bluepotions/blue_full.png', 2, 2, 0, 0, 16, 16),
-            'blue_half' : get_tiles_from_sheet('Potions/Bluepotions/blue_half.png', 2, 2, 0, 0, 16, 16),
-            'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 16, 16),
+            'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 16, 16, self.white),
+            'red_full' : get_tiles_from_sheet('Potions/Redpotions/red_full.png', 2, 2, 0, 0, 16, 16, self.white),
+            'red_half' : get_tiles_from_sheet('Potions/Redpotions/red_half.png', 2, 2, 0, 0, 16, 16, self.white),
+            'red_low' : get_tiles_from_sheet('Potions/Redpotions/red_low.png', 2, 2, 0, 0, 16, 16, self.white),
+            'blue_full' : get_tiles_from_sheet('Potions/Bluepotions/blue_full.png', 2, 2, 0, 0, 16, 16, self.white),
+            'blue_half' : get_tiles_from_sheet('Potions/Bluepotions/blue_half.png', 2, 2, 0, 0, 16, 16, self.white),
+            'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 16, 16, self.white),
         }
         self.assets.update(potion_assets)
             
