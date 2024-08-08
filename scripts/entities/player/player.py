@@ -41,15 +41,7 @@ class Player(Moving_Entity):
         self.Dashing_Update(offset)
             
 
-        # if self.velocity[0] > 0:
-        #     self.velocity[0] = max(self.velocity[0] - 0.1, 0)
-        # else:
-        #     self.velocity[0] = min(self.velocity[0] + 0.1, 0)
-
-        # if self.velocity[1] > 0:
-        #     self.velocity[1] = max(self.velocity[1] - 0.1, 0)
-        # else:
-        #     self.velocity[1] = min(self.velocity[1] + 0.1, 0)
+        
 
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
@@ -162,14 +154,15 @@ class Player(Moving_Entity):
     def Render(self, surf, offset=(0, 0)):
         if abs(self.dashing) >= 50:
             return
+         # Load and scale the entity images, split to allow better animation
         entity_image_head = self.game.assets[self.animation + '_head'][0]
-        # entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
+        entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
 
         entity_image_body = self.game.assets[self.animation + '_body'][0]
-        # entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
+        entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
 
         entity_image_legs = self.game.assets[self.animation + '_legs'][0]
-        # entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
+        entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
 
         surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
         surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))

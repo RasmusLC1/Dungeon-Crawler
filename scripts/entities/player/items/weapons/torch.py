@@ -9,7 +9,7 @@ class Torch(Weapon):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type, 1, 1, 1, 'one_handed_melee')
         self.max_animation = 7
-        self.aniamtion = random.randint(0, self.max_animation)
+        self.animation_speed = 30
         self.light_level = 8
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
@@ -25,6 +25,8 @@ class Torch(Weapon):
                 self.game.light_handler.Restore_Light(self.light_source)
                 self.picked_up = False
                 self.game.entities_render.remove(self)
+
+
 
     def Place_Down(self):
         # Parent class Place_down function

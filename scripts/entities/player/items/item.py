@@ -16,12 +16,13 @@ class Item(PhysicsEntity):
         self.used = False
         self.picked_up = True
         self.move_inventory = False
-        self.animation = 0
         self.animation_cooldown = 0
+        self.animation_speed = 50
         self.amount = amount
         self.max_amount = 0
         self.damaged = False
         self.max_animation = 0
+        self.animation = random.randint(0, self.max_animation)
         
 
     def Activate(self):
@@ -50,7 +51,7 @@ class Item(PhysicsEntity):
         if self.animation_cooldown:
             self.animation_cooldown -= 1
         else:
-            self.animation_cooldown = 50
+            self.animation_cooldown = self.animation_speed
             self.animation = random.randint(0,self.max_animation)
 
 

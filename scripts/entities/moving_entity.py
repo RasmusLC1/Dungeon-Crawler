@@ -12,7 +12,9 @@ class Moving_Entity(PhysicsEntity):
     def __init__(self, game, e_type, pos, size):
         super().__init__(game, e_type, pos, size)
         self.velocity = [0, 0, 0, 0]
-        self.friction = 2
+        self.friction = 0.1
+        self.acceleration = 0.2  
+        self.max_speed = 2.0     
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.animation_state = 'up'
@@ -57,10 +59,7 @@ class Moving_Entity(PhysicsEntity):
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
-        self.direction_x = movement[0]
-        self.direction_y = movement[1]
-        
-        self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
+        self.Update_Movement(movement)
         self.Update_Status_Effects()
 
 
@@ -75,6 +74,21 @@ class Moving_Entity(PhysicsEntity):
 
         self.Movement(movement, tilemap)
     
+    def Update_Movement(self, movement):
+        if self.velocity[0] > 0:
+            self.velocity[0] = max(self.velocity[0] - 0.1, 0)
+        else:
+            self.velocity[0] = min(self.velocity[0] + 0.1, 0)
+
+        if self.velocity[1] > 0:
+            self.velocity[1] = max(self.velocity[1] - 0.1, 0)
+        else:
+            self.velocity[1] = min(self.velocity[1] + 0.1, 0)
+        self.direction_x = movement[0]
+        self.direction_y = movement[1]
+        
+        self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
+
     # Movement handling
     # TODO Cleanp
     def Movement(self, movement, tilemap):
