@@ -11,10 +11,13 @@ from scripts.entities.entities import PhysicsEntity
 class Moving_Entity(PhysicsEntity):
     def __init__(self, game, e_type, pos, size):
         super().__init__(game, e_type, pos, size)
-        self.velocity = [0, 0, 0, 0]
-        self.friction = 0.1
-        self.acceleration = 0.2  
-        self.max_speed = 2.0     
+        self.velocity = [0, 0]
+        self.friction = self.game.render_scale
+        self.friction_holder = self.friction
+        self.acceleration = 1
+        self.acceleration_holder = self.acceleration
+        self.max_speed = 2.0 
+        self.max_speed_holder = self.max_speed  
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.animation_state = 'up'
@@ -75,27 +78,63 @@ class Moving_Entity(PhysicsEntity):
         self.Movement(movement, tilemap)
     
     def Update_Movement(self, movement):
-        if self.velocity[0] > 0:
-            self.velocity[0] = max(self.velocity[0] - 0.1, 0)
-        else:
-            self.velocity[0] = min(self.velocity[0] + 0.1, 0)
+        # Apply acceleration to velocity based on input
+        self.velocity[0] += movement[0] * self.acceleration
+        self.velocity[1] += movement[1] * self.acceleration
 
-        if self.velocity[1] > 0:
-            self.velocity[1] = max(self.velocity[1] - 0.1, 0)
-        else:
-            self.velocity[1] = min(self.velocity[1] + 0.1, 0)
+        # Clamp the velocity to max speed
+        self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
+        self.velocity[1] = max(-self.max_speed, min(self.velocity[1], self.max_speed))
+
+        # Apply friction when there's no input
+        if movement[0] == 0:
+            if self.velocity[0] > 0:
+                self.velocity[0] = max(self.velocity[0] - self.friction, 0)
+            else:
+                self.velocity[0] = min(self.velocity[0] + self.friction, 0)
+        
+        if movement[1] == 0:
+            if self.velocity[1] > 0:
+                self.velocity[1] = max(self.velocity[1] - self.friction, 0)
+            else:
+                self.velocity[1] = min(self.velocity[1] + self.friction, 0)
+
         self.direction_x = movement[0]
         self.direction_y = movement[1]
-        
-        self.frame_movement = (movement[0]*4/self.friction + self.velocity[0], movement[1]*4/self.friction + self.velocity[1])
+
+        # Calculate frame movement based on updated velocity
+        self.frame_movement = (self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale)
 
     # Movement handling
     # TODO Cleanp
     def Movement(self, movement, tilemap):
-        if self.Collision_Detection():
+        if self.Entity_Collision_Detection():
             return
 
 
+        self.Tile_Map_Collision_Detection(tilemap)
+
+        self.Set_Action(movement)
+
+        self.last_frame_movement = self.frame_movement
+
+    def Set_Action(self, movement):
+        if movement[0] > 0:
+            self.flip[0] = False
+            self.set_action('side')
+        if movement[0] < 0:
+            self.flip[0] = True
+            self.set_action('side')
+        if movement[1] < 0:
+            self.set_action('up')
+            self.flip[1] = False
+        if movement[1] > 0:
+            self.flip[1] = True
+            self.set_action('down')
+        else:
+            self.set_action('idle')
+
+    def Tile_Map_Collision_Detection(self, tilemap):
         self.pos[0] += self.frame_movement[0]
         entity_rect = self.rect()
         for rect in tilemap.physics_rects_around(self.pos):
@@ -119,26 +158,8 @@ class Moving_Entity(PhysicsEntity):
                     entity_rect.top = rect.bottom
                     self.collisions['up'] = True
                 self.pos[1] = entity_rect.y
-        
-                
-        if movement[0] > 0:
-            self.flip[0] = False
-            self.set_action('side')
-        if movement[0] < 0:
-            self.flip[0] = True
-            self.set_action('side')
-        if movement[1] < 0:
-            self.set_action('up')
-            self.flip[1] = False
-        if movement[1] > 0:
-            self.flip[1] = True
-            self.set_action('down')
-        else:
-            self.set_action('idle')
 
-        self.last_frame_movement = self.frame_movement
-
-    def Collision_Detection(self):
+    def Entity_Collision_Detection(self):
         future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
         for enemy in self.nearby_enemies:
             if enemy.rect().colliderect(self.rect_future(future_pos)):
@@ -198,18 +219,15 @@ class Moving_Entity(PhysicsEntity):
         self.pos[0] += x_direction
         self.pos[1] += y_direction
 
-    # Ice mechanic
-    # TODO Improve the physics
-    def On_Ice(self):
-        if not self.is_on_ice:
-            self.is_on_ice = 10
-        else:
-            self.is_on_ice -= 1
-            self.frame_movement = self.last_frame_movement 
+    # Ice mechanic, lower friction and acceleration to simulate ice
+    def On_Ice(self, effect):
+        self.friction = max(0.1, self.friction / effect)
+        self.acceleration = max(0.4, self.acceleration / effect)
 
     # Handle status effects
     def Update_Status_Effects(self):
-        self.friction = 2
+        self.friction = self.friction_holder
+        self.max_speed = self.max_speed_holder
         self.status_effects.OnFire()
         self.status_effects.Snare()
         self.status_effects.Poisoned()
@@ -242,17 +260,13 @@ class Moving_Entity(PhysicsEntity):
     
     # Slow the entity down by increasing friction
     def Slow_Down(self, effect):
-        self.friction = max(2, effect)
+        self.max_speed = max(0.1, self.max_speed / effect)
 
 
     
     
     # Render entity
     def Render(self, surf, offset=(0, 0)):
-        
-        
-        
-
         # Don't Render the enemy if their light level is very low
         # Simulates low visibility
         if not self.Update_Light_Level():

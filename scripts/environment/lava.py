@@ -17,7 +17,7 @@ class Lava(Trap):
             self.Cooldown -= 1
 
         if self.rect().colliderect(entity.rect()):
-            entity.Set_Effect('Slow_Down', 10)
+            entity.Set_Effect('Slow_Down', 4)
             if self.Cooldown == 0:
                 if entity.type == 'player':
                     if entity.dashing:

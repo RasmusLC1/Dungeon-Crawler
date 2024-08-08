@@ -14,6 +14,8 @@ class Enemy(Moving_Entity):
         self.walking = 0
         self.health = 30
         self.random_movement_cooldown = 0
+        self.max_speed = 1
+        self.max_speed_holder = self.max_speed  
         
         self.pos_holder = (0,0)
         self.pathfinding_cooldown = 0
@@ -30,6 +32,7 @@ class Enemy(Moving_Entity):
 
 
     def update(self, tilemap, movement=(0, 0)):
+        
         self.Path_Finding()
         movement = self.direction
         

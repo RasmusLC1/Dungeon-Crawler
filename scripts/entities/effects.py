@@ -103,6 +103,8 @@ class Status_Effect_Handler:
                 self.entity.wet_animation = 0
             else:
                 self.entity.wet_animation += 1
+
+    
     
     def render_fire(self, game, surf, offset=(0, 0)):
         if self.entity.is_on_fire:

@@ -13,8 +13,11 @@ import pygame
 class Player(Moving_Entity):
     def __init__(self, game, pos, size):
         super().__init__(game, 'player', pos, size)
+        self.max_speed = 2.0 * self.game.render_scale
+        self.max_speed_holder = self.max_speed
         self.dashing = 0
         self.stored_position = 0
+        
         
         self.max_ammo = 30
         self.ammo = 10

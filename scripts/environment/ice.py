@@ -11,12 +11,13 @@ class Ice(Trap):
 
     def Update(self, entity):
         if self.rect().colliderect(entity.rect()):
-            if self.type == 'shallow_ice':
-                entity.On_Ice()
-            elif self.type == 'medium_ice':
-                entity.On_Ice()
-            elif self.type == 'deep_ice':
-                entity.On_Ice()
+
+            if self.type == 'shallow_ice_env':
+                entity.On_Ice(20)
+            elif self.type == 'medium_ice_env':
+                entity.On_Ice(20)
+            elif self.type == 'deep_ice_env':
+                entity.On_Ice(20)
 
 
     def Render(self, surf, offset=(0, 0)):
