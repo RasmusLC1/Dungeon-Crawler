@@ -2,8 +2,7 @@ import pygame
 
 class Ammo_Bar:
     def __init__(self):
-        self.scaled_weapon_image = pygame.transform.scale(self.assets[self.player.active_weapon], (10, 10))
-
+        pass
 
     def normalize_health(current_health, max_health, bar_length):
         # Calculate the normalization factor
@@ -33,4 +32,10 @@ class Ammo_Bar:
         self.display.blit(text, (rect_x, rect_y - 10))
         pygame.draw.rect(self.display, (255, 0, 0), (rect_x, rect_y, normalised_cooldown, rect_height))
         pygame.draw.rect(self.display, (155, 155, 155), (rect_x + normalised_cooldown, rect_y, bar_length-normalised_cooldown, rect_height))
-        self.display.blit(self.scaled_weapon_image, (rect_x + 40, rect_y - 12))
+        
+        # scaled_weapon = self.player.active_weapon_left
+        # if not scaled_weapon:
+        #     return
+        # weapon_image = self.assets[scaled_weapon.sub_type][scaled_weapon.animation]
+        # self.display.blit(weapon_image, (rect_x + 40, rect_y - 12))
+        # return

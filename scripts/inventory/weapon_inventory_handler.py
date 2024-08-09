@@ -34,17 +34,9 @@ class Weapon_Inventory_Handler():
 
     def Render(self, surf, offset=(0, 0)):
         self.Render_Inventory(surf)
-        self.Render_Weapon_In_Hand(surf, offset)
         # Render the current active inventory
         
     def Render_Inventory(self, surf):
         current_inventory = self.inventories[self.active_inventory]
         for inventory_slot in current_inventory:
             inventory_slot.Render(surf)
-        
-
-    def Render_Weapon_In_Hand(self, surf, offset=(0, 0)):
-        current_inventory = self.inventories[self.active_inventory]
-        for inventory_slot in current_inventory:
-            if inventory_slot.item:
-                inventory_slot.item.Render_Equipped(surf, offset)

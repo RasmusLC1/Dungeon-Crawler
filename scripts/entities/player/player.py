@@ -4,6 +4,7 @@ from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile.projectile import Projectile
 from scripts.weapon_generator import Weapon_Generator, Weapon
+from copy import copy
 
 import random
 import math
@@ -17,11 +18,13 @@ class Player(Moving_Entity):
         self.max_speed_holder = self.max_speed
         self.dashing = 0
         self.stored_position = 0
+        self.animation_num_max = 4
         
         
         self.max_ammo = 30
         self.ammo = 10
-        self.active_weapon = 'gun'
+        self.active_weapon_left = None
+        self.active_weapon_right = None
         self.set_action('idle_down')
         self.mana = 5
         self.nearby_chests = []
@@ -40,6 +43,7 @@ class Player(Moving_Entity):
 
     
     def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
+
         super().update(tilemap, movement=movement)
         if self.dashing:
             self.Dashing_Update(offset)
@@ -149,6 +153,22 @@ class Player(Moving_Entity):
             self.stored_position[1] -= offset[1]
             self.dashing = 60
 
+    def Set_Active_Weapon(self, weapon, hand):      
+
+        equipped_weapon = copy(weapon)
+        equipped_weapon.Set_In_Inventory(False)
+        equipped_weapon.Move(self.pos)
+        if hand == 'left_hand':
+            self.active_weapon_left = equipped_weapon
+        if hand == 'right_hand':
+            self.active_weapon_right = equipped_weapon
+
+    def Remove_Active_Weapon(self, hand):
+        if hand == 'left_hand' and self.active_weapon_left:
+            self.active_weapon_left = None
+        if hand == 'right_hand' and self.active_weapon_right:
+            self.active_weapon_right = None
+
     def Mouse_Handler(self):
         self.mpos = pygame.mouse.get_pos()
         self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
@@ -167,18 +187,22 @@ class Player(Moving_Entity):
         if abs(self.dashing) >= 50:
             return
          # Load and scale the entity images, split to allow better animation
-        entity_image_head = self.game.assets[self.animation + '_head'][0]
+        entity_image_head = self.game.assets[self.animation + '_head'][self.animation_num]
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
 
-        entity_image_body = self.game.assets[self.animation + '_body'][0]
+        entity_image_body = self.game.assets[self.animation + '_body'][self.animation_num]
         entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
 
-        entity_image_legs = self.game.assets[self.animation + '_legs'][0]
+        entity_image_legs = self.game.assets[self.animation + '_legs'][self.animation_num]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
 
         surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
         surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
+        if self.active_weapon_left:
+            self.active_weapon_left.Render(surf, offset)
+        if self.active_weapon_right:
+            self.active_weapon_right.Render(surf, offset)
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)

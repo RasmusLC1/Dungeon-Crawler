@@ -2,8 +2,7 @@ import pygame
 
 class Mana_Bar:
     def __init__(self):
-        self.scaled_weapon_image = pygame.transform.scale(self.assets[self.player.active_weapon], (10, 10))
-
+        pass
 
     def normalize_health(current_health, max_health, bar_length):
         # Calculate the normalization factor

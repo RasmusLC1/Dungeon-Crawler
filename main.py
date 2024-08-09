@@ -50,7 +50,6 @@ class Game:
         self.movement = [False, False, False, False]
         self.assets = {}
         Asset_Loader.Run_All(self)
-        self.player = None
 
 
         self.tilemap = Tilemap(self, tile_size=16)

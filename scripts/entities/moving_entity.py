@@ -21,6 +21,10 @@ class Moving_Entity(PhysicsEntity):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.animation_state = 'up'
+        self.idle_count = 0
+        self.animation_num = 0
+        self.animation_num_max = 1
+        self.animation_num_cooldown = 0
 
         self.direction = (0,0,0,0)
         self.direction_x = 0
@@ -54,6 +58,8 @@ class Moving_Entity(PhysicsEntity):
     
     # Set new action for animation
     def set_action(self, action):
+        
+
         if action != self.action:
             self.action = action
             self.animation = self.type + '_' + self.action
@@ -111,12 +117,33 @@ class Moving_Entity(PhysicsEntity):
         if self.Entity_Collision_Detection():
             return
 
-
         self.Tile_Map_Collision_Detection(tilemap)
-
-        self.Set_Action(movement)
+        self.Set_Animation()
+        if movement[0] or movement[1]:
+            self.Set_Action(movement)
+            self.idle_count = 0
+        elif self.idle_count > 60:
+            self.Set_Idle()
+        else:
+            self.idle_count += 1
 
         self.last_frame_movement = self.frame_movement
+
+    def Set_Animation(self):
+        if not self.animation_num_cooldown:
+            self.animation_num += 1
+            if self.animation_num >= self.animation_num_max:
+                self.animation_num = 0
+            self.animation_num_cooldown = 10
+        else:
+            self.animation_num_cooldown -= 1
+
+    # Set the idle state every 60 ticks to either up or down depending on last input
+    def Set_Idle(self):
+        if self.direction_y_holder < 0:
+            self.set_action('idle_up')
+        else:
+            self.set_action('idle_down')
 
     def Set_Action(self, movement):
         if movement[0] > 0:
@@ -126,12 +153,10 @@ class Moving_Entity(PhysicsEntity):
             self.flip[0] = True
             self.set_action('idle_down')
         if movement[1] < 0:
-            print(movement[1])
             self.set_action('idle_up')
         if movement[1] > 0:
             self.set_action('idle_down')
-        if movement[0] == 0 and movement[1] == 0:
-            self.set_action('idle_down')
+        
 
     def Tile_Map_Collision_Detection(self, tilemap):
         self.pos[0] += self.frame_movement[0]

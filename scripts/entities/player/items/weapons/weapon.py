@@ -36,14 +36,19 @@ class Weapon(Item):
             return True     
 
     
+    # Attempt to move the item to the receiving inventory slot by double clicking
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
-        # Attempt to move the item to the receiving inventory slot
 
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
         # If the move was successful, remove it from the sending inventory
         if move_successful:
             self.inventory_type = inventory_slot.inventory_type
             sending_inventory.Remove_Item(self, move_successful)
+            if self.inventory_type:
+                self.equipped = True
+                self.game.player.Set_Active_Weapon(self, self.inventory_type)
+            else:
+                self.equipped = False
             return True
         
         return False
@@ -53,13 +58,16 @@ class Weapon(Item):
         if self.picked_up:
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-            if self.equipped:
+            
+            if self.equipped: # Move to normal inventory
                 if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory, offset):
                     self.equipped = False
+                    self.game.player.Remove_Active_Weapon(self.inventory_type)
                     return True
-            else:
+            else: # Move to weapon inventory
                 if self.Move_To_Other_Inventory(self.game.item_inventory, weapon_inventory, offset):
                     self.equipped = True
+                    self.game.player.Set_Active_Weapon(self, self.inventory_type)
                     return True
                 
         return False
@@ -81,49 +89,12 @@ class Weapon(Item):
         self.equipped = False
         return False
 
-    def Render_Equipped(self, surf, offset = (0,0)):
-        equipped_offset = self.Find_Equipped_Offset()
-        
-        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], (self.size[0], self.size[1]))  
-        surf.blit(item_image, (self.game.player.pos[0] - offset[0] + equipped_offset[0], self.game.player.pos[1] - offset[1] - equipped_offset[1]))
+    def Set_In_Inventory(self, state):
+        self.in_inventory = state
+    
 
-    def Find_Equipped_Offset(self):
-        if self.inventory_type == 'left_hand':
-            # Looking Up
-            if self.game.player.direction_y_holder < 0:
-                return (-6, 5)
-            # Looking down
-            if self.game.player.direction_y_holder > 0:
-                return (8, 5)
-            # Looking right
-            if self.game.player.direction_x_holder > 0:
-                return (3, 5)
-            # Looking left
-            if self.game.player.direction_x_holder < 0:
-                return (0, 5)
-            return (0,0)
-        elif self.inventory_type == 'right_hand':
-            if self.game.player.direction_y_holder < 0:
-                return (6, 5)
-            # Looking down
-            if self.game.player.direction_y_holder > 0:
-                return (-8, 5)
-            # Looking right
-            if self.game.player.direction_x_holder > 0:
-                return (3, 5)
-            # Looking left
-            if self.game.player.direction_x_holder < 0:
-                return (0, 5)
-            return (0,0)
-        elif self.inventory_type == 'bow':
-            return (0,0)
-        elif self.inventory_type == 'arrow':
-            return (0,0)
-        else:
-            print("OFFSET NOT FOUND")
-        return (0,0)
-        
 
+    
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
@@ -139,6 +110,11 @@ class Weapon(Item):
             else:
                 self.Render_In_Inventory(surf)
 
+        if self.equipped:
+            weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+            surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+            return
+        
         if not self.Update_Light_Level():
             return
         
