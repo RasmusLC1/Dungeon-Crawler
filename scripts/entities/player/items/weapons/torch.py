@@ -26,6 +26,8 @@ class Torch(Weapon):
                 self.picked_up = False
                 self.game.entities_render.remove(self)
 
+    def Update(self):
+        self.light_source.Move_Light(self.pos)
 
 
     def Place_Down(self):

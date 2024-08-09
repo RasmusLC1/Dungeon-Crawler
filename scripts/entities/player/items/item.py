@@ -28,9 +28,6 @@ class Item(PhysicsEntity):
     def Activate(self):
         pass
 
-    def Update(self):
-        pass
-
 
     def Pick_Up(self):
         if self.rect().colliderect(self.game.player.rect()):

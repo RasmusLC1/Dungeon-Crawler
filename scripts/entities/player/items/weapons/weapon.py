@@ -42,13 +42,21 @@ class Weapon(Item):
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
         # If the move was successful, remove it from the sending inventory
         if move_successful:
+            # Remove item from old inventory and save the inventory type
+            inventory_type_holder = self.inventory_type
             self.inventory_type = inventory_slot.inventory_type
             sending_inventory.Remove_Item(self, move_successful)
+            # Drag weapon into weapon inventory
             if self.inventory_type:
+                # If weapon is already equipped in the other hand, remove it before adding to new hand
+                if self.equipped:
+                    self.game.player.Remove_Active_Weapon(inventory_type_holder)
+                    
                 self.equipped = True
                 self.game.player.Set_Active_Weapon(self, self.inventory_type)
-            else:
+            else: # Drag weapon back into item inventory
                 self.equipped = False
+                self.game.player.Remove_Active_Weapon(inventory_type_holder)
             return True
         
         return False
@@ -56,9 +64,9 @@ class Weapon(Item):
     def Move_Inventory_Check(self, offset = (0,0)):
         # Check if the weapon can be moved to the weapon inventory
         if self.picked_up:
+            print(self.equipped)
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-            
             if self.equipped: # Move to normal inventory
                 if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory, offset):
                     self.equipped = False
@@ -92,13 +100,15 @@ class Weapon(Item):
     def Set_In_Inventory(self, state):
         self.in_inventory = state
     
-
-
-    
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+    def Render_Equipped(self, surf, offset = (0,0)):
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        return
 
     def Render(self, surf, offset=(0, 0)):
 
@@ -109,11 +119,6 @@ class Weapon(Item):
                 self.Render_In_Inventory(surf, offset)
             else:
                 self.Render_In_Inventory(surf)
-
-        if self.equipped:
-            weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-            surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-            return
         
         if not self.Update_Light_Level():
             return

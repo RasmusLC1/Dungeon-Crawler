@@ -47,14 +47,18 @@ class Player(Moving_Entity):
         super().update(tilemap, movement=movement)
         if self.dashing:
             self.Dashing_Update(offset)
-            
-
-        
 
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
+        
+        self.Update_Light()
+
+        self.Update_Weapon()
 
         self.Set_Direction_Holder()
+        
+    # Function to update the light around player
+    def Update_Light(self):
         if self.light_source:
             # Update all the light's around the player
             # Do it only when the player light has been activated to prevent lag
@@ -65,6 +69,31 @@ class Player(Moving_Entity):
             else:
                 self.light_source.Move_Light(self.pos)
 
+    # Function to update the player's weapons
+    def Update_Weapon(self):
+        if self.active_weapon_left:
+            self.active_weapon_left.Move((self.pos[0] - 7, self.pos[1] - 5))
+            self.active_weapon_left.Update()
+        if self.active_weapon_right:
+            self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 5))
+            self.active_weapon_right.Update()
+        return
+    
+    def Set_Active_Weapon(self, weapon, hand):      
+        equipped_weapon = copy(weapon)
+        equipped_weapon.Set_In_Inventory(False)
+        if hand == 'left_hand':
+            equipped_weapon.Move(self.pos)
+            self.active_weapon_left = equipped_weapon
+        if hand == 'right_hand':
+            equipped_weapon.Move(self.pos)
+            self.active_weapon_right = equipped_weapon
+
+    def Remove_Active_Weapon(self, hand):
+        if hand == 'left_hand' and self.active_weapon_left:
+            self.active_weapon_left = None
+        if hand == 'right_hand' and self.active_weapon_right:
+            self.active_weapon_right = None
 
     def Set_Light_State(self, state):
         self.light_source.active = state
@@ -81,6 +110,7 @@ class Player(Moving_Entity):
 
         if self.dashing > 0:
             self.dashing = max(0, self.dashing - 1)
+
 
         if self.dashing > 50:
             self.stored_position = self.pos.copy()
@@ -106,7 +136,7 @@ class Player(Moving_Entity):
                 pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
 
-
+    
         
 
     def Ammo_Change(self, ammo):
@@ -121,8 +151,6 @@ class Player(Moving_Entity):
         
     def Coin_Change(self, coins):
         self.coins += coins
-        
-        
 
     def Shooting(self, offset=(0, 0)):
         
@@ -153,21 +181,7 @@ class Player(Moving_Entity):
             self.stored_position[1] -= offset[1]
             self.dashing = 60
 
-    def Set_Active_Weapon(self, weapon, hand):      
-
-        equipped_weapon = copy(weapon)
-        equipped_weapon.Set_In_Inventory(False)
-        equipped_weapon.Move(self.pos)
-        if hand == 'left_hand':
-            self.active_weapon_left = equipped_weapon
-        if hand == 'right_hand':
-            self.active_weapon_right = equipped_weapon
-
-    def Remove_Active_Weapon(self, hand):
-        if hand == 'left_hand' and self.active_weapon_left:
-            self.active_weapon_left = None
-        if hand == 'right_hand' and self.active_weapon_right:
-            self.active_weapon_right = None
+    
 
     def Mouse_Handler(self):
         self.mpos = pygame.mouse.get_pos()
@@ -200,9 +214,9 @@ class Player(Moving_Entity):
         surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
         if self.active_weapon_left:
-            self.active_weapon_left.Render(surf, offset)
+            self.active_weapon_left.Render_Equipped(surf, offset)
         if self.active_weapon_right:
-            self.active_weapon_right.Render(surf, offset)
+            self.active_weapon_right.Render_Equipped(surf, offset)
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)
