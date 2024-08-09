@@ -121,18 +121,17 @@ class Moving_Entity(PhysicsEntity):
     def Set_Action(self, movement):
         if movement[0] > 0:
             self.flip[0] = False
-            self.set_action('side')
+            self.set_action('idle_down')
         if movement[0] < 0:
             self.flip[0] = True
-            self.set_action('side')
+            self.set_action('idle_down')
         if movement[1] < 0:
-            self.set_action('up')
-            self.flip[1] = False
+            print(movement[1])
+            self.set_action('idle_up')
         if movement[1] > 0:
-            self.flip[1] = True
-            self.set_action('down')
-        else:
-            self.set_action('idle')
+            self.set_action('idle_down')
+        if movement[0] == 0 and movement[1] == 0:
+            self.set_action('idle_down')
 
     def Tile_Map_Collision_Detection(self, tilemap):
         self.pos[0] += self.frame_movement[0]

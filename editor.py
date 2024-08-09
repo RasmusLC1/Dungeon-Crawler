@@ -18,6 +18,7 @@ class Editor:
         self.display = pygame.Surface((320, 240))
 
         self.clock = pygame.time.Clock()
+        self.asset_loader = Asset_Loader()
         
         self.assets = {}
         Asset_Loader.Asset_Tile_List(self)
@@ -26,6 +27,8 @@ class Editor:
         Asset_Loader.Asset_Interative_Objects_List(self)
         Asset_Loader.Asset_Environment_List(self)
         Asset_Loader.Asset_Decoration_List(self)
+        Asset_Loader.Asset_Weapons_List(self)
+
         
         
         self.movement = [False, False, False, False]
