@@ -33,23 +33,23 @@ Game Ideas
     # Player can hold weapons
     Attack
     Defend
-    
+
 
 
 
 # Weapons:
+    Torch, emits light and be be used to set enemies on fire, relatively low damage
+    Sword, best damage, little utility
+    Spear, can be thrown
+    Shield, can block damage, can be used to rocket jump with bomb
     Bow, can press button, different arrows that can do certain things
     Crossbow, Same as bow, but takes longer to load, but can be preloaded
     Boomerang, Returns to player and damages everything it hits
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
-    Sword, best damage, little utility
     Axe, can break wood doors
     Mace/Hammer, can break certain walls and enviorement
     Whip, can be used for movement
-    Spear, can be thrown
-    Shield, can block damage, can be used to rocket jump with bomb
     magic Staff, improved spells but poor melee damage, different staffs for different lores of magic
-    Torch, emits light and be be used to set enemies on fire, relatively low damage
 
 # Potions
     # Health

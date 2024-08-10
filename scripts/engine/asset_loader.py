@@ -96,6 +96,7 @@ class Asset_Loader:
         Weapons_assets = {
             'sword' : get_tiles_from_sheet('weapons/sword.png', 1, 0, 0, 0, 16, 16),
             'torch': get_tiles_from_sheet('weapons/torch.png', 8, 0, 0, 0, 16, 16),
+            'torch_attack': get_tiles_from_sheet('weapons/torch_attack.png', 8, 0, 0, 0, 16, 16),
         }
         self.assets.update(Weapons_assets)
 

@@ -40,6 +40,11 @@ class Inventory_Slot():
         item.active = True
         self.item = item
         self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
+        if self.inventory_type:
+            self.item.Set_Inventory_Type(self.inventory_type)
+        else:
+            self.item.Set_Inventory_Type(None)
+
     
     def Remove_Item(self):
         self.item = None

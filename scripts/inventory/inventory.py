@@ -160,15 +160,20 @@ class Inventory:
                     self.clicked_inventory_slot.item = None  # Clear the original slot
                     self.clicked_inventory_slot.Set_Active(False)  # Deactivate original slot
                     self.active_item = None  # Clear active item
-                    return True
+                return True
         return False
     
     # Method to move an item into a slot
     def Move_Item(self, item, inventory_slot):
         if not inventory_slot.item:
+            inventory_type_holder = item.inventory_type
             item.picked_up = False  # Ensure the item is marked as not picked up
             inventory_slot.Add_Item(item)  # Place the item in the inventory slot
             inventory_slot.Set_Active(False)  # Deactivate the slot after placing the item
+
+            if inventory_type_holder and item:
+                item.Update_Player_Hand(inventory_type_holder)
+
             return True
         return False
 

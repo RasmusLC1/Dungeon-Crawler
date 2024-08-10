@@ -108,9 +108,9 @@ class Player(Moving_Entity):
             return
         
         # Return if mouse has not been clicked
-        if not self.game.mouse.left_click:
+        if not self.game.mouse.right_click:
             return
-        
+        print("TEST")
         # Attack with weapon
         cooldown = self.Weapon_Attack(self.active_weapon_right)
         self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
@@ -121,6 +121,7 @@ class Player(Moving_Entity):
         if self.game.mouse.inventory_clicked:
             return
         cooldown = max(5, 100 - weapon.speed)
+        weapon.Attack()
         return cooldown
 
     def Set_Active_Weapon(self, weapon, hand):      

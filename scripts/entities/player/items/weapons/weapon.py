@@ -10,24 +10,18 @@ class Weapon(Item):
         self.range = range
         self.in_inventory = False
         self.equipped = False
-        self.inventory_type = None
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         self.weapon_class = weapon_class
 
+    def Attack(self):
+        print(self.inventory_type)
 
-    # Add weapons from a sending inventory to a receiving inventory
-    # Example: weapon_inventory (sending) -> inventory (receiving) 
-    def Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset = (0,0)):
-        if self.game.mouse.left_click:
-            return
-        
-        for receiving_inventory_slot in receiving_inventory:
-            if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory, receiving_inventory):
-                    return True             
-        return False
     
+
+    # Inventory Logic below
+    #######################################################
+
     def Handle_Double_Click(self, sending_inventory, receiving_inventory):
         recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
         if not recieving_inventory_slot:
@@ -42,16 +36,15 @@ class Weapon(Item):
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
         # If the move was successful, remove it from the sending inventory
         if move_successful:
+
             # Remove item from old inventory and save the inventory type
             inventory_type_holder = self.inventory_type
-            self.inventory_type = inventory_slot.inventory_type
             sending_inventory.Remove_Item(self, move_successful)
-            # Drag weapon into weapon inventory
+            # send weapon into weapon inventory, checked by seeing if it has an inventory_type
             if self.inventory_type:
                 # If weapon is already equipped in the other hand, remove it before adding to new hand
                 if self.equipped:
-                    self.game.player.Remove_Active_Weapon(inventory_type_holder)
-                    
+                    self.game.player.Remove_Active_Weapon(inventory_type_holder)                    
                 self.equipped = True
                 self.game.player.Set_Active_Weapon(self, self.inventory_type)
             else: # Drag weapon back into item inventory
@@ -59,6 +52,18 @@ class Weapon(Item):
                 self.game.player.Remove_Active_Weapon(inventory_type_holder)
             return True
         
+        return False
+    
+    # Add weapons from a sending inventory to a receiving inventory
+    # Example: weapon_inventory (sending) -> inventory (receiving) 
+    def Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset = (0,0)):
+        if self.game.mouse.left_click:
+            return
+        
+        for receiving_inventory_slot in receiving_inventory:
+            if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
+                if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory, receiving_inventory):
+                    return True             
         return False
 
     # Check if the weapon can be moved to the weapon inventory
@@ -71,6 +76,8 @@ class Weapon(Item):
                     self.equipped = False
                     self.game.player.Remove_Active_Weapon(self.inventory_type)
                     return True
+                
+                
             else: # Move to weapon inventory
                 if self.Move_To_Other_Inventory(self.game.item_inventory, weapon_inventory, offset):
                     self.equipped = True
@@ -81,6 +88,7 @@ class Weapon(Item):
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
+
         # Check if the weapon can be moved to the weapon inventory
         if self.Move_Inventory_Check(offset):
             self.picked_up = False
@@ -88,9 +96,27 @@ class Weapon(Item):
             return False
         if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):
             return True
+        
+        
+        
         else:
             return False
-        
+
+    def Update_Player_Hand(self, prev_hand):
+        # print("TEST")
+        # # Check if the weapon has changed hands
+        # print(self.inventory_type)
+        print(prev_hand)
+        if self.inventory_type != prev_hand:
+            self.equipped = True
+            if prev_hand == 'left_hand':
+                self.game.player.Remove_Active_Weapon(prev_hand)
+                self.game.player.Set_Active_Weapon(self, self.inventory_type)
+            elif prev_hand == 'right_hand':
+                self.game.player.Remove_Active_Weapon(prev_hand)
+                self.game.player.Set_Active_Weapon(self, self.inventory_type)
+
+
     def Place_Down(self):
         super().Place_Down()
         self.equipped = False
@@ -98,6 +124,7 @@ class Weapon(Item):
 
     def Set_In_Inventory(self, state):
         self.in_inventory = state
+    ####################################################### 
     
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         

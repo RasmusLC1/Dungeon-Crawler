@@ -16,6 +16,7 @@ class Item(PhysicsEntity):
         self.used = False
         self.picked_up = True
         self.move_inventory = False
+        self.inventory_type = None
         self.animation_cooldown = 0
         self.animation_speed = 50
         self.amount = amount
@@ -60,6 +61,9 @@ class Item(PhysicsEntity):
     
     def Increase_Amount(self, amount):
         self.amount = min(self.max_amount, self.amount + amount)
+
+    def Set_Inventory_Type(self, inventory_type):
+        self.inventory_type = inventory_type
     
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
