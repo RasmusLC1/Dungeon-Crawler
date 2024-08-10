@@ -94,17 +94,25 @@ class Inventory:
     
     # Handle single clicking behaviour, return True if valid click
     def Item_Single_Click(self):
+        # Check for empty inventory slot
         if not self.clicked_inventory_slot.item:
             return
-        if not self.game.mouse.single_click_delay and not self.game.mouse.double_click:
-            if self.game.mouse.hold_down_left < 5 and self.game.mouse.hold_down_left > 0:
-                # if not self.game.mouse.single_click_delay:
-                self.clicked_inventory_slot.item.Activate()
-                self.clicked_inventory_slot.Update()
-                self.clicked_inventory_slot = None
-                return True
+        # Check for double click
+        if self.game.mouse.single_click_delay and self.game.mouse.double_click:
+            return False
         
-        return False
+        # Check that the left click has been held down between 0 and 5 ticks
+        # If it is then it might be dragged
+        if not self.game.mouse.hold_down_left < 5 and not self.game.mouse.hold_down_left > 0:
+            return False
+        
+        # Activate item if it passes the previous checks
+        self.clicked_inventory_slot.item.Activate()
+        self.clicked_inventory_slot.Update()
+        self.clicked_inventory_slot = None
+        self.game.mouse.Set_Inventory_Clicked(10)
+        return True
+        
 
 
     # Return the item to its previous Inventory slot and deactivate

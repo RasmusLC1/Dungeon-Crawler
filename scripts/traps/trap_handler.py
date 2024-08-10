@@ -1,12 +1,12 @@
-from scripts.traps.spike import Spike
-from scripts.traps.spike_poisoned import Spike_Poisoned
-from scripts.traps.bear_trap import Bear_Trap
-from scripts.traps.spike_pit import Spike_Pit
-from scripts.traps.top_push_trap import Top_Push_Trap
-from scripts.environment.lava import Lava
-from scripts.environment.water import Water
-from scripts.environment.ice import Ice
-from scripts.traps.fire_trap import Fire_Trap
+from scripts.traps.traps.spike import Spike
+from scripts.traps.traps.spike_poisoned import Spike_Poisoned
+from scripts.traps.traps.bear_trap import Bear_Trap
+from scripts.traps.traps.spike_pit import Spike_Pit
+from scripts.traps.traps.top_push_trap import Top_Push_Trap
+from scripts.traps.traps.fire_trap import Fire_Trap
+from scripts.traps.environment.lava import Lava
+from scripts.traps.environment.water import Water
+from scripts.traps.environment.ice import Ice
 import math
 
 

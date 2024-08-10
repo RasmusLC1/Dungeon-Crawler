@@ -5,7 +5,7 @@ import json
 import math
 
 
-from scripts.utils import load_image, load_images, Animation
+from scripts.engine.utils import load_image, load_images, Animation
 from scripts.engine.asset_loader import Asset_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler

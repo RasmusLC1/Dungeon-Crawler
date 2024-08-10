@@ -3,21 +3,24 @@ import pygame
 class Ammo_Bar:
     def __init__(self):
         pass
-
-    def normalize_health(current_health, max_health, bar_length):
+    
+    # TODO: REDO THIS CODE, normalising does not work
+    def normalize_ammo(current_health, max_health, bar_length):
         # Calculate the normalization factor
         normalization_factor = bar_length / max_health
         
         # Calculate the normalized health
         normalized_health = current_health * normalization_factor
         
-        return normalized_health
+        # Clamp the value to ensure it doesn't exceed the bar length
+        return min(max(normalized_health, 0), bar_length)
+
     
     def Attack_Recharge_Bar(self):
-        bar_length=80
+        bar_length = 80
         rect_x = self.screen_width / self.render_scale - bar_length - 20
         rect_y = self.screen_height / self.render_scale - 30
-        normalised_cooldown = Ammo_Bar.normalize_health(self.player.shootin_cooldown, 20, bar_length)
+        normalised_cooldown = Ammo_Bar.normalize_ammo(self.player.left_weapon_cooldown, 20, bar_length)
         rect_height = 5
         # Ensure the font is loaded correctly
         try:

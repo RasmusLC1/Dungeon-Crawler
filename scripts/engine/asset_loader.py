@@ -1,5 +1,5 @@
 import pygame
-from scripts.utils import load_image, load_images, Animation, get_tiles_from_sheet
+from scripts.engine.utils import load_image, load_images, Animation, get_tiles_from_sheet
 
 class Asset_Loader:
     def Run_All(self):

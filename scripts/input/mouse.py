@@ -12,15 +12,19 @@ class Mouse_Handler:
         self.time_since_last_click = 0  # Check the time since last click
         self.double_click = 0  # Timer to signal double clicking
         self.single_click_delay = 0  # Single click timer
+        self.inventory_clicked = 0 # Check if the inventory has been clicked
 
     # Mouse inputs that need to be updated for each frame
     def Mouse_Update(self):
         self.Double_Click_Timer()
+        self.Decrement_Inventory_Clicked()
+        
+
 
     # Mouse inputs that only need to be updated when there is an input
     def Mouse_Input(self, key_press, offset=(0, 0)):
         self.Hold_Down_Left()
-    
+
         if key_press.type == pygame.MOUSEBUTTONDOWN:
             if key_press.button == 1:  # Check for left click (button 1)
                 self.left_click = True
@@ -50,12 +54,14 @@ class Mouse_Handler:
         if key_press.type == pygame.MOUSEMOTION:
             self.Mpos_Update(key_press, offset)
 
+    # Hold down left click timers
     def Hold_Down_Left(self):
         if self.left_click:
             self.hold_down_left += 1
         elif not self.left_click and self.hold_down_left:
             self.hold_down_left = 0
 
+    # Handle the double click timers
     def Double_Click_Timer(self):
         if self.time_since_last_click:
             self.time_since_last_click -= 1
@@ -64,25 +70,33 @@ class Mouse_Handler:
         if self.single_click_delay:
             self.single_click_delay -= 1
 
+    # Rest double click logic
     def Reset_Double_Click(self):
         self.time_since_last_click = 0  
         self.double_click = 0  
         self.single_click_delay = 0  
-            
-
         
-    
+    # Update the mouse position when left clicking
     def Mpos_Update(self, key_press, offset=(0, 0)):
         if self.left_click == True:
             x = key_press.pos[0] / 4 + offset[0]
             y = key_press.pos[1] / 4 + offset[1]
             self.mpos = (x, y)
             self.mpos_not_offset = key_press.pos
-            
+    
+    # Reduce inventory clicked time
+    def Decrement_Inventory_Clicked(self):
+        if self.inventory_clicked:
+            self.inventory_clicked -= 1
 
+    # Start a timer if 
+    def Set_Inventory_Clicked(self, timer):
+        self.inventory_clicked = timer
 
+    # Click collision
     def rect_click(self):
         return pygame.Rect(self.click_pos[0], self.click_pos[1], 1, 1)    
     
+    # Mouse movement collision
     def rect_pos(self, offset):
         return pygame.Rect(self.mpos[0] - offset[0], self.mpos[1]  - offset[1], 1, 1)  

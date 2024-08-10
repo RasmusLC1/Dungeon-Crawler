@@ -29,6 +29,14 @@ Game Ideas
     Level editor
     Dungeon generator
 
+# Gameplay
+    # Player can hold weapons
+    Attack
+    Defend
+    
+
+
+
 # Weapons:
     Bow, can press button, different arrows that can do certain things
     Crossbow, Same as bow, but takes longer to load, but can be preloaded

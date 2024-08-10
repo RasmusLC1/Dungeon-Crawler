@@ -37,6 +37,9 @@ class Player(Moving_Entity):
 
         self.coins = 0
         self.shootin_cooldown = 0
+
+        self.left_weapon_cooldown = 0
+        self.right_weapon_cooldown = 0
         
         self.weapons = []
 
@@ -53,7 +56,8 @@ class Player(Moving_Entity):
         
         self.Update_Light()
 
-        self.Update_Weapon()
+        self.Update_Left_Weapon()
+        self.Update_Right_Weapon()
 
         self.Set_Direction_Holder()
         
@@ -70,15 +74,55 @@ class Player(Moving_Entity):
                 self.light_source.Move_Light(self.pos)
 
     # Function to update the player's weapons
-    def Update_Weapon(self):
-        if self.active_weapon_left:
-            self.active_weapon_left.Move((self.pos[0] - 7, self.pos[1] - 5))
-            self.active_weapon_left.Update()
-        if self.active_weapon_right:
-            self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 5))
-            self.active_weapon_right.Update()
+    def Update_Left_Weapon(self):
+        if not self.active_weapon_left:
+            return
+        self.active_weapon_left.Move((self.pos[0] - 7, self.pos[1] - 5))
+        self.active_weapon_left.Update()
+
+        if self.left_weapon_cooldown:
+            self.left_weapon_cooldown -= 1
+            return
+
+        if not self.game.mouse.left_click:
+            return
+
+        cooldown = self.Weapon_Attack(self.active_weapon_left)
+        self.left_weapon_cooldown = max(self.left_weapon_cooldown,cooldown)
+
+        
+        
         return
     
+    def Update_Right_Weapon(self):
+        # Return if there's no weapon
+        if not self.active_weapon_right:
+            return
+        # Update the weapon position and logic
+        self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 5))
+        self.active_weapon_right.Update()
+        
+        # Handle weapon cooldown
+        if self.right_weapon_cooldown:
+            self.right_weapon_cooldown -= 1
+            return
+        
+        # Return if mouse has not been clicked
+        if not self.game.mouse.left_click:
+            return
+        
+        # Attack with weapon
+        cooldown = self.Weapon_Attack(self.active_weapon_right)
+        self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
+    
+    # Activate weapon attack, return cooldown time
+    def Weapon_Attack(self, weapon):
+        # Return if inventory has not been clicked
+        if self.game.mouse.inventory_clicked:
+            return
+        cooldown = max(5, 100 - weapon.speed)
+        return cooldown
+
     def Set_Active_Weapon(self, weapon, hand):      
         equipped_weapon = copy(weapon)
         equipped_weapon.Set_In_Inventory(False)

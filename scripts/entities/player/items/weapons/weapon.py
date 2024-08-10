@@ -61,10 +61,9 @@ class Weapon(Item):
         
         return False
 
+    # Check if the weapon can be moved to the weapon inventory
     def Move_Inventory_Check(self, offset = (0,0)):
-        # Check if the weapon can be moved to the weapon inventory
         if self.picked_up:
-            print(self.equipped)
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
             if self.equipped: # Move to normal inventory

@@ -7,7 +7,7 @@ import pygame
 
 class Torch(Weapon):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 1, 1, 1, 'one_handed_melee')
+        super().__init__(game, pos, size, type, 1, 10, 1, 'one_handed_melee')
         self.max_animation = 7
         self.animation_speed = 30
         self.light_level = 8
