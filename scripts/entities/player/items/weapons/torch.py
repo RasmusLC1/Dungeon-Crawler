@@ -27,6 +27,7 @@ class Torch(Weapon):
                 self.game.entities_render.remove(self)
 
     def Update(self):
+        super().Update()
         self.light_source.Move_Light(self.pos)
 
 

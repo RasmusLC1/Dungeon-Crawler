@@ -10,12 +10,38 @@ class Weapon(Item):
         self.range = range
         self.in_inventory = False
         self.equipped = False
+        self.attacking = 0
+        self.attack_animation = 0
+        self.attack_animation_max = 7
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
+        
         self.weapon_class = weapon_class
 
     def Attack(self):
+        self.attacking = 24
         print(self.inventory_type)
+
+    def Update(self):
+        if self.attacking == 1:
+            self.sub_type = self.type
+            self.attacking = 0
+            self.attack_animation = 0
+            return
+        if self.attacking:
+            self.Move((self.pos[0] + 20 * self.game.player.direction[0], self.pos[1] + 20 * self.game.player.direction[1]))
+            self.animation = self.attack_animation
+            self.sub_type = self.type + '_attack'
+            self.attacking -= 1
+            if not self.attacking % 3:
+                self.attack_animation += 1
+                if self.attack_animation > self.attack_animation_max:
+                    self.attack_animation = 0
+            return
+
+
+        self.Update_Animation()
+
 
     
 
@@ -96,9 +122,6 @@ class Weapon(Item):
             return False
         if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):
             return True
-        
-        
-        
         else:
             return False
 
@@ -106,7 +129,6 @@ class Weapon(Item):
         # print("TEST")
         # # Check if the weapon has changed hands
         # print(self.inventory_type)
-        print(prev_hand)
         if self.inventory_type != prev_hand:
             self.equipped = True
             if prev_hand == 'left_hand':
@@ -127,7 +149,6 @@ class Weapon(Item):
     ####################################################### 
     
     def Render_In_Inventory(self, surf, offset=(0, 0)):
-        
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
@@ -148,7 +169,6 @@ class Weapon(Item):
         
         if not self.Update_Light_Level():
             return
-        
         # Set image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 

@@ -116,5 +116,14 @@ Game Ideas
     Elementals, rock, ice, fire, electric, metal
     Lurker in the dark, lowers light level around it, tries to sneak attack, vulnable to light
 
-
+# Companions:
+    Save friendly entities from prisons through the dungeon and make them ally you
+    They will follow you and assists in different ways
+    Ideas:
+        Light source
+        Healer
+        Mana
+        Item picker
+        Attacker
+        Defender
 
