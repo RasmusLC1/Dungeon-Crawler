@@ -2,6 +2,15 @@ import pygame
 from scripts.entities.player.items.item import Item
 from scripts.entities.entities import PhysicsEntity
 
+def rotate_on_pivot(image, angle, pivot, offset):
+    # Rotate the image
+    rotated_image = pygame.transform.rotate(image, angle)
+    
+    # Calculate the new rect around the pivot point
+    rotated_rect = rotated_image.get_rect(center=pivot + (offset - pivot).rotate(-angle))
+    
+    return rotated_image, rotated_rect
+
 class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
         super().__init__(game, type, 'weapon', pos, size, 1)
@@ -13,37 +22,116 @@ class Weapon(Item):
         self.attacking = 0
         self.attack_animation = 0
         self.attack_animation_max = 7
+        self.flip_image = False
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         
         self.weapon_class = weapon_class
 
     def Attack(self):
-        self.attacking = 24
+        self.attacking = 16
         print(self.inventory_type)
 
     def Update(self):
+        
+
+
+        self.Update_Animation()
+        self.Update_Flip()
+
+    def Update_Attacking_Logic(self):
         if self.attacking == 1:
             self.sub_type = self.type
             self.attacking = 0
             self.attack_animation = 0
             return
         if self.attacking:
-            self.Move((self.pos[0] + 20 * self.game.player.direction[0], self.pos[1] + 20 * self.game.player.direction[1]))
             self.animation = self.attack_animation
             self.sub_type = self.type + '_attack'
             self.attacking -= 1
-            if not self.attacking % 3:
+            if not self.attacking % 2:
                 self.attack_animation += 1
                 if self.attack_animation > self.attack_animation_max:
                     self.attack_animation = 0
-            return
+            
+        return
 
+    def Update_Flip(self):
+        player_direction_x = self.game.player.direction_x_holder
+        player_direction_y = self.game.player.direction_y_holder
 
-        self.Update_Animation()
-
+        if player_direction_x < 0 and player_direction_y == 0:
+            self.flip_image = True
+        elif player_direction_x > 0 and player_direction_y == 0:
+            self.flip_image = False
+        elif player_direction_x == 0 and player_direction_y < 0:
+            self.flip_image = False
+        elif player_direction_x == 0 and player_direction_y > 0:
+            self.flip_image = False
+    
 
     
+    
+    def Render_In_Inventory(self, surf, offset=(0, 0)):
+        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
+
+        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+
+    def Increase_Size(self, increase):
+        size_x = self.size[0] * increase
+        size_y = self.size[1] * increase 
+        self.size = (size_x, size_y)
+
+    def Decrease_Size(self, decrease):
+        size_x = self.size[0] / decrease
+        size_y = self.size[1] / decrease 
+        self.size = (size_x, size_y)
+
+    def Render_Equipped(self, surf, offset=(0, 0)):
+        # Load the weapon image
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+
+        if self.attacking:
+            self.pos = ((self.pos[0] + 5 * self.game.player.direction_x_holder), (self.pos[1] + 5 * self.game.player.direction_y_holder))
+
+        surf.blit(
+            pygame.transform.flip(weapon_image, self.flip_image, False),
+                                  (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+            
+
+    
+    def Render(self, surf, offset=(0, 0)):
+
+        # Check if item is in inventory. If yes we don't need offset, except if
+        # the weapon has been picked up
+        if self.in_inventory:
+            if self.picked_up:
+                self.Render_In_Inventory(surf, offset)
+            else:
+                self.Render_In_Inventory(surf)
+        
+        if not self.Update_Light_Level():
+            return
+        # Set image
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+
+        # Set alpha value to make chest fade out
+        alpha_value = max(0, min(255, self.active))
+        weapon_image.set_alpha(alpha_value)
+
+        # Blit the dark layer
+        dark_surface_head = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+
+        # Blit the chest layer on top the dark layer
+        weapon_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        
+        # Render the chest
+        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+
+
 
     # Inventory Logic below
     #######################################################
@@ -147,41 +235,3 @@ class Weapon(Item):
     def Set_In_Inventory(self, state):
         self.in_inventory = state
     ####################################################### 
-    
-    def Render_In_Inventory(self, surf, offset=(0, 0)):
-        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
-        surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-
-    def Render_Equipped(self, surf, offset = (0,0)):
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        return
-
-    def Render(self, surf, offset=(0, 0)):
-
-        # Check if item is in inventory. If yes we don't need offset, except if
-        # the weapon has been picked up
-        if self.in_inventory:
-            if self.picked_up:
-                self.Render_In_Inventory(surf, offset)
-            else:
-                self.Render_In_Inventory(surf)
-        
-        if not self.Update_Light_Level():
-            return
-        # Set image
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))
-        weapon_image.set_alpha(alpha_value)
-
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        # Blit the chest layer on top the dark layer
-        weapon_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        
-        # Render the chest
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

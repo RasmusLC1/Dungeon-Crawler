@@ -25,7 +25,7 @@ class Player(Moving_Entity):
         self.ammo = 10
         self.active_weapon_left = None
         self.active_weapon_right = None
-        self.set_action('idle_down')
+        self.Set_Animation('idle_down')
         self.mana = 5
         self.nearby_chests = []
 
@@ -40,6 +40,7 @@ class Player(Moving_Entity):
 
         self.left_weapon_cooldown = 0
         self.right_weapon_cooldown = 0
+
         
         self.weapons = []
 
@@ -59,7 +60,27 @@ class Player(Moving_Entity):
         self.Update_Left_Weapon()
         self.Update_Right_Weapon()
 
+        
+        
+
         self.Set_Direction_Holder()
+
+    def Attacking(self, weapon):
+        if weapon.attacking and not self.attacking:
+            self.pos[0] += 5 * self.direction_x_holder
+            self.pos[1] += 5 * self.direction_y_holder
+            self.attacking = weapon.attacking
+
+
+        if self.attacking == 1:
+            self.pos[0] -= 5 * self.direction_x_holder
+            self.pos[1] -= 5 * self.direction_y_holder
+
+        if self.attacking:
+            self.attacking -= 1
+
+
+
         
     # Function to update the light around player
     def Update_Light(self):
@@ -75,10 +96,22 @@ class Player(Moving_Entity):
 
     # Function to update the player's weapons
     def Update_Left_Weapon(self):
+
         if not self.active_weapon_left:
             return
-        self.active_weapon_left.Move((self.pos[0] - 7, self.pos[1] - 5))
+        attack_range = [0, 0]
+        # if self.active_weapon_left.attacking:
+        #     attack_range[0] = 8 * self.direction_x_holder
+        #     attack_range[1] = 8 * self.direction_y_holder
+        if not self.flip[0] or self.direction_y_holder < 0:
+            self.active_weapon_left.Move((self.pos[0] - 5 + attack_range[0], self.pos[1] - 10 + attack_range[1]))
+        else:
+            self.active_weapon_left.Move((self.pos[0] + 5 + attack_range[0], self.pos[1] - 10 + attack_range[1]))
+
+        print(self.direction_y_holder)
         self.active_weapon_left.Update()
+        self.Attacking(self.active_weapon_left)
+
 
         if self.left_weapon_cooldown:
             self.left_weapon_cooldown -= 1
@@ -90,8 +123,6 @@ class Player(Moving_Entity):
         cooldown = self.Weapon_Attack(self.active_weapon_left)
         self.left_weapon_cooldown = max(self.left_weapon_cooldown,cooldown)
 
-        
-        
         return
     
     def Update_Right_Weapon(self):
@@ -101,6 +132,7 @@ class Player(Moving_Entity):
         # Update the weapon position and logic
         self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 5))
         self.active_weapon_right.Update()
+        self.Attacking(self.active_weapon_right)
         
         # Handle weapon cooldown
         if self.right_weapon_cooldown:
@@ -113,6 +145,7 @@ class Player(Moving_Entity):
         # Attack with weapon
         cooldown = self.Weapon_Attack(self.active_weapon_right)
         self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
+
     
     # Activate weapon attack, return cooldown time
     def Weapon_Attack(self, weapon):
@@ -244,7 +277,8 @@ class Player(Moving_Entity):
     def Render(self, surf, offset=(0, 0)):
         if abs(self.dashing) >= 50:
             return
-         # Load and scale the entity images, split to allow better animation
+        
+        # Load and scale the entity images, split to allow better animation
         entity_image_head = self.game.assets[self.animation + '_head'][self.animation_num]
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
 
@@ -254,13 +288,22 @@ class Player(Moving_Entity):
         entity_image_legs = self.game.assets[self.animation + '_legs'][self.animation_num]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
 
-        surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
-        surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-        surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
+        
+        if not "up" in self.animation:
+            surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
+            surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
+            surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
+
         if self.active_weapon_left:
             self.active_weapon_left.Render_Equipped(surf, offset)
         if self.active_weapon_right:
             self.active_weapon_right.Render_Equipped(surf, offset)
+
+        if  "up" in self.animation:
+            surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
+            surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
+            surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
+
         self.status_effects.render_fire(self.game, surf, offset)
         self.status_effects.render_poison(self.game, surf, offset)
         self.status_effects.render_frozen(self.game, surf, offset)

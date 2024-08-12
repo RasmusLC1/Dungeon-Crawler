@@ -77,6 +77,10 @@ class Asset_Loader:
             'player_idle_up_body': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 8, 16, 6),
             'player_idle_up_legs': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 14, 16, 2),
 
+            'player_attack_head': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 0, 16, 8),
+            'player_attack_body': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 8, 16, 6),
+            'player_attack_legs': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 14, 16, 2),
+
 
             'gun': load_image('gun.png'),
             'projectile': load_image('projectile.png'),
