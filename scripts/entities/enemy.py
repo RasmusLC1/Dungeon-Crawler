@@ -179,8 +179,8 @@ class Enemy(Moving_Entity):
         
         return False
 
+    # Save the entity's position every 200 ticks
     def Position_Holder(self):
-        # Save the entity's position every 200 ticks
         if self.pos_holder_timer:
             self.pos_holder_timer -= 1
         else:

@@ -53,6 +53,12 @@ class Moving_Entity(PhysicsEntity):
         self.frame_movement = (0.0, 0.0)
         self.last_frame_movement = (0.0, 0.0)
 
+        # Attributes, placeholder should be assigned on creation
+        self.strength = 5 # Damage and moving items
+        self.agility = 5 # weapon recharge speed, movement speed and lockpicking
+        self.intelligence = 5 # spells and trap detection
+        self.stamina = 5 # movement ability recharge and weapon cooldown
+
         
         
 
@@ -247,7 +253,7 @@ class Moving_Entity(PhysicsEntity):
         if self.damage_cooldown:
             return
         
-        self.damage_cooldown = 20
+        self.damage_cooldown = 10
         self.health -= damage
         if self.health <= 0:
             print("GAME OVER")

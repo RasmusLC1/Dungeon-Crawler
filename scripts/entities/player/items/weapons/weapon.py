@@ -21,8 +21,9 @@ class Weapon(Item):
         self.equipped = False
         self.attacking = 0
         self.attack_animation = 0
-        self.attack_animation_max = 7
+        self.attack_animation_max = 5
         self.attack_animation_time = 2
+        self.enemy_hit = False
         self.flip_image = False
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
@@ -41,19 +42,25 @@ class Weapon(Item):
         if not self.attacking:
             return
         self.Update_Attack_Animation()
-        self.Attack_Collision_Check()
+        self.Attack_Collision_Check(entity)
     
 
-    def Set_Attack(self):
-        self.attacking = (self.attack_animation_max + 1) * self.attack_animation_time
+    def Set_Attack(self, entity):
+        self.attacking = max(self.attack_animation_max, self.attack_animation_max * 10 - self.speed * entity.agility)
+        self.enemy_hit = False  # Reset at the start of a new attack
 
-    def Attack_Collision_Check(self):
+    def Attack_Collision_Check(self, entity):
+        if self.enemy_hit:
+            return
         weapon_rect = self.rect_attack()
         for enemy in self.game.player.nearby_enemies:
             if enemy.damage_cooldown:
                 continue
             if weapon_rect.colliderect(enemy.rect()):
-                enemy.Damage_Taken(10)
+                damage = entity.strength * self.damage
+                enemy.Damage_Taken(damage)
+                self.enemy_hit = True
+                return
     
     def rect_attack(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
@@ -70,7 +77,7 @@ class Weapon(Item):
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack'
         self.attacking -= 1
-        if not self.attacking % 2:
+        if not self.attacking % self.attack_animation_max:
             self.attack_animation += 1
             if self.attack_animation > self.attack_animation_max:
                 self.attack_animation = 0

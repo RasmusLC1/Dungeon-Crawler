@@ -155,7 +155,7 @@ class Player(Moving_Entity):
         if self.game.mouse.inventory_clicked:
             return 0
         cooldown = max(5, 100 - weapon.speed)
-        weapon.Set_Attack()
+        weapon.Set_Attack(self)
         return cooldown
 
     def Set_Active_Weapon(self, weapon, hand):      
