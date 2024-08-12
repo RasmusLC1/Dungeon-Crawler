@@ -30,6 +30,9 @@ class Torch(Weapon):
         super().Update()
         self.light_source.Move_Light(self.pos)
 
+    def Update_Attack(self, entity):
+        super().Update_Attack(entity)
+
 
     def Place_Down(self):
         # Parent class Place_down function

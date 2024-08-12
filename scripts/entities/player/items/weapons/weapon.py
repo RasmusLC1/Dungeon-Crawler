@@ -22,28 +22,30 @@ class Weapon(Item):
         self.attacking = 0
         self.attack_animation = 0
         self.attack_animation_max = 7
+        self.attack_animation_time = 2
         self.flip_image = False
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         
         self.weapon_class = weapon_class
 
-    def Attack(self):
-        self.attacking = 16
 
+    # General Update function
     def Update(self):
-        
-        
         self.Update_Animation()
         self.Update_Flip()
 
-        # Check if the weapon is attacking and proceed with attack logic below
+        
+    # Update Attack logic
+    def Update_Attack(self, entity):
         if not self.attacking:
             return
         self.Update_Attack_Animation()
         self.Attack_Collision_Check()
-        
-        
+    
+
+    def Set_Attack(self):
+        self.attacking = (self.attack_animation_max + 1) * self.attack_animation_time
 
     def Attack_Collision_Check(self):
         weapon_rect = self.rect_attack()
