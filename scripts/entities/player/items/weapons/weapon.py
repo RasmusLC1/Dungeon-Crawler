@@ -30,32 +30,50 @@ class Weapon(Item):
 
     def Attack(self):
         self.attacking = 16
-        print(self.inventory_type)
 
     def Update(self):
         
-
-
+        
         self.Update_Animation()
         self.Update_Flip()
 
-    def Update_Attacking_Logic(self):
+        # Check if the weapon is attacking and proceed with attack logic below
+        if not self.attacking:
+            return
+        self.Update_Attack_Animation()
+        self.Attack_Collision_Check()
+        
+        
+
+    def Attack_Collision_Check(self):
+        weapon_rect = self.rect_attack()
+        for enemy in self.game.player.nearby_enemies:
+            if enemy.damage_cooldown:
+                continue
+            if weapon_rect.colliderect(enemy.rect()):
+                enemy.Damage_Taken(10)
+    
+    def rect_attack(self):
+        return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
+
+
+    def Update_Attack_Animation(self):
+        
         if self.attacking == 1:
             self.sub_type = self.type
             self.attacking = 0
             self.attack_animation = 0
             return
-        if self.attacking:
-            self.animation = self.attack_animation
-            self.sub_type = self.type + '_attack'
-            self.attacking -= 1
-            if not self.attacking % 2:
-                self.attack_animation += 1
-                if self.attack_animation > self.attack_animation_max:
-                    self.attack_animation = 0
-            
+        
+        self.animation = self.attack_animation
+        self.sub_type = self.type + '_attack'
+        self.attacking -= 1
+        if not self.attacking % 2:
+            self.attack_animation += 1
+            if self.attack_animation > self.attack_animation_max:
+                self.attack_animation = 0
         return
-
+        
     def Update_Flip(self):
         player_direction_x = self.game.player.direction_x_holder
         player_direction_y = self.game.player.direction_y_holder
@@ -214,9 +232,7 @@ class Weapon(Item):
             return False
 
     def Update_Player_Hand(self, prev_hand):
-        # print("TEST")
         # # Check if the weapon has changed hands
-        # print(self.inventory_type)
         if self.inventory_type != prev_hand:
             self.equipped = True
             if prev_hand == 'left_hand':

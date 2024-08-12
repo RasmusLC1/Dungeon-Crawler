@@ -11,14 +11,14 @@ from scripts.entities.entities import PhysicsEntity
 class Moving_Entity(PhysicsEntity):
     def __init__(self, game, e_type, pos, size):
         super().__init__(game, e_type, pos, size)
-        self.velocity = [0, 0]
-        self.friction = self.game.render_scale
-        self.friction_holder = self.friction
-        self.acceleration = 1
-        self.acceleration_holder = self.acceleration
-        self.max_speed = 2.0 
-        self.max_speed_holder = self.max_speed  
-        self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
+        self.velocity = [0, 0] # Velocity of the player
+        self.friction = self.game.render_scale # Friction, set to the renderscale
+        self.friction_holder = self.friction # Holder for friction to reset it
+        self.acceleration = 1 # Default acceleration
+        self.acceleration_holder = self.acceleration # accelarition holder to reset it
+        self.max_speed = 2.0  # Max speed of the entity
+        self.max_speed_holder = self.max_speed # Max speed holder to reset it
+        self.collisions = {'up': False, 'down': False, 'right': False, 'left': False} # Check for wall collision in each direction
 
         self.animation_state = 'up'
         self.idle_count = 0
@@ -36,6 +36,7 @@ class Moving_Entity(PhysicsEntity):
 
         self.health = 100
         self.max_health = self.health
+        self.damage_cooldown = 0
         self.mana = 0
         self.max_mana = 100
         self.snared = 0
@@ -77,6 +78,7 @@ class Moving_Entity(PhysicsEntity):
         self.Update_Traps()
         self.nearby_enemies.clear()
         self.Nearby_Enemies(20)
+        self.Update_Damage_Cooldown()
 
   
         if self.collisions['down'] or self.collisions['up']:
@@ -237,7 +239,15 @@ class Moving_Entity(PhysicsEntity):
             if distance < max_distance and not enemy == self:
                 self.nearby_enemies.append(enemy)
 
+    def Update_Damage_Cooldown(self):
+        if self.damage_cooldown:
+            self.damage_cooldown -= 1
+
     def Damage_Taken(self, damage):
+        if self.damage_cooldown:
+            return
+        
+        self.damage_cooldown = 20
         self.health -= damage
         if self.health <= 0:
             print("GAME OVER")

@@ -10,8 +10,6 @@ class Spike(Trap):
         self.animation = random.randint(0, 5)
 
     def Update(self, entity):
-        if self.Cooldown > 0:
-            self.Cooldown -= 1
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 3 and not self.game.player.dashing:
             if entity.type == 'player':
@@ -19,7 +17,6 @@ class Spike(Trap):
                     return
             entity.Damage_Taken(2)
             entity.Set_Effect('Slow_Down', 4)
-            self.Cooldown = 100
             
 
     def Animation_Update(self):

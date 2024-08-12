@@ -99,19 +99,13 @@ class Player(Moving_Entity):
 
         if not self.active_weapon_left:
             return
-        attack_range = [0, 0]
-        # if self.active_weapon_left.attacking:
-        #     attack_range[0] = 8 * self.direction_x_holder
-        #     attack_range[1] = 8 * self.direction_y_holder
         if not self.flip[0] or self.direction_y_holder < 0:
-            self.active_weapon_left.Move((self.pos[0] - 5 + attack_range[0], self.pos[1] - 10 + attack_range[1]))
+            self.active_weapon_left.Move((self.pos[0] - 5 , self.pos[1] - 10 ))
         else:
-            self.active_weapon_left.Move((self.pos[0] + 5 + attack_range[0], self.pos[1] - 10 + attack_range[1]))
+            self.active_weapon_left.Move((self.pos[0] + 5 , self.pos[1] - 10))
 
-        print(self.direction_y_holder)
         self.active_weapon_left.Update()
         self.Attacking(self.active_weapon_left)
-
 
         if self.left_weapon_cooldown:
             self.left_weapon_cooldown -= 1
@@ -121,7 +115,8 @@ class Player(Moving_Entity):
             return
 
         cooldown = self.Weapon_Attack(self.active_weapon_left)
-        self.left_weapon_cooldown = max(self.left_weapon_cooldown,cooldown)
+        
+        self.left_weapon_cooldown = max(self.left_weapon_cooldown, cooldown)
 
         return
     
@@ -130,7 +125,11 @@ class Player(Moving_Entity):
         if not self.active_weapon_right:
             return
         # Update the weapon position and logic
-        self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 5))
+        if not self.flip[0] or self.direction_y_holder < 0:
+            self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 10))
+        else:
+            self.active_weapon_right.Move((self.pos[0] - 7, self.pos[1] - 10))
+            
         self.active_weapon_right.Update()
         self.Attacking(self.active_weapon_right)
         
@@ -144,6 +143,7 @@ class Player(Moving_Entity):
             return
         # Attack with weapon
         cooldown = self.Weapon_Attack(self.active_weapon_right)
+        
         self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
 
     
@@ -151,7 +151,7 @@ class Player(Moving_Entity):
     def Weapon_Attack(self, weapon):
         # Return if inventory has not been clicked
         if self.game.mouse.inventory_clicked:
-            return
+            return 0
         cooldown = max(5, 100 - weapon.speed)
         weapon.Attack()
         return cooldown
