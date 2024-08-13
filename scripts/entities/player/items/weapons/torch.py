@@ -9,7 +9,7 @@ class Torch(Weapon):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type, 3, 5, 1, 'one_handed_melee')
         self.max_animation = 5
-        self.animation_speed = 30
+        self.attack_animation_max = 5
         self.light_level = 8
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
@@ -29,9 +29,6 @@ class Torch(Weapon):
     def Update(self):
         super().Update()
         self.light_source.Move_Light(self.pos)
-
-    def Update_Attack(self, entity):
-        super().Update_Attack(entity)
 
 
     def Place_Down(self):

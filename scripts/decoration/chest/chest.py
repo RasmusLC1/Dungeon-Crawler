@@ -6,6 +6,10 @@ from scripts.entities.player.items.potions.health_potion import Health_Potion
 from scripts.entities.player.items.potions.mana_potion import Mana_Potion
 from scripts.decoration.decoration import Decoration
 
+from scripts.entities.player.items.weapons.sword import Sword
+from scripts.entities.player.items.weapons.torch import Torch
+from scripts.entities.player.items.weapons.spear import Spear
+
 
 class Chest(Decoration):
     def __init__(self, game, pos, size, type, depth):
@@ -25,6 +29,11 @@ class Chest(Decoration):
         self.weapon_type = ''
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+        self.weapons = [
+            'sword',
+            'torch',
+            'spear'
+        ]
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -33,7 +42,8 @@ class Chest(Decoration):
         if self.rect().colliderect(self.game.player.rect()):
             version_modifier = self.version * 3 + 1
             self.loot_amount = random.randint(1, 3) * version_modifier
-            self.loot_type = random.randint(0, 3)
+            # self.loot_type = random.randint(0, 3)
+            self.loot_type = 3 # TEMP REMOVE
             if self.loot_type == 0:
                     item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
                     self.game.item_handler.Add_Item(item)
@@ -48,12 +58,28 @@ class Chest(Decoration):
                 self.game.player.Coin_Change(self.loot_amount)
                 self.text_color  = (255,223,0)  
             elif self.loot_type == 3:
-                print("WEAPON")
-                if self.version <= 2:
-                    self.Update()
-                else:
-                    self.weapon_type = Weapon_Generator.Generate_Weapon(self, self.loot_amount)
-                    self.text_color  = (255, 255, 255)
+                rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
+                rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
+                weapon_index = random.randint(0, len(self.weapons) - 1)
+                if self.weapons[weapon_index] == 'sword':
+                    print("TEST")
+                    sword = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16), 'sword')
+                    self.game.item_handler.Add_Item(sword)
+                elif self.weapons[weapon_index] == 'spear':
+                    spear = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16), 'spear')
+                    self.game.item_handler.Add_Item(spear)
+                elif self.weapons[weapon_index] == 'torch':
+                    torch = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16), 'torch')
+                    self.game.item_handler.Add_Item(torch)
+
+
+                    
+
+                # if self.version <= 2:
+                #     self.Update()
+                # else:
+                #     self.weapon_type = Weapon_Generator.Generate_Weapon(self, self.loot_amount)
+                #     self.text_color  = (255, 255, 255)
 
             self.empty = True
             self.text_cooldown = 30

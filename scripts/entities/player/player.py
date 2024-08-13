@@ -3,7 +3,7 @@ from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile.projectile import Projectile
-from scripts.weapon_generator import Weapon_Generator, Weapon
+from scripts.entities.player.items.weapons import weapon
 from copy import copy
 
 import random
@@ -99,10 +99,8 @@ class Player(Moving_Entity):
 
         if not self.active_weapon_left:
             return
-        if not self.flip[0] or self.direction_y_holder < 0:
-            self.active_weapon_left.Move((self.pos[0] - 5 , self.pos[1] - 10 ))
-        else:
-            self.active_weapon_left.Move((self.pos[0] + 5 , self.pos[1] - 10))
+        
+        self.active_weapon_left.Set_Equipped_Position(self.flip[0], self.direction_y_holder)
 
         self.active_weapon_left.Update()
         self.active_weapon_left.Update_Attack(self)
@@ -126,10 +124,8 @@ class Player(Moving_Entity):
         if not self.active_weapon_right:
             return
         # Update the weapon position and logic
-        if not self.flip[0] or self.direction_y_holder < 0:
-            self.active_weapon_right.Move((self.pos[0] + 7, self.pos[1] - 10))
-        else:
-            self.active_weapon_right.Move((self.pos[0] - 7, self.pos[1] - 10))
+
+        self.active_weapon_right.Set_Equipped_Position(self.flip[0], self.direction_y_holder)
             
         self.active_weapon_right.Update()
         self.active_weapon_right.Update_Attack(self)

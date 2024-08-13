@@ -2,14 +2,6 @@ import pygame
 from scripts.entities.player.items.item import Item
 from scripts.entities.entities import PhysicsEntity
 
-def rotate_on_pivot(image, angle, pivot, offset):
-    # Rotate the image
-    rotated_image = pygame.transform.rotate(image, angle)
-    
-    # Calculate the new rect around the pivot point
-    rotated_rect = rotated_image.get_rect(center=pivot + (offset - pivot).rotate(-angle))
-    
-    return rotated_image, rotated_rect
 
 class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
@@ -20,8 +12,10 @@ class Weapon(Item):
         self.in_inventory = False
         self.equipped = False
         self.attacking = 0
+        self.animation_speed = 30
+        self.max_animation = 1
         self.attack_animation = 0
-        self.attack_animation_max = 5
+        self.attack_animation_max = 1
         self.attack_animation_time = 2
         self.enemy_hit = False
         self.flip_image = False
@@ -40,6 +34,21 @@ class Weapon(Item):
                 
                 return True
         return False
+    
+    def Set_Equipped_Position(self, entity_flip, direction_y):
+        if 'left' in self.inventory_type:
+            if not entity_flip or direction_y < 0:
+                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
+            else:
+                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
+        elif 'right' in self.inventory_type:
+            if not entity_flip or direction_y < 0:
+                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
+            else:
+                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
+        else:
+            print("DIRECTION NOT FOUND", self.inventory_type)
+
 
     # General Update function
     def Update(self):
@@ -54,9 +63,10 @@ class Weapon(Item):
         self.Update_Attack_Animation()
         self.Attack_Collision_Check(entity)
     
-
+    # TODO: UPDATE function to use the weapon's speed and the entity's
+    # agility to determine self.attacking, which is the attack speed
     def Set_Attack(self, entity):
-        self.attacking = max(self.attack_animation_max, self.attack_animation_max * 10 - self.speed * entity.agility)
+        self.attacking = max(self.attack_animation_max, 20)
         self.enemy_hit = False  # Reset at the start of a new attack
 
     def Attack_Collision_Check(self, entity):
@@ -77,7 +87,7 @@ class Weapon(Item):
 
 
     def Update_Attack_Animation(self):
-        
+        print(self.attacking)
         if self.attacking == 1:
             self.sub_type = self.type
             self.attacking = 0

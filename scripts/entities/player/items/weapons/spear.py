@@ -5,9 +5,13 @@ import random
 import pygame
 
 
-class Sword(Weapon):
+class Spear(Weapon):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 3, 5, 1, 'one_handed_melee')
+        super().__init__(game, pos, size, type, 3, 5, 1, 'two_handed_melee')
+        self.max_animation = 3
+        self.attack_animation_max = 3
+        
+
 
 
     def Place_Down(self):

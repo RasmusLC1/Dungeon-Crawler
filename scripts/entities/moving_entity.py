@@ -247,9 +247,11 @@ class Moving_Entity(PhysicsEntity):
 
     def Update_Damage_Cooldown(self):
         if self.damage_cooldown:
+            print(self.damage_cooldown)
             self.damage_cooldown -= 1
 
     def Damage_Taken(self, damage):
+        print(self.type)
         if self.damage_cooldown:
             return
         

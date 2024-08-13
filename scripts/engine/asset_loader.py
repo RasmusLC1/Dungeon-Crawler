@@ -99,9 +99,11 @@ class Asset_Loader:
     def Asset_Weapons_List(self):
         Weapons_assets = {
             'sword' : get_tiles_from_sheet('weapons/sword.png', 1, 0, 0, 0, 16, 16),
+            'sword_attack' : get_tiles_from_sheet('weapons/sword.png', 1, 0, 0, 0, 16, 16), # TEMP REMOVE
             'torch': get_tiles_from_sheet('weapons/torch.png', 8, 0, 0, 0, 16, 16),
             'torch_attack': get_tiles_from_sheet('weapons/torch_attack.png', 8, 0, 0, 0, 16, 16),
             'spear': get_tiles_from_sheet('weapons/spear.png', 8, 0, 0, 0, 16, 16),
+            'spear_attack': get_tiles_from_sheet('weapons/spear_attack.png', 8, 0, 0, 0, 16, 16),
 
         }
         self.assets.update(Weapons_assets)
