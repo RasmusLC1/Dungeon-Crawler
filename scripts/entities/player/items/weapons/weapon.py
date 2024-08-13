@@ -30,6 +30,16 @@ class Weapon(Item):
         
         self.weapon_class = weapon_class
 
+    # Pick up the torch and update the general light in the area
+    def Pick_Up(self):
+        if self.rect().colliderect(self.game.player.rect()):
+            if self.game.item_inventory.Add_Item(self):
+                self.in_inventory = True
+                self.picked_up = False
+                self.game.entities_render.remove(self)
+                
+                return True
+        return False
 
     # General Update function
     def Update(self):
@@ -254,7 +264,9 @@ class Weapon(Item):
 
     def Place_Down(self):
         super().Place_Down()
-        self.equipped = False
+        if self.equipped:
+            self.game.player.Remove_Active_Weapon(self.inventory_type)
+            self.equipped = False
         return False
 
     def Set_In_Inventory(self, state):
