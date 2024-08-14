@@ -33,6 +33,8 @@ class Moving_Entity(PhysicsEntity):
         self.direction_y = 0
         self.direction_x_holder = 0
         self.direction_y_holder = 0
+        self.attack_direction = (0,0)
+
 
         self.health = 100
         self.max_health = self.health

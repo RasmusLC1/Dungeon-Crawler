@@ -42,7 +42,6 @@ class Player(Moving_Entity):
         # Determined by the player's agility
         self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
-        self.attack_direction = (0,0)
 
         
         self.weapons = []

@@ -6,20 +6,21 @@ from scripts.entities.entities import PhysicsEntity
 class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
         super().__init__(game, type, 'weapon', pos, size, 1)
-        self.damage = damage
-        self.speed = speed
-        self.range = range
-        self.in_inventory = False
-        self.equipped = False
-        self.attacking = 0
-        self.animation_speed = 30
-        self.max_animation = 0
-        self.attack_animation = 0
-        self.attack_animation_max = 1
-        self.attack_animation_time = 0
-        self.attack_animation_counter = 0
+        self.damage = damage # The damage the wepaon does
+        self.speed = speed # Speed of the weapon
+        self.range = range # Range of the weapon
+        self.in_inventory = False # Is the weapon in an inventory
+        self.equipped = False # Is the weapon currently equipped and can be used to attack
+        self.animation_speed = 30 # Animation speed that it cycles through animations
+        self.max_animation = 0 # Max amount of animations
+        self.attacking = 0 # The time it takes for the attack to complete
+        self.attack_animation = 0 # Current attack animation
+        self.attack_animation_max = 1 # Maximum amount of attack animations
+        self.attack_animation_time = 0 # Time to shift to new animation
+        self.attack_animation_counter = 0 # Animation countdown that ticks up to animation time
         self.enemy_hit = False # Prevent double damage on attacks
         self.flip_image = False
+        self.rotate = 0
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         
@@ -61,7 +62,7 @@ class Weapon(Item):
     def Update_Attack(self, entity):
         if not self.attacking:
             return
-        self.Update_Attack_Animation()
+        self.Update_Attack_Animation(entity)
         self.Attack_Collision_Check(entity)
     
 
@@ -71,6 +72,7 @@ class Weapon(Item):
         self.attacking = max(self.attack_animation_max, int (100 / self.speed))
         self.enemy_hit = False  # Reset at the start of a new attack
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
+
 
     def Attack_Collision_Check(self, entity):
         if self.enemy_hit:
@@ -89,11 +91,12 @@ class Weapon(Item):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
 
 
-    def Update_Attack_Animation(self):
+    def Update_Attack_Animation(self, entity):
         if self.attacking <= 1:
             self.sub_type = self.type
             self.attacking = 0
             self.attack_animation = 0
+            self.rotate = 0
             return
         
         self.animation = self.attack_animation
@@ -143,8 +146,13 @@ class Weapon(Item):
         # Load the weapon image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
+        if self.rotate:
+            weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
         if self.attacking:
             self.pos = ((self.pos[0] + 5 * self.game.player.direction_x_holder), (self.pos[1] + 5 * self.game.player.direction_y_holder))
+
+
+
 
         surf.blit(
             pygame.transform.flip(weapon_image, self.flip_image, False),
