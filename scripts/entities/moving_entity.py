@@ -28,7 +28,7 @@ class Moving_Entity(PhysicsEntity):
         self.attacking = 0
 
 
-        self.direction = (0,0,0,0)
+        self.direction = (0,0)
         self.direction_x = 0
         self.direction_y = 0
         self.direction_x_holder = 0
@@ -247,11 +247,9 @@ class Moving_Entity(PhysicsEntity):
 
     def Update_Damage_Cooldown(self):
         if self.damage_cooldown:
-            print(self.damage_cooldown)
             self.damage_cooldown -= 1
 
     def Damage_Taken(self, damage):
-        print(self.type)
         if self.damage_cooldown:
             return
         

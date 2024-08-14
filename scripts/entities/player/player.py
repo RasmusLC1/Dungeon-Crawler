@@ -19,6 +19,7 @@ class Player(Moving_Entity):
         self.dashing = 0
         self.stored_position = 0
         self.animation_num_max = 4
+        self.agility = 5
         
         
         self.max_ammo = 30
@@ -38,8 +39,10 @@ class Player(Moving_Entity):
         self.coins = 0
         self.shootin_cooldown = 0
 
-        self.left_weapon_cooldown = 0
+        # Determined by the player's agility
+        self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
+        self.attack_direction = (0,0)
 
         
         self.weapons = []
@@ -57,30 +60,18 @@ class Player(Moving_Entity):
         
         self.Update_Light()
 
-        self.Update_Left_Weapon()
-        self.Update_Right_Weapon()
+        self.Update_Left_Weapon(offset)
+        self.Update_Right_Weapon(offset)
 
         
         
 
         self.Set_Direction_Holder()
 
-    def Attacking(self, weapon):
-        if weapon.attacking and not self.attacking:
-            self.pos[0] += 5 * self.direction_x_holder
-            self.pos[1] += 5 * self.direction_y_holder
-            self.attacking = weapon.attacking
+    
 
 
-        if self.attacking == 1:
-            self.pos[0] -= 5 * self.direction_x_holder
-            self.pos[1] -= 5 * self.direction_y_holder
-
-        if self.attacking:
-            self.attacking -= 1
-
-
-
+    
         
     # Function to update the light around player
     def Update_Light(self):
@@ -95,16 +86,16 @@ class Player(Moving_Entity):
                 self.light_source.Move_Light(self.pos)
 
     # Function to update the player's weapons
-    def Update_Left_Weapon(self):
+    def Update_Left_Weapon(self, offset=(0, 0)):
 
         if not self.active_weapon_left:
             return
         
-        self.active_weapon_left.Set_Equipped_Position(self.flip[0], self.direction_y_holder)
+        self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
 
         self.active_weapon_left.Update()
         self.active_weapon_left.Update_Attack(self)
-        self.Attacking(self.active_weapon_left)
+        self.Attacking(self.active_weapon_left, offset)
 
         if self.left_weapon_cooldown:
             self.left_weapon_cooldown -= 1
@@ -119,17 +110,17 @@ class Player(Moving_Entity):
 
         return
     
-    def Update_Right_Weapon(self):
+    def Update_Right_Weapon(self, offset=(0, 0)):
         # Return if there's no weapon
         if not self.active_weapon_right:
             return
         # Update the weapon position and logic
 
-        self.active_weapon_right.Set_Equipped_Position(self.flip[0], self.direction_y_holder)
+        self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
             
         self.active_weapon_right.Update()
         self.active_weapon_right.Update_Attack(self)
-        self.Attacking(self.active_weapon_right)
+        self.Attacking(self.active_weapon_right, offset)
         
         # Handle weapon cooldown
         if self.right_weapon_cooldown:
@@ -150,9 +141,26 @@ class Player(Moving_Entity):
         # Return if inventory has not been clicked
         if self.game.mouse.inventory_clicked:
             return 0
-        cooldown = max(5, 100 - weapon.speed)
-        weapon.Set_Attack(self)
+        weapon.Set_Attack()
+        cooldown = max(5 + weapon.attacking, 100/self.agility + weapon.attacking)
         return cooldown
+    
+    def Attacking(self, weapon, offset=(0, 0)):
+            
+        if weapon.attacking and not self.attacking:
+            self.Attack_Direction_Handler(offset)
+
+            self.pos[0] += 5 * self.attack_direction[0]
+            self.pos[1] += 5 * self.attack_direction[1]
+            self.attacking = weapon.attacking
+
+
+        if self.attacking == 1:
+            self.pos[0] -= 5 * self.attack_direction[0]
+            self.pos[1] -= 5 * self.attack_direction[1]
+
+        if self.attacking:
+            self.attacking -= 1
 
     def Set_Active_Weapon(self, weapon, hand):      
         equipped_weapon = copy(weapon)
@@ -188,9 +196,7 @@ class Player(Moving_Entity):
 
 
         if self.dashing > 50:
-            self.stored_position = self.pos.copy()
-            self.stored_position[0] -= offset[0]
-            self.stored_position[1] -= offset[1]
+            self.Stored_Position_Handler(offset)
             direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
             
             if direction.length() > 0:
@@ -234,9 +240,7 @@ class Player(Moving_Entity):
         
         self.shootin_cooldown = 20
         self.Mouse_Handler()
-        self.stored_position = self.pos.copy()
-        self.stored_position[0] -= offset[0]
-        self.stored_position[1] -= offset[1]
+        self.Stored_Position_Handler(offset)
         direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
 
         if direction.length() > 0:  # Ensure the vector is not zero-length before normalizing
@@ -251,12 +255,20 @@ class Player(Moving_Entity):
             print(weapon)
         if not self.dashing:
             self.Mouse_Handler()
-            self.stored_position = self.pos.copy()
-            self.stored_position[0] -= offset[0]
-            self.stored_position[1] -= offset[1]
+            self.Stored_Position_Handler(offset)
             self.dashing = 60
 
+    def Stored_Position_Handler(self, offset=(0, 0)):
+        self.stored_position = self.pos.copy()
+        self.stored_position[0] -= offset[0]
+        self.stored_position[1] -= offset[1]
     
+    def Attack_Direction_Handler(self, offset = (0,0)):
+        self.Mouse_Handler()
+        self.Stored_Position_Handler(offset)
+        self.attack_direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+
+        self.attack_direction.normalize_ip()
 
     def Mouse_Handler(self):
         self.mpos = pygame.mouse.get_pos()

@@ -173,8 +173,8 @@ class Enemy(Moving_Entity):
                 return False
             self.direction = pygame.math.Vector2(dx, dy)
             self.direction.normalize_ip()
-            self.direction[0] /= 4
-            self.direction[1] /= 4
+            self.direction[0] /= self.game.render_scale
+            self.direction[1] /= self.game.render_scale
             return True
         
         return False

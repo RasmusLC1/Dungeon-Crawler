@@ -13,11 +13,12 @@ class Weapon(Item):
         self.equipped = False
         self.attacking = 0
         self.animation_speed = 30
-        self.max_animation = 1
+        self.max_animation = 0
         self.attack_animation = 0
         self.attack_animation_max = 1
-        self.attack_animation_time = 2
-        self.enemy_hit = False
+        self.attack_animation_time = 0
+        self.attack_animation_counter = 0
+        self.enemy_hit = False # Prevent double damage on attacks
         self.flip_image = False
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
@@ -35,14 +36,14 @@ class Weapon(Item):
                 return True
         return False
     
-    def Set_Equipped_Position(self, entity_flip, direction_y):
+    def Set_Equipped_Position(self, direction_y):
         if 'left' in self.inventory_type:
-            if not entity_flip or direction_y < 0:
+            if direction_y < 0:
                 self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
             else:
                 self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
         elif 'right' in self.inventory_type:
-            if not entity_flip or direction_y < 0:
+            if  direction_y < 0:
                 self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
             else:
                 self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
@@ -63,11 +64,13 @@ class Weapon(Item):
         self.Update_Attack_Animation()
         self.Attack_Collision_Check(entity)
     
-    # TODO: UPDATE function to use the weapon's speed and the entity's
-    # agility to determine self.attacking, which is the attack speed
-    def Set_Attack(self, entity):
-        self.attacking = max(self.attack_animation_max, 20)
+
+    # TODO: UPDATE function to use the weapon's speed
+    #  to determine self.attacking
+    def Set_Attack(self):
+        self.attacking = max(self.attack_animation_max, int (100 / self.speed))
         self.enemy_hit = False  # Reset at the start of a new attack
+        self.attack_animation_time = int(self.attacking / self.attack_animation_max)
 
     def Attack_Collision_Check(self, entity):
         if self.enemy_hit:
@@ -87,8 +90,7 @@ class Weapon(Item):
 
 
     def Update_Attack_Animation(self):
-        print(self.attacking)
-        if self.attacking == 1:
+        if self.attacking <= 1:
             self.sub_type = self.type
             self.attacking = 0
             self.attack_animation = 0
@@ -97,7 +99,9 @@ class Weapon(Item):
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack'
         self.attacking -= 1
-        if not self.attacking % self.attack_animation_max:
+        self.attack_animation_counter += 1
+        if self.attack_animation_counter >= self.attack_animation_time:
+            self.attack_animation_counter = 0
             self.attack_animation += 1
             if self.attack_animation > self.attack_animation_max:
                 self.attack_animation = 0
