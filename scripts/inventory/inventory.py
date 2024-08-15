@@ -91,6 +91,13 @@ class Inventory:
                 return inventory_slot
         else:
             return None
+        
+    def Find_Item_In_Inventory(self, item):
+        for inventory_slot in self.inventory:
+            if inventory_slot.item == item:
+                return inventory_slot
+            
+        return None
     
     # Handle single clicking behaviour, return True if valid click
     def Item_Single_Click(self):
@@ -257,6 +264,7 @@ class Inventory:
 
         return False
 
+    
 
     # Implement the __iter__ method to make the class iterable
     def __iter__(self):

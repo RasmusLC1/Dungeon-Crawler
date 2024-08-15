@@ -38,6 +38,14 @@ class Weapon_Inventory(Inventory):
             #     print(inventory_slot.item.picked_up)
             # print(inventory_slot.active)
 
+    def Find_Inventory_Slot(self, searched_inventory_slot):
+        for inventory_slot in self.inventory:
+            if inventory_slot.inventory_type == searched_inventory_slot.inventory_type:
+                continue
+            if inventory_slot.item:
+                return True
+            
+        return False
     
     def Item_Double_Click(self):
         if not super().Item_Double_Click():

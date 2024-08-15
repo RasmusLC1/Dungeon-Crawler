@@ -9,6 +9,7 @@ class Weapon(Item):
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
+        self.effect = '' # Special effects, like poision, ice, fire etc
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
         self.animation_speed = 30 # Animation speed that it cycles through animations
@@ -64,6 +65,7 @@ class Weapon(Item):
             return
         self.Update_Attack_Animation(entity)
         self.Attack_Collision_Check(entity)
+        self.Attack_Align_Weapon(entity)
     
 
     # TODO: UPDATE function to use the weapon's speed
@@ -74,9 +76,10 @@ class Weapon(Item):
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
 
 
+
     def Attack_Collision_Check(self, entity):
         if self.enemy_hit:
-            return
+            return None
         weapon_rect = self.rect_attack()
         for enemy in self.game.player.nearby_enemies:
             if enemy.damage_cooldown:
@@ -85,7 +88,13 @@ class Weapon(Item):
                 damage = entity.strength * self.damage
                 enemy.Damage_Taken(damage)
                 self.enemy_hit = True
-                return
+                if self.effect:
+                    enemy.Set_Effect(self.effect, 3)
+
+
+                return enemy
+            
+        return None
     
     def rect_attack(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
@@ -109,19 +118,32 @@ class Weapon(Item):
             if self.attack_animation > self.attack_animation_max:
                 self.attack_animation = 0
         return
+    
+    # Align the weapon with the attacking entity while attacking
+    def Attack_Align_Weapon(self, entity):
+        if 'left' in self.inventory_type:
+            if self.flip_image:
+                self.Move((self.pos[0] - 3, self.pos[1] - 2))
+            else:
+                self.Move((self.pos[0] + 3, self.pos[1] - 2))
+            return
+        if 'right' in self.inventory_type:
+            if abs(entity.attack_direction[0]) < abs(entity.attack_direction[1]):
+                self.Move((self.pos[0], self.pos[1] - 2))
+            elif self.flip_image:
+                self.Move((self.pos[0] + 3, self.pos[1] - 2))
+            else:
+                self.Move((self.pos[0] + 4, self.pos[1] - 2))
+            return
+
         
     def Update_Flip(self):
-        player_direction_x = self.game.player.direction_x_holder
-        player_direction_y = self.game.player.direction_y_holder
-
-        if player_direction_x < 0 and player_direction_y == 0:
-            self.flip_image = True
-        elif player_direction_x > 0 and player_direction_y == 0:
-            self.flip_image = False
-        elif player_direction_x == 0 and player_direction_y < 0:
-            self.flip_image = False
-        elif player_direction_x == 0 and player_direction_y > 0:
-            self.flip_image = False
+        attack_direction = self.game.player.attack_direction
+        if abs(attack_direction[0]) >= abs(attack_direction[1]):
+            if attack_direction[0] < 0:
+                self.flip_image = True
+            else:
+                self.flip_image = False
     
 
     
@@ -142,6 +164,9 @@ class Weapon(Item):
         size_y = self.size[1] / decrease 
         self.size = (size_x, size_y)
 
+    def Set_Effect(self, effect):
+        self.effect = effect
+
     def Render_Equipped(self, surf, offset=(0, 0)):
         # Load the weapon image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
@@ -150,9 +175,6 @@ class Weapon(Item):
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
         if self.attacking:
             self.pos = ((self.pos[0] + 5 * self.game.player.direction_x_holder), (self.pos[1] + 5 * self.game.player.direction_y_holder))
-
-
-
 
         surf.blit(
             pygame.transform.flip(weapon_image, self.flip_image, False),
@@ -194,22 +216,28 @@ class Weapon(Item):
 
     # Inventory Logic below
     #######################################################
-
+    # Initialise the double clikc
     def Handle_Double_Click(self, sending_inventory, receiving_inventory):
+        # Check if there is a free inventory slot
         recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
         if not recieving_inventory_slot:
             return False
+        # Check if we can send the item to the new inventroy slot
         if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory, receiving_inventory):
             return True     
 
     
     # Attempt to move the item to the receiving inventory slot by double clicking
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
+       
+        if not self.Check_Two_Handed(inventory_slot, sending_inventory, receiving_inventory):
+            return False
 
+
+        # Move the item
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
         # If the move was successful, remove it from the sending inventory
         if move_successful:
-
             # Remove item from old inventory and save the inventory type
             inventory_type_holder = self.inventory_type
             sending_inventory.Remove_Item(self, move_successful)
@@ -227,12 +255,12 @@ class Weapon(Item):
         
         return False
     
-    # Add weapons from a sending inventory to a receiving inventory
+    # Add weapons from a sending inventory to a receiving inventory using drag
     # Example: weapon_inventory (sending) -> inventory (receiving) 
     def Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset = (0,0)):
         if self.game.mouse.left_click:
             return
-        
+        # Check for collision with new ivnentory slot
         for receiving_inventory_slot in receiving_inventory:
             if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
                 if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory, receiving_inventory):
@@ -273,7 +301,7 @@ class Weapon(Item):
             return False
 
     def Update_Player_Hand(self, prev_hand):
-        # # Check if the weapon has changed hands
+        # Check if the weapon has changed hands
         if self.inventory_type != prev_hand:
             self.equipped = True
             if prev_hand == 'left_hand':
@@ -293,4 +321,21 @@ class Weapon(Item):
 
     def Set_In_Inventory(self, state):
         self.in_inventory = state
+
+    def Check_Two_Handed(self, inventory_slot, sending_inventory, receiving_inventory):
+        if not 'two' in self.weapon_class:
+            return True
+        if inventory_slot.inventory_type:
+            # Try to find the inventory_slot, only the weapon inventory has this property
+            try:
+                if receiving_inventory.Find_Inventory_Slot(inventory_slot):
+                    # Find the original position of the item in the inventory
+                    original_inventory_slot = sending_inventory.Find_Item_In_Inventory(self)
+                    # Reset it back to not active if found
+                    if original_inventory_slot:
+                        original_inventory_slot.Set_Active(False)
+                    return False
+            except TypeError as e:
+                print(f"Receiving inventory not a weapon inventory: {e}")
+        return True
     ####################################################### 

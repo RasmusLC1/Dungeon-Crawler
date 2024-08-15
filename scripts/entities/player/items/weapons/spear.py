@@ -7,7 +7,7 @@ import pygame
 
 class Spear(Weapon):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 3, 5, 10, 'two_handed_melee')
+        super().__init__(game, pos, size, type, 3, 8, 10, 'two_handed_melee')
         self.max_animation = 3
         self.attack_animation_max = 3
         self.return_to_holder = False
@@ -62,7 +62,7 @@ class Spear(Weapon):
                 if attack_direction[0] >= 0:
                     self.rotate = 0
                     self.Move((self.pos[0] + self.distance_from_player, self.pos[1] + 5))
-                elif attack_direction[0] < 0:
+                else:
                     self.rotate = 0
                     self.flip_image = True
                     self.Move((self.pos[0] - self.distance_from_player, self.pos[1] + 5))
@@ -71,6 +71,6 @@ class Spear(Weapon):
                 if attack_direction[1] >= 0:
                     self.rotate = -90
                     self.Move((self.pos[0] - 5, self.pos[1] + self.distance_from_player))
-                elif attack_direction[1] < 0:
+                else:
                     self.rotate = 90
                     self.Move((self.pos[0] - 5, self.pos[1] - self.distance_from_player))

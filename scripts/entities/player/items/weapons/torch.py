@@ -7,7 +7,8 @@ import pygame
 
 class Torch(Weapon):
     def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 3, 3, 1, 'one_handed_melee')
+        super().__init__(game, pos, size, type, 1, 3, 1, 'one_handed_melee')
+        self.effect = 'Fire'
         self.max_animation = 5
         self.attack_animation_max = 5
         self.light_level = 8
@@ -27,11 +28,14 @@ class Torch(Weapon):
                 self.game.entities_render.remove(self)
 
     def Update(self):
+        self.Set_Effect('Poison')
         super().Update()
         self.light_source.Move_Light(self.pos)
 
-    def Update_Attack_Animation(self):
-        super().Update_Attack_Animation()
+    def Update_Attack_Animation(self, entity):
+        super().Update_Attack_Animation(entity)
+
+  
 
     def Place_Down(self):
         # Parent class Place_down function

@@ -132,11 +132,8 @@ class Moving_Entity(PhysicsEntity):
         self.Tile_Map_Collision_Detection(tilemap)
         self.Update_Animation()
         if self.attacking:
-            self.Set_Animation('attack')
             return
         
-        # if movement[0] or movement[1]:
-        #     self.idle_count = 0
         self.Set_Action(movement)
 
         if self.idle_count > 60:
@@ -310,7 +307,6 @@ class Moving_Entity(PhysicsEntity):
             self.Slow_Down(duration)
         else:
             print("EFFECT MISSING", effect)
-            exit()
 
     #set snare effect
     def Set_Snare(self, snare_time):
@@ -319,7 +315,13 @@ class Moving_Entity(PhysicsEntity):
     
     # Slow the entity down by increasing friction
     def Slow_Down(self, effect):
-        self.max_speed = max(0.1, self.max_speed / effect)
+        if not effect:
+            return
+        try:
+            self.max_speed = max(0.1, self.max_speed / effect)
+        except ZeroDivisionError as e:
+            print(self.max_speed, effect)
+            print(f"SLOWDOWN: {e}")
 
 
     

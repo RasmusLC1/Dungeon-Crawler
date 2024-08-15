@@ -17,5 +17,3 @@ class Sword(Weapon):
 
         return False
 
-    def Update_Attack_Animation(self):
-        super().Update_Attack_Animation()
