@@ -277,7 +277,6 @@ class Player(Moving_Entity):
 
         
         if self.attack_direction[1] < -0.5:
-            print(self.attack_direction[1])
             # TODO: UPDATE to attack up when that has been animated
             self.Set_Animation('idle_up')
         

@@ -1,290 +1,190 @@
+import sys
+
 import pygame
-from scripts.entities.player.items.item import Item
-from scripts.entities.entities import PhysicsEntity
+import json
+import math
 
-def rotate_on_pivot(image, angle, pivot, offset):
-    # Rotate the image
-    rotated_image = pygame.transform.rotate(image, angle)
-    
-    # Calculate the new rect around the pivot point
-    rotated_rect = rotated_image.get_rect(center=pivot + (offset - pivot).rotate(-angle))
-    
-    return rotated_image, rotated_rect
 
-class Weapon(Item):
-    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
-        super().__init__(game, type, 'weapon', pos, size, 1)
-        self.damage = damage
-        self.speed = speed
-        self.range = range
-        self.in_inventory = False
-        self.equipped = False
-        self.attacking = 0
-        self.max_animation = 0
-        self.attack_animation = 0
-        self.attack_animation_max = 0
-        self.attack_animation_time = 2
-        self.enemy_hit = False
-        self.flip_image = False
-        # Can be expanded to damaged or dirty versions of weapons later
-        self.sub_type = self.type
+from scripts.engine.utils import load_image, load_images, Animation
+from scripts.engine.asset_loader import Asset_Loader
+from scripts.input.keyboard import Keyboard_Handler
+from scripts.input.mouse import Mouse_Handler
+from scripts.entities.player.player import Player
+from scripts.engine.tilemap import Tilemap
+from scripts.engine.particles.particle_handler import Particle_Handler
+from scripts.projectile.projectile_handler import Projectile_Handler
+from scripts.traps.trap_handler import Trap_Handler
+from scripts.decoration.decoration_handler import Decoration_Handler
+from scripts.entities.player.items.item_handler import Item_Handler
+from scripts.engine.lights import light_handler
+from scripts.interface.health_bar import Health_Bar
+from scripts.interface.ammo_bar import Ammo_Bar
+from scripts.interface.mana_bar import Mana_Bar
+from scripts.interface.coins import Coins
+from scripts.decoration.chest.Chest_handler import Chest_Handler
+from scripts.entities.enemies.enemy_handler import Enemy_Handler
+from scripts.engine.a_star import A_Star
+from scripts.engine.lights.light_handler import Light_Handler
+from scripts.inventory.item_inventory import Item_Inventory
+from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
+from scripts.engine.ray_caster import Ray_Caster 
+
+import numpy as np
+
+import pygame
+from pygame.locals import *
+
+
+class Game:
+    def __init__(self):
+        pygame.init()
+        self.render_scale = 4
         
-        self.weapon_class = weapon_class
+        self.screen_width = 1280
+        self.screen_height = 960
+        self.screen = pygame.display.set_mode((1280, 960))
+        self.display = pygame.Surface((self.screen_width/self.render_scale, self.screen_height/self.render_scale))
 
-    # Pick up the torch and update the general light in the area
-    def Pick_Up(self):
-        if self.rect().colliderect(self.game.player.rect()):
-            if self.game.item_inventory.Add_Item(self):
-                self.in_inventory = True
-                self.picked_up = False
-                self.game.entities_render.remove(self)
-                
-                return True
-        return False
-    
-    def Set_Equipped_Position(self, entity_flip, direction_y):
-        if 'left' in self.inventory_type:
-            if not entity_flip or direction_y < 0:
-                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
-            else:
-                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
-        elif 'right' in self.inventory_type:
-            if not entity_flip or direction_y < 0:
-                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
-            else:
-                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
-        else:
-            print("DIRECTION NOT FOUND", self.inventory_type)
+        self.clock = pygame.time.Clock()
+        
+        self.movement = [False, False, False, False]
+        self.assets = {}
+        Asset_Loader.Run_All(self)
 
 
-    # General Update function
-    def Update(self):
-        self.Update_Animation()
-        self.Update_Flip()
+        self.tilemap = Tilemap(self, tile_size=16)
+        self.item_inventory = Item_Inventory(self)
+        # TODO: PLACEHOLDER CODE, Implement proper class system later
+        self.player = None
+        self.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
+        self.weapon_inventory = Weapon_Inventory_Handler(self, 'warrior', self.proffeciency)
+        self.mouse = Mouse_Handler(self)
+        self.ray_caster = Ray_Caster(self)
+        self.a_star = A_Star()
+
+        self.level = 0
+        self.scroll = [0, 0]
+        self.entities_render = []
+
+        self.load_level(self.level)
 
         
-    # Update Attack logic
-    def Update_Attack(self, entity):
-        if not self.attacking:
-            return
-        self.Update_Attack_Animation()
-        self.Attack_Collision_Check(entity)
-    
-
-    def Set_Attack(self, entity):
-        self.attacking = max(self.attack_animation_max, self.attack_animation_max * 10 - self.speed * entity.agility)
-        self.enemy_hit = False  # Reset at the start of a new attack
-
-    def Attack_Collision_Check(self, entity):
-        if self.enemy_hit:
-            return
-        weapon_rect = self.rect_attack()
-        for enemy in self.game.player.nearby_enemies:
-            if enemy.damage_cooldown:
-                continue
-            if weapon_rect.colliderect(enemy.rect()):
-                damage = entity.strength * self.damage
-                enemy.Damage_Taken(damage)
-                self.enemy_hit = True
-                return
-    
-    def rect_attack(self):
-        return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
 
 
-    def Update_Attack_Animation(self):
+
+    def tilemap_2d(self):
+        for loc in self.tilemap:
+            tile = self.tilemap[loc]
+
+    def count_lines_in_json_file(file_path):
+        with open(file_path, 'r') as file:
+            line_count = sum(1 for line in file)
+        return line_count
+
+    def load_level(self, map_id):
+        self.tilemap.load('data/maps/' + str(map_id) + '.json')
+         # Setup handlers
+        self.light_handler = Light_Handler(self)
         
-        if self.attacking == 1:
-            self.sub_type = self.type
-            self.attacking = 0
-            self.attack_animation = 0
-            return
         
-        self.animation = self.attack_animation
-        self.sub_type = self.type + '_attack'
-        self.attacking -= 1
-        if not self.attacking % self.attack_animation_max:
-            self.attack_animation += 1
-            if self.attack_animation > self.attack_animation_max:
-                self.attack_animation = 0
-        return
+        self.particles = []
+        self.sparks = []
+        self.scroll = [0, 0]
+        self.projectiles = []
+        for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
+            if spawner['variant'] == 0:
+                self.player = Player(self, spawner['pos'], (8, 16))
+
+        self.enemy_handler = Enemy_Handler(self)
+        self.trap_handler = Trap_Handler(self)
+        self.decoration_handler = Decoration_Handler(self)
+        self.chest_handler = Chest_Handler(self)
+        self.item_handler = Item_Handler(self)
+ 
+        Ammo_Bar.__init__(self)
+        Mana_Bar.__init__(self)
+        Health_Bar.__init__(self)
+        Coins.__init__(self)
         
-    def Update_Flip(self):
-        player_direction_x = self.game.player.direction_x_holder
-        player_direction_y = self.game.player.direction_y_holder
+        self.a_star.Setup_Map(self)
 
-        if player_direction_x < 0 and player_direction_y == 0:
-            self.flip_image = True
-        elif player_direction_x > 0 and player_direction_y == 0:
-            self.flip_image = False
-        elif player_direction_x == 0 and player_direction_y < 0:
-            self.flip_image = False
-        elif player_direction_x == 0 and player_direction_y > 0:
-            self.flip_image = False
-    
-
-    
-    
-    def Render_In_Inventory(self, surf, offset=(0, 0)):
-        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
-
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        
 
 
-    def Increase_Size(self, increase):
-        size_x = self.size[0] * increase
-        size_y = self.size[1] * increase 
-        self.size = (size_x, size_y)
 
-    def Decrease_Size(self, decrease):
-        size_x = self.size[0] / decrease
-        size_y = self.size[1] / decrease 
-        self.size = (size_x, size_y)
+        # Printing the map
+        # for row in self.shadow_map:
+        #     print(row)
 
-    def Render_Equipped(self, surf, offset=(0, 0)):
-        # Load the weapon image
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
-        if self.attacking:
-            self.pos = ((self.pos[0] + 5 * self.game.player.direction_x_holder), (self.pos[1] + 5 * self.game.player.direction_y_holder))
 
-        surf.blit(
-            pygame.transform.flip(weapon_image, self.flip_image, False),
-                                  (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+    def Update(self, render_scroll):
+            fps = int(self.clock.get_fps())
+            pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
             
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
+            Particle_Handler.particle_update(self, render_scroll)
+            Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
+            self.trap_handler.Update()
+            self.chest_handler.Update()
+            self.decoration_handler.Update()
+            self.item_handler.Update()
+            self.enemy_handler.Update()
 
+            self.item_inventory.Update(render_scroll)
+            self.weapon_inventory.Update(render_scroll)
+            Coins.Update(self)
+            self.ray_caster.Update(self)
+
+            self.mouse.Mouse_Update()
     
-    def Render(self, surf, offset=(0, 0)):
 
-        # Check if item is in inventory. If yes we don't need offset, except if
-        # the weapon has been picked up
-        if self.in_inventory:
-            if self.picked_up:
-                self.Render_In_Inventory(surf, offset)
-            else:
-                self.Render_In_Inventory(surf)
+    def Render(self, render_scroll):
+        self.ray_caster.Ray_Caster()
+        self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
+
+        self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
+
+        self.entities_render.sort(key=lambda entity: entity.pos[1])
+        for entity in self.entities_render:
+            entity.Render(self.display, render_scroll)
+
+
+        Health_Bar.Health_Bar(self)
+        Ammo_Bar.Attack_Recharge_Bar(self)
+        Mana_Bar.Mana_Bar(self)
+        Coins.Render(self)
+        self.item_inventory.Render(self.display)
+        self.weapon_inventory.Render(self.display, render_scroll)
+        for particle in self.particles:
+            particle.Render(self.display, render_scroll)
+
+
+
+
+
         
-        if not self.Update_Light_Level():
-            return
-        # Set image
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+    def run(self):  
+        while True:
+            self.display.blit(self.assets['background'], (0, 0))
+            # Get the scroll offset
+            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
+            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
+            render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+            
+            Game.Render(self, render_scroll)
+            Game.Update(self, render_scroll)
 
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))
-        weapon_image.set_alpha(alpha_value)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                self.mouse.Mouse_Input(event, render_scroll)
 
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+                Keyboard_Handler.keyboard_Input(self, event, offset = render_scroll)
 
-        # Blit the chest layer on top the dark layer
-        weapon_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        
-        # Render the chest
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
+            pygame.display.update()
+            self.clock.tick(60)
 
-
-
-
-    # Inventory Logic below
-    #######################################################
-
-    def Handle_Double_Click(self, sending_inventory, receiving_inventory):
-        recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
-        if not recieving_inventory_slot:
-            return False
-        if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory, receiving_inventory):
-            return True     
-
-    
-    # Attempt to move the item to the receiving inventory slot by double clicking
-    def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
-
-        move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
-        # If the move was successful, remove it from the sending inventory
-        if move_successful:
-
-            # Remove item from old inventory and save the inventory type
-            inventory_type_holder = self.inventory_type
-            sending_inventory.Remove_Item(self, move_successful)
-            # send weapon into weapon inventory, checked by seeing if it has an inventory_type
-            if self.inventory_type:
-                # If weapon is already equipped in the other hand, remove it before adding to new hand
-                if self.equipped:
-                    self.game.player.Remove_Active_Weapon(inventory_type_holder)                    
-                self.equipped = True
-                self.game.player.Set_Active_Weapon(self, self.inventory_type)
-            else: # Drag weapon back into item inventory
-                self.equipped = False
-                self.game.player.Remove_Active_Weapon(inventory_type_holder)
-            return True
-        
-        return False
-    
-    # Add weapons from a sending inventory to a receiving inventory
-    # Example: weapon_inventory (sending) -> inventory (receiving) 
-    def Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset = (0,0)):
-        if self.game.mouse.left_click:
-            return
-        
-        for receiving_inventory_slot in receiving_inventory:
-            if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory, receiving_inventory):
-                    return True             
-        return False
-
-    # Check if the weapon can be moved to the weapon inventory
-    def Move_Inventory_Check(self, offset = (0,0)):
-        if self.picked_up:
-            active_inventory = self.game.weapon_inventory.active_inventory
-            weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-            if self.equipped: # Move to normal inventory
-                if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory, offset):
-                    self.equipped = False
-                    self.game.player.Remove_Active_Weapon(self.inventory_type)
-                    return True
-                
-                
-            else: # Move to weapon inventory
-                if self.Move_To_Other_Inventory(self.game.item_inventory, weapon_inventory, offset):
-                    self.equipped = True
-                    self.game.player.Set_Active_Weapon(self, self.inventory_type)
-                    return True
-                
-        return False
-
-    # Check for out of bounds, return true if valid, else false
-    def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
-
-        # Check if the weapon can be moved to the weapon inventory
-        if self.Move_Inventory_Check(offset):
-            self.picked_up = False
-            self.move_inventory = True
-            return False
-        if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):
-            return True
-        else:
-            return False
-
-    def Update_Player_Hand(self, prev_hand):
-        # # Check if the weapon has changed hands
-        if self.inventory_type != prev_hand:
-            self.equipped = True
-            if prev_hand == 'left_hand':
-                self.game.player.Remove_Active_Weapon(prev_hand)
-                self.game.player.Set_Active_Weapon(self, self.inventory_type)
-            elif prev_hand == 'right_hand':
-                self.game.player.Remove_Active_Weapon(prev_hand)
-                self.game.player.Set_Active_Weapon(self, self.inventory_type)
-
-
-    def Place_Down(self):
-        super().Place_Down()
-        if self.equipped:
-            self.game.player.Remove_Active_Weapon(self.inventory_type)
-            self.equipped = False
-        return False
-
-    def Set_In_Inventory(self, state):
-        self.in_inventory = state
-    ####################################################### 
+Game().run()

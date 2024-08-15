@@ -34,7 +34,6 @@ class Enemy(Moving_Entity):
 
 
     def update(self, tilemap, movement=(0, 0)):
-        
         self.Path_Finding()
         movement = self.direction
         
@@ -202,6 +201,11 @@ class Enemy(Moving_Entity):
             return True
         
         return False
+    
+    def Damage_Taken(self, damage):
+        super().Damage_Taken(damage)
+        if self.health <= 0:
+            self.game.enemy_handler.Delete_Enemy(self)
         
 
     def Calculate_Position(self):

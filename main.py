@@ -22,7 +22,7 @@ from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.mana_bar import Mana_Bar
 from scripts.interface.coins import Coins
 from scripts.decoration.chest.Chest_handler import Chest_Handler
-from scripts.entities.enemy import Enemy
+from scripts.entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.item_inventory import Item_Inventory
@@ -90,14 +90,12 @@ class Game:
         self.sparks = []
         self.scroll = [0, 0]
         self.projectiles = []
-        self.enemies = []
-        for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
+        for spawner in self.tilemap.extract([('spawners', 0)]):
+            print("PLAYER")
             if spawner['variant'] == 0:
                 self.player = Player(self, spawner['pos'], (8, 16))
 
-            else:
-                self.enemies.append(Enemy(self, spawner['pos'],  (self.assets[spawner['type']][0].get_width(), self.assets[spawner['type']][0].get_height()), 'DecrepitBones'))
-
+        self.enemy_handler = Enemy_Handler(self)
         self.trap_handler = Trap_Handler(self)
         self.decoration_handler = Decoration_Handler(self)
         self.chest_handler = Chest_Handler(self)
@@ -131,11 +129,7 @@ class Game:
             self.chest_handler.Update()
             self.decoration_handler.Update()
             self.item_handler.Update()
-
-            for enemy in self.enemies:
-                enemy.update(self.tilemap)
-                if enemy.health <= 0:
-                    self.enemies.remove(enemy)
+            self.enemy_handler.Update()
 
             self.item_inventory.Update(render_scroll)
             self.weapon_inventory.Update(render_scroll)
@@ -164,10 +158,6 @@ class Game:
         self.weapon_inventory.Render(self.display, render_scroll)
         for particle in self.particles:
             particle.Render(self.display, render_scroll)
-
-
-
-
 
         
     def run(self):  

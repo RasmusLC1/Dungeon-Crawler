@@ -238,11 +238,7 @@ class Moving_Entity(PhysicsEntity):
         self.nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, distance)
 
     def Nearby_Enemies(self, max_distance):
-        self.nearby_enemies.clear()
-        for enemy in self.game.enemies:
-            distance = math.sqrt((self.pos[0] - enemy.pos[0]) ** 2 + (self.pos[1] - enemy.pos[1]) ** 2)
-            if distance < max_distance and not enemy == self:
-                self.nearby_enemies.append(enemy)
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, max_distance)
 
     def Update_Damage_Cooldown(self):
         if self.damage_cooldown:
@@ -254,8 +250,7 @@ class Moving_Entity(PhysicsEntity):
         
         self.damage_cooldown = 10
         self.health -= damage
-        if self.health <= 0:
-            print("GAME OVER")
+        
 
     # Return true if healing was successfull
     def Healing(self, healing):

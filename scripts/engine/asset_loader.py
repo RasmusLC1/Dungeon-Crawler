@@ -128,9 +128,15 @@ class Asset_Loader:
 
     def Asset_Objects_List(self):
         Objects_assets = {
-            'spawners': load_images('tiles/spawners'),    
+            'spawners': load_images('tiles/spawners'),   
+
         }
         self.assets.update(Objects_assets)
+
+    # def Asset_Enemy_List(self):
+    #     Objects_assets = {
+    #     }
+    #     self.assets.update(Objects_assets)
 
     def Asset_Environment_List(self):
         Environment_assets = {
