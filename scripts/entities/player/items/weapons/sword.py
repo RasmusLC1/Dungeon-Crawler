@@ -17,3 +17,18 @@ class Sword(Weapon):
 
         return False
 
+    def Set_Equipped_Position(self, direction_y):
+        # self.rotate = -180
+        if 'left' in self.inventory_type:
+            if direction_y < 0:
+                self.Move((self.game.player.pos[0] , self.game.player.pos[1] ))
+            else:
+                self.Move((self.game.player.pos[0] , self.game.player.pos[1]))
+        elif 'right' in self.inventory_type:
+            if  direction_y < 0:
+                self.Move((self.game.player.pos[0], self.game.player.pos[1]))
+            else:
+                self.Move((self.game.player.pos[0], self.game.player.pos[1]))
+        else:
+            print("DIRECTION NOT FOUND", self.inventory_type)
+

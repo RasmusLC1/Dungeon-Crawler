@@ -116,7 +116,7 @@ class Player(Moving_Entity):
         # Update the weapon position and logic
 
         self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
-            
+        
         self.active_weapon_right.Update()
         self.active_weapon_right.Update_Attack(self)
         self.Attacking(self.active_weapon_right, offset)
@@ -141,8 +141,10 @@ class Player(Moving_Entity):
         if self.game.mouse.inventory_clicked:
             return 0
         weapon.Set_Attack()
-        cooldown = max(5 + weapon.attacking, 100/self.agility + weapon.attacking)
-        return cooldown
+        if weapon.attacking:
+            cooldown = max(5 + weapon.attacking, 100/self.agility + weapon.attacking)
+            return cooldown
+        return 0
     
     def Attacking(self, weapon, offset=(0, 0)):
             

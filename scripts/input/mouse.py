@@ -18,12 +18,13 @@ class Mouse_Handler:
     def Mouse_Update(self):
         self.Double_Click_Timer()
         self.Decrement_Inventory_Clicked()
+        self.Hold_Down_Left()
+        self.Hold_Down_Right()
         
 
 
     # Mouse inputs that only need to be updated when there is an input
     def Mouse_Input(self, key_press, offset=(0, 0)):
-        self.Hold_Down_Left()
 
         if key_press.type == pygame.MOUSEBUTTONDOWN:
             if key_press.button == 1:  # Check for left click (button 1)
@@ -60,6 +61,13 @@ class Mouse_Handler:
             self.hold_down_left += 1
         elif not self.left_click and self.hold_down_left:
             self.hold_down_left = 0
+
+    # Hold down right click timers
+    def Hold_Down_Right(self):
+        if self.right_click:
+            self.hold_down_right += 1
+        elif not self.right_click and self.hold_down_right:
+            self.hold_down_right = 0
 
     # Handle the double click timers
     def Double_Click_Timer(self):

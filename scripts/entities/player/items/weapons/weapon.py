@@ -12,6 +12,8 @@ class Weapon(Item):
         self.effect = '' # Special effects, like poision, ice, fire etc
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
+        self.hold_down = 0 # Timer for charge attacks
+        self.hold_down_counter = 0 # Timer for charge attacks
         self.animation_speed = 30 # Animation speed that it cycles through animations
         self.max_animation = 0 # Max amount of animations
         self.attacking = 0 # The time it takes for the attack to complete
@@ -26,54 +28,60 @@ class Weapon(Item):
         self.sub_type = self.type
         
         self.weapon_class = weapon_class
-
-    # Pick up the torch and update the general light in the area
-    def Pick_Up(self):
-        if self.rect().colliderect(self.game.player.rect()):
-            if self.game.item_inventory.Add_Item(self):
-                self.in_inventory = True
-                self.picked_up = False
-                self.game.entities_render.remove(self)
-                
-                return True
-        return False
-    
-    def Set_Equipped_Position(self, direction_y):
-        if 'left' in self.inventory_type:
-            if direction_y < 0:
-                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
-            else:
-                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
-        elif 'right' in self.inventory_type:
-            if  direction_y < 0:
-                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
-            else:
-                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
-        else:
-            print("DIRECTION NOT FOUND", self.inventory_type)
-
+        
+        self.charge_time = 0  # Tracks how long the button is held
+        self.max_charge_time = 100  # Maximum time to fully charge
+        self.is_charging = False  # Tracks if the player is charging
+        self.attack_ready = False  # Track when the attack is ready to be triggered
+        self.charged_attack = False  # Determine if a charged attack should occur
 
     # General Update function
     def Update(self):
         self.Update_Animation()
         self.Update_Flip()
+        self.Charge_Attack()
 
-        
-    # Update Attack logic
     def Update_Attack(self, entity):
         if not self.attacking:
             return
+            
         self.Update_Attack_Animation(entity)
         self.Attack_Collision_Check(entity)
         self.Attack_Align_Weapon(entity)
-    
 
-    # TODO: UPDATE function to use the weapon's speed
-    #  to determine self.attacking
     def Set_Attack(self):
-        self.attacking = max(self.attack_animation_max, int (100 / self.speed))
-        self.enemy_hit = False  # Reset at the start of a new attack
-        self.attack_animation_time = int(self.attacking / self.attack_animation_max)
+        if self.attack_ready:
+            self.attacking = max(self.attack_animation_max, int(100 / self.speed))
+            self.enemy_hit = False  # Reset at the start of a new attack
+            self.attack_animation_time = int(self.attacking / self.attack_animation_max)
+            self.charge_time = 0  # Reset charge time
+            self.attack_ready = False  # Reset attack trigger
+            self.charged_attack = False  # Reset charged attack flag
+
+    def Charge_Attack(self):
+        if not self.inventory_type:
+            return
+        
+        # Detect if the player is holding down the button
+        if 'left' in self.inventory_type:
+            self.is_charging = self.game.mouse.hold_down_left
+        elif 'right' in self.inventory_type:
+            self.is_charging = self.game.mouse.hold_down_right
+        
+        if self.is_charging:
+            # Increase charge time while holding the button
+            self.charge_time += 1
+            if self.charge_time >= self.max_charge_time:
+                self.charge_time = self.max_charge_time  # Cap the charge time
+                self.charged_attack = True  # Mark the attack as charged
+        else:
+            # If the button is released
+            if self.charge_time > 0:
+                print(self.charge_time)
+                self.attack_ready = True  # Ready to trigger an attack
+                self.Set_Attack()  # Trigger the attack
+            self.charge_time = 0  # Reset the charge time
+        
 
 
 
@@ -216,11 +224,36 @@ class Weapon(Item):
 
     # Inventory Logic below
     #######################################################
+    # Pick up the torch and update the general light in the area
+    def Pick_Up(self):
+        if self.rect().colliderect(self.game.player.rect()):
+            if self.game.item_inventory.Add_Item(self):
+                self.in_inventory = True
+                self.picked_up = False
+                self.game.entities_render.remove(self)
+                
+                return True
+        return False
+    
+    def Set_Equipped_Position(self, direction_y):
+        if 'left' in self.inventory_type:
+            if direction_y < 0:
+                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
+            else:
+                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
+        elif 'right' in self.inventory_type:
+            if  direction_y < 0:
+                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
+            else:
+                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
+        else:
+            print("DIRECTION NOT FOUND", self.inventory_type)
     # Initialise the double clikc
     def Handle_Double_Click(self, sending_inventory, receiving_inventory):
         # Check if there is a free inventory slot
         recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
         if not recieving_inventory_slot:
+            self.Reset_Inventory_Slot(sending_inventory)
             return False
         # Check if we can send the item to the new inventroy slot
         if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory, receiving_inventory):
@@ -235,7 +268,7 @@ class Weapon(Item):
 
 
         # Move the item
-        move_successful = receiving_inventory.Move_Item(self, inventory_slot)       
+        move_successful = receiving_inventory.Move_Item(self, inventory_slot)
         # If the move was successful, remove it from the sending inventory
         if move_successful:
             # Remove item from old inventory and save the inventory type
@@ -252,6 +285,7 @@ class Weapon(Item):
                 self.equipped = False
                 self.game.player.Remove_Active_Weapon(inventory_type_holder)
             return True
+        
         
         return False
     
@@ -330,12 +364,16 @@ class Weapon(Item):
             try:
                 if receiving_inventory.Find_Inventory_Slot(inventory_slot):
                     # Find the original position of the item in the inventory
-                    original_inventory_slot = sending_inventory.Find_Item_In_Inventory(self)
-                    # Reset it back to not active if found
-                    if original_inventory_slot:
-                        original_inventory_slot.Set_Active(False)
+                    self.Reset_Inventory_Slot(sending_inventory)
                     return False
             except TypeError as e:
                 print(f"Receiving inventory not a weapon inventory: {e}")
         return True
+    
+    def Reset_Inventory_Slot(self, inventory_slot):
+        original_inventory_slot = inventory_slot.Find_Item_In_Inventory(self)
+        # Reset it back to not active if found
+        if original_inventory_slot:
+            original_inventory_slot.Set_Active(False)
+        return
     ####################################################### 

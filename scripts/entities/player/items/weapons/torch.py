@@ -8,12 +8,13 @@ import pygame
 class Torch(Weapon):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type, 1, 3, 1, 'one_handed_melee')
-        self.effect = 'Fire'
         self.max_animation = 5
         self.attack_animation_max = 5
         self.light_level = 8
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+        self.Set_Effect('Fire')
+
 
     # Pick up the torch and update the general light in the area
     def Pick_Up(self):
@@ -28,7 +29,6 @@ class Torch(Weapon):
                 self.game.entities_render.remove(self)
 
     def Update(self):
-        self.Set_Effect('Poison')
         super().Update()
         self.light_source.Move_Light(self.pos)
 
