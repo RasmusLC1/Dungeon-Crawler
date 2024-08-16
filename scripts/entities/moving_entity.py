@@ -61,6 +61,10 @@ class Moving_Entity(PhysicsEntity):
         self.intelligence = 5 # spells and trap detection
         self.stamina = 5 # movement ability recharge and weapon cooldown
 
+        # Determined by the entities agility
+        self.left_weapon_cooldown = 0 
+        self.right_weapon_cooldown = 0
+
         
         
 

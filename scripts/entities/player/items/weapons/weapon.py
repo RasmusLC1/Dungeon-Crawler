@@ -34,12 +34,16 @@ class Weapon(Item):
         self.is_charging = False  # Tracks if the player is charging
         self.attack_ready = False  # Track when the attack is ready to be triggered
         self.charged_attack = False  # Determine if a charged attack should occur
+        self.special_attack = 0
 
     # General Update function
-    def Update(self):
+    def Update(self, entity):
         self.Update_Animation()
         self.Update_Flip()
-        self.Charge_Attack()
+
+        self.Charge_Attack(entity)
+        self.Special_Attack()
+
 
     def Update_Attack(self, entity):
         if not self.attacking:
@@ -49,8 +53,10 @@ class Weapon(Item):
         self.Attack_Collision_Check(entity)
         self.Attack_Align_Weapon(entity)
 
-    def Set_Attack(self):
+    def Set_Attack(self, entity):
         if self.attack_ready:
+            if not self.Check_Entity_Cooldown(entity):
+                return
             self.attacking = max(self.attack_animation_max, int(100 / self.speed))
             self.enemy_hit = False  # Reset at the start of a new attack
             self.attack_animation_time = int(self.attacking / self.attack_animation_max)
@@ -58,15 +64,17 @@ class Weapon(Item):
             self.attack_ready = False  # Reset attack trigger
             self.charged_attack = False  # Reset charged attack flag
 
-    def Charge_Attack(self):
+    
+    
+    def Special_Attack(self):
+        pass
+    
+    # Handle weapon charging
+    def Charge_Attack(self, entity):
         if not self.inventory_type:
             return
         
-        # Detect if the player is holding down the button
-        if 'left' in self.inventory_type:
-            self.is_charging = self.game.mouse.hold_down_left
-        elif 'right' in self.inventory_type:
-            self.is_charging = self.game.mouse.hold_down_right
+        self.Set_Charging()
         
         if self.is_charging:
             # Increase charge time while holding the button
@@ -76,13 +84,36 @@ class Weapon(Item):
                 self.charged_attack = True  # Mark the attack as charged
         else:
             # If the button is released
-            if self.charge_time > 0:
-                print(self.charge_time)
+            if self.charge_time > 0 and self.charge_time < 20:
                 self.attack_ready = True  # Ready to trigger an attack
-                self.Set_Attack()  # Trigger the attack
+                self.Set_Attack(entity)  # Trigger the attack
+            if self.charge_time > 20:
+                self.Set_Special_Attack()
             self.charge_time = 0  # Reset the charge time
-        
 
+    # Initialise special attack
+    def Set_Special_Attack(self):
+        self.special_attack = self.charge_time
+
+    def Set_Charging(self):
+        # Detect if the player is holding down the button
+        if 'left' in self.inventory_type:
+            self.is_charging = self.game.mouse.hold_down_left
+        elif 'right' in self.inventory_type:
+            self.is_charging = self.game.mouse.hold_down_right
+    
+    # Return False if entity weapon cooldown is not off
+    def Check_Entity_Cooldown(self, entity):
+        if not self.inventory_type:
+            return False
+        elif 'left' in self.inventory_type:
+                if entity.left_weapon_cooldown:
+                    return False
+        elif 'right' in self.inventory_type:
+            if entity.right_weapon_cooldown:
+                return False
+        return True
+        
 
 
     def Attack_Collision_Check(self, entity):
@@ -226,6 +257,7 @@ class Weapon(Item):
     #######################################################
     # Pick up the torch and update the general light in the area
     def Pick_Up(self):
+        print("TEST")
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.item_inventory.Add_Item(self):
                 self.in_inventory = True

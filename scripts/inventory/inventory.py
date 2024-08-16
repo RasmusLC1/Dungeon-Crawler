@@ -94,7 +94,8 @@ class Inventory:
         
     def Find_Item_In_Inventory(self, item):
         for inventory_slot in self.inventory:
-            if inventory_slot.item == item:
+            if inventory_slot.item.item_ID == item.item_ID:
+                print(inventory_slot.item.item_ID, item.item_ID)
                 return inventory_slot
             
         return None
@@ -143,17 +144,24 @@ class Inventory:
         self.active_item.Move(self.game.mouse.mpos)
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
-            if not self.active_item.Place_Down():
-                self.game.item_handler.Add_Item(self.active_item)
-                self.game.entities_render.append(self.active_item)
+            self.Place_Down_item()
+            self.Reset_Inventory_Slot()
 
-            self.active_item = None
-            # Set the inventory to be inactive again
-            if self.clicked_inventory_slot:
-                self.clicked_inventory_slot.Set_Active(False)
-                self.clicked_inventory_slot.item = None
-                self.clicked_inventory_slot = None
         return
+
+    def Place_Down_item(self):
+        if not self.active_item.Place_Down():
+            self.game.item_handler.Add_Item(self.active_item)
+            self.game.entities_render.append(self.active_item)
+
+        self.active_item = None
+        
+    # Set the inventory to be inactive again
+    def Reset_Inventory_Slot(self):
+        if self.clicked_inventory_slot:
+            self.clicked_inventory_slot.Set_Active(False)
+            self.clicked_inventory_slot.item = None
+            self.clicked_inventory_slot = None
 
     def Move_Item_To_New_Slot(self, offset):
         if self.active_item.move_inventory:
@@ -188,11 +196,10 @@ class Inventory:
     def Remove_Item(self, item, move_item):
         if not move_item:
             return False
-
-        for sending_slot in self.inventory:
-            if sending_slot.item == item:
-                sending_slot.Set_Active(False)  # Deactivate the slot
-                sending_slot.item = None  # Remove the item from the slot
+        for inventory_slot in self.inventory:
+            if inventory_slot.item.item_ID == item.item_ID:
+                inventory_slot.Set_Active(False)  # Deactivate the slot
+                inventory_slot.item = None  # Remove the item from the slot
                 return True
 
         return False
@@ -203,7 +210,7 @@ class Inventory:
         # Check if there is an active item
         if not self.active_item:
             return
-        # Check for out of bounds
+        # Check for out of bounds 
         item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
         if item_out_of_bounds == False:
             if self.game.mouse.left_click == False:       
@@ -254,7 +261,7 @@ class Inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
                 self.game.item_handler.Remove_Item(item)
-                inventory_slot.item.Update()
+                inventory_slot.item.Update(None)
                 return True
             # 2d array simulation for position
             i += 1

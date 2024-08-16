@@ -2,6 +2,9 @@ from scripts.decoration.decoration import Decoration
 from scripts.entities.player.items.weapons.torch import Torch
 import math
 
+# UPDATE for throwable weapons
+throwable_weapons = ['spear']
+
 class Item_Handler():
     def __init__(self, game):
         self.game = game
@@ -10,8 +13,6 @@ class Item_Handler():
         self.Initialise()
 
     def Initialise(self):
-        # top pusher initialisation
-        # pass
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
             self.items.append(Torch(self.game, torch['pos'], (16, 16), torch['type']))
 
@@ -19,7 +20,6 @@ class Item_Handler():
     def Add_Item(self, item):
         self.items.append(item)
 
-        # self.game.entities_render.append(item)
 
     def Remove_Item(self, item):
         self.items.remove(item)
@@ -37,6 +37,11 @@ class Item_Handler():
     def Update(self):
         self.nearby_items = self.find_nearby_item(self.game.player.pos, 200)
         for item in self.items:
+            if item.sub_type in throwable_weapons:
+                try:
+                    item.Throw_Weapon
+                except Exception as e:
+                    print(f"Item is not throwable {e}", item.sub_type)
             item.Update_Animation()
             if not item.picked_up:
                     self.items.remove(item)

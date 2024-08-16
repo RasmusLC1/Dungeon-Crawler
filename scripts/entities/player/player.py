@@ -39,9 +39,7 @@ class Player(Moving_Entity):
         self.coins = 0
         self.shootin_cooldown = 0
 
-        # Determined by the player's agility
-        self.left_weapon_cooldown = 0 
-        self.right_weapon_cooldown = 0
+        
 
         
         self.weapons = []
@@ -92,7 +90,9 @@ class Player(Moving_Entity):
         
         self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
 
-        self.active_weapon_left.Update()
+        self.active_weapon_left.Update(self)
+        if not self.active_weapon_left:
+            return
         self.active_weapon_left.Update_Attack(self)
         self.Attacking(self.active_weapon_left, offset)
 
@@ -117,7 +117,9 @@ class Player(Moving_Entity):
 
         self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
         
-        self.active_weapon_right.Update()
+        self.active_weapon_right.Update(self)
+        if not self.active_weapon_right:
+            return
         self.active_weapon_right.Update_Attack(self)
         self.Attacking(self.active_weapon_right, offset)
         
@@ -140,7 +142,7 @@ class Player(Moving_Entity):
         # Return if inventory has not been clicked
         if self.game.mouse.inventory_clicked:
             return 0
-        weapon.Set_Attack()
+        # weapon.Set_Attack()
         if weapon.attacking:
             cooldown = max(5 + weapon.attacking, 100/self.agility + weapon.attacking)
             return cooldown

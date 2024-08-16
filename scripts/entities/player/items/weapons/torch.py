@@ -28,8 +28,8 @@ class Torch(Weapon):
                 self.picked_up = False
                 self.game.entities_render.remove(self)
 
-    def Update(self):
-        super().Update()
+    def Update(self, entity):
+        super().Update(entity)
         self.light_source.Move_Light(self.pos)
 
     def Update_Attack_Animation(self, entity):

@@ -21,10 +21,28 @@ class Spear(Weapon):
         super().Place_Down()
         return False
 
-    def Set_Attack(self):
-        super().Set_Attack()
+    def Set_Attack(self, entity):
+        super().Set_Attack(entity)
         self.attack_animation_time = int(self.attacking / self.range / self.attack_animation_time) 
-        
+    
+
+    def Throw_Weapon(self):
+        if self.special_attack:
+            print(self.special_attack)
+            self.special_attack -= 1
+
+    def Special_Attack(self):
+        if not self.special_attack:
+            return
+        active_inventory = self.game.weapon_inventory.active_inventory
+        weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
+        self.game.player.Remove_Active_Weapon(self.inventory_type)
+        weapon_inventory.Remove_Item(self, True)
+        self.game.item_handler.Add_Item(self)
+        self.game.entities_render.append(self)
+        self.picked_up = True
+        self.equipped = False
+        self.special_attack = 0
 
     def Update_Attack_Animation(self, entity):
         super().Update_Attack_Animation(entity)
