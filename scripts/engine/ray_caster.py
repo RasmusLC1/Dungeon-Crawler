@@ -173,7 +173,6 @@ class Ray_Caster():
                         
                 # pygame.draw.line(surf, (255, 255, 255), (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1]), (pos_x, pos_y), 1)
         
-        # print(self.game.player.nearby_enemies)
 
     def rect(self, pos):
         return pygame.Rect(pos[0], pos[1], 10, 10)

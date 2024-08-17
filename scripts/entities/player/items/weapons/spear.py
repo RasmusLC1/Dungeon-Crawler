@@ -17,8 +17,10 @@ class Spear(Weapon):
         super().Place_Down()
         return False
 
-    def Set_Attack(self, entity):
-        super().Set_Attack(entity)
+    def Set_Attack(self):
+        super().Set_Attack()
+        if self.attacking == 0 or self.range == 0 or self.attack_animation_time == 0:
+            return
         self.attack_animation_time = int(self.attacking / self.range / self.attack_animation_time) 
     
 
@@ -30,8 +32,7 @@ class Spear(Weapon):
             self.Move((dir_x, dir_y))
             self.special_attack = max(0, self.special_attack - speed)
 
-            for enemy in self.game.enemy_handler.nearby_enemies:
-                print(enemy)
+            
 
     def Special_Attack(self):
         if not self.special_attack or not self.equipped:
@@ -52,8 +53,8 @@ class Spear(Weapon):
         self.picked_up = True
         self.equipped = False
 
-    def Update_Attack_Animation(self, entity):
-        super().Update_Attack_Animation(entity)
+    def Update_Attack_Animation(self):
+        super().Update_Attack_Animation()
         # Reset the attack logic
         if not self.attacking:
             self.return_to_holder = False
@@ -65,7 +66,7 @@ class Spear(Weapon):
             return
         
         
-        self.Attack_Direction(entity)
+        self.Attack_Direction()
         if not self.return_to_holder:
             self.distance_from_player += 1
             if self.distance_from_player <= self.range:
@@ -81,8 +82,8 @@ class Spear(Weapon):
                 self.return_to_holder = False
                 
             
-    def Attack_Direction(self, entity):
-            attack_direction = entity.attack_direction
+    def Attack_Direction(self):
+            attack_direction = self.entity.attack_direction
             if abs(attack_direction[0]) >= abs(attack_direction[1]):                
                 if attack_direction[0] >= 0:
                     self.rotate = 0

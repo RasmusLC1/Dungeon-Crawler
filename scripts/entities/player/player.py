@@ -90,10 +90,10 @@ class Player(Moving_Entity):
         
         self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
 
-        self.active_weapon_left.Update(self, offset)
+        self.active_weapon_left.Update(offset)
         if not self.active_weapon_left:
             return
-        self.active_weapon_left.Update_Attack(self)
+        self.active_weapon_left.Update_Attack()
         self.Attacking(self.active_weapon_left, offset)
 
         if self.left_weapon_cooldown:
@@ -117,10 +117,10 @@ class Player(Moving_Entity):
 
         self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
         
-        self.active_weapon_right.Update(self, offset)
+        self.active_weapon_right.Update(offset)
         if not self.active_weapon_right:
             return
-        self.active_weapon_right.Update_Attack(self)
+        self.active_weapon_right.Update_Attack()
         self.Attacking(self.active_weapon_right, offset)
         
         # Handle weapon cooldown
@@ -254,8 +254,6 @@ class Player(Moving_Entity):
         self.ammo -= 1
 
     def Dash(self, offset=(0, 0)):
-        for weapon in self.weapons:
-            print(weapon)
         if not self.dashing:
             self.Mouse_Handler()
             self.Stored_Position_Handler(offset)

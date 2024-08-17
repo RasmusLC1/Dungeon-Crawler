@@ -95,7 +95,6 @@ class Inventory:
     def Find_Item_In_Inventory(self, item):
         for inventory_slot in self.inventory:
             if inventory_slot.item.item_ID == item.item_ID:
-                print(inventory_slot.item.item_ID, item.item_ID)
                 return inventory_slot
             
         return None
@@ -265,7 +264,7 @@ class Inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
                 self.game.item_handler.Remove_Item(item)
-                inventory_slot.item.Update(None)
+                inventory_slot.item.Update()
                 return True
             # 2d array simulation for position
             i += 1

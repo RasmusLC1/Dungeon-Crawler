@@ -25,12 +25,12 @@ class Torch(Weapon):
         self.game.light_handler.Remove_Light(self.light_source)
         self.game.light_handler.Restore_Light(self.light_source)
 
-    def Update(self, entity):
-        super().Update(entity)
+    def Update(self, offset=(0, 0)):
+        super().Update()
         self.light_source.Move_Light(self.pos)
 
-    def Update_Attack_Animation(self, entity):
-        super().Update_Attack_Animation(entity)
+    def Update_Attack_Animation(self):
+        super().Update_Attack_Animation()
 
   
 

@@ -42,26 +42,26 @@ class Weapon(Item):
         self.special_attack = 0
 
     # General Update function
-    def Update(self, entity, offset = (0,0)):
+    def Update(self, offset = (0,0)):
         self.Update_Animation()
         self.Special_Attack()
-        if not entity:
+        if not self.entity:
             return
-        self.Update_Flip(entity)
-        self.Charge_Attack(entity, offset)
+        self.Update_Flip()
+        self.Charge_Attack(offset)
 
 
-    def Update_Attack(self, entity):
+    def Update_Attack(self):
         if not self.attacking:
             return
             
-        self.Update_Attack_Animation(entity)
-        self.Attack_Collision_Check(entity)
-        self.Attack_Align_Weapon(entity)
+        self.Update_Attack_Animation()
+        self.Attack_Collision_Check()
+        self.Attack_Align_Weapon()
 
-    def Set_Attack(self, entity):
+    def Set_Attack(self):
         if self.attack_ready:
-            if not self.Check_Entity_Cooldown(entity):
+            if not self.Check_Entity_Cooldown():
                 return
             self.attacking = max(self.attack_animation_max, int(100 / self.speed))
             self.enemy_hit = False  # Reset at the start of a new attack
@@ -76,7 +76,7 @@ class Weapon(Item):
         pass
     
     # Handle weapon charging
-    def Charge_Attack(self, entity, offset = (0, 0)):
+    def Charge_Attack(self, offset = (0, 0)):
         if not self.inventory_type:
             return
         
@@ -92,18 +92,16 @@ class Weapon(Item):
             # If the button is released
             if self.charge_time > 0 and self.charge_time < 20:
                 self.attack_ready = True  # Ready to trigger an attack
-                self.Set_Attack(entity)  # Trigger the attack
+                self.Set_Attack()  # Trigger the attack
             if self.charge_time > 20:
-                self.Set_Special_Attack(entity, offset)
+                self.Set_Special_Attack(offset)
             self.charge_time = 0  # Reset the charge time
 
     # Initialise special attack
-    def Set_Special_Attack(self, entity, offset = (0, 0)):
+    def Set_Special_Attack(self, offset = (0, 0)):
 
-        entity.Attack_Direction_Handler(offset)
-        self.attack_direction = entity.attack_direction
-        # print(vars(entity))
-        # print(self.attack_direction)
+        self.entity.Attack_Direction_Handler(offset)
+        self.attack_direction = self.entity.attack_direction
         self.special_attack = self.charge_time
 
     def Set_Charging(self):
@@ -114,20 +112,20 @@ class Weapon(Item):
             self.is_charging = self.game.mouse.hold_down_right
     
     # Return False if entity weapon cooldown is not off
-    def Check_Entity_Cooldown(self, entity):
+    def Check_Entity_Cooldown(self):
         if not self.inventory_type:
             return False
         elif 'left' in self.inventory_type:
-                if entity.left_weapon_cooldown:
+                if self.entity.left_weapon_cooldown:
                     return False
         elif 'right' in self.inventory_type:
-            if entity.right_weapon_cooldown:
+            if self.entity.right_weapon_cooldown:
                 return False
         return True
         
 
 
-    def Attack_Collision_Check(self, entity):
+    def Attack_Collision_Check(self):
         if self.enemy_hit:
             return None
         weapon_rect = self.rect_attack()
@@ -135,7 +133,7 @@ class Weapon(Item):
             if enemy.damage_cooldown:
                 continue
             if weapon_rect.colliderect(enemy.rect()):
-                damage = entity.strength * self.damage
+                damage = self.entity.strength * self.damage
                 enemy.Damage_Taken(damage)
                 self.enemy_hit = True
                 if self.effect:
@@ -150,7 +148,7 @@ class Weapon(Item):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
 
 
-    def Update_Attack_Animation(self, entity):
+    def Update_Attack_Animation(self):
         if self.attacking <= 1:
             self.sub_type = self.type
             self.attacking = 0
@@ -170,7 +168,7 @@ class Weapon(Item):
         return
     
     # Align the weapon with the attacking entity while attacking
-    def Attack_Align_Weapon(self, entity):
+    def Attack_Align_Weapon(self):
         if 'left' in self.inventory_type:
             if self.flip_image:
                 self.Move((self.pos[0] - 3, self.pos[1] - 2))
@@ -178,7 +176,7 @@ class Weapon(Item):
                 self.Move((self.pos[0] + 3, self.pos[1] - 2))
             return
         if 'right' in self.inventory_type:
-            if abs(entity.attack_direction[0]) < abs(entity.attack_direction[1]):
+            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]):
                 self.Move((self.pos[0], self.pos[1] - 2))
             elif self.flip_image:
                 self.Move((self.pos[0] + 3, self.pos[1] - 2))
@@ -187,8 +185,8 @@ class Weapon(Item):
             return
 
         
-    def Update_Flip(self, entity):
-        attack_direction = entity.attack_direction
+    def Update_Flip(self):
+        attack_direction = self.entity.attack_direction
         if abs(attack_direction[0]) >= abs(attack_direction[1]):
             if attack_direction[0] < 0:
                 self.flip_image = True
@@ -276,11 +274,11 @@ class Weapon(Item):
     def Pick_Up(self):
         if self.in_inventory:
             return
-        print("TEST")
         self.Find_Nearby_Entities(1000)
         for entity in self.nearby_entities:
             if self.rect().colliderect(entity.rect()):
                 if self.game.item_inventory.Add_Item(self):
+                    self.entity = entity
                     self.in_inventory = True
                     self.picked_up = False
                     self.game.entities_render.remove(self)
@@ -317,6 +315,9 @@ class Weapon(Item):
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
        
         if not self.Check_Two_Handed(inventory_slot, sending_inventory, receiving_inventory):
+            return False
+        
+        if not self.Check_For_Two_Handed_In_Weapon_Inventory(inventory_slot, sending_inventory, receiving_inventory):
             return False
 
 
@@ -404,6 +405,7 @@ class Weapon(Item):
 
     def Place_Down(self):
         super().Place_Down()
+        self.entity = None
         if self.equipped:
             self.game.player.Remove_Active_Weapon(self.inventory_type)
             self.equipped = False
@@ -419,6 +421,41 @@ class Weapon(Item):
             # Try to find the inventory_slot, only the weapon inventory has this property
             try:
                 if receiving_inventory.Find_Inventory_Slot(inventory_slot):
+                    # Find the original position of the item in the inventory
+                    self.Reset_Inventory_Slot(sending_inventory)
+                    return False
+            except TypeError as e:
+                print(f"Receiving inventory not a weapon inventory: {e}")
+        return True
+    
+    
+    def Check_For_Two_Handed_In_Weapon_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
+        # Check for weapon inventory
+        if not inventory_slot.inventory_type:
+            return True
+        
+        for weapon_inventory_slot in receiving_inventory:
+            if not weapon_inventory_slot.item:
+                continue
+            # Check to ensure that item is a weapon
+            if not weapon_inventory_slot.item.category == 'weapon':
+                continue
+            
+            # Check if there is already a two handed weapon in the inventory
+            if 'two' in weapon_inventory_slot.item.weapon_class:
+                self.Reset_Inventory_Slot(sending_inventory)
+
+                return False
+        
+        return True
+            
+        
+        if not 'one' in self.weapon_class:
+            return True
+        if weapon_inventory_slot.inventory_type:
+            # Try to find the inventory_slot, only the weapon inventory has this property
+            try:
+                if receiving_inventory.Find_Inventory_Slot(weapon_inventory_slot):
                     # Find the original position of the item in the inventory
                     self.Reset_Inventory_Slot(sending_inventory)
                     return False
