@@ -90,7 +90,7 @@ class Player(Moving_Entity):
         
         self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
 
-        self.active_weapon_left.Update(self)
+        self.active_weapon_left.Update(self, offset)
         if not self.active_weapon_left:
             return
         self.active_weapon_left.Update_Attack(self)
@@ -117,7 +117,7 @@ class Player(Moving_Entity):
 
         self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
         
-        self.active_weapon_right.Update(self)
+        self.active_weapon_right.Update(self, offset)
         if not self.active_weapon_right:
             return
         self.active_weapon_right.Update_Attack(self)
@@ -264,26 +264,7 @@ class Player(Moving_Entity):
     def Stored_Position_Handler(self, offset=(0, 0)):
         self.stored_position = self.pos.copy()
         self.stored_position[0] -= offset[0]
-        self.stored_position[1] -= offset[1]
-    
-    def Attack_Direction_Handler(self, offset = (0,0)):
-        self.Mouse_Handler()
-        self.Stored_Position_Handler(offset)
-        self.attack_direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
-        self.attack_direction.normalize_ip()
-        if self.attack_direction[0] < 0:
-            self.flip[0] = True
-            self.Set_Animation('attack')
-
-        else:
-            self.flip[0] = False
-            self.Set_Animation('attack')
-
-        
-        if self.attack_direction[1] < -0.5:
-            # TODO: UPDATE to attack up when that has been animated
-            self.Set_Animation('idle_up')
-        
+        self.stored_position[1] -= offset[1]     
 
 
     def Mouse_Handler(self):

@@ -1,6 +1,8 @@
-import pygame
+from scripts.decoration.decoration import Decoration
 from scripts.entities.player.items.item import Item
-from scripts.entities.entities import PhysicsEntity
+import random
+import pygame
+import math
 
 
 class Weapon(Item):
@@ -9,6 +11,8 @@ class Weapon(Item):
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
+        self.entity = None # Entity that holds the weapon
+        self.nearby_entities = []
         self.effect = '' # Special effects, like poision, ice, fire etc
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
@@ -17,6 +21,7 @@ class Weapon(Item):
         self.animation_speed = 30 # Animation speed that it cycles through animations
         self.max_animation = 0 # Max amount of animations
         self.attacking = 0 # The time it takes for the attack to complete
+        self.attack_direction = []
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
@@ -37,12 +42,13 @@ class Weapon(Item):
         self.special_attack = 0
 
     # General Update function
-    def Update(self, entity):
+    def Update(self, entity, offset = (0,0)):
         self.Update_Animation()
-        self.Update_Flip()
-
-        self.Charge_Attack(entity)
         self.Special_Attack()
+        if not entity:
+            return
+        self.Update_Flip(entity)
+        self.Charge_Attack(entity, offset)
 
 
     def Update_Attack(self, entity):
@@ -70,7 +76,7 @@ class Weapon(Item):
         pass
     
     # Handle weapon charging
-    def Charge_Attack(self, entity):
+    def Charge_Attack(self, entity, offset = (0, 0)):
         if not self.inventory_type:
             return
         
@@ -88,11 +94,16 @@ class Weapon(Item):
                 self.attack_ready = True  # Ready to trigger an attack
                 self.Set_Attack(entity)  # Trigger the attack
             if self.charge_time > 20:
-                self.Set_Special_Attack()
+                self.Set_Special_Attack(entity, offset)
             self.charge_time = 0  # Reset the charge time
 
     # Initialise special attack
-    def Set_Special_Attack(self):
+    def Set_Special_Attack(self, entity, offset = (0, 0)):
+
+        entity.Attack_Direction_Handler(offset)
+        self.attack_direction = entity.attack_direction
+        # print(vars(entity))
+        # print(self.attack_direction)
         self.special_attack = self.charge_time
 
     def Set_Charging(self):
@@ -176,8 +187,8 @@ class Weapon(Item):
             return
 
         
-    def Update_Flip(self):
-        attack_direction = self.game.player.attack_direction
+    def Update_Flip(self, entity):
+        attack_direction = entity.attack_direction
         if abs(attack_direction[0]) >= abs(attack_direction[1]):
             if attack_direction[0] < 0:
                 self.flip_image = True
@@ -250,6 +261,12 @@ class Weapon(Item):
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
+    def Find_Nearby_Entities(self, distance):
+        # Set the player first so the player gets priority
+        distance_player = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
+        if distance_player < distance:
+            self.nearby_entities.append(self.game.player)
+        self.nearby_entities.extend(self.game.enemy_handler.Find_Nearby_Enemies(self, distance))
 
 
 
@@ -257,14 +274,18 @@ class Weapon(Item):
     #######################################################
     # Pick up the torch and update the general light in the area
     def Pick_Up(self):
+        if self.in_inventory:
+            return
         print("TEST")
-        if self.rect().colliderect(self.game.player.rect()):
-            if self.game.item_inventory.Add_Item(self):
-                self.in_inventory = True
-                self.picked_up = False
-                self.game.entities_render.remove(self)
-                
-                return True
+        self.Find_Nearby_Entities(1000)
+        for entity in self.nearby_entities:
+            if self.rect().colliderect(entity.rect()):
+                if self.game.item_inventory.Add_Item(self):
+                    self.in_inventory = True
+                    self.picked_up = False
+                    self.game.entities_render.remove(self)
+                    
+                    return True
         return False
     
     def Set_Equipped_Position(self, direction_y):
@@ -311,8 +332,7 @@ class Weapon(Item):
                 # If weapon is already equipped in the other hand, remove it before adding to new hand
                 if self.equipped:
                     self.game.player.Remove_Active_Weapon(inventory_type_holder)                    
-                self.equipped = True
-                self.game.player.Set_Active_Weapon(self, self.inventory_type)
+                self.Equip()
             else: # Drag weapon back into item inventory
                 self.equipped = False
                 self.game.player.Remove_Active_Weapon(inventory_type_holder)
@@ -347,11 +367,15 @@ class Weapon(Item):
                 
             else: # Move to weapon inventory
                 if self.Move_To_Other_Inventory(self.game.item_inventory, weapon_inventory, offset):
-                    self.equipped = True
-                    self.game.player.Set_Active_Weapon(self, self.inventory_type)
+                    self.Equip()
                     return True
                 
         return False
+    
+    # Equip the weapon
+    def Equip(self):
+        self.equipped = True
+        self.game.player.Set_Active_Weapon(self, self.inventory_type)
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):

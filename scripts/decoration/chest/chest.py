@@ -62,7 +62,6 @@ class Chest(Decoration):
                 rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
                 weapon_index = random.randint(0, len(self.weapons) - 1)
                 if self.weapons[weapon_index] == 'sword':
-                    print("TEST")
                     sword = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16), 'sword')
                     self.game.item_handler.Add_Item(sword)
                 elif self.weapons[weapon_index] == 'spear':

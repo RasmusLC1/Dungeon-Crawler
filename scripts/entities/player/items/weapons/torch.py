@@ -18,15 +18,12 @@ class Torch(Weapon):
 
     # Pick up the torch and update the general light in the area
     def Pick_Up(self):
-        if self.rect().colliderect(self.game.player.rect()):
-            if self.game.item_inventory.Add_Item(self):
-                self.in_inventory = True
-                self.light_source.picked_up = True
-                self.game.player.Set_Light_State(False)
-                self.game.light_handler.Remove_Light(self.light_source)
-                self.game.light_handler.Restore_Light(self.light_source)
-                self.picked_up = False
-                self.game.entities_render.remove(self)
+        if not super().Pick_Up():
+            return
+        self.light_source.picked_up = True
+        self.game.player.Set_Light_State(False)
+        self.game.light_handler.Remove_Light(self.light_source)
+        self.game.light_handler.Restore_Light(self.light_source)
 
     def Update(self, entity):
         super().Update(entity)

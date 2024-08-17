@@ -197,6 +197,10 @@ class Inventory:
         if not move_item:
             return False
         for inventory_slot in self.inventory:
+            # Check if the inventory slot has an item
+            if not inventory_slot.item:
+                continue
+            # Compare Item ID's
             if inventory_slot.item.item_ID == item.item_ID:
                 inventory_slot.Set_Active(False)  # Deactivate the slot
                 inventory_slot.item = None  # Remove the item from the slot

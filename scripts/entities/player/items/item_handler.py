@@ -25,11 +25,11 @@ class Item_Handler():
         self.items.remove(item)
 
 
-    def find_nearby_item(self, player_pos, max_distance):
+    def find_nearby_item(self, entity_pos, max_distance):
         nearby_items = []
         for item in self.items:
             # Calculate the Euclidean distance
-            distance = math.sqrt((player_pos[0] - item.pos[0]) ** 2 + (player_pos[1] - item.pos[1]) ** 2)
+            distance = math.sqrt((entity_pos[0] - item.pos[0]) ** 2 + (entity_pos[1] - item.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_items.append(item)
         return nearby_items
@@ -39,12 +39,12 @@ class Item_Handler():
         for item in self.items:
             if item.sub_type in throwable_weapons:
                 try:
-                    item.Throw_Weapon
+                    item.Throw_Weapon()
                 except Exception as e:
                     print(f"Item is not throwable {e}", item.sub_type)
             item.Update_Animation()
             if not item.picked_up:
-                    self.items.remove(item)
+                self.items.remove(item)
 
     def Render(self, decorations, surf, render_scroll = (0, 0)):
         for decoration in decorations:

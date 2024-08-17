@@ -1,8 +1,4 @@
-from scripts.decoration.decoration import Decoration
-from scripts.entities.player.items.item import Item
 from scripts.entities.player.items.weapons.weapon import Weapon
-import random
-import pygame
 
 
 class Spear(Weapon):
@@ -28,12 +24,25 @@ class Spear(Weapon):
 
     def Throw_Weapon(self):
         if self.special_attack:
-            print(self.special_attack)
-            self.special_attack -= 1
+            speed = 5
+            dir_x = self.pos[0] + self.attack_direction[0] * speed
+            dir_y = self.pos[1] + self.attack_direction[1] * speed
+            self.Move((dir_x, dir_y))
+            self.special_attack = max(0, self.special_attack - speed)
+
+            for enemy in self.game.enemy_handler.nearby_enemies:
+                print(enemy)
 
     def Special_Attack(self):
-        if not self.special_attack:
+        if not self.special_attack or not self.equipped:
             return
+        self.Drop_Weapon_From_Weapon_Inventory()
+
+        
+        # distance_player = math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2)
+        
+    
+    def Drop_Weapon_From_Weapon_Inventory(self):
         active_inventory = self.game.weapon_inventory.active_inventory
         weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
         self.game.player.Remove_Active_Weapon(self.inventory_type)
@@ -42,7 +51,6 @@ class Spear(Weapon):
         self.game.entities_render.append(self)
         self.picked_up = True
         self.equipped = False
-        self.special_attack = 0
 
     def Update_Attack_Animation(self, entity):
         super().Update_Attack_Animation(entity)
@@ -50,7 +58,6 @@ class Spear(Weapon):
         if not self.attacking:
             self.return_to_holder = False
             self.distance_from_player = 0
-            print(self.game.player.attack_direction)
             return
         
         # Not updating the animation as the timer hasn't been hit yet

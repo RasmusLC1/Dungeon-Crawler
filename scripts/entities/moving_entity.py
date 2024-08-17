@@ -255,6 +255,23 @@ class Moving_Entity(PhysicsEntity):
         self.damage_cooldown = 10
         self.health -= damage
         
+    def Attack_Direction_Handler(self, offset = (0,0)):
+        self.Mouse_Handler()
+        self.Stored_Position_Handler(offset)
+        self.attack_direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+        self.attack_direction.normalize_ip()
+        if self.attack_direction[0] < 0:
+            self.flip[0] = True
+            self.Set_Animation('attack')
+
+        else:
+            self.flip[0] = False
+            self.Set_Animation('attack')
+
+        
+        if self.attack_direction[1] < -0.5:
+            # TODO: UPDATE to attack up when that has been animated
+            self.Set_Animation('idle_up')
 
     # Return true if healing was successfull
     def Healing(self, healing):
