@@ -205,6 +205,7 @@ class Enemy(Moving_Entity):
     def Damage_Taken(self, damage):
         super().Damage_Taken(damage)
         if self.health <= 0:
+            self.Reset_Effects()
             self.game.enemy_handler.Delete_Enemy(self)
         
 

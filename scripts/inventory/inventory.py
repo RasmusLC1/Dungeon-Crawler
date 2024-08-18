@@ -151,7 +151,7 @@ class Inventory:
     def Place_Down_item(self):
         if not self.active_item.Place_Down():
             self.game.item_handler.Add_Item(self.active_item)
-            self.game.entities_render.append(self.active_item)
+            self.game.entities_render.Add_Entity(self.active_item)
 
         self.active_item = None
         

@@ -35,7 +35,7 @@ class Item(PhysicsEntity):
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.item_inventory.Add_Item(self):
                 self.picked_up = False
-                self.game.entities_render.remove(self)
+                self.game.entities_render.Remove_Entity(self)
 
     def Place_Down(self):
         nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, 20)

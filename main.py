@@ -28,6 +28,7 @@ from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
+from scripts.entities.entity_renderer import Entity_Renderer
 
 import numpy as np
 
@@ -60,10 +61,10 @@ class Game:
         self.mouse = Mouse_Handler(self)
         self.ray_caster = Ray_Caster(self)
         self.a_star = A_Star()
+        self.entities_render = Entity_Renderer(self)
 
         self.level = 0
         self.scroll = [0, 0]
-        self.entities_render = []
 
         self.load_level(self.level)
 
@@ -130,6 +131,7 @@ class Game:
             self.decoration_handler.Update()
             self.item_handler.Update()
             self.enemy_handler.Update()
+            self.entities_render.Update()
 
             self.item_inventory.Update(render_scroll)
             self.weapon_inventory.Update(render_scroll)
@@ -144,10 +146,7 @@ class Game:
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
 
         self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
-
-        self.entities_render.sort(key=lambda entity: entity.pos[1])
-        for entity in self.entities_render:
-            entity.Render(self.display, render_scroll)
+   
 
 
         Health_Bar.Health_Bar(self)
@@ -156,6 +155,7 @@ class Game:
         Coins.Render(self)
         self.item_inventory.Render(self.display)
         self.weapon_inventory.Render(self.display, render_scroll)
+        self.entities_render.Render(self.display, render_scroll)
         for particle in self.particles:
             particle.Render(self.display, render_scroll)
 

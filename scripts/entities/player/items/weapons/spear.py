@@ -49,7 +49,7 @@ class Spear(Weapon):
         self.game.player.Remove_Active_Weapon(self.inventory_type)
         weapon_inventory.Remove_Item(self, True)
         self.game.item_handler.Add_Item(self)
-        self.game.entities_render.append(self)
+        self.game.entities_render.Add_Entity(self)
         self.picked_up = True
         self.equipped = False
 

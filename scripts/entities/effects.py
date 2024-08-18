@@ -108,6 +108,7 @@ class Status_Effect_Handler:
     
     def render_fire(self, game, surf, offset=(0, 0)):
         if self.entity.is_on_fire:
+            print(self.entity.is_on_fire)
             fire_image = game.assets['fire'][self.entity.fire_animation].convert_alpha()
             # Set the opacity to 70%
             fire_image.set_alpha(179)

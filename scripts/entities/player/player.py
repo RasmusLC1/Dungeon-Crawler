@@ -265,9 +265,7 @@ class Player(Moving_Entity):
         self.stored_position[1] -= offset[1]     
 
 
-    def Mouse_Handler(self):
-        self.mpos = pygame.mouse.get_pos()
-        self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
+    
 
     def Set_Direction_Holder(self):
         if self.direction_x or self.direction_y:

@@ -16,10 +16,14 @@ class Enemy_Handler():
 
     def Delete_Enemy(self, enemy):
         self.enemies.remove(enemy)
+        self.game.entities_render.Remove_Entity(enemy)
 
     def Update(self):
         for enemy in self.enemies:
             enemy.update(self.game.tilemap)
+            
+            
+                
 
     def Find_Nearby_Enemies(self, entity, max_distance):
         self.nearby_enemies.clear()

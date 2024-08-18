@@ -15,7 +15,7 @@ class PhysicsEntity:
         self.size = size
         self.active = 0
         self.light_level = 0
-        self.game.entities_render.append(self)
+        self.game.entities_render.Add_Entity(self)
 
         # Status Effects
         self.is_on_fire = 0
@@ -89,6 +89,14 @@ class PhysicsEntity:
             return
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
 
+
+    def Reset_Effects(self):
+        # Status Effects
+        self.is_on_fire = 0
+        self.poisoned = 0
+        self.is_on_ice = 0
+        self.frozen = 0 
+        self.wet = 0 
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on

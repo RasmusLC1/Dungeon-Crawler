@@ -272,6 +272,10 @@ class Moving_Entity(PhysicsEntity):
         if self.attack_direction[1] < -0.5:
             # TODO: UPDATE to attack up when that has been animated
             self.Set_Animation('idle_up')
+    
+    def Mouse_Handler(self):
+        self.mpos = pygame.mouse.get_pos()
+        self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
 
     # Return true if healing was successfull
     def Healing(self, healing):

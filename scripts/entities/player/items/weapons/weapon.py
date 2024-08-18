@@ -281,7 +281,7 @@ class Weapon(Item):
                     self.entity = entity
                     self.in_inventory = True
                     self.picked_up = False
-                    self.game.entities_render.remove(self)
+                    self.game.entities_render.Remove_Entity(self)
                     
                     return True
         return False
