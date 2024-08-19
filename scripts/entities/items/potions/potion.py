@@ -1,4 +1,4 @@
-from scripts.entities.player.items.item import Item
+from scripts.entities.items.item import Item
 
 
 class Potion(Item):

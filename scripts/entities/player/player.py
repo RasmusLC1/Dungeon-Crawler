@@ -3,7 +3,7 @@ from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
 from scripts.projectile.projectile import Projectile
-from scripts.entities.player.items.weapons import weapon
+from scripts.entities.items.weapons import weapon
 from copy import copy
 
 import random
@@ -259,11 +259,7 @@ class Player(Moving_Entity):
             self.Stored_Position_Handler(offset)
             self.dashing = 60
 
-    def Stored_Position_Handler(self, offset=(0, 0)):
-        self.stored_position = self.pos.copy()
-        self.stored_position[0] -= offset[0]
-        self.stored_position[1] -= offset[1]     
-
+    
 
     
 

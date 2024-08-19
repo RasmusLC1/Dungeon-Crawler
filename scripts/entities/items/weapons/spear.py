@@ -1,5 +1,6 @@
-from scripts.entities.player.items.weapons.weapon import Weapon
-
+from scripts.entities.items.weapons.weapon import Weapon
+import math
+import pygame
 
 class Spear(Weapon):
     def __init__(self, game, pos, size, type):
@@ -9,7 +10,13 @@ class Spear(Weapon):
         self.return_to_holder = False
         self.distance_from_player = 0
         
-
+    # TODO: Implement this more widely with weapons and player
+    def Point_Towards_Mouse(self):
+        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
+        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
+        # Calculate the angle in degrees
+        self.rotate = math.degrees(math.atan2(dy, dx)) + 90
+        self.rotate *= -1
 
 
     def Place_Down(self):
@@ -23,10 +30,14 @@ class Spear(Weapon):
             return
         self.attack_animation_time = int(self.attacking / self.range / self.attack_animation_time) 
     
+    def Set_Special_Attack(self, offset= (0,0)):
+        super().Set_Special_Attack(offset)
+        self.Point_Towards_Mouse()
+
 
     def Throw_Weapon(self):
         if self.special_attack:
-            speed = 5
+            speed = 1
             dir_x = self.pos[0] + self.attack_direction[0] * speed
             dir_y = self.pos[1] + self.attack_direction[1] * speed
             self.Move((dir_x, dir_y))
@@ -100,3 +111,39 @@ class Spear(Weapon):
                 else:
                     self.rotate = 90
                     self.Move((self.pos[0] - 5, self.pos[1] - self.distance_from_player))
+
+    # For some reason calling the parent function does not work for render
+    def Render(self, surf, offset=(0, 0)):
+        
+
+
+        # Check if item is in inventory. If yes we don't need offset, except if
+        # the weapon has been picked up
+        if self.in_inventory:
+            if self.picked_up:
+                self.Render_In_Inventory(surf, offset)
+            else:
+                self.Render_In_Inventory(surf)
+        
+        if not self.Update_Light_Level():
+            return
+        # Set image
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+
+        if self.special_attack:
+            
+            weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
+
+        # Set alpha value to make chest fade out
+        alpha_value = max(0, min(255, self.active))
+        weapon_image.set_alpha(alpha_value)
+
+        # Blit the dark layer
+        dark_surface_head = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+
+        # Blit the chest layer on top the dark layer
+        weapon_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        
+        # Render the chest
+        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

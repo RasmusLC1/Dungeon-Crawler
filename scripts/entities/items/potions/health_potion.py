@@ -1,4 +1,4 @@
-from scripts.entities.player.items.potions.potion import Potion
+from scripts.entities.items.potions.potion import Potion
 
 
 

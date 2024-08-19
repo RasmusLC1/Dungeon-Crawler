@@ -273,6 +273,12 @@ class Moving_Entity(PhysicsEntity):
             # TODO: UPDATE to attack up when that has been animated
             self.Set_Animation('idle_up')
     
+    def Stored_Position_Handler(self, offset=(0, 0)):
+        self.stored_position = self.pos.copy()
+        self.stored_position[0] -= offset[0]
+        self.stored_position[1] -= offset[1]     
+
+
     def Mouse_Handler(self):
         self.mpos = pygame.mouse.get_pos()
         self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)

@@ -25,17 +25,33 @@ class Item(PhysicsEntity):
         self.damaged = False
         self.max_animation = 0
         self.animation = random.randint(0, self.max_animation)
+        self.nearby_entities = []
         
 
     def Activate(self):
         pass
+    
+    def Find_Nearby_Entities(self, distance):
+        # Set the player first so the player gets priority
+        distance_player = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
+        if distance_player < distance:
+            self.nearby_entities.append(self.game.player)
+        self.nearby_entities.extend(self.game.enemy_handler.Find_Nearby_Enemies(self, distance))
+
+
 
 
     def Pick_Up(self):
-        if self.rect().colliderect(self.game.player.rect()):
+        self.Find_Nearby_Entities(10)
+        for entity in self.nearby_entities:
+            if not self.rect().colliderect(entity.rect()):
+                continue
             if self.game.item_inventory.Add_Item(self):
                 self.picked_up = False
                 self.game.entities_render.Remove_Entity(self)
+                return entity
+                
+        return None
 
     def Place_Down(self):
         nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, 20)

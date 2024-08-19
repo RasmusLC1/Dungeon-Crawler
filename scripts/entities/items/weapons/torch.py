@@ -1,6 +1,6 @@
 from scripts.decoration.decoration import Decoration
-from scripts.entities.player.items.item import Item
-from scripts.entities.player.items.weapons.weapon import Weapon
+from scripts.entities.items.item import Item
+from scripts.entities.items.weapons.weapon import Weapon
 import random
 import pygame
 

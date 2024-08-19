@@ -15,7 +15,7 @@ from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
-from scripts.entities.player.items.item_handler import Item_Handler
+from scripts.entities.items.item_handler import Item_Handler
 from scripts.engine.lights import light_handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
@@ -146,8 +146,6 @@ class Game:
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=render_scroll)
 
         self.trap_handler.Render(self.ray_caster.traps, self.display, render_scroll)
-   
-
 
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)

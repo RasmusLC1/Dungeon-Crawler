@@ -1,5 +1,5 @@
 from scripts.decoration.decoration import Decoration
-from scripts.entities.player.items.item import Item
+from scripts.entities.items.item import Item
 import random
 import pygame
 import math
@@ -12,7 +12,6 @@ class Weapon(Item):
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
         self.entity = None # Entity that holds the weapon
-        self.nearby_entities = []
         self.effect = '' # Special effects, like poision, ice, fire etc
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
@@ -259,31 +258,31 @@ class Weapon(Item):
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
-    def Find_Nearby_Entities(self, distance):
-        # Set the player first so the player gets priority
-        distance_player = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
-        if distance_player < distance:
-            self.nearby_entities.append(self.game.player)
-        self.nearby_entities.extend(self.game.enemy_handler.Find_Nearby_Enemies(self, distance))
-
-
+    
 
     # Inventory Logic below
     #######################################################
     # Pick up the torch and update the general light in the area
     def Pick_Up(self):
         if self.in_inventory:
-            return
-        self.Find_Nearby_Entities(1000)
-        for entity in self.nearby_entities:
-            if self.rect().colliderect(entity.rect()):
-                if self.game.item_inventory.Add_Item(self):
-                    self.entity = entity
-                    self.in_inventory = True
-                    self.picked_up = False
-                    self.game.entities_render.Remove_Entity(self)
-                    
-                    return True
+            return False
+        self.entity = super().Pick_Up()
+
+        if not self.entity:
+            return False
+        
+        self.in_inventory = True
+        self.rotate = 0
+        return True
+    
+    def Pickup_Reset_Weapon(self, entity):
+        if self.game.item_inventory.Add_Item(self):
+            self.entity = entity
+            self.in_inventory = True
+            self.picked_up = False
+            self.rotate = 0
+            self.game.entities_render.Remove_Entity(self)
+            return True
         return False
     
     def Set_Equipped_Position(self, direction_y):
@@ -406,6 +405,7 @@ class Weapon(Item):
     def Place_Down(self):
         super().Place_Down()
         self.entity = None
+        self.in_inventory = False
         if self.equipped:
             self.game.player.Remove_Active_Weapon(self.inventory_type)
             self.equipped = False
