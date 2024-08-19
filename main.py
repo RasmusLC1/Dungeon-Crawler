@@ -129,7 +129,7 @@ class Game:
             self.trap_handler.Update()
             self.chest_handler.Update()
             self.decoration_handler.Update()
-            self.item_handler.Update()
+            self.item_handler.Update(render_scroll)
             self.enemy_handler.Update()
             self.entities_render.Update()
 

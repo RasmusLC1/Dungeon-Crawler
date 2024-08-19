@@ -34,7 +34,7 @@ class Item_Handler():
                 nearby_items.append(item)
         return nearby_items
 
-    def Update(self):
+    def Update(self, offset = (0,0)):
         self.nearby_items = self.find_nearby_item(self.game.player.pos, 200)
         for item in self.items:
             if item.sub_type in throwable_weapons:

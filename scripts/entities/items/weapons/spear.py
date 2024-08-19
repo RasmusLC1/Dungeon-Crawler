@@ -9,6 +9,8 @@ class Spear(Weapon):
         self.attack_animation_max = 3
         self.return_to_holder = False
         self.distance_from_player = 0
+        self.throw_speed = 0
+        self.nearby_enemies = []
         
     # TODO: Implement this more widely with weapons and player
     def Point_Towards_Mouse(self):
@@ -19,10 +21,10 @@ class Spear(Weapon):
         self.rotate *= -1
 
 
-    def Place_Down(self):
-        # Parent class Place_down function
-        super().Place_Down()
-        return False
+    # def Place_Down(self):
+    #     # Parent class Place_down function
+    #     super().Place_Down()
+    #     return False
 
     def Set_Attack(self):
         super().Set_Attack()
@@ -36,12 +38,39 @@ class Spear(Weapon):
 
 
     def Throw_Weapon(self):
-        if self.special_attack:
-            speed = 1
-            dir_x = self.pos[0] + self.attack_direction[0] * speed
-            dir_y = self.pos[1] + self.attack_direction[1] * speed
-            self.Move((dir_x, dir_y))
-            self.special_attack = max(0, self.special_attack - speed)
+        if not self.special_attack:
+            return
+        # Initialise the throw
+        if not self.throw_speed:
+            self.throw_speed = self.entity.strength
+            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack * 2)
+        
+
+        dir_x = self.pos[0] + self.attack_direction[0] * self.throw_speed
+        dir_y = self.pos[1] + self.attack_direction[1] * self.throw_speed
+        
+        if not self.Check_Tile((dir_x, dir_y)):
+            self.special_attack = 0
+            return False
+        self.Move((dir_x, dir_y))
+        # Check for collision with enemy
+        if self.Attack_Collision_Check():
+            self.special_attack = 0
+        self.special_attack = max(0, self.special_attack - self.throw_speed)
+
+    
+
+    def Check_Tile(self, new_pos):
+        tile = self.game.tilemap.Current_Tile(new_pos)
+        if not tile:
+            return True
+        
+        if 'Wall' in tile['type']:
+            return False
+        
+        return True
+
+        
 
             
 
@@ -51,7 +80,6 @@ class Spear(Weapon):
         self.Drop_Weapon_From_Weapon_Inventory()
 
         
-        # distance_player = math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2)
         
     
     def Drop_Weapon_From_Weapon_Inventory(self):

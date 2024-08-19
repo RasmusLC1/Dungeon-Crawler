@@ -28,6 +28,7 @@ class Weapon(Item):
         self.enemy_hit = False # Prevent double damage on attacks
         self.flip_image = False
         self.rotate = 0
+        self.nearby_enemies = []
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
         
@@ -68,6 +69,7 @@ class Weapon(Item):
             self.charge_time = 0  # Reset charge time
             self.attack_ready = False  # Reset attack trigger
             self.charged_attack = False  # Reset charged attack flag
+            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.range * 8) # Find nearby enemies to attack
 
     
     
@@ -128,7 +130,7 @@ class Weapon(Item):
         if self.enemy_hit:
             return None
         weapon_rect = self.rect_attack()
-        for enemy in self.game.player.nearby_enemies:
+        for enemy in self.nearby_enemies:
             if enemy.damage_cooldown:
                 continue
             if weapon_rect.colliderect(enemy.rect()):
@@ -144,7 +146,11 @@ class Weapon(Item):
         return None
     
     def rect_attack(self):
-        return pygame.Rect(self.pos[0], self.pos[1], self.size[0]*2, self.size[1]*2)
+        extra_reach = 10
+        if self.entity.attack_direction[0] < 0:
+            extra_reach = -10
+
+        return pygame.Rect(self.pos[0] + extra_reach, self.pos[1] + self.entity.attack_direction[1], self.size[0]*2, self.size[1]*2)
 
 
     def Update_Attack_Animation(self):
@@ -271,20 +277,16 @@ class Weapon(Item):
         if not self.entity:
             return False
         
-        self.in_inventory = True
-        self.rotate = 0
+        self.Pickup_Reset_Weapon(self.entity)
         return True
     
     def Pickup_Reset_Weapon(self, entity):
-        if self.game.item_inventory.Add_Item(self):
-            self.entity = entity
-            self.in_inventory = True
-            self.picked_up = False
-            self.rotate = 0
-            self.game.entities_render.Remove_Entity(self)
-            return True
-        return False
-    
+        self.entity = entity
+        self.in_inventory = True
+        self.picked_up = False
+        self.rotate = 0
+        self.enemy_hit = False
+
     def Set_Equipped_Position(self, direction_y):
         if 'left' in self.inventory_type:
             if direction_y < 0:

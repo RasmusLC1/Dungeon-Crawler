@@ -26,9 +26,9 @@ class Enemy_Handler():
                 
 
     def Find_Nearby_Enemies(self, entity, max_distance):
-        self.nearby_enemies.clear()
+        nearby_enemies = []
         for enemy in self.enemies:
             distance = math.sqrt((entity.pos[0] - enemy.pos[0]) ** 2 + (entity.pos[1] - enemy.pos[1]) ** 2)
             if distance < max_distance and not enemy == entity:
-                self.nearby_enemies.append(enemy)
-        return self.nearby_enemies
+                nearby_enemies.append(enemy)
+        return nearby_enemies

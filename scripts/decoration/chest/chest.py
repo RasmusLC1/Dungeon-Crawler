@@ -42,7 +42,7 @@ class Chest(Decoration):
         if self.rect().colliderect(self.game.player.rect()):
             version_modifier = self.version * 3 + 1
             self.loot_amount = random.randint(1, 3) * version_modifier
-            self.loot_type = random.randint(0, 3)
+            self.loot_type = random.randint(3, 3)
             if self.loot_type == 0:
                     item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
                     self.game.item_handler.Add_Item(item)
