@@ -104,7 +104,7 @@ class Asset_Loader:
             'torch': get_tiles_from_sheet('weapons/torch.png', 8, 0, 0, 0, 16, 16),
             'torch_attack': get_tiles_from_sheet('weapons/torch_attack.png', 8, 0, 0, 0, 16, 16),
             'spear': get_tiles_from_sheet('weapons/spear.png', 8, 0, 0, 0, 16, 16),
-            'spear_attack': get_tiles_from_sheet('weapons/spear_attack.png', 8, 0, 0, 0, 16, 16),
+            'spear_attack': get_tiles_from_sheet('weapons/spear.png', 8, 0, 0, 0, 16, 16),
 
         }
         self.assets.update(Weapons_assets)

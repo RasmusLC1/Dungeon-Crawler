@@ -12,6 +12,7 @@ class Sword(Weapon):
         self.max_animation = 3
         self.attack_animation_max = 3
         self.animation_speed = 20
+        self.slash = True
 
     def Update_Flip(self):
         pass
@@ -38,12 +39,7 @@ class Sword(Weapon):
                 self.rotate = 10
                 self.Move((self.game.player.pos[0] - 4, self.game.player.pos[1] - 14))
             else:
-                if self.flip_image:
-                    offset_x = 2
-                    self.rotate = -30
-                else:
-                    offset_x = 11
-                    self.rotate = 0
+                offset_x = self.Rotate_Left()
                 self.Move((self.game.player.pos[0] + offset_x , self.game.player.pos[1] - 7))
         elif 'right' in self.inventory_type:
             
@@ -51,14 +47,30 @@ class Sword(Weapon):
                 self.rotate = 60
                 self.Move((self.game.player.pos[0] + 1, self.game.player.pos[1] - 14))
             else:
-                if self.flip_image:
-                    offset_x = -11
-                    self.rotate = 0
-
-                else:
-                    offset_x = -2
-                    self.rotate = -30
+                offset_x = self.Rotate_Right()
                 self.Move((self.game.player.pos[0] + offset_x, self.game.player.pos[1] - 7))
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
+
+    def Rotate_Left(self):
+        if self.flip_image:
+            offset_x = 2
+            self.rotate = -30
+            self.slash = False
+        else:
+            offset_x = 11
+            self.rotate = 0
+            self.slash = True
+        return offset_x
+        
+    def Rotate_Right(self):
+        if self.flip_image:
+            offset_x = -11
+            self.rotate = 0
+            self.slash = True
+        else:
+            offset_x = -2
+            self.rotate = -30
+            self.slash = False
+        return offset_x
 

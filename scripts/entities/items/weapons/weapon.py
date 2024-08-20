@@ -20,7 +20,7 @@ class Weapon(Item):
         self.animation_speed = 30 # Animation speed that it cycles through animations
         self.max_animation = 0 # Max amount of animations
         self.attacking = 0 # The time it takes for the attack to complete
-        self.attack_direction = []
+        self.attack_direction = (0,0)
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
@@ -28,6 +28,7 @@ class Weapon(Item):
         self.enemy_hit = False # Prevent double damage on attacks
         self.flip_image = False
         self.rotate = 0
+        self.distance_from_player = 0
         self.nearby_enemies = []
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type
@@ -61,7 +62,7 @@ class Weapon(Item):
             
         self.Update_Attack_Animation()
         self.Attack_Collision_Check()
-        self.Attack_Align_Weapon()
+        self.Swipe_Attack_Align_Weapon()
 
     def Set_Attack(self):
         if self.attack_ready:
@@ -176,7 +177,7 @@ class Weapon(Item):
         return
     
     # Align the weapon with the attacking entity while attacking
-    def Attack_Align_Weapon(self):
+    def Swipe_Attack_Align_Weapon(self):
         if 'left' in self.inventory_type:
             if self.flip_image:
                 self.Move((self.pos[0] - 3, self.pos[1] - 2))
@@ -191,8 +192,60 @@ class Weapon(Item):
             else:
                 self.Move((self.pos[0] + 4, self.pos[1] - 2))
             return
+    
+    def Stabbing_Attack(self):
+        # if not self.rotate:  
+        if not self.rotate:
+            self.Point_Towards_Mouse()
+            self.Stabbing_Attack_Direction()
+        
+        if not self.return_to_holder:
+            self.distance_from_player += 1
+            new_x_pos = self.pos[0] + self.distance_from_player * self.attack_direction[0]
+            new_y_pos = self.pos[1] + self.distance_from_player * self.attack_direction[1]
+            self.Move((new_x_pos, new_y_pos))
+            # new_x_pos = self.pos[0]
+            # if self.attack_direction[0] < 0:
+            #     new_x_pos -= self.distance_from_player
+            # else:
+            #     new_x_pos += self.distance_from_player
+            # new_y_pos = self.pos[1]
+            # if self.attack_direction[1] < 0:
+            #     new_y_pos -= self.distance_from_player
+            # else:
+            #     new_y_pos += self.distance_from_player
+
+            # self.Move((new_x_pos, new_y_pos))
+            if self.distance_from_player <= self.range:
+                return
+            elif self.distance_from_player > self.range:
+                self.return_to_holder = True
+                return
+        else:
+            self.distance_from_player -= 1
+
+
+            if self.distance_from_player <= 0:
+                self.return_to_holder = False
+
+                
+    # TODO: BUG fix it sometimes points the wrong way
+    def Stabbing_Attack_Direction(self):
+            self.entity.Attack_Direction_Handler(self.game.render_scroll)
+            self.attack_direction = self.entity.attack_direction
+            print(self.entity.attack_direction)
+            if self.entity.flip[0]:
+                self.rotate *= -1
 
     
+    def Point_Towards_Mouse(self):
+        dx = self.game.mouse.mpos[0] - self.pos[0]
+        dy = self.game.mouse.mpos[1] - self.pos[1]
+        # Calculate the angle in degrees
+        self.rotate = math.degrees(math.atan2(dy, dx)) + 90
+        self.rotate *= -1
+                 
+     
     
 
     def Update_Flip(self):

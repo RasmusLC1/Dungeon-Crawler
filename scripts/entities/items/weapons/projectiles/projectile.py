@@ -37,13 +37,7 @@ class Projectile(Weapon):
         self.special_attack = max(0, self.special_attack - self.shoot_speed)
         return None
 
-    # TODO: Implement this more widely with weapons and player
-    def Point_Towards_Mouse(self):
-        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
-        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
-        # Calculate the angle in degrees
-        self.rotate = math.degrees(math.atan2(dy, dx)) + 90
-        self.rotate *= -1
+ 
 
     def Check_Tile(self, new_pos):
         tile = self.game.tilemap.Current_Tile(new_pos)
@@ -82,7 +76,6 @@ class Projectile(Weapon):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
         if self.special_attack:
-            
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
 
         # Set alpha value to make chest fade out

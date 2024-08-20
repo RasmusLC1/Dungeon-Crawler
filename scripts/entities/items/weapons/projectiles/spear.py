@@ -42,40 +42,40 @@ class Spear(Projectile):
         self.Stabbing_Attack()
         
 
-    def Stabbing_Attack(self):        
-        self.Stabbing_Attack_Direction()
-        if not self.return_to_holder:
-            self.distance_from_player += 1
-            if self.distance_from_player <= self.range:
-                return
-            elif self.distance_from_player > self.range:
-                self.return_to_holder = True
-                return
-        else:
-            self.distance_from_player -= 1
+    # def Stabbing_Attack(self):        
+    #     self.Stabbing_Attack_Direction()
+    #     if not self.return_to_holder:
+    #         self.distance_from_player += 1
+    #         if self.distance_from_player <= self.range:
+    #             return
+    #         elif self.distance_from_player > self.range:
+    #             self.return_to_holder = True
+    #             return
+    #     else:
+    #         self.distance_from_player -= 1
 
 
-            if self.distance_from_player <= 0:
-                self.return_to_holder = False
+    #         if self.distance_from_player <= 0:
+    #             self.return_to_holder = False
                 
             
-    def Stabbing_Attack_Direction(self):
-            attack_direction = self.entity.attack_direction
-            if abs(attack_direction[0]) >= abs(attack_direction[1]):                
-                if attack_direction[0] >= 0:
-                    self.rotate = 0
-                    self.Move((self.pos[0] + self.distance_from_player, self.pos[1] + 5))
-                else:
-                    self.rotate = 0
-                    self.flip_image = True
-                    self.Move((self.pos[0] - self.distance_from_player, self.pos[1] + 5))
-            else:
+    # def Stabbing_Attack_Direction(self):
+    #         attack_direction = self.entity.attack_direction
+    #         if abs(attack_direction[0]) >= abs(attack_direction[1]):                
+    #             if attack_direction[0] >= 0:
+    #                 self.rotate = 0
+    #                 self.Move((self.pos[0] + self.distance_from_player, self.pos[1] + 5))
+    #             else:
+    #                 self.rotate = 0
+    #                 self.flip_image = True
+    #                 self.Move((self.pos[0] - self.distance_from_player, self.pos[1] + 5))
+    #         else:
                 
-                if attack_direction[1] >= 0:
-                    self.rotate = -90
-                    self.Move((self.pos[0] - 5, self.pos[1] + self.distance_from_player))
-                else:
-                    self.rotate = 90
-                    self.Move((self.pos[0] - 5, self.pos[1] - self.distance_from_player))
+    #             if attack_direction[1] >= 0:
+    #                 self.rotate = -90
+    #                 self.Move((self.pos[0] - 5, self.pos[1] + self.distance_from_player))
+    #             else:
+    #                 self.rotate = 90
+    #                 self.Move((self.pos[0] - 5, self.pos[1] - self.distance_from_player))
 
     
