@@ -6,9 +6,9 @@ from scripts.entities.items.potions.health_potion import Health_Potion
 from scripts.entities.items.potions.mana_potion import Mana_Potion
 from scripts.decoration.decoration import Decoration
 
-from scripts.entities.items.weapons.sword import Sword
-from scripts.entities.items.weapons.torch import Torch
-from scripts.entities.items.weapons.spear import Spear
+from scripts.entities.items.weapons.close_combat.sword import Sword
+from scripts.entities.items.weapons.close_combat.torch import Torch
+from scripts.entities.items.weapons.projectiles.spear import Spear
 
 
 class Chest(Decoration):

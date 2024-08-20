@@ -1,5 +1,5 @@
 from scripts.decoration.decoration import Decoration
-from scripts.entities.items.weapons.torch import Torch
+from scripts.entities.items.weapons.close_combat.torch import Torch
 import math
 
 class Decoration_Handler():

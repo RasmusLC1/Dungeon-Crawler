@@ -189,7 +189,9 @@ class Weapon(Item):
                 self.Move((self.pos[0] + 4, self.pos[1] - 2))
             return
 
-        
+    
+    
+
     def Update_Flip(self):
         attack_direction = self.entity.attack_direction
         if abs(attack_direction[0]) >= abs(attack_direction[1]):
@@ -199,8 +201,6 @@ class Weapon(Item):
                 self.flip_image = False
     
 
-    
-    
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
 
@@ -450,20 +450,7 @@ class Weapon(Item):
                 return False
         
         return True
-            
-        
-        if not 'one' in self.weapon_class:
-            return True
-        if weapon_inventory_slot.inventory_type:
-            # Try to find the inventory_slot, only the weapon inventory has this property
-            try:
-                if receiving_inventory.Find_Inventory_Slot(weapon_inventory_slot):
-                    # Find the original position of the item in the inventory
-                    self.Reset_Inventory_Slot(sending_inventory)
-                    return False
-            except TypeError as e:
-                print(f"Receiving inventory not a weapon inventory: {e}")
-        return True
+          
     
     def Reset_Inventory_Slot(self, inventory_slot):
         original_inventory_slot = inventory_slot.Find_Item_In_Inventory(self)

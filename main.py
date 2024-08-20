@@ -12,7 +12,6 @@ from scripts.input.mouse import Mouse_Handler
 from scripts.entities.player.player import Player
 from scripts.engine.tilemap import Tilemap
 from scripts.engine.particles.particle_handler import Particle_Handler
-from scripts.projectile.projectile_handler import Projectile_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
 from scripts.entities.items.item_handler import Item_Handler
@@ -109,10 +108,6 @@ class Game:
         
         self.a_star.Setup_Map(self)
 
-        
-
-
-
         # Printing the map
         # for row in self.shadow_map:
         #     print(row)
@@ -125,7 +120,6 @@ class Game:
             
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), render_scroll)
             Particle_Handler.particle_update(self, render_scroll)
-            Projectile_Handler.Projectile_Update(self, self.render_scale, render_scroll)
             self.trap_handler.Update()
             self.chest_handler.Update()
             self.decoration_handler.Update()

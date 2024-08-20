@@ -2,7 +2,6 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
-from scripts.projectile.projectile import Projectile
 from scripts.entities.items.weapons import weapon
 from copy import copy
 
@@ -235,23 +234,6 @@ class Player(Moving_Entity):
         
     def Coin_Change(self, coins):
         self.coins += coins
-
-    def Shooting(self, offset=(0, 0)):
-        
-        if not self.ammo or self.shootin_cooldown:
-            return
-        
-        self.shootin_cooldown = 20
-        self.Mouse_Handler()
-        self.Stored_Position_Handler(offset)
-        direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
-
-        if direction.length() > 0:  # Ensure the vector is not zero-length before normalizing
-            direction.normalize_ip()
-            position = [self.rect().centerx - 7, self.rect().centery]
-            velocity = [direction.x * 3, direction.y * 3]
-            self.game.projectiles.append(Projectile(self.game, 'bullet', position, velocity, 0))
-        self.ammo -= 1
 
     def Dash(self, offset=(0, 0)):
         if not self.dashing:

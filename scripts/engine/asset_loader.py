@@ -57,6 +57,7 @@ class Asset_Loader:
         effect_assets = {
             'particle/leaf': Animation(load_images('particles/leaf'), img_dur=20, loop=False),
             'particle/particle': Animation(load_images('particles/particle'), img_dur=6, loop=False),
+            'fire_particle': get_tiles_from_sheet('particles/fire_particle/fire_particle.png', 3, 0, 0, 0, 2, 2, white),
             'heart': load_image('heart.png'),
             'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13, white),
             'fire': get_tiles_from_sheet('particles/effects/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 16, 16, white),

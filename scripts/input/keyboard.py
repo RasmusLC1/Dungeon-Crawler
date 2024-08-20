@@ -12,11 +12,11 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_s:
                 self.movement[3] = True
             if key_press.key == pygame.K_e:
-                nearby_items = self.item_handler.find_nearby_item(self.player.pos, 30)
+                nearby_items = self.item_handler.Find_Nearby_Item(self.player.pos, 30)
                 for item in nearby_items:
                     item.Pick_Up()
             if key_press.key == pygame.K_SPACE:
-                self.player.Shooting(offset)
+                pass
             if key_press.key == pygame.K_x:
                 self.player.Dash(offset)
         if key_press.type == pygame.KEYUP:
