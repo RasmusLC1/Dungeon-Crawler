@@ -15,7 +15,8 @@ class Enemy_Handler():
                 self.enemies.append(Enemy(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'DecrepitBones'))
 
     def Delete_Enemy(self, enemy):
-        self.enemies.remove(enemy)
+        if enemy in self.enemies:
+            self.enemies.remove(enemy)
         self.game.entities_render.Remove_Entity(enemy)
 
     def Update(self):

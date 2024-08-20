@@ -72,6 +72,7 @@ class Weapon(Item):
             self.enemy_hit = False  # Reset at the start of a new attack
             self.attack_animation_time = int(self.attacking / self.attack_animation_max)
             self.charge_time = 0  # Reset charge time
+            self.rotate = 0
             self.attack_ready = False  # Reset attack trigger
             self.charged_attack = False  # Reset charged attack flag
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.range * 8) # Find nearby enemies to attack
@@ -195,27 +196,18 @@ class Weapon(Item):
     
     def Stabbing_Attack(self):
         # if not self.rotate:  
-        if not self.rotate:
-            self.Point_Towards_Mouse()
-            self.Stabbing_Attack_Direction()
+        self.Point_Towards_Mouse()
+        self.Stabbing_Attack_Direction()
         
         if not self.return_to_holder:
             self.distance_from_player += 1
-            new_x_pos = self.pos[0] + self.distance_from_player * self.attack_direction[0]
+            left_offset = 0
+            if self.attack_direction[0] < 0:
+                left_offset = -3
+            new_x_pos = self.pos[0] + self.distance_from_player * self.attack_direction[0] + left_offset
             new_y_pos = self.pos[1] + self.distance_from_player * self.attack_direction[1]
             self.Move((new_x_pos, new_y_pos))
-            # new_x_pos = self.pos[0]
-            # if self.attack_direction[0] < 0:
-            #     new_x_pos -= self.distance_from_player
-            # else:
-            #     new_x_pos += self.distance_from_player
-            # new_y_pos = self.pos[1]
-            # if self.attack_direction[1] < 0:
-            #     new_y_pos -= self.distance_from_player
-            # else:
-            #     new_y_pos += self.distance_from_player
-
-            # self.Move((new_x_pos, new_y_pos))
+            
             if self.distance_from_player <= self.range:
                 return
             elif self.distance_from_player > self.range:
@@ -229,22 +221,30 @@ class Weapon(Item):
                 self.return_to_holder = False
 
                 
-    # TODO: BUG fix it sometimes points the wrong way
     def Stabbing_Attack_Direction(self):
             self.entity.Attack_Direction_Handler(self.game.render_scroll)
             self.attack_direction = self.entity.attack_direction
-            print(self.entity.attack_direction)
-            if self.entity.flip[0]:
+            # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
+            self.attack_direction.normalize_ip()
+            if self.attack_direction[0] < 0:
                 self.rotate *= -1
+
+
+            # print(self.attack_direction, self.flip_image, self.rotate)
+            # self.flip_image = False
+            # if self.flip_image:
+            #     self.rotate *= -1
 
     
     def Point_Towards_Mouse(self):
         dx = self.game.mouse.mpos[0] - self.pos[0]
         dy = self.game.mouse.mpos[1] - self.pos[1]
         # Calculate the angle in degrees
+
         self.rotate = math.degrees(math.atan2(dy, dx)) + 90
         self.rotate *= -1
-                 
+
+       
      
     
 
@@ -378,6 +378,9 @@ class Weapon(Item):
         
         if not self.Check_For_Two_Handed_In_Weapon_Inventory(inventory_slot, sending_inventory, receiving_inventory):
             return False
+        
+        if not self.Check_Two_Handed_Left_Hand(inventory_slot, sending_inventory, receiving_inventory):
+            return False
 
 
         # Move the item
@@ -487,6 +490,12 @@ class Weapon(Item):
             except TypeError as e:
                 print(f"Receiving inventory not a weapon inventory: {e}")
         return True
+    
+    def Check_Two_Handed_Left_Hand(self, inventory_slot, sending_inventory, receiving_inventory):
+        if 'left' in inventory_slot.inventory_type:
+            return True
+        else:
+            return False
     
     
     def Check_For_Two_Handed_In_Weapon_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
