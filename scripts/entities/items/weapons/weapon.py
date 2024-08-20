@@ -100,7 +100,6 @@ class Weapon(Item):
 
     # Initialise special attack
     def Set_Special_Attack(self, offset = (0, 0)):
-
         self.entity.Attack_Direction_Handler(offset)
         self.attack_direction = self.entity.attack_direction
         self.special_attack = self.charge_time

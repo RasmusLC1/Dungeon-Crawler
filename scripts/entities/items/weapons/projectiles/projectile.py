@@ -27,12 +27,15 @@ class Projectile(Weapon):
         
         if not self.Check_Tile((dir_x, dir_y)):
             self.special_attack = 0
-            return False
+            return None
         self.Move((dir_x, dir_y))
         # Check for collision with enemy
-        if self.Attack_Collision_Check():
+        entity = self.Attack_Collision_Check()
+        if entity:
             self.special_attack = 0
+            return entity
         self.special_attack = max(0, self.special_attack - self.shoot_speed)
+        return None
 
     # TODO: Implement this more widely with weapons and player
     def Point_Towards_Mouse(self):

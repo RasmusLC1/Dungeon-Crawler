@@ -24,6 +24,7 @@ class Item_Handler():
 
     def Remove_Item(self, item):
         self.items.remove(item)
+        self.game.entities_render.Remove_Entity(item)
 
  
 
