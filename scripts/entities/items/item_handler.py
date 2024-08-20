@@ -22,9 +22,12 @@ class Item_Handler():
         self.items.append(item)
 
 
-    def Remove_Item(self, item):
+    def Remove_Item(self, item, delete_item = False):
         self.items.remove(item)
         self.game.entities_render.Remove_Entity(item)
+
+        if delete_item:
+            del item
 
  
 

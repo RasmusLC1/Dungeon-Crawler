@@ -36,8 +36,10 @@ class Torch(Weapon):
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:
+            self.light_level = 8
             return
         self.Fire_Particle_Creation()
+        self.light_level = 12
         
     
     def Fire_Particle_Creation(self):
@@ -46,7 +48,6 @@ class Torch(Weapon):
             return
         else:
             self.fire_cooldown = 3
-            print(self.special_attack)
             self.special_attack -= 20
             
         # Basic raycasting attributes

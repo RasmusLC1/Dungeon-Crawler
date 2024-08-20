@@ -51,6 +51,10 @@ class Weapon(Item):
         self.Charge_Attack(offset)
 
 
+    def Change_Rotate(self, change):
+        self.rotate += change
+        print(self.rotate)
+
     def Update_Attack(self):
         if not self.attacking:
             return
@@ -299,6 +303,8 @@ class Weapon(Item):
                 self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
+
+
     # Initialise the double clikc
     def Handle_Double_Click(self, sending_inventory, receiving_inventory):
         # Check if there is a free inventory slot
