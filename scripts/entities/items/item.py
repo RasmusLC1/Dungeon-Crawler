@@ -16,7 +16,7 @@ class Item(PhysicsEntity):
         self.sub_type = ''
         self.used = False
         self.picked_up = True
-        self.move_inventory = False
+        self.move_inventory = False # Check for if the item is being moved to a new inventory
         self.inventory_type = None
         self.animation_cooldown = 0
         self.animation_speed = 50

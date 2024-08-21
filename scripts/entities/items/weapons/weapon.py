@@ -14,6 +14,8 @@ class Weapon(Item):
         self.entity = None # Entity that holds the weapon
         self.effect = '' # Special effects, like poision, ice, fire etc
         self.in_inventory = False # Is the weapon in an inventory
+        self.inventory_interaction = 0 # Check if the player is interacting with inventory
+        self.reset_inventory_interaction = False # Check if the player is interacting with inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
         self.hold_down = 0 # Timer for charge attacks
         self.hold_down_counter = 0 # Timer for charge attacks
@@ -52,6 +54,7 @@ class Weapon(Item):
             return
         self.Update_Flip()
         self.Charge_Attack(offset)
+        
 
 
     def Change_Rotate(self, change):
@@ -89,6 +92,18 @@ class Weapon(Item):
         if not self.inventory_type:
             return
         
+        if self.reset_inventory_interaction:
+            self.inventory_interaction -= 1
+            if self.inventory_interaction <= 0:
+                self.reset_inventory_interaction = False
+            return
+        
+        
+        if self.inventory_interaction:
+            self.is_charging = 0
+            self.charge_time = 0            
+            return
+        
         self.Set_Charging()
         
         if self.is_charging:
@@ -116,8 +131,11 @@ class Weapon(Item):
         # Detect if the player is holding down the button
         if 'left' in self.inventory_type:
             self.is_charging = self.game.mouse.hold_down_left
+            return True
         elif 'right' in self.inventory_type:
             self.is_charging = self.game.mouse.hold_down_right
+            return True
+        return False
     
     # Return False if entity weapon cooldown is not off
     def Check_Entity_Cooldown(self):
@@ -366,14 +384,14 @@ class Weapon(Item):
     
     # Attempt to move the item to the receiving inventory slot by double clicking
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
-       
+        
         if not self.Check_Two_Handed(inventory_slot, sending_inventory, receiving_inventory):
             return False
         
         if not self.Check_For_Two_Handed_In_Weapon_Inventory(inventory_slot, sending_inventory, receiving_inventory):
             return False
         
-        if not self.Check_Two_Handed_Left_Hand(inventory_slot, sending_inventory, receiving_inventory):
+        if not self.Check_Two_Handed_Left_Hand(inventory_slot):
             return False
 
 
@@ -412,6 +430,7 @@ class Weapon(Item):
 
     # Check if the weapon can be moved to the weapon inventory
     def Move_Inventory_Check(self, offset = (0,0)):
+        self.reset_inventory_interaction = True
         if self.picked_up:
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
@@ -436,7 +455,7 @@ class Weapon(Item):
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
-
+        self.inventory_interaction = 20
         # Check if the weapon can be moved to the weapon inventory
         if self.Move_Inventory_Check(offset):
             self.picked_up = False
@@ -485,7 +504,8 @@ class Weapon(Item):
                 print(f"Receiving inventory not a weapon inventory: {e}")
         return True
     
-    def Check_Two_Handed_Left_Hand(self, inventory_slot, sending_inventory, receiving_inventory):
+    def Check_Two_Handed_Left_Hand(self, inventory_slot):
+        
         if not inventory_slot.inventory_type:
             return True
         if 'left' in inventory_slot.inventory_type:
@@ -513,6 +533,9 @@ class Weapon(Item):
                 return False
         
         return True
+    
+    def Set_Inventory_Interaction(self, state):
+        self.inventory_interaction = 100
           
     
     def Reset_Inventory_Slot(self, inventory_slot):

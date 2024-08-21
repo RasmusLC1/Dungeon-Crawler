@@ -163,6 +163,7 @@ class Inventory:
             self.clicked_inventory_slot = None
 
     def Move_Item_To_New_Slot(self, offset):
+        # Check for if the item is being moved to another inventory
         if self.active_item.move_inventory:
             self.active_item.move_inventory = False
             self.active_item = None  # Clear active item
@@ -170,6 +171,13 @@ class Inventory:
         for inventory_slot in self.inventory:
             # Collision with other inventory slots
             if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
+                if self.active_item.category == 'weapon':
+                    try:
+                        if not self.active_item.Check_Two_Handed_Left_Hand(inventory_slot):
+                            self.active_item.is_charging = False
+                            return False
+                    except Exception as e:
+                        print(f"Item not weapon {e}")
                 if self.Move_Item(self.active_item, inventory_slot):
                     self.clicked_inventory_slot.item = None  # Clear the original slot
                     self.clicked_inventory_slot.Set_Active(False)  # Deactivate original slot
@@ -180,6 +188,8 @@ class Inventory:
     # Method to move an item into a slot
     def Move_Item(self, item, inventory_slot):
         if not inventory_slot.item:
+            
+
             inventory_type_holder = item.inventory_type
             item.picked_up = False  # Ensure the item is marked as not picked up
             inventory_slot.Add_Item(item)  # Place the item in the inventory slot
