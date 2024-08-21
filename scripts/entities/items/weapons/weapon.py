@@ -41,6 +41,8 @@ class Weapon(Item):
         self.attack_ready = False  # Track when the attack is ready to be triggered
         self.charged_attack = False  # Determine if a charged attack should occur
         self.special_attack = 0
+        self.return_to_holder = False # Return the weapon to original positon after stab
+
 
     # General Update function
     def Update(self, offset = (0,0)):
@@ -62,7 +64,7 @@ class Weapon(Item):
             
         self.Update_Attack_Animation()
         self.Attack_Collision_Check()
-        self.Swipe_Attack_Align_Weapon()
+        self.Attack_Align_Weapon()
 
     def Set_Attack(self):
         if self.attack_ready:
@@ -163,7 +165,6 @@ class Weapon(Item):
             self.sub_type = self.type
             self.attacking = 0
             self.attack_animation = 0
-            self.rotate = 0
             return
         
         self.animation = self.attack_animation
@@ -177,27 +178,19 @@ class Weapon(Item):
                 self.attack_animation = 0
         return
     
+    def Slash_Attack(self):
+        pass
+
     # Align the weapon with the attacking entity while attacking
-    def Swipe_Attack_Align_Weapon(self):
-        if 'left' in self.inventory_type:
-            if self.flip_image:
-                self.Move((self.pos[0] - 3, self.pos[1] - 2))
-            else:
-                self.Move((self.pos[0] + 3, self.pos[1] - 2))
-            return
-        if 'right' in self.inventory_type:
-            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]):
-                self.Move((self.pos[0], self.pos[1] - 2))
-            elif self.flip_image:
-                self.Move((self.pos[0] + 3, self.pos[1] - 2))
-            else:
-                self.Move((self.pos[0] + 4, self.pos[1] - 2))
-            return
+    def Attack_Align_Weapon(self):
+        pass
     
     def Stabbing_Attack(self):
         # if not self.rotate:  
         self.Point_Towards_Mouse()
         self.Stabbing_Attack_Direction()
+
+
         
         if not self.return_to_holder:
             self.distance_from_player += 1
@@ -226,7 +219,7 @@ class Weapon(Item):
             self.attack_direction = self.entity.attack_direction
             # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
             self.attack_direction.normalize_ip()
-            if self.attack_direction[0] < 0:
+            if self.attack_direction[0] > 0:
                 self.rotate *= -1
 
 
@@ -237,12 +230,13 @@ class Weapon(Item):
 
     
     def Point_Towards_Mouse(self):
-        dx = self.game.mouse.mpos[0] - self.pos[0]
-        dy = self.game.mouse.mpos[1] - self.pos[1]
+        self.rotate = 0
+        
+        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
+        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
         # Calculate the angle in degrees
 
         self.rotate = math.degrees(math.atan2(dy, dx)) + 90
-        self.rotate *= -1
 
        
      
@@ -492,6 +486,8 @@ class Weapon(Item):
         return True
     
     def Check_Two_Handed_Left_Hand(self, inventory_slot, sending_inventory, receiving_inventory):
+        if not inventory_slot.inventory_type:
+            return True
         if 'left' in inventory_slot.inventory_type:
             return True
         else:

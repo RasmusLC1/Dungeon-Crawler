@@ -12,16 +12,35 @@ class Sword(Weapon):
         self.max_animation = 3
         self.attack_animation_max = 3
         self.animation_speed = 20
-        self.slash = True
+        self.slash = True # Slash if True, stab if False
 
     def Update_Flip(self):
         pass
 
+    
     def Update_Animation(self):
         if not self.equipped:
             return
         super().Update_Animation()
 
+    def Update_Attack_Animation(self):
+        super().Update_Attack_Animation()
+        # Reset the attack logic
+        if not self.attacking:
+            self.rotate = 0
+            return
+        
+        # Not updating the animation as the timer hasn't been hit yet
+        if not self.attack_animation_counter >= self.attack_animation_time - 1:
+            return
+        if self.slash:
+            pass
+        else:
+            self.Stabbing_Attack()
+
+    def Set_Attack(self):
+        self.slash = random.choice([True, False]) # Set either slash or stab
+        return super().Set_Attack()
 
 
     def Modify_Offset(self, change):
@@ -37,18 +56,18 @@ class Sword(Weapon):
         if 'left' in self.inventory_type:
             if direction_y < 0:
                 self.rotate = 10
-                self.Move((self.game.player.pos[0] - 4, self.game.player.pos[1] - 14))
+                self.Move((self.game.player.pos[0] - 4, self.game.player.pos[1] - 12))
             else:
                 offset_x = self.Rotate_Left()
-                self.Move((self.game.player.pos[0] + offset_x , self.game.player.pos[1] - 7))
+                self.Move((self.game.player.pos[0] + offset_x , self.game.player.pos[1] - 5))
         elif 'right' in self.inventory_type:
             
             if  direction_y < 0:
                 self.rotate = 60
-                self.Move((self.game.player.pos[0] + 1, self.game.player.pos[1] - 14))
+                self.Move((self.game.player.pos[0] + 1, self.game.player.pos[1] - 12))
             else:
                 offset_x = self.Rotate_Right()
-                self.Move((self.game.player.pos[0] + offset_x, self.game.player.pos[1] - 7))
+                self.Move((self.game.player.pos[0] + offset_x, self.game.player.pos[1] - 5))
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
 

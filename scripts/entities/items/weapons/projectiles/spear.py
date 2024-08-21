@@ -7,7 +7,6 @@ class Spear(Projectile):
         super().__init__(game, pos, size, type, 3, 8, 10, 'two_handed_melee')
         self.max_animation = 3
         self.attack_animation_max = 3
-        self.return_to_holder = False # Return the weapon to original positon after thrust
         self.distance_from_player = 0
         
     
@@ -42,6 +41,13 @@ class Spear(Projectile):
             return
         self.Stabbing_Attack()
 
-    # def Update_Flip(self):
-    #     pass
+
+    def Attack_Align_Weapon(self):
+        left_offset = 0
+        if self.attack_direction[0] < 0:
+            left_offset = -5
+
+        self.Move((self.pos[0] + left_offset, self.pos[1] + 2))
+        return
+    
         

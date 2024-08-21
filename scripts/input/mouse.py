@@ -26,7 +26,9 @@ class Mouse_Handler:
     # Mouse inputs that only need to be updated when there is an input
     def Mouse_Input(self, key_press, offset=(0, 0)):
 
+        self.Mpos_Update(offset)
         if key_press.type == pygame.MOUSEBUTTONDOWN:
+
             if key_press.button == 1:  # Check for left click (button 1)
                 self.left_click = True
                 self.click_pos = (key_press.pos[0] / 4, key_press.pos[1] / 4)
@@ -52,8 +54,6 @@ class Mouse_Handler:
             if key_press.button in {4, 5}:  # Scroll wheel click
                 self.game.weapon_inventory.Increment_inventory()
 
-        if key_press.type == pygame.MOUSEMOTION:
-            self.Mpos_Update(key_press, offset)
 
     # Hold down left click timers
     def Hold_Down_Left(self):
@@ -85,12 +85,19 @@ class Mouse_Handler:
         self.single_click_delay = 0  
         
     # Update the mouse position when left clicking
-    def Mpos_Update(self, key_press, offset=(0, 0)):
-        if self.left_click == True:
-            x = key_press.pos[0] / 4 + offset[0]
-            y = key_press.pos[1] / 4 + offset[1]
-            self.mpos = (x, y)
-            self.mpos_not_offset = key_press.pos
+    def Mpos_Update(self, offset = (0,0)):
+        mouse_pos = pygame.mouse.get_pos()
+        mpos_x = mouse_pos[0] / self.game.render_scale + self.game.render_scroll[0]
+        mpos_y = mouse_pos[1] / self.game.render_scale + self.game.render_scroll[1]
+        self.mpos = (mpos_x, mpos_y)
+        self.mpos_not_offset = mouse_pos
+
+    # def Mpos_Update(self, key_press, offset=(0, 0)):
+    #     if self.left_click == True:
+    #         x = key_press.pos[0] / 4 + offset[0]
+    #         y = key_press.pos[1] / 4 + offset[1]
+    #         self.mpos = (x, y)
+    #         self.mpos_not_offset = key_press.pos
     
     # Reduce inventory clicked time
     def Decrement_Inventory_Clicked(self):

@@ -40,7 +40,29 @@ class Torch(Weapon):
             return
         self.Fire_Particle_Creation()
         self.light_level = 12
-        
+
+    def Attack_Align_Weapon(self):
+        if 'left' in self.inventory_type:
+            if self.flip_image:
+                self.Move((self.pos[0] - 3, self.pos[1] - 2))
+            else:
+                self.Move((self.pos[0] + 3, self.pos[1] - 2))
+            return
+        if 'right' in self.inventory_type:
+            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]):
+                self.Move((self.pos[0], self.pos[1] - 2))
+            elif self.flip_image:
+                self.Move((self.pos[0] + 3, self.pos[1] - 2))
+            else:
+                self.Move((self.pos[0] + 4, self.pos[1] - 2))
+            return
+    
+    def Attack_Collision_Check(self):
+        entity = super().Attack_Collision_Check()
+        if entity:
+            entity.Set_Effect('Fire', 2)
+        del entity
+        return None
     
     def Fire_Particle_Creation(self):
         if self.fire_cooldown:
