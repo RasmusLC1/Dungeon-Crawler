@@ -76,7 +76,7 @@ class Weapon(Item):
         if self.attack_ready:
             if not self.Check_Entity_Cooldown():
                 return
-            self.attacking = max(self.attack_animation_max, int(100 / self.speed))
+            self.attacking = max(self.attack_animation_max * 3, int(100 / self.speed))
             self.enemy_hit = False  # Reset at the start of a new attack
             self.attack_animation_time = int(self.attacking / self.attack_animation_max)
             self.charge_time = 0  # Reset charge time
@@ -191,48 +191,19 @@ class Weapon(Item):
     def Attack_Align_Weapon(self):
         pass
     
+    def Stabbing_Attack_Handler(self):
+        pass
+
     def Stabbing_Attack(self):
-        # if not self.rotate:  
-        self.Point_Towards_Mouse()
-        self.Stabbing_Attack_Direction()
-
-
-        
-        if not self.return_to_holder:
-            self.distance_from_player += 1
-            left_offset = 0
-            if self.attack_direction[0] < 0:
-                left_offset = -3
-            new_x_pos = self.pos[0] + self.distance_from_player * self.attack_direction[0] + left_offset
-            new_y_pos = self.pos[1] + self.distance_from_player * self.attack_direction[1]
-            self.Move((new_x_pos, new_y_pos))
-            
-            if self.distance_from_player <= self.range:
-                return
-            elif self.distance_from_player > self.range:
-                self.return_to_holder = True
-                return
-        else:
-            self.distance_from_player -= 1
-
-
-            if self.distance_from_player <= 0:
-                self.return_to_holder = False
+        pass
 
                 
     def Stabbing_Attack_Direction(self):
-            self.entity.Attack_Direction_Handler(self.game.render_scroll)
-            self.attack_direction = self.entity.attack_direction
-            # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
-            self.attack_direction.normalize_ip()
-            if self.attack_direction[0] > 0:
-                self.rotate *= -1
-
-
-            # print(self.attack_direction, self.flip_image, self.rotate)
-            # self.flip_image = False
-            # if self.flip_image:
-            #     self.rotate *= -1
+        self.entity.Attack_Direction_Handler(self.game.render_scroll)
+        self.attack_direction = self.entity.attack_direction
+        # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
+        self.attack_direction.normalize_ip()
+        return
 
     
     def Point_Towards_Mouse(self):

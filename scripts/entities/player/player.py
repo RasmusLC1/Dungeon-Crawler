@@ -92,7 +92,7 @@ class Player(Moving_Entity):
             return
         
         if self.inventory_interaction:
-            self.inventory_interaction -= 1
+            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
             self.active_weapon_left.Reset_Charge()
             return
         
@@ -124,7 +124,7 @@ class Player(Moving_Entity):
         # Update the weapon position and logic
 
         if self.inventory_interaction:
-            self.inventory_interaction -= 1
+            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
             self.active_weapon_right.Reset_Charge()
             return
 

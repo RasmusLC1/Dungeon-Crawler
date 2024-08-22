@@ -37,9 +37,46 @@ class Spear(Projectile):
             return
         
         # Not updating the animation as the timer hasn't been hit yet
-        if not self.attack_animation_counter >= self.attack_animation_time - 1:
+        if not self.attack_animation_counter >= self.attack_animation_time:
             return
+        self.Stabbing_Attack_Handler()
+
+    def Stabbing_Attack_Handler(self):
+        # if not self.rotate:  
+        self.Point_Towards_Mouse()
+        self.Stabbing_Attack_Direction()
         self.Stabbing_Attack()
+
+
+    def Stabbing_Attack(self):
+        if not self.return_to_holder:
+            self.distance_from_player += 1
+            left_offset = 0
+            if self.attack_direction[0] < 0:
+                left_offset = -3
+            new_x_pos = self.pos[0] + self.distance_from_player * self.attack_direction[0] + left_offset
+            new_y_pos = self.pos[1] + self.distance_from_player * self.attack_direction[1]
+            self.Move((new_x_pos, new_y_pos))
+            
+            if self.distance_from_player <= self.range:
+                return
+            elif self.distance_from_player > self.range:
+                self.return_to_holder = True
+                return
+        else:
+            self.distance_from_player -= 1
+
+
+            if self.distance_from_player <= 0:
+                self.return_to_holder = False  
+        
+
+                
+    def Stabbing_Attack_Direction(self):
+        super().Stabbing_Attack_Direction()
+        if self.attack_direction[0] > 0:
+            self.rotate *= -1
+
 
 
     def Attack_Align_Weapon(self):
