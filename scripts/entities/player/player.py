@@ -34,6 +34,9 @@ class Player(Moving_Entity):
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
+        self.inventory_interaction = 0
+
+
 
         self.coins = 0
         self.shootin_cooldown = 0
@@ -56,13 +59,14 @@ class Player(Moving_Entity):
         
         self.Update_Light()
 
+        self.Set_Direction_Holder()
+        
         self.Update_Left_Weapon(offset)
         self.Update_Right_Weapon(offset)
 
         
         
 
-        self.Set_Direction_Holder()
 
     
 
@@ -85,6 +89,11 @@ class Player(Moving_Entity):
     def Update_Left_Weapon(self, offset=(0, 0)):
 
         if not self.active_weapon_left:
+            return
+        
+        if self.inventory_interaction:
+            self.inventory_interaction -= 1
+            self.active_weapon_left.Reset_Charge()
             return
         
         self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
@@ -113,6 +122,11 @@ class Player(Moving_Entity):
         if not self.active_weapon_right:
             return
         # Update the weapon position and logic
+
+        if self.inventory_interaction:
+            self.inventory_interaction -= 1
+            self.active_weapon_right.Reset_Charge()
+            return
 
         self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
         
@@ -252,6 +266,9 @@ class Player(Moving_Entity):
 
     def Find_Nearby_Chests(self, range):
         self.nearby_chests = self.game.chest_handler.find_nearby_chests(self.pos, range)
+
+    def Set_Inventory_Interaction(self, state):
+        self.inventory_interaction = state
             
 
     # Render player
