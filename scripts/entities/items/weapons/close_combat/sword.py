@@ -136,9 +136,6 @@ class Sword(Weapon):
                 self.return_to_holder = False
 
 
-
-        
-
     def Set_Attack(self):
         self.slash = random.choice([True]) # Set either slash or stab
         return super().Set_Attack()

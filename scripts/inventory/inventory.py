@@ -143,6 +143,7 @@ class Inventory:
         # Render legal item position and move it
         self.active_item.Render(self.game.display, offset)  
         self.active_item.Move(self.game.mouse.mpos)
+
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
             self.Place_Down_item()
@@ -173,6 +174,10 @@ class Inventory:
         for inventory_slot in self.inventory:
             # Collision with other inventory slots
             if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
+                # Check if the colliding inventory slot is the one that is currently active
+                if inventory_slot.active:
+                    return False
+
                 if self.Move_Item(self.active_item, inventory_slot):
                     self.clicked_inventory_slot.item = None  # Clear the original slot
                     self.clicked_inventory_slot.Set_Active(False)  # Deactivate original slot
@@ -221,13 +226,16 @@ class Inventory:
     
     # Active item is an item being dragged
     def Active_Item(self, offset=(0, 0)):
+
         # Check if there is an active item
         if not self.active_item:
             return
         # Check for out of bounds 
         item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
         if item_out_of_bounds == False:
+
             if self.game.mouse.left_click == False:
+
                 if self.Move_Item_To_New_Slot(offset):
                     return   
                 self.Return_Item()

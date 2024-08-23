@@ -330,7 +330,10 @@ class Weapon(Item):
             return False
         # Check if we can send the item to the new inventroy slot
         if self.Send_To_Inventory(recieving_inventory_slot, sending_inventory, receiving_inventory):
-            return True     
+            return True
+        else:
+            self.Reset_Inventory_Slot(sending_inventory)
+            return False
 
     
     # Attempt to move the item to the receiving inventory slot by double clicking
