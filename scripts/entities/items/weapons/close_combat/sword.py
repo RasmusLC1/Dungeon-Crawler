@@ -11,10 +11,15 @@ class Sword(Weapon):
         self.offset = 0
         self.max_animation = 3
         self.attack_animation_max = 3
-        self.distance_from_player = 0
-
+        self.slash_distance = 0
+        self.max_slash_distance = 10
         # self.animation_speed = 20
         self.slash = False # Slash if True, stab if False
+
+    def Update(self, offset = (0, 0)):
+        if not super().Update(offset):
+            return
+        
 
     def Update_Flip(self):
         pass
@@ -28,40 +33,81 @@ class Sword(Weapon):
         super().Update_Animation()
 
     def Update_Attack_Animation(self):
-        super().Update_Attack_Animation()
-        self.Point_Towards_Mouse()
-        if self.slash and self.attacking:
-            self.sub_type = 'sword_attack'
-        else:
-            self.sub_type = 'sword'
         # Reset the attack logic
         if not self.attacking:
             self.return_to_holder = False
-            self.distance_from_player = 0
+            self.slash_distance = 0
             self.rotate = 0
+            print("TEST")
             return
         
-        self.Stabbing_Attack_Handler()
+        super().Update_Attack_Animation()
+
+        self.Point_Towards_Mouse()
+        self.Attack_Direction()
         
-        
+        if self.slash:
+            self.sub_type = 'sword_attack'
+            self.Slash_Attack()
+        else:
+            self.sub_type = 'sword'
+            self.Stabbing_Attack()
 
-    def Stabbing_Attack_Handler(self):
-        # if not self.rotate:  
 
-        self.Stabbing_Attack_Direction()
-        self.Stabbing_Attack()
+    def Slash_Attack(self):
+            
+            x_offset = 0
+            y_offset = 0
+            if not self.return_to_holder:
+                if self.slash_distance <= self.max_slash_distance:
+                    self.slash_distance += 1
+                else:
+                    self.return_to_holder = True
+            else:
+                if self.slash_distance <= 0:
+                    self.return_to_holder = False
+                else:
+                    self.slash_distance -= 1
+            new_x_pos = (0,0)
+            new_y_pos = (0,0)
+            # Condition for if x coordinate is dominant
+            if abs(self.attack_direction[0]) >= abs(self.attack_direction[1]):
+                y_offset = -5
+                
 
-    def Stabbing_Attack_Direction(self):
-        self.entity.Attack_Direction_Handler(self.game.render_scroll)
-        self.attack_direction = self.entity.attack_direction
-        # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
-        self.attack_direction.normalize_ip()
+                if self.attack_direction[0] < 0:
+                    self.pos = self.entity.rect().midleft
+                    x_offset = -5
+                else:
+                    x_offset = -2
+                    self.pos = self.entity.rect().midright
+                new_x_pos = int(self.pos[0]) + x_offset
+                new_y_pos = int(self.pos[1]) + y_offset - self.slash_distance + y_offset
+            # Dominant y coordinate
+            else:
+                
+                self.pos = self.entity.rect().center
+                if self.attack_direction[1] >= 0:
+                    y_offset = -13
+                else:
+                    y_offset = - 20
+                x_offset = -5
+                new_x_pos = int(self.pos[0]) + x_offset + self.slash_distance
+                new_y_pos = int(self.pos[1]) + y_offset
+                    
+            
+            self.Move((new_x_pos, new_y_pos))
 
-    
+            if self.slash_distance <= self.range:
+                return
+            elif self.slash_distance > self.range:
+                self.return_to_holder = True
+                return
+
 
     def Stabbing_Attack(self):
         if not self.return_to_holder:
-            self.distance_from_player += 1
+            self.slash_distance += 1
             y_offset = 0
             if abs(self.attack_direction[0]) >= abs(self.attack_direction[1]):
                 y_offset = -5
@@ -71,25 +117,22 @@ class Sword(Weapon):
                 else:
                     self.pos = self.entity.rect().topright
             else:
-                if self.attack_direction[1] < 0:
-                    self.pos = self.entity.rect().center
-                    y_offset = - 8
-                else:
-                    y_offset = 5
+                self.pos = self.entity.rect().center
+                y_offset = - 15
                     
-            new_x_pos = int(self.pos[0]) + self.distance_from_player * self.attack_direction[0]
-            new_y_pos = int(self.pos[1]) + self.distance_from_player * self.attack_direction[1] + y_offset
+            new_x_pos = int(self.pos[0]) + self.slash_distance * self.attack_direction[0]
+            new_y_pos = int(self.pos[1]) + self.slash_distance * self.attack_direction[1] + y_offset
             self.Move((new_x_pos, new_y_pos))
 
-            if self.distance_from_player <= self.range:
+            if self.slash_distance <= self.range:
                 return
-            elif self.distance_from_player > self.range:
+            elif self.slash_distance > self.range:
                 self.return_to_holder = True
                 return
         else:
-            self.distance_from_player -= 1
+            self.slash_distance -= 1
 
-            if self.distance_from_player <= 0:
+            if self.slash_distance <= 0:
                 self.return_to_holder = False
 
 
@@ -97,7 +140,7 @@ class Sword(Weapon):
         
 
     def Set_Attack(self):
-        # self.slash = random.choice([True, False]) # Set either slash or stab
+        self.slash = random.choice([True]) # Set either slash or stab
         return super().Set_Attack()
 
     def Update_Flip(self):
@@ -124,7 +167,6 @@ class Sword(Weapon):
                     offset_x = self.Rotate_Left()
                 self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] - 5))
         elif 'right' in self.inventory_type:
-            
             if  direction_y < 0:
                 if not self.attacking:
                     self.rotate = 60

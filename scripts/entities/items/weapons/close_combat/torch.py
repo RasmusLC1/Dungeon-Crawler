@@ -57,6 +57,20 @@ class Torch(Weapon):
                 self.Move((self.pos[0] + 4, self.pos[1] - 2))
             return
     
+    def Set_Equipped_Position(self, direction_y):
+        if 'left' in self.inventory_type:
+            if direction_y < 0:
+                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
+            else:
+                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
+        elif 'right' in self.inventory_type:
+            if  direction_y < 0:
+                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
+            else:
+                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
+        else:
+            print("DIRECTION NOT FOUND", self.inventory_type)
+
     def Attack_Collision_Check(self):
         entity = super().Attack_Collision_Check()
         if entity:

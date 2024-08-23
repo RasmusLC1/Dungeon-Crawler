@@ -49,10 +49,12 @@ class Weapon(Item):
         self.Update_Animation()
         self.Special_Attack()
         if not self.entity:
-            return
+            return False
         self.Update_Flip()
             
         self.Charge_Attack(offset)
+
+        return True
 
     def Reset_Charge(self):
         self.is_charging = 0
@@ -198,7 +200,7 @@ class Weapon(Item):
         pass
 
                 
-    def Stabbing_Attack_Direction(self):
+    def Attack_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
         self.attack_direction = self.entity.attack_direction
         # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
@@ -316,18 +318,7 @@ class Weapon(Item):
         self.light_level = 10
 
     def Set_Equipped_Position(self, direction_y):
-        if 'left' in self.inventory_type:
-            if direction_y < 0:
-                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
-            else:
-                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
-        elif 'right' in self.inventory_type:
-            if  direction_y < 0:
-                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
-            else:
-                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
-        else:
-            print("DIRECTION NOT FOUND", self.inventory_type)
+        pass
 
 
     # Initialise the double clikc
