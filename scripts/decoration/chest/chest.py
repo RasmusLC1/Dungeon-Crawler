@@ -9,6 +9,7 @@ from scripts.decoration.decoration import Decoration
 from scripts.entities.items.weapons.close_combat.sword import Sword
 from scripts.entities.items.weapons.close_combat.torch import Torch
 from scripts.entities.items.weapons.projectiles.spear import Spear
+from scripts.entities.items.weapons.projectiles.bow import Bow
 
 
 class Chest(Decoration):
@@ -30,9 +31,10 @@ class Chest(Decoration):
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
-            'sword',
-            'torch',
-            'spear'
+            # 'sword',
+            # 'torch',
+            # 'spear',
+            'bow',
         ]
 
     def rect(self):
@@ -69,6 +71,10 @@ class Chest(Decoration):
                 elif self.weapons[weapon_index] == 'torch':
                     torch = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16), 'torch')
                     self.game.item_handler.Add_Item(torch)
+                elif self.weapons[weapon_index] == 'bow':
+                    bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'bow')
+                    self.game.item_handler.Add_Item(bow)
+
 
 
                     

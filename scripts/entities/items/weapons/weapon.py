@@ -185,7 +185,6 @@ class Weapon(Item):
             self.attacking = 0
             self.attack_animation = 0
             return
-        
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack'
         self.attacking -= 1
@@ -241,34 +240,23 @@ class Weapon(Item):
                 self.flip_image = True
             else:
                 self.flip_image = False
-    
+   
+
+    # Set the effect of the weapon if an effect needs to be applied
+    def Set_Effect(self, effect):
+        self.effect = effect
+
     # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
-    # Inrease the size of the weapon
-    def Increase_Size(self, increase):
-        size_x = self.size[0] * increase
-        size_y = self.size[1] * increase 
-        self.size = (size_x, size_y)
-
-    # Decrease the size of the weapon
-    def Decrease_Size(self, decrease):
-        size_x = self.size[0] / decrease
-        size_y = self.size[1] / decrease 
-        self.size = (size_x, size_y)
-
-    # Set the effect of the weapon if an effect needs to be applied
-    def Set_Effect(self, effect):
-        self.effect = effect
 
     # Render the weapon in entity's hand
     def Render_Equipped(self, surf, offset=(0, 0)):
         # Load the weapon image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
         if self.attacking:
