@@ -10,11 +10,13 @@ class Sword(Weapon):
         super().__init__(game, pos, size, type, 3, 5, 10, 'one_handed_melee')
         self.offset = 0
         self.max_animation = 3
-        self.attack_animation_max = 3
-        self.slash_distance = 0
-        self.max_slash_distance = 10
+        self.attack_animation_max = 3 
+        self.slash_distance = 0 # Current slash distance
+        self.max_slash_distance = 10 # Limit to the slashing animation distance
         # self.animation_speed = 20
         self.slash = False # Slash if True, stab if False
+        self.charging = 0 # Charging value will be alligned with the entity's
+        self.stored_rotation = 0 # Store the rotation for the charge
 
     def Update(self, offset = (0, 0)):
         if not super().Update(offset):
@@ -44,7 +46,7 @@ class Sword(Weapon):
         super().Update_Attack_Animation()
 
         self.Point_Towards_Mouse()
-        self.Attack_Direction()
+        self.Set_Attack_Direction()
         
         if self.slash:
             self.sub_type = 'sword_attack'
@@ -142,10 +144,47 @@ class Sword(Weapon):
 
     def Update_Flip(self):
         pass
+    
+    # Handle special attack charge
+    def Special_Attack(self):
+        if not self.entity:
+            return
+        
+        if self.Charge():
+            return
+        
+        if self.special_attack <= 0 or not self.equipped:
+            return
+        
+        self.Initialise_Charge()
+        
 
-    def Modify_Offset(self, change):
-        self.offset -= change
-        print(self.offset)
+
+        
+    # Handle charging logic, return True if successfull else False
+    def Charge(self):
+        if not self.charging:
+            return False
+        if self.attack_direction[0] < 0:
+            self.flip_image = False
+        self.rotate = self.stored_rotation
+        new_x_pos = self.entity.pos[0] + self.attack_direction[0] * 10
+        new_y_pos = self.entity.pos[1] + self.attack_direction[1] * 10 - 10
+        self.Move((new_x_pos, new_y_pos))
+        self.charging = self.entity.charging
+        self.enemy_hit = False
+        self.Attack_Collision_Check()
+        return True
+    
+    # Initialise the charge logic
+    def Initialise_Charge(self):
+        self.Point_Towards_Mouse()
+        self.stored_rotation = self.rotate
+        self.entity.Set_Charge(self.special_attack / 8)
+        self.charging = self.entity.charging
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack) # Find nearby enemies to attack
+        self.special_attack = 0
+
 
     def Set_Equipped_Position(self, direction_y):
         

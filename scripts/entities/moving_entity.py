@@ -26,6 +26,7 @@ class Moving_Entity(PhysicsEntity):
         self.animation_num_max = 1
         self.animation_num_cooldown = 0
         self.attacking = 0
+        self.charging = 0
 
 
         self.direction = (0,0)
@@ -91,6 +92,7 @@ class Moving_Entity(PhysicsEntity):
         self.nearby_enemies.clear()
         self.Nearby_Enemies(20)
         self.Update_Damage_Cooldown()
+        self.Charge_Update()
 
   
         if self.collisions['down'] or self.collisions['up']:
@@ -272,6 +274,27 @@ class Moving_Entity(PhysicsEntity):
         if self.attack_direction[1] < -0.5:
             # TODO: UPDATE to attack up when that has been animated
             self.Set_Animation('idle_up')
+
+    def Set_Charge(self, charge_speed, offset=(0, 0)):
+        if not self.charging:
+            self.Mouse_Handler()
+            self.Stored_Position_Handler(offset)
+            self.charging = min(12, charge_speed)
+
+    # Handle Charging Updates
+    def Charge_Update(self):
+        if self.charging <= 0:
+            return
+        self.max_speed = 20  # Adjust max speed speed for dashing distance
+        self.charging = max(0, self.charging - 1)
+        self.Stored_Position_Handler(self.game.render_scroll)
+        direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+        direction.normalize_ip()
+
+        self.velocity[0] = direction.x * 50
+        self.velocity[1] = direction.y * 50
+
+
     
     def Stored_Position_Handler(self, offset=(0, 0)):
         self.stored_position = self.pos.copy()

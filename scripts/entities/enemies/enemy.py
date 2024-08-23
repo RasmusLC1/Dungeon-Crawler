@@ -55,7 +55,7 @@ class Enemy(Moving_Entity):
         if self.Stuck_Check():
             return
 
-        if self.Charging():
+        if self.Direct_Pathing():
             return
 
         
@@ -160,7 +160,7 @@ class Enemy(Moving_Entity):
         return True
     
 
-    def Charging(self):
+    def Direct_Pathing(self):
         distance = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
 
         # Player is close, so the enemy charge directly

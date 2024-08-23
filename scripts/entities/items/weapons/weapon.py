@@ -26,21 +26,21 @@ class Weapon(Item):
         self.attack_animation_time = 0 # Time to shift to new animation
         self.attack_animation_counter = 0 # Animation countdown that ticks up to animation time
         self.enemy_hit = False # Prevent double damage on attacks
-        self.flip_image = False
-        self.rotate = 0
-        self.distance_from_player = 0
-        self.nearby_enemies = []
+        self.flip_image = False # Check if image is flipped
+        self.rotate = 0 # Rotation value of weapon
+        self.distance_from_entity = 0 # Weapon's distance from entity, in case it needs to be retracted
+        self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
         # Can be expanded to damaged or dirty versions of weapons later
-        self.sub_type = self.type
+        self.sub_type = self.type # Sub_type can be used to make different variants of weapon
+        self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
         
-        self.weapon_class = weapon_class
         
         self.charge_time = 0  # Tracks how long the button is held
         self.max_charge_time = 100  # Maximum time to fully charge
         self.is_charging = False  # Tracks if the player is charging
         self.attack_ready = False  # Track when the attack is ready to be triggered
         self.charged_attack = False  # Determine if a charged attack should occur
-        self.special_attack = 0
+        self.special_attack = 0 # special attack counter
         self.return_to_holder = False # Return the weapon to original positon after stab
 
 
@@ -56,16 +56,17 @@ class Weapon(Item):
 
         return True
 
+    # Reset the attack charge
     def Reset_Charge(self):
         self.is_charging = 0
         self.charge_time = 0
         return
 
-
+    # Change the rotation
     def Change_Rotate(self, change):
         self.rotate += change
-        print(self.rotate)
 
+    # Update the attack logic
     def Update_Attack(self):
         if not self.attacking:
             return
@@ -74,6 +75,7 @@ class Weapon(Item):
         self.Attack_Collision_Check()
         self.Attack_Align_Weapon()
 
+    # Initialise the attack
     def Set_Attack(self):
         if self.attack_ready:
             if not self.Check_Entity_Cooldown():
@@ -83,7 +85,7 @@ class Weapon(Item):
             self.attack_animation_time = int(self.attacking / self.attack_animation_max)
             self.charge_time = 0  # Reset charge time
             self.rotate = 0
-            self.attack_ready = False  # Reset attack trigger
+            self.Set_Attack_Ready(False) # Reset attack trigger
             self.charged_attack = False  # Reset charged attack flag
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.range * 8) # Find nearby enemies to attack
 
@@ -108,7 +110,7 @@ class Weapon(Item):
         else:
             # If the button is released
             if self.charge_time > 0 and self.charge_time < 20:
-                self.attack_ready = True  # Ready to trigger an attack
+                self.Set_Attack_Ready(True)  # Ready to trigger an attack
                 self.Set_Attack()  # Trigger the attack
             if self.charge_time > 20:
                 self.Set_Special_Attack(offset)
@@ -120,6 +122,7 @@ class Weapon(Item):
         self.attack_direction = self.entity.attack_direction
         self.special_attack = self.charge_time
 
+    # Initialise the charging of the weapon
     def Set_Charging(self):
         # Detect if the player is holding down the button
         if 'left' in self.inventory_type:
@@ -139,35 +142,43 @@ class Weapon(Item):
                 return False
         return True
         
-
-
+    # Check for collision on attack
     def Attack_Collision_Check(self):
+        # Check if the weapon has already hit an enemy this attack
         if self.enemy_hit:
             return None
         weapon_rect = self.rect_attack()
         for enemy in self.nearby_enemies:
+            # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:
                 continue
+            # Check for collision with enemy
             if weapon_rect.colliderect(enemy.rect()):
                 damage = self.entity.strength * self.damage
                 enemy.Damage_Taken(damage)
                 self.enemy_hit = True
+
+                # Set special status effect of weapon if weapon has one
                 if self.effect:
                     enemy.Set_Effect(self.effect, 3)
 
-
+                # Return enemy in case further effects need to be added such as knockback
                 return enemy
             
         return None
     
+    # Set the rect of the weapon to be a bit forward for better detection
     def rect_attack(self):
-        extra_reach = 10
+        extra_reach_x = 3
+        extra_reach_y = 3
         if self.entity.attack_direction[0] < 0:
-            extra_reach = -10
+            extra_reach_x *= -1
+        if self.entity.attack_direction[1] < 0:
+            extra_reach_y *= -1
 
-        return pygame.Rect(self.pos[0] + extra_reach, self.pos[1] + self.entity.attack_direction[1], self.size[0]*2, self.size[1]*2)
+        return pygame.Rect(self.pos[0] + extra_reach_x, self.pos[1] + self.entity.attack_direction[1] + extra_reach_y, self.size[0]*2, self.size[1]*2)
 
-
+    # Update attack animation logic
     def Update_Attack_Animation(self):
         if self.attacking <= 1:
             self.sub_type = self.type
@@ -199,28 +210,30 @@ class Weapon(Item):
     def Stabbing_Attack(self):
         pass
 
-                
-    def Attack_Direction(self):
+    def Set_Attack_Ready(self, state):
+        self.attack_ready = state
+
+    # Set the attack direction   
+    def Set_Attack_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
         self.attack_direction = self.entity.attack_direction
         # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
         self.attack_direction.normalize_ip()
         return
 
-    
+    # Point the weapon towards the mouse
     def Point_Towards_Mouse(self):
         self.rotate = 0
         
+        # Get the direction
         dx = self.game.mouse.mpos[0] - self.entity.pos[0]
         dy = self.game.mouse.mpos[1] - self.entity.pos[1]
-        # Calculate the angle in degrees
 
+        # Calculate the angle in degrees
         self.rotate = math.degrees(math.atan2(dy, dx)) + 90
 
        
-     
-    
-
+    # Check if the weapon sprites needs to be flipped
     def Update_Flip(self):
         attack_direction = self.entity.attack_direction
         if abs(attack_direction[0]) >= abs(attack_direction[1]):
@@ -229,26 +242,29 @@ class Weapon(Item):
             else:
                 self.flip_image = False
     
-
+    # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
-
+    # Inrease the size of the weapon
     def Increase_Size(self, increase):
         size_x = self.size[0] * increase
         size_y = self.size[1] * increase 
         self.size = (size_x, size_y)
 
+    # Decrease the size of the weapon
     def Decrease_Size(self, decrease):
         size_x = self.size[0] / decrease
         size_y = self.size[1] / decrease 
         self.size = (size_x, size_y)
 
+    # Set the effect of the weapon if an effect needs to be applied
     def Set_Effect(self, effect):
         self.effect = effect
 
+    # Render the weapon in entity's hand
     def Render_Equipped(self, surf, offset=(0, 0)):
         # Load the weapon image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
@@ -263,7 +279,7 @@ class Weapon(Item):
                                   (self.pos[0] - offset[0], self.pos[1] - offset[1]))
             
 
-    
+    # Render basic function on the map
     def Render(self, surf, offset=(0, 0)):
 
         # Check if item is in inventory. If yes we don't need offset, except if
