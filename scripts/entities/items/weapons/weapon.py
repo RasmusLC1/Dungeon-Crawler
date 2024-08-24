@@ -128,6 +128,8 @@ class Weapon(Item):
             self.is_charging = self.game.mouse.hold_down_left
         elif 'right' in self.inventory_type:
             self.is_charging = self.game.mouse.hold_down_right
+        elif 'bow' in self.inventory_type:
+            self.is_charging = self.game.mouse.hold_down_left
     
     # Return False if entity weapon cooldown is not off
     def Check_Entity_Cooldown(self):
@@ -430,6 +432,9 @@ class Weapon(Item):
                 self.game.player.Remove_Active_Weapon(prev_hand)
                 self.game.player.Set_Active_Weapon(self, self.inventory_type)
             elif prev_hand == 'right_hand':
+                self.game.player.Remove_Active_Weapon(prev_hand)
+                self.game.player.Set_Active_Weapon(self, self.inventory_type)
+            elif 'bow' in prev_hand:
                 self.game.player.Remove_Active_Weapon(prev_hand)
                 self.game.player.Set_Active_Weapon(self, self.inventory_type)
 

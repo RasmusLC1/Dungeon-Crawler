@@ -34,7 +34,7 @@ class Chest(Decoration):
             # 'sword',
             # 'torch',
             'spear',
-            # 'bow',
+            'bow',
         ]
 
     def rect(self):

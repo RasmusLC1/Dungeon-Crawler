@@ -24,7 +24,11 @@ class Player(Moving_Entity):
         self.max_ammo = 30
         self.ammo = 10
         self.active_weapon_left = None
+        self.left_weapon_cooldown = 0
         self.active_weapon_right = None
+        self.right_weapon_cooldown = 0
+        self.active_bow = None
+        self.bow_cooldown = 0
         self.Set_Animation('idle_down')
         self.mana = 5
         self.nearby_chests = []
@@ -61,16 +65,15 @@ class Player(Moving_Entity):
 
         self.Set_Direction_Holder()
         
-        self.Update_Left_Weapon(offset)
-        self.Update_Right_Weapon(offset)
-
         
-        
-
-
-    
-
-
+        if self.game.weapon_inventory.active_inventory == 0:
+            self.Update_Left_Weapon(offset)
+            self.Update_Right_Weapon(offset)
+        elif self.game.weapon_inventory.active_inventory == 1:
+            self.Update_Bow(offset)
+        else:
+            print("INVENTORY MISSING")
+ 
     
         
     # Function to update the light around player
@@ -86,6 +89,7 @@ class Player(Moving_Entity):
                 self.light_source.Move_Light(self.pos)
 
     # Function to update the player's weapons
+    # Each weapon needs it own method to handle it's cooldown
     def Update_Left_Weapon(self, offset=(0, 0)):
 
         if not self.active_weapon_left:
@@ -104,6 +108,7 @@ class Player(Moving_Entity):
         self.active_weapon_left.Update_Attack()
         self.Attacking(self.active_weapon_left, offset)
 
+        
         if self.left_weapon_cooldown:
             self.left_weapon_cooldown -= 1
             return
@@ -125,7 +130,6 @@ class Player(Moving_Entity):
 
         if self.inventory_interaction:
             self.Set_Inventory_Interaction(self.inventory_interaction - 1)
-
             self.active_weapon_right.Reset_Charge()
             return
 
@@ -149,6 +153,40 @@ class Player(Moving_Entity):
         cooldown = self.Weapon_Attack(self.active_weapon_right)
         
         self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
+
+    
+    def Update_Bow(self, offset=(0, 0)):
+        # Return if there's no weapon
+        if not self.active_bow:
+            return
+        # Update the weapon position and logic
+
+        if self.inventory_interaction:
+            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
+            self.active_bow.Reset_Charge()
+            return
+
+        self.active_bow.Set_Equipped_Position(self.direction_y_holder)
+        
+        self.active_bow.Update(offset)
+        if not self.active_bow:
+            return
+        
+        self.active_bow.Update_Attack()
+        self.Attacking(self.active_bow, offset)
+        
+        # Handle weapon cooldown
+        if self.bow_cooldown:
+            self.bow_cooldown -= 1
+            return
+        
+        # Return if mouse has not been clicked
+        if not self.game.mouse.right_click:
+            return
+        # Attack with weapon
+        cooldown = self.Weapon_Attack(self.active_bow)
+        
+        self.bow_cooldown = max(self.bow_cooldown, cooldown)
 
     
     # Activate weapon attack, return cooldown time
@@ -182,12 +220,18 @@ class Player(Moving_Entity):
     def Set_Active_Weapon(self, weapon, hand):      
         equipped_weapon = copy(weapon)
         equipped_weapon.Set_In_Inventory(False)
+        print(hand)
         if hand == 'left_hand':
             equipped_weapon.Move(self.pos)
             self.active_weapon_left = equipped_weapon
+            return
         if hand == 'right_hand':
             equipped_weapon.Move(self.pos)
             self.active_weapon_right = equipped_weapon
+            return
+        if 'bow' in hand:
+            equipped_weapon.Move(self.pos)
+            self.active_bow = equipped_weapon
 
     def Remove_Active_Weapon(self, hand):
         if hand == 'left_hand' and self.active_weapon_left:
@@ -293,10 +337,9 @@ class Player(Moving_Entity):
             surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
             surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
 
-        if self.active_weapon_left:
-            self.active_weapon_left.Render_Equipped(surf, offset)
-        if self.active_weapon_right:
-            self.active_weapon_right.Render_Equipped(surf, offset)
+
+        self.Render_Weapons(surf, offset)
+        
 
         if  "up" in self.animation:
             surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
@@ -308,12 +351,15 @@ class Player(Moving_Entity):
         self.status_effects.render_frozen(self.game, surf, offset)
         self.status_effects.render_wet(self.game, surf, offset)
         
+    def Render_Weapons(self, surf, offset):
+        if self.game.weapon_inventory.active_inventory == 0:
+            if self.active_weapon_left:
+                self.active_weapon_left.Render_Equipped(surf, offset)
+            if self.active_weapon_right:
+                self.active_weapon_right.Render_Equipped(surf, offset)
+        elif self.game.weapon_inventory.active_inventory == 1:
+            if self.active_bow:
+                self.active_bow.Render_Equipped(surf, offset)
+        else:
+            print("INVENTORY MISSING")
 
-        
-        # Render active weapon
-        # if self.flip[0]:
-        #     surf.blit(pygame.transform.flip(self.game.assets[self.active_weapon], True, False), (self.rect().centerx - self.game.assets[self.active_weapon].get_width() - offset[0], self.rect().centery - offset[1]))
-        # else:
-        #     surf.blit(self.game.assets[self.active_weapon], (self.rect().centerx - offset[0], self.rect().centery -offset[1]))
-
-        

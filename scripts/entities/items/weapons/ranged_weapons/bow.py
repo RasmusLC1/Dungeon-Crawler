@@ -89,7 +89,6 @@ class Bow(Weapon):
         # Calculate the angle in degrees
         self.rotate = math.degrees(math.atan2(dy, dx))
         self.rotate *= -1
-        print(self.rotate)
 
     def Set_Charging(self):
         super().Set_Charging()
