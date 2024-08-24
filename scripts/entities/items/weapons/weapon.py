@@ -342,7 +342,7 @@ class Weapon(Item):
     
     # Attempt to move the item to the receiving inventory slot by double clicking
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
-       
+        
         if not self.Check_Two_Handed(inventory_slot, sending_inventory, receiving_inventory):
             return False
         
@@ -351,6 +351,10 @@ class Weapon(Item):
         
         if not self.Check_Two_Handed_Left_Hand(inventory_slot):
             return False
+        
+        if not self.Bow_Check(inventory_slot):
+            return False
+
 
 
         # Move the item
@@ -447,6 +451,28 @@ class Weapon(Item):
     def Set_In_Inventory(self, state):
         self.in_inventory = state
 
+    def Bow_Check(self, inventory_slot):
+        if not inventory_slot.inventory_type:
+            return True
+        if 'bow' in inventory_slot.inventory_type:
+            if 'bow' in self.weapon_class:
+                return True
+            else:
+                return False
+        return True
+        
+        
+    def Arrow_Check(self, inventory_slot):
+
+        if not inventory_slot.inventory_type:
+            return True
+        if 'arrow' in inventory_slot.inventory_type:
+            if 'arrow' in self.weapon_class:
+                return True
+            else:
+                return False
+        return True
+
     def Check_Two_Handed(self, inventory_slot, sending_inventory, receiving_inventory):
         if not 'two' in self.weapon_class:
             return True
@@ -461,6 +487,7 @@ class Weapon(Item):
                 print(f"Receiving inventory not a weapon inventory: {e}")
         return True
     
+    # Checks to ensure that the twohanded weapo can only be sent to the left hand
     def Check_Two_Handed_Left_Hand(self, inventory_slot):
         if self.entity.type == 'player':
             self.entity.Set_Inventory_Interaction(20)

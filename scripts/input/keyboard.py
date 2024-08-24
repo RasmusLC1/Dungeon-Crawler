@@ -11,7 +11,29 @@ class Keyboard_Handler:
                 self.movement[2] = True
             if key_press.key == pygame.K_s:
                 self.movement[3] = True
-            # self.Animation_Adjustment_Helper(key_press)
+                
+            # if key_press.key == pygame.K_p:
+            #     if self.player.active_weapon_left:
+            #         try:
+            #             self.player.active_weapon_left.Modify_Offset(1)
+            #         except Exception as e:
+            #             print(f"Font load error: {e}")
+            #     if self.player.active_weapon_right:
+            #         try:
+            #             self.player.active_weapon_right.Modify_Offset(1)
+            #         except Exception as e:
+            #             print(f"Font load error: {e}")
+            # if key_press.key == pygame.K_MINUS:
+            #     if self.player.active_weapon_left:
+            #         try:
+            #             self.player.active_weapon_left.Modify_Offset(-1)
+            #         except Exception as e:
+            #             print(f"Font load error: {e}")
+            #     if self.player.active_weapon_right:
+            #         try:
+            #             self.player.active_weapon_right.Modify_Offset(-1)
+            #         except Exception as e:
+            #             print(f"Font load error: {e}")
             
             if key_press.key == pygame.K_e:
                 nearby_items = self.item_handler.Find_Nearby_Item(self.player.pos, 30)

@@ -9,8 +9,7 @@ class Bow(Weapon):
         self.attack_animation_max = 2
         self.distance_from_player = 0
         self.attack_animation_counter
-        
-    
+
 
     def Set_Attack(self):
         pass
@@ -24,12 +23,35 @@ class Bow(Weapon):
     def Update_Attack_Animation(self):
         self.sub_type = self.type + '_attack'
         self.animation = self.attack_animation
-        
+        self.Set_Attack_Direction()
+        self.Point_Towards_Mouse()
+        self.Set_Attack_Position()
+
+    # Determine the position of the bow when being drawn
+    def Set_Attack_Position(self):
+        new_x_pos = 0
+        new_y_pos = 0
+        new_y_pos = self.entity.rect().center[1] + self.attack_direction[1] * 2 - 12
+        if self.attack_direction[0] < 0:
+            self.flip_image = False
+            new_x_pos = self.entity.rect().midleft[0] - 4
+        else:
+            self.flip_image = False
+            new_x_pos = self.entity.rect().midright[0] - 4
+
+        self.Move((new_x_pos, new_y_pos))
+
+    # Set the position of the bow when not drawn
+    def Set_Equipped_Position(self, direction_y):
+        self.Move((self.entity.pos[0] + 2, self.entity.pos[1] - 6))
+        self.rotate = -30
+    
+
     def Charge_Attack(self, offset = (0, 0)):
         if not self.inventory_type:
             return
         
-        
+ 
         self.Set_Charging()
         if self.is_charging:
             self.Update_Attack_Animation()
@@ -55,7 +77,20 @@ class Bow(Weapon):
             self.attack_animation_counter = 0
             self.attack_animation = 0
 
-            
+
+    # Point the weapon towards the mouse
+    def Point_Towards_Mouse(self):
+        self.rotate = 0
+        
+        # Get the direction
+        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
+        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
+
+        # Calculate the angle in degrees
+        self.rotate = math.degrees(math.atan2(dy, dx))
+        self.rotate *= -1
+        print(self.rotate)
+
     def Set_Charging(self):
         super().Set_Charging()
 
@@ -63,66 +98,24 @@ class Bow(Weapon):
     def Special_Attack(self):
         if not self.special_attack or not self.equipped:
             return
-        print(self.special_attack)
 
-    
+    def Modify_Offset(self, rotate):
+        self.rotate += rotate
+        print(self.rotate)
 
-    def Set_Equipped_Position(self, direction_y):
+    def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
+        if not self.Bow_Inventory_Check(inventory_slot):
+            return False
+        return super().Send_To_Inventory(inventory_slot, sending_inventory, receiving_inventory)
+
+    def Bow_Inventory_Check(self, inventory_slot):
+        if not 'bow' in self.weapon_class:
+            return True
         
-        offset_x = 0
-        if self.entity.flip[0] and not self.attacking:
-            self.flip_image = True
-        else:
-            self.flip_image = False
-        if 'left' in self.inventory_type:
-            if direction_y < 0:
-                if not self.attacking:
-                    self.rotate = 10
-                self.Move((self.entity.pos[0] - 4, self.entity.pos[1] - 12))
-            else:
-                if not self.attacking:
-                    offset_x = self.Rotate_Left()
-                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] - 5))
-        elif 'right' in self.inventory_type:
-            if  direction_y < 0:
-                if not self.attacking:
-                    self.rotate = 60
-                self.Move((self.entity.pos[0] + 1, self.entity.pos[1] - 12))
-            else:
-                if not self.attacking:
-                    offset_x = self.Rotate_Right()
-                self.Move((self.entity.pos[0] + offset_x, self.entity.pos[1] - 5))
-        else:
-            print("DIRECTION NOT FOUND", self.inventory_type)
-
-    def Point_Towards_Mouse(self):
-        self.rotate = 0
-
-        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
-        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
-        # Calculate the angle in degrees
-
-        self.rotate = math.degrees(math.atan2(dy, dx)) + 45
-        self.rotate *= -1
-
-    def Rotate_Left(self):
-        if self.flip_image:
-            offset_x = 2
-            self.rotate = -30
-            self.slash = False
-        else:
-            offset_x = 11
-            self.rotate = 0
-            # self.slash = True
-        return offset_x
         
-    def Rotate_Right(self):
-        if self.flip_image:
-            offset_x = -11
-            self.rotate = 0
-            # self.slash = True
+        if not inventory_slot.inventory_type:
+            return True
+        if 'bow' in inventory_slot.inventory_type:
+            return True
         else:
-            offset_x = -2
-            self.rotate = -30
-            self.slash = False
-        return offset_x
+            return False

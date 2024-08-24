@@ -9,7 +9,7 @@ from scripts.decoration.decoration import Decoration
 from scripts.entities.items.weapons.close_combat.sword import Sword
 from scripts.entities.items.weapons.close_combat.torch import Torch
 from scripts.entities.items.weapons.projectiles.spear import Spear
-from scripts.entities.items.weapons.projectiles.bow import Bow
+from scripts.entities.items.weapons.ranged_weapons.bow import Bow
 
 
 class Chest(Decoration):
