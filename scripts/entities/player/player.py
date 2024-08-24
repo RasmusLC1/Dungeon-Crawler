@@ -125,6 +125,7 @@ class Player(Moving_Entity):
 
         if self.inventory_interaction:
             self.Set_Inventory_Interaction(self.inventory_interaction - 1)
+
             self.active_weapon_right.Reset_Charge()
             return
 

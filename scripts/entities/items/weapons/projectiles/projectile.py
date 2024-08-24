@@ -18,6 +18,7 @@ class Projectile(Weapon):
             return True
         return False
 
+
     def Shoot(self):
         if not self.special_attack:
             return        
@@ -50,8 +51,7 @@ class Projectile(Weapon):
         return True
 
     def Drop_Weapon_After_Shot(self):
-        self.special_attack = 0
-        self.attack = 0
+        
         active_inventory = self.game.weapon_inventory.active_inventory
         weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
         self.game.player.Remove_Active_Weapon(self.inventory_type)

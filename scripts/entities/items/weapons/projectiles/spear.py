@@ -12,6 +12,7 @@ class Spear(Projectile):
     
 
     def Set_Attack(self):
+
         super().Set_Attack()
         if self.attacking == 0 or self.range == 0 or self.attack_animation_time == 0:
             return
@@ -35,8 +36,23 @@ class Spear(Projectile):
             self.distance_from_player = 0
             self.rotate = 0
             return
-
+        
+        
         self.Stabbing_Attack_Handler()
+
+    def Set_Equipped_Position(self, direction_y):
+        if 'left' in self.inventory_type:
+            if direction_y < 0:
+                self.Move((self.game.player.pos[0] - 5 , self.game.player.pos[1] - 10 ))
+            else:
+                self.Move((self.game.player.pos[0] + 5 , self.game.player.pos[1] - 10))
+        elif 'right' in self.inventory_type:
+            if  direction_y < 0:
+                self.Move((self.game.player.pos[0] + 7, self.game.player.pos[1] - 10))
+            else:
+                self.Move((self.game.player.pos[0] - 7, self.game.player.pos[1] - 10))
+        else:
+            print("DIRECTION NOT FOUND", self.inventory_type)
 
     def Stabbing_Attack_Handler(self):
         # if not self.rotate:  

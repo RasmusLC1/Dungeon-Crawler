@@ -92,7 +92,7 @@ class Torch(Weapon):
             angle = start_angle + j * math.radians(angle_increment)
             pos_x = math.cos(angle)
             pos_y = math.sin(angle)
-            fire_particle = Fire_Particle(self.game, self.pos, (2,2), 'fire_particle', 2, 4, 30, 'particle', self.special_attack, (pos_x, pos_y), self.entity)
+            fire_particle = Fire_Particle(self.game, self.entity.rect().midtop, (2,2), 'fire_particle', 2, 4, 30, 'particle', self.special_attack, (pos_x, pos_y), self.entity)
             self.game.item_handler.Add_Item(fire_particle)
         
 

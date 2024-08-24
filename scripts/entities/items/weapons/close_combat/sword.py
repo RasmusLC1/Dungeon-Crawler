@@ -40,7 +40,6 @@ class Sword(Weapon):
             self.return_to_holder = False
             self.slash_distance = 0
             self.rotate = 0
-            print("TEST")
             return
         
         super().Update_Attack_Animation()
@@ -139,7 +138,7 @@ class Sword(Weapon):
 
 
     def Set_Attack(self):
-        self.slash = random.choice([True]) # Set either slash or stab
+        self.slash = random.choice([True, False]) # Set either slash or stab
         return super().Set_Attack()
 
     def Update_Flip(self):
