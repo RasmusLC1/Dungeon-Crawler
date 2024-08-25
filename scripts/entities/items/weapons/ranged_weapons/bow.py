@@ -1,4 +1,5 @@
 from scripts.entities.items.weapons.weapon import Weapon
+from scripts.entities.items.weapons.projectiles.arrow import Arrow
 import math
 import pygame
 
@@ -8,8 +9,12 @@ class Bow(Weapon):
         self.max_animation = 0
         self.attack_animation_max = 2
         self.distance_from_player = 0
-        self.attack_animation_counter
+        self.attack_animation_counter = 0
+        self.arrow = False
 
+
+    def Set_Speed(self, speed):
+        self.speed = speed
 
     def Set_Attack(self):
         pass
@@ -64,10 +69,11 @@ class Bow(Weapon):
                 self.charged_attack = True  # Mark the attack as charged
             else:
                 self.attack_animation_counter += 1
+                self.Spawn_Arrow()
                 if self.attack_animation_time <= self.attack_animation_counter:
                     self.attack_animation_counter = 0
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
-
+    
         elif self.charge_time > 0:
             if self.attack_animation > 0:
                 print("SHOOT")
@@ -76,6 +82,14 @@ class Bow(Weapon):
             self.animation = 0
             self.attack_animation_counter = 0
             self.attack_animation = 0
+
+
+    def Spawn_Arrow(self):
+        if not self.arrow:
+            self.arrow = True
+            arrow = Arrow(self.game, self.pos, (16,16), 'arrow')
+            self.game.item_handler.Add_Item(arrow)
+
 
 
     # Point the weapon towards the mouse
@@ -110,8 +124,7 @@ class Bow(Weapon):
     def Bow_Inventory_Check(self, inventory_slot):
         if not 'bow' in self.weapon_class:
             return True
-        
-        
+
         if not inventory_slot.inventory_type:
             return True
         if 'bow' in inventory_slot.inventory_type:

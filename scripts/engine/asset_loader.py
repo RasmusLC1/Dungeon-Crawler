@@ -110,6 +110,10 @@ class Asset_Loader:
             
             'bow': get_tiles_from_sheet('weapons/bow.png', 0, 0, 0, 0, 16, 16),
             'bow_attack': get_tiles_from_sheet('weapons/bow_attack.png', 2, 0, 0, 0, 16, 16),
+            
+            'arrow': get_tiles_from_sheet('weapons/arrow.png', 0, 0, 0, 0, 16, 16),
+            'arrow_attack': get_tiles_from_sheet('weapons/arrow.png', 0, 0, 0, 0, 16, 16),
+
         }
         self.assets.update(Weapons_assets)
 
