@@ -3,12 +3,22 @@ import math
 import pygame
 
 class Arrow(Projectile):
-    def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 3, 8, 10, 'arrow')
+    def __init__(self, game, pos, size, type, entity):
+        super().__init__(game, pos, size, type, 2, 2, 10, 'arrow')
         self.max_animation = 0
         self.attack_animation_max = 0
         self.distance_from_player = 0
-        
+        self.entity = entity
+    
+    def Update(self, offset=...):
+        print("TEST")
+        return super().Update(offset)
+    
+    def Set_Speed(self, speed):
+        self.speed += speed
+    
+    def Set_Damage(self, damage):
+        self.damage = damage
     
 
     def Set_Attack(self):
@@ -22,10 +32,7 @@ class Arrow(Projectile):
 
         super().Shoot()
 
-    def Special_Attack(self):
-        if not self.special_attack or not self.equipped:
-            return
-        self.Drop_Weapon_After_Shot()
+    
 
     def Update_Attack_Animation(self):
         super().Update_Attack_Animation()

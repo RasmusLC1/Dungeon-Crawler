@@ -10,7 +10,7 @@ class Bow(Weapon):
         self.attack_animation_max = 2
         self.distance_from_player = 0
         self.attack_animation_counter = 0
-        self.arrow = False
+        self.arrow = None
 
 
     def Set_Speed(self, speed):
@@ -73,21 +73,26 @@ class Bow(Weapon):
                 if self.attack_animation_time <= self.attack_animation_counter:
                     self.attack_animation_counter = 0
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
-    
-        elif self.charge_time > 0:
-            if self.attack_animation > 0:
-                print("SHOOT")
 
+        elif self.charge_time > 0:
+            print(self.charge_time)
+            arrow_damage = max(8, self.charge_time // 10)
+            arrow_speed = max(10, self.charge_time // 10)
+            self.arrow.Set_Damage(arrow_damage)
+            self.arrow.Set_Speed(arrow_speed)
+            self.arrow.Shoot()
+            self.arrow = None
             self.charge_time = 0
             self.animation = 0
             self.attack_animation_counter = 0
             self.attack_animation = 0
 
 
+
     def Spawn_Arrow(self):
         if not self.arrow:
-            self.arrow = True
-            arrow = Arrow(self.game, self.pos, (16,16), 'arrow')
+            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16,16), 'arrow', self.entity)
+            self.arrow = arrow
             self.game.item_handler.Add_Item(arrow)
 
 
@@ -131,3 +136,8 @@ class Bow(Weapon):
             return True
         else:
             return False
+        
+    def Render_Equipped(self, surf, offset=(0, 0)):
+        super().Render_Equipped(surf, offset)
+        if self.arrow:
+            self.arrow.Render_Equipped(surf, offset)

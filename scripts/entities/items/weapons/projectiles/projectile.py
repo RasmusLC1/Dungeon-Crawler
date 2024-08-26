@@ -64,6 +64,7 @@ class Projectile(Weapon):
     # For some reason calling the parent function does not work for render
     def Render(self, surf, offset=(0, 0)):
         
+        
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
         if self.in_inventory:
