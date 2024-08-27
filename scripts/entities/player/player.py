@@ -217,7 +217,9 @@ class Player(Moving_Entity):
         if self.attacking:
             self.attacking -= 1
 
-    def Set_Active_Weapon(self, weapon, hand):      
+    def Set_Active_Weapon(self, weapon, hand):  
+        if not weapon or not hand:
+            return False    
         equipped_weapon = copy(weapon)
         equipped_weapon.Set_In_Inventory(False)
         print(hand)

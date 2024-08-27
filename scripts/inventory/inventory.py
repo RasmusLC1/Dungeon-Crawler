@@ -283,7 +283,11 @@ class Inventory:
             if not inventory_slot.item:
                 inventory_slot.Add_Item(item)
                 self.game.item_handler.Remove_Item(item)
-                inventory_slot.item.Update()
+                try:
+                    inventory_slot.item.Update()
+                except TypeError as e:
+                    print(f"Weapon in inventory: {e}")
+                    
                 return True
             # 2d array simulation for position
             i += 1

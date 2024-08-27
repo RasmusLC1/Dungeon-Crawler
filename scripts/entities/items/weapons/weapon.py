@@ -48,6 +48,7 @@ class Weapon(Item):
     def Update(self, offset = (0,0)):
         self.Update_Animation()
         self.Special_Attack()
+        
         if not self.entity:
             return False
         self.Update_Flip()
@@ -249,6 +250,7 @@ class Weapon(Item):
 
     # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
+        
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
@@ -256,13 +258,11 @@ class Weapon(Item):
 
     # Render the weapon in entity's hand
     def Render_Equipped(self, surf, offset=(0, 0)):
-        # Load the weapon image
+        
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
-        if self.attacking:
-            self.pos = ((self.pos[0] + 5 * self.game.player.direction_x_holder), (self.pos[1] + 5 * self.game.player.direction_y_holder))
-
+        
         surf.blit(
             pygame.transform.flip(weapon_image, self.flip_image, False),
                                   (self.pos[0] - offset[0], self.pos[1] - offset[1]))
@@ -270,7 +270,6 @@ class Weapon(Item):
 
     # Render basic function on the map
     def Render(self, surf, offset=(0, 0)):
-
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
         if self.in_inventory:
@@ -283,7 +282,7 @@ class Weapon(Item):
             return
         # Set image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-
+        
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))
         weapon_image.set_alpha(alpha_value)

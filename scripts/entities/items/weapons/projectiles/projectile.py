@@ -51,7 +51,6 @@ class Projectile(Weapon):
         return True
 
     def Drop_Weapon_After_Shot(self):
-        
         active_inventory = self.game.weapon_inventory.active_inventory
         weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
         self.game.player.Remove_Active_Weapon(self.inventory_type)
@@ -60,14 +59,15 @@ class Projectile(Weapon):
         self.game.entities_render.Add_Entity(self)
         self.picked_up = True
         self.equipped = False
+        self.in_inventory = False
 
     # For some reason calling the parent function does not work for render
     def Render(self, surf, offset=(0, 0)):
         
-        
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
         if self.in_inventory:
+
             if self.picked_up:
                 self.Render_In_Inventory(surf, offset)
             else:
@@ -78,8 +78,14 @@ class Projectile(Weapon):
         # Set image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
+        if self.attack_direction[0] < 0:
+            self.rotate += 180
+
+
         if self.special_attack:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
+
+        
 
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))

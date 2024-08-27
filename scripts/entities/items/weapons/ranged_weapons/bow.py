@@ -13,6 +13,12 @@ class Bow(Weapon):
         self.arrow = None
 
 
+    def Update(self, offset = (0,0)):
+        if self.arrow:
+            self.arrow.Set_Equipped_Position()
+        return super().Update(offset)
+    
+
     def Set_Speed(self, speed):
         self.speed = speed
 
@@ -23,6 +29,9 @@ class Bow(Weapon):
         if self.is_charging:
             return
         super().Update_Animation()
+
+
+
         
 
     def Update_Attack_Animation(self):
@@ -31,6 +40,7 @@ class Bow(Weapon):
         self.Set_Attack_Direction()
         self.Point_Towards_Mouse()
         self.Set_Attack_Position()
+
 
     # Determine the position of the bow when being drawn
     def Set_Attack_Position(self):
@@ -75,12 +85,12 @@ class Bow(Weapon):
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
 
         elif self.charge_time > 0:
-            print(self.charge_time)
             arrow_damage = max(8, self.charge_time // 10)
             arrow_speed = max(10, self.charge_time // 10)
             self.arrow.Set_Damage(arrow_damage)
             self.arrow.Set_Speed(arrow_speed)
-            self.arrow.Shoot()
+            self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
+            self.arrow.Special_Attack()
             self.arrow = None
             self.charge_time = 0
             self.animation = 0
@@ -93,7 +103,6 @@ class Bow(Weapon):
         if not self.arrow:
             arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16,16), 'arrow', self.entity)
             self.arrow = arrow
-            self.game.item_handler.Add_Item(arrow)
 
 
 

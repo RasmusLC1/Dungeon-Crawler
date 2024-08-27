@@ -19,6 +19,7 @@ class Spear(Projectile):
         self.attack_animation_time = int(self.attacking / self.range / self.attack_animation_time) 
     
     def Shoot(self):
+
         self.Initialise_Shooting(self.entity.strength)
 
         super().Shoot()
@@ -55,7 +56,6 @@ class Spear(Projectile):
             print("DIRECTION NOT FOUND", self.inventory_type)
 
     def Stabbing_Attack_Handler(self):
-        # if not self.rotate:  
         self.Point_Towards_Mouse()
         self.Set_Attack_Direction()
         self.Stabbing_Attack()
