@@ -27,3 +27,16 @@ To achieve high performance, the following optimization techniques have been use
     Lazy Loading: Loading resources only when needed to reduce memory footprint.
     Location detection for physics objects to only interract with nearby objects
 
+    
+Algorithms used:
+
+    Raycasting: used for efficient lighting engine and line of sight
+    A* Pathfinding: Used for efficient pathfinding around the dungeon by enemies
+    Location Based Collision Detection: Used for efficiently computing collisions
+    Collision Layers: used to seperate collision detection so that an entity only checks for collision with relevant objects
+    Tilemap: used to generate and manage dungeon
+    Built in Timsort: for sorting object in O(n log n) time
+    Animation Interpolation: For handling depth of field and general animation quality
+    
+
+
