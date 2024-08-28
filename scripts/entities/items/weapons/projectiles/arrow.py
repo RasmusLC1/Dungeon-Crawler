@@ -6,18 +6,17 @@ class Arrow(Projectile):
     def __init__(self, game, pos, size, type, entity):
         super().__init__(game, pos, size, type, 2, 2, 10, 'arrow')
         self.max_animation = 0
-        self.attack_animation_max = 0
-        self.distance_from_player = 0
-        self.entity = entity
-        self.equipped = True
-        self.in_inventory = True
-        self.attacking = 10
-        self.picked_up = True
-        self.game.entities_render.Remove_Entity(self)
+        # self.attack_animation_max = 0
+        # self.distance_from_player = 0
+        # self.entity = entity
+        # self.equipped = True
+        # self.in_inventory = True
+        # self.picked_up = True
+        # self.attacking = 10
+        # self.game.entities_render.Remove_Entity(self)
+        self.max_amount = 20
 
-    
-    def Update(self, offset=...):
-        return super().Update(offset)
+
     
     def Set_Speed(self, speed):
         self.speed += speed
@@ -33,11 +32,29 @@ class Arrow(Projectile):
     def Shoot(self):
         # print(self.rotate, self.special_attack)
         self.Initialise_Shooting(self.entity.strength)
+        if not self.special_attack:
+            return        
 
-
-        super().Shoot()
+        dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
+        dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
+        
+        if not self.Check_Tile((dir_x, dir_y)):
+            self.special_attack = 0
+            self.game.item_handler.Remove_Item(self, True)
+            return None
+        self.Move((dir_x, dir_y))
+        # Check for collision with enemy
+        entity = self.Attack_Collision_Check()
+        if entity:
+            self.special_attack = 0
+            self.game.item_handler.Remove_Item(self, True)
+            return entity
+        self.special_attack = max(0, self.special_attack - self.shoot_speed)
+        return None
 
     def Set_Equipped_Position(self, direction_y = 0):
+        if not self.entity:
+            return
         if self.entity.attack_direction[0] < 0:
             self.Move((self.entity.pos[0] - 4, self.entity.pos[1] - 3))
         else:
@@ -77,6 +94,11 @@ class Arrow(Projectile):
             return
 
         self.Stabbing_Attack_Handler()
+
+    def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
+        if not self.Arrow_Inventory_Check(inventory_slot):
+            return False
+        return super().Send_To_Inventory(inventory_slot, sending_inventory, receiving_inventory)
 
 
         

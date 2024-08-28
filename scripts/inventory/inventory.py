@@ -85,8 +85,10 @@ class Inventory:
         return False
 
 
-    def Find_Available_Inventory_Slot(self):
+    def Find_Available_Inventory_Slot(self, checked_inventory_slot):
         for inventory_slot in self.inventory:
+            if inventory_slot == checked_inventory_slot:
+                continue
             if not inventory_slot.item:
                 return inventory_slot
         else:

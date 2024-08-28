@@ -118,6 +118,8 @@ class Weapon(Item):
 
     # Initialise special attack
     def Set_Special_Attack(self, offset = (0, 0)):
+        if not self.entity:
+            return
         self.entity.Attack_Direction_Handler(offset)
         self.attack_direction = self.entity.attack_direction
         self.special_attack = self.charge_time
@@ -272,6 +274,8 @@ class Weapon(Item):
     def Render(self, surf, offset=(0, 0)):
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
+        if self.type == 'arrow':
+            print("TEST")
         if self.in_inventory:
             if self.picked_up:
                 self.Render_In_Inventory(surf, offset)
@@ -328,7 +332,16 @@ class Weapon(Item):
     # Initialise the double clikc
     def Handle_Double_Click(self, sending_inventory, receiving_inventory):
         # Check if there is a free inventory slot
-        recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot()
+        recieving_inventory_slot = None
+        for i in range(8):
+            recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot(recieving_inventory_slot)
+            if not self.Check_Legal_Move(recieving_inventory_slot, sending_inventory, receiving_inventory):
+                continue
+            
+                
+            break
+            
+        
         if not recieving_inventory_slot:
             self.Reset_Inventory_Slot(sending_inventory)
             return False
@@ -339,17 +352,32 @@ class Weapon(Item):
             self.Reset_Inventory_Slot(sending_inventory)
             return False
 
-    
-    # Attempt to move the item to the receiving inventory slot by double clicking
-    def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
-       
-        if not self.Check_Two_Handed(inventory_slot, sending_inventory, receiving_inventory):
+    def Check_Legal_Move(self, inventory_slot, sending_inventory, receiving_inventory):
+        if not inventory_slot:
             return False
         
+        if not self.Check_Two_Handed(inventory_slot, sending_inventory, receiving_inventory):
+            return False
+    
         if not self.Check_For_Two_Handed_In_Weapon_Inventory(inventory_slot, sending_inventory, receiving_inventory):
             return False
         
         if not self.Check_Two_Handed_Left_Hand(inventory_slot):
+            return False
+        
+        if not self.Bow_Check(inventory_slot):
+            return False
+        
+        if not self.Arrow_Check(inventory_slot):
+            return False
+        
+        return True
+
+
+    # Attempt to move the item to the receiving inventory slot by double clicking
+    def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
+       
+        if not self.Check_Legal_Move(inventory_slot, sending_inventory, receiving_inventory):
             return False
 
 
@@ -502,6 +530,8 @@ class Weapon(Item):
     
     def Check_For_Two_Handed_In_Weapon_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
         # Check for weapon inventory
+        
+
         if not inventory_slot.inventory_type:
             return True
         

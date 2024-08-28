@@ -10,6 +10,7 @@ from scripts.entities.items.weapons.close_combat.sword import Sword
 from scripts.entities.items.weapons.close_combat.torch import Torch
 from scripts.entities.items.weapons.projectiles.spear import Spear
 from scripts.entities.items.weapons.ranged_weapons.bow import Bow
+from scripts.entities.items.weapons.projectiles.arrow import Arrow
 
 
 class Chest(Decoration):
@@ -35,6 +36,7 @@ class Chest(Decoration):
             # 'torch',
             'spear',
             'bow',
+            'arrow',
         ]
 
     def rect(self):
@@ -74,6 +76,11 @@ class Chest(Decoration):
                 elif self.weapons[weapon_index] == 'bow':
                     bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'bow')
                     self.game.item_handler.Add_Item(bow)
+                elif self.weapons[weapon_index] == 'arrow':
+                    loot_amount = max(self.loot_amount / 10, 1)
+                    for i in range(self.loot_amount):
+                        arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'arrow', None)
+                        self.game.item_handler.Add_Item(arrow)
 
 
 

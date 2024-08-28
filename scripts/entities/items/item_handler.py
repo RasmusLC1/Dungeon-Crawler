@@ -45,8 +45,6 @@ class Item_Handler():
         self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)
         
         for item in self.items:
-            
-            item.Update_Animation()
             if not item.picked_up:
                 self.items.remove(item)
 
