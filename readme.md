@@ -22,21 +22,22 @@ Optimization Techniques
 
 To achieve high performance, the following optimization techniques have been used:
 
-    Algorithm Optimization: Efficient sorting, searching, and pathfinding algorithms.
-    Memory Management: Use of memory-efficient data structures.
-    Lazy Loading: Loading resources only when needed to reduce memory footprint.
-    Location detection for physics objects to only interract with nearby objects
-
+    Algorithm Optimization: Use of efficient sorting, searching, and pathfinding algorithms.
+    Memory Management: Utilization of memory-efficient data structures.
+    Lazy Loading: Loading resources only when needed to minimize memory usage.
+    Location-Based Interaction: Physics objects only interact with nearby entities to reduce unnecessary computations.
+    Code Refactoring: Regularly refactoring and iterating over code to enhance performance.
+    Iterative Testing: Continuously testing for errors and optimizing performance.
     
 Algorithms used:
 
-    Raycasting: used for efficient lighting engine and line of sight
-    A* Pathfinding: Used for efficient pathfinding around the dungeon by enemies
-    Location Based Collision Detection: Used for efficiently computing collisions
-    Collision Layers: used to seperate collision detection so that an entity only checks for collision with relevant objects
-    Tilemap: used to generate and manage dungeon
-    Built in Timsort: for sorting object in O(n log n) time
-    Animation Interpolation: For handling depth of field and general animation quality
+    Raycasting: Efficiently calculates lighting and line of sight.
+    A* Pathfinding: Optimizes enemy pathfinding around the dungeon.
+    Location-Based Collision Detection: Efficiently computes collisions based on object locations.
+    Collision Layers: Separates collision detection so that entities only check for collisions with relevant objects.
+    Tilemap: Generates and manages the dungeon layout.
+    Built-in Timsort: Sorts objects with O(n log n) time complexity for efficient processing.
+    Animation Interpolation: Enhances depth of field and overall animation quality.
     
 
 
