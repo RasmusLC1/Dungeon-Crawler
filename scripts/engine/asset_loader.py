@@ -16,6 +16,7 @@ class Asset_Loader:
         Asset_Loader.Asset_Decoration_List(self)
         Asset_Loader.Asset_Weapons_List(self)
         Asset_Loader.Asset_Weapon_Inventory(self)
+        Asset_Loader.Asset_Font(self)
 
         
     def Asset_Background_List(self):
@@ -178,6 +179,13 @@ class Asset_Loader:
             'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 16, 16, white),
         }
         self.assets.update(potion_assets)
+
+    def Asset_Font(self):
+        font = {
+            'font' : get_tiles_from_sheet('font/font.png', 7, 4, 0, 0, 8, 8),
+        }
+        self.assets.update(font)
+
             
     def sound_effects(self):
         self.sfx ={

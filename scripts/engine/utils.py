@@ -31,25 +31,31 @@ def get_tile_image_from_sheet(sheet, pos_x, pos_y, width, height, color=None):
 
 
 # Get a defined range of sprites from a sheet
-def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, size_x, size_y, color = None):
+def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, size_x, size_y, color=None):
     sheet = pygame.image.load(BASE_IMG_PATH + path).convert_alpha()
     images = []
+    
     # Setup for double while loop
-    current_iteration_x = 0
     current_iteration_y = 0
-    while current_iteration_x <= versions_x:
-        y_holder = starting_y
-        while current_iteration_y <= versions_y:
-            # Go through the tiles from the sheet on the x and y location, with a given size, filter out white colour
+    
+    while current_iteration_y <= versions_y:
+        x_holder = starting_x  # Store the original starting_x position
+        current_iteration_x = 0
+        
+        while current_iteration_x <= versions_x:
+            # Go through the tiles from the sheet on the y and x location, with a given size, filter out white color
             images.append(get_tile_image_from_sheet(sheet, starting_x, starting_y, size_x, size_y, color))
-            starting_y += size_y
-            current_iteration_y += 1
+            starting_x += size_x  # Move to the next tile on the x-axis
+            current_iteration_x += 1
+        
         # Increment the position and current iteration
-        starting_x += size_x
-        current_iteration_x += 1
-        current_iteration_y = 0
-        starting_y = y_holder
+        starting_y += size_y  # Move to the next row
+        current_iteration_y += 1
+        current_iteration_x = 0
+        starting_x = x_holder  # Reset starting_x for the next row
+    
     return images
+
 
 
 

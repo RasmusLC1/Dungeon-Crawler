@@ -28,6 +28,8 @@ from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
+from scripts.engine.font import Font
+
 
 import numpy as np
 
@@ -61,6 +63,8 @@ class Game:
         self.ray_caster = Ray_Caster(self)
         self.a_star = A_Star()
         self.entities_render = Entity_Renderer(self)
+        self.default_font = Font(self)
+
 
         self.level = 0
         self.scroll = [0, 0]
@@ -152,6 +156,7 @@ class Game:
             particle.Render(self.display, self.render_scroll)
         self.item_inventory.Render(self.display)
         self.weapon_inventory.Render(self.display, self.render_scroll)
+
         self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
 
         

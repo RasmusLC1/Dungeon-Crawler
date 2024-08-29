@@ -29,10 +29,13 @@ class Health_Bar:
         rect_height = 5
         
 
-        text = self.font.render(str(self.player.health) + '/' + str(self.player.max_health), True, (255, 255, 255))
+        # text = self.font.render(, True, (255, 255, 255))
         
         # Use self.display consistently if it's the initialized display surface
-        self.display.blit(text, (rect_x, rect_y - 10))
+        
+        text = str(self.player.health)
+        self.default_font.Render_Word(self.display, text, (rect_x, rect_y - 10))
+        # self.display.blit(text, (rect_x, rect_y - 10))
         # Draw healthy
         pygame.draw.rect(self.display, (0, 255, 0), (rect_x - 10, rect_y, normalised_health, rect_height))
         # Draw damage
