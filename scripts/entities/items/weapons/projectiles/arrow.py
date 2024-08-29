@@ -6,15 +6,9 @@ class Arrow(Projectile):
     def __init__(self, game, pos, size, type, entity):
         super().__init__(game, pos, size, type, 2, 2, 10, 'arrow')
         self.max_animation = 0
-        # self.attack_animation_max = 0
-        # self.distance_from_player = 0
-        # self.entity = entity
-        # self.equipped = True
-        # self.in_inventory = True
-        # self.picked_up = True
-        # self.attacking = 10
-        # self.game.entities_render.Remove_Entity(self)
+        
         self.max_amount = 20
+        self.amount = 1
 
 
     
@@ -28,9 +22,18 @@ class Arrow(Projectile):
     def Update_Flip(self):
         pass
 
+    def Shooting_Setup(self, entity):
+        self.attack_animation_max = 0
+        self.distance_from_player = 0
+        self.entity = entity
+        self.equipped = True
+        self.in_inventory = True
+        self.picked_up = True
+        self.attacking = 10
+        self.game.entities_render.Remove_Entity(self)
+
 
     def Shoot(self):
-        # print(self.rotate, self.special_attack)
         self.Initialise_Shooting(self.entity.strength)
         if not self.special_attack:
             return        

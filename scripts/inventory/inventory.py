@@ -264,13 +264,11 @@ class Inventory:
                 if inventory_slot.item:
                     inventory_slot.item.Update()
                     if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
-                        
-                        current_amount = inventory_slot.item.amount + item.amount
-                        
+
                         inventory_slot.item.Increase_Amount(item.amount)
                         # Handle overflow and send it to the new available position
-                        if current_amount > inventory_slot.item.max_amount:
-                            new_amount = current_amount - inventory_slot.item.max_amount
+                        if inventory_slot.item.amount > inventory_slot.item.max_amount:
+                            new_amount = inventory_slot.item.amount - inventory_slot.item.max_amount
                             new_item = copy(item)
                             new_item.Set_Amount(new_amount)
                             # Add item to item list if there is no room

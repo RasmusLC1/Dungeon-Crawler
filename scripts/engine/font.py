@@ -10,8 +10,6 @@ class Font():
         '-', '!', ]
 
 
-
-
     def find_char_positions(self, input_string):
         # Convert input_string to lowercase to handle case-insensitivity
         characters = list(input_string.lower())  
@@ -41,4 +39,4 @@ class Font():
         for i, font_position in enumerate(char_positions):
             item_image = self.font[font_position]
             surf.blit(item_image, pos)
-            pos = (pos[0] + 8, pos[1])
+            pos = (pos[0] + 7, pos[1])

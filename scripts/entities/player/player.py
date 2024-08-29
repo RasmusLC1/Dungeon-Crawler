@@ -222,7 +222,6 @@ class Player(Moving_Entity):
             return False    
         equipped_weapon = copy(weapon)
         equipped_weapon.Set_In_Inventory(False)
-        print(hand)
         if hand == 'left_hand':
             equipped_weapon.Move(self.pos)
             self.active_weapon_left = equipped_weapon

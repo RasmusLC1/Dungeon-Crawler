@@ -274,8 +274,7 @@ class Weapon(Item):
     def Render(self, surf, offset=(0, 0)):
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
-        if self.type == 'arrow':
-            print("TEST")
+        
         if self.in_inventory:
             if self.picked_up:
                 self.Render_In_Inventory(surf, offset)

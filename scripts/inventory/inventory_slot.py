@@ -49,6 +49,12 @@ class Inventory_Slot():
     def Remove_Item(self):
         self.item = None
 
+    def Remove_Item_On_Amount(self):
+        if not self.item.amount <= 0:
+            return False
+        self.item = None
+        return True
+
     def Add_Background(self, background):
         self.background = background
 

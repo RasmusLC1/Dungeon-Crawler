@@ -79,24 +79,49 @@ class Bow(Weapon):
                 self.charged_attack = True  # Mark the attack as charged
             else:
                 self.attack_animation_counter += 1
-                self.Find_Arrow()
+                if not self.arrow:
+                    if not self.Find_Arrow():
+                        self.Reset_Bow()
+                        return
                 if self.attack_animation_time <= self.attack_animation_counter:
                     self.attack_animation_counter = 0
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
 
         elif self.charge_time > 0:
-            
-            self.charge_time = 0
-            self.animation = 0
-            self.attack_animation_counter = 0
-            self.attack_animation = 0
+            arrow_damage = max(8, self.charge_time // 10)
+            arrow_speed = max(10, self.charge_time // 10)
+            self.arrow.Set_Damage(arrow_damage)
+            self.arrow.Set_Speed(arrow_speed)
+            self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
+            self.arrow.Special_Attack()
+            self.Reset_Bow()
 
+    def Reset_Bow(self):
+        self.charge_time = 0
+        self.animation = 0
+        self.attack_animation_counter = 0
+        self.attack_animation = 0
+        self.arrow = None
 
     def Find_Arrow(self):
         weapon_inventory = self.game.weapon_inventory.inventories[1]
         inventory_slot = weapon_inventory.inventory[1]
-        if inventory_slot.item:
-            print(inventory_slot.item.amount)
+        if not inventory_slot.item:
+            return False
+        # print(inventory_slot.item.type)
+        
+        if not inventory_slot.item.type == 'arrow':
+            return False
+        
+        if not inventory_slot.item.amount > 0:
+            return False
+        
+        self.Spawn_Arrow()
+        inventory_slot.item.Decrease_Amount(1)
+        inventory_slot.Remove_Item_On_Amount()
+        
+
+        return True
 
 
     def Shoot_Arrow(self):
@@ -107,6 +132,12 @@ class Bow(Weapon):
         self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
         self.arrow.Special_Attack()
         self.arrow = None
+
+    def Spawn_Arrow(self):
+        if not self.arrow:
+            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16,16), 'arrow', self.entity)
+            self.arrow = arrow
+            self.arrow.Shooting_Setup(self.entity)
 
 
 

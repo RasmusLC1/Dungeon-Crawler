@@ -11,7 +11,7 @@ class Health_Potion(Potion):
 
     def Activate(self):
         if self.game.player.Healing(10):
-            self.amount -= 1
+            self.Decrease_Amount(1)
         if self.amount <= 0:
             self.used = True
         self.Update()
