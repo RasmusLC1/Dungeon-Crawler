@@ -136,6 +136,8 @@ class Game:
     
 
     def Render(self):
+        self.display.blit(self.assets['background'], (0, 0))
+        
         self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=self.render_scroll)
 
@@ -150,11 +152,11 @@ class Game:
             particle.Render(self.display, self.render_scroll)
         self.item_inventory.Render(self.display)
         self.weapon_inventory.Render(self.display, self.render_scroll)
+        self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
 
         
     def run(self):  
         while True:
-            self.display.blit(self.assets['background'], (0, 0))
             # Get the scroll offset
             self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
@@ -171,7 +173,6 @@ class Game:
 
                 Keyboard_Handler.keyboard_Input(self, event, offset = self.render_scroll)
 
-            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
             pygame.display.update()
             self.clock.tick(60)
 

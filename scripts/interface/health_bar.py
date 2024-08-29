@@ -3,6 +3,12 @@ import pygame
 class Health_Bar:
     def __init__(self):
         self.scaled_heart = pygame.transform.scale(self.assets['heart'], (10, 12))
+        # Ensure the font is loaded correctly
+        try:
+            self.font = pygame.font.Font('freesansbold.ttf', 10)
+        except Exception as e:
+            print(f"Font load error: {e}")
+            self.font = pygame.font.SysFont('freesans', 10)  # Fallback font
 
 
     
@@ -21,14 +27,9 @@ class Health_Bar:
         rect_y = self.screen_height / self.render_scale - 20
         normalised_health = Health_Bar.normalize_health(self.player.health, self.player.max_health, bar_length)
         rect_height = 5
-        # Ensure the font is loaded correctly
-        try:
-            font = pygame.font.Font('freesansbold.ttf', 10)
-        except Exception as e:
-            print(f"Font load error: {e}")
-            font = pygame.font.SysFont('freesans', 10)  # Fallback font
+        
 
-        text = font.render(str(self.player.health) + '/' + str(self.player.max_health), True, (255, 255, 255))
+        text = self.font.render(str(self.player.health) + '/' + str(self.player.max_health), True, (255, 255, 255))
         
         # Use self.display consistently if it's the initialized display surface
         self.display.blit(text, (rect_x, rect_y - 10))

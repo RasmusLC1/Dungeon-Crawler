@@ -264,7 +264,9 @@ class Inventory:
                 if inventory_slot.item:
                     inventory_slot.item.Update()
                     if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
+                        
                         current_amount = inventory_slot.item.amount + item.amount
+                        
                         inventory_slot.item.Increase_Amount(item.amount)
                         # Handle overflow and send it to the new available position
                         if current_amount > inventory_slot.item.max_amount:
