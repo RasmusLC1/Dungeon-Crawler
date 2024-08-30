@@ -22,10 +22,7 @@ class Enemy(Moving_Entity):
         self.max_speed_holder = self.max_speed  
         self.alert_cooldown = 0
 
-        
-
         self.path_finding = Path_Finding(game, self)
-        print("TEST")
 
 
     def update(self, tilemap, movement=(0, 0)):
@@ -45,7 +42,7 @@ class Enemy(Moving_Entity):
         self.direction_x_holder = self.direction_x 
         self.direction_y_holder = self.direction_y
 
-        # self.Update_Alert_Cooldown()
+        self.Update_Alert_Cooldown()
 
         
     def Update_Alert_Cooldown(self):

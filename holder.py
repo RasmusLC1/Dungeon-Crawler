@@ -27,7 +27,11 @@ class Path_Finding():
 
         self.corner_handling_cooldown = 0
 
+        self.player_found = False
+
     def Path_Finding(self, target, look_for_new_path = False):
+        print("TEST")
+
         self.Set_Position_Holder()
 
         self.Update_Stuck_Timer()
@@ -36,6 +40,10 @@ class Path_Finding():
 
         if self.Direct_Pathing():
             return
+        else:
+            if self.player_found:
+                self.player_found = False
+                target = self.game.player.pos
         
         # Only run this if we need a new path
         if look_for_new_path:
@@ -164,6 +172,7 @@ class Path_Finding():
             self.entity.direction.normalize_ip()
             self.entity.direction[0] /= self.game.render_scale
             self.entity.direction[1] /= self.game.render_scale
+            self.player_found = True
             return True
         
         return False

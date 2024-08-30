@@ -25,6 +25,7 @@ class Path_Finding():
 
         self.corner_handling_cooldown = 0
 
+        self.player_found = False
 
 
 
@@ -38,6 +39,12 @@ class Path_Finding():
 
         if self.Direct_Pathing():
             return
+        else:
+            # If enemy looses sight of player he will try to go to the last known location
+            if self.player_found:
+                self.player_found = False
+                target = self.game.player.pos
+                look_for_new_path = True
         
         # Only run this if we need a new path
         if look_for_new_path:
@@ -164,6 +171,7 @@ class Path_Finding():
             self.entity.direction.normalize_ip()
             self.entity.direction[0] /= self.game.render_scale
             self.entity.direction[1] /= self.game.render_scale
+            self.player_found = True
             if not self.entity.alert_cooldown:
                 self.entity.Set_Alert_Cooldown(10000)
                 self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
