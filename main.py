@@ -29,6 +29,8 @@ from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.font import Font
+from scripts.engine.clatter import Clatter
+
 
 
 import numpy as np
@@ -64,6 +66,8 @@ class Game:
         self.a_star = A_Star()
         self.entities_render = Entity_Renderer(self)
         self.default_font = Font(self)
+        self.clatter = Clatter(self)
+
 
 
         self.level = 0
@@ -138,7 +142,6 @@ class Game:
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), self.render_scroll)
             Particle_Handler.particle_update(self, self.render_scroll)
             self.trap_handler.Update()
-            self.chest_handler.Update()
             self.decoration_handler.Update()
             self.item_handler.Update(self.render_scroll)
             self.enemy_handler.Update()

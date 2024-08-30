@@ -42,45 +42,44 @@ class Chest(Decoration):
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
-    def Update(self):
-        if self.rect().colliderect(self.game.player.rect()):
-            version_modifier = self.version * 3 + 1
-            self.loot_amount = random.randint(1, 3) * version_modifier
-            self.loot_type = random.randint(3, 3)
-            if self.loot_type == 0:
-                    item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
-                    self.game.item_handler.Add_Item(item)
-            elif self.loot_type == 1:
-                    item = Mana_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
-                    self.game.item_handler.Add_Item(item)
+    def Open(self):
+        version_modifier = self.version * 3 + 1
+        self.loot_amount = random.randint(1, 3) * version_modifier
+        self.loot_type = random.randint(3, 3)
+        if self.loot_type == 0:
+                item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
+                self.game.item_handler.Add_Item(item)
+        elif self.loot_type == 1:
+                item = Mana_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
+                self.game.item_handler.Add_Item(item)
 
 
-            elif self.loot_type == 2:
-                print("COIN")
-                self.loot_amount *= 3
-                self.game.player.Coin_Change(self.loot_amount)
-                self.text_color  = (255,223,0)  
-            elif self.loot_type == 3:
-                rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
-                rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-                weapon_index = random.randint(0, len(self.weapons) - 1)
-                if self.weapons[weapon_index] == 'sword':
-                    sword = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16), 'sword')
-                    self.game.item_handler.Add_Item(sword)
-                elif self.weapons[weapon_index] == 'spear':
-                    spear = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16), 'spear')
-                    self.game.item_handler.Add_Item(spear)
-                elif self.weapons[weapon_index] == 'torch':
-                    torch = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16), 'torch')
-                    self.game.item_handler.Add_Item(torch)
-                elif self.weapons[weapon_index] == 'bow':
-                    bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'bow')
-                    self.game.item_handler.Add_Item(bow)
-                elif self.weapons[weapon_index] == 'arrow':
-                    loot_amount = min(20, max(self.loot_amount // 5, 3))
-                    for i in range(loot_amount):
-                        arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'arrow', None)
-                        self.game.item_handler.Add_Item(arrow)
+        elif self.loot_type == 2:
+            print("COIN")
+            self.loot_amount *= 3
+            self.game.player.Coin_Change(self.loot_amount)
+            self.text_color  = (255,223,0)  
+        elif self.loot_type == 3:
+            rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
+            rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
+            weapon_index = random.randint(0, len(self.weapons) - 1)
+            if self.weapons[weapon_index] == 'sword':
+                sword = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16), 'sword')
+                self.game.item_handler.Add_Item(sword)
+            elif self.weapons[weapon_index] == 'spear':
+                spear = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16), 'spear')
+                self.game.item_handler.Add_Item(spear)
+            elif self.weapons[weapon_index] == 'torch':
+                torch = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16), 'torch')
+                self.game.item_handler.Add_Item(torch)
+            elif self.weapons[weapon_index] == 'bow':
+                bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'bow')
+                self.game.item_handler.Add_Item(bow)
+            elif self.weapons[weapon_index] == 'arrow':
+                loot_amount = min(20, max(self.loot_amount // 5, 3))
+                for i in range(loot_amount):
+                    arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'arrow', None)
+                    self.game.item_handler.Add_Item(arrow)
 
 
 

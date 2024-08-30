@@ -311,7 +311,7 @@ class Player(Moving_Entity):
             self.direction_y_holder = self.direction_y
 
     def Find_Nearby_Chests(self, range):
-        self.nearby_chests = self.game.chest_handler.find_nearby_chests(self.pos, range)
+        self.nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.pos, range)
 
     def Set_Inventory_Interaction(self, state):
         self.inventory_interaction = state

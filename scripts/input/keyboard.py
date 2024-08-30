@@ -1,5 +1,6 @@
 import pygame
 
+
 class Keyboard_Handler:
     def keyboard_Input(self, key_press, offset=(0, 0)):
         if key_press.type == pygame.KEYDOWN:
@@ -11,34 +12,15 @@ class Keyboard_Handler:
                 self.movement[2] = True
             if key_press.key == pygame.K_s:
                 self.movement[3] = True
-                
-            # if key_press.key == pygame.K_p:
-            #     if self.player.active_weapon_left:
-            #         try:
-            #             self.player.active_weapon_left.Modify_Offset(1)
-            #         except Exception as e:
-            #             print(f"Font load error: {e}")
-            #     if self.player.active_weapon_right:
-            #         try:
-            #             self.player.active_weapon_right.Modify_Offset(1)
-            #         except Exception as e:
-            #             print(f"Font load error: {e}")
-            # if key_press.key == pygame.K_MINUS:
-            #     if self.player.active_weapon_left:
-            #         try:
-            #             self.player.active_weapon_left.Modify_Offset(-1)
-            #         except Exception as e:
-            #             print(f"Font load error: {e}")
-            #     if self.player.active_weapon_right:
-            #         try:
-            #             self.player.active_weapon_right.Modify_Offset(-1)
-            #         except Exception as e:
-            #             print(f"Font load error: {e}")
-            
+
             if key_press.key == pygame.K_e:
                 nearby_items = self.item_handler.Find_Nearby_Item(self.player.pos, 30)
                 for item in nearby_items:
                     item.Pick_Up()
+
+                nearby_chests = self.chest_handler.Find_Nearby_Chests(self.player.pos, 30)
+                self.chest_handler.Open_Chests(nearby_chests)
+
             if key_press.key == pygame.K_SPACE:
                 pass
             if key_press.key == pygame.K_x:

@@ -10,20 +10,21 @@ class Chest_Handler:
             size = (game.assets[chest['type']][0].get_width(), game.assets[chest['type']][0].get_height())
             self.chests.append(Chest(game, chest['pos'], size, chest['type'], depth))  
 
+    def Open_Chests(self, chests):
+        if not chests:
+            return
+        self.game.clatter.Generate_Clatter(chests[0].pos, 150)
 
-    def Update(self):
-        for chest in self.chests:
-                if chest.empty:
-                    if not chest.text_cooldown:
-                        self.chests.remove(chest)
-                else:
-                    chest.Update()
+        for chest in chests:
+            chest.Open()
+            self.chests.remove(chest)
+            del(chest)
 
-    def find_nearby_chests(self, player_pos, max_distance):
+    def Find_Nearby_Chests(self, center, max_distance):
         nearby_chests = []
         for chest in self.chests:  # Assuming self.traps is a list of traps
             # Calculate the Euclidean distance
-            distance = math.sqrt((player_pos[0] - chest.pos[0]) ** 2 + (player_pos[1] - chest.pos[1]) ** 2)
+            distance = math.sqrt((center[0] - chest.pos[0]) ** 2 + (center[1] - chest.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_chests.append(chest)
         return nearby_chests

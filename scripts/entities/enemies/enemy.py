@@ -20,12 +20,17 @@ class Enemy(Moving_Entity):
         self.random_movement_cooldown = 0
         self.max_speed = 1
         self.max_speed_holder = self.max_speed  
+        self.alert_cooldown = 0
+
         
 
         self.path_finding = Path_Finding(game, self)
+        print("TEST")
 
 
     def update(self, tilemap, movement=(0, 0)):
+        
+            
         self.path_finding.Path_Finding(self.game.player.pos)
         movement = self.direction
         
@@ -39,18 +44,20 @@ class Enemy(Moving_Entity):
             
         self.direction_x_holder = self.direction_x 
         self.direction_y_holder = self.direction_y
-    
+
+        # self.Update_Alert_Cooldown()
+
+        
+    def Update_Alert_Cooldown(self):
+        if self.alert_cooldown:
+            self.alert_cooldown = max(0, self.alert_cooldown - 1)
+
+    def Set_Alert_Cooldown(self, amount):
+        self.alert_cooldown = amount
+
     def Find_New_Path(self, destination):
         self.path_finding.Path_Finding(destination, True)
 
-
-    def Calculate_Position(self):
-        self.src_x = round(self.pos[0] / 16) - self.game.a_star.min_x 
-        self.src_y = round(self.pos[1] / 16) - self.game.a_star.min_y 
-        
-    def Calculate_Destination_Position(self, destination):
-        self.des_x = round(destination[0] / 16) - self.game.a_star.min_x 
-        self.des_y = round(destination[1] / 16) - self.game.a_star.min_y 
 
         
     def Damage_Taken(self, damage):
@@ -80,7 +87,6 @@ class Enemy(Moving_Entity):
             else:
                 # Check if the enemy will collide soon, if yes redirect in the opposite direction
                 if self.Future_Rect(self.direction).colliderect(trap.rect()):
-                    print("TEST")
                     self.direction_x *= -1
                     self.direction_y *= -1
                     self.direction = (self.direction_x, self.direction_y)

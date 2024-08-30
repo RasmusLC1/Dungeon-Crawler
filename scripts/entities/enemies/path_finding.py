@@ -25,7 +25,11 @@ class Path_Finding():
 
         self.corner_handling_cooldown = 0
 
+
+
+
     def Path_Finding(self, target, look_for_new_path = False):
+        
         self.Set_Position_Holder()
 
         self.Update_Stuck_Timer()
@@ -150,7 +154,7 @@ class Path_Finding():
         distance = Helper_Functions.Distance_Float(self.entity.pos, self.game.player.pos)
 
         # Player is close, so the enemy charge directly
-        if distance < 60:
+        if distance < 100:
             dx = self.game.player.pos[0] - self.entity.pos[0]
             dy = self.game.player.pos[1] - self.entity.pos[1]
             # Check if the enemy has 
@@ -160,6 +164,9 @@ class Path_Finding():
             self.entity.direction.normalize_ip()
             self.entity.direction[0] /= self.game.render_scale
             self.entity.direction[1] /= self.game.render_scale
+            if not self.entity.alert_cooldown:
+                self.entity.Set_Alert_Cooldown(10000)
+                self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
             return True
         
         return False

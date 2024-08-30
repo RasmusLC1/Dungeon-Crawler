@@ -44,7 +44,6 @@ class Weapon(Item):
         self.special_attack = 0 # special attack counter
         self.return_to_holder = False # Return the weapon to original positon after stab
 
-        self.clatter = Clatter(game)
 
     # General Update function
     def Update(self, offset = (0,0)):
@@ -161,7 +160,7 @@ class Weapon(Item):
             # Check for collision with enemy
             if weapon_rect.colliderect(enemy.rect()):
                 target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
-                self.clatter.Generate_Clatter(target_position, 1000)
+                self.game.clatter.Generate_Clatter(target_position, 200)
 
                 damage = self.entity.strength * self.damage
                 enemy.Damage_Taken(damage)
@@ -185,7 +184,7 @@ class Weapon(Item):
         
         if 'Wall' in tile['type']:
             target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
-            self.clatter.Generate_Clatter(target_position, 10000)
+            self.game.clatter.Generate_Clatter(target_position, 400)
             return False
         
         return True
