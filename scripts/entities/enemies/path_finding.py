@@ -10,9 +10,7 @@ class Path_Finding():
         self.entity = entity
 
         self.pos_holder = (0,0)
-
         self.path = [] # Path to destination
-        self.pathfinding_cooldown = 0
 
         # self.pos in 16/16 tileformat
         self.src_x = 0
@@ -27,7 +25,7 @@ class Path_Finding():
 
         self.corner_handling_cooldown = 0
 
-    def Path_Finding(self):
+    def Path_Finding(self, target, look_for_new_path = False):
         self.Set_Position_Holder()
 
         self.Update_Stuck_Timer()
@@ -37,30 +35,35 @@ class Path_Finding():
         if self.Direct_Pathing():
             return
         
-        self.Find_Shortest_Path(self.game.player.pos)
-        self.Navigate_Path()
+        # Only run this if we need a new path
+        if look_for_new_path:
+            self.Find_Shortest_Path(target)
+
+        if not self.Navigate_Path():
+            self.Moving_Random()
+
 
 
     def Navigate_Path(self):
         # Pathfinding
-        if len(self.path) > 1:
-            # Calculate the updated position
-            self.Calculate_Position()
-            # Assign the target to be the next position
-            target = self.path[1]
-            # Move the entity away from walls
-            self.Corner_Handling()
+        if len(self.path) < 2:
+            return False
+        
+        # Calculate the updated position
+        self.Calculate_Position()
+        # Assign the target to be the next position
+        target = self.path[1]
+        # Move the entity away from walls
+        self.Corner_Handling()
 
-            if self.Path_Segment_Complete(target):
-                return
-
-            self.Calculate_Path_Segment(target)
-
-            self.entity.direction =  Helper_Functions.Direction_Vector((self.entity.direction_x, self.entity.direction_y))
+        if self.Path_Segment_Complete(target):
             return
-        # If there is no path, move at random
-        else:
-            self.Moving_Random()
+
+        self.Calculate_Path_Segment(target)
+
+        self.entity.direction =  Helper_Functions.Direction_Vector((self.entity.direction_x, self.entity.direction_y))
+        
+        return True
 
     def Calculate_Path_Segment(self, target):
         # Calculate Direction
@@ -86,16 +89,11 @@ class Path_Finding():
         self.corner_handling_cooldown = 0
         return True
 
-    def Find_Shortest_Path(self, destination) -> None:
-        if self.pathfinding_cooldown:
-            self.pathfinding_cooldown -= 1
-            return
-            
+    def Find_Shortest_Path(self, destination) -> None:          
         self.path.clear()
         self.Calculate_Position()
         self.Calculate_Destination_Position(destination)
         self.game.a_star.a_star_search(self.path, [self.src_y, self.src_x], [self.des_x, self.des_x])
-        self.pathfinding_cooldown = 100
         return
 
     # Move the entity if they're to close to a wall
@@ -130,6 +128,7 @@ class Path_Finding():
             path_list = list(self.path[1])
             path_list[0] += 1
             self.path[1] = tuple(path_list)
+        return
 
     # Check for line of sight with the player
     def Line_Of_Sight(self, distance, dx, dy):

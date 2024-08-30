@@ -26,7 +26,7 @@ class Enemy(Moving_Entity):
 
 
     def update(self, tilemap, movement=(0, 0)):
-        self.path_finding.Path_Finding()
+        self.path_finding.Path_Finding(self.game.player.pos)
         movement = self.direction
         
         super().update(tilemap, movement = movement)
@@ -40,6 +40,9 @@ class Enemy(Moving_Entity):
         self.direction_x_holder = self.direction_x 
         self.direction_y_holder = self.direction_y
     
+    def Find_New_Path(self, destination):
+        self.path_finding.Path_Finding(destination, True)
+
 
     def Calculate_Position(self):
         self.src_x = round(self.pos[0] / 16) - self.game.a_star.min_x 
@@ -77,6 +80,7 @@ class Enemy(Moving_Entity):
             else:
                 # Check if the enemy will collide soon, if yes redirect in the opposite direction
                 if self.Future_Rect(self.direction).colliderect(trap.rect()):
+                    print("TEST")
                     self.direction_x *= -1
                     self.direction_y *= -1
                     self.direction = (self.direction_x, self.direction_y)

@@ -38,17 +38,7 @@ class Projectile(Weapon):
         self.special_attack = max(0, self.special_attack - self.shoot_speed)
         return None
 
- 
-
-    def Check_Tile(self, new_pos):
-        tile = self.game.tilemap.Current_Tile(new_pos)
-        if not tile:
-            return True
-        
-        if 'Wall' in tile['type']:
-            return False
-        
-        return True
+    
 
     def Drop_Weapon_After_Shot(self):
         active_inventory = self.game.weapon_inventory.active_inventory

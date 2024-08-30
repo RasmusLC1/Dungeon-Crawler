@@ -47,6 +47,7 @@ class Arrow(Projectile):
             self.special_attack = 0
             self.game.item_handler.Remove_Item(self, True)
             return None
+        
         self.Move((dir_x, dir_y))
         # Check for collision with enemy
         entity = self.Attack_Collision_Check()

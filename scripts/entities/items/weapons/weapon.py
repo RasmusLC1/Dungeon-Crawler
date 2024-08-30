@@ -1,5 +1,6 @@
 from scripts.decoration.decoration import Decoration
 from scripts.entities.items.item import Item
+from scripts.engine.clatter import Clatter
 import random
 import pygame
 import math
@@ -43,6 +44,7 @@ class Weapon(Item):
         self.special_attack = 0 # special attack counter
         self.return_to_holder = False # Return the weapon to original positon after stab
 
+        self.clatter = Clatter(game)
 
     # General Update function
     def Update(self, offset = (0,0)):
@@ -158,6 +160,9 @@ class Weapon(Item):
                 continue
             # Check for collision with enemy
             if weapon_rect.colliderect(enemy.rect()):
+                target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
+                self.clatter.Generate_Clatter(target_position, 1000)
+
                 damage = self.entity.strength * self.damage
                 enemy.Damage_Taken(damage)
                 self.enemy_hit = True
@@ -170,6 +175,20 @@ class Weapon(Item):
                 return enemy
             
         return None
+    
+    #TODO: Make a formula for better computing clatter ditsnace
+    # Return False on collision
+    def Check_Tile(self, new_pos):
+        tile = self.game.tilemap.Current_Tile(new_pos)
+        if not tile:
+            return True
+        
+        if 'Wall' in tile['type']:
+            target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
+            self.clatter.Generate_Clatter(target_position, 10000)
+            return False
+        
+        return True
     
     # Set the rect of the weapon to be a bit forward for better detection
     def rect_attack(self):
