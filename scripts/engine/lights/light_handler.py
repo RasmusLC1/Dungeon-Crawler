@@ -2,7 +2,7 @@ from scripts.engine.lights.lights import Light
 import math
 
 class Light_Handler():
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         self.game = game
         self.lights = []
 

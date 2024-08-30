@@ -3,7 +3,7 @@ from scripts.entities.entities import PhysicsEntity
 
 
 class Decoration(PhysicsEntity):
-    def __init__(self, game, pos, size, type):
+    def __init__(self, game, pos, size, type) -> None:
         super().__init__(game, type, pos, size)
         self.game = game
         self.pos = pos

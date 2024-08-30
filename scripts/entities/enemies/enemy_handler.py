@@ -21,9 +21,7 @@ class Enemy_Handler():
 
     def Update(self):
         for enemy in self.enemies:
-            enemy.update(self.game.tilemap)
-            
-            
+            enemy.update(self.game.tilemap)      
                 
 
     def Find_Nearby_Enemies(self, entity, max_distance):

@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.close_combat.torch import Torch
 import math
 
 class Decoration_Handler():
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         self.game = game
         self.decorations = []
         self.nearby_decoration = []

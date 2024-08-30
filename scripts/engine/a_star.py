@@ -6,7 +6,7 @@ import heapq
 
 
 class A_Star:
-    def __init__(self):
+    def __init__(self) -> None:
             self.parent_i = 0 # Parent cell's row index
             self.parent_j = 0 # Parent cell's column index
             self.f = float('inf') # Total cost of the cell (g + h)
@@ -82,7 +82,7 @@ class A_Star:
         return ((row - dest[0]) ** 2 + (col - dest[1]) ** 2) ** 0.5
 
     # Trace the path from source to destination
-    def trace_path(self, enemy, cell_details, dest):
+    def trace_path(self, path, cell_details, dest):
         self.path.clear()
         row = dest[0]
         col = dest[1]
@@ -107,7 +107,7 @@ class A_Star:
         #     print("->", i, end=" ")
         # print()
 
-    def Check_For_Walls(self, enemy):
+    def Check_For_Walls(self, path):
         if not self.path:
             return
         for point in self.path:
@@ -123,12 +123,12 @@ class A_Star:
             elif self.map[point[0] - 1][point[1]] == 1 and not self.map[point[0] + 1][point[1]] == 1:
                 col = point[0] + 1
 
-            enemy.path.append((col, row))
+            path.append((col, row))
         return
     
 
     # Implement the A* search algorithm
-    def a_star_search(self, enemy, src, dest):
+    def a_star_search(self, path, src, dest):
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
             return
@@ -192,8 +192,8 @@ class A_Star:
                         # Set the parent of the destination cell
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
-                        self.trace_path(enemy, cell_details, dest)
-                        self.Check_For_Walls(enemy)
+                        self.trace_path(path, cell_details, dest)
+                        self.Check_For_Walls(path)
                         return
                     else:
                         # Calculate the new f, g, and h values
@@ -225,7 +225,7 @@ class A_Star:
                                 # Set the parent of the destination cell
                                 cell_details[new_i][new_j].parent_i = i
                                 cell_details[new_i][new_j].parent_j = j
-                                self.trace_path(enemy, cell_details, dest)
+                                self.trace_path(path, cell_details, dest)
                                 return
                             else:
                                 # Calculate the new f, g, and h values

@@ -1,7 +1,7 @@
 import math
 
 class Light():
-    def __init__(self, game, pos, light_level):
+    def __init__(self, game, pos, light_level) -> None:
         self.game = game
         self.light_level = light_level
         self.pos = pos

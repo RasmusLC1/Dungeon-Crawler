@@ -2,7 +2,7 @@ from scripts.decoration.chest.chest import Chest
 import math
 
 class Chest_Handler:
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         self.game = game
         self.chests = []
         depth = 3

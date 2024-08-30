@@ -22,7 +22,7 @@ AUTOTILE_TYPES = {'floor'}
 FLOOR_TTLES = {'floor'}
 
 class Tilemap:
-    def __init__(self, game, tile_size=16):
+    def __init__(self, game, tile_size=16) -> None:
         self.game = game
         self.tile_size = tile_size
         self.tilemap = {}

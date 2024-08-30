@@ -5,7 +5,7 @@ import json
 import math
 
 
-from scripts.engine.utils import load_image, load_images, Animation
+from scripts.engine.utility.utils import load_image, load_images, Animation
 from scripts.engine.asset_loader import Asset_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
@@ -116,7 +116,20 @@ class Game:
         # for row in self.shadow_map:
         #     print(row)
 
+    # Get the scroll offset
+    def Camera_Scroll(self):
+        self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
+        self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
+        self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
+    def Input_Handler(self):
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                self.mouse.Mouse_Input(event, self.render_scroll)
+
+                Keyboard_Handler.keyboard_Input(self, event, offset = self.render_scroll)
 
     def Update(self):
             fps = int(self.clock.get_fps())
@@ -162,21 +175,12 @@ class Game:
         
     def run(self):  
         while True:
-            # Get the scroll offset
-            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
-            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
-            self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+            self.Camera_Scroll()
             
-            Game.Render(self)
-            Game.Update(self)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                self.mouse.Mouse_Input(event, self.render_scroll)
-
-                Keyboard_Handler.keyboard_Input(self, event, offset = self.render_scroll)
+            self.Render()
+            self.Update()
+            self.Input_Handler()
+            
 
             pygame.display.update()
             self.clock.tick(60)

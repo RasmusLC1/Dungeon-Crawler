@@ -14,7 +14,7 @@ from scripts.entities.items.weapons.projectiles.arrow import Arrow
 
 
 class Chest(Decoration):
-    def __init__(self, game, pos, size, type, depth):
+    def __init__(self, game, pos, size, type, depth) -> None:
         super().__init__(game, pos, size, type)
         i = 0
         while i < 9:
@@ -77,8 +77,8 @@ class Chest(Decoration):
                     bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'bow')
                     self.game.item_handler.Add_Item(bow)
                 elif self.weapons[weapon_index] == 'arrow':
-                    loot_amount = max(self.loot_amount / 10, 1)
-                    for i in range(self.loot_amount):
+                    loot_amount = min(20, max(self.loot_amount // 5, 3))
+                    for i in range(loot_amount):
                         arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'arrow', None)
                         self.game.item_handler.Add_Item(arrow)
 

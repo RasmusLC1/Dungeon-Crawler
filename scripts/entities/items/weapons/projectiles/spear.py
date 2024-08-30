@@ -99,5 +99,3 @@ class Spear(Projectile):
 
         self.Move((self.pos[0] + left_offset, self.pos[1] + 2))
         return
-    
-        

@@ -36,8 +36,10 @@ class Arrow(Projectile):
     def Shoot(self):
         self.Initialise_Shooting(self.entity.strength)
         if not self.special_attack:
-            return        
+            return None
+        return self.Collision_Detection()   
 
+    def Collision_Detection(self):
         dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
         dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
         
@@ -53,7 +55,7 @@ class Arrow(Projectile):
             self.game.item_handler.Remove_Item(self, True)
             return entity
         self.special_attack = max(0, self.special_attack - self.shoot_speed)
-        return None
+        return None   
 
     def Set_Equipped_Position(self, direction_y = 0):
         if not self.entity:

@@ -88,13 +88,16 @@ class Bow(Weapon):
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
 
         elif self.charge_time > 0:
-            arrow_damage = max(8, self.charge_time // 10)
-            arrow_speed = max(10, self.charge_time // 10)
-            self.arrow.Set_Damage(arrow_damage)
-            self.arrow.Set_Speed(arrow_speed)
-            self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
-            self.arrow.Special_Attack()
+            self.Shoot_Arrow()
             self.Reset_Bow()
+
+    def Shoot_Arrow(self):
+        arrow_damage = max(8, self.charge_time // 10)
+        arrow_speed = max(10, self.charge_time // 10)
+        self.arrow.Set_Damage(arrow_damage)
+        self.arrow.Set_Speed(arrow_speed)
+        self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
+        self.arrow.Special_Attack()
 
     def Reset_Bow(self):
         self.charge_time = 0
