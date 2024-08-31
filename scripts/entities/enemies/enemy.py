@@ -42,7 +42,6 @@ class Enemy(Moving_Entity):
         sword.Pickup_Reset_Weapon(self)
         sword.Set_Equip(True)
         self.Set_Active_Weapon(sword)
-        print(vars(self.active_weapon_left))
         self.active_weapon_left.render = False
         del(sword)
         return True

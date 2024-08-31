@@ -1,4 +1,5 @@
 import math
+from scripts.engine.utility.helper_functions import Helper_Functions
 
 class Entity_Renderer():
     def __init__(self, game):
@@ -19,9 +20,11 @@ class Entity_Renderer():
     def Find_Nearby_Entities(self):
         self.nearby_entities.clear()
         for entity in self.entities:
+            if not entity.type == 'player' and not entity.active:
+                continue
             if not entity.render:
                 continue
-            distance = math.sqrt((entity.pos[0] - self.game.player.pos[0]) ** 2 + (entity.pos[1] - self.game.player.pos[1]) ** 2)
+            distance = Helper_Functions.Distance_Float(entity.pos, self.game.player.pos) 
             if distance < 300:
                 self.nearby_entities.append(entity)
 
