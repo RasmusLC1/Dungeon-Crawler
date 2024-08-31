@@ -39,6 +39,9 @@ class PhysicsEntity:
         self.wet_animation = 0
         self.wet_animation_cooldown = 0
 
+        self.render = True
+
+
 
     
     def rect(self):
@@ -89,7 +92,6 @@ class PhysicsEntity:
             return
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
 
-
     def Reset_Effects(self):
         # Status Effects
         self.is_on_fire = 0
@@ -97,6 +99,12 @@ class PhysicsEntity:
         self.is_on_ice = 0
         self.frozen = 0 
         self.wet = 0 
+
+    def Set_Active(self, value):
+        self.active = value
+
+    def Set_Light_Level(self, value):
+        self.light_level = value
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on
@@ -107,9 +115,9 @@ class PhysicsEntity:
             return True
         new_light_level = min(255, tile['light'] * 30)
         if self.light_level < new_light_level:
-            self.light_level += 5
+            self.Set_Light_Level(self.light_level + 5)
         elif self.light_level > new_light_level:
-            self.light_level -= 5
+            self.Set_Light_Level(self.light_level - 5)
         self.light_level = abs(self.light_level - 255)
         # 75 is the darkest level we want
         self.light_level = max(75, 255 - self.light_level)

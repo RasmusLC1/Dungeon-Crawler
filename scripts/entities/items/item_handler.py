@@ -35,6 +35,7 @@ class Item_Handler():
     def Find_Nearby_Item(self, entity_pos, max_distance):
         nearby_items = []
         for item in self.items:
+            
             # Calculate the Euclidean distance
             distance = math.sqrt((entity_pos[0] - item.pos[0]) ** 2 + (entity_pos[1] - item.pos[1]) ** 2)
             if distance < max_distance:
@@ -57,5 +58,6 @@ class Item_Handler():
                     print(f"Item is not throwable {e}", item.sub_type)
 
     def Render(self, decorations, surf, render_scroll = (0, 0)):
+        
         for decoration in decorations:
             decoration.Render(surf, render_scroll)

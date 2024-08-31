@@ -318,7 +318,29 @@ class Weapon(Item):
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
-    
+
+    # Render the weapon in entity's hand
+    def Render_Equipped_Enemy(self, surf, offset=(0, 0)):
+        
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        if self.rotate:
+            weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
+        
+        alpha_value = max(0, min(255, self.active)) 
+        weapon_image.set_alpha(alpha_value)
+
+
+         # Create a darkening surface that is affected by darkness
+        dark_surface = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface.fill((self.light_level, self.light_level, self.light_level, 255))  
+
+        weapon_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+
+
+        surf.blit(
+            pygame.transform.flip(weapon_image, self.flip_image, False),
+                                  (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+            
 
     # Inventory Logic below
     #######################################################
@@ -412,7 +434,7 @@ class Weapon(Item):
                     self.game.player.Remove_Active_Weapon(inventory_type_holder)                    
                 self.Equip()
             else: # Drag weapon back into item inventory
-                self.equipped = False
+                self.Set_Equip(False)
                 self.game.player.Remove_Active_Weapon(inventory_type_holder)
             return True
         
@@ -438,7 +460,7 @@ class Weapon(Item):
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
             if self.equipped: # Move to normal inventory
                 if self.Move_To_Other_Inventory(weapon_inventory, self.game.item_inventory, offset):
-                    self.equipped = False
+                    self.Set_Equip(False)
                     self.game.player.Remove_Active_Weapon(self.inventory_type)
                     return True
                 
@@ -452,8 +474,11 @@ class Weapon(Item):
     
     # Equip the weapon
     def Equip(self):
-        self.equipped = True
+        self.Set_Equip(True)
         self.game.player.Set_Active_Weapon(self, self.inventory_type)
+
+    def Set_Equip(self, state):
+        self.equipped = state
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
@@ -467,11 +492,19 @@ class Weapon(Item):
             return True
         else:
             return False
+        
+    def Set_Inventory_Type(self, type):
+        legal_inventories = ['left_hand', 'right_hand', 'bow', 'arrow']
+        if type not in legal_inventories:
+            return False
+        
+        self.inventory_type = type
+        return True
 
     def Update_Player_Hand(self, prev_hand):
         # Check if the weapon has changed hands
         if self.inventory_type != prev_hand:
-            self.equipped = True
+            self.Set_Equip(True)
             if prev_hand == 'left_hand':
                 self.game.player.Remove_Active_Weapon(prev_hand)
                 self.game.player.Set_Active_Weapon(self, self.inventory_type)
@@ -489,7 +522,7 @@ class Weapon(Item):
         self.in_inventory = False
         if self.equipped:
             self.game.player.Remove_Active_Weapon(self.inventory_type)
-            self.equipped = False
+            self.Set_Equip(False)
         return False
 
     def Set_In_Inventory(self, state):

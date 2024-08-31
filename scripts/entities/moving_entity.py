@@ -74,8 +74,7 @@ class Moving_Entity(PhysicsEntity):
     
     # Set new action for animation
     def Set_Animation(self, action):
-        
-
+        print("TEST", action)
         if action != self.action:
             self.action = action
             self.animation = self.type + '_' + self.action

@@ -2,6 +2,8 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.entities.enemies.path_finding import Path_Finding
+from scripts.entities.items.weapons.close_combat.sword import Sword
+
 
 import random
 import pygame
@@ -21,13 +23,31 @@ class Enemy(Moving_Entity):
         self.max_speed = 1
         self.max_speed_holder = self.max_speed  
         self.alert_cooldown = 0
+        self.active_weapon_left = None
 
         self.path_finding = Path_Finding(game, self)
 
 
-    def update(self, tilemap, movement=(0, 0)):
-        
+        self.left_weapon_cooldown = 0
+
+
+        self.Equip_Weapon()
+
+
+    def Equip_Weapon(self):
+        sword = Sword(self.game, self.pos, (16,16), 'sword')
+        if not sword.Set_Inventory_Type('left_hand'):
             
+            return False
+        sword.Pickup_Reset_Weapon(self)
+        sword.Set_Equip(True)
+        self.Set_Active_Weapon(sword)
+        print(vars(self.active_weapon_left))
+        self.active_weapon_left.render = False
+        del(sword)
+        return True
+
+    def update(self, tilemap, movement=(0, 0)):
         self.path_finding.Path_Finding(self.game.player.pos)
         movement = self.direction
         
@@ -44,7 +64,43 @@ class Enemy(Moving_Entity):
 
         self.Update_Alert_Cooldown()
 
+        self.Update_Left_Weapon()
+
+
+    def Update_Left_Weapon(self, offset=(0, 0)):
+
+        if not self.active_weapon_left:
+            return
+
+        self.active_weapon_left.Set_Active(self.active)
+        self.active_weapon_left.Set_Light_Level(self.light_level)
+
+        self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
+
+        self.active_weapon_left.Update(offset)
+        if not self.active_weapon_left:
+            return
+        # self.active_weapon_left.Update_Attack()
+        # self.Attacking(self.active_weapon_left, offset)
+
         
+        # if self.left_weapon_cooldown:
+        #     self.left_weapon_cooldown -= 1
+        #     return
+
+        # if not self.game.mouse.left_click:
+        #     return
+        
+        # cooldown = self.Weapon_Attack(self.active_weapon_left)
+        
+        # self.left_weapon_cooldown = max(self.left_weapon_cooldown, cooldown)
+
+        return
+
+
+    def Set_Active_Weapon(self, weapon):
+        self.active_weapon_left = weapon
+
     def Update_Alert_Cooldown(self):
         if self.alert_cooldown:
             self.alert_cooldown = max(0, self.alert_cooldown - 1)
@@ -93,3 +149,12 @@ class Enemy(Moving_Entity):
              return pygame.Rect(self.pos[0] + direction[0]*16, self.pos[1] + direction[1]*16, self.size[0], self.size[1])
 
     
+    def Render(self, surf, offset = (0,0)):
+        super().Render(surf, offset)
+        self.Render_Weapons(surf, offset)
+
+
+    def Render_Weapons(self, surf, offset):
+        if self.active_weapon_left:
+            self.active_weapon_left.Render_Equipped_Enemy(surf, offset)
+        

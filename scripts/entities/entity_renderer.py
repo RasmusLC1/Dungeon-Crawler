@@ -19,6 +19,8 @@ class Entity_Renderer():
     def Find_Nearby_Entities(self):
         self.nearby_entities.clear()
         for entity in self.entities:
+            if not entity.render:
+                continue
             distance = math.sqrt((entity.pos[0] - self.game.player.pos[0]) ** 2 + (entity.pos[1] - self.game.player.pos[1]) ** 2)
             if distance < 300:
                 self.nearby_entities.append(entity)
