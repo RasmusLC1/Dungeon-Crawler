@@ -79,17 +79,19 @@ class Weapon(Item):
 
     # Initialise the attack
     def Set_Attack(self):
-        if self.attack_ready:
-            if not self.Check_Entity_Cooldown():
-                return
-            self.attacking = max(self.attack_animation_max * 3, int(100 / self.speed))
-            self.enemy_hit = False  # Reset at the start of a new attack
-            self.attack_animation_time = int(self.attacking / self.attack_animation_max)
-            self.charge_time = 0  # Reset charge time
-            self.rotate = 0
-            self.Set_Attack_Ready(False) # Reset attack trigger
-            self.charged_attack = False  # Reset charged attack flag
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.range * 8) # Find nearby enemies to attack
+        if not self.attack_ready:
+            return
+        if not self.Check_Entity_Cooldown():
+            return
+        
+        self.attacking = max(self.attack_animation_max * 3, int(100 / self.speed))
+        self.enemy_hit = False  # Reset at the start of a new attack
+        self.attack_animation_time = int(self.attacking / self.attack_animation_max)
+        self.charge_time = 0  # Reset charge time
+        self.rotate = 0
+        self.Set_Attack_Ready(False) # Reset attack trigger
+        self.charged_attack = False  # Reset charged attack flag
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.range * 8) # Find nearby enemies to attack
 
     
     
@@ -231,7 +233,8 @@ class Weapon(Item):
     def Stabbing_Attack(self):
         pass
 
-    def Set_Attack_Ready(self, state):
+    # Input true or False
+    def Set_Attack_Ready(self, state) -> None:
         self.attack_ready = state
 
     # Set the attack direction   

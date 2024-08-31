@@ -91,9 +91,13 @@ class Asset_Loader:
 
     def Asset_Enemies_List(self):
         entities_assets = {
-            'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 0, 16, 8),
-            'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 8, 16, 6),
-            'decrepit_bones_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 2, 0, 0, 14, 16, 2),
+            'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 16, 8),
+            'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 8, 16, 6),
+            'decrepit_bones_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 14, 16, 2),
+
+            'decrepit_bones_attack_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 16, 8),
+            'decrepit_bones_attack_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 8, 16, 6),
+            'decrepit_bones_attack_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 14, 16, 2),
 
         }
         self.assets.update(entities_assets)

@@ -29,6 +29,8 @@ class Enemy(Moving_Entity):
 
 
         self.left_weapon_cooldown = 0
+        self.weapon_cooldown = 0
+
 
 
         self.Equip_Weapon()
@@ -65,6 +67,8 @@ class Enemy(Moving_Entity):
 
         self.Update_Left_Weapon()
 
+        self.Attack()
+
 
     def Update_Left_Weapon(self, offset=(0, 0)):
 
@@ -76,25 +80,17 @@ class Enemy(Moving_Entity):
 
         self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
 
-        self.active_weapon_left.Update(offset)
-        if not self.active_weapon_left:
-            return
-        # self.active_weapon_left.Update_Attack()
-        # self.Attacking(self.active_weapon_left, offset)
-
-        
-        # if self.left_weapon_cooldown:
-        #     self.left_weapon_cooldown -= 1
-        #     return
-
-        # if not self.game.mouse.left_click:
-        #     return
-        
-        # cooldown = self.Weapon_Attack(self.active_weapon_left)
-        
-        # self.left_weapon_cooldown = max(self.left_weapon_cooldown, cooldown)
+        self.active_weapon_left.Update_Attack_Animation()
 
         return
+    
+    def Attack(self):
+        if self.weapon_cooldown:
+            self.weapon_cooldown -= 1
+        else:
+            self.active_weapon_left.Set_Attack_Ready(True)
+            self.active_weapon_left.Set_Attack()
+            self.weapon_cooldown = 100
 
 
     def Set_Active_Weapon(self, weapon):
@@ -110,7 +106,8 @@ class Enemy(Moving_Entity):
     def Find_New_Path(self, destination):
         self.path_finding.Path_Finding(destination, True)
 
-
+    def Set_Idle(self):
+        pass
         
     def Damage_Taken(self, damage):
         super().Damage_Taken(damage)

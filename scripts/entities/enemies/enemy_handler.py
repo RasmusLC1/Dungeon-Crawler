@@ -12,7 +12,7 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                self.enemies.append(Enemy(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'DecrepitBones'))
+                self.enemies.append(Enemy(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones'))
 
     def Delete_Enemy(self, enemy):
         if enemy in self.enemies:

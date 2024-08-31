@@ -17,11 +17,12 @@ class Entity_Renderer():
             self.nearby_entities_cooldown -= 1
         self.nearby_entities.sort(key=lambda entity: entity.pos[1])
 
+    
+
     def Find_Nearby_Entities(self):
         self.nearby_entities.clear()
         for entity in self.entities:
-            if not entity.type == 'player' and not entity.active:
-                continue
+
             if not entity.render:
                 continue
             distance = Helper_Functions.Distance_Float(entity.pos, self.game.player.pos) 

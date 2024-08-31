@@ -379,7 +379,6 @@ class Moving_Entity(PhysicsEntity):
         # Simulates low visibility
         if not self.Update_Light_Level():
             return
-        
 
         # Load and scale the entity images, split to allow better animation
         entity_image_head = self.game.assets[self.animation + '_head'][0]
