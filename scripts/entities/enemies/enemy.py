@@ -71,7 +71,6 @@ class Enemy(Moving_Entity):
 
 
     def Update_Left_Weapon(self, offset=(0, 0)):
-
         if not self.active_weapon_left:
             return
 
@@ -79,8 +78,12 @@ class Enemy(Moving_Entity):
         self.active_weapon_left.Set_Light_Level(self.light_level)
 
         self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
+        self.active_weapon_left.Update(offset)
+        if not self.active_weapon_left:
+            return
+        self.active_weapon_left.Update_Attack()
 
-        self.active_weapon_left.Update_Attack_Animation()
+        # self.active_weapon_left.Update_Attack_Animation()
 
         return
     

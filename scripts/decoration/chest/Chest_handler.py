@@ -20,11 +20,11 @@ class Chest_Handler:
             self.chests.remove(chest)
             del(chest)
 
-    def Find_Nearby_Chests(self, center, max_distance):
+    def Find_Nearby_Chests(self, pos, max_distance):
         nearby_chests = []
         for chest in self.chests:  # Assuming self.traps is a list of traps
             # Calculate the Euclidean distance
-            distance = math.sqrt((center[0] - chest.pos[0]) ** 2 + (center[1] - chest.pos[1]) ** 2)
+            distance = math.sqrt((pos[0] - chest.pos[0]) ** 2 + (pos[1] - chest.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_chests.append(chest)
         return nearby_chests

@@ -47,6 +47,8 @@ class Moving_Entity(PhysicsEntity):
         self.nearby_traps = []
         self.nearby_traps_cooldown = 0
         self.nearby_enemies = []
+        self.nearby_enemies_cooldown = 0
+
         self.player_hit = False
         
         self.action = ''
@@ -65,10 +67,10 @@ class Moving_Entity(PhysicsEntity):
         # Determined by the entities agility
         self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
-
-        
-        
-
+        self.attacking = 0
+        self.attack_animation_num = 0
+        self.attack_animation_num_max = 1
+        self.attack_animation_num_cooldown = 0
 
         self.status_effects = Status_Effect_Handler(self)
     
@@ -87,8 +89,7 @@ class Moving_Entity(PhysicsEntity):
 
 
         self.Update_Traps()
-        self.nearby_enemies.clear()
-        self.Nearby_Enemies(20)
+        self.Nearby_Enemies(40)
         self.Update_Damage_Cooldown()
         self.Charge_Update()
 
@@ -149,14 +150,23 @@ class Moving_Entity(PhysicsEntity):
     
 
 
-    def Update_Animation(self):
+    def Update_Animation(self) -> None:
         if not self.animation_num_cooldown:
             self.animation_num += 1
             if self.animation_num >= self.animation_num_max:
                 self.animation_num = 0
             self.animation_num_cooldown = 10
         else:
-            self.animation_num_cooldown -= 1
+            self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
+
+    def Update_Attack_Animation(self) -> None:
+        if not self.attack_animation_num_cooldown:
+            self.attack_animation_num += 1
+            if self.attack_animation_num >= self.attack_animation_num_max:
+                self.attack_animation_num = 0
+            self.attack_animation_num_cooldown = 10
+        else:
+            self.attack_animation_num_cooldown = max(0, self.attack_animation_num_cooldown - 1)
 
     # Set the idle state every 60 ticks to either up or down depending on last input
     def Set_Idle(self):
@@ -238,11 +248,22 @@ class Moving_Entity(PhysicsEntity):
         for trap in self.nearby_traps:
             trap.Update(self)
 
-    def Find_Nearby_Traps(self, distance):
+    def Find_Nearby_Traps(self, distance) -> None:
+        if self.nearby_traps_cooldown:
+            self.nearby_traps_cooldown = max(0, self.nearby_traps_cooldown - 1)
+            return
         self.nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, distance)
+        self.nearby_traps_cooldown = 20
+        return
 
-    def Nearby_Enemies(self, max_distance):
+    def Nearby_Enemies(self, max_distance) -> None:
+        if self.nearby_enemies_cooldown:
+            self.nearby_enemies_cooldown = max(0, self.nearby_enemies_cooldown - 1)
+            return
+        self.nearby_enemies.clear()
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, max_distance)
+        self.nearby_enemies_cooldown = 20
+        return
 
     def Update_Damage_Cooldown(self):
         if self.damage_cooldown:
@@ -271,7 +292,7 @@ class Moving_Entity(PhysicsEntity):
         
         if self.attack_direction[1] < -0.5:
             # TODO: UPDATE to attack up when that has been animated
-            self.Set_Animation('idle_up')
+            self.Set_Animation('attack')
 
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         if not self.charging:

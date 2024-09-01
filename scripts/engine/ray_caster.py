@@ -8,8 +8,12 @@ class Ray_Caster():
         self.traps = []
         self.chests = []
         self.decorations = []
-        self.traps = []
+
+        self.nearby_enemies = []
         self.nearby_traps = []
+        self.nearby_decorations = []
+        self.nearby_chest = []
+        
         self.nearby_cooldown = 0
         self.inactive_distance = 300
         
@@ -73,7 +77,7 @@ class Ray_Caster():
                     trap.Set_Active(self.default_activity)   
 
     def Check_Enemy(self, pos):
-        for enemy in self.game.player.nearby_enemies:
+        for enemy in self.nearby_enemies:
             # Check if enemy is already in the enemy list
             if self.rect(pos).colliderect(enemy.rect()):
                 if not enemy.active:
@@ -83,7 +87,7 @@ class Ray_Caster():
                     enemy.Set_Active(300)
 
     def Check_Chest(self, pos):
-        for chest in self.game.player.nearby_chests:
+        for chest in self.nearby_chest:
             if self.rect(pos).colliderect(chest.rect()):
                 if not chest.active:
                     chest.Set_Active(self.default_activity)
@@ -92,7 +96,7 @@ class Ray_Caster():
                     chest.Set_Active(self.default_activity)
     
     def Check_Decoration(self, pos):
-        for decoration in self.game.decoration_handler.nearby_decoration:
+        for decoration in self.nearby_decorations:
             if self.rect(pos).colliderect(decoration.rect()):
                 if not decoration.active:
                     decoration.Set_Active(self.default_activity)
@@ -125,6 +129,25 @@ class Ray_Caster():
             
             
         return True
+    
+    # Check for entities near to the player
+    def Find_Nearby_Entities(self):
+        if self.nearby_cooldown:
+            self.nearby_cooldown = max(0, self.nearby_cooldown - 1)
+            return
+        
+        # Clear the lists before assigning new values to them
+        self.nearby_enemies.clear()
+        self.nearby_decorations.clear()
+        self.nearby_chest.clear()
+
+        # Assign new nerby lists
+        player = self.game.player
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(player, 200)
+        self.nearby_decorations = self.game.decoration_handler.find_nearby_decoration(player.pos, 200)
+        self.nearby_chest = self.game.chest_handler.Find_Nearby_Chests(player.pos, 200)
+        self.nearby_cooldown = 20
+        return
 
     def Ray_Caster(self):
         # Basic raycasting attributes
@@ -143,14 +166,8 @@ class Ray_Caster():
         self.Check_Items(self.game.player.pos)
         self.Check_Decoration(self.game.player.pos)
 
-        # Find nearby Enemies
-        if not self.nearby_cooldown:
-            self.game.player.nearby_enemies.clear()
-            self.game.player.Nearby_Enemies(200)
-            self.game.player.Find_Nearby_Chests(200)
-            self.nearby_cooldown = 20
-        else:
-            self.nearby_cooldown -= 1
+        self.Find_Nearby_Entities()
+        
 
         # Look for tiles that hit the rays
         for j in range(num_lines):
