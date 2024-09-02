@@ -33,7 +33,6 @@ class Light():
         self.pos = pos
 
     def Setup_Tile_Light(self):
-        
         num_lines = 80
         spread_angle = 360
         angle_increment = spread_angle / num_lines
@@ -43,7 +42,7 @@ class Light():
         tile = self.game.tilemap.Current_Tile(self.pos)
         if self.Check_Tile(tile):
             if self.light_level > tile['light']:
-                tile['light'] = self.light_level
+                self.game.tilemap.Set_Light_Level(tile, self.light_level)
                 self.tiles.append(tile)
 
         for j in range(num_lines):
@@ -59,8 +58,8 @@ class Light():
 
                 new_light_level = max(0, self.light_level - i)
                 if new_light_level > tile['light']:
-                    tile['light'] = new_light_level
-                    self.tiles.append(tile)
+                    self.game.tilemap.Set_Light_Level(tile, new_light_level)
+                self.tiles.append(tile)
     
     
 
@@ -74,11 +73,13 @@ class Light():
             self.Setup_Under_entity_Light()
 
     def Delete_Light(self):
-        if not self.tiles:
+        # If the light has no tiles to update, we don't need to delete
+        if not self.tiles: 
             return False
         for tile in self.tiles:
             tile['light'] = 0
         self.tiles.clear()
+
         return True
 
     def Update(self):

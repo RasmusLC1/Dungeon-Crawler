@@ -2,7 +2,7 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.entities.enemies.path_finding import Path_Finding
-from scripts.entities.items.weapons.close_combat.sword import Sword
+from scripts.items.weapons.close_combat.sword import Sword
 
 
 import random
@@ -83,7 +83,7 @@ class Enemy(Moving_Entity):
             return
         self.active_weapon_left.Update_Attack()
 
-        # self.active_weapon_left.Update_Attack_Animation()
+        self.active_weapon_left.Update_Attack_Animation()
 
         return
     

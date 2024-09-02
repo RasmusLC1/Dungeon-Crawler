@@ -159,7 +159,7 @@ class Path_Finding():
     
 
     def Direct_Pathing(self):
-        distance = Helper_Functions.Distance_Float(self.entity.pos, self.game.player.pos)
+        distance = Helper_Functions.Abs_Distance_Float(self.entity.pos, self.game.player.pos)
 
         # Player is close, so the enemy charge directly
         if distance < 60:

@@ -1,5 +1,5 @@
 import pygame
-from scripts.entities.items.item import Item
+from scripts.items.item import Item
 from scripts.inventory.inventory_slot import Inventory_Slot
 from copy import copy
 
@@ -242,8 +242,8 @@ class Inventory:
                     return   
                 self.Return_Item()
                 return
-            
             self.active_item.render_out_of_bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
+
         else:
             self.Drag_Item(offset)
             return

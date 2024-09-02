@@ -1,5 +1,6 @@
-import json
+from scripts.engine.utility.helper_functions import Helper_Functions
 
+import json
 import pygame
 import math
 
@@ -50,9 +51,6 @@ class Tilemap:
         return matches
     
 
-    
-   
-    
     # Get the position of tiles in the tilemap
     def Get_Pos(self):
         positions = []
@@ -91,6 +89,18 @@ class Tilemap:
             return self.tilemap[check_loc]
         else:
             return None
+        
+    def Find_Nearby_Tiles(self, pos, max_distance):
+        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
+        normalised_max_distance = max_distance // 16
+        nearby_tiles = []
+        for tile_key in self.tilemap:
+            tile = self.tilemap[tile_key]
+            # Calculate the Euclidean distance
+            distance = Helper_Functions.Abs_Distance_Float(tile_loc, tile['pos'])
+            if distance < normalised_max_distance:
+                nearby_tiles.append(tile)
+        return nearby_tiles
         
     # Check for collision on relevant tile
     def Collision_Check(self, pos):
@@ -161,6 +171,8 @@ class Tilemap:
         grid_y = (y // 5 - x // 10) // 2
         return int(grid_x), int(grid_y)
     
+    def Set_Light_Level(self, tile, new_light_level):
+        tile['light'] = new_light_level
     
     # Render function that shows the entire screen
     def Render(self, surf, offset=(0, 0)):

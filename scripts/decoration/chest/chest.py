@@ -1,16 +1,16 @@
 import pygame
 import random
 from scripts.weapon_generator import Weapon_Generator
-from scripts.entities.items.item import Item
-from scripts.entities.items.potions.health_potion import Health_Potion
-from scripts.entities.items.potions.mana_potion import Mana_Potion
+from scripts.items.item import Item
+from scripts.items.potions.health_potion import Health_Potion
+from scripts.items.potions.mana_potion import Mana_Potion
 from scripts.decoration.decoration import Decoration
 
-from scripts.entities.items.weapons.close_combat.sword import Sword
-from scripts.entities.items.weapons.close_combat.torch import Torch
-from scripts.entities.items.weapons.projectiles.spear import Spear
-from scripts.entities.items.weapons.ranged_weapons.bow import Bow
-from scripts.entities.items.weapons.projectiles.arrow import Arrow
+from scripts.items.weapons.close_combat.sword import Sword
+from scripts.items.weapons.close_combat.torch import Torch
+from scripts.items.weapons.projectiles.spear import Spear
+from scripts.items.weapons.ranged_weapons.bow import Bow
+from scripts.items.weapons.projectiles.arrow import Arrow
 
 
 class Chest(Decoration):
@@ -45,7 +45,7 @@ class Chest(Decoration):
     def Open(self):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(3, 3)
+        self.loot_type = random.randint(1, 1)
         if self.loot_type == 0:
                 item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
                 self.game.item_handler.Add_Item(item)
@@ -80,19 +80,10 @@ class Chest(Decoration):
                 for i in range(loot_amount):
                     arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'arrow', None)
                     self.game.item_handler.Add_Item(arrow)
-
-
-
-                    
-
-                # if self.version <= 2:
-                #     self.Update()
-                # else:
-                #     self.weapon_type = Weapon_Generator.Generate_Weapon(self, self.loot_amount)
-                #     self.text_color  = (255, 255, 255)
-
-            self.empty = True
-            self.text_cooldown = 30
+        else:
+            return
+        self.empty = True
+        self.text_cooldown = 30
 
     def Set_Active(self, duration):
         self.active = duration

@@ -14,8 +14,7 @@ from scripts.engine.tilemap import Tilemap
 from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
-from scripts.entities.items.item_handler import Item_Handler
-from scripts.engine.lights import light_handler
+from scripts.items.item_handler import Item_Handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.mana_bar import Mana_Bar
@@ -147,6 +146,7 @@ class Game:
             self.enemy_handler.Update()
             self.entities_render.Update()
 
+
             self.item_inventory.Update(self.render_scroll)
             self.weapon_inventory.Update(self.render_scroll)
             Coins.Update(self)
@@ -156,7 +156,6 @@ class Game:
     
 
     def Render(self):
-        self.display.blit(self.assets['background'], (0, 0))
         
         self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=self.render_scroll)
@@ -178,13 +177,15 @@ class Game:
         
     def run(self):  
         while True:
+            self.display.blit(self.assets['background'], (0, 0))
+
             self.Camera_Scroll()
             
             self.Render()
             self.Update()
             self.Input_Handler()
             
-
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
             pygame.display.update()
             self.clock.tick(60)
 

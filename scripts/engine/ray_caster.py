@@ -148,6 +148,17 @@ class Ray_Caster():
         self.nearby_chest = self.game.chest_handler.Find_Nearby_Chests(player.pos, 200)
         self.nearby_cooldown = 20
         return
+    
+    # Check the tile the player is standing on
+    def Check_For_Objects(self, pos):
+        if not self.Check_Tile(pos):
+            return False
+        self.Check_Trap(pos)
+        self.Check_Enemy(pos)
+        self.Check_Chest(pos)
+        self.Check_Items(pos)
+        self.Check_Decoration(pos)
+        return True
 
     def Ray_Caster(self):
         # Basic raycasting attributes
@@ -158,14 +169,7 @@ class Ray_Caster():
         base_angle = math.atan2(self.game.player.direction_y_holder, self.game.player.direction_x_holder)
         start_angle = base_angle - math.radians(spread_angle / 2)
         
-        # Check the tile the player is standing on
-        self.Check_Tile(self.game.player.pos)
-        self.Check_Trap(self.game.player.pos)
-        self.Check_Enemy(self.game.player.pos)
-        self.Check_Chest(self.game.player.pos)
-        self.Check_Items(self.game.player.pos)
-        self.Check_Decoration(self.game.player.pos)
-
+        self.Check_For_Objects(self.game.player.pos)
         self.Find_Nearby_Entities()
         
 
@@ -176,18 +180,9 @@ class Ray_Caster():
                 pos_x = self.game.player.pos[0] + math.cos(angle) * 16 * i
                 pos_y = self.game.player.pos[1] + math.sin(angle) * 16 * i
 
-        
-                if not self.Check_Tile((pos_x, pos_y)):
+                if not self.Check_For_Objects((pos_x, pos_y)):
                     break
-                
-                
-                self.Check_Trap((pos_x, pos_y))
-                self.Check_Enemy((pos_x, pos_y))
-                self.Check_Chest((pos_x, pos_y))
-                self.Check_Decoration((pos_x, pos_y))
-                self.Check_Items((pos_x, pos_y))
 
-                        
                 # pygame.draw.line(surf, (255, 255, 255), (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1]), (pos_x, pos_y), 1)
         
 

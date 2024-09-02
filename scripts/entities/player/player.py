@@ -2,7 +2,7 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
-from scripts.entities.items.weapons import weapon
+from scripts.items.weapons import weapon
 from copy import copy
 
 import random
@@ -35,6 +35,7 @@ class Player(Moving_Entity):
 
         self.light_level = 5
         self.light_cooldown = 0
+        # self.light_source = None
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
@@ -64,6 +65,7 @@ class Player(Moving_Entity):
         self.Update_Light()
 
         self.Set_Direction_Holder()
+
         
         
         if self.game.weapon_inventory.active_inventory == 0:
@@ -86,7 +88,7 @@ class Player(Moving_Entity):
                 self.game.light_handler.Restore_Light(self.light_source)
                 self.Set_Light_State(True)
             else:
-                self.light_source.Move_Light(self.pos)
+                self.game.light_handler.Move_Light(self.pos, self.light_source)
 
     # Function to update the player's weapons
     # Each weapon needs it own method to handle it's cooldown

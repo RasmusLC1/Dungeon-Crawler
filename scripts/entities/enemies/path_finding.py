@@ -158,7 +158,7 @@ class Path_Finding():
     
 
     def Direct_Pathing(self):
-        distance = Helper_Functions.Distance_Float(self.entity.pos, self.game.player.pos)
+        distance = Helper_Functions.Abs_Distance_Float(self.entity.pos, self.game.player.pos)
 
         # Player is close, so the enemy charge directly
         if distance < 100:
@@ -168,6 +168,9 @@ class Path_Finding():
             if not self.Line_Of_Sight(distance, dx, dy):
                 return False
             self.entity.direction = pygame.math.Vector2(dx, dy)
+            if self.entity.direction == 0:
+                return
+            
             self.entity.direction.normalize_ip()
             self.entity.direction[0] /= self.game.render_scale
             self.entity.direction[1] /= self.game.render_scale
