@@ -109,7 +109,7 @@ class Item(PhysicsEntity):
 
 
     def Damage_Taken(self, damage):
-        self.damaged = True
+        self.damaged = damage
     
     # Render legal position
     def Render(self, surf, offset=(0, 0)):

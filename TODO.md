@@ -19,30 +19,52 @@ Game Ideas
     Take contracts to complete achievements, example kill 5 ice demons
     Noice attracts enemies
 
+# Gameplay Loop
+    Start with a deck / Runes, mixture of positive and negative cards, but all low risk
+    Colelct gold and artifcats in dungeon to buy new cards
+    Lower levels have better rewards
+    To get to lower levels you need to collect a key on each floor
+    Each time you complete a run you get a curse card that is calculated based on performance to force playstyle adjustments
+        If you kill lots of enemies, it might make enemies tougher
+        If you don't get detected or sneak a lot, maybe enemies have their detection radius increased
+    You can then buy new cards and other upgrades with the gold you brought up
+        Example could be buying keys to get to lower levels quicker
+        Permanent upgrades for character like more health
+    There are shrines in the dungeon where you can pay with souls of slain enemies to buy upgrades
+        Upgrades could be temporarily calming the dungeon so that no new enemies spawn
+        More gold on the floor
+        Key to the next floor in case you cannot find one
+        Weapon or artifact to help you
+        Temporary rune for this run
+    Game ends when you die, you can buy resurrection tombs to prevent this, but it will be money you could spend on other upgrades instead
+        Each resurrection tomb gets more expensive
+        
+
 # Engine Features:
     # Tile systsem
     # Use A* for path finding
     # Inventory System
+    # Weapon inventory system
     # Dropping item, triggers trap
     # Raytracer that limits players vision, so enemies can sneak up from behind
     # Light engine
+    # Clatter System where enemies are attracted to noise
+    Cards / Runes
     Level editor
     Dungeon generator
 
 # Gameplay
     # Player can hold weapons
-    Attack
+    # Attack
     Defend
 
 
-
-
 # Weapons:
-    Torch, emits light and be be used to set enemies on fire, relatively low damage
-    Sword, best damage, little utility
-    Spear, can be thrown
+    # Torch, emits light and be be used to set enemies on fire, relatively low damage
+    # Sword, best damage, little utility
+    # Spear, can be thrown
     Shield, can block damage, can be used to rocket jump with bomb
-    Bow, can press button, different arrows that can do certain things
+    # Bow, can press button, different arrows that can do certain things
     Crossbow, Same as bow, but takes longer to load, but can be preloaded
     Boomerang, Returns to player and damages everything it hits
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
@@ -61,6 +83,7 @@ Game Ideas
     Poison
 
 # Arrows:
+    # Basic Arrow, Higher base damage
     Rope arrow, allows you to cross traps
     Fire arrow, lights enemies on fire and lights up the envoirement
     Ice arrow, ice effect, if it touches water it freezes the water
@@ -73,7 +96,8 @@ Game Ideas
     Different types of armour to protect against different elements
 
 # Movements:
-    # Teleport to a given destination, has x amount of charges
+    # Dash, Move rapidly without hit detection to a location
+    Teleport to a random destination, has x amount of charges
     Run, double run speed for a short duration
     Roll, avoid damage and roll in the direction of the mouse
     Block, block damage, if the player has shield block all damage, if not then it only blocks melee
@@ -81,8 +105,20 @@ Game Ideas
     Swim in deep water, can't cross if in heavy armour
     Push certain objects and block
 
+# Traps:
+    # Spike pits, fall into and slows you down
+    # Spike traps, that move up and harm you when they're extended
+    # Spike traps poison, that move up and harm you when they're extended, poision effect
+    # Fire traps, sets you on fire
+    # Pushing trap, pushes entities when triggered
+    Pressure plates, Trigger nearby linked object when pressed
+    Explosive traps, area of effect damage
+    # Bear trap, snares the entity for a period of time
+    # Lava, sets on fire and slows down entity, heavy damage
+    # Water, slows down entities
 
-# Enemies
+
+# Enemies:
     Each enemy has an intelligence level and personality that determines it's ability to think
         Personality:
             - Agression, number from 1 to 10 that determines its behaviour and makes it more likely to attack and stay in combat
@@ -115,6 +151,16 @@ Game Ideas
     Goblins swarm attack, cowardly
     Elementals, rock, ice, fire, electric, metal
     Lurker in the dark, lowers light level around it, tries to sneak attack, vulnable to light
+
+# Biomes:
+    Desert Biome, Water does not exist, enemies are vulnerable to fire, high gold in urns
+    Mushroom Biom, poison effects are common, enemies here are immune to poision, potion ingredients
+    Crystal Caverns, High armour enemies, crystals that emit light, Rare gems
+    Lava forge, lots of lava, enemies are immune to fire and deal fire damage, rare weapons
+    Ice Cave, Lots of ice, enemies are immune to frost and deal frost damage, breakable walls are more common
+    Ancient ruins, undead enemies, rare runes
+    Water caves, need to traverse lots of water, Deep water contains enemies, look for shallow water. More Treasure chests
+
 
 # Companions:
     Save friendly entities from prisons through the dungeon and make them ally you

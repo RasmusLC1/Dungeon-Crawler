@@ -156,6 +156,7 @@ class Game:
     
 
     def Render(self):
+        self.display.blit(self.assets['background'], (0, 0))
         
         self.ray_caster.Ray_Caster()
         self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=self.render_scroll)
@@ -177,7 +178,6 @@ class Game:
         
     def run(self):  
         while True:
-            self.display.blit(self.assets['background'], (0, 0))
 
             self.Camera_Scroll()
             
