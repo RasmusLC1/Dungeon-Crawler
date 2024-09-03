@@ -154,7 +154,6 @@ class Sword(Weapon):
         
         if self.special_attack <= 0 or not self.equipped:
             return
-        
         self.Initialise_Charge()
         
 
@@ -177,6 +176,7 @@ class Sword(Weapon):
     
     # Initialise the charge logic
     def Initialise_Charge(self):
+        print(self.charge_time, self.special_attack, self.entity.type)
         self.Point_Towards_Mouse()
         self.stored_rotation = self.rotate
         self.entity.Set_Charge(self.special_attack / 8)

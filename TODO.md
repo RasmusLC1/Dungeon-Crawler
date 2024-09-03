@@ -52,6 +52,7 @@ Game Ideas
     Cards / Runes
     Level editor
     Dungeon generator
+    Chunk system to prevent slowdown with larger maps
 
 # Gameplay
     # Player can hold weapons

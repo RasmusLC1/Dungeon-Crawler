@@ -46,9 +46,6 @@ class Player(Moving_Entity):
         self.coins = 0
         self.shootin_cooldown = 0
 
-        
-
-        
         self.weapons = []
 
 
@@ -76,19 +73,13 @@ class Player(Moving_Entity):
         else:
             print("INVENTORY MISSING")
  
-    
-        
-    # Function to update the light around player
-    def Update_Light(self):
-        if self.light_source:
-            # Update all the light's around the player
-            # Do it only when the player light has been activated to prevent lag
-            if not self.light_source.active:
-                self.game.light_handler.Remove_Light(self.light_source)
-                self.game.light_handler.Restore_Light(self.light_source)
-                self.Set_Light_State(True)
-            else:
-                self.game.light_handler.Move_Light(self.pos, self.light_source)
+    def Attack_Direction_Handler(self, offset = (0,0)):
+        self.Mouse_Handler()
+        super().Attack_Direction_Handler(offset)
+
+    def Set_Charge(self, charge_speed, offset=(0, 0)):
+        self.Mouse_Handler()
+        super().Set_Charge(charge_speed, offset)
 
     # Function to update the player's weapons
     # Each weapon needs it own method to handle it's cooldown
@@ -245,7 +236,21 @@ class Player(Moving_Entity):
     def Set_Light_State(self, state):
         self.light_source.active = state
     
-            
+    
+        
+    # Function to update the light around player
+    def Update_Light(self):
+        if self.light_source:
+            # Update all the light's around the player
+            # Do it only when the player light has been activated to prevent lag
+            if not self.light_source.active:
+                self.game.light_handler.Remove_Light(self.light_source)
+                self.game.light_handler.Restore_Light(self.light_source)
+                self.Set_Light_State(True)
+            else:
+                self.game.light_handler.Move_Light(self.pos, self.light_source)
+
+
     def Dashing_Update(self, offset=(0, 0)):
 
         if abs(self.dashing) in {60, 50}:
@@ -303,7 +308,9 @@ class Player(Moving_Entity):
             self.Stored_Position_Handler(offset)
             self.dashing = 60
 
-    
+    def Mouse_Handler(self):
+        self.game.mouse.Player_Mouse_Update()
+        self.target = self.game.mouse.player_mouse
 
     
 

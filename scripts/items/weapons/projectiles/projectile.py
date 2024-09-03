@@ -43,7 +43,7 @@ class Projectile(Weapon):
     def Drop_Weapon_After_Shot(self):
         active_inventory = self.game.weapon_inventory.active_inventory
         weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-        self.game.player.Remove_Active_Weapon(self.inventory_type)
+        self.entity.Remove_Active_Weapon(self.inventory_type)
         weapon_inventory.Remove_Item(self, True)
         self.game.item_handler.Add_Item(self)
         self.game.entities_render.Add_Entity(self)

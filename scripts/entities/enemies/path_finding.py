@@ -31,12 +31,14 @@ class Path_Finding():
 
     def Path_Finding(self, target, look_for_new_path = False):
         
+        self.Calculate_Distance_To_Player()
+
         self.Set_Position_Holder()
 
         self.Update_Stuck_Timer()
         if self.Stuck_Check():
             return
-
+        
         if self.Direct_Pathing():
             return
         else:
@@ -156,16 +158,18 @@ class Path_Finding():
                     return False
         return True
     
+    def Calculate_Distance_To_Player(self):
+        self.entity.distance_to_player = Helper_Functions.Abs_Distance_Float(self.entity.pos, self.game.player.pos)
+
 
     def Direct_Pathing(self):
-        distance = Helper_Functions.Abs_Distance_Float(self.entity.pos, self.game.player.pos)
 
         # Player is close, so the enemy charge directly
-        if distance < 100:
+        if self.entity.distance_to_player < 100:
             dx = self.game.player.pos[0] - self.entity.pos[0]
             dy = self.game.player.pos[1] - self.entity.pos[1]
             # Check if the enemy has 
-            if not self.Line_Of_Sight(distance, dx, dy):
+            if not self.Line_Of_Sight(self.entity.distance_to_player, dx, dy):
                 return False
             self.entity.direction = pygame.math.Vector2(dx, dy)
             if self.entity.direction == 0:

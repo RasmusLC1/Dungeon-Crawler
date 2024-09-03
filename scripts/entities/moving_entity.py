@@ -3,7 +3,7 @@ import random
 import pygame
 
 from scripts.engine.particles.particle import Particle
-from scripts.traps.trap_handler import Trap_Handler
+from scripts.engine.utility.helper_functions import Helper_Functions 
 from scripts.entities.effects import Status_Effect_Handler
 from scripts.entities.entities import PhysicsEntity
 
@@ -35,6 +35,7 @@ class Moving_Entity(PhysicsEntity):
         self.direction_x_holder = 0
         self.direction_y_holder = 0
         self.attack_direction = (0,0)
+        self.target = (0,0)
 
 
         self.health = 100
@@ -276,11 +277,11 @@ class Moving_Entity(PhysicsEntity):
         self.damage_cooldown = 10
         self.health -= damage
         
-    def Attack_Direction_Handler(self, offset = (0,0)):
-        self.Mouse_Handler()
+    def Attack_Direction_Handler(self, offset = (0, 0)):
         self.Stored_Position_Handler(offset)
-        self.attack_direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
-        self.attack_direction.normalize_ip()
+
+        self.Set_Attack_Direction()
+        
         if self.attack_direction[0] < 0:
             self.flip[0] = True
             self.Set_Animation('attack')
@@ -294,9 +295,12 @@ class Moving_Entity(PhysicsEntity):
             # TODO: UPDATE to attack up when that has been animated
             self.Set_Animation('attack')
 
+    def Set_Attack_Direction(self):
+        self.attack_direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
+        self.attack_direction.normalize_ip()
+
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         if not self.charging:
-            self.Mouse_Handler()
             self.Stored_Position_Handler(offset)
             self.charging = min(12, charge_speed)
 
@@ -307,7 +311,7 @@ class Moving_Entity(PhysicsEntity):
         self.max_speed = 20  # Adjust max speed speed for dashing distance
         self.charging = max(0, self.charging - 1)
         self.Stored_Position_Handler(self.game.render_scroll)
-        direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+        direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
         direction.normalize_ip()
 
         self.velocity[0] = direction.x * 50
@@ -321,9 +325,7 @@ class Moving_Entity(PhysicsEntity):
         self.stored_position[1] -= offset[1]     
 
 
-    def Mouse_Handler(self):
-        self.mpos = pygame.mouse.get_pos()
-        self.mpos = (self.mpos[0] / 4, self.mpos[1] / 4)
+    
 
     # Return true if healing was successfull
     def Healing(self, healing):

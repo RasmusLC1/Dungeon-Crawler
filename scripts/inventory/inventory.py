@@ -203,7 +203,7 @@ class Inventory:
         item.picked_up = False  # Ensure the item is marked as not picked up
         inventory_slot.Add_Item(item)  # Place the item in the inventory slot
         inventory_slot.Set_Active(False)  # Deactivate the slot after placing the item
-
+        print("TEST")
         if inventory_type_holder and item:
             item.Update_Player_Hand(inventory_type_holder)
 

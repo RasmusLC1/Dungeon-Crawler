@@ -6,7 +6,8 @@ class Mouse_Handler:
         self.right_click = False  # Right mouse button has been clicked
         self.game = game  # Game
         self.click_pos = (0, 0)  # Get the position of the last click
-        self.mpos = (0, 0)  # Mouse position, updated on clicks
+        self.mpos = (0, 0)  # Mouse position with offset
+        self.player_mouse = (0, 0)  # Mouse position without offset
         self.hold_down_left = 0  # Left mouse button hold down time in ticks
         self.hold_down_right = 0  # Right mouse button hold down time in ticks
         self.time_since_last_click = 0  # Check the time since last click
@@ -87,10 +88,14 @@ class Mouse_Handler:
     # Update the mouse position when left clicking
     def Mpos_Update(self, offset = (0,0)):
         mouse_pos = pygame.mouse.get_pos()
-        mpos_x = mouse_pos[0] / self.game.render_scale + self.game.render_scroll[0]
-        mpos_y = mouse_pos[1] / self.game.render_scale + self.game.render_scroll[1]
+        mpos_x = mouse_pos[0] / self.game.render_scale + offset[0]
+        mpos_y = mouse_pos[1] / self.game.render_scale + offset[1]
         self.mpos = (mpos_x, mpos_y)
         self.mpos_not_offset = mouse_pos
+
+    def Player_Mouse_Update(self):
+        mouse_pos = pygame.mouse.get_pos()
+        self.player_mouse = (mouse_pos[0] / 4, mouse_pos[1] / 4)
 
     # def Mpos_Update(self, key_press, offset=(0, 0)):
     #     if self.left_click == True:

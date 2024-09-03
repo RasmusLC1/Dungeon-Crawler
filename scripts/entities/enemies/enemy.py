@@ -16,6 +16,7 @@ from scripts.engine.ray_caster import Ray_Caster
 class Enemy(Moving_Entity):
     def __init__(self, game, pos, size, type):
         super().__init__(game, type, pos, size)
+        self.subtype = 'enemy'
         self.animation = 'decrepit_bones'
         self.walking = 0
         self.health = 30
@@ -30,6 +31,9 @@ class Enemy(Moving_Entity):
 
         self.left_weapon_cooldown = 0
         self.weapon_cooldown = 0
+        self.charge = 0
+        self.distance_to_player = 9999
+
 
 
 
@@ -38,7 +42,7 @@ class Enemy(Moving_Entity):
 
     def Equip_Weapon(self):
         sword = Sword(self.game, self.pos, (16,16), 'sword')
-        if not sword.Set_Inventory_Type('left_hand'):
+        if not sword.Check_Inventory_Type('left_hand'):
             
             return False
         sword.Pickup_Reset_Weapon(self)
@@ -66,9 +70,10 @@ class Enemy(Moving_Entity):
         self.Update_Alert_Cooldown()
 
         self.Update_Left_Weapon()
+        if self.distance_to_player < 20:
+            self.Attack()
 
-        self.Attack()
-
+    
 
     def Update_Left_Weapon(self, offset=(0, 0)):
         if not self.active_weapon_left:
@@ -89,11 +94,12 @@ class Enemy(Moving_Entity):
     
     def Attack(self):
         if self.weapon_cooldown:
-            self.weapon_cooldown -= 1
-        else:
-            self.active_weapon_left.Set_Attack_Ready(True)
-            self.active_weapon_left.Set_Attack()
-            self.weapon_cooldown = 100
+            return
+        
+        self.active_weapon_left.Set_Attack_Ready(True)
+        self.active_weapon_left.Set_Attack()
+        self.weapon_cooldown = 100
+
 
 
     def Set_Active_Weapon(self, weapon):
@@ -108,6 +114,10 @@ class Enemy(Moving_Entity):
 
     def Find_New_Path(self, destination):
         self.path_finding.Path_Finding(destination, True)
+
+    def Weapon_Cooldown(self):
+        if self.weapon_cooldown:
+            self.weapon_cooldown = max(0, self.weapon_cooldown - 1)
 
     def Set_Idle(self):
         pass

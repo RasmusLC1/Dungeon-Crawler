@@ -103,7 +103,15 @@ class Weapon(Item):
     def Charge_Attack(self, offset = (0, 0)):
         if not self.inventory_type:
             return
-        self.Set_Charging()
+        
+        try:
+            if 'player' == self.entity.type:
+                self.Set_Charging_Player()
+            elif 'enemy' == self.entity.subtype:
+                self.Set_Charging_Enemy()
+        except TypeError as e:
+            print(f"Entity neither enemy nor player: {e}")
+
         
         if self.is_charging:
             # Increase charge time while holding the button
@@ -129,7 +137,7 @@ class Weapon(Item):
         self.special_attack = self.charge_time
 
     # Initialise the charging of the weapon
-    def Set_Charging(self):
+    def Set_Charging_Player(self):
         # Detect if the player is holding down the button
         if 'left' in self.inventory_type:
             self.is_charging = self.game.mouse.hold_down_left
@@ -137,6 +145,10 @@ class Weapon(Item):
             self.is_charging = self.game.mouse.hold_down_right
         elif 'bow' in self.inventory_type:
             self.is_charging = self.game.mouse.hold_down_left
+
+    # TODO: Write charge logic for enemy
+    def Set_Charging_Enemy(self):
+        self.is_charging = self.entity.charge
     
     # Return False if entity weapon cooldown is not off
     def Check_Entity_Cooldown(self):
@@ -376,9 +388,9 @@ class Weapon(Item):
         for i in range(8):
             recieving_inventory_slot = receiving_inventory.Find_Available_Inventory_Slot(recieving_inventory_slot)
             if not self.Check_Legal_Move(recieving_inventory_slot, sending_inventory, receiving_inventory):
+                recieving_inventory_slot = None
                 continue
-            
-                
+
             break
             
         
@@ -420,23 +432,29 @@ class Weapon(Item):
         if not self.Check_Legal_Move(inventory_slot, sending_inventory, receiving_inventory):
             return False
 
-
         # Move the item
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)
         # If the move was successful, remove it from the sending inventory
         if move_successful:
+
             # Remove item from old inventory and save the inventory type
             inventory_type_holder = self.inventory_type
+            print(self.inventory_type)
+
             sending_inventory.Remove_Item(self, move_successful)
+            print(self.inventory_type)
             # send weapon into weapon inventory, checked by seeing if it has an inventory_type
             if self.inventory_type:
+
                 # If weapon is already equipped in the other hand, remove it before adding to new hand
                 if self.equipped:
-                    self.game.player.Remove_Active_Weapon(inventory_type_holder)                    
+                    self.game.player.Remove_Active_Weapon(inventory_type_holder)
                 self.Equip()
             else: # Drag weapon back into item inventory
                 self.Set_Equip(False)
                 self.game.player.Remove_Active_Weapon(inventory_type_holder)
+                print("TEST")
+
             return True
         
         
@@ -494,7 +512,7 @@ class Weapon(Item):
         else:
             return False
         
-    def Set_Inventory_Type(self, type):
+    def Check_Inventory_Type(self, type):
         legal_inventories = ['left_hand', 'right_hand', 'bow', 'arrow']
         if type not in legal_inventories:
             return False
