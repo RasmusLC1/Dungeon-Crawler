@@ -57,13 +57,8 @@ class Enemy(Moving_Entity):
         movement = self.direction
         
         super().update(tilemap, movement = movement)
-        self.animation = 'decrepit_bones'
+        # self.animation = 'decrepit_bones'
 
-        if abs(self.game.player.dashing) >= 50:
-            if self.rect().colliderect(self.game.player.rect()):
-                self.game.player.Damage_Taken(5)
-                return True
-            
         self.direction_x_holder = self.direction_x 
         self.direction_y_holder = self.direction_y
 
@@ -73,7 +68,11 @@ class Enemy(Moving_Entity):
         if self.distance_to_player < 20:
             self.Attack()
 
-    
+    def Set_Idle(self):
+        pass
+
+    def Set_Action(self,  movement):
+        pass
 
     def Update_Left_Weapon(self, offset=(0, 0)):
         if not self.active_weapon_left:

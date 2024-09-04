@@ -72,16 +72,26 @@ class Asset_Loader:
         entities_assets = {
 
             'player_idle_down_head': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 0, 16, 8),
-            'player_idle_down_body': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 8, 16, 6),
-            'player_idle_down_legs': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 14, 16, 2),
+            'player_idle_down_body': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 9, 16, 6),
+            'player_idle_down_legs': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 15, 16, 2),
 
             'player_idle_up_head': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 0, 16, 8),
-            'player_idle_up_body': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 8, 16, 6),
-            'player_idle_up_legs': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 14, 16, 2),
+            'player_idle_up_body': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 9, 16, 6),
+            'player_idle_up_legs': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 15, 16, 2),
+
+
+            'player_running_down_head': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 0, 16, 8),
+            'player_running_down_body': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 9, 16, 6),
+            'player_running_down_legs': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 15, 16, 2),
+
+            'player_running_up_head': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 0, 16, 8),
+            'player_running_up_body': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 9, 16, 6),
+            'player_running_up_legs': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 15, 16, 2),
+            
 
             'player_attack_head': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 0, 16, 8),
-            'player_attack_body': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 8, 16, 6),
-            'player_attack_legs': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 14, 16, 2),
+            'player_attack_body': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 9, 16, 6),
+            'player_attack_legs': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 15, 16, 2),
 
 
             'gun': load_image('gun.png'),
@@ -92,12 +102,12 @@ class Asset_Loader:
     def Asset_Enemies_List(self):
         entities_assets = {
             'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 16, 8),
-            'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 8, 16, 6),
-            'decrepit_bones_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 14, 16, 2),
+            'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 9, 16, 6),
+            'decrepit_bones_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 15, 16, 2),
 
             'decrepit_bones_attack_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 16, 8),
-            'decrepit_bones_attack_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 8, 16, 6),
-            'decrepit_bones_attack_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 14, 16, 2),
+            'decrepit_bones_attack_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 9, 16, 6),
+            'decrepit_bones_attack_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 15, 16, 2),
 
         }
         self.assets.update(entities_assets)

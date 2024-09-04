@@ -31,6 +31,10 @@ def get_tile_image_from_sheet(sheet, pos_x, pos_y, width, height, color=None):
 
 
 # Get a defined range of sprites from a sheet
+# Version x and y represent how many tiles on x and y axis should be extracted
+# Starting y and x represent the starting position on the sheet
+# Size x and y is the total size of each tile
+# Color is the colorkey that needs to be filtered out
 def get_tiles_from_sheet(path, versions_x, versions_y, starting_x, starting_y, size_x, size_y, color=None):
     sheet = pygame.image.load(BASE_IMG_PATH + path).convert_alpha()
     images = []

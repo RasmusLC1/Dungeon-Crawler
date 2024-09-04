@@ -154,8 +154,8 @@ Game Ideas
     Lurker in the dark, lowers light level around it, tries to sneak attack, vulnable to light
 
 # Biomes:
-    Desert Biome, Water does not exist, enemies are vulnerable to fire, high gold in urns
-    Mushroom Biom, poison effects are common, enemies here are immune to poision, potion ingredients
+    Desert Biome, Water does not exist, enemies are vulnerable to fire, high gold in urns, 
+    Mushroom Biom, poison effects are common, enemies here are immune to poision, potion ingredients, exploding mushrooms, Mushroom Queen boss
     Crystal Caverns, High armour enemies, crystals that emit light, Rare gems
     Lava forge, lots of lava, enemies are immune to fire and deal fire damage, rare weapons
     Ice Cave, Lots of ice, enemies are immune to frost and deal frost damage, breakable walls are more common

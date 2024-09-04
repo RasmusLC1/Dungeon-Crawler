@@ -266,7 +266,7 @@ class Player(Moving_Entity):
 
         if self.dashing > 50:
             self.Stored_Position_Handler(offset)
-            direction = pygame.math.Vector2(self.mpos[0] - self.stored_position[0], self.mpos[1] - self.stored_position[1])
+            direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
             
             if direction.length() > 0:
                 # Temporarily set friction to zero to avoid deceleration during dash
@@ -328,6 +328,7 @@ class Player(Moving_Entity):
 
     # Render player
     def Render(self, surf, offset=(0, 0)):
+        print(self.animation)
         if abs(self.dashing) >= 50:
             return
         
