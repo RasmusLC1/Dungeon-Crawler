@@ -11,6 +11,7 @@ from scripts.entities.entities import PhysicsEntity
 class Moving_Entity(PhysicsEntity):
     def __init__(self, game, e_type, pos, size):
         super().__init__(game, e_type, pos, size)
+        self.subtype = e_type
         self.velocity = [0, 0] # Velocity of the player
         self.friction = self.game.render_scale # Friction, set to the renderscale
         self.friction_holder = self.friction # Holder for friction to reset it
@@ -60,10 +61,10 @@ class Moving_Entity(PhysicsEntity):
         self.last_frame_movement = (0.0, 0.0)
 
         # Attributes, placeholder should be assigned on creation
-        self.strength = 5 # Damage and moving items
-        self.agility = 5 # weapon recharge speed, movement speed and lockpicking
-        self.intelligence = 5 # spells and trap detection
-        self.stamina = 5 # movement ability recharge and weapon cooldown
+        self.strength = 1 # Damage and moving items
+        self.agility = 1 # weapon recharge speed, movement speed and lockpicking
+        self.intelligence = 1 # spells and trap detection
+        self.stamina = 1 # movement ability recharge and weapon cooldown
 
         # Determined by the entities agility
         self.left_weapon_cooldown = 0 
@@ -127,12 +128,12 @@ class Moving_Entity(PhysicsEntity):
         self.direction_y = movement[1]
 
         # Calculate frame movement based on updated velocity
-        self.frame_movement = (self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale)
+        self.Set_Frame_movement((self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale))
 
     # Movement handling
     # TODO Cleanp
     def Movement(self, movement, tilemap):
-        if self.Entity_Collision_Detection():
+        if self.Entity_Collision_Detection(tilemap):
             return
 
         self.Tile_Map_Collision_Detection(tilemap)
@@ -231,23 +232,58 @@ class Moving_Entity(PhysicsEntity):
                     self.collisions['up'] = True
                 self.pos[1] = entity_rect.y
 
-    def Entity_Collision_Detection(self):
+    # def Entity_Collision_Detection(self):
+    #     future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
+    #     for enemy in self.nearby_enemies:
+    #         if enemy.rect().colliderect(self.rect_future(future_pos)):
+    #             return enemy
+    #     # Only apply this logic to enemies
+    #     if not self.type == 'player': 
+    #         if self.game.player.rect().colliderect(self.rect_future(future_pos)):
+    #             self.player_hit = True
+    #             return self.game.player
+            
+    #     return None
+
+    def Entity_Collision_Detection(self, tilemap):
         future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
         for enemy in self.nearby_enemies:
-            if enemy.rect().colliderect(self.rect_future(future_pos)):
-                if not self.type == 'player':
-                    return True
-        if not self.type == 'player': 
-            if self.game.player.rect().colliderect(self.rect_future(future_pos)):
-                self.player_hit = True
-                return True
-            
-        return False
+            if enemy != self and enemy.rect().colliderect(self.rect_future(future_pos)):
+                self.apply_repulsion(enemy, tilemap)
+                return enemy
+        
+        # Handle collision with the player
+        if self.type != 'player' and self.game.player.rect().colliderect(self.rect_future(future_pos)):
+            self.apply_repulsion(self.game.player, tilemap)
+            self.player_hit = True
+            return self.game.player
+                
+        return None
+
+    def apply_repulsion(self, other_entity, tilemap):
+        # Check if entity is stronger than the other, if no then simply return as it cannot push it
+        if self.strength < other_entity.strength:
+            return
+
+        repulsion_strength = 1 + (self.strength - other_entity.strength) / 10
+
+        direction_vector = pygame.math.Vector2(self.pos) - pygame.math.Vector2(other_entity.pos)
+        if direction_vector.length() < 0:
+            return
+        
+        direction_vector = direction_vector.normalize() * repulsion_strength
+
+        # Push the other entity backwards
+        other_entity.Set_Frame_movement((direction_vector.x * -1, direction_vector.y * -1))
+        other_entity.Tile_Map_Collision_Detection(tilemap)
+
 
 
     def rect_future(self, future_pos):
         return pygame.Rect(future_pos[0], future_pos[1], self.size[0], self.size[1])     
     
+    
+
     # Update only the nearby traps
     def Update_Traps(self):
         if not self.nearby_traps_cooldown:
@@ -287,7 +323,6 @@ class Moving_Entity(PhysicsEntity):
         self.health -= damage
         
     def Attack_Direction_Handler(self, offset = (0, 0)):
-        self.Stored_Position_Handler(offset)
 
         self.Set_Attack_Direction()
         
@@ -326,6 +361,8 @@ class Moving_Entity(PhysicsEntity):
         self.velocity[0] = direction.x * 50
         self.velocity[1] = direction.y * 50
 
+    def Set_Frame_movement(self, movement):
+        self.frame_movement = movement
 
     
     def Stored_Position_Handler(self, offset=(0, 0)):

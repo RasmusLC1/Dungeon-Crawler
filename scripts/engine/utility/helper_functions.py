@@ -16,3 +16,6 @@ class Helper_Functions():
     
     def Direction_Vector(direction):
         return pygame.math.Vector2(direction[0], direction[1])
+    
+    def Set_Direction_Vector(origin, target):
+        return pygame.math.Vector2(target[0] - origin[0], target[1] - origin[1])

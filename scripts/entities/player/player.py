@@ -42,6 +42,11 @@ class Player(Moving_Entity):
         self.inventory_interaction = 0
 
 
+        # Attributes, placeholder should be assigned on creation
+        self.strength = 5 # Damage and moving items
+        self.agility = 1 # weapon recharge speed, movement speed and lockpicking
+        self.intelligence = 1 # spells and trap detection
+        self.stamina = 1 # movement ability recharge and weapon cooldown
 
         self.coins = 0
         self.shootin_cooldown = 0
@@ -72,7 +77,12 @@ class Player(Moving_Entity):
             self.Update_Bow(offset)
         else:
             print("INVENTORY MISSING")
- 
+    
+    def Entity_Collision_Detection(self, tilemap):
+        if self.dashing > 40:
+            return None
+        return super().Entity_Collision_Detection(tilemap)
+
     def Attack_Direction_Handler(self, offset = (0,0)):
         self.Mouse_Handler()
         super().Attack_Direction_Handler(offset)

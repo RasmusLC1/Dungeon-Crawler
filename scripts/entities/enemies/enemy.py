@@ -8,8 +8,6 @@ from scripts.items.weapons.close_combat.sword import Sword
 import random
 import pygame
 import math
-from scripts.engine.a_star import A_Star
-from scripts.engine.ray_caster import Ray_Caster
 
 
 
@@ -34,6 +32,12 @@ class Enemy(Moving_Entity):
         self.charge = 0
         self.distance_to_player = 9999
 
+        # Attributes, placeholder should be assigned on creation
+        self.strength = 1 # Damage and moving items
+        self.agility = 1 # weapon recharge speed, movement speed and lockpicking
+        self.intelligence = 1 # spells and trap detection
+        self.stamina = 1 # movement ability recharge and weapon cooldown
+
 
 
 
@@ -53,6 +57,8 @@ class Enemy(Moving_Entity):
         return True
 
     def update(self, tilemap, movement=(0, 0)):
+
+
         self.path_finding.Path_Finding(self.game.player.pos)
         movement = self.direction
         
@@ -68,6 +74,8 @@ class Enemy(Moving_Entity):
         self.Weapon_Cooldown()
         if self.distance_to_player < 20:
             self.Attack()
+
+
 
     def Set_Idle(self):
         pass
@@ -92,6 +100,32 @@ class Enemy(Moving_Entity):
 
         return
     
+    def Entity_Collision_Detection(self, tilemap):
+        colliding_entity = super().Entity_Collision_Detection(tilemap)
+
+        if colliding_entity:
+            if colliding_entity.type == 'player':
+                # Prevent further movement towards the player by stopping the enemy's movement
+                self.direction = (0, 0)
+                return colliding_entity
+
+            # Collision logic for other entities
+            collision_vector = pygame.math.Vector2(self.pos[0] - colliding_entity.pos[0],
+                                                self.pos[1] - colliding_entity.pos[1])
+            if collision_vector.length() > 0:
+                collision_vector = collision_vector.normalize()
+                direction_vector = pygame.math.Vector2(self.direction)
+                reflected_direction = direction_vector.reflect(collision_vector)
+
+                if self.Future_Rect(reflected_direction).colliderect(self.game.player.rect()):
+                    self.direction = (0, 0)
+
+                    return self.game.player
+
+                self.direction = (reflected_direction.x, reflected_direction.y)
+
+        return None
+        
     def Attack(self):
         if self.weapon_cooldown:
             return
@@ -101,8 +135,10 @@ class Enemy(Moving_Entity):
         self.active_weapon_left.Set_Attack()
         self.weapon_cooldown = 100
 
+    def Update_Movement(self, movement):
+        return super().Update_Movement(movement)
 
-
+    
     def Set_Active_Weapon(self, weapon):
         self.active_weapon_left = weapon
 

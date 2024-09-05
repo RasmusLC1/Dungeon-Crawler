@@ -202,6 +202,7 @@ class Path_Finding():
             else:
                 self.stuck_timer = 0
 
+    
 
     # Move the entity at random if stuck
     def Stuck_Check(self):
