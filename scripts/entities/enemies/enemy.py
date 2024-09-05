@@ -65,6 +65,7 @@ class Enemy(Moving_Entity):
         self.Update_Alert_Cooldown()
 
         self.Update_Left_Weapon()
+        self.Weapon_Cooldown()
         if self.distance_to_player < 20:
             self.Attack()
 
@@ -95,6 +96,7 @@ class Enemy(Moving_Entity):
         if self.weapon_cooldown:
             return
         
+        self.Set_Target(self.game.player.pos)
         self.active_weapon_left.Set_Attack_Ready(True)
         self.active_weapon_left.Set_Attack()
         self.weapon_cooldown = 100

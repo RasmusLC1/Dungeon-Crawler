@@ -165,6 +165,8 @@ class Sword(Weapon):
             return False
         if self.attack_direction[0] < 0:
             self.flip_image = False
+        if self.attack_direction[0] > 0:
+            self.flip_image = True
         self.rotate = self.stored_rotation
         new_x_pos = self.entity.pos[0] + self.attack_direction[0] * 10
         new_y_pos = self.entity.pos[1] + self.attack_direction[1] * 10 - 10

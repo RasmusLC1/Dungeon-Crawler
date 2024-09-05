@@ -78,7 +78,14 @@ class Asset_Loader:
             'player_idle_up_head': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 0, 16, 8),
             'player_idle_up_body': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 9, 16, 6),
             'player_idle_up_legs': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 15, 16, 2),
+            
+            'player_standing_still_down_head': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 0, 16, 8),
+            'player_standing_still_down_body': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 9, 16, 6),
+            'player_standing_still_down_legs': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 15, 16, 3),
 
+            'player_standing_still_up_head': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 0, 16, 8),
+            'player_standing_still_up_body': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 9, 16, 6),
+            'player_standing_still_up_legs': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 15, 16, 2),
 
             'player_running_down_head': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 0, 16, 8),
             'player_running_down_body': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 9, 16, 6),

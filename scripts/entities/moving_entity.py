@@ -145,7 +145,7 @@ class Moving_Entity(PhysicsEntity):
         if self.idle_count > 60:
             self.Set_Idle()
         else:
-            self.idle_count += 1
+            self.idle_count += 0
 
         self.last_frame_movement = self.frame_movement
     
@@ -180,21 +180,30 @@ class Moving_Entity(PhysicsEntity):
     def Set_Action(self, movement):
         # Check for movement
         if not movement[0] and not movement[1]:
+            if self.direction_y_holder < 0:
+                self.Set_Animation('standing_still_up')
+            else:
+                self.Set_Animation('standing_still_down')
             return
         self.idle_count = 0
         
 
-        
+        if movement[1] < 0:
+            self.Set_Animation('running_up')
+            return
         if movement[0] > 0:
             self.flip[0] = False
             self.Set_Animation('running_down')
+            return
         if movement[0] < 0:
             self.flip[0] = True
             self.Set_Animation('running_down')
-        if movement[1] < 0:
-            self.Set_Animation('running_up')
+            return
+
         if movement[1] > 0:
             self.Set_Animation('running_down')
+            return
+
         
 
     def Tile_Map_Collision_Detection(self, tilemap):
@@ -296,7 +305,7 @@ class Moving_Entity(PhysicsEntity):
             self.Set_Animation('attack')
 
     def Set_Attack_Direction(self):
-        self.attack_direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
+        self.attack_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
         self.attack_direction.normalize_ip()
 
     def Set_Charge(self, charge_speed, offset=(0, 0)):
@@ -325,7 +334,8 @@ class Moving_Entity(PhysicsEntity):
         self.stored_position[1] -= offset[1]     
 
 
-    
+    def Set_Target(self, pos):
+        self.target = pos
 
     # Return true if healing was successfull
     def Healing(self, healing):

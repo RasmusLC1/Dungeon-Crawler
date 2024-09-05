@@ -13,7 +13,7 @@ import pygame
 class Player(Moving_Entity):
     def __init__(self, game, pos, size):
         super().__init__(game, 'player', pos, size)
-        self.max_speed = 2.5 * self.game.render_scale
+        self.max_speed = 2 * self.game.render_scale
         self.max_speed_holder = self.max_speed
         self.dashing = 0
         self.stored_position = 0
@@ -310,7 +310,7 @@ class Player(Moving_Entity):
 
     def Mouse_Handler(self):
         self.game.mouse.Player_Mouse_Update()
-        self.target = self.game.mouse.player_mouse
+        self.Set_Target(self.game.mouse.player_mouse)
 
     
 
@@ -328,7 +328,6 @@ class Player(Moving_Entity):
 
     # Render player
     def Render(self, surf, offset=(0, 0)):
-        print(self.animation)
         if abs(self.dashing) >= 50:
             return
         

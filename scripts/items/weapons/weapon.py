@@ -168,27 +168,46 @@ class Weapon(Item):
         if self.enemy_hit:
             return None
         weapon_rect = self.rect_attack()
+
+        # Handle enemy attack collision check for player
+        player_collision_result = self.Player_Collision(weapon_rect)
+        if player_collision_result:
+            return player_collision_result
+
         for enemy in self.nearby_enemies:
             # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:
                 continue
             # Check for collision with enemy
             if weapon_rect.colliderect(enemy.rect()):
-                target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
-                self.game.clatter.Generate_Clatter(target_position, 200)
-
-                damage = self.entity.strength * self.damage
-                enemy.Damage_Taken(damage)
-                self.enemy_hit = True
-
-                # Set special status effect of weapon if weapon has one
-                if self.effect:
-                    enemy.Set_Effect(self.effect, 3)
-
+                self.Entity_Hit(enemy)
                 # Return enemy in case further effects need to be added such as knockback
                 return enemy
             
         return None
+    
+    def Entity_Hit(self, entity):
+        target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
+        self.game.clatter.Generate_Clatter(target_position, 200)
+
+        damage = self.entity.strength * self.damage
+        entity.Damage_Taken(damage)
+        self.enemy_hit = True
+
+        # Set special status effect of weapon if weapon has one
+        if self.effect:
+            entity.Set_Effect(self.effect, 3)
+    
+
+    # Check if enemy has hit the player
+    def Player_Collision(self, weapon_rect):
+        if self.entity.subtype == 'enemy':
+            player = self.game.player
+            if weapon_rect.colliderect(player.rect()):
+                self.Entity_Hit(player)
+                return self.game.player
+            else:
+                return None
     
     #TODO: Make a formula for better computing clatter distance
     # Return False on collision
@@ -439,10 +458,8 @@ class Weapon(Item):
 
             # Remove item from old inventory and save the inventory type
             inventory_type_holder = self.inventory_type
-            print(self.inventory_type)
 
             sending_inventory.Remove_Item(self, move_successful)
-            print(self.inventory_type)
             # send weapon into weapon inventory, checked by seeing if it has an inventory_type
             if self.inventory_type:
 
@@ -453,7 +470,6 @@ class Weapon(Item):
             else: # Drag weapon back into item inventory
                 self.Set_Equip(False)
                 self.game.player.Remove_Active_Weapon(inventory_type_holder)
-                print("TEST")
 
             return True
         
