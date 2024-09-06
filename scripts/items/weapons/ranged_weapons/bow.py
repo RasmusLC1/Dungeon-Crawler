@@ -5,7 +5,7 @@ import pygame
 
 class Bow(Weapon):
     def __init__(self, game, pos, size):
-        super().__init__(game, pos, size, 'spear', 3, 8, 10, 'bow')
+        super().__init__(game, pos, size, 'bow', 3, 8, 10, 'ranged')
         self.max_animation = 0
         self.attack_animation_max = 2
         self.distance_from_player = 0
@@ -138,7 +138,7 @@ class Bow(Weapon):
 
     def Spawn_Arrow(self):
         if not self.arrow:
-            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16,16), 'arrow', self.entity)
+            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16,16))
             self.arrow = arrow
             self.arrow.Shooting_Setup(self.entity)
 
@@ -157,7 +157,7 @@ class Bow(Weapon):
         self.rotate *= -1
 
     def Set_Charging(self):
-        super().Set_Charging()
+        super().Set_Charging_Player()
 
 
     def Special_Attack(self):
@@ -174,7 +174,9 @@ class Bow(Weapon):
         return super().Send_To_Inventory(inventory_slot, sending_inventory, receiving_inventory)
 
     def Bow_Inventory_Check(self, inventory_slot):
-        if not 'bow' in self.weapon_class:
+        print(inventory_slot.inventory_type)
+
+        if not 'bow' in self.type:
             return True
 
         if not inventory_slot.inventory_type:

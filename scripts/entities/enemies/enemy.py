@@ -18,7 +18,7 @@ class Enemy(Moving_Entity):
         self.max_speed_holder = self.max_speed
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0
-        self.active_weapon_left = None
+        self.active_weapon = None
         self.weapon_cooldown = 0
         self.walking = 0
 
@@ -81,15 +81,15 @@ class Enemy(Moving_Entity):
         return None
         
     def Attack(self):
-        if not self.active_weapon_left:
+        if not self.active_weapon:
             return
 
         if self.weapon_cooldown:
             return
         
         self.Set_Target(self.game.player.pos)
-        self.active_weapon_left.Set_Attack_Ready(True)
-        self.active_weapon_left.Set_Attack()
+        self.active_weapon.Set_Attack_Ready(True)
+        self.active_weapon.Set_Attack()
         self.weapon_cooldown = 100
 
     def Update_Movement(self, movement):
@@ -97,7 +97,7 @@ class Enemy(Moving_Entity):
 
     
     def Set_Active_Weapon(self, weapon):
-        self.active_weapon_left = weapon
+        self.active_weapon = weapon
 
     def Update_Alert_Cooldown(self):
         if self.alert_cooldown:
@@ -158,6 +158,6 @@ class Enemy(Moving_Entity):
 
 
     def Render_Weapons(self, surf, offset):
-        if self.active_weapon_left:
-            self.active_weapon_left.Render_Equipped_Enemy(surf, offset)
+        if self.active_weapon:
+            self.active_weapon.Render_Equipped_Enemy(surf, offset)
         

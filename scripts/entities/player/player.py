@@ -311,8 +311,6 @@ class Player(Moving_Entity):
         self.game.mouse.Player_Mouse_Update()
         self.Set_Target(self.game.mouse.player_mouse)
 
-    
-
     def Set_Direction_Holder(self):
         if self.direction_x or self.direction_y:
             self.direction_x_holder = self.direction_x

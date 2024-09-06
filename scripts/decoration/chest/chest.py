@@ -32,7 +32,7 @@ class Chest(Decoration):
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
-            'sword',
+            # 'sword',
             # 'torch',
             'spear',
             # 'bow',
@@ -78,7 +78,7 @@ class Chest(Decoration):
             elif self.weapons[weapon_index] == 'arrow':
                 loot_amount = min(20, max(self.loot_amount // 5, 3))
                 for i in range(loot_amount):
-                    arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'arrow', None)
+                    arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16))
                     self.game.item_handler.Add_Item(arrow)
         else:
             return

@@ -162,6 +162,10 @@ class Path_Finding():
         self.entity.distance_to_player = Helper_Functions.Abs_Distance_Float(self.entity.pos, self.game.player.pos)
 
 
+    def Attack_Strategy(self):
+        if self.entity.active_weapon.type == 'bow':
+            pass
+
     def Direct_Pathing(self):
 
         # Player is close, so the enemy charge directly

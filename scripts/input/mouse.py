@@ -95,7 +95,7 @@ class Mouse_Handler:
 
     def Player_Mouse_Update(self):
         mouse_pos = pygame.mouse.get_pos()
-        self.player_mouse = (mouse_pos[0] / 4, mouse_pos[1] / 4)
+        self.player_mouse = (mouse_pos[0] / 4 + self.game.render_scroll[0], mouse_pos[1] / 4 + self.game.render_scroll[1])
 
     # def Mpos_Update(self, key_press, offset=(0, 0)):
     #     if self.left_click == True:

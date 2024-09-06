@@ -133,7 +133,7 @@ class Weapon(Item):
         if not self.entity:
             return
         self.entity.Attack_Direction_Handler(offset)
-        self.attack_direction = self.entity.attack_direction
+        self.Set_Attack_Direction()
         self.special_attack = self.charge_time
 
     # Initialise the charging of the weapon
@@ -292,9 +292,8 @@ class Weapon(Item):
        
     # Check if the weapon sprites needs to be flipped
     def Update_Flip(self):
-        attack_direction = self.entity.attack_direction
-        if abs(attack_direction[0]) >= abs(attack_direction[1]):
-            if attack_direction[0] < 0:
+        if abs(self.attack_direction[0]) >= abs(self.attack_direction[1]):
+            if self.attack_direction[0] < 0:
                 self.flip_image = True
             else:
                 self.flip_image = False
@@ -568,7 +567,7 @@ class Weapon(Item):
         if not inventory_slot.inventory_type:
             return True
         if 'bow' in inventory_slot.inventory_type:
-            if 'bow' in self.weapon_class:
+            if 'bow' in self.type:
                 return True
             else:
                 return False

@@ -100,9 +100,6 @@ class Moving_Entity(PhysicsEntity):
         self.Update_Damage_Cooldown()
         self.Charge_Update()
 
-        # if self.collisions['down'] or self.collisions['up']:
-        #     self.velocity[1] = 0
-
         self.Movement(movement, tilemap)
     
     def Update_Movement(self, movement):
@@ -256,6 +253,7 @@ class Moving_Entity(PhysicsEntity):
         if self.strength < other_entity.strength:
             return
 
+        # Calculate repulsion strength based on strength
         repulsion_strength = 1 + (self.strength - other_entity.strength) / 10
 
         direction_vector = pygame.math.Vector2(self.pos) - pygame.math.Vector2(other_entity.pos)
@@ -264,10 +262,14 @@ class Moving_Entity(PhysicsEntity):
         
         direction_vector = direction_vector.normalize() * repulsion_strength
 
-        # Push the other entity backwards
-        other_entity.Set_Frame_movement((direction_vector.x * -1, direction_vector.y * -1))
-        other_entity.Tile_Map_Collision_Detection(tilemap)
+        self.Move_Entity(other_entity, direction_vector, tilemap)
 
+        # Push the other entity backwards
+        
+    # Function to move the entity with pushback
+    def Move_Entity(self, other_entity, direction, tilemap):
+        other_entity.Set_Frame_movement((direction[0] * -1, direction[1] * -1))
+        other_entity.Tile_Map_Collision_Detection(tilemap)
 
 
     def rect_future(self, future_pos):

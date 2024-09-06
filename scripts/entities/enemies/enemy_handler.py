@@ -1,5 +1,6 @@
 from scripts.entities.enemies.enemy import Enemy
 from scripts.entities.enemies.decrepit_bones_melee import Decrepit_Bones_Melee
+from scripts.entities.enemies.decrepit_bones_ranged import Decrepit_Bones_Ranged
 import math
 
 class Enemy_Handler():
@@ -13,7 +14,8 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                self.enemies.append(Decrepit_Bones_Melee(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones', 30, 2, 2, 2, 2, 2))
+                pass
+                # self.enemies.append(Decrepit_Bones_Melee(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones', 30, 2, 2, 2, 2, 2))
 
     def Delete_Enemy(self, enemy):
         if enemy in self.enemies:

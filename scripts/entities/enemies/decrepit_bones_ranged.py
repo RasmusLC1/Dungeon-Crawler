@@ -1,17 +1,21 @@
 from scripts.entities.enemies.enemy import Enemy
-from scripts.items.weapons.close_combat.sword import Sword
-from scripts.items.weapons.close_combat.torch import Torch
+from scripts.items.weapons.ranged_weapons.bow import Bow
 from scripts.items.weapons.projectiles.spear import Spear
 
+from scripts.engine.utility.helper_functions import Helper_Functions
+
+import pygame
 import random
 
 
-class Decrepit_Bones_Melee(Enemy):
+class Decrepit_Bones_Ranged(Enemy):
     def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
 
         self.animation = 'decrepit_bones'
+        self.shooting_distance = False
         self.Equip_Weapon()
+        
 
     def update(self, tilemap, movement=(0, 0)):
         super().update(tilemap, movement)
@@ -20,17 +24,23 @@ class Decrepit_Bones_Melee(Enemy):
         if self.distance_to_player < 20:
             self.Attack()
 
+    
+
+
+
 
     def Equip_Weapon(self):
         weapon = None
 
         random_weapon = random.randint(0, 1)
 
-        if random_weapon == 0:
-            weapon = Sword(self.game, self.pos, (16,16))
+        # if random_weapon == 0:
+        #     weapon = Bow(self.game, self.pos, (16,16))
 
-        elif random_weapon == 1:
-            weapon = Spear(self.game, self.pos, (16,16))
+        # elif random_weapon == 1:
+        #     weapon = Bow(self.game, self.pos, (16,16))
+
+            # weapon = Spear(self.game, self.pos, (16,16))
         
 
         if not weapon:
