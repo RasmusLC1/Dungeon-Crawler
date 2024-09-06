@@ -100,7 +100,7 @@ class Game:
         for spawner in self.tilemap.extract([('spawners', 0)]):
             print("PLAYER")
             if spawner['variant'] == 0:
-                self.player = Player(self, spawner['pos'], (8, 16))
+                self.player = Player(self, spawner['pos'], (8, 16), 100, 5, 8, 10, 5, 5)
 
         self.enemy_handler = Enemy_Handler(self)
         self.trap_handler = Trap_Handler(self)

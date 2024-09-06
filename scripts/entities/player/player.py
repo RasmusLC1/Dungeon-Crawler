@@ -11,15 +11,11 @@ import pygame
 
 
 class Player(Moving_Entity):
-    def __init__(self, game, pos, size):
-        super().__init__(game, 'player', pos, size)
-        self.max_speed = 2 * self.game.render_scale
-        self.max_speed_holder = self.max_speed
+    def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.dashing = 0
         self.stored_position = 0
         self.animation_num_max = 4
-        self.agility = 5
-        
         
         self.max_ammo = 30
         self.ammo = 10
@@ -40,13 +36,6 @@ class Player(Moving_Entity):
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
         self.inventory_interaction = 0
-
-
-        # Attributes, placeholder should be assigned on creation
-        self.strength = 5 # Damage and moving items
-        self.agility = 1 # weapon recharge speed, movement speed and lockpicking
-        self.intelligence = 1 # spells and trap detection
-        self.stamina = 1 # movement ability recharge and weapon cooldown
 
         self.coins = 0
         self.shootin_cooldown = 0

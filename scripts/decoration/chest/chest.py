@@ -34,7 +34,7 @@ class Chest(Decoration):
         self.weapons = [
             'sword',
             # 'torch',
-            # 'spear',
+            'spear',
             # 'bow',
             # 'arrow',
         ]
@@ -64,16 +64,16 @@ class Chest(Decoration):
             rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
             weapon_index = random.randint(0, len(self.weapons) - 1)
             if self.weapons[weapon_index] == 'sword':
-                sword = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16), 'sword')
+                sword = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16))
                 self.game.item_handler.Add_Item(sword)
             elif self.weapons[weapon_index] == 'spear':
-                spear = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16), 'spear')
+                spear = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16))
                 self.game.item_handler.Add_Item(spear)
             elif self.weapons[weapon_index] == 'torch':
-                torch = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16), 'torch')
+                torch = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16))
                 self.game.item_handler.Add_Item(torch)
             elif self.weapons[weapon_index] == 'bow':
-                bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16), 'bow')
+                bow = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16))
                 self.game.item_handler.Add_Item(bow)
             elif self.weapons[weapon_index] == 'arrow':
                 loot_amount = min(20, max(self.loot_amount // 5, 3))

@@ -15,7 +15,7 @@ class Item_Handler():
 
     def Initialise(self):
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
-            self.items.append(Torch(self.game, torch['pos'], (16, 16), torch['type']))
+            self.items.append(Torch(self.game, torch['pos'], (16, 16)))
 
 
     def Add_Item(self, item):

@@ -2,7 +2,6 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.entities.enemies.path_finding import Path_Finding
-from scripts.items.weapons.close_combat.sword import Sword
 
 
 import random
@@ -12,52 +11,27 @@ import math
 
 
 class Enemy(Moving_Entity):
-    def __init__(self, game, pos, size, type):
-        super().__init__(game, type, pos, size)
-        self.subtype = 'enemy'
-        self.animation = 'decrepit_bones'
-        self.walking = 0
-        self.health = 30
+    def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, type, pos, size, health, strength, max_speed, agility, intelligence, stamina)
+        self.subtype = 'enemy'     
+
+        self.max_speed_holder = self.max_speed
         self.random_movement_cooldown = 0
-        self.max_speed = 1
-        self.max_speed_holder = self.max_speed  
         self.alert_cooldown = 0
         self.active_weapon_left = None
+        self.weapon_cooldown = 0
+        self.walking = 0
 
         self.path_finding = Path_Finding(game, self)
-
-
-        self.left_weapon_cooldown = 0
-        self.weapon_cooldown = 0
-        self.charge = 0
         self.distance_to_player = 9999
-
-        # Attributes, placeholder should be assigned on creation
-        self.strength = 1 # Damage and moving items
-        self.agility = 1 # weapon recharge speed, movement speed and lockpicking
-        self.intelligence = 1 # spells and trap detection
-        self.stamina = 1 # movement ability recharge and weapon cooldown
+        self.charge = 0
 
 
 
 
-        self.Equip_Weapon()
-
-
-    def Equip_Weapon(self):
-        sword = Sword(self.game, self.pos, (16,16), 'sword')
-        if not sword.Check_Inventory_Type('left_hand'):
-            
-            return False
-        sword.Pickup_Reset_Weapon(self)
-        sword.Set_Equip(True)
-        self.Set_Active_Weapon(sword)
-        self.active_weapon_left.render = False
-        del(sword)
-        return True
+    
 
     def update(self, tilemap, movement=(0, 0)):
-
 
         self.path_finding.Path_Finding(self.game.player.pos)
         movement = self.direction
@@ -70,11 +44,6 @@ class Enemy(Moving_Entity):
 
         self.Update_Alert_Cooldown()
 
-        self.Update_Left_Weapon()
-        self.Weapon_Cooldown()
-        if self.distance_to_player < 20:
-            self.Attack()
-
 
 
     def Set_Idle(self):
@@ -83,22 +52,7 @@ class Enemy(Moving_Entity):
     def Set_Action(self,  movement):
         pass
 
-    def Update_Left_Weapon(self, offset=(0, 0)):
-        if not self.active_weapon_left:
-            return
-
-        self.active_weapon_left.Set_Active(self.active)
-        self.active_weapon_left.Set_Light_Level(self.light_level)
-
-        self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
-        self.active_weapon_left.Update(offset)
-        if not self.active_weapon_left:
-            return
-        self.active_weapon_left.Update_Attack()
-
-        self.active_weapon_left.Update_Attack_Animation()
-
-        return
+    
     
     def Entity_Collision_Detection(self, tilemap):
         colliding_entity = super().Entity_Collision_Detection(tilemap)
@@ -127,6 +81,9 @@ class Enemy(Moving_Entity):
         return None
         
     def Attack(self):
+        if not self.active_weapon_left:
+            return
+
         if self.weapon_cooldown:
             return
         

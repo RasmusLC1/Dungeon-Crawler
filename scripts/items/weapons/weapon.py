@@ -236,6 +236,7 @@ class Weapon(Item):
 
     # Update attack animation logic
     def Update_Attack_Animation(self):
+        
         if self.attacking <= 1:
             self.sub_type = self.type
             self.attacking = 0

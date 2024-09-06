@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Spear(Projectile):
-    def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 3, 8, 10, 'two_handed_melee')
+    def __init__(self, game, pos, size):
+        super().__init__(game, pos, size, 'spear', 3, 8, 10, 'two_handed_melee')
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0

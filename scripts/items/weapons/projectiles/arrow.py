@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Arrow(Projectile):
-    def __init__(self, game, pos, size, type, entity):
-        super().__init__(game, pos, size, type, 2, 2, 10, 'arrow')
+    def __init__(self, game, pos, size):
+        super().__init__(game, pos, size, 'arrow', 2, 2, 10, 'arrow')
         self.max_animation = 0
         
         self.max_amount = 20

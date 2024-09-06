@@ -6,8 +6,8 @@ import math
 
 
 class Sword(Weapon):
-    def __init__(self, game, pos, size, type):
-        super().__init__(game, pos, size, type, 3, 5, 10, 'one_handed_melee')
+    def __init__(self, game, pos, size):
+        super().__init__(game, pos, size, 'sword', 3, 5, 10, 'one_handed_melee')
         self.offset = 0
         self.max_animation = 3
         self.attack_animation_max = 3 

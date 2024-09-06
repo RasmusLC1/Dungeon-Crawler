@@ -9,16 +9,11 @@ from scripts.entities.entities import PhysicsEntity
 
 
 class Moving_Entity(PhysicsEntity):
-    def __init__(self, game, e_type, pos, size):
+    def __init__(self, game, e_type, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, e_type, pos, size)
         self.subtype = e_type
         self.velocity = [0, 0] # Velocity of the player
-        self.friction = self.game.render_scale # Friction, set to the renderscale
-        self.friction_holder = self.friction # Holder for friction to reset it
-        self.acceleration = 1 # Default acceleration
-        self.acceleration_holder = self.acceleration # accelarition holder to reset it
-        self.max_speed = 2.0  # Max speed of the entity
-        self.max_speed_holder = self.max_speed # Max speed holder to reset it
+        
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False} # Check for wall collision in each direction
 
         self.animation_state = 'up'
@@ -29,7 +24,6 @@ class Moving_Entity(PhysicsEntity):
         self.attacking = 0
         self.charging = 0
 
-
         self.direction = (0,0)
         self.direction_x = 0
         self.direction_y = 0
@@ -39,8 +33,7 @@ class Moving_Entity(PhysicsEntity):
         self.target = (0,0)
 
 
-        self.health = 100
-        self.max_health = self.health
+        
         self.damage_cooldown = 0
         self.mana = 0
         self.max_mana = 100
@@ -61,14 +54,26 @@ class Moving_Entity(PhysicsEntity):
         self.last_frame_movement = (0.0, 0.0)
 
         # Attributes, placeholder should be assigned on creation
-        self.strength = 1 # Damage and moving items
-        self.agility = 1 # weapon recharge speed, movement speed and lockpicking
-        self.intelligence = 1 # spells and trap detection
-        self.stamina = 1 # movement ability recharge and weapon cooldown
+        self.strength = strength # Damage and moving items and other entities
+        self.agility = agility # max_speed, acceleration, weapon recharge speed, movement speed and lockpicking
+        self.intelligence = intelligence # spells and trap detection
+        self.stamina = stamina # movement ability recharge and weapon cooldown
+        self.health = health
+        self.max_health = self.health
+        
+        # Movement variables
+        self.friction = self.game.render_scale # Friction, set to the renderscale
+        self.friction_holder = self.friction # Holder for friction to reset it
+        self.acceleration = agility / 10
+        self.acceleration_holder = self.acceleration # accelarition holder to reset it
+        self.max_speed = max_speed # Max speed of the entity
+        self.max_speed_holder = self.max_speed + agility / 5 # Max speed holder to reset it
+
 
         # Determined by the entities agility
         self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
+
         self.attacking = 0
         self.attack_animation_num = 0
         self.attack_animation_num_max = 1
@@ -95,10 +100,8 @@ class Moving_Entity(PhysicsEntity):
         self.Update_Damage_Cooldown()
         self.Charge_Update()
 
-  
-        if self.collisions['down'] or self.collisions['up']:
-            self.velocity[1] = 0
-            
+        # if self.collisions['down'] or self.collisions['up']:
+        #     self.velocity[1] = 0
 
         self.Movement(movement, tilemap)
     
@@ -232,18 +235,6 @@ class Moving_Entity(PhysicsEntity):
                     self.collisions['up'] = True
                 self.pos[1] = entity_rect.y
 
-    # def Entity_Collision_Detection(self):
-    #     future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
-    #     for enemy in self.nearby_enemies:
-    #         if enemy.rect().colliderect(self.rect_future(future_pos)):
-    #             return enemy
-    #     # Only apply this logic to enemies
-    #     if not self.type == 'player': 
-    #         if self.game.player.rect().colliderect(self.rect_future(future_pos)):
-    #             self.player_hit = True
-    #             return self.game.player
-            
-    #     return None
 
     def Entity_Collision_Detection(self, tilemap):
         future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
@@ -260,7 +251,7 @@ class Moving_Entity(PhysicsEntity):
                 
         return None
 
-    def apply_repulsion(self, other_entity, tilemap):
+    def apply_repulsion(self, other_entity, tilemap) -> None:
         # Check if entity is stronger than the other, if no then simply return as it cannot push it
         if self.strength < other_entity.strength:
             return
@@ -395,7 +386,7 @@ class Moving_Entity(PhysicsEntity):
     # Ice mechanic, lower friction and acceleration to simulate ice
     def On_Ice(self, effect):
         self.friction = max(0.1, self.friction / effect)
-        self.acceleration = max(0.4, self.acceleration / effect)
+        self.acceleration = max(0.3, self.acceleration / effect)
 
     # Handle status effects
     def Update_Status_Effects(self):
