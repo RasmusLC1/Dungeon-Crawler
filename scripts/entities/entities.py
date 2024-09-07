@@ -113,6 +113,7 @@ class PhysicsEntity:
             return True
         if tile['light'] == self.light_level:
             return True
+        
         new_light_level = min(255, tile['light'] * 30)
         if self.light_level < new_light_level:
             self.Set_Light_Level(self.light_level + 5)

@@ -46,13 +46,14 @@ class Enemy(Moving_Entity):
 
 
 
+
+
     def Set_Idle(self):
         pass
 
     def Set_Action(self,  movement):
         pass
 
-    
     
     def Entity_Collision_Detection(self, tilemap):
         colliding_entity = super().Entity_Collision_Detection(tilemap)

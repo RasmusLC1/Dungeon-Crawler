@@ -14,7 +14,7 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                self.enemies.append(Decrepit_Bones_Melee(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones', 30, 2, 2, 2, 2, 2))
+                self.enemies.append(Decrepit_Bones_Ranged(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones', 30, 2, 2, 2, 2, 2))
 
     def Delete_Enemy(self, enemy):
         if enemy in self.enemies:

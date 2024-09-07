@@ -21,8 +21,8 @@ class Decrepit_Bones_Ranged(Enemy):
         super().update(tilemap, movement)
         self.Update_Left_Weapon()
         self.Weapon_Cooldown()
-        if self.distance_to_player < 20:
-            self.Attack()
+        # if self.distance_to_player < 20:
+        #     self.Attack()
 
     
 
@@ -34,13 +34,12 @@ class Decrepit_Bones_Ranged(Enemy):
 
         random_weapon = random.randint(0, 1)
 
-        # if random_weapon == 0:
-        #     weapon = Bow(self.game, self.pos, (16,16))
+        if random_weapon == 0:
+            weapon = Bow(self.game, self.pos, (16,16))
 
-        # elif random_weapon == 1:
-        #     weapon = Bow(self.game, self.pos, (16,16))
+        elif random_weapon == 1:
+            weapon = Bow(self.game, self.pos, (16,16))
 
-            # weapon = Spear(self.game, self.pos, (16,16))
         
 
         if not weapon:

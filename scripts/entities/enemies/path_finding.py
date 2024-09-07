@@ -27,6 +27,8 @@ class Path_Finding():
 
         self.player_found = False
 
+        self.direct_pathing_cooldown = 0
+
 
 
     def Path_Finding(self, target, look_for_new_path = False):
@@ -39,7 +41,9 @@ class Path_Finding():
         if self.Stuck_Check():
             return
         
-        if self.Direct_Pathing():
+        if self.Attack_Strategy():
+            self.entity.Trap_Collision_Handler()
+
             return
         else:
             # If enemy looses sight of player he will try to go to the last known location
@@ -145,8 +149,6 @@ class Path_Finding():
 
     # Check for line of sight with the player
     def Line_Of_Sight(self, distance, dx, dy):
-        
-
         # Calculate the angle in radians
         angle_radians = math.atan2(dy, dx)
 
@@ -163,13 +165,63 @@ class Path_Finding():
 
 
     def Attack_Strategy(self):
-        if self.entity.active_weapon.type == 'bow':
-            pass
+        if not self.entity.active_weapon:
+            return self.Direct_Pathing()
+        if self.entity.active_weapon.weapon_class == 'ranged':
+            return self.Keep_Distance()
+        else:
+            return self.Direct_Pathing()
+
+    def Keep_Distance(self):
+        if self.direct_pathing_cooldown:
+            self.direct_pathing_cooldown = max(0, self.direct_pathing_cooldown - 1)
+            return True       
+        
+        if self.entity.distance_to_player < 80 and self.entity.distance_to_player > 60:
+            random_x = random.randint(1, 10) / 10
+            random_y = random.randint(1, 10) / 10
+            self.entity.direction = pygame.math.Vector2(random_x, random_y)
+            self.entity.direction.normalize_ip()
+            self.direct_pathing_cooldown = 20
+
+            return True
+        
+        if self.entity.distance_to_player > 60 :
+            return self.Charge_player(100)
+        
+        return self.Run_Away(60)
+        
 
     def Direct_Pathing(self):
-
+        if self.direct_pathing_cooldown:
+            self.direct_pathing_cooldown = max(0, self.direct_pathing_cooldown - 1)
+            return True
+        return self.Charge_player(100)  
         # Player is close, so the enemy charge directly
-        if self.entity.distance_to_player < 100:
+        
+    def Run_Away(self, distance):
+        if self.entity.distance_to_player < distance:
+            dx = (self.game.player.pos[0] - self.entity.pos[0]) * -1
+            dy = (self.game.player.pos[1] - self.entity.pos[1]) * -1
+            # Check if the enemy has 
+            if not self.Line_Of_Sight(self.entity.distance_to_player, dx, dy):
+                return False
+            self.entity.direction = pygame.math.Vector2(dx, dy)
+            if self.entity.direction == 0:
+                return
+            
+            self.entity.direction.normalize_ip()
+            self.player_found = True
+            if not self.entity.alert_cooldown:
+                self.entity.Set_Alert_Cooldown(400)
+                self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
+            self.direct_pathing_cooldown = 10
+            return True
+        return False
+
+
+    def Charge_player(self, distance):
+        if self.entity.distance_to_player < distance:
             dx = self.game.player.pos[0] - self.entity.pos[0]
             dy = self.game.player.pos[1] - self.entity.pos[1]
             # Check if the enemy has 
@@ -180,15 +232,14 @@ class Path_Finding():
                 return
             
             self.entity.direction.normalize_ip()
-            self.entity.direction[0] /= self.game.render_scale
-            self.entity.direction[1] /= self.game.render_scale
             self.player_found = True
             if not self.entity.alert_cooldown:
-                self.entity.Set_Alert_Cooldown(10000)
+                self.entity.Set_Alert_Cooldown(400)
                 self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
+            self.direct_pathing_cooldown = 10
             return True
-        
         return False
+
 
     # Save the entity's position every 200 ticks
     def Set_Position_Holder(self):
@@ -210,7 +261,7 @@ class Path_Finding():
 
     # Move the entity at random if stuck
     def Stuck_Check(self):
-        if not self.stuck_timer > 20:
+        if self.stuck_timer < 20:
             return False
         
         self.entity.random_movement_cooldown = 200
