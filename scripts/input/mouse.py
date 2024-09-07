@@ -97,13 +97,7 @@ class Mouse_Handler:
         mouse_pos = pygame.mouse.get_pos()
         self.player_mouse = (mouse_pos[0] / 4 + self.game.render_scroll[0], mouse_pos[1] / 4 + self.game.render_scroll[1])
 
-    # def Mpos_Update(self, key_press, offset=(0, 0)):
-    #     if self.left_click == True:
-    #         x = key_press.pos[0] / 4 + offset[0]
-    #         y = key_press.pos[1] / 4 + offset[1]
-    #         self.mpos = (x, y)
-    #         self.mpos_not_offset = key_press.pos
-    
+
     # Reduce inventory clicked time
     def Decrement_Inventory_Clicked(self):
         if self.inventory_clicked:

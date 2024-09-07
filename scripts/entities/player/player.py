@@ -265,18 +265,17 @@ class Player(Moving_Entity):
 
         if self.dashing > 50:
             self.Stored_Position_Handler(offset)
-            direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
+            # direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
             
-            if direction.length() > 0:
+            if self.attack_direction.length() > 0:
                 # Temporarily set friction to zero to avoid deceleration during dash
                 self.friction = 0
                 self.max_speed = 40  # Adjust max speed speed for dashing distance
 
-                direction.normalize_ip()
 
                 # Set the velocity directly based on dash without friction interference
-                self.velocity[0] = direction.x * self.dashing
-                self.velocity[1] = direction.y * self.dashing
+                self.velocity[0] = self.attack_direction[0] * self.dashing
+                self.velocity[1] = self.attack_direction[1] * self.dashing
 
                 if abs(self.dashing) == 51:
                     self.velocity[0] *= 0.1
@@ -285,7 +284,10 @@ class Player(Moving_Entity):
                 pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
                 self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
 
-    
+    def Dash(self, offset=(0, 0)):
+        if not self.dashing:
+            self.Attack_Direction_Handler(offset)
+            self.dashing = 60
         
 
     def Ammo_Change(self, ammo):
@@ -301,11 +303,7 @@ class Player(Moving_Entity):
     def Coin_Change(self, coins):
         self.coins += coins
 
-    def Dash(self, offset=(0, 0)):
-        if not self.dashing:
-            self.Mouse_Handler()
-            self.Stored_Position_Handler(offset)
-            self.dashing = 60
+    
 
     def Mouse_Handler(self):
         self.game.mouse.Player_Mouse_Update()
