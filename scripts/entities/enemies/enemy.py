@@ -46,7 +46,8 @@ class Enemy(Moving_Entity):
 
 
 
-
+    def Reset_Charge(self):
+        self.charge = 0
 
     def Set_Idle(self):
         pass
@@ -80,7 +81,7 @@ class Enemy(Moving_Entity):
                 self.direction = (reflected_direction.x, reflected_direction.y)
 
         return None
-        
+    
     def Attack(self):
         if not self.active_weapon:
             return

@@ -3,6 +3,7 @@ from scripts.items.weapons.projectiles.arrow import Arrow
 import math
 import pygame
 
+
 class Bow(Weapon):
     def __init__(self, game, pos, size):
         super().__init__(game, pos, size, 'bow', 3, 8, 10, 'ranged')
@@ -30,9 +31,6 @@ class Bow(Weapon):
             return
         super().Update_Animation()
 
-
-
-        
 
     def Update_Attack_Animation(self):
         self.sub_type = self.type + '_attack'
@@ -63,11 +61,23 @@ class Bow(Weapon):
     
 
     def Charge_Attack(self, offset = (0, 0)):
+        try:
+            if 'player' == self.entity.type:
+                if not self.inventory_type:
+                    return
+                self.Set_Charging_Player()
+                self.Player_Shooting()
+            elif 'enemy' == self.entity.subtype:
+                self.Set_Charging_Enemy()
+        except TypeError as e:
+            print(f"Entity neither enemy nor player: {e}")
+        
         if not self.inventory_type:
             return
-        
- 
-        self.Set_Charging()
+
+        self.Set_Charging_Player()
+    
+    def Player_Shooting(self):
         if self.is_charging:
             self.Update_Attack_Animation()
             if not self.charge_time:
@@ -91,6 +101,32 @@ class Bow(Weapon):
             self.Shoot_Arrow()
             self.Reset_Bow()
 
+    def Enemy_Shooting(self):
+        print(self.is_charging, self.entity.charge)
+        if not self.entity.charge:
+            return False
+
+        if self.is_charging > 50:
+            self.Shoot_Arrow()
+            self.Reset_Bow()
+            return True
+        
+        # self.charge_time = self.entity.charge
+        if self.is_charging >= self.max_charge_time:
+            self.is_charging = self.max_charge_time  # Cap the charge time
+            self.charged_attack = True  # Mark the attack as charged
+        else:
+            self.attack_animation_counter += 1
+            self.Spawn_Arrow()
+
+            if self.attack_animation_time <= self.attack_animation_counter:
+                self.attack_animation_counter = 0
+                self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
+        return False
+
+   
+
+
     def Shoot_Arrow(self):
         arrow_damage = min(2, self.charge_time // 10)
         arrow_speed = max(3, self.charge_time // 10)
@@ -100,11 +136,14 @@ class Bow(Weapon):
         self.arrow.Special_Attack()
 
     def Reset_Bow(self):
-        self.charge_time = 0
-        self.animation = 0
-        self.attack_animation_counter = 0
-        self.attack_animation = 0
-        self.arrow = None
+        # Reset only if necessary to avoid redundant calls
+        if self.arrow or self.charge_time > 0:
+            self.charge_time = 0
+            self.charged_attack = False
+            self.animation = 0
+            self.attack_animation_counter = 0
+            self.attack_animation = 0
+            self.arrow = None
 
     def Find_Arrow(self):
         weapon_inventory = self.game.weapon_inventory.inventories[1]
@@ -128,6 +167,8 @@ class Bow(Weapon):
 
 
     def Shoot_Arrow(self):
+        if not self.arrow:
+            return
         arrow_damage = max(8, self.charge_time // 10)
         arrow_speed = max(10, self.charge_time // 10)
         self.arrow.Set_Damage(arrow_damage)
@@ -136,9 +177,10 @@ class Bow(Weapon):
         self.arrow.Special_Attack()
         self.arrow = None
 
+
     def Spawn_Arrow(self):
-        if not self.arrow:
-            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16,16))
+        if not self.arrow:  # Check if arrow already exists to prevent duplication
+            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16, 16))
             self.arrow = arrow
             self.arrow.Shooting_Setup(self.entity)
 
@@ -156,13 +198,7 @@ class Bow(Weapon):
         self.rotate = math.degrees(math.atan2(dy, dx))
         self.rotate *= -1
 
-    def Set_Charging(self):
-        super().Set_Charging_Player()
 
-
-    def Special_Attack(self):
-        if not self.special_attack or not self.equipped:
-            return
 
     def Modify_Offset(self, rotate):
         self.rotate += rotate

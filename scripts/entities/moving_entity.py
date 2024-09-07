@@ -341,6 +341,8 @@ class Moving_Entity(PhysicsEntity):
             self.Stored_Position_Handler(offset)
             self.charging = min(12, charge_speed)
 
+   
+
     # Handle Charging Updates
     def Charge_Update(self):
         if self.charging <= 0:

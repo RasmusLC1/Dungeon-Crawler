@@ -21,17 +21,31 @@ class Decrepit_Bones_Ranged(Enemy):
         super().update(tilemap, movement)
         self.Update_Left_Weapon()
         self.Weapon_Cooldown()
-        # if self.distance_to_player < 20:
-        #     self.Attack()
+        if self.distance_to_player < 100 and self.distance_to_player > 40:
+            self.Attack()
 
     
+    def Attack(self):
+        if not self.active_weapon:
+            return
+
+        if self.weapon_cooldown:
+            return
+        
+        self.Set_Target(self.game.player.pos)
+        if self.active_weapon.type == 'bow':
+            self.charge += 1
+            self.active_weapon.Set_Charging_Enemy()
+            if self.active_weapon.Enemy_Shooting():
+                self.Reset_Charge()
+
+                self.weapon_cooldown = 100
 
 
 
-
+    # Extend with more weapons later
     def Equip_Weapon(self):
         weapon = None
-
         random_weapon = random.randint(0, 1)
 
         if random_weapon == 0:
@@ -40,7 +54,6 @@ class Decrepit_Bones_Ranged(Enemy):
         elif random_weapon == 1:
             weapon = Bow(self.game, self.pos, (16,16))
 
-        
 
         if not weapon:
             return False

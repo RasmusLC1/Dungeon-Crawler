@@ -49,11 +49,10 @@ class Weapon(Item):
     def Update(self, offset = (0,0)):
         self.Update_Animation()
         self.Special_Attack()
-        
         if not self.entity:
             return False
         self.Update_Flip()
-            
+        
         self.Charge_Attack(offset)
 
         return True
@@ -101,11 +100,11 @@ class Weapon(Item):
     
     # Handle weapon charging
     def Charge_Attack(self, offset = (0, 0)):
-        if not self.inventory_type:
-            return
-        
+
         try:
             if 'player' == self.entity.type:
+                if not self.inventory_type:
+                    return
                 self.Set_Charging_Player()
             elif 'enemy' == self.entity.subtype:
                 self.Set_Charging_Enemy()

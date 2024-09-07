@@ -26,7 +26,7 @@ class Arrow(Projectile):
         self.in_inventory = True
         self.picked_up = True
         self.attacking = 10
-        self.game.entities_render.Remove_Entity(self)
+        # self.game.entities_render.Remove_Entity(self)
 
 
     def Shoot(self):
