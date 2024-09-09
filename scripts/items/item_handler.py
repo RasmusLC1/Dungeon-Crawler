@@ -19,17 +19,16 @@ class Item_Handler():
 
 
     def Add_Item(self, item):
+        if item in self.items:
+            return
         self.items.append(item)
 
 
     def Remove_Item(self, item, delete_item = False):
         self.items.remove(item)
         self.game.entities_render.Remove_Entity(item)
-
         if delete_item:
             del item
-
- 
 
 
     def Find_Nearby_Item(self, entity_pos, max_distance):
@@ -41,6 +40,7 @@ class Item_Handler():
             if distance < max_distance:
                 nearby_items.append(item)
         return nearby_items
+
 
     def Update(self, offset = (0,0)):
         self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)

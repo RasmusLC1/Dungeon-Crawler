@@ -6,7 +6,8 @@ import math
 
 
 from scripts.engine.utility.utils import load_image, load_images, Animation
-from scripts.engine.asset_loader import Asset_Loader
+from scripts.engine.assets.graphics_loader import Graphics_Loader
+from scripts.engine.assets.audio_loader import Audio_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.entities.player.player import Player
@@ -52,7 +53,8 @@ class Game:
         
         self.movement = [False, False, False, False]
         self.assets = {}
-        Asset_Loader.Run_All(self)
+        Graphics_Loader.Run_All(self)
+        Audio_Loader.Run_All(self)
 
 
         self.tilemap = Tilemap(self, tile_size=16)

@@ -3,9 +3,9 @@ import sys
 import pygame
 
 from scripts.engine.utility.utils import load_images, load_image, get_tiles_from_sheet
-import scripts.engine.asset_loader
+import scripts.engine.assets.graphics_loader
 from scripts.engine.tilemap import Tilemap
-from scripts.engine.asset_loader import Asset_Loader
+from scripts.engine.assets.graphics_loader import Graphics_Loader
 
 RENDER_SCALE = 2.0
 
@@ -18,16 +18,16 @@ class Editor:
         self.display = pygame.Surface((320, 240))
 
         self.clock = pygame.time.Clock()
-        self.asset_loader = Asset_Loader()
+        self.asset_loader = Graphics_Loader()
         
         self.assets = {}
-        Asset_Loader.Asset_Tile_List(self)
-        Asset_Loader.Asset_Trap_List(self)
-        Asset_Loader.Asset_Objects_List(self)
-        Asset_Loader.Asset_Interative_Objects_List(self)
-        Asset_Loader.Asset_Environment_List(self)
-        Asset_Loader.Asset_Decoration_List(self)
-        Asset_Loader.Asset_Weapons_List(self)
+        Graphics_Loader.Asset_Tile_List(self)
+        Graphics_Loader.Asset_Trap_List(self)
+        Graphics_Loader.Asset_Objects_List(self)
+        Graphics_Loader.Asset_Interative_Objects_List(self)
+        Graphics_Loader.Asset_Environment_List(self)
+        Graphics_Loader.Asset_Decoration_List(self)
+        Graphics_Loader.Asset_Weapons_List(self)
 
         
         

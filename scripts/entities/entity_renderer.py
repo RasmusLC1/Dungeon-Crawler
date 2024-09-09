@@ -30,6 +30,8 @@ class Entity_Renderer():
                 self.nearby_entities.append(entity)
 
     def Add_Entity(self, entity):
+        if entity in self.entities:
+            return
         self.entities.append(entity)
         self.nearby_entities_cooldown = 0
     
@@ -39,6 +41,10 @@ class Entity_Renderer():
             self.nearby_entities_cooldown = 0
 
     def Render(self, surf, offset = (0,0)):
+        count = 0
         for entity in self.nearby_entities:
+            if entity.type == 'arrow':
+                print("arrow", count)
+                count += 1
             entity.Render(surf, offset)
 

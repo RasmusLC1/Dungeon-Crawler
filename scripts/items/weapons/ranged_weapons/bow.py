@@ -93,16 +93,17 @@ class Bow(Weapon):
                     if not self.Find_Arrow():
                         self.Reset_Bow()
                         return
+                    self.game.sfx['bow_draw'].play()
                 if self.attack_animation_time <= self.attack_animation_counter:
                     self.attack_animation_counter = 0
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
 
         elif self.charge_time > 0:
+            self.game.sfx['arrow_shot'].play()
             self.Shoot_Arrow()
             self.Reset_Bow()
 
     def Enemy_Shooting(self):
-        print(self.is_charging, self.entity.charge)
         if not self.entity.charge:
             return False
 

@@ -26,7 +26,6 @@ class Arrow(Projectile):
         self.in_inventory = True
         self.picked_up = True
         self.attacking = 10
-        # self.game.entities_render.Remove_Entity(self)
 
 
     def Shoot(self):
@@ -40,6 +39,9 @@ class Arrow(Projectile):
         dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
         
         if not self.Check_Tile((dir_x, dir_y)):
+            self.game.sfx['sword_impact_wall'].set_volume(0.5)
+
+            self.game.sfx['projectile_impact'].play()
             self.special_attack = 0
             self.game.item_handler.Remove_Item(self, True)
             return None
@@ -48,6 +50,9 @@ class Arrow(Projectile):
         # Check for collision with enemy
         entity = self.Attack_Collision_Check()
         if entity:
+            self.game.sfx['projectile_impact'].set_volume(0.3)
+
+            self.game.sfx['projectile_impact'].play()
             self.special_attack = 0
             self.game.item_handler.Remove_Item(self, True)
             return entity

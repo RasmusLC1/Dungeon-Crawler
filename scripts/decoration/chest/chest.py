@@ -84,6 +84,7 @@ class Chest(Decoration):
             return
         self.empty = True
         self.text_cooldown = 30
+        self.game.sfx['chest_open'].play()
 
     def Set_Active(self, duration):
         self.active = duration
