@@ -183,6 +183,7 @@ class Bow(Weapon):
         if not self.arrow:  # Check if arrow already exists to prevent duplication
             arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16, 16))
             self.arrow = arrow
+            self.game.entities_render.Remove_Entity(self.arrow) # Remove the arrow
             self.arrow.Shooting_Setup(self.entity)
 
 

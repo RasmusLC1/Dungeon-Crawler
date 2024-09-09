@@ -34,6 +34,7 @@ class Arrow(Projectile):
             return None
         return self.Collision_Detection()   
 
+
     def Collision_Detection(self):
         dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
         dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed

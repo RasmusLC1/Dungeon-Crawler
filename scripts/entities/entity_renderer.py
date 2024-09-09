@@ -9,12 +9,12 @@ class Entity_Renderer():
         self.nearby_entities_cooldown = 0
 
     def Update(self):
-
-        if not self.nearby_entities_cooldown:
-            self.Find_Nearby_Entities()
-            self.nearby_entities_cooldown = 50
-        else:
+        if self.nearby_entities_cooldown:
             self.nearby_entities_cooldown -= 1
+            return
+            
+        self.Find_Nearby_Entities()
+        self.nearby_entities_cooldown = 50
         self.nearby_entities.sort(key=lambda entity: entity.pos[1])
 
     
@@ -41,10 +41,6 @@ class Entity_Renderer():
             self.nearby_entities_cooldown = 0
 
     def Render(self, surf, offset = (0,0)):
-        count = 0
         for entity in self.nearby_entities:
-            if entity.type == 'arrow':
-                print("arrow", count)
-                count += 1
             entity.Render(surf, offset)
 
