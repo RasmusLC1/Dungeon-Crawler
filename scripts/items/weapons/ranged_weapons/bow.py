@@ -93,6 +93,8 @@ class Bow(Weapon):
                     if not self.Find_Arrow():
                         self.Reset_Bow()
                         return
+                    self.game.entities_render.Remove_Entity(self.arrow) # Remove the arrow
+                    
                     self.game.sfx['bow_draw'].play()
                 if self.attack_animation_time <= self.attack_animation_counter:
                     self.attack_animation_counter = 0
@@ -108,6 +110,9 @@ class Bow(Weapon):
             return False
 
         if self.is_charging > 50:
+            # print(vars(self.arrow))
+            self.charge_time = self.is_charging
+            self.arrow.Set_Special_Attack(self.is_charging)
             self.Shoot_Arrow()
             self.Reset_Bow()
             return True
@@ -119,6 +124,7 @@ class Bow(Weapon):
         else:
             self.attack_animation_counter += 1
             self.Spawn_Arrow()
+            self.game.item_handler.Add_Item(self.arrow)
 
             if self.attack_animation_time <= self.attack_animation_counter:
                 self.attack_animation_counter = 0
@@ -183,7 +189,6 @@ class Bow(Weapon):
         if not self.arrow:  # Check if arrow already exists to prevent duplication
             arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16, 16))
             self.arrow = arrow
-            self.game.entities_render.Remove_Entity(self.arrow) # Remove the arrow
             self.arrow.Shooting_Setup(self.entity)
 
 

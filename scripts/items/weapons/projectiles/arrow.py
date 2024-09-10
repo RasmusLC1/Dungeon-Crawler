@@ -29,7 +29,9 @@ class Arrow(Projectile):
 
 
     def Shoot(self):
-        self.Initialise_Shooting(self.entity.strength)
+        # if self.entity.subtype == 'enemy':
+        #     print(self.special_attack)
+        self.Initialise_Shooting(max(3, self.entity.strength))
         if not self.special_attack:
             return None
         return self.Collision_Detection()   

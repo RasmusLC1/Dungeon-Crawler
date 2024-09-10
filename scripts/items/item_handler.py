@@ -46,11 +46,21 @@ class Item_Handler():
         self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)
         
         for item in self.items:
+            # if item.type == 'arrow':
+            #     print(item.delete_countdown)
+            if item.Update_Delete_Cooldown():
+                if not item.delete_countdown:
+                    self.Remove_Item(item, True)
+
+                
+
             if not item.picked_up:
                 self.items.remove(item)
 
             if item.sub_type in throwable_weapons:
                 if not item.special_attack:
+                    if item.shoot_speed and item.entity.subtype == 'enemy' and not item.delete_countdown:
+                        item.Set_Delete_Countdown(10)
                     continue
                 try:
                     item.Shoot()

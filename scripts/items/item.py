@@ -26,6 +26,7 @@ class Item(PhysicsEntity):
         self.max_animation = 0
         self.animation = random.randint(0, self.max_animation)
         self.nearby_entities = []
+        self.delete_countdown = 0
         
 
     def Activate(self):
@@ -114,6 +115,14 @@ class Item(PhysicsEntity):
     def Move(self, new_pos):
         self.pos = new_pos
 
+    def Update_Delete_Cooldown(self):
+        if not self.delete_countdown:
+            return False
+        self.delete_countdown = max(0, self.delete_countdown - 1)
+        return True
+
+    def Set_Delete_Countdown(self, time):
+        self.delete_countdown = time
 
     def Damage_Taken(self, damage):
         self.damaged = damage

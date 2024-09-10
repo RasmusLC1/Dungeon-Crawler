@@ -4,19 +4,12 @@ import pygame
 class Fire_Particle(Projectile):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, attack_direction, entity):
         super().__init__(game, pos, size, type, damage, speed, range, weapon_class)
-        self.timer = 30
+        self.delete_countdown = 30
         self.attack_direction = attack_direction
         self.special_attack = special_attack / 4
         self.entity = entity
         self.attack_animation_max = 3
 
-    def Update_Animation(self):
-        self.timer -= 1
-        if self.timer <= 0:
-            self.game.item_handler.Remove_Item(self, True)
-
-
-        return super().Update_Animation()
 
     def Shoot(self):
         if not self.shoot_speed:
