@@ -72,7 +72,7 @@ class Trap_Handler:
             self.traps.append(Fire_Trap(self.game, trap['pos'], (16, 16), trap['type']))
 
 
-    def find_nearby_traps(self, player_pos, max_distance):
+    def Find_Nearby_Traps(self, player_pos, max_distance):
         nearby_traps = []
         for trap in self.traps:
             # Calculate the Euclidean distance
@@ -82,7 +82,7 @@ class Trap_Handler:
         return nearby_traps
     
     def Update(self):
-        self.nearby_traps = self.find_nearby_traps(self.game.player.pos, 200)
+        self.nearby_traps = self.Find_Nearby_Traps(self.game.player.pos, 200)
         for trap in self.nearby_traps:
             trap.Animation_Update()
             

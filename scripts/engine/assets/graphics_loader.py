@@ -7,7 +7,8 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Tile_List(self)
         Graphics_Loader.Asset_Trap_List(self)
         Graphics_Loader.Asset_Effect_List(self)
-        Graphics_Loader.Asset_Enemies_List(self)
+        Graphics_Loader.Asset_Dusty_Bones_List(self)
+        Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Player_List(self)
         Graphics_Loader.Asset_Interative_Objects_List(self)
         Graphics_Loader.Asset_Environment_List(self)
@@ -106,7 +107,7 @@ class Graphics_Loader:
         }
         self.assets.update(entities_assets)
 
-    def Asset_Enemies_List(self):
+    def Asset_Dusty_Bones_List(self):
         entities_assets = {
             'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 16, 8),
             'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 9, 16, 6),
@@ -115,6 +116,23 @@ class Graphics_Loader:
             'decrepit_bones_attack_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 16, 8),
             'decrepit_bones_attack_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 9, 16, 6),
             'decrepit_bones_attack_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 15, 16, 2),
+
+        }
+        self.assets.update(entities_assets)
+
+    def Asset_Fire_Spirit_List(self):
+        entities_assets = {
+            'fire_spirit_standing_still_head': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 0, 16, 8),
+            'fire_spirit_standing_still_body': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 9, 16, 6),
+            'fire_spirit_standing_still_legs': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 15, 16, 2),
+
+            'fire_spirit_running_head': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 0, 16, 8),
+            'fire_spirit_running_body': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 9, 16, 6),
+            'fire_spirit_running_legs': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 15, 16, 2),
+
+            'fire_spirit_attack_head': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 0, 16, 8),
+            'fire_spirit_attack_body': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 9, 16, 6),
+            'fire_spirit_attack_legs': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 15, 16, 2),
 
         }
         self.assets.update(entities_assets)

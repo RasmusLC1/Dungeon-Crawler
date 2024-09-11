@@ -2,7 +2,6 @@ from scripts.entities.enemies.enemy import Enemy
 from scripts.items.weapons.ranged_weapons.bow import Bow
 from scripts.items.weapons.projectiles.spear import Spear
 
-from scripts.engine.utility.helper_functions import Helper_Functions
 
 import pygame
 import random
@@ -13,18 +12,25 @@ class Decrepit_Bones_Ranged(Enemy):
         super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
 
         self.animation = 'decrepit_bones'
+        self.attack_strategy = 'ranged'
+        
         self.shooting_distance = False
         self.Equip_Weapon()
         
 
-    def update(self, tilemap, movement=(0, 0)):
-        super().update(tilemap, movement)
+    def Update(self, tilemap, movement=(0, 0)):
+        super().Update(tilemap, movement)
         self.Update_Left_Weapon()
         self.Weapon_Cooldown()
         if self.distance_to_player < 100 and self.distance_to_player > 40:
             self.Attack()
 
-    
+    def Set_Idle(self):
+        pass
+
+    def Set_Action(self,  movement):
+        pass
+
     def Attack(self):
         if not self.active_weapon:
             return

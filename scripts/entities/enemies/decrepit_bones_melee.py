@@ -13,13 +13,30 @@ class Decrepit_Bones_Melee(Enemy):
         self.animation = 'decrepit_bones'
         self.Equip_Weapon()
 
-    def update(self, tilemap, movement=(0, 0)):
-        super().update(tilemap, movement)
+    def Update(self, tilemap, movement=(0, 0)):
+        super().Update(tilemap, movement)
         self.Update_Left_Weapon()
         self.Weapon_Cooldown()
         if self.distance_to_player < 20:
             self.Attack()
 
+    def Set_Idle(self):
+        pass
+
+    def Set_Action(self,  movement):
+        pass
+
+    def Attack(self):
+        if not self.active_weapon:
+            return
+
+        if self.weapon_cooldown:
+            return
+        
+        self.Set_Target(self.game.player.pos)
+        self.active_weapon.Set_Attack_Ready(True)
+        self.active_weapon.Set_Attack()
+        self.weapon_cooldown = 100
 
     def Equip_Weapon(self):
         weapon = None

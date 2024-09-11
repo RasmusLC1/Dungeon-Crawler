@@ -14,7 +14,6 @@ class Fire_Particle(Projectile):
     def Shoot(self):
         if not self.shoot_speed:
             self.Initialise_Shooting(2)
-        
 
         entity = super().Shoot()
         if entity:
@@ -26,10 +25,10 @@ class Fire_Particle(Projectile):
     def Pick_Up(self):
         pass
 
+    
+    # Own render function since we don't need to compute light
     def Render(self, surf, offset=(0, 0)):
 
-        # Set image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
-        # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

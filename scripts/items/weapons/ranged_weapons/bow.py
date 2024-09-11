@@ -109,7 +109,7 @@ class Bow(Weapon):
         if not self.entity.charge:
             return False
 
-        if self.is_charging > 50:
+        if self.is_charging > 70:
             # print(vars(self.arrow))
             self.charge_time = self.is_charging
             self.arrow.Set_Special_Attack(self.is_charging)

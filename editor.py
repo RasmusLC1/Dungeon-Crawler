@@ -161,7 +161,7 @@ class Editor:
             text = font.render(self.tile_list[self.tile_group], True, (255, 255, 255))            
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
             self.screen.blit(text, (150, 0))
-            pygame.display.update()
+            pygame.display.Update()
             self.clock.tick(60)
 
 Editor().run()

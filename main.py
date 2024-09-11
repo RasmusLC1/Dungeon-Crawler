@@ -140,7 +140,7 @@ class Game:
             fps = int(self.clock.get_fps())
             pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
             
-            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), self.render_scroll)
+            self.player.Update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), self.render_scroll)
             Particle_Handler.particle_update(self, self.render_scroll)
             self.trap_handler.Update()
             self.decoration_handler.Update()

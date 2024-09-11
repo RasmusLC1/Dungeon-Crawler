@@ -54,7 +54,7 @@ class PhysicsEntity:
         self.active -= 1
 
         
-    def update(self):
+    def Update(self):
         pass
 
     def Damage_Taken(self, damage):

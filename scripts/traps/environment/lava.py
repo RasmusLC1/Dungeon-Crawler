@@ -13,8 +13,6 @@ class Lava(Trap):
         
 
     def Update(self, entity):
-        
-
         if self.rect().colliderect(entity.rect()):
             entity.Set_Effect('Slow_Down', 4)
             if entity.type == 'player':

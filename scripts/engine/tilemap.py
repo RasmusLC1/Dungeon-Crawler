@@ -81,6 +81,14 @@ class Tilemap:
         else:
             return None
         
+    # Check what tile type is in a given position
+    def Current_Tile_Type_Without_Offset(self, pos):
+        check_loc = str(pos[0]) + ';' + str(pos[1])
+        if check_loc in self.tilemap:
+            return self.tilemap[check_loc]['type']
+        else:
+            return None
+        
     # Check what tile is in a given position and return the full tile
     def Current_Tile(self, pos):
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))

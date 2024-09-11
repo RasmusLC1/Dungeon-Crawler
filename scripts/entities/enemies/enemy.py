@@ -21,22 +21,25 @@ class Enemy(Moving_Entity):
         self.active_weapon = None
         self.weapon_cooldown = 0
         self.walking = 0
+        self.target = self.game.player.pos
 
         self.path_finding = Path_Finding(game, self)
         self.distance_to_player = 9999
         self.charge = 0
+        self.attack_strategy = 'direct'
+        self.path_finding_strategy = 'standard'
 
 
 
 
     
 
-    def update(self, tilemap, movement=(0, 0)):
+    def Update(self, tilemap, movement=(0, 0)):
 
-        self.path_finding.Path_Finding(self.game.player.pos)
+        self.path_finding.Path_Finding(self.target)
         movement = self.direction
         
-        super().update(tilemap, movement = movement)
+        super().Update(tilemap, movement = movement)
         # self.animation = 'decrepit_bones'
 
         self.direction_x_holder = self.direction_x 
@@ -49,11 +52,7 @@ class Enemy(Moving_Entity):
     def Reset_Charge(self):
         self.charge = 0
 
-    def Set_Idle(self):
-        pass
-
-    def Set_Action(self,  movement):
-        pass
+    
 
     
     def Entity_Collision_Detection(self, tilemap):
@@ -83,16 +82,8 @@ class Enemy(Moving_Entity):
         return None
     
     def Attack(self):
-        if not self.active_weapon:
-            return
-
-        if self.weapon_cooldown:
-            return
-        
-        self.Set_Target(self.game.player.pos)
-        self.active_weapon.Set_Attack_Ready(True)
-        self.active_weapon.Set_Attack()
-        self.weapon_cooldown = 100
+        pass
+        # print("Attack not implemented")
 
     def Update_Movement(self, movement):
         return super().Update_Movement(movement)

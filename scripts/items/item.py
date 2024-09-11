@@ -62,7 +62,7 @@ class Item(PhysicsEntity):
         return None
 
     def Place_Down(self):
-        nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, 20)
+        nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 20)
         for trap in nearby_traps:
             trap.Update(self)
             if self.damaged:

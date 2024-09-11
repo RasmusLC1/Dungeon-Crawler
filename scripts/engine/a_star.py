@@ -19,11 +19,18 @@ class A_Star:
             self.row = 0
             self.col = 0
             self.map = []
+            self.standard_map = []
+            self.flying_map = []
+            self.ignore_lava_map = []
             self.path = []
 
     def Setup_Map(self, game):
-
-        self.map.clear()
+        self.Extract_Map_Data(game)
+        self.Standard_Map(game)
+        self.Ignore_Lava_Map(game)
+        self.Flying_Map(game)
+    
+    def Extract_Map_Data(self, game):
         # Extract all pos values
         positions = game.tilemap.Get_Pos()
 
@@ -41,28 +48,71 @@ class A_Star:
         self.row = self.max_y - self.min_y + 1
         self.col = self.max_x - self.min_x + 1
 
-        # Print the results
-        print("x range:", [self.min_x, self.max_x])
-        print("y range:", [self.min_y, self.max_y])
-        print("ROW AND COLUMN", (self.row, self.col))
+        # # Print the results
+        # print("x range:", [self.min_x, self.max_x])
+        # print("y range:", [self.min_y, self.max_y])
+        # print("ROW AND COLUMN", (self.row, self.col))
 
-        tilesize = game.tilemap.Get_Tile_Size()
+    def Standard_Map(self, game):
+        self.standard_map.clear()
 
         for y in range(self.min_y, self.max_y + 1):
             row = []
             for x in range(self.min_x, self.max_x + 1):
-                tile_type = game.tilemap.Current_Tile_Type((x * tilesize, y * tilesize))
+                tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
                 location = 1
                 if tile_type == 'Floor':
                     location = 0
                 row.append(location)
-            self.map.append(row)
+            self.standard_map.append(row)
 
         # Print the map to debug
-        with open('output.txt', 'w') as file:
-            for row in self.map:
-                file.write(f"{row}\n")
-        
+        print("STANDARD MAP")
+        for row in self.standard_map:
+            print(row)  
+
+    def Ignore_Lava_Map(self, game):
+        self.ignore_lava_map.clear()
+
+        for y in range(self.min_y, self.max_y + 1):
+            row = []
+            for x in range(self.min_x, self.max_x + 1):
+                tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
+                location = 1
+                if tile_type == 'Floor' or tile_type == 'Lava_env':
+                    location = 0
+                row.append(location)
+            self.ignore_lava_map.append(row)
+        print("LAVA MAP")
+        # Print the map to debug
+        for row in self.ignore_lava_map:
+            print(row)  
+
+
+    def Flying_Map(self, game):
+        self.flying_map.clear()
+        for y in range(self.min_y, self.max_y + 1):
+            row = []
+            for x in range(self.min_x, self.max_x + 1):
+                tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
+                location = 0
+                
+                if not tile_type:
+                    location = 1
+                    row.append(location)
+                    continue
+
+                
+                if 'Wall' in tile_type:
+                    location = 1
+
+                row.append(location)
+                
+            self.flying_map.append(row)
+
+        # Print the map to debug
+        # for row in self.standard_map:
+        #     print(row)  
 
     # Check if a cell is valid (within the grid)
     def is_valid(self, row, col):
@@ -128,7 +178,17 @@ class A_Star:
     
 
     # Implement the A* search algorithm
-    def a_star_search(self, path, src, dest):
+    def a_star_search(self, path, src, dest, map = 'standard'):
+        if map == 'standard':
+            self.map = self.standard_map
+        elif map == 'ignore_lava':
+            print("LAVA MAP")
+            self.map = self.ignore_lava_map
+        
+        else:
+            self.map = self.standard_map
+            print("MAP MISSING")
+
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
             return

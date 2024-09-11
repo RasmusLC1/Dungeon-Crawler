@@ -110,7 +110,7 @@ class Path_Finding():
         self.path.clear()
         self.Calculate_Position()
         self.Calculate_Destination_Position(destination)
-        self.game.a_star.a_star_search(self.path, [self.src_y, self.src_x], [self.des_x, self.des_x])
+        self.game.a_star.a_star_search(self.path, [self.src_y, self.src_x], [self.des_x, self.des_x], self.entity.path_finding_strategy)
         return
 
     # Move the entity if they're to close to a wall
@@ -165,9 +165,9 @@ class Path_Finding():
 
 
     def Attack_Strategy(self):
-        if not self.entity.active_weapon:
+        if self.entity.attack_strategy == 'direct':
             return self.Direct_Pathing()
-        if self.entity.active_weapon.weapon_class == 'ranged':
+        if self.entity.attack_strategy == 'ranged':
             return self.Keep_Distance()
         else:
             return self.Direct_Pathing()

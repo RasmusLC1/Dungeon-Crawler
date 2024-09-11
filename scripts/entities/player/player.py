@@ -44,9 +44,9 @@ class Player(Moving_Entity):
 
 
     
-    def update(self, tilemap, movement=(0, 0), offset=(0, 0)):
+    def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
 
-        super().update(tilemap, movement=movement)
+        super().Update(tilemap, movement=movement)
         if self.dashing:
             self.Dashing_Update(offset)
 

@@ -9,7 +9,7 @@ class Particle:
         self.animation = self.game.assets['particle/' + p_type].copy()
         self.animation.frame = frame
 
-    def update(self):
+    def Update(self):
         kill = False
         if self.animation.done:
             kill = True
@@ -17,7 +17,7 @@ class Particle:
         self.pos[0] += self.velocity[0]
         self.pos[1] += self.velocity[1]
 
-        self.animation.update()
+        self.animation.Update()
 
         return kill
     

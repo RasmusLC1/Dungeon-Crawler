@@ -88,7 +88,7 @@ class Moving_Entity(PhysicsEntity):
             self.animation = self.type + '_' + self.action
 
     # Update the entity 
-    def update(self, tilemap, movement=(0, 0)):
+    def Update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.Update_Movement(movement)
@@ -291,7 +291,7 @@ class Moving_Entity(PhysicsEntity):
         if self.nearby_traps_cooldown:
             self.nearby_traps_cooldown = max(0, self.nearby_traps_cooldown - 1)
             return
-        self.nearby_traps = self.game.trap_handler.find_nearby_traps(self.pos, distance)
+        self.nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, distance)
         self.nearby_traps_cooldown = 20
         return
 
