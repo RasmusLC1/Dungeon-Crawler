@@ -334,6 +334,8 @@ class Moving_Entity(PhysicsEntity):
 
     def Set_Attack_Direction(self):
         self.attack_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
+        if not self.attack_direction:
+            return
         self.attack_direction.normalize_ip()
 
     def Set_Charge(self, charge_speed, offset=(0, 0)):

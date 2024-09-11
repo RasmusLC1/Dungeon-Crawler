@@ -32,7 +32,6 @@ class Path_Finding():
 
 
     def Path_Finding(self, target, look_for_new_path = False):
-        
         self.Calculate_Distance_To_Player()
 
         self.Set_Position_Holder()
@@ -49,13 +48,15 @@ class Path_Finding():
             # If enemy looses sight of player he will try to go to the last known location
             if self.player_found:
                 self.player_found = False
-                target = self.game.player.pos
+                self.entity.Set_Target(self.game.player.pos)
                 look_for_new_path = True
         
+   
+
         # Only run this if we need a new path
         if look_for_new_path:
-            self.Find_Shortest_Path(target)
-
+            self.Find_Shortest_Path()
+        
         if not self.Navigate_Path():
             self.Moving_Random()
 
@@ -70,31 +71,22 @@ class Path_Finding():
         self.Calculate_Position()
         # Assign the target to be the next position
         target = self.path[1]
+
         # Move the entity away from walls
         self.Corner_Handling()
 
         if self.Path_Segment_Complete(target):
             return
-
         self.Calculate_Path_Segment(target)
 
-        self.entity.direction =  Helper_Functions.Direction_Vector((self.entity.direction_x, self.entity.direction_y))
         
         return True
 
+
     def Calculate_Path_Segment(self, target):
-        # Calculate Direction
-        self.entity.direction_x = 0.1 
-        self.entity.direction_y = 0.1 
-        # Update the direction relative to the target
-        if target[1] == self.src_x:
-            self.entity.direction_x = 0
-        elif target[1] < self.src_x:
-            self.entity.direction_x *= -1
-        if target[0] == self.src_y:
-            self.entity.direction_y = 0
-        elif target[0] < self.src_y:
-            self.entity.direction_y *= -1
+        
+        self.entity.direction = pygame.math.Vector2(target[0] * 16 - self.entity.pos[0], target[1]  * 16 - self.entity.pos[1])
+        self.entity.direction.normalize_ip()
 
     # Check if enemy has reached target, pop the first element and set direction to 0
     def Path_Segment_Complete(self, target):
@@ -106,11 +98,15 @@ class Path_Finding():
         self.corner_handling_cooldown = 0
         return True
 
-    def Find_Shortest_Path(self, destination) -> None:          
+    def Find_Shortest_Path(self) -> None:          
         self.path.clear()
         self.Calculate_Position()
-        self.Calculate_Destination_Position(destination)
-        self.game.a_star.a_star_search(self.path, [self.src_y, self.src_x], [self.des_x, self.des_x], self.entity.path_finding_strategy)
+        self.Calculate_Destination_Position(self.entity.target)
+        self.game.a_star.a_star_search(self.path, [self.src_x, self.src_y], [self.des_x, self.des_y])
+
+        # self.path = [(y, x) for (x, y) in self.path]
+        print("TARGET", self.entity.target, self.game.player.pos)
+        print("NEW PATH FOUND", self.path, (self.entity.pos[0] // 16, self.entity.pos[1] // 16), (self.game.player.pos[0] // 16, self.game.player.pos[1] // 16))
         return
 
     # Move the entity if they're to close to a wall
@@ -284,9 +280,9 @@ class Path_Finding():
 
     
     def Calculate_Position(self):
-        self.src_x = round(self.entity.pos[0] / 16) - self.game.a_star.min_x 
-        self.src_y = round(self.entity.pos[1] / 16) - self.game.a_star.min_y 
+        self.src_x = round(self.entity.pos[0] // 16)
+        self.src_y = round(self.entity.pos[1] // 16) 
         
     def Calculate_Destination_Position(self, destination):
-        self.des_x = round(destination[0] / 16) - self.game.a_star.min_x 
-        self.des_x = round(destination[1] / 16) - self.game.a_star.min_y 
+        self.des_x = round(destination[0] // 16)
+        self.des_y = round(destination[1] // 16)

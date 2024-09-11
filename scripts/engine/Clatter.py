@@ -9,6 +9,9 @@ class Clatter():
         for enemy in nearby_enemies:
             if not enemy:
                 continue
+            print(enemy)
             enemy.Find_New_Path(center)
+            print("CENTER", center)
+
 
     

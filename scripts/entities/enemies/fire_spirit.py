@@ -19,7 +19,7 @@ class Fire_Spirit(Enemy):
         if self.look_for_health_cooldown:
             self.look_for_health_cooldown = max(0, self.look_for_health_cooldown - 1)
             if not self.look_for_health_cooldown:
-                self.target = self.game.player.pos
+                self.Set_Target(self.game.player.pos)
 
         if self.health <= self.max_health / 3 and not self.look_for_health_cooldown:
             self.look_for_health_cooldown = 2000
@@ -29,7 +29,7 @@ class Fire_Spirit(Enemy):
 
                 if trap.type == 'Lava_env':
                     print(trap.type)
-                    self.target = trap.pos
+                    self.Set_Target(trap.pos)
                     self.Find_New_Path(self.target)
                     break
         

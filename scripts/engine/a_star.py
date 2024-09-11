@@ -56,10 +56,12 @@ class A_Star:
     def Standard_Map(self, game):
         self.standard_map.clear()
 
-        for y in range(self.min_y, self.max_y + 1):
+        for x in range(self.min_x, self.max_x + 1):
             row = []
-            for x in range(self.min_x, self.max_x + 1):
-                tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
+            tilesize = game.tilemap.Get_Tile_Size()
+            for y in range(self.min_y, self.max_y + 1):
+                tile_type = game.tilemap.Current_Tile_Type((x * tilesize, y * tilesize))
+                # tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
                 location = 1
                 if tile_type == 'Floor':
                     location = 0
@@ -81,6 +83,7 @@ class A_Star:
                 location = 1
                 if tile_type == 'Floor' or tile_type == 'Lava_env':
                     location = 0
+                print(tile_type, location)
                 row.append(location)
             self.ignore_lava_map.append(row)
         print("LAVA MAP")
@@ -180,7 +183,10 @@ class A_Star:
     # Implement the A* search algorithm
     def a_star_search(self, path, src, dest, map = 'standard'):
         if map == 'standard':
+            print("STANDARD MAP")
             self.map = self.standard_map
+            for row in self.map:
+                print(row)
         elif map == 'ignore_lava':
             print("LAVA MAP")
             self.map = self.ignore_lava_map

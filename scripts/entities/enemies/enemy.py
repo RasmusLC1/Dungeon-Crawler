@@ -53,7 +53,6 @@ class Enemy(Moving_Entity):
         self.charge = 0
 
     
-
     
     def Entity_Collision_Detection(self, tilemap):
         colliding_entity = super().Entity_Collision_Detection(tilemap)
@@ -100,7 +99,8 @@ class Enemy(Moving_Entity):
         self.alert_cooldown = amount
 
     def Find_New_Path(self, destination):
-        self.path_finding.Path_Finding(destination, True)
+        self.Set_Target(destination)
+        self.path_finding.Find_Shortest_Path()
 
     def Weapon_Cooldown(self):
         if self.weapon_cooldown:
