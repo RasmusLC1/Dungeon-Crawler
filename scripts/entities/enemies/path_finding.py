@@ -23,11 +23,10 @@ class Path_Finding():
         self.pos_holder_timer = 0
         self.stuck_timer = 0
 
-        self.corner_handling_cooldown = 0
-
         self.player_found = False
 
         self.direct_pathing_cooldown = 0
+
 
 
 
@@ -40,16 +39,16 @@ class Path_Finding():
         if self.Stuck_Check():
             return
         
-        if self.Attack_Strategy():
-            self.entity.Trap_Collision_Handler()
+        # if self.Attack_Strategy():
+        #     self.entity.Trap_Collision_Handler()
 
-            return
-        else:
-            # If enemy looses sight of player he will try to go to the last known location
-            if self.player_found:
-                self.player_found = False
-                self.entity.Set_Target(self.game.player.pos)
-                look_for_new_path = True
+        #     return
+        # else:
+        #     # If enemy looses sight of player he will try to go to the last known location
+        #     if self.player_found:
+        #         self.player_found = False
+        #         self.entity.Set_Target(self.game.player.pos)
+        #         look_for_new_path = True
         
    
 
@@ -98,7 +97,6 @@ class Path_Finding():
 
         self.entity.direction = (0, 0)
         self.path.pop(0)
-        self.corner_handling_cooldown = 0
         return True
 
     def Find_Shortest_Path(self) -> None:          
@@ -116,37 +114,23 @@ class Path_Finding():
 
     # Move the entity if they're to close to a wall
     def Corner_Handling(self):
-        self.corner_handling_cooldown = 1
-
-        # Timer for how often cornerhandling should be done
-        if self.corner_handling_cooldown:
-            return
 
         
-        target_x_pos = (self.src_x + self.game.a_star.min_x) * 16
-        target_y_pos = (self.src_y + self.game.a_star.min_y) * 16
-        if not self.game.tilemap.Current_Tile_Type((target_x_pos, target_y_pos + 16)) == 'Floor':
-            # Change the path to be a list, so it can be modified and
-            # set the path goal up to avoid clash with wall
-            path_list = list(self.path[1])
-            path_list[1] += 1
-            self.path[1] = tuple(path_list)
+        direction_x = 0
+        direction_y = 0
+        if self.entity.collisions['up']:
+            direction_y = -5
+        if self.entity.collisions['down']:
+            direction_y = 5
+        if self.entity.collisions['left']:
+            direction_x = 5
+        if self.entity.collisions['right']:
+            direction_x = -5
+        if direction_x or direction_y:
+            self.entity.Set_Frame_movement((direction_x, direction_y))
+            self.entity.Tile_Map_Collision_Detection(self.game.tilemap)
 
-        elif not self.game.tilemap.Current_Tile_Type((target_x_pos, target_y_pos - 16)) == 'Floor':
-            path_list = list(self.path[1])
-            path_list[1] -= 1
-            self.path[1] = tuple(path_list)
 
-        if not self.game.tilemap.Current_Tile_Type((target_x_pos + 16, target_y_pos)) == 'Floor':
-            path_list = list(self.path[1])
-            path_list[0] -= 1
-            self.path[1] = tuple(path_list)
-
-        elif not self.game.tilemap.Current_Tile_Type((target_x_pos - 16, target_y_pos)) == 'Floor':
-            path_list = list(self.path[1])
-            path_list[0] += 1
-            self.path[1] = tuple(path_list)
-        return
 
     # Check for line of sight with the player
     def Line_Of_Sight(self, distance, dx, dy):

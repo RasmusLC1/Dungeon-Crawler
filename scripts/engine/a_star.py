@@ -147,9 +147,10 @@ class A_Star:
     # Check if a cell is unblocked
     def is_unblocked(self, row, col):
         # First check if row and col indices are within the valid range
-        if (0 <= row < self.row) and (0 <= col < self.col):
-            return self.map[row][col] == 0
-        return False
+        if col > self.max_x or col < self.min_x or row > self.max_y or row < self.min_y:
+            return False
+
+        return self.map[row][col] == 0
 
     # Check if a cell is the destination
     def is_destination(self, row, col, dest):

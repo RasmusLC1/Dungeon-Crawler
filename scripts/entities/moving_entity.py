@@ -50,8 +50,8 @@ class Moving_Entity(PhysicsEntity):
         self.anim_offset = (0, 0)
         self.flip = [False, False]
         self.Set_Animation('')
-        self.frame_movement = (0.0, 0.0)
-        self.last_frame_movement = (0.0, 0.0)
+        self.frame_movement = (0.0)
+        self.last_frame_movement = (0.0)
 
         # Attributes, placeholder should be assigned on creation
         self.strength = strength # Damage and moving items and other entities
