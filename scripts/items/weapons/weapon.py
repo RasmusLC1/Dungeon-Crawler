@@ -273,6 +273,8 @@ class Weapon(Item):
     def Set_Attack_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
         self.attack_direction = self.entity.attack_direction
+        if not self.attack_direction:
+            return
         # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
         self.attack_direction.normalize_ip()
         return

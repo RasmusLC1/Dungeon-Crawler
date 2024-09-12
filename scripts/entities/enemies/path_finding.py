@@ -74,7 +74,6 @@ class Path_Finding():
 
         # Move the entity away from walls
         self.Corner_Handling()
-
         if self.Path_Segment_Complete(target):
             return
         self.Calculate_Path_Segment(target)
@@ -84,16 +83,20 @@ class Path_Finding():
 
 
     def Calculate_Path_Segment(self, target):
-        
-        self.entity.direction = pygame.math.Vector2(target[0] * 16 - self.entity.pos[0], target[1]  * 16 - self.entity.pos[1])
-        self.entity.direction.normalize_ip()
+        target_pos = (target[0] * 16, target[1] * 16)
+        self.entity.direction = pygame.math.Vector2(target_pos[0] - self.entity.pos[0], target_pos[1] - self.entity.pos[1])
+        if self.entity.direction.length() > 0:
+            self.entity.direction.normalize_ip()
 
     # Check if enemy has reached target, pop the first element and set direction to 0
     def Path_Segment_Complete(self, target):
-        if not (self.src_y, self.src_x) == target:
+
+        # Use a threshold for reaching the target to avoid precision issues
+        reach_threshold = 16
+        if math.hypot(self.entity.pos[0] - target[0] * 16, self.entity.pos[1] - target[1] * 16) > reach_threshold:
             return False
-        
-        self.entity.direction = (0,0)
+
+        self.entity.direction = (0, 0)
         self.path.pop(0)
         self.corner_handling_cooldown = 0
         return True
@@ -102,11 +105,13 @@ class Path_Finding():
         self.path.clear()
         self.Calculate_Position()
         self.Calculate_Destination_Position(self.entity.target)
-        self.game.a_star.a_star_search(self.path, [self.src_x, self.src_y], [self.des_x, self.des_y])
 
-        # self.path = [(y, x) for (x, y) in self.path]
-        print("TARGET", self.entity.target, self.game.player.pos)
-        print("NEW PATH FOUND", self.path, (self.entity.pos[0] // 16, self.entity.pos[1] // 16), (self.game.player.pos[0] // 16, self.game.player.pos[1] // 16))
+        for i in range(3):
+            self.game.a_star.a_star_search(self.path, [self.src_x, self.src_y], [self.des_x, self.des_y])
+            if self.path:
+                break
+
+        self.path = [(x + self.game.a_star.min_x, y + self.game.a_star.min_y) for (x, y) in self.path]
         return
 
     # Move the entity if they're to close to a wall
@@ -280,9 +285,9 @@ class Path_Finding():
 
     
     def Calculate_Position(self):
-        self.src_x = round(self.entity.pos[0] // 16)
-        self.src_y = round(self.entity.pos[1] // 16) 
+        self.src_x = round(self.entity.pos[0] // 16) - self.game.a_star.min_x 
+        self.src_y = round(self.entity.pos[1] // 16) - self.game.a_star.min_y 
         
     def Calculate_Destination_Position(self, destination):
-        self.des_x = round(destination[0] // 16)
-        self.des_y = round(destination[1] // 16)
+        self.des_x = round(destination[0] // 16) - self.game.a_star.min_x 
+        self.des_y = round(destination[1] // 16) - self.game.a_star.min_y 

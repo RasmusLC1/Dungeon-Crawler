@@ -26,9 +26,9 @@ class A_Star:
 
     def Setup_Map(self, game):
         self.Extract_Map_Data(game)
-        self.Standard_Map(game)
-        self.Ignore_Lava_Map(game)
-        self.Flying_Map(game)
+        # self.Standard_Map(game)
+        # self.Ignore_Lava_Map(game)
+        # self.Flying_Map(game)
     
     def Extract_Map_Data(self, game):
         # Extract all pos values
@@ -38,20 +38,42 @@ class A_Star:
         x_coords = [pos[0] for pos in positions]
         y_coords = [pos[1] for pos in positions]
 
-        
         # Find min and max for x and y coordinates
         self.min_x = min(x_coords)
         self.max_x = max(x_coords)
         self.min_y = min(y_coords)
         self.max_y = max(y_coords)
 
+        # Calculate offsets based on the minimum values (assuming they might be negative)
+        x_offset = -self.min_x if self.min_x < 0 else 0
+        y_offset = -self.min_y if self.min_y < 0 else 0
+
+        # Define the number of rows and columns based on max values and offsets
         self.row = self.max_y - self.min_y + 1
         self.col = self.max_x - self.min_x + 1
 
-        # # Print the results
-        # print("x range:", [self.min_x, self.max_x])
-        # print("y range:", [self.min_y, self.max_y])
-        # print("ROW AND COLUMN", (self.row, self.col))
+        # Initialize the map with '1's
+        self.standard_map = [[1] * self.row for _ in range(self.col)]
+
+        # Fill the map based on JSON data
+        for position in positions:
+            x = position[0]
+            y = position[1]
+            map_x = x + x_offset
+            map_y = y + y_offset
+
+            # Check if the position is within the bounds of the map
+            if 0 <= map_x < self.col and 0 <= map_y < self.row:
+                tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
+                if tile_type == 'Floor':
+                    self.standard_map[map_x][map_y] = 0
+
+
+        # print("STANDARD MAP")
+        # # Optional: print the map to debug
+        # for row in self.standard_map:
+        #     print(row)
+
 
     def Standard_Map(self, game):
         self.standard_map.clear()
@@ -124,41 +146,29 @@ class A_Star:
 
     # Check if a cell is unblocked
     def is_unblocked(self, row, col):
-        return self.map[row][col] == 0
+        # First check if row and col indices are within the valid range
+        if (0 <= row < self.row) and (0 <= col < self.col):
+            return self.map[row][col] == 0
+        return False
 
     # Check if a cell is the destination
-    def is_destination(row, col, dest):
+    def is_destination(self, row, col, dest):
         return row == dest[0] and col == dest[1]
 
     # Calculate the heuristic value of a cell (Euclidean distance to destination)
-    def calculate_h_value(row, col, dest):
-        return ((row - dest[0]) ** 2 + (col - dest[1]) ** 2) ** 0.5
+    def calculate_h_value(self, row, col, dest):
+        return math.sqrt((row - dest[0])**2 + (col - dest[1])**2)
 
-    # Trace the path from source to destination
+    
+
     def trace_path(self, path, cell_details, dest):
-        self.path.clear()
-        row = dest[0]
-        col = dest[1]
-
-        # Trace the path from destination to source using parent cells
-        while not (cell_details[row][col].parent_i == row and cell_details[row][col].parent_j == col):
-            # enemy.path.append((row, col))
-            self.path.append((row, col))
-
-            temp_row = cell_details[row][col].parent_i
-            temp_col = cell_details[row][col].parent_j
-            row = temp_row
-            col = temp_col
-
-        # Add the source cell to the path
-        self.path.append((row, col))
-        # Reverse the path to get the path from source to destination
-        self.path.reverse()
-
-        # Print the path
-        # for i in path:
-        #     print("->", i, end=" ")
-        # print()
+        node = dest
+        while cell_details[node[0]][node[1]].parent_i != node[0] or cell_details[node[0]][node[1]].parent_j != node[1]:
+            path.append(node)
+            node = (cell_details[node[0]][node[1]].parent_i, cell_details[node[0]][node[1]].parent_j)
+        path.append(node)  # add the start point
+        path.reverse()
+        return path
 
     def Check_For_Walls(self, path):
         if not self.path:
@@ -183,17 +193,14 @@ class A_Star:
     # Implement the A* search algorithm
     def a_star_search(self, path, src, dest, map = 'standard'):
         if map == 'standard':
-            print("STANDARD MAP")
-            self.map = self.standard_map
-            for row in self.map:
-                print(row)
+            self.map = self.standard_map.copy()
+
+            
         elif map == 'ignore_lava':
-            print("LAVA MAP")
             self.map = self.ignore_lava_map
         
         else:
             self.map = self.standard_map
-            print("MAP MISSING")
 
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
@@ -204,7 +211,7 @@ class A_Star:
             return
 
         # Check if we are already at the destination
-        if A_Star.is_destination(src[0], src[1], dest):
+        if A_Star.is_destination(self, src[0], src[1], dest):
             return
         
         # Initialize the closed list (visited cells)
@@ -254,7 +261,7 @@ class A_Star:
                 # If the successor is valid, unblocked, and not visited
                 if A_Star.is_valid(self, new_i, new_j) and A_Star.is_unblocked(self, new_i, new_j) and not closed_list[new_i][new_j]:
                     # If the successor is the destination
-                    if A_Star.is_destination(new_i, new_j, dest):
+                    if A_Star.is_destination(self, new_i, new_j, dest):
                         # Set the parent of the destination cell
                         cell_details[new_i][new_j].parent_i = i
                         cell_details[new_i][new_j].parent_j = j
@@ -263,8 +270,9 @@ class A_Star:
                         return
                     else:
                         # Calculate the new f, g, and h values
-                        g_new = cell_details[i][j].g + 1.0
-                        h_new = A_Star.calculate_h_value(new_i, new_j, dest)
+                        # g_new = cell_details[i][j].g + 1.0
+                        g_new = cell_details[i][j].g + (1.41 if dir in directions_diagonal else 1.0)
+                        h_new = A_Star.calculate_h_value(self, new_i, new_j, dest)
                         f_new = g_new + h_new
 
                         # If the cell is not in the open list or the new f value is smaller
@@ -287,7 +295,7 @@ class A_Star:
                         # If the successor is valid, unblocked, and not visited
                         if A_Star.is_valid(self, new_i, new_j) and A_Star.is_unblocked(self, new_i, new_j) and not closed_list[new_i][new_j]:
                             # If the successor is the destination
-                            if A_Star.is_destination(new_i, new_j, dest):
+                            if A_Star.is_destination(self, new_i, new_j, dest):
                                 # Set the parent of the destination cell
                                 cell_details[new_i][new_j].parent_i = i
                                 cell_details[new_i][new_j].parent_j = j
@@ -295,8 +303,9 @@ class A_Star:
                                 return
                             else:
                                 # Calculate the new f, g, and h values
-                                g_new = cell_details[i][j].g + 1.0
-                                h_new = A_Star.calculate_h_value(new_i, new_j, dest)
+                                # g_new = cell_details[i][j].g + 1.0
+                                g_new = cell_details[i][j].g + (1.41 if dir in directions_diagonal else 1.0)
+                                h_new = A_Star.calculate_h_value(self, new_i, new_j, dest)
                                 f_new = g_new + h_new
 
                                 # If the cell is not in the open list or the new f value is smaller
