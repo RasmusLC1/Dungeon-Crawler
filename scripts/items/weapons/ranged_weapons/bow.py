@@ -44,8 +44,8 @@ class Bow(Weapon):
     def Set_Attack_Position(self):
         new_x_pos = 0
         new_y_pos = 0
-        new_y_pos = self.entity.rect().center[1] + self.attack_direction[1] * 2 - 12
-        if self.attack_direction[0] < 0:
+        new_y_pos = self.entity.rect().center[1] + self.entity.attack_direction[1] * 2 - 12
+        if self.entity.attack_direction[0] < 0:
             self.flip_image = False
             new_x_pos = self.entity.rect().midleft[0] - 4
         else:
@@ -111,7 +111,7 @@ class Bow(Weapon):
 
         if self.is_charging > 70:
             # print(vars(self.arrow))
-            self.charge_time = self.is_charging
+            self.charge_time = 120
             self.arrow.Set_Special_Attack(self.is_charging)
             self.Shoot_Arrow()
             self.Reset_Bow()

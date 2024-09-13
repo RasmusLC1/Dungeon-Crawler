@@ -1,30 +1,101 @@
 from scripts.entities.enemies.enemy import Enemy
+from scripts.items.weapons.projectiles.fire_particle import Fire_Particle
+
+
+import math
 
 
 class Fire_Spirit(Enemy):
     def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
         self.animation = 'fire_spirit'
-        
         self.path_finding_strategy = 'ignore_lava'
+        self.attack_strategy = 'medium_range'
         self.look_for_health_cooldown = 0
+        self.fire_cooldown = 0
+        self.spewing_fire = False
 
     def Update(self, tilemap, movement = (0, 0)):
         
-
         super().Update(tilemap, movement)
+
+        self.Look_For_Health()
+
+        if self.distance_to_player < 60:
+            self.Attack()
+
+        
     
+    def Attack(self):
+        self.charge += 1
+
+        if self.charge >= 100:
+            self.spewing_fire = True
+
+        if self.spewing_fire:
+            self.Fire_Particle_Creation()
+
+        if self.charge <= 0:
+            self.spewing_fire = False
+    
+    def Fire_Particle_Creation(self):
+        self.Set_Target(self.game.player.pos)
+        self.Set_Attack_Direction()
+        # Handle cooldown for spacing between fire particles
+        if self.fire_cooldown:
+            self.fire_cooldown -= 1
+            return
+        else:
+            self.fire_cooldown = 3
+            self.charge = max(0, self.charge - 20)
+
+        # Basic raycasting attributes
+        num_lines = 8  # Define the number of lines and the spread angle (in degrees)
+        spread_angle = 50  # Total spread of the fan (in degrees)
+        angle_increment = spread_angle / (num_lines - 1)  # Calculate the angle increment between each line
+
+        # Calculate the base angle using atan2(y, x)
+        base_angle = math.atan2(self.attack_direction[1], self.attack_direction[0])
+        start_angle = base_angle - math.radians(spread_angle / 2)
+
+        damage = 2
+        speed = 1
+        max_range = 50
+
+        # Generate fire particles
+        for j in range(num_lines):
+            angle = start_angle + j * math.radians(angle_increment)
+            pos_x = math.cos(angle) * speed
+            pos_y = math.sin(angle) * speed
+            direction = (pos_x, pos_y)
+
+            # Create the fire particle with the direction
+            fire_particle = Fire_Particle(
+                self.game,
+                self.rect(),
+                (2, 2),
+                'fire_particle',
+                damage,
+                speed,
+                max_range,
+                'particle',
+                self.charge,
+                direction,  # Pass the direction here
+                self
+            )
+
+            self.game.item_handler.Add_Item(fire_particle)
+
+    # TODO: IMPLEMENT 
+    def Look_For_Health(self):
         if self.look_for_health_cooldown:
             self.look_for_health_cooldown = max(0, self.look_for_health_cooldown - 1)
-            if not self.look_for_health_cooldown:
-                self.Set_Target(self.game.player.pos)
             return
         
 
-        if self.distance_to_player < 30:
-            self.Attack()
+        if self.health < self.max_health:
+            self.Set_Locked_On_Target(0)
 
-        if self.health < self.max_health and not self.look_for_health_cooldown:
             self.look_for_health_cooldown = 2000
 
             nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 200)
@@ -32,16 +103,12 @@ class Fire_Spirit(Enemy):
 
                 if trap.type == 'Lava_env':
                     self.Find_New_Path(trap.pos)
-                    print("LOOKING FOR LAVA", self.target)
                     self.locked_on_target = True
                     break
-    
-    def Attack(self):
-        pass
-    
-    # TODO: IMPLEMENT 
-    def Look_For_Health(self):
-        pass
+
+            self.Set_Locked_On_Target(4000)
+        
+        return
 
     def Set_Idle(self):
         pass

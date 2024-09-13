@@ -65,10 +65,10 @@ class Spear(Projectile):
         if not self.return_to_holder:
             self.distance_from_player += 1
             left_offset = 0
-            if self.attack_direction[0] < 0:
+            if self.entity.attack_direction[0] < 0:
                 left_offset = -3
-            new_x_pos = self.pos[0] + self.distance_from_player * self.attack_direction[0] + left_offset
-            new_y_pos = self.pos[1] + self.distance_from_player * self.attack_direction[1]
+            new_x_pos = self.pos[0] + self.distance_from_player * self.entity.attack_direction[0] + left_offset
+            new_y_pos = self.pos[1] + self.distance_from_player * self.entity.attack_direction[1]
             self.Move((new_x_pos, new_y_pos))
             
             if self.distance_from_player <= self.range:
@@ -87,14 +87,14 @@ class Spear(Projectile):
                 
     def Set_Attack_Direction(self):
         super().Set_Attack_Direction()
-        if self.attack_direction[0] > 0:
+        if self.entity.attack_direction[0] > 0:
             self.rotate *= -1
 
 
 
     def Attack_Align_Weapon(self):
         left_offset = 0
-        if self.attack_direction[0] < 0:
+        if self.entity.attack_direction[0] < 0:
             left_offset = -5
 
         self.Move((self.pos[0] + left_offset, self.pos[1] + 2))

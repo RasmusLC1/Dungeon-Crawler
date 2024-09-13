@@ -72,11 +72,11 @@ class Sword(Weapon):
             new_x_pos = (0,0)
             new_y_pos = (0,0)
             # Condition for if x coordinate is dominant
-            if abs(self.attack_direction[0]) >= abs(self.attack_direction[1]):
+            if abs(self.entity.attack_direction[0]) >= abs(self.entity.attack_direction[1]):
                 y_offset = -5
                 
 
-                if self.attack_direction[0] < 0:
+                if self.entity.attack_direction[0] < 0:
                     self.pos = self.entity.rect().midleft
                     x_offset = -5
                 else:
@@ -88,7 +88,7 @@ class Sword(Weapon):
             else:
                 
                 self.pos = self.entity.rect().center
-                if self.attack_direction[1] >= 0:
+                if self.entity.attack_direction[1] >= 0:
                     y_offset = -13
                 else:
                     y_offset = - 20
@@ -110,10 +110,10 @@ class Sword(Weapon):
         if not self.return_to_holder:
             self.slash_distance += 1
             y_offset = 0
-            if abs(self.attack_direction[0]) >= abs(self.attack_direction[1]):
+            if abs(self.entity.attack_direction[0]) >= abs(self.entity.attack_direction[1]):
                 y_offset = -5
 
-                if self.attack_direction[0] < 0:
+                if self.entity.attack_direction[0] < 0:
                     self.pos = self.entity.rect().topleft
                 else:
                     self.pos = self.entity.rect().topright
@@ -121,8 +121,8 @@ class Sword(Weapon):
                 self.pos = self.entity.rect().center
                 y_offset = - 15
                     
-            new_x_pos = int(self.pos[0]) + self.slash_distance * self.attack_direction[0]
-            new_y_pos = int(self.pos[1]) + self.slash_distance * self.attack_direction[1] + y_offset
+            new_x_pos = int(self.pos[0]) + self.slash_distance * self.entity.attack_direction[0]
+            new_y_pos = int(self.pos[1]) + self.slash_distance * self.entity.attack_direction[1] + y_offset
             self.Move((new_x_pos, new_y_pos))
 
             if self.slash_distance <= self.range:
@@ -163,13 +163,13 @@ class Sword(Weapon):
     def Charge(self):
         if not self.charging:
             return False
-        if self.attack_direction[0] < 0:
+        if self.entity.attack_direction[0] < 0:
             self.flip_image = False
-        if self.attack_direction[0] > 0:
+        if self.entity.attack_direction[0] > 0:
             self.flip_image = True
         self.rotate = self.stored_rotation
-        new_x_pos = self.entity.pos[0] + self.attack_direction[0] * 10
-        new_y_pos = self.entity.pos[1] + self.attack_direction[1] * 10 - 10
+        new_x_pos = self.entity.pos[0] + self.entity.attack_direction[0] * 10
+        new_y_pos = self.entity.pos[1] + self.entity.attack_direction[1] * 10 - 10
         self.Move((new_x_pos, new_y_pos))
         self.charging = self.entity.charging
         self.enemy_hit = False

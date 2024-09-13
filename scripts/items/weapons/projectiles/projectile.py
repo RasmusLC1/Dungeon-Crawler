@@ -23,8 +23,8 @@ class Projectile(Weapon):
         if not self.special_attack:
             return        
 
-        dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
-        dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
+        dir_x = self.pos[0] + self.entity.attack_direction[0] * self.shoot_speed
+        dir_y = self.pos[1] + self.entity.attack_direction[1] * self.shoot_speed
         
         if not self.Check_Tile((dir_x, dir_y)):
             self.special_attack = 0
@@ -69,8 +69,8 @@ class Projectile(Weapon):
         # Set image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
-        if self.attack_direction[0] < 0:
-            self.rotate += 180
+        # if self.entity.attack_direction[0] < 0:
+        #     self.rotate += 180
 
 
         if self.special_attack:

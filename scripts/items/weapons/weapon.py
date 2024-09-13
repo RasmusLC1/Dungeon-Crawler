@@ -21,7 +21,6 @@ class Weapon(Item):
         self.animation_speed = 30 # Animation speed that it cycles through animations
         self.max_animation = 0 # Max amount of animations
         self.attacking = 0 # The time it takes for the attack to complete
-        self.attack_direction = (0,0)
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
@@ -188,7 +187,7 @@ class Weapon(Item):
         return None
     
     def Entity_Hit(self, entity):
-        target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
+        target_position = (self.pos[0] - 16 * self.entity.attack_direction[0], self.pos[1] - 16 * self.entity.attack_direction[1])
         self.game.clatter.Generate_Clatter(target_position, 200)
 
         damage = self.entity.strength * self.damage
@@ -218,7 +217,7 @@ class Weapon(Item):
             return True
         
         if 'Wall' in tile['type']:
-            target_position = (self.pos[0] - 16 * self.attack_direction[0], self.pos[1] - 16 * self.attack_direction[1])
+            target_position = (self.pos[0] - 16 * self.entity.attack_direction[0], self.pos[1] - 16 * self.entity.attack_direction[1])
             self.game.clatter.Generate_Clatter(target_position, 400)
             return False
         
@@ -274,11 +273,11 @@ class Weapon(Item):
     # Set the attack direction   
     def Set_Attack_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
-        self.attack_direction = self.entity.attack_direction
-        if not self.attack_direction:
+        self.entity.attack_direction = self.entity.attack_direction
+        if not self.entity.attack_direction:
             return
-        # self.attack_direction = pygame.math.Vector2(self.attack_direction[0], self.attack_direction[1])
-        self.attack_direction.normalize_ip()
+        # self.entity.attack_direction = pygame.math.Vector2(self.entity.attack_direction[0], self.entity.attack_direction[1])
+        self.entity.attack_direction.normalize_ip()
         return
 
     # Point the weapon towards the mouse
@@ -295,8 +294,8 @@ class Weapon(Item):
        
     # Check if the weapon sprites needs to be flipped
     def Update_Flip(self):
-        if abs(self.attack_direction[0]) >= abs(self.attack_direction[1]):
-            if self.attack_direction[0] < 0:
+        if abs(self.entity.attack_direction[0]) >= abs(self.entity.attack_direction[1]):
+            if self.entity.attack_direction[0] < 0:
                 self.flip_image = True
             else:
                 self.flip_image = False

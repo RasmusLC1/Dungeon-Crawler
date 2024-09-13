@@ -9,6 +9,10 @@ class Clatter():
         for enemy in nearby_enemies:
             if not enemy:
                 continue
+            # Check if enemy already has a target
+            if enemy.locked_on_target:
+                continue
+
             enemy.Find_New_Path(center)
             # print("ENEMY FOUND", enemy)
 

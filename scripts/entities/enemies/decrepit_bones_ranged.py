@@ -12,7 +12,7 @@ class Decrepit_Bones_Ranged(Enemy):
         super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
 
         self.animation = 'decrepit_bones'
-        self.attack_strategy = 'ranged'
+        self.attack_strategy = 'long_range'
         
         self.shooting_distance = False
         self.Equip_Weapon()

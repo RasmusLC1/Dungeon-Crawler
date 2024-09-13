@@ -38,8 +38,8 @@ class Arrow(Projectile):
 
 
     def Collision_Detection(self):
-        dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
-        dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
+        dir_x = self.pos[0] + self.entity.attack_direction[0] * self.shoot_speed
+        dir_y = self.pos[1] + self.entity.attack_direction[1] * self.shoot_speed
         
         if not self.Check_Tile((dir_x, dir_y)):
             self.game.sfx['sword_impact_wall'].set_volume(0.5)

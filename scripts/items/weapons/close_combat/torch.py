@@ -1,5 +1,3 @@
-from scripts.decoration.decoration import Decoration
-from scripts.items.item import Item
 from scripts.items.weapons.weapon import Weapon
 from scripts.items.weapons.projectiles.fire_particle import Fire_Particle
 import math
@@ -56,6 +54,7 @@ class Torch(Weapon):
             else:
                 self.Move((self.pos[0] + 4, self.pos[1] - 2))
             return
+        
     
     def Set_Equipped_Position(self, direction_y):
         if 'left' in self.inventory_type:
@@ -71,30 +70,52 @@ class Torch(Weapon):
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
 
-
+    
     def Fire_Particle_Creation(self):
+        # Handle cooldown for spacing between fire particles
         if self.fire_cooldown:
             self.fire_cooldown -= 1
             return
         else:
             self.fire_cooldown = 3
             self.special_attack -= 20
-            
+
         # Basic raycasting attributes
-        num_lines = 8 # Define the number of lines and the spread angle (in degrees)
+        num_lines = 8  # Define the number of lines and the spread angle (in degrees)
         spread_angle = 50  # Total spread of the fan (in degrees)
-        angle_increment = spread_angle / (num_lines - 1) # Calculate the angle increment between each line
-        # Calculate the starting angle
-        base_angle = math.atan2(self.attack_direction[1], self.attack_direction[0])
+        angle_increment = spread_angle / (num_lines - 1)  # Calculate the angle increment between each line
+
+        # Calculate the base angle using atan2(y, x)
+        base_angle = math.atan2(self.entity.attack_direction[1], self.entity.attack_direction[0])
         start_angle = base_angle - math.radians(spread_angle / 2)
-         # Look for tiles that hit the rays
+
+        damage = 2
+        speed = 1  
+        max_range = 50
+
+        # Generate fire particles
         for j in range(num_lines):
             angle = start_angle + j * math.radians(angle_increment)
-            pos_x = math.cos(angle)
-            pos_y = math.sin(angle)
-            fire_particle = Fire_Particle(self.game, self.entity.rect().midtop, (2,2), 'fire_particle', 2, 4, 30, 'particle', self.special_attack, (pos_x, pos_y), self.entity)
+            pos_x = math.cos(angle) * speed
+            pos_y = math.sin(angle) * speed
+            direction = (pos_x, pos_y)
+
+            # Create the fire particle with the direction
+            fire_particle = Fire_Particle(
+                self.game,
+                self.entity.rect(),
+                (2, 2),
+                'fire_particle',
+                damage,
+                speed,
+                max_range,
+                'particle',
+                self.special_attack,
+                direction,  # Pass the direction here
+                self.entity
+            )
+
             self.game.item_handler.Add_Item(fire_particle)
-        
 
     def Set_Special_Attack(self, offset = (0,0)):
         super().Set_Special_Attack(offset)

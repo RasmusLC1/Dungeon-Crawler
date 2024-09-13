@@ -29,7 +29,7 @@ class Enemy(Moving_Entity):
         self.attack_strategy = 'direct' # Attack strategy that the enemy utalises
         self.path_finding_strategy = 'standard' # Maptype that is used for navigation
 
-        self.locked_on_target = False # If the enemy is locked onto a target, then it will not switch based on clatter
+        self.locked_on_target = 0 # If the enemy is locked onto a target, then it will not switch based on clatter
 
     
 
@@ -44,6 +44,7 @@ class Enemy(Moving_Entity):
         self.direction_y_holder = self.direction_y
 
         self.Update_Alert_Cooldown()
+        self.Update_Locked_On_Target()
 
 
 
@@ -109,6 +110,14 @@ class Enemy(Moving_Entity):
 
     def Set_Idle(self):
         pass
+
+    def Update_Locked_On_Target(self):
+        if not self.locked_on_target:
+            return
+        self.locked_on_target = max(0, self.locked_on_target - 1)
+    
+    def Set_Locked_On_Target(self, value):
+        self.locked_on_target = value
         
     def Damage_Taken(self, damage):
         super().Damage_Taken(damage)
