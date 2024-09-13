@@ -14,26 +14,32 @@ class Fire_Spirit(Enemy):
 
         super().Update(tilemap, movement)
     
-        if self.distance_to_player < 30:
-            self.Attack()
         if self.look_for_health_cooldown:
             self.look_for_health_cooldown = max(0, self.look_for_health_cooldown - 1)
             if not self.look_for_health_cooldown:
                 self.Set_Target(self.game.player.pos)
+            return
+        
 
-        if self.health <= self.max_health / 3 and not self.look_for_health_cooldown:
+        if self.distance_to_player < 30:
+            self.Attack()
+
+        if self.health < self.max_health and not self.look_for_health_cooldown:
             self.look_for_health_cooldown = 2000
 
             nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 200)
             for trap in nearby_traps:
 
                 if trap.type == 'Lava_env':
-                    print(trap.type)
-                    self.Set_Target(trap.pos)
-                    self.Find_New_Path(self.target)
+                    self.Find_New_Path(trap.pos)
+                    print("LOOKING FOR LAVA", self.target)
+                    self.locked_on_target = True
                     break
-        
-
+    
+    def Attack(self):
+        pass
+    
+    # TODO: IMPLEMENT 
     def Look_For_Health(self):
         pass
 
@@ -53,3 +59,4 @@ class Fire_Spirit(Enemy):
 
     def Set_On_Fire(self, fire_time):
         self.Healing(fire_time)
+        return False

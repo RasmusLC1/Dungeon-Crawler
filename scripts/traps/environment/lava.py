@@ -14,15 +14,16 @@ class Lava(Trap):
 
     def Update(self, entity):
         if self.rect().colliderect(entity.rect()):
-            entity.Set_Effect('Slow_Down', 4)
+            self.Cooldown = 20
             if entity.type == 'player':
                 if entity.dashing:
                     return
             if entity.wet:
                 entity.Set_Effect('Dry', 1)
-            entity.Set_Effect('Fire', 5)
+            if not entity.Set_Effect('Fire', 5):
+                return
+            entity.Set_Effect('Slow_Down', 4)
             entity.Damage_Taken(5)
-            self.Cooldown = 20
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

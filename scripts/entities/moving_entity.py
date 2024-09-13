@@ -259,8 +259,10 @@ class Moving_Entity(PhysicsEntity):
         direction_vector = pygame.math.Vector2(self.pos) - pygame.math.Vector2(other_entity.pos)
         if direction_vector.length() < 0:
             return
-        
-        direction_vector = direction_vector.normalize() * repulsion_strength
+        if direction_vector:
+            direction_vector.normalize()
+
+        direction_vector *= repulsion_strength
 
         self.Move_Entity(other_entity, direction_vector, tilemap)
 
@@ -314,6 +316,10 @@ class Moving_Entity(PhysicsEntity):
         
         self.damage_cooldown = 10
         self.health -= damage
+        print(self.health, self.max_health)
+        if self.health <= 0:
+            self.Reset_Effects()
+            self.Update_Status_Effects()
         
     def Attack_Direction_Handler(self, offset = (0, 0)):
 
@@ -406,25 +412,26 @@ class Moving_Entity(PhysicsEntity):
     
     def Set_Effect(self, effect, duration):
         if effect == 'Snare':
-            self.Set_Snare(duration)
+            return self.Set_Snare(duration)
         elif effect == 'Poison':
-            self.Set_Poisoned(duration)
+            return self.Set_Poisoned(duration)
         elif effect == 'Freeze':
-            self.Set_Frozen(duration)
+            return self.Set_Frozen(duration)
         elif effect == 'Fire':
-            self.Set_On_Fire(duration)
+            return self.Set_On_Fire(duration)
         elif effect == 'Wet':
-            self.Set_Wet(duration)
+            return self.Set_Wet(duration)
         elif effect == 'Dry':
-            self.Set_Dry(duration)
+            return self.Set_Dry(duration)
         elif effect == 'Slow_Down':
-            self.Slow_Down(duration)
+            return self.Slow_Down(duration)
         else:
             print("EFFECT MISSING", effect)
 
     #set snare effect
     def Set_Snare(self, snare_time):
         self.snared = snare_time
+        return True
     
     
     # Slow the entity down by increasing friction

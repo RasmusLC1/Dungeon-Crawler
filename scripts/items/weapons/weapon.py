@@ -57,6 +57,8 @@ class Weapon(Item):
 
         return True
 
+        
+
     # Reset the attack charge
     def Reset_Charge(self):
         self.is_charging = 0

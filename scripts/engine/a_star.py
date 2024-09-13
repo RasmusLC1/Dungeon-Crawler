@@ -18,6 +18,9 @@ class A_Star:
             self.y_max = 0
             self.row = 0
             self.col = 0
+            self.x_offset = 0
+            self.y_offset = 0
+            self.positions = []
             self.map = []
             self.standard_map = []
             self.flying_map = []
@@ -26,17 +29,17 @@ class A_Star:
 
     def Setup_Map(self, game):
         self.Extract_Map_Data(game)
-        # self.Standard_Map(game)
-        # self.Ignore_Lava_Map(game)
+        self.Standard_Map(game)
+        self.Ignore_Lava_Map(game)
         # self.Flying_Map(game)
     
     def Extract_Map_Data(self, game):
         # Extract all pos values
-        positions = game.tilemap.Get_Pos()
+        self.positions = game.tilemap.Get_Pos()
 
         # Separate x and y coordinates
-        x_coords = [pos[0] for pos in positions]
-        y_coords = [pos[1] for pos in positions]
+        x_coords = [pos[0] for pos in self.positions]
+        y_coords = [pos[1] for pos in self.positions]
 
         # Find min and max for x and y coordinates
         self.min_x = min(x_coords)
@@ -45,22 +48,27 @@ class A_Star:
         self.max_y = max(y_coords)
 
         # Calculate offsets based on the minimum values (assuming they might be negative)
-        x_offset = -self.min_x if self.min_x < 0 else 0
-        y_offset = -self.min_y if self.min_y < 0 else 0
+        self.x_offset = -self.min_x if self.min_x < 0 else 0
+        self.y_offset = -self.min_y if self.min_y < 0 else 0
 
         # Define the number of rows and columns based on max values and offsets
         self.row = self.max_y - self.min_y + 1
         self.col = self.max_x - self.min_x + 1
 
         # Initialize the map with '1's
-        self.standard_map = [[1] * self.row for _ in range(self.col)]
 
+
+
+    def Standard_Map(self, game):
+
+        # Fill with 1 to start with, add 0 for valid tiles later
+        self.standard_map = [[1] * self.row for _ in range(self.col)]
         # Fill the map based on JSON data
-        for position in positions:
+        for position in self.positions:
             x = position[0]
             y = position[1]
-            map_x = x + x_offset
-            map_y = y + y_offset
+            map_x = x + self.x_offset
+            map_y = y + self.y_offset
 
             # Check if the position is within the bounds of the map
             if 0 <= map_x < self.col and 0 <= map_y < self.row:
@@ -68,50 +76,35 @@ class A_Star:
                 if tile_type == 'Floor':
                     self.standard_map[map_x][map_y] = 0
 
-
-        # print("STANDARD MAP")
-        # # Optional: print the map to debug
-        # for row in self.standard_map:
-        #     print(row)
-
-
-    def Standard_Map(self, game):
-        self.standard_map.clear()
-
-        for x in range(self.min_x, self.max_x + 1):
-            row = []
-            tilesize = game.tilemap.Get_Tile_Size()
-            for y in range(self.min_y, self.max_y + 1):
-                tile_type = game.tilemap.Current_Tile_Type((x * tilesize, y * tilesize))
-                # tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
-                location = 1
-                if tile_type == 'Floor':
-                    location = 0
-                row.append(location)
-            self.standard_map.append(row)
-
         # Print the map to debug
-        print("STANDARD MAP")
-        for row in self.standard_map:
-            print(row)  
+        # print("STANDARD MAP")
+        # for row in self.standard_map:
+        #     print(row)  
 
     def Ignore_Lava_Map(self, game):
-        self.ignore_lava_map.clear()
+        # Fill with 1 to start with, add 0 for valid tiles later
+        self.ignore_lava_map = [[1] * self.row for _ in range(self.col)]
+        # Fill the map based on JSON data
+        for position in self.positions:
+            x = position[0]
+            y = position[1]
+            map_x = x + self.x_offset
+            map_y = y + self.y_offset
 
-        for y in range(self.min_y, self.max_y + 1):
-            row = []
-            for x in range(self.min_x, self.max_x + 1):
+            # Check if the position is within the bounds of the map
+            if 0 <= map_x < self.col and 0 <= map_y < self.row:
                 tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
-                location = 1
-                if tile_type == 'Floor' or tile_type == 'Lava_env':
-                    location = 0
-                print(tile_type, location)
-                row.append(location)
-            self.ignore_lava_map.append(row)
-        print("LAVA MAP")
-        # Print the map to debug
-        for row in self.ignore_lava_map:
-            print(row)  
+                if not tile_type:
+                    continue
+
+                if tile_type == 'Floor' or 'Lava' in tile_type or 'Fire' in tile_type:
+                    print(tile_type)
+                    self.ignore_lava_map[map_x][map_y] = 0
+        
+        # print("LAVA MAP")
+        # for row in self.ignore_lava_map:
+        #     print(row)  
+
 
 
     def Flying_Map(self, game):
@@ -195,7 +188,6 @@ class A_Star:
     def a_star_search(self, path, src, dest, map = 'standard'):
         if map == 'standard':
             self.map = self.standard_map.copy()
-
             
         elif map == 'ignore_lava':
             self.map = self.ignore_lava_map

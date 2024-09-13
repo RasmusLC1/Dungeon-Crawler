@@ -105,7 +105,7 @@ class Path_Finding():
         self.Calculate_Destination_Position(self.entity.target)
 
         for i in range(3):
-            self.game.a_star.a_star_search(self.path, [self.src_x, self.src_y], [self.des_x, self.des_y])
+            self.game.a_star.a_star_search(self.path, [self.src_x, self.src_y], [self.des_x, self.des_y], self.entity.path_finding_strategy)
             if self.path:
                 break
 
@@ -263,7 +263,6 @@ class Path_Finding():
         
         self.entity.direction = (self.entity.direction_x, self.entity.direction_y)
         self.entity.random_movement_cooldown = 20
-        self.entity.walking = max(0, self.entity.walking-1)
 
         self.entity.Trap_Collision_Handler()
 

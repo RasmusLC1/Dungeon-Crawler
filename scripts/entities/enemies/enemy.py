@@ -20,17 +20,16 @@ class Enemy(Moving_Entity):
         self.alert_cooldown = 0
         self.active_weapon = None
         self.weapon_cooldown = 0
-        self.walking = 0
-        self.target = self.game.player.pos
+        self.target = self.game.player.pos # Default target is set to player
 
-        self.path_finding = Path_Finding(game, self)
-        self.distance_to_player = 9999
-        self.charge = 0
-        self.attack_strategy = 'direct'
-        self.path_finding_strategy = 'standard'
+        self.path_finding = Path_Finding(game, self) # Pathfinding logic for enemy
+        self.distance_to_player = 9999 # Distance to player
+        self.charge = 0 # Determines when the enemy attacks
+        self.max_charge = 50 # Determines when the enemy is ready to attack
+        self.attack_strategy = 'direct' # Attack strategy that the enemy utalises
+        self.path_finding_strategy = 'standard' # Maptype that is used for navigation
 
-
-
+        self.locked_on_target = False # If the enemy is locked onto a target, then it will not switch based on clatter
 
     
 
@@ -80,8 +79,8 @@ class Enemy(Moving_Entity):
         return None
     
     def Attack(self):
+        print("Attack not implemented")
         pass
-        # print("Attack not implemented")
 
     def Update_Movement(self, movement):
         return super().Update_Movement(movement)
@@ -98,6 +97,9 @@ class Enemy(Moving_Entity):
         self.alert_cooldown = amount
 
     def Find_New_Path(self, destination):
+        # If enemy has a target it prioritises, then it will not look for new path
+        if self.locked_on_target:
+            return
         self.Set_Target(destination)
         self.path_finding.Find_Shortest_Path()
 

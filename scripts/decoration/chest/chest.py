@@ -32,9 +32,9 @@ class Chest(Decoration):
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
-            # 'sword',
-            # 'torch',
-            # 'spear',
+            'sword',
+            'torch',
+            'spear',
             'bow',
             'arrow',
         ]

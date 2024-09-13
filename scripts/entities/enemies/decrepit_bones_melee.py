@@ -12,10 +12,11 @@ class Decrepit_Bones_Melee(Enemy):
 
         self.animation = 'decrepit_bones'
         self.Equip_Weapon()
+        self.max_charge = 70
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
-        self.Update_Left_Weapon()
+        self.Update_Active_Weapon()
         self.Weapon_Cooldown()
         if self.distance_to_player < 20:
             self.Attack()
@@ -27,16 +28,17 @@ class Decrepit_Bones_Melee(Enemy):
         pass
 
     def Attack(self):
+        self.charge = min(self.max_charge, self.charge + 1)
         if not self.active_weapon:
             return
 
-        if self.weapon_cooldown:
+        if self.charge < self.max_charge:
             return
         
         self.Set_Target(self.game.player.pos)
         self.active_weapon.Set_Attack_Ready(True)
         self.active_weapon.Set_Attack()
-        self.weapon_cooldown = 100
+        self.Reset_Charge()
 
     def Equip_Weapon(self):
         weapon = None
@@ -64,7 +66,7 @@ class Decrepit_Bones_Melee(Enemy):
         del(weapon)
         return True
     
-    def Update_Left_Weapon(self, offset=(0, 0)):
+    def Update_Active_Weapon(self, offset=(0, 0)):
         if not self.active_weapon:
             return
 
@@ -73,7 +75,7 @@ class Decrepit_Bones_Melee(Enemy):
         self.active_weapon.Set_Light_Level(self.light_level)
 
         self.active_weapon.Set_Equipped_Position(self.direction_y_holder)
-        self.active_weapon.Update(offset)
+        # self.active_weapon.Update(offset)
         if not self.active_weapon:
             return
         
