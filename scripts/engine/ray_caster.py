@@ -184,7 +184,14 @@ class Ray_Caster():
                     break
 
                 # pygame.draw.line(surf, (255, 255, 255), (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1]), (pos_x, pos_y), 1)
-        
+    
+    def Remove_Trap(self, trap):
+        if trap in self.traps:  
+            self.traps.remove(trap)
+
+    def Remove_Chest(self, chest):
+        if chest in self.chests:
+            self.chests.remove(chest)
 
     def rect(self, pos):
         return pygame.Rect(pos[0], pos[1], 10, 10)

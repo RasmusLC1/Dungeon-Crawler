@@ -10,6 +10,7 @@ class Trap:
         self.Cooldown = 0
         self.animation = 0
         self.animation_cooldown = 0
+        self.animation_max = 0
         self.type = type
         self.active = 0
         self.light = 0

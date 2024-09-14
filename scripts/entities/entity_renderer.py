@@ -38,6 +38,7 @@ class Entity_Renderer():
     def Remove_Entity(self, entity):
         if entity in self.entities:
             self.entities.remove(entity)
+            self.nearby_entities.remove(entity)
             self.nearby_entities_cooldown = 0
 
     def Render(self, surf, offset = (0,0)):

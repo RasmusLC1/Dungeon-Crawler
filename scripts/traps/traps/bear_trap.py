@@ -7,6 +7,7 @@ import pygame
 class Bear_Trap(Trap):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type)
+        self.animation_max = 3
 
     def Update(self, entity):
         if self.Cooldown > 0:
@@ -23,7 +24,7 @@ class Bear_Trap(Trap):
             
         if self.Cooldown:
             if not self.animation_cooldown:
-                self.animation = min(3, self.animation + 1)
+                self.animation = min(self.animation_max, self.animation + 1)
                 self.animation_cooldown = 10
 
             self.animation_cooldown -= 1

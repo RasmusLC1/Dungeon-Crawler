@@ -7,6 +7,7 @@ from scripts.traps.traps.fire_trap import Fire_Trap
 from scripts.traps.environment.lava import Lava
 from scripts.traps.environment.water import Water
 from scripts.traps.environment.ice import Ice
+from scripts.traps.traps.spider_web import Spider_Web
 import math
 
 
@@ -18,6 +19,7 @@ class Trap_Handler:
         self.environment = []
         self.game = game
 
+        self.nearby_traps_cooldown = 0
         # TODO: Create seperate spawner class
         # Spawner initialisation
         for spawner in self.game.tilemap.extract([('spawners', 0)]):
@@ -71,8 +73,13 @@ class Trap_Handler:
         for trap in self.game.tilemap.extract([('Fire_trap', 0)].copy()):
             self.traps.append(Fire_Trap(self.game, trap['pos'], (16, 16), trap['type']))
 
+        for trap in self.game.tilemap.extract([('spider_web', 3)].copy()):
+            self.traps.append(Spider_Web(self.game, trap['pos'], (16, 16), trap['type']))
+
+
 
     def Find_Nearby_Traps(self, player_pos, max_distance):
+        
         nearby_traps = []
         for trap in self.traps:
             # Calculate the Euclidean distance
@@ -82,13 +89,31 @@ class Trap_Handler:
         return nearby_traps
     
     def Update(self):
-        self.nearby_traps = self.Find_Nearby_Traps(self.game.player.pos, 200)
+        if self.nearby_traps_cooldown:
+            self.nearby_traps_cooldown = max(0, self.nearby_traps_cooldown - 1)
+            return
+        else:
+            self.nearby_traps_cooldown = 50
+            self.nearby_traps.clear()
+            self.nearby_traps = self.Find_Nearby_Traps(self.game.player.pos, 200)
+
         for trap in self.nearby_traps:
+            if not trap:
+                continue
             trap.Animation_Update()
             
-            
+    def Remove_Trap(self, trap):
+        self.game.ray_caster.Remove_Trap(trap)
+        if trap in self.traps:
+            self.traps.remove(trap)
+        if trap in self.nearby_traps:
+            self.nearby_traps.remove(trap)
+        del(trap)
 
     def Render(self, traps, surf, offset = (0,0)):
         for trap in traps:
+            if not trap:
+                continue
+            
             trap.Render(surf, offset)
 

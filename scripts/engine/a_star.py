@@ -101,7 +101,6 @@ class A_Star:
                     continue
 
                 if tile_type == 'Floor' or 'Lava' in tile_type or 'Fire' in tile_type:
-                    print(tile_type)
                     self.ignore_lava_map[map_x][map_y] = 0
         
         # print("LAVA MAP")
