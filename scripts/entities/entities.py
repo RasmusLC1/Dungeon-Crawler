@@ -71,11 +71,17 @@ class PhysicsEntity:
 
     #set frozen effect
     def Set_Frozen(self, freeze_time):
+        if self.is_on_fire:
+            return
+        
         if self.wet:
             freeze_time *= 2
             self.wet = 0
         self.frozen = max(3, freeze_time)
         return True
+    
+    def Remove_Frozen(self):
+        self.frozen = 0
 
     # Set wet effect
     def Set_Wet(self, wet_time):
@@ -97,6 +103,8 @@ class PhysicsEntity:
     def Set_On_Fire(self, fire_time):
         if self.wet:
             return
+        if self.frozen:
+            self.Remove_Frozen()
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
         return True
 

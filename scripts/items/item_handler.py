@@ -3,7 +3,7 @@ from scripts.items.weapons.close_combat.torch import Torch
 import math
 
 # UPDATE for throwable weapons
-throwable_weapons = ['spear', 'fire_particle', 'arrow']
+throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow']
 
 class Item_Handler():
     def __init__(self, game):

@@ -1,7 +1,7 @@
 from scripts.items.weapons.projectiles.projectile import Projectile
 import pygame
 
-class Fire_Particle(Projectile):
+class Ice_Particle(Projectile):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, direction, entity):
         super().__init__(game, pos, size, type, damage, speed, range, weapon_class)
         self.delete_countdown = 30
@@ -9,9 +9,9 @@ class Fire_Particle(Projectile):
         self.entity = entity
         self.direction = direction  # Store the direction vector
         self.attack_animation_max = 3
+        self.attack_animation_time = range // self.attack_animation_max
 
     def Shoot(self):
-        
         if not self.shoot_speed:
             self.Initialise_Shooting(self.speed)
 
@@ -21,11 +21,11 @@ class Fire_Particle(Projectile):
             self.pos[1] + self.direction[1] * self.shoot_speed
         )
 
+        # Rest of your collision detection and effects
         entity = super().Shoot()
-        
         if entity:
-            self.special_attack = 0
-            entity.Set_Effect('Fire', 4)
+            self.Set_Special_Attack(0)
+            entity.Set_Effect('Freeze', 3)
 
         self.range = max(0, self.range - 1)
         if self.special_attack <= 0 or not self.range:

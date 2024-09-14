@@ -2,6 +2,7 @@ from scripts.entities.enemies.enemy import Enemy
 from scripts.entities.enemies.decrepit_bones_melee import Decrepit_Bones_Melee
 from scripts.entities.enemies.decrepit_bones_ranged import Decrepit_Bones_Ranged
 from scripts.entities.enemies.fire_spirit import Fire_Spirit
+from scripts.entities.enemies.ice_spirit import Ice_Spirit
 
 import random
 import math
@@ -17,14 +18,97 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                enemy_variant = random.randint(2, 2)
+                enemy_variant = random.randint(2, 3)
                 if enemy_variant == 0: # Melee Decrepit Bones
-                    self.enemies.append(Decrepit_Bones_Melee(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones', 30, 2, 2, 2, 2, 2))
+                    self.Spawn_Melee_Decrepit_Bones(spawner)
                 elif enemy_variant == 1: # Ranged Decrepit Bones
-                    self.enemies.append(Decrepit_Bones_Ranged(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'decrepit_bones', 30, 2, 2, 2, 2, 2))
+                    self.Spawn_Ranged_Decrepit_Bones(spawner)
                 elif enemy_variant == 2: # Fire spirit
-                    self.enemies.append(Fire_Spirit(self.game, spawner['pos'],  (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height()), 'fire_spirit', 60, 4, 5, 4, 2, 2))
-                    
+                    self.Spawn_Fire_Spirit(spawner)
+                elif enemy_variant == 3: # Fire spirit
+                    self.Spawn_Ice_Spirit(spawner)
+
+    def Spawn_Melee_Decrepit_Bones(self, spawner):
+        health = 30
+        strength = 2
+        speed = 2
+        agility = 2 
+        intelligence = 2
+        stamina = 2
+        self.enemies.append(Decrepit_Bones_Melee(
+            self.game,
+            spawner['pos'], 
+            (self.game.assets[spawner['type']][0].get_width(),
+            self.game.assets[spawner['type']][0].get_height()),
+            'decrepit_bones',
+            health,
+            strength,
+            speed,
+            agility,
+            intelligence,
+            stamina))
+        
+    def Spawn_Ranged_Decrepit_Bones(self, spawner):
+        health = 30
+        strength = 2
+        speed = 2
+        agility = 2 
+        intelligence = 2
+        stamina = 2
+        self.enemies.append(Decrepit_Bones_Ranged(
+            self.game,
+            spawner['pos'], 
+            (self.game.assets[spawner['type']][0].get_width(),
+            self.game.assets[spawner['type']][0].get_height()),
+            'decrepit_bones',
+            health,
+            strength,
+            speed,
+            agility,
+            intelligence,
+            stamina))
+        
+    def Spawn_Fire_Spirit(self, spawner):
+        health = 60
+        strength = 4
+        speed = 5
+        agility = 4 
+        intelligence = 2
+        stamina = 2
+        self.enemies.append(
+            Fire_Spirit(self.game,
+                        spawner['pos'], 
+                        (self.game.assets[spawner['type']][0].get_width(),
+                            self.game.assets[spawner['type']][0].get_height()),
+                            'fire_spirit',
+                            health,
+                            strength,
+                            speed,
+                            agility,
+                            intelligence,
+                            stamina))
+        
+
+    def Spawn_Ice_Spirit(self, spawner):
+        health = 100
+        strength = 7
+        speed = 3
+        agility = 3
+        intelligence = 2
+        stamina = 2
+        self.enemies.append(
+            Ice_Spirit(self.game,
+                        spawner['pos'], 
+                        (self.game.assets[spawner['type']][0].get_width(),
+                            self.game.assets[spawner['type']][0].get_height()),
+                            'ice_spirit',
+                            health,
+                            strength,
+                            speed,
+                            agility,
+                            intelligence,
+                            stamina))
+
 
     def Delete_Enemy(self, enemy):
         if enemy in self.enemies:

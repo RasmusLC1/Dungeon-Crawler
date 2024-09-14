@@ -8,12 +8,18 @@ import math
 class Fire_Spirit(Enemy):
     def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
+        
         self.animation = 'fire_spirit'
         self.path_finding_strategy = 'ignore_lava'
         self.attack_strategy = 'medium_range'
         self.look_for_health_cooldown = 0
         self.fire_cooldown = 0
         self.spewing_fire = False
+
+        self.animation_num_max = 3
+        self.attack_animation_num_max = 3
+        self.attack_animation_num_cooldown_max = 100
+        self.animation_num_cooldown_max = 100
 
     def Update(self, tilemap, movement = (0, 0)):
         
@@ -23,6 +29,7 @@ class Fire_Spirit(Enemy):
 
         if self.distance_to_player < 60:
             self.Attack()
+
 
         
     
@@ -58,7 +65,7 @@ class Fire_Spirit(Enemy):
         base_angle = math.atan2(self.attack_direction[1], self.attack_direction[0])
         start_angle = base_angle - math.radians(spread_angle / 2)
 
-        damage = 2
+        damage = 1
         speed = 1
         max_range = 50
 
@@ -79,7 +86,7 @@ class Fire_Spirit(Enemy):
                 speed,
                 max_range,
                 'particle',
-                self.charge,
+                self.charge * 2,
                 direction,  # Pass the direction here
                 self
             )

@@ -18,9 +18,8 @@ class Moving_Entity(PhysicsEntity):
 
         self.animation_state = 'up'
         self.idle_count = 0
-        self.animation_num = 0
-        self.animation_num_max = 1
-        self.animation_num_cooldown = 0
+        
+
         self.attacking = 0
         self.charging = 0
 
@@ -74,10 +73,18 @@ class Moving_Entity(PhysicsEntity):
         self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
 
+        # Handle regular animation
+        self.animation_num = 0
+        self.animation_num_max = 1
+        self.animation_num_cooldown = 0
+        self.animation_num_cooldown_max = 50
+
+        # Handle attack animations
         self.attacking = 0
         self.attack_animation_num = 0
         self.attack_animation_num_max = 1
         self.attack_animation_num_cooldown = 0
+        self.attack_animation_num_cooldown_max = 50
 
         self.status_effects = Status_Effect_Handler(self)
     
@@ -137,7 +144,6 @@ class Moving_Entity(PhysicsEntity):
             return
 
         self.Tile_Map_Collision_Detection(tilemap)
-        self.Update_Animation()
         if self.attacking:
             return
         
@@ -148,16 +154,22 @@ class Moving_Entity(PhysicsEntity):
         else:
             self.idle_count += 0
 
+        if 'attack' in self.animation:
+            self.Update_Attack_Animation()
+        else:
+            self.Update_Animation()
+
         self.last_frame_movement = self.frame_movement
     
 
 
     def Update_Animation(self) -> None:
+        
         if not self.animation_num_cooldown:
             self.animation_num += 1
             if self.animation_num >= self.animation_num_max:
                 self.animation_num = 0
-            self.animation_num_cooldown = 10
+            self.animation_num_cooldown = self.animation_num_cooldown_max
         else:
             self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
 
@@ -316,7 +328,6 @@ class Moving_Entity(PhysicsEntity):
         
         self.damage_cooldown = 10
         self.health -= damage
-        print(self.health, self.max_health)
         if self.health <= 0:
             self.Reset_Effects()
             self.Update_Status_Effects()
@@ -453,14 +464,19 @@ class Moving_Entity(PhysicsEntity):
         # Simulates low visibility
         if not self.Update_Light_Level():
             return
+        animation_num = self.animation_num
+
+        if 'attack' in self.animation:
+            animation_num = self.attack_animation_num
+
         # Load and scale the entity images, split to allow better animation
-        entity_image_head = self.game.assets[self.animation + '_head'][0]
+        entity_image_head = self.game.assets[self.animation + '_head'][animation_num]
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
 
-        entity_image_body = self.game.assets[self.animation + '_body'][0]
+        entity_image_body = self.game.assets[self.animation + '_body'][animation_num]
         entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
 
-        entity_image_legs = self.game.assets[self.animation + '_legs'][0]
+        entity_image_legs = self.game.assets[self.animation + '_legs'][animation_num]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
         
         # Set the alpha value to make the entity fade out

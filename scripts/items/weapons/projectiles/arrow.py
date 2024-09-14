@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Arrow(Projectile):
-    def __init__(self, game, pos, size):
-        super().__init__(game, pos, size, 'arrow', 2, 2, 10, 'arrow')
+    def __init__(self, game, pos, size,):
+        super().__init__(game, pos, size, 'arrow', 2, 2, 50, 'arrow')
         self.max_animation = 0
         
         self.max_amount = 20
@@ -32,11 +32,15 @@ class Arrow(Projectile):
         # if self.entity.subtype == 'enemy':
         #     print(self.special_attack)
         self.Initialise_Shooting(max(3, self.entity.strength))
-        if not self.special_attack:
+        
+        if not self.Update_Range():
+            self.special_attack = 0
             return None
         return self.Collision_Detection()   
 
 
+    
+    # Handles the collision detection and moves the arrow 
     def Collision_Detection(self):
         dir_x = self.pos[0] + self.entity.attack_direction[0] * self.shoot_speed
         dir_y = self.pos[1] + self.entity.attack_direction[1] * self.shoot_speed
@@ -50,6 +54,7 @@ class Arrow(Projectile):
             return None
         
         self.Move((dir_x, dir_y))
+        
         # Check for collision with enemy
         entity = self.Attack_Collision_Check()
         if entity:

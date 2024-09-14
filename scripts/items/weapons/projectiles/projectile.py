@@ -20,25 +20,32 @@ class Projectile(Weapon):
 
 
     def Shoot(self):
-        if not self.special_attack:
-            return        
+        if not self.Update_Range():
+            self.special_attack = 0
+            return  
 
         dir_x = self.pos[0] + self.entity.attack_direction[0] * self.shoot_speed
         dir_y = self.pos[1] + self.entity.attack_direction[1] * self.shoot_speed
         
         if not self.Check_Tile((dir_x, dir_y)):
             self.special_attack = 0
+            self.range = 0
             return None
         self.Move((dir_x, dir_y))
         # Check for collision with enemy
         entity = self.Attack_Collision_Check()
         if entity:
             self.special_attack = 0
+            self.range = 0
             return entity
-        self.special_attack = max(0, self.special_attack - self.shoot_speed)
         return None
 
-    
+    def Update_Range(self):
+        if not self.range:
+            return False
+        
+        self.range = max(0, self.range - 1)
+        return True
 
     def Drop_Weapon_After_Shot(self):
         active_inventory = self.game.weapon_inventory.active_inventory

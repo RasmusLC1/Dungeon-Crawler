@@ -73,7 +73,10 @@ class A_Star:
             # Check if the position is within the bounds of the map
             if 0 <= map_x < self.col and 0 <= map_y < self.row:
                 tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
-                if tile_type == 'Floor':
+                if not tile_type:
+                    continue
+                
+                if tile_type == 'Floor' or 'ice_env' in tile_type or 'water_env' in tile_type:
                     self.standard_map[map_x][map_y] = 0
 
         # Print the map to debug
