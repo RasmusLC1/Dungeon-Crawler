@@ -11,6 +11,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Dusty_Bones_List(self)
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
+        Graphics_Loader.Asset_Spider_List(self)
         Graphics_Loader.Asset_Player_List(self)
         Graphics_Loader.Asset_Interative_Objects_List(self)
         Graphics_Loader.Asset_Environment_List(self)
@@ -156,6 +157,38 @@ class Graphics_Loader:
             'ice_spirit_attack_head': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 0, 16, 8),
             'ice_spirit_attack_body': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 9, 16, 6),
             'ice_spirit_attack_legs': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 15, 16, 2),
+        }
+        self.assets.update(entities_assets)
+
+    def Asset_Spider_List(self):
+        entities_assets = {
+            'spider_idle_head': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 0, 16, 8),
+            'spider_idle_body': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 9, 16, 6),
+            'spider_idle_legs': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 15, 16, 2),
+
+            'spider_running_head': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 0, 16, 8),
+            'spider_running_body': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 9, 16, 6),
+            'spider_running_legs': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 15, 16, 2),
+
+            'friendly_spider_idle_head': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 0, 16, 8),
+            'friendly_spider_idle_body': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 9, 16, 6),
+            'friendly_spider_idle_legs': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 15, 16, 2),
+
+            'friendly_spider_running_head': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 0, 16, 8),
+            'friendly_spider_running_body': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 9, 16, 6),
+            'friendly_spider_running_legs': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 15, 16, 2),
+
+            'spider_attack_head': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 0, 16, 8),
+            'spider_attack_body': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 9, 16, 6),
+            'spider_attack_legs': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 15, 16, 2),
+
+            'spider_jumping_head': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 0, 16, 8),
+            'spider_jumping_body': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 9, 16, 6),
+            'spider_jumping_legs': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 15, 16, 2),
+
+            'spider_on_back_head': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 0, 16, 8),
+            'spider_on_back_body': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 9, 16, 6),
+            'spider_on_back_legs': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 15, 16, 2),
         }
         self.assets.update(entities_assets)
 

@@ -3,7 +3,7 @@ from scripts.items.weapons.close_combat.torch import Torch
 import math
 
 # UPDATE for throwable weapons
-throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow']
+throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web']
 
 class Item_Handler():
     def __init__(self, game):
@@ -52,8 +52,6 @@ class Item_Handler():
                 if not item.delete_countdown:
                     self.Remove_Item(item, True)
 
-                
-
             if not item.picked_up:
                 self.items.remove(item)
 
@@ -70,5 +68,4 @@ class Item_Handler():
     def Render(self, items, surf, render_scroll = (0, 0)):
         
         for item in items:
-            print(item.pos)
             item.Render(surf, render_scroll)

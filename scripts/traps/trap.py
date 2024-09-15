@@ -31,6 +31,7 @@ class Trap:
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
     
     def Render(self, surf, offset=(0, 0)):
+
         # Get the tile surface from the assets
         tile_surface = self.game.assets[self.type][self.animation].copy()
         
@@ -41,6 +42,8 @@ class Trap:
         tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
 
         tile = self.game.tilemap.Current_Tile(self.pos)
+
+        
         if tile['light'] > 0:
             light_level = min(255, tile['light'] * 25)
         else:

@@ -197,14 +197,18 @@ class Player(Moving_Entity):
         if weapon.attacking and not self.attacking:
             self.Attack_Direction_Handler(offset)
 
-            self.pos[0] += 5 * self.attack_direction[0]
-            self.pos[1] += 5 * self.attack_direction[1]
+            direction_x = 5 * self.attack_direction[0]
+            direction_y = 5 * self.attack_direction[1]
+            self.Set_Frame_movement((direction_x, direction_y))
+            self.Tile_Map_Collision_Detection(self.game.tilemap)
             self.attacking = weapon.attacking
 
 
         if self.attacking == 1:
-            self.pos[0] -= 5 * self.attack_direction[0]
-            self.pos[1] -= 5 * self.attack_direction[1]
+            direction_x = - 5 * self.attack_direction[0]
+            direction_y = - 5 * self.attack_direction[1]
+            self.Set_Frame_movement((direction_x, direction_y))
+            self.Tile_Map_Collision_Detection(self.game.tilemap)
 
         if self.attacking:
             self.attacking -= 1

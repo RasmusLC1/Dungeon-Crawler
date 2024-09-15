@@ -3,6 +3,7 @@ from scripts.entities.enemies.decrepit_bones_melee import Decrepit_Bones_Melee
 from scripts.entities.enemies.decrepit_bones_ranged import Decrepit_Bones_Ranged
 from scripts.entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.enemies.ice_spirit import Ice_Spirit
+from scripts.entities.enemies.spider import Spider
 
 import random
 import math
@@ -18,7 +19,7 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                enemy_variant = random.randint(2, 3)
+                enemy_variant = random.randint(4, 4)
                 if enemy_variant == 0: # Melee Decrepit Bones
                     self.Spawn_Melee_Decrepit_Bones(spawner)
                 elif enemy_variant == 1: # Ranged Decrepit Bones
@@ -27,6 +28,8 @@ class Enemy_Handler():
                     self.Spawn_Fire_Spirit(spawner)
                 elif enemy_variant == 3: # Fire spirit
                     self.Spawn_Ice_Spirit(spawner)
+                elif enemy_variant == 4: # Fire spirit
+                    self.Spawn_Spider(spawner)
 
     def Spawn_Melee_Decrepit_Bones(self, spawner):
         health = 30
@@ -102,6 +105,26 @@ class Enemy_Handler():
                         (self.game.assets[spawner['type']][0].get_width(),
                             self.game.assets[spawner['type']][0].get_height()),
                             'ice_spirit',
+                            health,
+                            strength,
+                            speed,
+                            agility,
+                            intelligence,
+                            stamina))
+        
+    def Spawn_Spider(self, spawner):
+        health = 80
+        strength = 4
+        speed = 3
+        agility = 3
+        intelligence = 5
+        stamina = 2
+        self.enemies.append(
+            Spider(self.game,
+                        spawner['pos'], 
+                        (self.game.assets[spawner['type']][0].get_width(),
+                            self.game.assets[spawner['type']][0].get_height()),
+                            'spider',
                             health,
                             strength,
                             speed,

@@ -110,6 +110,9 @@ class Trap_Handler:
             self.nearby_traps.remove(trap)
         del(trap)
 
+    def Add_Trap(self, trap):
+        self.traps.append(trap)
+
     def Render(self, traps, surf, offset = (0,0)):
         for trap in traps:
             if not trap:
