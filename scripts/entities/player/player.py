@@ -15,7 +15,7 @@ class Player(Moving_Entity):
         super().__init__(game, 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.dashing = 0
         self.stored_position = 0
-        self.animation_num_max = 4
+        self.animation_num_max = 3
         
         self.max_ammo = 30
         self.ammo = 10
@@ -45,7 +45,6 @@ class Player(Moving_Entity):
 
     
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
-
         super().Update(tilemap, movement=movement)
         if self.dashing:
             self.Dashing_Update(offset)

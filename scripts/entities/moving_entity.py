@@ -74,14 +74,14 @@ class Moving_Entity(PhysicsEntity):
 
         # Handle regular animation
         self.animation_num = 0
-        self.animation_num_max = 1
+        self.animation_num_max = 0
         self.animation_num_cooldown = 0
         self.animation_num_cooldown_max = 50
 
         # Handle attack animations
         self.attacking = 0
         self.attack_animation_num = 0
-        self.attack_animation_num_max = 1
+        self.attack_animation_num_max = 0
         self.attack_animation_num_cooldown = 0
         self.attack_animation_num_cooldown_max = 50
 
@@ -174,7 +174,7 @@ class Moving_Entity(PhysicsEntity):
         
         if not self.animation_num_cooldown:
             self.animation_num += 1
-            if self.animation_num >= self.animation_num_max:
+            if self.animation_num > self.animation_num_max:
                 self.animation_num = 0
             self.animation_num_cooldown = self.animation_num_cooldown_max
         else:
@@ -184,7 +184,7 @@ class Moving_Entity(PhysicsEntity):
         
         if not self.attack_animation_num_cooldown:
             self.attack_animation_num += 1
-            if self.attack_animation_num >= self.attack_animation_num_max:
+            if self.attack_animation_num > self.attack_animation_num_max:
                 self.attack_animation_num = 0
             self.attack_animation_num_cooldown = 10
         else:
@@ -194,7 +194,7 @@ class Moving_Entity(PhysicsEntity):
         
         if not self.jumping_animation_num_cooldown:
             self.jumping_animation_num += 1
-            if self.jumping_animation_num >= self.animation_num_max:
+            if self.jumping_animation_num > self.animation_num_max:
                 self.jumping_animation_num = self.jumping_animation_num_max
             self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
         else:

@@ -107,7 +107,6 @@ class Path_Finding():
         self.path.clear()
         self.Calculate_Position()
         self.Calculate_Destination_Position(self.entity.target)
-
         for i in range(3):
             self.game.a_star.a_star_search(self.path, [self.src_x, self.src_y], [self.des_x, self.des_y], self.entity.path_finding_strategy)
             if self.path:
@@ -214,8 +213,11 @@ class Path_Finding():
             return self.Keep_Distance(100, 80)
         elif self.entity.attack_strategy == 'medium_range':
             return self.Keep_Distance(60, 30)
+        elif self.entity.attack_strategy == 'medium_range':
+            return self.Keep_Distance(30, 20)
         elif self.entity.attack_strategy == 'keep_position':
-            return False
+            self.entity.direction = (0, 0)
+            return True
         else:
             return self.Direct_Pathing()
 

@@ -28,31 +28,62 @@ class Spider(Enemy):
         self.on_back_animation_num_cooldown_max = 50
 
         self.shot_fired = 0
+        self.attack_cooldown = 0
 
         self.spider_web = None
 
     def Update(self, tilemap, movement = (0, 0)):
-        
         super().Update(tilemap, movement)
         self.Update_Shot_Fired()        
+        self.Update_Attack_Cooldown()
 
-        if self.shot_fired < 30 and self.shot_fired > 15:
+        if self.distance_to_player > 70 and self.attack_strategy != 'medium_range':
+            self.charge = 0
+            self.attack_strategy = 'medium_range'
+
+        if self.attack_cooldown:
+            return    
+
+        if self.shot_fired:
             self.Jump_Attack()
             return
 
-        if self.distance_to_player <= 50 and not self.shot_fired:
+        if self.distance_to_player <= 50:
             self.Ranged_Attack()
             return
         
 
+    def Jump_Attack(self):
+        if self.shot_fired == 1:
+            self.Set_Attack_Cooldown(60)
+            return
+        
+        if self.shot_fired < 30 and self.shot_fired > 15:
+            self.Set_Frame_movement((self.attack_direction[0], self.attack_direction[1]))
+            self.Tile_Map_Collision_Detection(self.game.tilemap)
+            self.attack_strategy =  'direct'
+            if self.max_speed == self.max_speed_holder:
+                self.max_speed *= 15
+        elif self.shot_fired < 15:
+            self.attack_strategy =  'long_range'
+            if self.max_speed != self.max_speed_holder:
+                self.max_speed = self.max_speed_holder
+        else:
+            self.attack_strategy = 'close_range'
+
+        self.Bite_Attack()
+    
+    # Bite the player when the player is close
+    def Bite_Attack(self):
+        if self.Future_Rect(self.attack_direction).colliderect(self.game.player.rect()):
+            self.attack_strategy =  'long_range'
+            self.game.player.Damage_Taken(self.strength)
+            self.game.player.Set_Effect('Poison', 4)
+            self.Set_Attack_Cooldown(60)
         
 
     def Ranged_Attack(self):
         self.charge += 1
-
-        if self.distance_to_player > 50:
-            self.attack_strategy = 'medium_range'
-            return
         
         if self.charge == 5:
             self.attack_strategy = 'keep_position'
@@ -61,9 +92,7 @@ class Spider(Enemy):
             self.Initialise_Spider_Web()
             self.attack_strategy = 'medium_range'
             self.charge = 0
-
-
-
+            self.Set_Shot_Fired(45)
     
     def Initialise_Spider_Web(self):
         self.Set_Target(self.game.player.pos)
@@ -95,13 +124,15 @@ class Spider(Enemy):
         self.game.item_handler.Add_Item(spider_web)
         self.shot_fired = 45
 
-    def Jump_Attack(self):
-        pass
     
     def Update_Shot_Fired(self):
         if self.shot_fired:
             self.shot_fired = max(0, self.shot_fired - 1)
-        
+        return
+    
+    def Update_Attack_Cooldown(self):
+        if self.attack_cooldown:
+            self.attack_cooldown = max(0, self.attack_cooldown - 1)
         return
 
     # Set new action for animation
@@ -118,23 +149,27 @@ class Spider(Enemy):
         if not movement[0] and not movement[1]:
             self.Set_Animation('idle')
             return
-
-        
-
         if movement[1] or movement[0]:
             self.Set_Animation('running')
 
     
     def Update_Jumping_Animation(self) -> None:
-        
-        if not self.animation_num_cooldown:
-            self.animation_num += 1
-            if self.animation_num >= self.animation_num_max:
-                self.animation_num = 0
-            self.animation_num_cooldown = self.animation_num_cooldown_max
+        if not self.jumping_animation_num_cooldown:
+            self.jumping_animation_num += 1
+            if self.jumping_animation_num > self.jumping_animation_num_max:
+                self.jumping_animation_num = 0
+            self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
         else:
-            self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
+            self.jumping_animation_num_cooldown = max(0, self.jumping_animation_num_cooldown - 1)
 
+
+    def Set_Shot_Fired(self, amount):
+        self.shot_fired = amount
+        return
+    
+    def Set_Attack_Cooldown(self, amount):
+        self.attack_cooldown = amount
+        return
 
     # Render entity
     def Render(self, surf, offset=(0, 0)):
