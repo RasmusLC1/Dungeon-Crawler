@@ -12,6 +12,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
         Graphics_Loader.Asset_Spider_List(self)
+        Graphics_Loader.Asset_Enemy_Symbols_List(self)
         Graphics_Loader.Asset_Player_List(self)
         Graphics_Loader.Asset_Interative_Objects_List(self)
         Graphics_Loader.Asset_Environment_List(self)
@@ -191,6 +192,13 @@ class Graphics_Loader:
             'spider_on_back_legs': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 15, 16, 2),
         }
         self.assets.update(entities_assets)
+
+    def Asset_Enemy_Symbols_List(self):
+        symbols_assets = {
+            'exclamation_mark': get_tiles_from_sheet('entities/enemies/symbols/exclamation.png', 0, 0, 0, 0, 16, 16),
+            'health_bar': get_tiles_from_sheet('entities/enemies/symbols/health_bar.png', 9, 0, 0, 0, 16, 16),
+        }
+        self.assets.update(symbols_assets)
 
     def Asset_Weapons_List(self):
         Weapons_assets = {

@@ -32,12 +32,15 @@ class Spider(Enemy):
 
         self.spider_web = None
 
+        self.attack_symbol_offset = 10
+
+
     def Update(self, tilemap, movement = (0, 0)):
         super().Update(tilemap, movement)
         self.Update_Shot_Fired()        
         self.Update_Attack_Cooldown()
 
-        if self.distance_to_player > 70 and self.attack_strategy != 'medium_range':
+        if self.distance_to_player > 50 and self.attack_strategy != 'medium_range':
             self.charge = 0
             self.attack_strategy = 'medium_range'
 
@@ -170,62 +173,3 @@ class Spider(Enemy):
     def Set_Attack_Cooldown(self, amount):
         self.attack_cooldown = amount
         return
-
-    # Render entity
-    def Render(self, surf, offset=(0, 0)):
-        # Don't Render the enemy if their light level is very low
-        # Simulates low visibility
-        if not self.Update_Light_Level():
-            return
-        animation_num = self.animation_num
-
-        if 'attack' in self.animation:
-            animation_num = self.attack_animation_num
-
-        if 'jumping' in self.animation:
-            animation_num = self.jumping_animation_num
-
-        # Load and scale the entity images, split to allow better animation
-        entity_image_head = self.game.assets[self.animation + '_head'][animation_num]
-        entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
-
-        entity_image_body = self.game.assets[self.animation + '_body'][animation_num]
-        entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
-
-        entity_image_legs = self.game.assets[self.animation + '_legs'][animation_num]
-        entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
-        
-        # Set the alpha value to make the entity fade out
-        alpha_value = max(0, min(255, self.active)) 
-        entity_image_head.set_alpha(alpha_value)
-        entity_image_body.set_alpha(alpha_value)
-        entity_image_legs.set_alpha(alpha_value)
-
-         # Create a darkening surface that is affected by darkness
-        dark_surface_head = pygame.Surface(entity_image_head.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))  
-
-        dark_surface_body = pygame.Surface(entity_image_body.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_body.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        dark_surface_legs = pygame.Surface(entity_image_legs.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_legs.fill((self.light_level, self.light_level, self.light_level, 255))
-
-
-        # Apply darkening effect using BLEND_RGBA_MULT
-        entity_image_head.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        entity_image_body.blit(dark_surface_body, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        entity_image_legs.blit(dark_surface_legs, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-
-        surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 9))
-        surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-        surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 12))
-
-        # Render status effects
-        self.status_effects.render_fire(self.game, surf, offset)
-        self.status_effects.render_poison(self.game, surf, offset)
-        self.status_effects.render_frozen(self.game, surf, offset)
-        self.status_effects.render_wet(self.game, surf, offset)

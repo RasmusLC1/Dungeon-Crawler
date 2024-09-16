@@ -30,6 +30,7 @@ class Enemy(Moving_Entity):
 
         self.locked_on_target = 0 # If the enemy is locked onto a target, then it will not switch based on clatter
 
+        self.attack_symbol_offset = 20
     
 
     def Update(self, tilemap, movement=(0, 0)):
@@ -157,6 +158,33 @@ class Enemy(Moving_Entity):
     def Render(self, surf, offset = (0,0)):
         super().Render(surf, offset)
         self.Render_Weapons(surf, offset)
+        self.Render_Health_Bar(surf, offset)
+        self.Render_Attacking_Symbol(surf, offset)
+
+    def Render_Health_Bar(self, surf, offset = (0,0)):
+        health_fraction = self.health / self.max_health
+
+        # Map the fraction to an index from 0 to 9 (assuming 10 total images)
+        health_index = int((1 - health_fraction) * 9)  # Invert fraction and scale to index range
+
+        # Correct potential rounding issues at full health
+        if self.health == self.max_health:
+            health_index = 0
+
+        health_Bar = self.game.assets['health_bar'][health_index]
+        alpha_value = 150
+        health_Bar.set_alpha(alpha_value)
+        surf.blit(health_Bar, (self.rect().left - offset[0], self.rect().bottom - offset[1] - 10))
+
+
+    def Render_Attacking_Symbol(self, surf, offset = (0,0)):
+        if self.charge < 20:
+            return
+        exclamation_mark = self.game.assets['exclamation_mark'][0]
+
+        alpha_value = max(0, min(255, self.charge * 7))
+        exclamation_mark.set_alpha(alpha_value)
+        surf.blit(exclamation_mark, (self.rect().left - offset[0], self.rect().top - offset[1] - self.attack_symbol_offset))
 
 
     def Render_Weapons(self, surf, offset):

@@ -19,7 +19,7 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                enemy_variant = random.randint(4, 4)
+                enemy_variant = random.randint(0, 4)
                 if enemy_variant == 0: # Melee Decrepit Bones
                     self.Spawn_Melee_Decrepit_Bones(spawner)
                 elif enemy_variant == 1: # Ranged Decrepit Bones

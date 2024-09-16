@@ -488,6 +488,9 @@ class Moving_Entity(PhysicsEntity):
         if 'attack' in self.animation:
             animation_num = self.attack_animation_num
 
+        if 'jumping' in self.animation:
+            animation_num = self.jumping_animation_num
+
         # Load and scale the entity images, split to allow better animation
         entity_image_head = self.game.assets[self.animation + '_head'][animation_num]
         entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))

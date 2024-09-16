@@ -37,14 +37,27 @@ class Spider_Web_Projectile(Projectile):
             self.pos[1] + self.direction[1] * self.shoot_speed
         )
 
-        # Custom collision detection
+        self.Entity_Collision_Detection()
+        if self.Wall_Collision_Detection():
+            return        
+
+        self.range = max(0, self.range - 1)
+
+    def Wall_Collision_Detection(self):
+        
+        if not self.Check_Tile(self.pos):
+            self.special_attack = 0
+            self.game.item_handler.Remove_Item(self, True)
+            return None
+    
+    def Entity_Collision_Detection(self):
         entity = self.Attack_Collision_Check()
+
         if entity:
             entity.Set_Effect('Snare', 100)
             self.animation = self.attack_animation_max
             self.pos = entity.pos
             self.target_hit = 100
-            return
-
-        self.range = max(0, self.range - 1)
+            return True
         
+        return False

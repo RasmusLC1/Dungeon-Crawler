@@ -59,6 +59,11 @@ class Projectile(Weapon):
         self.equipped = False
         self.in_inventory = False
 
+    def Pick_Up(self):
+        if self.shoot_speed:
+            return
+        return super().Pick_Up()
+
     # For some reason calling the parent function does not work for render
     def Render(self, surf, offset=(0, 0)):
         
