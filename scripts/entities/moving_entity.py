@@ -20,7 +20,6 @@ class Moving_Entity(PhysicsEntity):
         self.idle_count = 0
         
 
-        self.attacking = 0
         self.charging = 0
 
         self.direction = (0,0)
@@ -65,8 +64,8 @@ class Moving_Entity(PhysicsEntity):
         self.friction_holder = self.friction # Holder for friction to reset it
         self.acceleration = agility / 10
         self.acceleration_holder = self.acceleration # accelarition holder to reset it
-        self.max_speed = max_speed # Max speed of the entity
-        self.max_speed_holder = self.max_speed + agility / 5 # Max speed holder to reset it
+        self.max_speed = max_speed + agility / 5 # Max speed of the entity
+        self.max_speed_holder = self.max_speed # Max speed holder to reset it
 
 
         # Determined by the entities agility
@@ -85,6 +84,12 @@ class Moving_Entity(PhysicsEntity):
         self.attack_animation_num_max = 1
         self.attack_animation_num_cooldown = 0
         self.attack_animation_num_cooldown_max = 50
+
+         # Jumping attack
+        self.jumping_animation_num = 0
+        self.jumping_animation_num_max = 0
+        self.jumping_animation_num_cooldown = 0
+        self.jumping_animation_num_cooldown_max = 50
 
         self.status_effects = Status_Effect_Handler(self)
     
@@ -156,6 +161,8 @@ class Moving_Entity(PhysicsEntity):
 
         if 'attack' in self.animation:
             self.Update_Attack_Animation()
+        elif 'jumping' in self.animation:
+            self.Update_Jumping_Animation()
         else:
             self.Update_Animation()
 
@@ -174,6 +181,7 @@ class Moving_Entity(PhysicsEntity):
             self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
 
     def Update_Attack_Animation(self) -> None:
+        
         if not self.attack_animation_num_cooldown:
             self.attack_animation_num += 1
             if self.attack_animation_num >= self.attack_animation_num_max:
@@ -181,6 +189,17 @@ class Moving_Entity(PhysicsEntity):
             self.attack_animation_num_cooldown = 10
         else:
             self.attack_animation_num_cooldown = max(0, self.attack_animation_num_cooldown - 1)
+
+    def Update_Jumping_Animation(self) -> None:
+        
+        if not self.jumping_animation_num_cooldown:
+            self.jumping_animation_num += 1
+            if self.jumping_animation_num >= self.animation_num_max:
+                self.jumping_animation_num = self.jumping_animation_num_max
+            self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
+        else:
+            self.jumping_animation_num_cooldown = max(0, self.jumping_animation_num_cooldown - 1)
+
 
     # Set the idle state every 60 ticks to either up or down depending on last input
     def Set_Idle(self):

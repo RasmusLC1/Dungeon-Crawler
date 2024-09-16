@@ -1,0 +1,270 @@
+<diagram program="umletino" version="15.1"><zoom_level>5</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>495</x><y>0</y><w>105</w><h>95</h></coordinates><panel_attributes>Main
+{Some Properties}
+--
+- int Screen_width
+- int screen_height
+- display screen
+- display display
+
+--
+Methods
+- load_level(self, map_id)
+- Camera_Scroll(self)
+- Input_Handler(self)
+- Update(self)
+- Render(self)
+- Run(self)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>260</x><y>150</y><w>105</w><h>125</h></coordinates><panel_attributes>Item_Handler
+--
+- item items []
+- self.game game
+-  item nearby_items []
+- int nearby_items_cooldown
+--
+Methods
+- Initialise (self)
+- Add_Item (self, item)
+- Remove_Item (self, item)
+- Find_Nearby_Item (self, entity_pos, max_distance)
+- Update (self, offset)
+- Render (self, items, surf, render_scroll)
+--
+Responsibilities
+-- Handle Item Logic
+*-- Update the nearby items for optimisation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>45</x><y>140</y><w>105</w><h>95</h></coordinates><panel_attributes>Trap_Handler
+--
+- Trap traps []
+- self.game game
+-  item nearby_traps []
+- int nearby_traps_cooldown
+--
+Methods
+- Initialise (self)
+- Add_Trap (self, trap)
+- Remove_Trap (self, trap)
+- Find_Nearby_Trap (self, entity_pos, max_distance)
+- Update (self, offset)
+- Render (self, traps, surf, render_scroll)
+--
+Responsibilities
+-- Handle Trap Logic
+*-- Update the nearby traps for optimisation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>595</x><y>155</y><w>105</w><h>95</h></coordinates><panel_attributes>Enemy_Handler
+--
+- Enemy enemies []
+- self.game game
+-  Enemy nearby_enemies []
+- int nearby_enemies_cooldown
+--
+Methods
+- Initialise (self)
+- Add_Enemy (self, enemy)
+- Remove_Enemy (self, enemy)
+- Find_Nearby_Enemy (self, entity_pos, max_distance)
+- Update (self, offset)
+- Render (self, enemies, surf, render_scroll)
+--
+Responsibilities
+-- Handle Enemy Logic
+*-- Update the nearby enemies for optimisation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>150</y><w>105</w><h>95</h></coordinates><panel_attributes>Decoration_Handler
+--
+- Decoration decorations []
+- self.game game
+-  item nearby_decorations  []
+- int nearby_decorations _cooldown
+--
+Methods
+- Initialise (self)
+- Add_Decoration (self, decoration)
+- Remove_Decoration (self, decoration)
+- Find_Nearby_Decoration (self, entity_pos, max_distance)
+- Update (self, offset)
+- Render (self, decorations , surf, render_scroll)
+--
+Responsibilities
+-- Handle Decoration Logic
+*-- Update the nearby Decoration for optimisation</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>355</x><y>85</y><w>150</w><h>75</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;130;280;10</additional_attributes></element><element><id>Relation</id><coordinates><x>100</x><y>90</y><w>430</w><h>60</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;100;840;10</additional_attributes></element><element><id>Relation</id><coordinates><x>575</x><y>90</y><w>35</w><h>75</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>50;130;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>85</y><w>165</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>310;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>270</y><w>25</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>30;80;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>310</y><w>105</w><h>315</h></coordinates><panel_attributes>Item
+--
+# Variables
+- Game self.game
+- int self.item_ID
+- string self.category
+- string self.sub_type
+- bool self.used
+- bool self.picked_up
+- bool self.move_inventory
+- Inventory_Type self.inventory_type
+- int self.animation_cooldown
+- int self.animation_speed
+- int self.amoun
+- int self.max_amount 
+- bool self.damaged
+- int self.max_animation
+- int self.animation
+- Entitities[] self.nearby_entities
+- int self.delete_countdown 
+--
+# Methods
+- void Activate(self)
+- void Find_Nearby_Entities(self, distance)
+- Entity Pick_Up(self)
+- bool Place_Down(self)
+- void Update_Animation(self)
+- int Distance(self, player_pos, mouse_pos)
+- void Set_Amount(self, amount)
+- void Increase_Amount(self, amount)
+- void Decrease_Amount(self, amount)
+- void Set_Inventory_Type(self, inventory_type)
+- bool Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0))
+- void Move(self, new_pos)
+- bool Update_Delete_Cooldown(self)
+- void  Set_Delete_Countdown(self, time)
+- void Damage_Taken(self, damage)
+- void Render(self, surf, offset=(0, 0))
+- void render_out_of_bounds(self, player_pos, mouse_pos, surf, offset = (0,0))
+--
+Responsibilities
+-- Items are interactable objects</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>620</y><w>50</w><h>55</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;90;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>665</y><w>105</w><h>375</h></coordinates><panel_attributes>Weapon
+--
+# Variables
+- Game self.game
+- int self.damage
+- int self.speed
+- int self.range
+- Entity self.entity
+- string self.effect
+- bool self.in_inventory
+- bool self.equipped
+- int self.hold_down
+- int self.hold_down_counter
+- int self.animation_speed
+- int self.max_animation
+- int self.attacking
+- int self.attack_animation
+- int self.attack_animation_max
+- int self.attack_animation_time
+- int self.attack_animation_counter
+- bool self.enemy_hit
+- bool self.flip_image
+- int self.rotate
+- int self.distance_from_entity
+- Entitities[] self.nearby_enemies
+- string self.sub_type
+- string self.weapon_class
+- int self.charge_time
+- int self.max_charge_time
+- bool self.is_charging
+- bool self.attack_ready
+- bool self.charged_attack
+- int self.special_attack
+- bool self.return_to_holder
+--
+# Methods
+- bool Update(self, offset=(0,0))
+- void Reset_Charge(self)
+- void Change_Rotate(self, change)
+- void Update_Attack(self)
+- void Set_Attack(self)
+- void Set_Damage(self, damage)
+- void Special_Attack(self)
+- void Charge_Attack(self, offset=(0,0))
+- void Set_Special_Attack(self, offset=(0,0))
+- void Set_Charging_Player(self)
+- void Set_Charging_Enemy(self)
+- bool Check_Entity_Cooldown(self)
+- Entity Attack_Collision_Check(self)
+- void Entity_Hit(self, entity)
+- Entity Player_Collision(self, weapon_rect)
+- bool Check_Tile(self, new_pos)
+- pygame.Rect rect_attack(self)
+- void Update_Attack_Animation(self)
+- void Slash_Attack(self)
+- void Attack_Align_Weapon(self)
+- void Stabbing_Attack_Handler(self)
+- void Stabbing_Attack(self)
+- void Set_Attack_Ready(self, state)
+- void Set_Attack_Direction(self)
+- void Point_Towards_Mouse(self)
+- void Update_Flip(self)
+- void Render_In_Inventory(self, surf, offset=(0,0))
+- void Render_Equipped(self, surf, offset=(0,0))
+- void Render(self, surf, offset=(0,0))
+- void Render_Equipped_Enemy(self, surf, offset=(0,0))
+- bool Pick_Up(self)
+- void Pickup_Reset_Weapon(self, entity)
+- void Set_Equipped_Position(self, direction_y)
+- bool Handle_Double_Click(self, sending_inventory, receiving_inventory)
+- bool Check_Legal_Move(self, inventory_slot, sending_inventory, receiving_inventory)
+- bool Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory)
+- bool Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset=(0,0))
+- bool Move_Inventory_Check(self, offset=(0,0))
+- void Equip(self)
+- void Set_Equip(self, state)
+- bool Move_Legal(self, mouse_pos, player_pos, tilemap, offset=(0,0))
+- bool Check_Inventory_Type(self, type)
+- void Update_Player_Hand(self, prev_hand)
+- bool Place_Down(self)
+- void Set_In_Inventory(self, state)
+- bool Bow_Check(self, inventory_slot)
+- bool Arrow_Check(self, inventory_slot)
+- bool Check_Two_Handed(self, inventory_slot, sending_inventory, receiving_inventory)
+- bool Check_Two_Handed_Left_Hand(self, inventory_slot)
+- bool Check_For_Two_Handed_In_Weapon_Inventory(self, inventory_slot, sending_inventory, receiving_inventory)
+- void Reset_Inventory_Slot(self, inventory_slot)
+--
+Responsibilities
+-- Weapons handle attacks, animations, and interactions with entities and inventories.</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>180</y><w>125</w><h>420</h></coordinates><panel_attributes>Abstract Entity
+--
+# Variables
+- Game self.game 
+- string self.type
+- (int, int) self.pos
+- (int, int) self.size
+-int self.active = 0
+-int self.light_level = 0
+
+        # Status Effects
+-int self.is_on_fire = 0
+-int self.fire_cooldown = 0
+-int self.fire_animation = 0
+-int self.fire_animation_cooldown = 0
+
+-int self.poisoned = 0
+-int self.poisoned_cooldown = 0
+-int self.poison_animation = 0        
+-int self.poison_animation_cooldown = 0
+
+-int self.is_on_ice = 0
+-int self.frozen = 0 
+-int self.frozen_cooldown = 0
+-int self.frozen_animation = 0
+-int self.frozen_animation_cooldown = 0
+
+-int self.wet = 0 
+-int self.wet_cooldown = 0
+-int self.wet_animation = 0
+-int self.wet_animation_cooldown = 0
+
+- bool self.render = True
+--
+#Methods
+
+- Rect rect(self)
+- void Set_Active(self, duration)
+- void Reduce_Active(self)
+- void Update(self)
+- void Damage_Taken(self, damage)
+- void Set_Effect(self, effect, duration)
+- bool Set_Poisoned(self, poison_time)
+- bool Set_Frozen(self, freeze_time)
+- void Remove_Frozen(self)
+- bool Set_Wet(self, wet_time)
+- bool Set_Dry(self, drying)
+- bool Set_On_Fire(self, fire_time)
+- void Reset_Effects(self)
+- void Set_Active(self, value)
+- void Set_Light_Level(self, value)
+- bool Update_Light_Level(self)
+- void Render(self, surf, offset=(0, 0))
+--
+Responsibilities
+-- Base physics entity, every object that inherits from this can be rendered and interacted with
+*-- Most methods are left blank for children to fill out, but every entity will have all these valu</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>350</x><y>280</y><w>80</w><h>65</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;110;140;10</additional_attributes></element></diagram>

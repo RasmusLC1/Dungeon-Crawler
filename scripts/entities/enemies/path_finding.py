@@ -214,6 +214,8 @@ class Path_Finding():
             return self.Keep_Distance(100, 80)
         elif self.entity.attack_strategy == 'medium_range':
             return self.Keep_Distance(60, 30)
+        elif self.entity.attack_strategy == 'keep_position':
+            return False
         else:
             return self.Direct_Pathing()
 
@@ -256,7 +258,7 @@ class Path_Finding():
                 return False
             self.entity.direction = pygame.math.Vector2(dx, dy)
             if self.entity.direction == 0:
-                return
+                return False
             
             self.entity.direction.normalize_ip()
             self.player_found = True
@@ -265,6 +267,7 @@ class Path_Finding():
                 self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
             self.direct_pathing_cooldown = 10
             return True
+        
         return False
 
 
@@ -277,7 +280,7 @@ class Path_Finding():
                 return False
             self.entity.direction = pygame.math.Vector2(dx, dy)
             if self.entity.direction == 0:
-                return
+                return False
             
             self.entity.direction.normalize_ip()
             self.player_found = True

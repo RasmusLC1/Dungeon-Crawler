@@ -193,7 +193,6 @@ class Player(Moving_Entity):
         return 0
     
     def Attacking(self, weapon, offset=(0, 0)):
-            
         if weapon.attacking and not self.attacking:
             self.Attack_Direction_Handler(offset)
 

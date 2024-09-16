@@ -15,7 +15,6 @@ class Enemy(Moving_Entity):
         super().__init__(game, type, pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.subtype = 'enemy'     
 
-        self.max_speed_holder = self.max_speed
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0
         self.active_weapon = None

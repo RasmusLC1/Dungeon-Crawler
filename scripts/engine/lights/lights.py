@@ -16,8 +16,8 @@ class Light():
 
     # Precompute all the cos and sin angles
     def Compute_Angles(self):
-        self.angle_cosines = [math.cos(math.radians(i * (self.field_of_view / self.number_rays))) for i in range(100)]
-        self.angle_sines = [math.sin(math.radians(i * (self.field_of_view / self.number_rays))) for i in range(100)]
+        self.angle_cosines = [math.cos(math.radians(i * (self.field_of_view / self.number_rays))) * 16 for i in range(self.number_rays * self.light_level + 2)]
+        self.angle_sines = [math.sin(math.radians(i * (self.field_of_view / self.number_rays))) * 16 for i in range(self.number_rays * self.light_level + 2)]
 
     def Setup_Tile_Light(self):
 
@@ -27,10 +27,15 @@ class Light():
             if self.light_level > tile['light']:
                 self.game.tilemap.Set_Light_Level(tile, self.light_level)
                 self.tiles.append(tile)
+            else: # If the current tile is brigther than the lightsource, then just return as nothing can be updated
+                return 
+        else: # If there is no tile present, then simply return
+            return
 
         for j in range(self.number_rays):
-            cos_angle = self.angle_cosines[j] * 16
-            sin_angle = self.angle_sines[j] * 16
+            # Compute the precalculated angles on the new points
+            cos_angle = self.angle_cosines[j]
+            sin_angle = self.angle_sines[j]
             for i in range(1, self.light_level + 1):
                 pos_x = self.pos[0] + cos_angle * i
                 pos_y = self.pos[1] + sin_angle * i

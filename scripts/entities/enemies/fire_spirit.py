@@ -100,7 +100,7 @@ class Fire_Spirit(Enemy):
             return
         
 
-        if self.health < self.max_health:
+        if self.health < self.max_health / 2:
             self.Set_Locked_On_Target(0)
 
             self.look_for_health_cooldown = 2000
