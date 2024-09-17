@@ -17,6 +17,8 @@ class Bow(Weapon):
     def Update(self, offset = (0,0)):
         if self.arrow:
             self.arrow.Set_Equipped_Position()
+            self.arrow.Set_Active(self.active)
+            self.arrow.Set_Light_Level(self.light_level)
         return super().Update(offset)
     
 
@@ -231,5 +233,7 @@ class Bow(Weapon):
         
     def Render_Equipped(self, surf, offset=(0, 0)):
         super().Render_Equipped(surf, offset)
-        if self.arrow:
-            self.arrow.Render_Equipped(surf, offset)
+        if not self.entity:
+            return
+        if self.entity.active > 20 and self.arrow:
+                self.arrow.Render_Equipped(surf, offset)

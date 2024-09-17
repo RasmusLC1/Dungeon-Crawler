@@ -34,20 +34,22 @@ class Item_Handler():
     def Find_Nearby_Item(self, entity_pos, max_distance):
         nearby_items = []
         for item in self.items:
-            
             # Calculate the Euclidean distance
             distance = math.sqrt((entity_pos[0] - item.pos[0]) ** 2 + (entity_pos[1] - item.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_items.append(item)
+
+        
         return nearby_items
 
 
     def Update(self, offset = (0,0)):
-        self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)
+        if self.Update_Nearby_Items_Cooldown():
+            self.nearby_items.clear()
+            self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)
         
         for item in self.items:
-            # if item.type == 'arrow':
-            #     print(item.delete_countdown)
+
             if item.Update_Delete_Cooldown():
                 if not item.delete_countdown:
                     self.Remove_Item(item, True)
@@ -64,6 +66,16 @@ class Item_Handler():
                     item.Shoot()
                 except Exception as e:
                     print(f"Item is not throwable {e}", item.sub_type)
+
+    def Reset_Nearby_Items_Cooldown(self):
+        self.nearby_item_cooldown = 1
+
+    def Update_Nearby_Items_Cooldown(self):
+        if self.nearby_item_cooldown:
+            self.nearby_item_cooldown = max(0, self.nearby_item_cooldown - 1)
+            return False
+        self.nearby_item_cooldown = 30
+        return True
 
     def Render(self, items, surf, render_scroll = (0, 0)):
         

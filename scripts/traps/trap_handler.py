@@ -89,11 +89,7 @@ class Trap_Handler:
         return nearby_traps
     
     def Update(self):
-        if self.nearby_traps_cooldown:
-            self.nearby_traps_cooldown = max(0, self.nearby_traps_cooldown - 1)
-            return
-        else:
-            self.nearby_traps_cooldown = 50
+        if self.Update_Nearby_Traps_Cooldown():
             self.nearby_traps.clear()
             self.nearby_traps = self.Find_Nearby_Traps(self.game.player.pos, 200)
 
@@ -101,7 +97,17 @@ class Trap_Handler:
             if not trap:
                 continue
             trap.Animation_Update()
-            
+    
+    def Reset_Nearby_Traps_Cooldown(self):
+        self.nearby_traps_cooldown = 1
+
+    def Update_Nearby_Traps_Cooldown(self):
+        if self.nearby_traps_cooldown:
+            self.nearby_traps_cooldown = max(0, self.nearby_traps_cooldown - 1)
+            return False
+        self.nearby_traps_cooldown = 50
+        return True
+
     def Remove_Trap(self, trap):
         self.game.ray_caster.Remove_Trap(trap)
         if trap in self.traps:

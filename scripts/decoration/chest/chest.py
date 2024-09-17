@@ -84,6 +84,7 @@ class Chest(Decoration):
             return
         self.empty = True
         self.text_cooldown = 30
+        self.game.item_handler.Reset_Nearby_Items_Cooldown()
         self.game.sfx['chest_open'].play()
         self.game.clatter.Generate_Clatter(self.pos, 5000) # Generate clatter to alert nearby enemies
 

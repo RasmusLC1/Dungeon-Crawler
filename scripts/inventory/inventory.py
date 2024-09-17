@@ -298,7 +298,13 @@ class Inventory:
 
         return False
 
-    
+    def Get_Items(self):
+        items = []
+        for inventory_slot in self.inventory:
+            if inventory_slot.item:
+                items.append(inventory_slot.item)
+
+        return items
 
     # Implement the __iter__ method to make the class iterable
     def __iter__(self):

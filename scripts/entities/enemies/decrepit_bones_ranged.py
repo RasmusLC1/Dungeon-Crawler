@@ -30,6 +30,9 @@ class Decrepit_Bones_Ranged(Enemy):
         if self.distance_to_player < 100 and self.distance_to_player > 40:
             self.Attack()
 
+        if self.distance_to_player > 110 and self.charge:
+            self.charge = 0
+
     def Set_Idle(self):
         pass
 

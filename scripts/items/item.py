@@ -2,7 +2,7 @@ import random
 import math
 import pygame
 from scripts.entities.entities import PhysicsEntity
-from scripts.traps.trap_handler import Trap_Handler
+from scripts.items.utility.textbox import Text_Box
 
 
 
@@ -27,7 +27,10 @@ class Item(PhysicsEntity):
         self.animation = random.randint(0, self.max_animation)
         self.nearby_entities = []
         self.delete_countdown = 0
-        
+        self.text_box = Text_Box(self.game, self)
+
+    def Update_Text_Box(self):
+        self.text_box.Update(self.game.render_scroll)
 
     def Activate(self):
         pass
@@ -38,8 +41,6 @@ class Item(PhysicsEntity):
         if distance_player < distance:
             self.nearby_entities.append(self.game.player)
         self.nearby_entities.extend(self.game.enemy_handler.Find_Nearby_Enemies(self, distance))
-
-
 
 
     def Pick_Up(self):
@@ -129,8 +130,11 @@ class Item(PhysicsEntity):
     
     # Render legal position
     def Render(self, surf, offset=(0, 0)):
+
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        self.text_box.Render(surf, offset)
+        
 
     # Render item with fadeout if it's in an illegal position
     def render_out_of_bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):

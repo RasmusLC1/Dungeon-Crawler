@@ -22,6 +22,9 @@ class Decrepit_Bones_Melee(Enemy):
         if self.distance_to_player < 20:
             self.Attack()
 
+        if self.distance_to_player > 30 and self.charge:
+            self.charge = 0
+
     def Set_Idle(self):
         pass
 

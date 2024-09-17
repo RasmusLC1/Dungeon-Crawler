@@ -25,6 +25,9 @@ class Ice_Spirit(Enemy):
         if self.distance_to_player <= 100:
             self.Attack()
 
+        if self.distance_to_player > 110 and self.charge:
+            self.charge = 0
+
         
 
         

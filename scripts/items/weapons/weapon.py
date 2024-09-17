@@ -308,6 +308,9 @@ class Weapon(Item):
         
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        self.text_box.Render(surf)
+
+
 
 
     # Render the weapon in entity's hand
@@ -317,9 +320,10 @@ class Weapon(Item):
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
         
-        surf.blit(
-            pygame.transform.flip(weapon_image, self.flip_image, False),
-                                  (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        surf.blit( pygame.transform.flip(weapon_image, self.flip_image, False),
+                    (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+  
+        
             
 
     # Render basic function on the map
@@ -351,7 +355,9 @@ class Weapon(Item):
         
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        self.text_box.Render(surf, offset)
 
+        
 
     # Render the weapon in entity's hand
     def Render_Equipped_Enemy(self, surf, offset=(0, 0)):

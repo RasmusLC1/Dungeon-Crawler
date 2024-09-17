@@ -30,6 +30,9 @@ class Fire_Spirit(Enemy):
         if self.distance_to_player < 60:
             self.Attack()
 
+        if self.distance_to_player > 70 and self.charge:
+            self.charge = 0
+
 
         
     
