@@ -54,7 +54,7 @@ class Item_Handler():
                 if not item.delete_countdown:
                     self.Remove_Item(item, True)
 
-            if not item.picked_up:
+            if item.picked_up:
                 self.items.remove(item)
 
             if item.sub_type in throwable_weapons:

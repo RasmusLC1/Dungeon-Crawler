@@ -7,11 +7,13 @@ class Text_Box():
         self.render = False
 
     def Update(self, offset):
-        
+        # print(vars(self.item))
         
         # Handle when item is in inventory
-        if self.item.picked_up:
-            if self.item.rect().colliderect(self.game.mouse.rect_pos(self.game.render_scroll)):
+        if not self.item.picked_up:
+            # print(self.item, self.item.pos, self.game.mouse.player_mouse)
+            if self.item.rect().colliderect(self.game.mouse.rect_pos()):
+                print(self.item.type)
                 self.render = True
                 return
         else:
@@ -32,15 +34,14 @@ class Text_Box():
         rectangle_surface.fill(rectangle_color)
 
     
-        if self.item.picked_up:
+        if not self.item.picked_up:
             x_pos = self.item.pos[0] - x_size / 4
             y_pos = self.item.pos[1] - y_size
             surf.blit(rectangle_surface, (x_pos, y_pos))
             self.game.default_font.Render_Word(surf, self.item.type, (x_pos, y_pos))
             if self.item.category == 'weapon':
-                damage_text = 'damage ' + str(self.item.damage)
-                # print(damage_text)
-                self.game.default_font.Render_Word(surf, damage_text, (x_pos, y_pos + 10))
-                # self.game.default_font.Render_Word(surf, str(self.item.range), (x_pos, y_pos - 20))
+                self.game.damage_symbols.Render_Symbol(surf, 'fire',  (x_pos, y_pos + 10))
+                self.game.default_font.Render_Word(surf, str(self.item.damage), (x_pos + 20, y_pos + 10))
+                self.game.default_font.Render_Word(surf, str(self.item.range), (x_pos + 20, y_pos + 20))
         else:
             surf.blit(rectangle_surface, (self.item.pos[0] - offset[0], self.item.pos[1] - offset[1] - y_size))

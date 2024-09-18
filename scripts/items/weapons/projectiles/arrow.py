@@ -24,7 +24,7 @@ class Arrow(Projectile):
         self.entity = entity
         self.equipped = True
         self.in_inventory = True
-        self.picked_up = True
+        self.picked_up = False
         self.attacking = 10
 
 

@@ -15,7 +15,7 @@ class Item(PhysicsEntity):
         self.category = category
         self.sub_type = ''
         self.used = False
-        self.picked_up = True
+        self.picked_up = False
         self.move_inventory = False # Check for if the item is being moved to a new inventory
         self.inventory_type = None
         self.animation_cooldown = 0
@@ -47,7 +47,7 @@ class Item(PhysicsEntity):
         # First Check if the player is colliding with the object as this is priority
         if self.rect().colliderect(self.game.player.rect()):
             if self.game.item_inventory.Add_Item(self):
-                self.picked_up = False
+                self.picked_up = True
                 self.game.entities_render.Remove_Entity(self)
                 return self.game.player
         
@@ -68,7 +68,7 @@ class Item(PhysicsEntity):
             trap.Update(self)
             if self.damaged:
                 return True
-        self.picked_up = True
+        self.picked_up = False
         return False
 
     def Update_Animation(self):

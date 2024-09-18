@@ -10,6 +10,7 @@ class Font():
         '-', '+', ':','!', ' ']
 
 
+
     def find_char_positions(self, input_string):
         # Convert input_string to lowercase to handle case-insensitivity
         characters = list(input_string.lower())  
@@ -29,12 +30,16 @@ class Font():
         
         return char_positions
 
-
     def Render_Word(self, surf, text, pos):
 
         
         # Get the positions of the characters in font_lookup
         char_positions = self.find_char_positions(text)
+
+        if not char_positions:
+            return
+
+
         
         # Iterate over the list of positions to render each character
         for i, font_position in enumerate(char_positions):

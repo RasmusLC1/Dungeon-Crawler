@@ -55,12 +55,12 @@ class Projectile(Weapon):
             weapon_inventory.Remove_Item(self, True)
             self.game.item_handler.Add_Item(self)
         self.game.entities_render.Add_Entity(self)
-        self.picked_up = True
+        self.picked_up = False
         self.equipped = False
         self.in_inventory = False
 
     def Pick_Up(self):
-        if self.shoot_speed:
+        if self.shoot_speed or self.special_attack:
             return
         return super().Pick_Up()
 
@@ -71,7 +71,7 @@ class Projectile(Weapon):
         # the weapon has been picked up
         if self.in_inventory:
 
-            if self.picked_up:
+            if not self.picked_up:
                 self.Render_In_Inventory(surf, offset)
             else:
                 self.Render_In_Inventory(surf)

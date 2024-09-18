@@ -42,7 +42,7 @@ class Inventory:
         if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
             # Move the item
             self.active_item = inventory_slot.item
-            self.active_item.picked_up = True
+            self.active_item.picked_up = False
             inventory_slot.item = None
             inventory_slot.Set_Active(True)
             return True
@@ -200,7 +200,7 @@ class Inventory:
                 print(f"Item is not a weapon {e}")
 
         inventory_type_holder = item.inventory_type
-        item.picked_up = False  # Ensure the item is marked as not picked up
+        item.picked_up = True  # Ensure the item is marked as not picked up
         inventory_slot.Add_Item(item)  # Place the item in the inventory slot
         inventory_slot.Set_Active(False)  # Deactivate the slot after placing the item
         if inventory_type_holder and item:

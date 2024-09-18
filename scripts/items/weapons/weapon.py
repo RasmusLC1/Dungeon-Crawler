@@ -332,7 +332,7 @@ class Weapon(Item):
         # the weapon has been picked up
         
         if self.in_inventory:
-            if self.picked_up:
+            if not self.picked_up:
                 self.Render_In_Inventory(surf, offset)
             else:
                 self.Render_In_Inventory(surf)
@@ -384,7 +384,7 @@ class Weapon(Item):
 
     # Inventory Logic below
     #######################################################
-    # Pick up the torch and update the general light in the area
+    # Pick up the weapon and update the general light in the area
     def Pick_Up(self):
         if self.in_inventory:
             return False
@@ -399,7 +399,7 @@ class Weapon(Item):
     def Pickup_Reset_Weapon(self, entity):
         self.entity = entity
         self.in_inventory = True
-        self.picked_up = False
+        self.picked_up = True
         self.rotate = 0
         self.enemy_hit = False
         self.light_level = 10
@@ -493,12 +493,17 @@ class Weapon(Item):
         for receiving_inventory_slot in receiving_inventory:
             if receiving_inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
                 if self.Send_To_Inventory(receiving_inventory_slot, sending_inventory, receiving_inventory):
+                    for inventory_slot in sending_inventory.inventory:
+                        if not inventory_slot.active: # Reset active state after dragging
+                            continue
+                        inventory_slot.Set_Active(False)
+                        break
                     return True             
         return False
 
     # Check if the weapon can be moved to the weapon inventory
     def Move_Inventory_Check(self, offset = (0,0)):
-        if self.picked_up:
+        if not self.picked_up:
             active_inventory = self.game.weapon_inventory.active_inventory
             weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
             if self.equipped: # Move to normal inventory
@@ -528,7 +533,7 @@ class Weapon(Item):
 
         # Check if the weapon can be moved to the weapon inventory
         if self.Move_Inventory_Check(offset):
-            self.picked_up = False
+            self.picked_up = True
             self.move_inventory = True
             return False
         if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):

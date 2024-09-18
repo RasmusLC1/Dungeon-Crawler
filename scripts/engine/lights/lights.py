@@ -7,7 +7,7 @@ class Light():
         self.pos = pos
         self.pos_holder = pos
         self.tiles = []
-        self.picked_up = False
+        self.picked_up = True
         self.active = True
         self.number_rays = 80
         self.field_of_view = 360

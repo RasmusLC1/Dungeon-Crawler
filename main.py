@@ -28,7 +28,8 @@ from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
-from scripts.engine.font import Font
+from scripts.engine.fonts.font import Font
+from scripts.engine.fonts.damage_symbols import Damage_Symbols
 from scripts.engine.clatter import Clatter
 
 
@@ -67,6 +68,7 @@ class Game:
         self.a_star = A_Star()
         self.entities_render = Entity_Renderer(self)
         self.default_font = Font(self)
+        self.damage_symbols = Damage_Symbols(self)
         self.clatter = Clatter(self)
 
 

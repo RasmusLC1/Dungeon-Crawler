@@ -36,9 +36,12 @@ class Mouse_Handler:
         if self.nearby_item_cooldown:
             self.nearby_item_cooldown = max(0, self.nearby_item_cooldown - 1)
             return False
+        
+
         self.nearby_item_cooldown = 30
         self.nearby_items.clear()
         self.Player_Mouse_Update()
+
         self.nearby_items = self.game.item_handler.Find_Nearby_Item(self.player_mouse, 100)
         inventory_items = self.game.item_inventory.Get_Items()
         
