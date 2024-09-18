@@ -38,9 +38,9 @@ class Text_Box():
             surf.blit(rectangle_surface, (x_pos, y_pos))
             self.game.default_font.Render_Word(surf, self.item.type, (x_pos, y_pos))
             if self.item.category == 'weapon':
-                # damage_text = 'Damage: ' + str(self.item.damage)
+                damage_text = 'damage ' + str(self.item.damage)
                 # print(damage_text)
-                self.game.default_font.Render_Word(surf, str(self.item.damage), (x_pos, y_pos + 10))
+                self.game.default_font.Render_Word(surf, damage_text, (x_pos, y_pos + 10))
                 # self.game.default_font.Render_Word(surf, str(self.item.range), (x_pos, y_pos - 20))
         else:
             surf.blit(rectangle_surface, (self.item.pos[0] - offset[0], self.item.pos[1] - offset[1] - y_size))

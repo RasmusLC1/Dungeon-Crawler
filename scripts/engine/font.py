@@ -7,7 +7,7 @@ class Font():
         self.font_lookup = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '-', '!', ]
+        '-', '+', ':','!', ' ']
 
 
     def find_char_positions(self, input_string):
@@ -31,6 +31,7 @@ class Font():
 
 
     def Render_Word(self, surf, text, pos):
+
         
         # Get the positions of the characters in font_lookup
         char_positions = self.find_char_positions(text)

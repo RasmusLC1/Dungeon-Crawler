@@ -284,7 +284,7 @@ class Graphics_Loader:
 
     def Asset_Font(self):
         font = {
-            'font' : get_tiles_from_sheet('font/font.png', 7, 4, 0, 0, 8, 8),
+            'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 8, 8),
         }
         self.assets.update(font)
 
