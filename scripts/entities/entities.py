@@ -102,7 +102,7 @@ class PhysicsEntity:
     #set Fire effect
     def Set_On_Fire(self, fire_time):
         if self.wet:
-            return
+            return False
         if self.frozen:
             self.Remove_Frozen()
         self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)

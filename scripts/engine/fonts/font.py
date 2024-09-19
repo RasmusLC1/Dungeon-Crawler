@@ -7,7 +7,7 @@ class Font():
         self.font_lookup = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '-', '+', ':','!', ' ']
+        '-', '+', ':','!', '_' ' ']
 
 
 
@@ -43,6 +43,10 @@ class Font():
         
         # Iterate over the list of positions to render each character
         for i, font_position in enumerate(char_positions):
-            item_image = self.font[font_position]
-            surf.blit(item_image, pos)
-            pos = (pos[0] + 7, pos[1])
+            try:
+                item_image = self.font[font_position]
+                surf.blit(item_image, pos)
+                pos = (pos[0] + 7, pos[1])
+            except Exception as e:
+                print(f"WRONG SYMBOL: {e}")
+            

@@ -456,7 +456,7 @@ class Moving_Entity(PhysicsEntity):
         elif effect == 'Slow_Down':
             return self.Slow_Down(duration)
         else:
-            print("EFFECT MISSING", effect)
+            return False
 
     #set snare effect
     def Set_Snare(self, snare_time):

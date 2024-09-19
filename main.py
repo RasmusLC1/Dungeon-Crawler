@@ -31,6 +31,7 @@ from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
 from scripts.engine.fonts.damage_symbols import Damage_Symbols
 from scripts.engine.clatter import Clatter
+from scripts.items.utility.text_box_handler import Text_Box_handler
 
 
 
@@ -70,6 +71,7 @@ class Game:
         self.default_font = Font(self)
         self.damage_symbols = Damage_Symbols(self)
         self.clatter = Clatter(self)
+        self.text_box_handler = Text_Box_handler(self)
 
 
 
@@ -157,6 +159,7 @@ class Game:
             self.ray_caster.Update(self)
 
             self.mouse.Mouse_Update()
+            self.text_box_handler.Update()
     
 
     def Render(self):
@@ -176,6 +179,7 @@ class Game:
             particle.Render(self.display, self.render_scroll)
         self.item_inventory.Render(self.display)
         self.weapon_inventory.Render(self.display, self.render_scroll)
+        self.text_box_handler.Render(self.display, self.render_scroll)
 
         self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
 

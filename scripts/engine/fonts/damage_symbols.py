@@ -6,7 +6,7 @@ class Damage_Symbols():
         self.damage_symbols = self.game.assets['damage_symbols']
         self.damage_symbols_lookup = [
                                     'slash', 'blunt', 'electric',
-                                    'fire', 'ice', 'poison']
+                                    'fire', 'freeze', 'poison']
 
 
 
@@ -19,13 +19,9 @@ class Damage_Symbols():
         return None
 
     def Render_Symbol(self, surf, text, pos):
-
-        
         # Get the positions of the characters in font_lookup
         symbol_position = self.find_symbol_position(text)
-        if not symbol_position:
-            return
-        
+
         # Iterate over the list of positions to render each character
         item_image = self.damage_symbols[symbol_position]
         surf.blit(item_image, pos)

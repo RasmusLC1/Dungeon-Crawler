@@ -5,7 +5,7 @@ import math
 
 class Torch(Weapon):
     def __init__(self, game, pos, size):
-        super().__init__(game, pos, size, 'torch', 1, 3, 5, 'one_handed_melee')
+        super().__init__(game, pos, size, 'torch', 1, 3, 5, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
         self.light_level = 12

@@ -15,8 +15,7 @@ class Mouse_Handler:
         self.single_click_delay = 0  # Single click timer
         self.inventory_clicked = 0 # Check if the inventory has been clicked
         
-        self.nearby_items = []
-        self.nearby_item_cooldown = 0
+        
 
     # Mouse inputs that need to be updated for each frame
     def Mouse_Update(self):
@@ -24,31 +23,8 @@ class Mouse_Handler:
         self.Decrement_Inventory_Clicked()
         self.Hold_Down_Left()
         self.Hold_Down_Right()
-
-        self.Update_Nearby_Items()
-        self.Check_Items()
-
-    def Check_Items(self):
-        for item in self.nearby_items:
-            item.Update_Text_Box()
-        
-    def Update_Nearby_Items(self):
-        if self.nearby_item_cooldown:
-            self.nearby_item_cooldown = max(0, self.nearby_item_cooldown - 1)
-            return False
-        
-
-        self.nearby_item_cooldown = 30
-        self.nearby_items.clear()
         self.Player_Mouse_Update()
 
-        self.nearby_items = self.game.item_handler.Find_Nearby_Item(self.player_mouse, 100)
-        inventory_items = self.game.item_inventory.Get_Items()
-        
-        for item in inventory_items:
-            if item not in self.nearby_items:
-                self.nearby_items.append(item)
-        return True
 
     # Mouse inputs that only need to be updated when there is an input
     def Mouse_Input(self, key_press, offset=(0, 0)):
@@ -137,6 +113,6 @@ class Mouse_Handler:
     def rect_click(self):
         return pygame.Rect(self.click_pos[0], self.click_pos[1], 1, 1)    
     
-    # Mouse movement collision
+    # Mouse movement collision, add offset to remove it
     def rect_pos(self, offset = (0, 0)):
         return pygame.Rect(self.mpos[0] - offset[0], self.mpos[1]  - offset[1], 1, 1)  

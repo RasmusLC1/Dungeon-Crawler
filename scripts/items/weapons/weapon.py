@@ -7,7 +7,7 @@ import math
 
 
 class Weapon(Item):
-    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
+    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, damage_type = 'slash'):
         super().__init__(game, type, 'weapon', pos, size, 1)
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
@@ -33,7 +33,7 @@ class Weapon(Item):
         # Can be expanded to damaged or dirty versions of weapons later
         self.sub_type = self.type # Sub_type can be used to make different variants of weapon
         self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
-        
+        self.damage_type = damage_type # Default damage type, 
         
         self.charge_time = 0  # Tracks how long the button is held
         self.max_charge_time = 100  # Maximum time to fully charge
@@ -192,6 +192,7 @@ class Weapon(Item):
 
         damage = self.entity.strength * self.damage
         entity.Damage_Taken(damage)
+        entity.Set_Effect(self.effect, 3)
         self.enemy_hit = True
 
         # Set special status effect of weapon if weapon has one
@@ -308,7 +309,6 @@ class Weapon(Item):
         
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        self.text_box.Render(surf)
 
 
 
@@ -328,6 +328,7 @@ class Weapon(Item):
 
     # Render basic function on the map
     def Render(self, surf, offset=(0, 0)):
+        
         # Check if item is in inventory. If yes we don't need offset, except if
         # the weapon has been picked up
         
@@ -355,7 +356,6 @@ class Weapon(Item):
         
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        self.text_box.Render(surf, offset)
 
         
 

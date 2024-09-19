@@ -3,12 +3,15 @@ import pygame
 
 class Ice_Particle(Projectile):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, direction, entity):
-        super().__init__(game, pos, size, type, damage, speed, range, weapon_class)
+        super().__init__(game, pos, size, type, damage, speed, range, weapon_class, 'ice')
         self.special_attack = special_attack / 4
         self.entity = entity
         self.direction = direction  # Store the direction vector
         self.attack_animation_max = 3
+        self.delete_countdown = 50
         self.attack_animation_time = range // self.attack_animation_max
+        self.effect = 'Freeze'
+   
 
     def Shoot(self):
         if not self.shoot_speed:
@@ -23,11 +26,10 @@ class Ice_Particle(Projectile):
         entity = super().Shoot()
         if entity:
             self.Set_Special_Attack(0)
-            entity.Set_Effect('Freeze', 3)
 
-        self.range = max(0, self.range - 1)
-        if self.special_attack <= 0 or not self.range:
-            self.game.item_handler.Remove_Item(self, True)
+    def Update_Text_Box(self, hitbox_1, hitbox_2):
+        pass
+
         
         
 

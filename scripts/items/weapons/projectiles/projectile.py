@@ -3,9 +3,11 @@ import math
 import pygame
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class):
-        super().__init__(game, pos, size, type, damage, speed, range, weapon_class)
+    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, damage_type):
+        super().__init__(game, pos, size, type, damage, speed, range, weapon_class,  damage_type)
         self.shoot_speed = 0
+        self.pickup_allowed = True
+
 
     def Set_Special_Attack(self, offset= (0,0)):
         super().Set_Special_Attack(offset)
@@ -60,7 +62,7 @@ class Projectile(Weapon):
         self.in_inventory = False
 
     def Pick_Up(self):
-        if self.shoot_speed or self.special_attack:
+        if self.delete_countdown:
             return
         return super().Pick_Up()
 
@@ -81,15 +83,10 @@ class Projectile(Weapon):
         # Set image
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
-        # if self.entity.attack_direction[0] < 0:
-        #     self.rotate += 180
-
-
         if self.special_attack:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
 
         
-
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))
         weapon_image.set_alpha(alpha_value)
@@ -103,3 +100,4 @@ class Projectile(Weapon):
         
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        

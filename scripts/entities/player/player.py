@@ -308,7 +308,6 @@ class Player(Moving_Entity):
     
 
     def Mouse_Handler(self):
-        self.game.mouse.Player_Mouse_Update()
         self.Set_Target(self.game.mouse.player_mouse)
 
     def Set_Direction_Holder(self):

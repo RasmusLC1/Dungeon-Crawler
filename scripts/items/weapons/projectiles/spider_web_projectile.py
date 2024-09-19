@@ -7,15 +7,17 @@ import pygame
 
 class Spider_Web_Projectile(Projectile):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, direction, entity):
-        super().__init__(game, pos, size, type, damage, speed, range, weapon_class)
+        super().__init__(game, pos, size, type, damage, speed, range, weapon_class, 'blunt')
         self.special_attack = special_attack / 4
         self.entity = entity
         self.direction = direction  # Store the direction vector
         self.target_hit = 0
+        self.delete_countdown = 100
         self.attack_animation_max = 3
         self.attack_animation_time = range // self.attack_animation_max
 
-
+    def Update_Text_Box(self, hitbox_1, hitbox_2):
+        pass
 
     def Shoot(self):
         if self.target_hit:

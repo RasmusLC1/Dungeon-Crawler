@@ -27,10 +27,14 @@ class Item(PhysicsEntity):
         self.animation = random.randint(0, self.max_animation)
         self.nearby_entities = []
         self.delete_countdown = 0
+        self.value = 100 # Placeholder gold value
         self.text_box = Text_Box(self.game, self)
 
-    def Update_Text_Box(self):
-        self.text_box.Update(self.game.render_scroll)
+    def Update_Text_Box(self, hitbox_1, hitbox_2):
+        if self.text_box.Update(hitbox_1, hitbox_2):
+            return self
+        else:
+            return None
 
     def Activate(self):
         pass
@@ -133,7 +137,6 @@ class Item(PhysicsEntity):
 
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        self.text_box.Render(surf, offset)
         
 
     # Render item with fadeout if it's in an illegal position

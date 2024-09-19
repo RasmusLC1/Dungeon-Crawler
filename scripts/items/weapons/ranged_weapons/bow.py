@@ -115,6 +115,7 @@ class Bow(Weapon):
             # print(vars(self.arrow))
             self.charge_time = 120
             self.arrow.Set_Special_Attack(self.is_charging)
+            self.arrow.Set_Delete_Countdown(50)
             self.Shoot_Arrow()
             self.Reset_Bow()
             return True

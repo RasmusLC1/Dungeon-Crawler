@@ -22,6 +22,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Weapons_List(self)
         Graphics_Loader.Asset_Weapon_Inventory(self)
         Graphics_Loader.Asset_Font(self)
+        Graphics_Loader.Asset_Loot(self)
 
         
     def Asset_Background_List(self):
@@ -282,32 +283,15 @@ class Graphics_Loader:
         }
         self.assets.update(potion_assets)
 
+    def Asset_Loot(self):
+        loot = {
+            'gold_coins' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 8, 8),
+        }
+        self.assets.update(loot)
+
     def Asset_Font(self):
         font = {
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 8, 8),
             'damage_symbols' : get_tiles_from_sheet('font/damage_symbols.png', 5, 0, 0, 0, 8, 8),
         }
         self.assets.update(font)
-
-            
-    def sound_effects(self):
-        self.sfx ={
-            'jump' : pygame.mixer.Sound('data/sfx/jump.wav'),
-            'dash' : pygame.mixer.Sound('data/sfx/dash.wav'),
-            'hit' : pygame.mixer.Sound('data/sfx/hit.wav'),
-            'shoot' : pygame.mixer.Sound('data/sfx/shoot.wav'),
-            'ambience' : pygame.mixer.Sound('data/sfx/ambience.wav'),
-        }
-
-        self.sfx['ambience'].set_volume(0.2)
-        self.sfx['shoot'].set_volume(0.4)
-        self.sfx['hit'].set_volume(0.8)
-        self.sfx['dash'].set_volume(0.3)
-        self.sfx['jump'].set_volume(0.7)
-
-    def get_tile_image_from_sheet(file_name, x, y, color):
-        sheet = pygame.image.load('data/images/tiles/' + file_name).convert_alpha()
-        sheet.set_colorkey(color)
-        return sheet
-
-    

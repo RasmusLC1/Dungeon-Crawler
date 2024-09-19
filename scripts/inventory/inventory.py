@@ -28,7 +28,7 @@ class Inventory:
             # slot if no continue to next inventory slot
             if not self.game.mouse.left_click:
                 continue
-            if not self.Inventory_Slot_Collision(inventory_slot):
+            if not self.Inventory_Slot_Collision_Click(inventory_slot):
                 continue
             if self.Pickup_Item_To_Move(inventory_slot):
                 return
@@ -49,7 +49,7 @@ class Inventory:
         return False
 
     # Check for collision with inventory slot, if no collision return False
-    def Inventory_Slot_Collision(self, inventory_slot):
+    def Inventory_Slot_Collision_Click(self, inventory_slot):
         if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
             self.clicked_inventory_slot = inventory_slot
             self.item_clicked += 1
