@@ -3,7 +3,7 @@ import random
 from scripts.weapon_generator import Weapon_Generator
 from scripts.items.item import Item
 from scripts.items.potions.health_potion import Health_Potion
-from scripts.items.potions.mana_potion import Mana_Potion
+from scripts.items.potions.soul_potion import Soul_Potion
 from scripts.decoration.decoration import Decoration
 
 from scripts.items.weapons.close_combat.sword import Sword
@@ -34,9 +34,9 @@ class Chest(Decoration):
         self.weapons = [
             # 'sword',
             # 'torch',
-            'spear',
-            # 'bow',
-            # 'arrow',
+            # 'spear',
+            'bow',
+            'arrow',
         ]
 
     def rect(self):
@@ -50,7 +50,7 @@ class Chest(Decoration):
                 item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
                 self.game.item_handler.Add_Item(item)
         elif self.loot_type == 1:
-                item = Mana_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
+                item = Soul_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
                 self.game.item_handler.Add_Item(item)
 
 

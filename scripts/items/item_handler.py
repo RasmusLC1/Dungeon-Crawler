@@ -66,6 +66,10 @@ class Item_Handler():
 
             if item.sub_type in throwable_weapons:
                 if not item.special_attack:
+                    if not item.entity:
+                        continue
+                    if item.entity.type == 'player':
+                        continue
                     if item.shoot_speed and item.entity.subtype == 'enemy' and not item.delete_countdown:
                         item.Set_Delete_Countdown(10)
                     continue

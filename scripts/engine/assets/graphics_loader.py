@@ -293,5 +293,7 @@ class Graphics_Loader:
         font = {
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 8, 8),
             'damage_symbols' : get_tiles_from_sheet('font/damage_symbols.png', 5, 0, 0, 0, 8, 8),
+            'potion_symbols' : get_tiles_from_sheet('font/potion_symbols.png', 7, 1, 0, 0, 8, 8),
+            'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 16, 16),
         }
         self.assets.update(font)

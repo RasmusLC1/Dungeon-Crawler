@@ -21,7 +21,7 @@ Game Ideas
 
 # Gameplay Loop
     Start with a deck / Runes, mixture of positive and negative cards, but all low risk
-    Colelct gold and artifcats in dungeon to buy new cards
+    Collect gold and artifcats in dungeon to buy new cards
     Lower levels have better rewards
     To get to lower levels you need to collect a key on each floor
     Each time you complete a run you get a curse card that is calculated based on performance to force playstyle adjustments
@@ -76,12 +76,19 @@ Game Ideas
 
 # Potions
     # Health
+    strength
+    movement
     # Mana
-    Stamina
-    Invisibility
-    Light
-    Damage
-    Poison
+    poison resistance
+    invisibility
+    fire resistance
+    frost resistance
+    physical resistance
+    health regen, more health than health potion but slower
+    silence
+    luck
+    vampire, heals based on damage dealt
+
 
 # Arrows:
     # Basic Arrow, Higher base damage
@@ -134,11 +141,10 @@ Game Ideas
                 - Ranged, shoots the player from range 
                 - Melee, attacks the player up close
 
-    Spider, shoots spiderweb that snares you, less damage
+    # Spider, shoots spiderweb that snares you, less damage
     Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
-    Skeletons take more damage from blunt weapons, make more noise from rattle
+    # Skeletons take more damage from blunt weapons, make more noise from rattle
     Rats swarm attack, easy to kill, little damage
-    Robots, noisy, high armour but slow
     Minotaur, boss mob, charges and breaks envoirement, high damage, low defence
     Clicker, blind but good hearing, loud because of clicks
     Sniffer, Good smells, but bad hearing, attracted to blood and destroyed potions
@@ -150,7 +156,7 @@ Game Ideas
     Living plant, waits for the player and tries to ambush them, also attacks normal enemies, basically a trap
     Armadillos that dig and pop out of the ground to surprise you
     Goblins swarm attack, cowardly
-    Elementals, rock, ice, fire, electric, metal
+    # Elementals, rock, ice, fire, electric, metal
     Lurker in the dark, lowers light level around it, tries to sneak attack, vulnable to light
 
 # Biomes:
@@ -162,7 +168,7 @@ Game Ideas
     Ancient ruins, undead enemies, rare runes
     Water caves, need to traverse lots of water, Deep water contains enemies, look for shallow water. More Treasure chests
 
-
+# LOW PRIORITY TASKS
 # Companions:
     Save friendly entities from prisons through the dungeon and make them ally you
     They will follow you and assists in different ways

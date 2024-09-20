@@ -33,8 +33,6 @@ class Moving_Entity(PhysicsEntity):
 
         
         self.damage_cooldown = 0
-        self.mana = 0
-        self.max_mana = 100
         self.snared = 0
 
         self.nearby_traps = []
@@ -414,11 +412,7 @@ class Moving_Entity(PhysicsEntity):
         self.health = min(self.max_health, self.health + healing)
         return True
     
-    def Increase_Mana(self, added_mana):
-        if self.mana >= self.max_mana:
-            return False     
-        self.mana = min(self.max_mana, self.mana + added_mana)
-        return True
+    
         
     # Push the entity in the given direction
     def Push(self, x_direction, y_direction):

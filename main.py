@@ -18,8 +18,7 @@ from scripts.decoration.decoration_handler import Decoration_Handler
 from scripts.items.item_handler import Item_Handler
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
-from scripts.interface.mana_bar import Mana_Bar
-from scripts.interface.coins import Coins
+from scripts.interface.souls import Souls
 from scripts.decoration.chest.Chest_handler import Chest_Handler
 from scripts.entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.a_star import A_Star
@@ -30,6 +29,7 @@ from scripts.engine.ray_caster import Ray_Caster
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
 from scripts.engine.fonts.damage_symbols import Damage_Symbols
+from scripts.engine.fonts.potion_symbols import Potion_Symbols
 from scripts.engine.clatter import Clatter
 from scripts.items.utility.text_box_handler import Text_Box_handler
 
@@ -70,8 +70,12 @@ class Game:
         self.entities_render = Entity_Renderer(self)
         self.default_font = Font(self)
         self.damage_symbols = Damage_Symbols(self)
+        self.potion_symbols = Potion_Symbols(self)
         self.clatter = Clatter(self)
         self.text_box_handler = Text_Box_handler(self)
+        Ammo_Bar.__init__(self)
+        Health_Bar.__init__(self)
+        self.souls_interface = Souls(self)
 
 
 
@@ -114,10 +118,7 @@ class Game:
         self.chest_handler = Chest_Handler(self)
         self.item_handler = Item_Handler(self)
  
-        Ammo_Bar.__init__(self)
-        Mana_Bar.__init__(self)
-        Health_Bar.__init__(self)
-        Coins.__init__(self)
+        
         
         self.a_star.Setup_Map(self)
 
@@ -155,7 +156,7 @@ class Game:
 
             self.item_inventory.Update(self.render_scroll)
             self.weapon_inventory.Update(self.render_scroll)
-            Coins.Update(self)
+            self.souls_interface.Update()
             self.ray_caster.Update(self)
 
             self.mouse.Mouse_Update()
@@ -172,8 +173,7 @@ class Game:
 
         Health_Bar.Health_Bar(self)
         Ammo_Bar.Attack_Recharge_Bar(self)
-        Mana_Bar.Mana_Bar(self)
-        Coins.Render(self)
+        self.souls_interface.Render(self.display)
         self.entities_render.Render(self.display, self.render_scroll)
         for particle in self.particles:
             particle.Render(self.display, self.render_scroll)

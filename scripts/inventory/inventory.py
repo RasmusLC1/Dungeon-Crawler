@@ -169,8 +169,8 @@ class Inventory:
 
     def Move_Item_To_New_Slot(self, offset):
         # Check for if the item is being moved to another inventory
-        if self.active_item.move_inventory:
-            self.active_item.move_inventory = False
+        if self.active_item.move_inventory_slot:
+            self.active_item.move_inventory_slot = False
             self.active_item = None  # Clear active item
             return True
         for inventory_slot in self.inventory:

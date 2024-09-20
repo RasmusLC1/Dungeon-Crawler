@@ -122,8 +122,11 @@ class Enemy(Moving_Entity):
     def Damage_Taken(self, damage):
         super().Damage_Taken(damage)
         if self.health <= 0:
-            self.Reset_Effects()
-            self.game.enemy_handler.Delete_Enemy(self)   
+            self.game.enemy_handler.Delete_Enemy(self)
+            if self.distance_to_player < 150:
+                self.game.player.Increase_Souls(5)
+
+
 
         self.direction = pygame.math.Vector2(self.direction_x, self.direction_y)
         

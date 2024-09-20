@@ -1,12 +1,12 @@
 from scripts.decoration.decoration import Decoration
-from scripts.items.item import Item
+from scripts.items.interactive_item import Interactive_Item
 from scripts.engine.clatter import Clatter
 import random
 import pygame
 import math
 
 
-class Weapon(Item):
+class Weapon(Interactive_Item):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, damage_type = 'slash'):
         super().__init__(game, type, 'weapon', pos, size, 1)
         self.damage = damage # The damage the wepaon does
@@ -534,7 +534,7 @@ class Weapon(Item):
         # Check if the weapon can be moved to the weapon inventory
         if self.Move_Inventory_Check(offset):
             self.picked_up = True
-            self.move_inventory = True
+            self.move_inventory_slot = True
             return False
         if super().Move_Legal(mouse_pos, player_pos, tilemap, offset):
             return True

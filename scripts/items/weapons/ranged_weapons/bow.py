@@ -95,6 +95,7 @@ class Bow(Weapon):
                     if not self.Find_Arrow():
                         self.Reset_Bow()
                         return
+                    
                     self.game.entities_render.Remove_Entity(self.arrow) # Remove the arrow
                     
                     self.game.sfx['bow_draw'].play()
@@ -104,6 +105,8 @@ class Bow(Weapon):
 
         elif self.charge_time > 0:
             self.game.sfx['arrow_shot'].play()
+            self.game.entities_render.Add_Entity(self.arrow) # Add the arrow back into rendering
+
             self.Shoot_Arrow()
             self.Reset_Bow()
 
@@ -236,5 +239,5 @@ class Bow(Weapon):
         super().Render_Equipped(surf, offset)
         if not self.entity:
             return
-        if self.entity.active > 20 and self.arrow:
+        if self.entity.type == 'player' and self.arrow or self.entity.active > 20 and self.arrow:
                 self.arrow.Render_Equipped(surf, offset)

@@ -4,8 +4,7 @@ class Damage_Symbols():
     def __init__(self, game):
         self.game = game
         self.damage_symbols = self.game.assets['damage_symbols']
-        self.damage_symbols_lookup = [
-                                    'slash', 'blunt', 'electric',
+        self.damage_symbols_lookup = ['slash', 'blunt', 'electric',
                                     'fire', 'freeze', 'poison']
 
 

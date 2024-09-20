@@ -26,7 +26,7 @@ class Player(Moving_Entity):
         self.active_bow = None
         self.bow_cooldown = 0
         self.Set_Animation('idle_down')
-        self.mana = 5
+        self.souls = 5
         self.nearby_chests = []
 
         self.light_level = 5
@@ -66,6 +66,9 @@ class Player(Moving_Entity):
         else:
             print("INVENTORY MISSING")
     
+    def Increase_Souls(self, added_soul):
+        self.souls += added_soul
+
     def Entity_Collision_Detection(self, tilemap):
         if self.dashing > 40:
             return None

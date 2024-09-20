@@ -7,7 +7,7 @@ class Font():
         self.font_lookup = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '-', '+', ':','!', '_' ' ']
+        '-', '+', ':','!', '_', ' ']
 
 
 
@@ -17,11 +17,13 @@ class Font():
         
         # List to store the positions of the characters in font_lookup
         char_positions = []
+
         
         # Iterate over each character in the input string
         for char in characters:
             # Append the position to the list
             if char in self.font_lookup:
+                
                 position = self.font_lookup.index(char)
                 char_positions.append(position)  
             else:  # Append None if no char is found
@@ -39,10 +41,9 @@ class Font():
         if not char_positions:
             return
 
-
-        
         # Iterate over the list of positions to render each character
         for i, font_position in enumerate(char_positions):
+
             try:
                 item_image = self.font[font_position]
                 surf.blit(item_image, pos)
