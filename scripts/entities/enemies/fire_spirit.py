@@ -135,5 +135,5 @@ class Fire_Spirit(Enemy):
             return
 
     def Set_On_Fire(self, fire_time):
-        self.Healing(fire_time)
+        self.status_effects.Set_Effect('healing', fire_time)
         return False

@@ -18,7 +18,7 @@ class Lava(Trap):
             if entity.type == 'player':
                 if entity.dashing:
                     return
-            if entity.wet:
+            if entity.status_effects.wet:
                 entity.Set_Effect('Dry', 1)
             if not entity.Set_Effect('Fire', 5):
                 return

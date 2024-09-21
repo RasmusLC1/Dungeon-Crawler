@@ -18,7 +18,6 @@ class Moving_Entity(PhysicsEntity):
 
         self.animation_state = 'up'
         self.idle_count = 0
-        
 
         self.charging = 0
 
@@ -29,18 +28,13 @@ class Moving_Entity(PhysicsEntity):
         self.direction_y_holder = 0
         self.attack_direction = (0,0)
         self.target = (0,0)
-
-
         
         self.damage_cooldown = 0
-        self.snared = 0
-
+        
         self.nearby_traps = []
         self.nearby_traps_cooldown = 0
         self.nearby_enemies = []
         self.nearby_enemies_cooldown = 0
-
-        self.player_hit = False
         
         self.action = ''
         self.anim_offset = (0, 0)
@@ -89,7 +83,10 @@ class Moving_Entity(PhysicsEntity):
         self.jumping_animation_num_cooldown = 0
         self.jumping_animation_num_cooldown_max = 50
 
+        # Status Effects
         self.status_effects = Status_Effect_Handler(self)
+
+
     
     # Set new action for animation
     def Set_Animation(self, action):
@@ -141,7 +138,6 @@ class Moving_Entity(PhysicsEntity):
         self.Set_Frame_movement((self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale))
 
     # Movement handling
-    # TODO Cleanp
     def Movement(self, movement, tilemap):
         if self.Entity_Collision_Detection(tilemap):
             return
@@ -272,7 +268,6 @@ class Moving_Entity(PhysicsEntity):
         # Handle collision with the player
         if self.type != 'player' and self.game.player.rect().colliderect(self.rect_future(future_pos)):
             self.apply_repulsion(self.game.player, tilemap)
-            self.player_hit = True
             return self.game.player
                 
         return None
@@ -405,14 +400,6 @@ class Moving_Entity(PhysicsEntity):
     def Set_Target(self, pos):
         self.target = pos
 
-    # Return true if healing was successfull
-    def Healing(self, healing):
-        if self.health >= self.max_health:
-            return False     
-        self.health = min(self.max_health, self.health + healing)
-        return True
-    
-    
         
     # Push the entity in the given direction
     def Push(self, x_direction, y_direction):
@@ -437,21 +424,6 @@ class Moving_Entity(PhysicsEntity):
     def Set_Effect(self, effect, duration):
         return self.status_effects.Set_Effect(effect, duration)
 
-    # #set snare effect
-    # def Set_Snare(self, snare_time):
-    #     self.snared = snare_time
-    #     return True
-    
-    
-    # Slow the entity down by increasing friction
-    # def Slow_Down(self, effect):
-    #     if not effect:
-    #         return
-    #     try:
-    #         self.max_speed = max(0.1, self.max_speed / effect)
-    #     except ZeroDivisionError as e:
-    #         print(self.max_speed, effect)
-    #         print(f"SLOWDOWN: {e}")
 
     
     # Render entity
