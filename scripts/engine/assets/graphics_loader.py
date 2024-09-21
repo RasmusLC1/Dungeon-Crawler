@@ -273,13 +273,39 @@ class Graphics_Loader:
         white = (255,255,255)
 
         potion_assets = {
-            'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 16, 16, white),
-            'red_full' : get_tiles_from_sheet('Potions/Redpotions/red_full.png', 2, 2, 0, 0, 16, 16, white),
-            'red_half' : get_tiles_from_sheet('Potions/Redpotions/red_half.png', 2, 2, 0, 0, 16, 16, white),
-            'red_low' : get_tiles_from_sheet('Potions/Redpotions/red_low.png', 2, 2, 0, 0, 16, 16, white),
-            'blue_full' : get_tiles_from_sheet('Potions/Bluepotions/blue_full.png', 2, 2, 0, 0, 16, 16, white),
-            'blue_half' : get_tiles_from_sheet('Potions/Bluepotions/blue_half.png', 2, 2, 0, 0, 16, 16, white),
-            'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 16, 16, white),
+            'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 16, 16,),
+            
+            'red_full' : get_tiles_from_sheet('Potions/Redpotions/red_full.png', 2, 2, 0, 0, 16, 16,),
+            'red_half' : get_tiles_from_sheet('Potions/Redpotions/red_half.png', 2, 2, 0, 0, 16, 16,),
+            'red_low' : get_tiles_from_sheet('Potions/Redpotions/red_low.png', 2, 2, 0, 0, 16, 16,),
+            
+            'blue_full' : get_tiles_from_sheet('Potions/Bluepotions/blue_full.png', 2, 2, 0, 0, 16, 16,),
+            'blue_half' : get_tiles_from_sheet('Potions/Bluepotions/blue_half.png', 2, 2, 0, 0, 16, 16,),
+            'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'yellow_full' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_full.png', 2, 2, 0, 0, 16, 16,),
+            'yellow_half' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_half.png', 2, 2, 0, 0, 16, 16,),
+            'yellow_low' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'green_full' : get_tiles_from_sheet('Potions/Greenpotions/Green_full.png', 2, 2, 0, 0, 16, 16,),
+            'green_half' : get_tiles_from_sheet('Potions/Greenpotions/Green_half.png', 2, 2, 0, 0, 16, 16,),
+            'green_low' : get_tiles_from_sheet('Potions/Greenpotions/Green_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'purple_full' : get_tiles_from_sheet('Potions/Purplepotions/Purple_full.png', 2, 2, 0, 0, 16, 16,),
+            'purple_half' : get_tiles_from_sheet('Potions/Purplepotions/Purple_half.png', 2, 2, 0, 0, 16, 16,),
+            'purple_low' : get_tiles_from_sheet('Potions/Purplepotions/Purple_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'light_blue_full' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_full.png', 2, 2, 0, 0, 16, 16,),
+            'light_blue_half' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_half.png', 2, 2, 0, 0, 16, 16,),
+            'light_blue_low' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'pink_full' : get_tiles_from_sheet('Potions/Pinkpotions/pink_full.png', 2, 2, 0, 0, 16, 16,),
+            'pink_half' : get_tiles_from_sheet('Potions/Pinkpotions/pink_half.png', 2, 2, 0, 0, 16, 16,),
+            'pink_low' : get_tiles_from_sheet('Potions/Pinkpotions/pink_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'dark_red_full' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_full.png', 2, 2, 0, 0, 16, 16,),
+            'dark_red_half' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_half.png', 2, 2, 0, 0, 16, 16,),
+            'dark_red_low' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_low.png', 2, 2, 0, 0, 16, 16,),
         }
         self.assets.update(potion_assets)
 
@@ -294,6 +320,7 @@ class Graphics_Loader:
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 8, 8),
             'damage_symbols' : get_tiles_from_sheet('font/damage_symbols.png', 5, 0, 0, 0, 8, 8),
             'potion_symbols' : get_tiles_from_sheet('font/potion_symbols.png', 7, 1, 0, 0, 8, 8),
+            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 1, 0, 0, 8, 8),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 16, 16),
         }
         self.assets.update(font)

@@ -1,7 +1,7 @@
-from scripts.items.interactive_item import Interactive_Item
+from scripts.items.item import Item
 
 
-class Potion(Interactive_Item):
+class Potion(Item):
     def __init__(self, game, type, pos, amount, effect):
         super().__init__(game, type, 'potion', pos, (10,10), amount)
         self.Update()

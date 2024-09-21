@@ -43,7 +43,7 @@ class Text_Box():
         effect = self.item.type.replace('_potion', '')
         self.game.default_font.Render_Word(surf, effect, text_box_pos)
 
-        self.game.potion_symbols.Render_Symbol(surf, effect,  (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.symbols.Render_Symbol(surf, effect,  (text_box_pos[0], text_box_pos[1] + 10))
         self.game.default_font.Render_Word(surf, str(self.item.effect), (text_box_pos[0] + 10, text_box_pos[1] + 10))
 
         surf.blit(self.game.assets['gold_coins'][0], (text_box_pos[0], text_box_pos[1] + 20))
@@ -57,7 +57,7 @@ class Text_Box():
         self.game.default_font.Render_Word(surf, self.item.type, text_box_pos)
 
         # Render Damage and damage type
-        self.game.damage_symbols.Render_Symbol(surf, self.item.damage_type,  (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.symbols.Render_Symbol(surf, self.item.damage_type,  (text_box_pos[0], text_box_pos[1] + 10))
         self.game.default_font.Render_Word(surf, str(self.item.damage), (text_box_pos[0] + 10, text_box_pos[1] + 10))
 
         # Render value

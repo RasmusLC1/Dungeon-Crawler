@@ -32,9 +32,9 @@ class Chest(Decoration):
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
-            # 'sword',
-            # 'torch',
-            # 'spear',
+            'sword',
+            'torch',
+            'spear',
             'bow',
             'arrow',
         ]
@@ -45,7 +45,7 @@ class Chest(Decoration):
     def Open(self):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(3, 3)
+        self.loot_type = random.randint(0, 3)
         if self.loot_type == 0:
                 item = Health_Potion(self.game, (self.pos[0] + random.randint(-100, 100)/10 , self.pos[1] + random.randint(-100, 100)/10), random.randint(1,3))
                 self.game.item_handler.Add_Item(item)

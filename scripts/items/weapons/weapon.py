@@ -1,12 +1,12 @@
 from scripts.decoration.decoration import Decoration
-from scripts.items.interactive_item import Interactive_Item
+from scripts.items.item import Item
 from scripts.engine.clatter import Clatter
 import random
 import pygame
 import math
 
 
-class Weapon(Interactive_Item):
+class Weapon(Item):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, damage_type = 'slash'):
         super().__init__(game, type, 'weapon', pos, size, 1)
         self.damage = damage # The damage the wepaon does

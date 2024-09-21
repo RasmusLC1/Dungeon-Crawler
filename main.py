@@ -28,8 +28,7 @@ from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
-from scripts.engine.fonts.damage_symbols import Damage_Symbols
-from scripts.engine.fonts.potion_symbols import Potion_Symbols
+from scripts.engine.fonts.symbols import Symbols
 from scripts.engine.clatter import Clatter
 from scripts.items.utility.text_box_handler import Text_Box_handler
 
@@ -69,8 +68,7 @@ class Game:
         self.a_star = A_Star()
         self.entities_render = Entity_Renderer(self)
         self.default_font = Font(self)
-        self.damage_symbols = Damage_Symbols(self)
-        self.potion_symbols = Potion_Symbols(self)
+        self.symbols = Symbols(self)
         self.clatter = Clatter(self)
         self.text_box_handler = Text_Box_handler(self)
         Ammo_Bar.__init__(self)
