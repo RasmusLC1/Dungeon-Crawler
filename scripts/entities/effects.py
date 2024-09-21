@@ -7,6 +7,73 @@ class Status_Effect_Handler:
     def __init__(self, entity):
         self.entity = entity
 
+    def Set_Effect(self, effect, duration):
+        if effect == 'Snare':
+            return self.Set_Snare(duration)
+        elif effect == 'Poison':
+            return self.Set_Poisoned(duration)
+        elif effect == 'Freeze':
+            return self.Set_Frozen(duration)
+        elif effect == 'Fire':
+            return self.Set_On_Fire(duration)
+        elif effect == 'Wet':
+            return self.Set_Wet(duration)
+        elif effect == 'Dry':
+            return self.Set_Dry(duration)
+        elif effect == 'Slow_Down':
+            return self.Slow_Down(duration)
+        else:
+            return False
+
+     #set poison effect
+    def Set_Poisoned(self, poison_time):
+        self.entity.poisoned =  max(random.randint(2, poison_time), self.entity.poisoned)
+        return True
+
+    #set frozen effect
+    def Set_Frozen(self, freeze_time):
+        if self.entity.is_on_fire:
+            return
+        
+        if self.entity.wet:
+            freeze_time *= 2
+            self.entity.wet = 0
+        self.entity.frozen = max(3, freeze_time)
+        return True
+    
+    def Remove_Frozen(self):
+        self.entity.frozen = 0
+
+    # Set wet effect
+    def Set_Wet(self, wet_time):
+        if self.entity.is_on_fire:
+            self.entity.is_on_fire = 0
+        if self.entity.frozen:
+            self.entity.frozen -= 1
+        self.entity.wet = max(2, wet_time)
+        return True
+
+    
+    def Set_Dry(self, drying):
+        self.entity.wet = max(0, self.entity.wet - drying)
+        return True
+
+
+
+    #set Fire effect
+    def Set_On_Fire(self, fire_time):
+        if self.entity.wet:
+            return False
+        if self.entity.frozen:
+            self.Remove_Frozen()
+        self.entity.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.entity.is_on_fire)
+        return True
+    
+    #set snare effect
+    def Set_Snare(self, snare_time):
+        self.entity.snared = snare_time
+        return True
+
     def Snare(self):
         if self.entity.snared:
             self.entity.snared -= 1
@@ -32,7 +99,15 @@ class Status_Effect_Handler:
             else:
                 self.entity.fire_animation += 1
 
-    
+    # Slow the entity down by increasing friction
+    def Slow_Down(self, effect):
+        if not effect:
+            return
+        try:
+            self.entity.max_speed = max(0.1, self.entity.max_speed / effect)
+        except ZeroDivisionError as e:
+            print(self.entity.max_speed, effect)
+            print(f"SLOWDOWN: {e}")
 
     def Poisoned(self):
         if not self.entity.poisoned:

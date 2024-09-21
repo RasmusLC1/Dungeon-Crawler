@@ -3,8 +3,6 @@ import random
 import pygame
 
 from scripts.engine.particles.particle import Particle
-from scripts.traps.trap_handler import Trap_Handler
-from scripts.entities.effects import Status_Effect_Handler
 
 
 class PhysicsEntity:
@@ -63,50 +61,50 @@ class PhysicsEntity:
     def Set_Effect(self, effect, duration):
         pass
 
-    #set poison effect
-    def Set_Poisoned(self, poison_time):
-        self.poisoned =  max(random.randint(2, poison_time), self.poisoned)
-        return True
+    # #set poison effect
+    # def Set_Poisoned(self, poison_time):
+    #     self.poisoned =  max(random.randint(2, poison_time), self.poisoned)
+    #     return True
 
 
-    #set frozen effect
-    def Set_Frozen(self, freeze_time):
-        if self.is_on_fire:
-            return
+    # #set frozen effect
+    # def Set_Frozen(self, freeze_time):
+    #     if self.is_on_fire:
+    #         return
         
-        if self.wet:
-            freeze_time *= 2
-            self.wet = 0
-        self.frozen = max(3, freeze_time)
-        return True
+    #     if self.wet:
+    #         freeze_time *= 2
+    #         self.wet = 0
+    #     self.frozen = max(3, freeze_time)
+    #     return True
     
-    def Remove_Frozen(self):
-        self.frozen = 0
+    # def Remove_Frozen(self):
+    #     self.frozen = 0
 
-    # Set wet effect
-    def Set_Wet(self, wet_time):
-        if self.is_on_fire:
-            self.is_on_fire = 0
-        if self.frozen:
-            self.frozen -= 1
-        self.wet = max(2, wet_time)
-        return True
+    # # Set wet effect
+    # def Set_Wet(self, wet_time):
+    #     if self.is_on_fire:
+    #         self.is_on_fire = 0
+    #     if self.frozen:
+    #         self.frozen -= 1
+    #     self.wet = max(2, wet_time)
+    #     return True
 
     
-    def Set_Dry(self, drying):
-        self.wet = max(0, self.wet - drying)
-        return True
+    # def Set_Dry(self, drying):
+    #     self.wet = max(0, self.wet - drying)
+    #     return True
 
 
 
-    #set Fire effect
-    def Set_On_Fire(self, fire_time):
-        if self.wet:
-            return False
-        if self.frozen:
-            self.Remove_Frozen()
-        self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
-        return True
+    # #set Fire effect
+    # def Set_On_Fire(self, fire_time):
+    #     if self.wet:
+    #         return False
+    #     if self.frozen:
+    #         self.Remove_Frozen()
+    #     self.is_on_fire = max(random.randint(fire_time, fire_time * 2), self.is_on_fire)
+    #     return True
 
 
     def Reset_Effects(self):

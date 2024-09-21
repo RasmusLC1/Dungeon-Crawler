@@ -435,41 +435,24 @@ class Moving_Entity(PhysicsEntity):
         self.status_effects.Wet()
     
     def Set_Effect(self, effect, duration):
-        if effect == 'Snare':
-            return self.Set_Snare(duration)
-        elif effect == 'Poison':
-            return self.Set_Poisoned(duration)
-        elif effect == 'Freeze':
-            return self.Set_Frozen(duration)
-        elif effect == 'Fire':
-            return self.Set_On_Fire(duration)
-        elif effect == 'Wet':
-            return self.Set_Wet(duration)
-        elif effect == 'Dry':
-            return self.Set_Dry(duration)
-        elif effect == 'Slow_Down':
-            return self.Slow_Down(duration)
-        else:
-            return False
+        return self.status_effects.Set_Effect(effect, duration)
 
-    #set snare effect
-    def Set_Snare(self, snare_time):
-        self.snared = snare_time
-        return True
+    # #set snare effect
+    # def Set_Snare(self, snare_time):
+    #     self.snared = snare_time
+    #     return True
     
     
     # Slow the entity down by increasing friction
-    def Slow_Down(self, effect):
-        if not effect:
-            return
-        try:
-            self.max_speed = max(0.1, self.max_speed / effect)
-        except ZeroDivisionError as e:
-            print(self.max_speed, effect)
-            print(f"SLOWDOWN: {e}")
+    # def Slow_Down(self, effect):
+    #     if not effect:
+    #         return
+    #     try:
+    #         self.max_speed = max(0.1, self.max_speed / effect)
+    #     except ZeroDivisionError as e:
+    #         print(self.max_speed, effect)
+    #         print(f"SLOWDOWN: {e}")
 
-
-    
     
     # Render entity
     def Render(self, surf, offset=(0, 0)):
