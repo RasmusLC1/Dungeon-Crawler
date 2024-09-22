@@ -206,7 +206,10 @@ class Path_Finding():
 
     # ATTACK STRATEGIES:
     #################################################
-    def Attack_Strategy(self):
+    # Return True if pathing updated else false
+    def Attack_Strategy(self) -> bool:
+        if self.game.player.status_effects.invisibility:
+            return False
         if self.entity.attack_strategy == 'direct':
             return self.Direct_Pathing()
         elif self.entity.attack_strategy == 'long_range':

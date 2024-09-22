@@ -32,6 +32,9 @@ class Decrepit_Bones_Melee(Enemy):
         pass
 
     def Attack(self):
+        if not super().Attack():
+            return
+        
         self.charge = min(self.max_charge, self.charge + 1)
         if not self.active_weapon:
             return

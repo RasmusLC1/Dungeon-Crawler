@@ -45,7 +45,13 @@ class Spider(Enemy):
             self.attack_strategy = 'medium_range'
 
         if self.attack_cooldown:
-            return    
+            return
+        
+        self.Attack()
+
+    def Attack(self):
+        if not super().Attack():
+            return
 
         if self.shot_fired:
             self.Jump_Attack()

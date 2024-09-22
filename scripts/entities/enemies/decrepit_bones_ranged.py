@@ -40,6 +40,9 @@ class Decrepit_Bones_Ranged(Enemy):
         pass
 
     def Attack(self):
+        if not super().Attack():
+            return
+        
         if not self.active_weapon:
             return
 

@@ -33,6 +33,9 @@ class Ice_Spirit(Enemy):
         
     
     def Attack(self):
+        if not super().Attack():
+            return
+        
         self.charge += 1
 
         if self.charge >= 100:

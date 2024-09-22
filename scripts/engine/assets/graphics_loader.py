@@ -71,6 +71,7 @@ class Graphics_Loader:
             'poison': get_tiles_from_sheet('particles/effects/poison.png', 2, 0, 0, 0, 16, 16, white),
             'frozen': get_tiles_from_sheet('particles/effects/frozen.png', 2, 0, 0, 0, 16, 16, white),
             'wet': get_tiles_from_sheet('particles/effects/wet.png', 2, 0, 0, 0, 16, 16),
+            'regen': get_tiles_from_sheet('particles/effects/regen.png', 2, 1, 0, 0, 16, 16),
         }
         self.assets.update(effect_assets)
     
@@ -287,9 +288,13 @@ class Graphics_Loader:
             'yellow_half' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_half.png', 2, 2, 0, 0, 16, 16,),
             'yellow_low' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_low.png', 2, 2, 0, 0, 16, 16,),
 
-            'green_full' : get_tiles_from_sheet('Potions/Greenpotions/Green_full.png', 2, 2, 0, 0, 16, 16,),
-            'green_half' : get_tiles_from_sheet('Potions/Greenpotions/Green_half.png', 2, 2, 0, 0, 16, 16,),
-            'green_low' : get_tiles_from_sheet('Potions/Greenpotions/Green_low.png', 2, 2, 0, 0, 16, 16,),
+            'green_full' : get_tiles_from_sheet('Potions/Greenpotions/green_full.png', 2, 2, 0, 0, 16, 16,),
+            'green_half' : get_tiles_from_sheet('Potions/Greenpotions/green_half.png', 2, 2, 0, 0, 16, 16,),
+            'green_low' : get_tiles_from_sheet('Potions/Greenpotions/green_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'dark_green_full' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_full.png', 2, 2, 0, 0, 16, 16,),
+            'dark_green_half' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_half.png', 2, 2, 0, 0, 16, 16,),
+            'dark_green_low' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_low.png', 2, 2, 0, 0, 16, 16,),
 
             'purple_full' : get_tiles_from_sheet('Potions/Purplepotions/Purple_full.png', 2, 2, 0, 0, 16, 16,),
             'purple_half' : get_tiles_from_sheet('Potions/Purplepotions/Purple_half.png', 2, 2, 0, 0, 16, 16,),

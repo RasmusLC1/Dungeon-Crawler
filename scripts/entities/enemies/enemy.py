@@ -80,8 +80,11 @@ class Enemy(Moving_Entity):
         return None
     
     def Attack(self):
-        print("Attack not implemented")
-        pass
+        # Check if the player is invisible
+        if self.game.player.status_effects.invisibility:
+            return False
+        
+        return True
 
     def Update_Movement(self, movement):
         return super().Update_Movement(movement)

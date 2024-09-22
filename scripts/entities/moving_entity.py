@@ -45,6 +45,7 @@ class Moving_Entity(PhysicsEntity):
 
         # Attributes, placeholder should be assigned on creation
         self.strength = strength # Damage and moving items and other entities
+        self.strength_holder = strength # Damage and moving items and other entities
         self.agility = agility # max_speed, acceleration, weapon recharge speed, movement speed and lockpicking
         self.intelligence = intelligence # spells and trap detection
         self.stamina = stamina # movement ability recharge and weapon cooldown
@@ -415,11 +416,8 @@ class Moving_Entity(PhysicsEntity):
     def Update_Status_Effects(self):
         self.friction = self.friction_holder
         self.max_speed = self.max_speed_holder
-        self.status_effects.OnFire()
-        self.status_effects.Snare()
-        self.status_effects.Poisoned()
-        self.status_effects.Frozen()
-        self.status_effects.Wet()
+        self.strength = self.strength_holder
+        self.status_effects.Update_Status_Effects()
     
     def Set_Effect(self, effect, duration):
         return self.status_effects.Set_Effect(effect, duration)
@@ -450,7 +448,7 @@ class Moving_Entity(PhysicsEntity):
         entity_image_legs = self.game.assets[self.animation + '_legs'][animation_num]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
         
-        # Set the alpha value to make the entity fade out
+        # Set the alpha value to make the entity fade out, the lower the more invisible
         alpha_value = max(0, min(255, self.active)) 
         entity_image_head.set_alpha(alpha_value)
         entity_image_body.set_alpha(alpha_value)
@@ -481,11 +479,4 @@ class Moving_Entity(PhysicsEntity):
 
         # Render status effects
         #Fire
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.is_on_fire, self.status_effects.fire_animation, 'fire', offset)
-        # Posion
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.poisoned, self.status_effects.poison_animation, 'poison', offset)
-        # Frozen
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.frozen, self.status_effects.frozen_animation, 'frozen', offset)
-        # Wet
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.wet, self.status_effects.wet_animation, 'wet', offset)
-
+        self.status_effects.Render_Effects(self.game, surf, offset)

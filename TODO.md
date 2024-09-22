@@ -76,15 +76,15 @@ Game Ideas
 
 # Potions
     # Health
-    strength
-    movement
+    # strength
+    # movement
     # Mana
+    # health regen, more health than health potion but slower
     poison resistance
     invisibility
     fire resistance
     frost resistance
     physical resistance
-    health regen, more health than health potion but slower
     silence
     luck
     vampire, heals based on damage dealt
@@ -172,7 +172,7 @@ Game Ideas
 # Biomes:
     Desert Biome, Water does not exist, enemies are vulnerable to fire, high gold in urns, 
 
-    Mushroom Biom, poison effects are common, enemies here are immune to poision, potion ingredients, exploding mushrooms, Mushroom Queen boss
+    Mushroom Biom, poison effects are common, enemies here are immune to poision, more potion, exploding mushrooms, Mushroom Queen boss
 
     Crystal Caverns, High armour enemies, crystals that emit light, Rare gems
 

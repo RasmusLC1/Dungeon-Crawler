@@ -340,7 +340,13 @@ class Player(Moving_Entity):
         entity_image_legs = self.game.assets[self.animation + '_legs'][self.animation_num]
         entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
 
-        
+        if self.status_effects.invisibility:
+            # Set the alpha value to make the entity fade out, the lower the more invisible
+            alpha_value = max(0, min(255, self.active)) 
+            entity_image_head.set_alpha(alpha_value)
+            entity_image_body.set_alpha(alpha_value)
+            entity_image_legs.set_alpha(alpha_value)
+            
         if not "up" in self.animation:
             surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
             surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
@@ -356,15 +362,7 @@ class Player(Moving_Entity):
             surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
 
         # Render status effects
-        #Fire
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.is_on_fire, self.status_effects.fire_animation, 'fire', offset)
-        # Posion
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.poisoned, self.status_effects.poison_animation, 'poison', offset)
-        # Frozen
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.frozen, self.status_effects.frozen_animation, 'frozen', offset)
-        # Wet
-        self.status_effects.Render_Effect(self.game, surf, self.status_effects.wet, self.status_effects.wet_animation, 'wet', offset)
-
+        self.status_effects.Render_Effects(self.game, surf, offset)
 
         
     def Render_Weapons(self, surf, offset):
