@@ -19,7 +19,7 @@ class Bear_Trap(Trap):
                     return
                 
             entity.Damage_Taken(2)
-            entity.Set_Effect('Snare', 100)
+            entity.Set_Effect('snare', 100)
             self.Cooldown = 300
             
         if self.Cooldown:

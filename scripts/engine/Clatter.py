@@ -4,7 +4,10 @@ class Clatter():
         self.game = game
 
 
-    def Generate_Clatter(self, center, range): 
+    def Generate_Clatter(self, center, range):
+        if self.game.player.status_effects.silence:
+            return
+
         nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.game.player, range)
         for enemy in nearby_enemies:
             if not enemy:
@@ -14,7 +17,6 @@ class Clatter():
                 continue
 
             enemy.Find_New_Path(center)
-            # print("ENEMY FOUND", enemy)
 
 
     

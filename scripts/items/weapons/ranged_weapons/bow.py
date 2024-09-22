@@ -98,13 +98,14 @@ class Bow(Weapon):
                     
                     self.game.entities_render.Remove_Entity(self.arrow) # Remove the arrow
                     
-                    self.game.sfx['bow_draw'].play()
+                    self.game.sound_handler.Play_Sound('bow_draw', 1)
                 if self.attack_animation_time <= self.attack_animation_counter:
                     self.attack_animation_counter = 0
                     self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
 
         elif self.charge_time > 0:
-            self.game.sfx['arrow_shot'].play()
+            self.game.sound_handler.Play_Sound('arrow_shot', 1)
+
             self.game.entities_render.Add_Entity(self.arrow) # Add the arrow back into rendering
 
             self.Shoot_Arrow()

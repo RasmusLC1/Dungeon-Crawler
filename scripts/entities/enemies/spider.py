@@ -87,7 +87,7 @@ class Spider(Enemy):
         if self.Future_Rect(self.attack_direction).colliderect(self.game.player.rect()):
             self.attack_strategy =  'long_range'
             self.game.player.Damage_Taken(self.strength)
-            self.game.player.Set_Effect('Poison', 4)
+            self.game.player.Set_Effect('poison', 4)
             self.Set_Attack_Cooldown(60)
         
 

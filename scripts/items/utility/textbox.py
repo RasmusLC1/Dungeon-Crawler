@@ -40,9 +40,13 @@ class Text_Box():
 
 
     def Render_Potion(self, surf, text_box_pos):
+        effect = self.item.effect
+        if 'resistance' in self.item.effect:
+            effect = self.item.effect.replace('_resistance', '')
+
         self.game.default_font.Render_Word(surf, self.item.effect, text_box_pos)
 
-        self.game.symbols.Render_Symbol(surf, self.item.effect,  (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.symbols.Render_Symbol(surf, effect,  (text_box_pos[0], text_box_pos[1] + 10))
         self.game.default_font.Render_Word(surf, str(self.item.amount), (text_box_pos[0] + 10, text_box_pos[1] + 10))
 
         surf.blit(self.game.assets['gold_coins'][0], (text_box_pos[0], text_box_pos[1] + 20))

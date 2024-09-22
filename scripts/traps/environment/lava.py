@@ -19,10 +19,10 @@ class Lava(Trap):
                 if entity.dashing:
                     return
             if entity.status_effects.wet:
-                entity.Set_Effect('Dry', 1)
-            if not entity.Set_Effect('Fire', 5):
+                entity.Set_Effect('dry', 1)
+            if not entity.Set_Effect('fire', 5):
                 return
-            entity.Set_Effect('Slow_Down', 4)
+            entity.Set_Effect('slow', 4)
             entity.Damage_Taken(5)
 
     def Animation_Update(self):

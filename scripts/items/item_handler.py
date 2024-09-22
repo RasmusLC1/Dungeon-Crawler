@@ -26,7 +26,7 @@ class Item_Handler():
 
     def Remove_Item(self, item, delete_item = False):
         if not item in self.items:
-            print(item)
+            print("ITEM DOES NOT EXISTS", item)
             return
         
         self.items.remove(item)
@@ -68,8 +68,8 @@ class Item_Handler():
                 if not item.special_attack:
                     if not item.entity:
                         continue
-                    if item.entity.type == 'player':
-                        continue
+                    # if item.entity.type == 'player':
+                    #     continue
                     if item.shoot_speed and item.entity.subtype == 'enemy' and not item.delete_countdown:
                         item.Set_Delete_Countdown(10)
                     continue

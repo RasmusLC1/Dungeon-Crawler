@@ -12,7 +12,7 @@ Game Ideas
     Loot has weight which will slow you down, also lowers your initiative in combat
     Each dungeon layer get's progressively harder, but main challenge is to conserve resources to proceed further down
     Enviorement effects and physics to solve puzzles in the dungeon
-    Each section has at least 1 random combat from a pool of possible mobs based on enviorement, frost section as frost enemies
+    Each section has at least 1 random combat from a pool of possible mobs based on enviorement, freeze section as freeze enemies
     Each layer draws a random theme, fire for example, then it draws from the tech theme for example
     Pokemon style resistances and effectivness in a rock paper scissor style
     You can drop loot to flee combat, to distract enemies
@@ -80,12 +80,12 @@ Game Ideas
     # movement
     # Mana
     # health regen, more health than health potion but slower
-    poison resistance
-    invisibility
-    fire resistance
-    frost resistance
+    # silence
+    # invisibility
+    # poison resistance
+    # fire resistance
+    # freeze resistance
     physical resistance
-    silence
     luck
     vampire, heals based on damage dealt
 
@@ -178,7 +178,7 @@ Game Ideas
 
     Lava forge, lots of lava, enemies are immune to fire and deal fire damage, rare weapons
 
-    Ice Cave, Lots of ice, enemies are immune to frost and deal frost damage, breakable walls are more common
+    Ice Cave, Lots of ice, enemies are immune to freeze and deal freeze damage, breakable walls are more common
 
     Ancient ruins, undead enemies, rare runes
 

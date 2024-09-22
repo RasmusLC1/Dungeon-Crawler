@@ -9,7 +9,7 @@ class Fire_Particle(Projectile):
         self.entity = entity
         self.direction = direction  # Store the direction vector
         self.attack_animation_max = 3
-        self.effect = 'Fire'
+        self.effect = 'fire'
 
 
     def Shoot(self):

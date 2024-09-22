@@ -14,7 +14,7 @@ class Spike_Poisoned(Trap):
                 if entity.dashing:
                     return
             entity.Damage_Taken(2)
-            entity.Set_Effect('Poison', random.randint(3,5))
+            entity.Set_Effect('poison', random.randint(3,5))
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

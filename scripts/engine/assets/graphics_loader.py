@@ -296,6 +296,10 @@ class Graphics_Loader:
             'dark_green_half' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_half.png', 2, 2, 0, 0, 16, 16,),
             'dark_green_low' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_low.png', 2, 2, 0, 0, 16, 16,),
 
+            'swamp_green_full' : get_tiles_from_sheet('Potions/SwampGreenpotions/swamp_green_full.png', 2, 2, 0, 0, 16, 16,),
+            'swamp_green_half' : get_tiles_from_sheet('Potions/SwampGreenpotions/swamp_green_half.png', 2, 2, 0, 0, 16, 16,),
+            'swamp_green_low' : get_tiles_from_sheet('Potions/SwampGreenpotions/swamp_green_low.png', 2, 2, 0, 0, 16, 16,),
+
             'purple_full' : get_tiles_from_sheet('Potions/Purplepotions/Purple_full.png', 2, 2, 0, 0, 16, 16,),
             'purple_half' : get_tiles_from_sheet('Potions/Purplepotions/Purple_half.png', 2, 2, 0, 0, 16, 16,),
             'purple_low' : get_tiles_from_sheet('Potions/Purplepotions/Purple_low.png', 2, 2, 0, 0, 16, 16,),
@@ -304,6 +308,10 @@ class Graphics_Loader:
             'light_blue_half' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_half.png', 2, 2, 0, 0, 16, 16,),
             'light_blue_low' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_low.png', 2, 2, 0, 0, 16, 16,),
 
+            'light_grey_full' : get_tiles_from_sheet('Potions/LightGreypotions/light_grey_full.png', 2, 2, 0, 0, 16, 16,),
+            'light_grey_half' : get_tiles_from_sheet('Potions/LightGreypotions/light_grey_half.png', 2, 2, 0, 0, 16, 16,),
+            'light_grey_low' : get_tiles_from_sheet('Potions/LightGreypotions/light_grey_low.png', 2, 2, 0, 0, 16, 16,),
+
             'pink_full' : get_tiles_from_sheet('Potions/Pinkpotions/pink_full.png', 2, 2, 0, 0, 16, 16,),
             'pink_half' : get_tiles_from_sheet('Potions/Pinkpotions/pink_half.png', 2, 2, 0, 0, 16, 16,),
             'pink_low' : get_tiles_from_sheet('Potions/Pinkpotions/pink_low.png', 2, 2, 0, 0, 16, 16,),
@@ -311,6 +319,10 @@ class Graphics_Loader:
             'dark_red_full' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_full.png', 2, 2, 0, 0, 16, 16,),
             'dark_red_half' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_half.png', 2, 2, 0, 0, 16, 16,),
             'dark_red_low' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_low.png', 2, 2, 0, 0, 16, 16,),
+
+            'fire_resistance_full' : get_tiles_from_sheet('Potions/Firepotions/fire_resistance_potion_full.png', 2, 2, 0, 0, 16, 16,),
+            'fire_resistance_half' : get_tiles_from_sheet('Potions/Firepotions/fire_resistance_potion_half.png', 2, 2, 0, 0, 16, 16,),
+            'fire_resistance_low' : get_tiles_from_sheet('Potions/Firepotions/fire_resistance_potion_low.png', 2, 2, 0, 0, 16, 16,),
         }
         self.assets.update(potion_assets)
 

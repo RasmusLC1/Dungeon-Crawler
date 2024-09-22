@@ -43,7 +43,7 @@ class Spider_Web(Trap):
                 if entity.dashing:
                     return
             self.animation = self.animation_max
-            entity.Set_Effect('Snare', 100)
+            entity.Set_Effect('snare', 100)
             self.Cooldown = 100
             self.delete = True
             self.active = False

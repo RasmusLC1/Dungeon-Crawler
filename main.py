@@ -31,6 +31,7 @@ from scripts.engine.fonts.font import Font
 from scripts.engine.fonts.symbols import Symbols
 from scripts.engine.clatter import Clatter
 from scripts.items.utility.text_box_handler import Text_Box_handler
+from scripts.engine.sound.sound_handler import Sound_Handler
 
 
 
@@ -71,6 +72,7 @@ class Game:
         self.symbols = Symbols(self)
         self.clatter = Clatter(self)
         self.text_box_handler = Text_Box_handler(self)
+        self.sound_handler = Sound_Handler(self)
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         self.souls_interface = Souls(self)
@@ -106,9 +108,9 @@ class Game:
         self.scroll = [0, 0]
         self.projectiles = []
         for spawner in self.tilemap.extract([('spawners', 0)]):
-            print("PLAYER")
             if spawner['variant'] == 0:
-                self.player = Player(self, spawner['pos'], (8, 16), 100, 5, 8, 10, 5, 5)
+                self.player = Player(self, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
+                break
 
         self.enemy_handler = Enemy_Handler(self)
         self.trap_handler = Trap_Handler(self)

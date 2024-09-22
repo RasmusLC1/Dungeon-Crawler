@@ -8,6 +8,10 @@ from scripts.items.potions.regen_potion import Regen_Potion
 from scripts.items.potions.speed_potion import Speed_Potion
 from scripts.items.potions.strength_potion import Strength_Potion
 from scripts.items.potions.invisibility_potion import Invisibility_Potion
+from scripts.items.potions.silence_potion import Silence_Potion
+from scripts.items.potions.fire_resistance_potion import Fire_Resistance_Potion
+from scripts.items.potions.freeze_resistance import Freeze_Resistance_Potion
+from scripts.items.potions.poison_resistance import Poison_Resistance_Potion
 from scripts.decoration.decoration import Decoration
 
 from scripts.items.weapons.close_combat.sword import Sword
@@ -36,9 +40,9 @@ class Chest(Decoration):
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
-            'sword',
-            'torch',
-            'spear',
+            # 'sword',
+            # 'torch',
+            # 'spear',
             'bow',
             'arrow',
         ]
@@ -49,7 +53,11 @@ class Chest(Decoration):
             # 'soul',
             # 'speed',
             # 'strength',
-            'invisibility'
+            # 'invisibility',
+            # 'silence',
+            # 'fire_resistance',
+            # 'freeze_resistance',
+            'poison_resistance',
         ]
 
     def rect(self):
@@ -78,7 +86,8 @@ class Chest(Decoration):
         self.empty = True
         self.text_cooldown = 30
         self.game.item_handler.Reset_Nearby_Items_Cooldown()
-        self.game.sfx['chest_open'].play()
+        self.game.sound_handler.Play_Sound('chest_open', 0.15)
+
         self.game.clatter.Generate_Clatter(self.pos, 5000) # Generate clatter to alert nearby enemies
 
     def Potion_Spawner(self):
@@ -98,8 +107,16 @@ class Chest(Decoration):
             item = Strength_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
         elif self.potions[potion_index] == 'invisibility':
             item = Invisibility_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+        elif self.potions[potion_index] == 'silence':
+            item = Silence_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+        elif self.potions[potion_index] == 'fire_resistance':
+            item = Fire_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+        elif self.potions[potion_index] == 'freeze_resistance':
+            item = Freeze_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+        elif self.potions[potion_index] == 'poison_resistance':
+            item = Poison_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
 
-
+        
         if item:
             self.game.item_handler.Add_Item(item)
             return True

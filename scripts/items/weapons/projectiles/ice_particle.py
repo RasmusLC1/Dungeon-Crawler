@@ -10,7 +10,7 @@ class Ice_Particle(Projectile):
         self.attack_animation_max = 3
         self.delete_countdown = 50
         self.attack_animation_time = range // self.attack_animation_max
-        self.effect = 'Freeze'
+        self.effect = 'freeze'
    
 
     def Shoot(self):
