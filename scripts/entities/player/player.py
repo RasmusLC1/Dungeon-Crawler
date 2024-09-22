@@ -355,10 +355,17 @@ class Player(Moving_Entity):
             surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
             surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
 
-        self.status_effects.render_fire(self.game, surf, offset)
-        self.status_effects.render_poison(self.game, surf, offset)
-        self.status_effects.render_frozen(self.game, surf, offset)
-        self.status_effects.render_wet(self.game, surf, offset)
+        # Render status effects
+        #Fire
+        self.status_effects.Render_Effect(self.game, surf, self.status_effects.is_on_fire, self.status_effects.fire_animation, 'fire', offset)
+        # Posion
+        self.status_effects.Render_Effect(self.game, surf, self.status_effects.poisoned, self.status_effects.poison_animation, 'poison', offset)
+        # Frozen
+        self.status_effects.Render_Effect(self.game, surf, self.status_effects.frozen, self.status_effects.frozen_animation, 'frozen', offset)
+        # Wet
+        self.status_effects.Render_Effect(self.game, surf, self.status_effects.wet, self.status_effects.wet_animation, 'wet', offset)
+
+
         
     def Render_Weapons(self, surf, offset):
         if self.game.weapon_inventory.active_inventory == 0:

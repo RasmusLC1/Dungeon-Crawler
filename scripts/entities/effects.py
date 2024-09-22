@@ -10,23 +10,31 @@ class Status_Effect_Handler:
         self.is_on_fire = 0
         self.fire_cooldown = 0
         self.fire_animation = 0
+        self.fire_animation_max = 7
         self.fire_animation_cooldown = 0
+        self.fire_animation_cooldown_max = 20
 
         self.poisoned = 0
         self.poisoned_cooldown = 0
         self.poison_animation = 0
+        self.poison_animation_max = 2
         self.poison_animation_cooldown = 0
+        self.poison_animation_cooldown_max = 30
 
         self.is_on_ice = 0
         self.frozen = 0 
         self.frozen_cooldown = 0
         self.frozen_animation = 0
+        self.frozen_animation_max = 2
         self.frozen_animation_cooldown = 0
+        self.frozen_animation_cooldown_max = 30
 
         self.wet = 0 
         self.wet_cooldown = 0
         self.wet_animation = 0
+        self.wet_animation_max = 2
         self.wet_animation_cooldown = 0
+        self.wet_animation_cooldown_max = 30
 
         self.snared = 0
 
@@ -113,6 +121,31 @@ class Status_Effect_Handler:
             self.snared -= 1
             self.frame_movement = (0, 0)
 
+    # General effect animation update, takes string input for attributes
+    def Effect_Animation(self, animation_cooldown_attribute, animation_attribute, animation_max, cooldown_max):
+        # Asign the attributes to temp values
+        try:
+            animation_cooldown = getattr(self, animation_cooldown_attribute)
+            animation = getattr(self, animation_attribute)
+        except Exception as e:
+                print(f"Wrong effect animation input{e}", animation_cooldown_attribute, animation_attribute)
+
+        if animation_cooldown:
+            animation_cooldown -= 1
+        else:
+            animation_cooldown = cooldown_max
+            if animation >= animation_max:
+                animation = 0
+            else:
+                animation += 1
+        
+        try:
+            # Overwrite the attributes with the temp values
+            setattr(self, animation_cooldown_attribute, animation_cooldown)
+            setattr(self, animation_attribute, animation)
+        except Exception as e:
+                print(f"Wrong effect animation output{e}", animation_cooldown, animation)
+
     def OnFire(self):
         if self.fire_cooldown:
             self.fire_cooldown -= 1
@@ -121,17 +154,9 @@ class Status_Effect_Handler:
                 self.entity.Damage_Taken(damage)
                 self.is_on_fire -= 1
                 self.fire_cooldown = random.randint(30, 50)
-        self.Fire_Animation()
+        self.Effect_Animation('fire_animation_cooldown', 'fire_animation', self.fire_animation_max, self.fire_animation_cooldown_max)
 
-    def Fire_Animation(self):
-        if self.fire_animation_cooldown:
-            self.fire_animation_cooldown -= 1
-        else:
-            self.fire_animation_cooldown = 15
-            if self.fire_animation >= 7:
-                self.fire_animation = 0
-            else:
-                self.fire_animation += 1
+
 
     # Slow the entity down by increasing friction
     def Slow_Down(self, effect):
@@ -154,18 +179,7 @@ class Status_Effect_Handler:
             self.poisoned_cooldown = random.randint(50, 70)
             self.poisoned -= 1
         self.Slow_Down(self.poisoned)
-        self.Poision_Animation()
-
-    def Poision_Animation(self):
-        if self.poison_animation_cooldown:
-            self.poison_animation_cooldown -= 1
-        else:
-            self.poison_animation_cooldown = 30
-            if self.poison_animation >= 2:
-                self.poison_animation = 0
-            else:
-                self.poison_animation += 1
-
+        self.Effect_Animation('poison_animation_cooldown', 'poison_animation', self.poison_animation_max, self.poison_animation_cooldown_max)
     
 
     def Frozen(self):
@@ -179,17 +193,7 @@ class Status_Effect_Handler:
             self.frozen_cooldown = random.randint(160, 200)
             self.frozen -= 1
         self.Slow_Down(self.frozen)
-        self.Frozen_Animation()
-
-    def Frozen_Animation(self):
-        if self.frozen_animation_cooldown:
-            self.frozen_animation_cooldown -= 1
-        else:
-            self.frozen_animation_cooldown = 30
-            if self.frozen_animation >= 2:
-                self.frozen_animation = 0
-            else:
-                self.frozen_animation += 1
+        self.Effect_Animation('frozen_animation_cooldown', 'frozen_animation', self.frozen_animation_max, self.frozen_animation_cooldown_max)
 
     def Wet(self):
         if self.wet <= 1:
@@ -201,48 +205,17 @@ class Status_Effect_Handler:
         if not self.wet_cooldown:
             self.wet_cooldown = random.randint(160, 200)
             self.wet -= 1
-        self.Wet_Animation()
-
-    def Wet_Animation(self):
-        if self.wet_animation_cooldown:
-            self.wet_animation_cooldown -= 1
-        else:
-            self.wet_animation_cooldown = 10
-            if self.wet_animation >= 10:
-                self.wet_animation = 0
-            else:
-                self.wet_animation += 1
+        self.Effect_Animation('wet_animation_cooldown', 'wet_animation', self.wet_animation_max, self.wet_animation_cooldown_max)
 
     
     # Render effect animations
     # TODO: Implement better animations
-    def render_fire(self, game, surf, offset=(0, 0)):
-        if self.is_on_fire:
-            fire_image = game.assets['fire'][self.fire_animation].convert_alpha()
-            # Set the opacity to 70%
-            fire_image.set_alpha(179)
-            surf.blit(pygame.transform.flip(fire_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
-
-    def render_poison(self, game, surf, offset=(0, 0)):
-        if self.poisoned:
-            poison_image = game.assets['poison'][self.poison_animation].convert_alpha()
-            # Set the opacity to 70%
-            poison_image.set_alpha(179)
-            poison_image = pygame.transform.scale(poison_image, (12, 12))
-            surf.blit(pygame.transform.flip(poison_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
-
-    def render_frozen(self, game, surf, offset=(0, 0)):
-        if self.frozen:
-            frozen_image = game.assets['frozen'][self.frozen_animation].convert_alpha()
-            # Set the opacity to 70%
-            frozen_image.set_alpha(179)
-            frozen_image = pygame.transform.scale(frozen_image, (12, 12))
-            surf.blit(pygame.transform.flip(frozen_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
-
-    def render_wet(self, game, surf, offset=(0, 0)):
-        if self.wet:
-            wet_image = game.assets['wet'][0].convert_alpha()
-            # Set the opacity to 70%
-            wet_image.set_alpha(179)
-            wet_image = pygame.transform.scale(wet_image, (10, 10))
-            surf.blit(pygame.transform.flip(wet_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] + self.wet_animation - 5))
+    def Render_Effect(self, game, surf, condition, animation, effect, offset=(0, 0)):
+        if condition:
+            try:
+                fire_image = game.assets[effect][animation].convert_alpha()
+                # Set the opacity to 70%
+                fire_image.set_alpha(179)
+                surf.blit(pygame.transform.flip(fire_image, self.entity.flip[0], False), (self.entity.pos[0] - offset[0] + self.entity.anim_offset[0], self.entity.pos[1] - offset[1] - 5))
+            except Exception as e:
+                    print(f"Wrong Render effect input{e}", condition, animation, effect)

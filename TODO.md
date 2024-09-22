@@ -141,18 +141,28 @@ Game Ideas
                 - Ranged, shoots the player from range 
                 - Melee, attacks the player up close
 
+## Ancient Tomb Enemies
     # Spider, shoots spiderweb that snares you, less damage
     Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
     # Skeletons take more damage from blunt weapons, make more noise from rattle
-    Rats swarm attack, easy to kill, little damage
-    Minotaur, boss mob, charges and breaks envoirement, high damage, low defence
-    Clicker, blind but good hearing, loud because of clicks
-    Sniffer, Good smells, but bad hearing, attracted to blood and destroyed potions
+    Vampire, life steal, flying bat form when travelling, close combat
+    Ghost, can go through walls, low health high damage, need special effect to damage
     Necromancer, boss mob, spawns skeletons, raises killed skeletons
+    Gargoyle, sentry that waits for players and blends into the envoirement
+
+## Crystal Caverns enemies
+    # Spider, shoots spiderweb that snares you, less damage
+    Crystal Elemental, high health and strength, shoots crystal
+    Minotaur, boss mob, charges and breaks envoirement, high damage, low defence
     Hydra, boss mob, splits head when a head is killed, needs to be attacked from behind or killed with enviorement damage
+    Clicker, blind but good hearing, loud because of clicks
+
+
+
+    Rats swarm attack, easy to kill, little damage
+    Sniffer, Good smells, but bad hearing, attracted to blood and destroyed potions
     Slime, splits into smaller slimes when health is low
     Ushabity, boss mob, sentry that waits for the player and attacks, high damage and defence
-    Gargoyle, sentry that waits for players and blends into the envoirement
     Living plant, waits for the player and tries to ambush them, also attacks normal enemies, basically a trap
     Armadillos that dig and pop out of the ground to surprise you
     Goblins swarm attack, cowardly
@@ -161,11 +171,17 @@ Game Ideas
 
 # Biomes:
     Desert Biome, Water does not exist, enemies are vulnerable to fire, high gold in urns, 
+
     Mushroom Biom, poison effects are common, enemies here are immune to poision, potion ingredients, exploding mushrooms, Mushroom Queen boss
+
     Crystal Caverns, High armour enemies, crystals that emit light, Rare gems
+
     Lava forge, lots of lava, enemies are immune to fire and deal fire damage, rare weapons
+
     Ice Cave, Lots of ice, enemies are immune to frost and deal frost damage, breakable walls are more common
+
     Ancient ruins, undead enemies, rare runes
+
     Water caves, need to traverse lots of water, Deep water contains enemies, look for shallow water. More Treasure chests
 
 # LOW PRIORITY TASKS
