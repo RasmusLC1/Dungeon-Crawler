@@ -76,6 +76,7 @@ class Game:
         Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         self.souls_interface = Souls(self)
+        self.keyboard_handler = Keyboard_Handler(self)
 
 
 
@@ -139,7 +140,7 @@ class Game:
                     sys.exit()
                 self.mouse.Mouse_Input(event, self.render_scroll)
 
-                Keyboard_Handler.keyboard_Input(self, event, offset = self.render_scroll)
+                self.keyboard_handler.keyboard_Input(event, self.render_scroll)
 
     def Update(self):
             fps = int(self.clock.get_fps())
@@ -180,6 +181,7 @@ class Game:
         self.item_inventory.Render(self.display)
         self.weapon_inventory.Render(self.display, self.render_scroll)
         self.text_box_handler.Render(self.display, self.render_scroll)
+        self.player.status_effects.Render_Effects_Symbols(self.display)
 
         self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
 

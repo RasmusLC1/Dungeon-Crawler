@@ -40,19 +40,18 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
     def Update_Status_Effects(self):
         super().Update_Status_Effects()
         self.Silence()
-        self.Render_Effects_Symbols()
 
     def Update_Effect_List(self, effect, value):
         if effect in self.effects:
             self.effects[effect]['current'] = value
 
-    def Render_Effects_Symbols(self):
+    def Render_Effects_Symbols(self, surf):
         x_pos = 10
         y_pos = 30
         for effect_key, data in self.effects.items():
             if data['current']:
-                self.entity.game.symbols.Render_Symbol(self.entity.game.display, effect_key, (x_pos, y_pos))
-                self.entity.game.default_font.Render_Word(self.entity.game.display, str(data['current']), (x_pos + 10, y_pos))
+                self.entity.game.symbols.Render_Symbol(surf, effect_key, (x_pos, y_pos))
+                self.entity.game.default_font.Render_Word(surf, str(data['current']), (x_pos + 10, y_pos))
 
                 y_pos += 10
 
