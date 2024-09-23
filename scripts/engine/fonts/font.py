@@ -33,7 +33,6 @@ class Font():
         return char_positions
 
     def Render_Word(self, surf, text, pos):
-
         
         # Get the positions of the characters in font_lookup
         char_positions = self.find_char_positions(text)

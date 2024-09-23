@@ -2,7 +2,7 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
-from scripts.items.weapons import weapon
+from scripts.entities.player.player_effects import Player_Status_Effect_Handler
 from copy import copy
 
 import random
@@ -41,6 +41,7 @@ class Player(Moving_Entity):
         self.shootin_cooldown = 0
 
         self.weapons = []
+        self.status_effects = Player_Status_Effect_Handler(self)
 
 
     
@@ -346,7 +347,7 @@ class Player(Moving_Entity):
             entity_image_head.set_alpha(alpha_value)
             entity_image_body.set_alpha(alpha_value)
             entity_image_legs.set_alpha(alpha_value)
-            
+
         if not "up" in self.animation:
             surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
             surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))

@@ -41,8 +41,7 @@ class Text_Box():
 
     def Render_Potion(self, surf, text_box_pos):
         effect = self.item.effect
-        if 'resistance' in self.item.effect:
-            effect = self.item.effect.replace('_resistance', '')
+        
 
         self.game.default_font.Render_Word(surf, self.item.effect, text_box_pos)
 

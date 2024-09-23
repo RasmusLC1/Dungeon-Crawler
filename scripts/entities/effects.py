@@ -56,9 +56,7 @@ class Status_Effect_Handler:
         self.invisibility_max = 10 
         self.invisibility_cooldown = 0
 
-        self.silence = 0 
-        self.silence_max = 10 
-        self.silence_cooldown = 0
+        
 
         self.fire_resistance = 0 
         self.fire_resistance_max = 10 
@@ -96,8 +94,8 @@ class Status_Effect_Handler:
             return self.Set_Dry(duration)
         elif effect == 'slow':
             return self.Slow_Down(duration)
-        elif effect == 'healing':
-            return self.Healing(duration)
+        elif effect == 'health':
+            return self.Health(duration)
         elif effect == 'regen':
             return self.Set_Regen(duration)
         elif effect == 'speed':
@@ -106,8 +104,6 @@ class Status_Effect_Handler:
             return self.Set_Strength(duration)
         elif effect == 'invisibility':
             return self.Set_Invisibility(duration)
-        elif effect == 'silence':
-            return self.Set_Silence(duration)
         else:
             return False
         
@@ -122,7 +118,6 @@ class Status_Effect_Handler:
         self.Speed()
         self.Strength()
         self.Invisibility()
-        self.Silence()
         self.Fire_Resistance()
         self.Freeze_Resistance()
         self.Poison_Resistance()
@@ -150,12 +145,12 @@ class Status_Effect_Handler:
 
     def Poison(self):
         if not self.poisoned:
-            return
+            return False
         
         if self.poison_resistance:
             self.poisoned = 0
             self.poisoned_cooldown = 0
-            return
+            return False
         
 
         if self.poisoned_cooldown:
@@ -166,6 +161,9 @@ class Status_Effect_Handler:
             self.entity.Damage_Taken(self.poisoned)
             self.poisoned_cooldown = random.randint(50, 70)
             self.poisoned -= 1
+            self.Slow_Down(self.poisoned)
+            return True
+
         self.Slow_Down(self.poisoned)
         self.Effect_Animation('poison_animation_cooldown', 'poison_animation', self.poison_animation_max, self.poison_animation_cooldown_max)
     
@@ -182,27 +180,30 @@ class Status_Effect_Handler:
         return True
     
     def Frozen(self):
-        if self.frozen <= 1:
-            self.frozen = 0
-            return
+        if not self.frozen:
+            return False
         
         if self.freeze_resistance:
             self.frozen = 0
             self.frozen_cooldown = 0
-            return
+            return False
         
-        elif self.frozen_cooldown:
+        if self.frozen_cooldown:
             self.frozen_cooldown -= 1
 
 
         if not self.frozen_cooldown:
             self.frozen_cooldown = random.randint(160, 200)
             self.frozen -= 1
+            self.Slow_Down(self.frozen)
+
+            return True
 
         
         self.Slow_Down(self.frozen)
         self.Effect_Animation('frozen_animation_cooldown', 'frozen_animation', self.frozen_animation_max, self.frozen_animation_cooldown_max)
-    
+        return False
+
     def Remove_Frozen(self):
         self.frozen = 0
 
@@ -218,15 +219,17 @@ class Status_Effect_Handler:
     def Wet(self):
         if self.wet <= 1:
             self.wet = 0
-            return
+            return False
         elif self.wet_cooldown:
             self.wet_cooldown -= 1
 
         if not self.wet_cooldown:
             self.wet_cooldown = random.randint(160, 200)
             self.wet -= 1
+            return True
+        
         self.Effect_Animation('wet_animation_cooldown', 'wet_animation', self.wet_animation_max, self.wet_animation_cooldown_max)
-
+        return False
     
     def Set_Dry(self, drying):
         self.wet = max(0, self.wet - drying)
@@ -244,22 +247,23 @@ class Status_Effect_Handler:
     
     def OnFire(self):
         if not self.fire:
-            return
+            return False
         
         if self.fire_resistance:
             self.fire = 0
             self.fire_cooldown = 0
-            return
+            return False
         
         if self.fire_cooldown:
             self.fire_cooldown -= 1
         elif self.fire:
-                damage = random.randint(1, 3)
-                self.entity.Damage_Taken(damage)
-                self.fire -= 1
-                self.fire_cooldown = random.randint(30, 50)
+            damage = random.randint(1, 3)
+            self.entity.Damage_Taken(damage)
+            self.fire -= 1
+            self.fire_cooldown = random.randint(30, 50)
+            return True
         self.Effect_Animation('fire_animation_cooldown', 'fire_animation', self.fire_animation_max, self.fire_animation_cooldown_max)
-    
+        return False
    
     
     # Set Speed effect, doesn't work when frozen
@@ -276,13 +280,17 @@ class Status_Effect_Handler:
             self.speed_cooldown -= 1
 
         if not self.speed or self.frozen:
-            return
+            return False
         
         self.entity.max_speed = min(14, self.entity.max_speed * 2)
             
         if not self.speed_cooldown:
             self.speed -= 1
             self.speed_cooldown = random.randint(40, 60)
+            return True
+        
+        return False
+
     
     # Set Strength effect, doesn't work when poisoned
     def Set_Strength(self, strength_time):
@@ -299,13 +307,16 @@ class Status_Effect_Handler:
             self.strength_cooldown -= 1
 
         if not self.strength or self.poisoned:
-            return
+            return False
         
         self.entity.strength = min(20, self.entity.strength * 2)
 
-        if self.strength_cooldown:
+        if not self.strength_cooldown:
             self.strength -= 1
             self.strength_cooldown = random.randint(40, 60)
+            return True
+        
+        return False
 
     # Set Invisibility effect
     def Set_Invisibility(self, invisibility_time):
@@ -317,7 +328,7 @@ class Status_Effect_Handler:
     
     def Invisibility(self):
         if not self.invisibility:
-            return
+            return False
         
         self.entity.active = max(0, min(255, 110 - self.invisibility * 10))
 
@@ -326,25 +337,10 @@ class Status_Effect_Handler:
         else:
             self.invisibility -= 1
             self.invisibility_cooldown = random.randint(40, 60)
+            return True
+        return False
     
-    # Set Strength effect, doesn't work when poisoned
-    def Set_Silence(self, silence_time):
-
-        if self.silence >= self.silence_max:
-            return False
-        self.silence = min(silence_time + self.silence, 10)
-        return True
     
-    def Silence(self):
-        if not self.silence:
-            return
-    
-        if self.silence_cooldown:
-            self.silence_cooldown -= 1
-        else:
-            self.silence -= 1
-            self.silence_cooldown = random.randint(40, 60)
-
     # Set Strength effect, doesn't work when poisoned
     def Set_Fire_Resistance(self, fire_resistance_time):
 
@@ -355,12 +351,15 @@ class Status_Effect_Handler:
     
     def Fire_Resistance(self):
         if not self.fire_resistance:
-            return
+            return False
         if self.fire_resistance_cooldown:
             self.fire_resistance_cooldown -= 1
         else:
             self.fire_resistance -= 1
             self.fire_resistance_cooldown = random.randint(80, 100)
+            return True
+        
+        return False
 
     # Set Strength effect, doesn't work when poisoned
     def Set_Freeze_Resistance(self, freeze_resistance_time):
@@ -372,12 +371,15 @@ class Status_Effect_Handler:
     
     def Freeze_Resistance(self):
         if not self.freeze_resistance:
-            return
+            return False
         if self.freeze_resistance_cooldown:
             self.freeze_resistance_cooldown -= 1
         else:
             self.freeze_resistance -= 1
             self.freeze_resistance_cooldown = random.randint(80, 100)
+            return True
+        
+        return False
 
     # Set Strength effect, doesn't work when poisoned
     def Set_Poison_Resistance(self, poison_resistance_time):
@@ -389,12 +391,15 @@ class Status_Effect_Handler:
     
     def Poison_Resistance(self):
         if not self.poison_resistance:
-            return
+            return False
         if self.poison_resistance_cooldown:
             self.poison_resistance_cooldown -= 1
         else:
             self.poison_resistance -= 1
             self.poison_resistance_cooldown = random.randint(80, 100)
+            return True
+        
+        return False
 
     #set snare effect
     def Set_Snare(self, snare_time):
@@ -406,11 +411,11 @@ class Status_Effect_Handler:
             self.snared -= 1
             self.entity.frame_movement = (0, 0)
 
-    # Return true if healing was successfull
-    def Healing(self, healing):
+    # Return true if health was successfull
+    def Health(self, health):
         if self.entity.health >= self.entity.max_health:
             return False     
-        self.entity.health = min(self.entity.max_health, self.entity.health + healing)
+        self.entity.health = min(self.entity.max_health, self.entity.health + health)
         return True
     
      # Set Regen effect, doesn't work when poisoned
@@ -424,19 +429,20 @@ class Status_Effect_Handler:
 
     def Regen(self):
         if not self.regen:
-            return
+            return False
         
         if self.regen_cooldown:
             self.regen_cooldown -= 1
-            return
+            return False
           
         if self.poisoned:
-            return
+            return False
         
-        self.Healing(random.randint(3, 5))
+        self.Health(random.randint(3, 5))
         self.regen -= 1
         self.regen_cooldown = random.randint(40, 60)
         self.Effect_Animation('regen_animation_cooldown', 'regen_animation', self.regen_animation_max, self.regen_animation_cooldown_max)
+        return True
 
 
     # Slow the entity down by increasing friction
