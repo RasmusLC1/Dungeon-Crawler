@@ -14,9 +14,6 @@ class PhysicsEntity:
         self.active = 0
         self.light_level = 0
         self.game.entities_render.Add_Entity(self)
-
-        
-
         self.render = True
 
 

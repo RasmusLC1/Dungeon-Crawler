@@ -381,12 +381,11 @@ class Moving_Entity(PhysicsEntity):
             return
         self.max_speed = 20  # Adjust max speed speed for dashing distance
         self.charging = max(0, self.charging - 1)
-        self.Stored_Position_Handler(self.game.render_scroll)
-        direction = pygame.math.Vector2(self.target[0] - self.stored_position[0], self.target[1] - self.stored_position[1])
-        direction.normalize_ip()
+        
 
-        self.velocity[0] = direction.x * 50
-        self.velocity[1] = direction.y * 50
+        self.velocity[0] = self.attack_direction[0] * 50
+        self.velocity[1] = self.attack_direction[1] * 50
+
 
     def Set_Frame_movement(self, movement):
         self.frame_movement = movement
@@ -450,6 +449,9 @@ class Moving_Entity(PhysicsEntity):
         
         # Set the alpha value to make the entity fade out, the lower the more invisible
         alpha_value = max(0, min(255, self.active)) 
+        if not alpha_value:
+            return
+        
         entity_image_head.set_alpha(alpha_value)
         entity_image_body.set_alpha(alpha_value)
         entity_image_legs.set_alpha(alpha_value)

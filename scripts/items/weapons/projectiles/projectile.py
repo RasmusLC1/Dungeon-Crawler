@@ -7,6 +7,7 @@ class Projectile(Weapon):
         super().__init__(game, pos, size, type, damage, speed, range, weapon_class,  damage_type)
         self.shoot_speed = 0
         self.pickup_allowed = True
+        self.range_holder = range
 
 
     def Set_Special_Attack(self, offset= (0,0)):
@@ -15,6 +16,8 @@ class Projectile(Weapon):
 
     def Initialise_Shooting(self, speed):
         if not self.shoot_speed:
+            self.range = self.range_holder
+            self.active = 255
             self.shoot_speed = speed
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack * 2)
             return True
@@ -23,6 +26,7 @@ class Projectile(Weapon):
 
     def Shoot(self):
         if not self.Update_Range():
+            self.shoot_speed = 0
             self.special_attack = 0
             return  
 
@@ -32,6 +36,7 @@ class Projectile(Weapon):
         if not self.Check_Tile((dir_x, dir_y)):
             self.special_attack = 0
             self.range = 0
+            self.shoot_speed = 0
             return None
         self.Move((dir_x, dir_y))
         # Check for collision with enemy
@@ -39,6 +44,7 @@ class Projectile(Weapon):
         if entity:
             self.special_attack = 0
             self.range = 0
+            self.shoot_speed = 0
             return entity
         return None
 
@@ -73,14 +79,12 @@ class Projectile(Weapon):
         # the weapon has been picked up
         if self.in_inventory:
 
-            if not self.picked_up:
-                self.Render_In_Inventory(surf, offset)
-            else:
+            if self.picked_up:
                 self.Render_In_Inventory(surf)
         
         if not self.Update_Light_Level():
             return
-        # Set image
+        
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
         if self.special_attack:
@@ -89,6 +93,11 @@ class Projectile(Weapon):
         
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))
+
+
+        if not alpha_value:
+            return
+        
         weapon_image.set_alpha(alpha_value)
 
         # Blit the dark layer

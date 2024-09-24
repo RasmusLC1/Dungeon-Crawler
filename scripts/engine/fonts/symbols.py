@@ -9,7 +9,7 @@ class Symbols():
                                'slash', 'blunt', 'electric',
                                'hardness', 'regen', 'silence',
                                'luck', 'vampiric', 'fire',
-                               'freeze', 'poison', ]
+                               'freeze', 'poison', 'wet']
 
 
 

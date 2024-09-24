@@ -219,6 +219,8 @@ class Graphics_Loader:
             'arrow': get_tiles_from_sheet('weapons/arrow.png', 0, 0, 0, 0, 16, 16),
             'arrow_attack': get_tiles_from_sheet('weapons/arrow.png', 0, 0, 0, 0, 16, 16),
 
+            'shield': get_tiles_from_sheet('weapons/shields.png', 4, 4, 0, 0, 14, 14),
+            'shield_attack': get_tiles_from_sheet('weapons/shields.png', 4, 4, 0, 0, 14, 14),
         }
         self.assets.update(Weapons_assets)
 
@@ -335,7 +337,7 @@ class Graphics_Loader:
     def Asset_Font(self):
         font = {
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 8, 8),
-            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 1, 0, 0, 8, 8),
+            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 2, 0, 0, 8, 8),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 16, 16),
         }
         self.assets.update(font)

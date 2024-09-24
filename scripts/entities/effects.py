@@ -161,7 +161,7 @@ class Status_Effect_Handler:
             self.entity.Damage_Taken(self.poisoned)
             self.poisoned_cooldown = random.randint(50, 70)
             self.poisoned -= 1
-            self.Slow_Down(self.poisoned)
+            self.Slow_Down(2)
             return True
 
         self.Slow_Down(self.poisoned)
@@ -217,9 +217,12 @@ class Status_Effect_Handler:
         return True
 
     def Wet(self):
-        if self.wet <= 1:
-            self.wet = 0
+        if not self.wet:
             return False
+        
+        if self.fire:
+            self.fire = 0
+            
         elif self.wet_cooldown:
             self.wet_cooldown -= 1
 
@@ -249,7 +252,7 @@ class Status_Effect_Handler:
         if not self.fire:
             return False
         
-        if self.fire_resistance:
+        if self.fire_resistance or self.wet:
             self.fire = 0
             self.fire_cooldown = 0
             return False

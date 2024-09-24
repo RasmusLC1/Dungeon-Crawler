@@ -8,7 +8,7 @@ import math
 class Sword(Weapon):
     def __init__(self, game, pos, size, damage_type = 'slash'):
         super().__init__(game, pos, size, 'sword', 3, 5, 10, 'one_handed_melee', damage_type)
-        self.offset = 0
+        self.max_charge_time = 50
         self.max_animation = 3
         self.attack_animation_max = 3 
         self.slash_distance = 0 # Current slash distance
@@ -22,6 +22,18 @@ class Sword(Weapon):
         if not super().Update(offset):
             return
         
+    def Update_Attack(self):
+        if not super().Update_Attack():
+            return False
+        self.Point_Towards_Mouse()
+        self.Set_Attack_Direction()
+        
+        if self.slash:
+            self.sub_type = 'sword_attack'
+            self.Slash_Attack()
+        else:
+            self.sub_type = 'sword'
+            self.Stabbing_Attack()
 
     def Update_Flip(self):
         pass
@@ -44,15 +56,7 @@ class Sword(Weapon):
         
         super().Update_Attack_Animation()
 
-        self.Point_Towards_Mouse()
-        self.Set_Attack_Direction()
         
-        if self.slash:
-            self.sub_type = 'sword_attack'
-            self.Slash_Attack()
-        else:
-            self.sub_type = 'sword'
-            self.Stabbing_Attack()
 
 
     def Slash_Attack(self):
@@ -154,13 +158,15 @@ class Sword(Weapon):
         
         if self.special_attack <= 0 or not self.equipped:
             return
+        print(self.special_attack)
         self.Initialise_Charge()
         
 
 
         
-    # Handle charging logic, return True if successfull else False
+    # Handle charging logic, return True if successful else False
     def Charge(self):
+        print(self.charging)
         if not self.charging:
             return False
         if self.entity.attack_direction[0] < 0:
@@ -178,10 +184,9 @@ class Sword(Weapon):
     
     # Initialise the charge logic
     def Initialise_Charge(self):
-        print(self.charge_time, self.special_attack, self.entity.type)
         self.Point_Towards_Mouse()
         self.stored_rotation = self.rotate
-        self.entity.Set_Charge(self.special_attack / 8)
+        self.entity.Set_Charge(self.special_attack / 4)
         self.charging = self.entity.charging
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack) # Find nearby enemies to attack
         self.special_attack = 0

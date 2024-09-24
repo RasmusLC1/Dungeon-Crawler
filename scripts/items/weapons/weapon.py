@@ -71,11 +71,12 @@ class Weapon(Item):
     # Update the attack logic
     def Update_Attack(self):
         if not self.attacking:
-            return
+            return False
             
         self.Update_Attack_Animation()
         self.Attack_Collision_Check()
         self.Attack_Align_Weapon()
+        return True
 
     # Initialise the attack
     def Set_Attack(self):
@@ -333,10 +334,7 @@ class Weapon(Item):
         # the weapon has been picked up
         
         if self.in_inventory:
-            if not self.picked_up:
-                self.Render_In_Inventory(surf, offset)
-            else:
-                self.Render_In_Inventory(surf)
+            self.Render_In_Inventory(surf)
         
         if not self.Update_Light_Level():
             return
@@ -345,6 +343,10 @@ class Weapon(Item):
         
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))
+
+        if not alpha_value:
+            return
+        
         weapon_image.set_alpha(alpha_value)
 
         # Blit the dark layer

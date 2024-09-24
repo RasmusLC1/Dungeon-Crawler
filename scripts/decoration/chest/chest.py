@@ -19,6 +19,7 @@ from scripts.items.weapons.close_combat.torch import Torch
 from scripts.items.weapons.projectiles.spear import Spear
 from scripts.items.weapons.ranged_weapons.bow import Bow
 from scripts.items.weapons.projectiles.arrow import Arrow
+from scripts.items.weapons.shields.shield import Shield
 
 
 class Chest(Decoration):
@@ -40,11 +41,12 @@ class Chest(Decoration):
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
-            'sword',
-            'torch',
+            # 'sword',
+            # 'torch',
             'spear',
-            'bow',
-            'arrow',
+            # 'bow',
+            # 'arrow',
+            # 'shield'
         ]
 
         self.potions = [
@@ -66,7 +68,7 @@ class Chest(Decoration):
     def Open(self):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(0, 2)
+        self.loot_type = random.randint(3, 3)
 
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
@@ -131,6 +133,8 @@ class Chest(Decoration):
         weapon = None
         if self.weapons[weapon_index] == 'sword':
             weapon = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16))
+        elif self.weapons[weapon_index] == 'shield':
+            weapon = Shield(self.game, (rand_pos_x, rand_pos_y), (16,16))
         elif self.weapons[weapon_index] == 'spear':
             weapon = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16))
         elif self.weapons[weapon_index] == 'torch':
@@ -187,6 +191,9 @@ class Chest(Decoration):
 
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
+        if not alpha_value:
+            return
+        
         chest_image.set_alpha(alpha_value)
 
         # Blit the dark layer

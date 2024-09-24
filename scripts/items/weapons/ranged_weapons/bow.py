@@ -65,19 +65,20 @@ class Bow(Weapon):
     def Charge_Attack(self, offset = (0, 0)):
         try:
             if 'player' == self.entity.type:
+                # Check that the weapon is in a weapon inventory
+
                 if not self.inventory_type:
                     return
                 self.Set_Charging_Player()
                 self.Player_Shooting()
+                return
             elif 'enemy' == self.entity.subtype:
                 self.Set_Charging_Enemy()
+                return
         except TypeError as e:
             print(f"Entity neither enemy nor player: {e}")
         
-        if not self.inventory_type:
-            return
 
-        self.Set_Charging_Player()
     
     def Player_Shooting(self):
         if self.is_charging:
@@ -105,8 +106,6 @@ class Bow(Weapon):
 
         elif self.charge_time > 0:
             self.game.sound_handler.Play_Sound('arrow_shot', 1)
-
-            self.game.entities_render.Add_Entity(self.arrow) # Add the arrow back into rendering
 
             self.Shoot_Arrow()
             self.Reset_Bow()

@@ -9,10 +9,10 @@ class Entity_Renderer():
         self.nearby_entities_cooldown = 0
 
     def Update(self):
-        if self.nearby_entities_cooldown:
-            self.nearby_entities_cooldown -= 1
-            return
-            
+        # if self.nearby_entities_cooldown:
+        #     self.nearby_entities_cooldown -= 1
+        #     return
+        
         self.Find_Nearby_Entities()
         self.nearby_entities_cooldown = 50
         self.nearby_entities.sort(key=lambda entity: entity.pos[1])
@@ -34,6 +34,7 @@ class Entity_Renderer():
             return
         self.entities.append(entity)
         self.nearby_entities_cooldown = 0
+
     
     def Remove_Entity(self, entity):
         if entity in self.entities:

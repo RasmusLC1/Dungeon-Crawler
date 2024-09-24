@@ -295,22 +295,7 @@ class Player(Moving_Entity):
             self.Attack_Direction_Handler(offset)
             self.dashing = 60
         
-
-    def Ammo_Change(self, ammo):
-        if self.ammo + ammo < self.max_ammo:
-            self.ammo += ammo
-            return True
-        elif self.ammo == self.max_ammo:
-            return False
-        else:
-            self.ammo = self.max_ammo
-            return True
         
-    def Coin_Change(self, coins):
-        self.coins += coins
-
-    
-
     def Mouse_Handler(self):
         self.Set_Target(self.game.mouse.player_mouse)
 
