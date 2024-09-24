@@ -26,7 +26,7 @@ class Sword(Weapon):
         if not super().Update_Attack():
             return False
         self.Point_Towards_Mouse()
-        self.Set_Attack_Direction()
+        self.Set_Block_Direction()
         
         if self.slash:
             self.sub_type = 'sword_attack'
@@ -158,7 +158,6 @@ class Sword(Weapon):
         
         if self.special_attack <= 0 or not self.equipped:
             return
-        print(self.special_attack)
         self.Initialise_Charge()
         
 
@@ -166,7 +165,6 @@ class Sword(Weapon):
         
     # Handle charging logic, return True if successful else False
     def Charge(self):
-        print(self.charging)
         if not self.charging:
             return False
         if self.entity.attack_direction[0] < 0:

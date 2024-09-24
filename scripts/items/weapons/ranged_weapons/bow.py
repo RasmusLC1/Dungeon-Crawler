@@ -37,7 +37,7 @@ class Bow(Weapon):
     def Update_Attack_Animation(self):
         self.sub_type = self.type + '_attack'
         self.animation = self.attack_animation
-        self.Set_Attack_Direction()
+        self.Set_Block_Direction()
         self.Point_Towards_Mouse()
         self.Set_Attack_Position()
 

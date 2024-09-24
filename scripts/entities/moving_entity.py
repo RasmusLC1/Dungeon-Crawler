@@ -78,6 +78,9 @@ class Moving_Entity(PhysicsEntity):
         self.attack_animation_num_cooldown = 0
         self.attack_animation_num_cooldown_max = 50
 
+        # Handle Blocking
+        self.block_direction = (0,0)
+
          # Jumping attack
         self.jumping_animation_num = 0
         self.jumping_animation_num_max = 0
@@ -335,15 +338,53 @@ class Moving_Entity(PhysicsEntity):
         if self.damage_cooldown:
             self.damage_cooldown -= 1
 
-    def Damage_Taken(self, damage):
+    def Damage_Taken(self, damage, direction = (0, 0)):
         if self.damage_cooldown:
-            return
+            return False
         
+        if self.Check_Blocking_Direction(direction):
+            return False
+
         self.damage_cooldown = 10
         self.health -= damage
         if self.health <= 0:
             self.Reset_Effects()
             self.Update_Status_Effects()
+
+        return True
+
+    
+    
+    def Check_Blocking_Direction(self, direction) -> bool:
+        # Check if entity is blocking
+        if self.block_direction == (0, 0):
+            return
+        
+        # Convert directions to pygame Vector2 for easier manipulation
+        attack_vector = pygame.math.Vector2(self.attack_direction)
+        block_vector = pygame.math.Vector2(direction)
+
+        # Check for zero-length vectors to avoid division by zero
+        if attack_vector.length() == 0 or block_vector.length() == 0:
+            return False
+
+        # Normalize the vectors to unit vectors
+        attack_vector.normalize_ip()
+        block_vector.normalize_ip()
+
+        # Calculate the dot product and determine the angle
+        dot_product = attack_vector.dot(block_vector)
+        dot_product = max(-1.0, min(1.0, dot_product))  # Clamp value to avoid errors in acos due to floating point precision
+        angle = math.acos(dot_product)
+        angle_degrees = math.degrees(angle)
+
+        # Determine if the block is successful based on the angle
+        if angle_degrees >= 130:
+            return True
+        
+        return False
+
+
         
     def Attack_Direction_Handler(self, offset = (0, 0)):
 
@@ -421,6 +462,8 @@ class Moving_Entity(PhysicsEntity):
     def Set_Effect(self, effect, duration):
         return self.status_effects.Set_Effect(effect, duration)
 
+    def Set_Block_Direction(self, direction):
+        self.block_direction = direction
 
     
     # Render entity

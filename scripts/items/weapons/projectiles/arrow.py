@@ -77,7 +77,7 @@ class Arrow(Projectile):
             self.Move((self.entity.pos[0] - 4, self.entity.pos[1] - 3))
         else:
             self.Move((self.entity.pos[0] + 7, self.entity.pos[1] - 3))
-        self.Set_Attack_Direction()
+        self.Set_Block_Direction()
         self.Point_Towards_Mouse()
 
     def Set_Special_Attack(self, charge_time, offset = (0, 0)):

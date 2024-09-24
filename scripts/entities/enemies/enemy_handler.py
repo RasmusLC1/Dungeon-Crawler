@@ -19,16 +19,16 @@ class Enemy_Handler():
     def Initialise(self):
         for spawner in self.game.tilemap.extract([('spawners', 1)]):
             if spawner['variant'] == 1:
-                enemy_variant = random.randint(0, 4)
+                enemy_variant = random.randint(1, 1)
                 if enemy_variant == 0: # Melee Decrepit Bones
                     self.Spawn_Melee_Decrepit_Bones(spawner)
                 elif enemy_variant == 1: # Ranged Decrepit Bones
                     self.Spawn_Ranged_Decrepit_Bones(spawner)
                 elif enemy_variant == 2: # Fire spirit
                     self.Spawn_Fire_Spirit(spawner)
-                elif enemy_variant == 3: # Fire spirit
+                elif enemy_variant == 3: # Ice spirit
                     self.Spawn_Ice_Spirit(spawner)
-                elif enemy_variant == 4: # Fire spirit
+                elif enemy_variant == 4: # Spider
                     self.Spawn_Spider(spawner)
 
     def Spawn_Melee_Decrepit_Bones(self, spawner):

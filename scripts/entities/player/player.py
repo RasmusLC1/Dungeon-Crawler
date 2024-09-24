@@ -47,6 +47,7 @@ class Player(Moving_Entity):
     
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().Update(tilemap, movement=movement)
+        self.Mouse_Handler()
         if self.dashing:
             self.Dashing_Update(offset)
 
@@ -76,11 +77,9 @@ class Player(Moving_Entity):
         return super().Entity_Collision_Detection(tilemap)
 
     def Attack_Direction_Handler(self, offset = (0,0)):
-        self.Mouse_Handler()
         super().Attack_Direction_Handler(offset)
 
     def Set_Charge(self, charge_speed, offset=(0, 0)):
-        self.Mouse_Handler()
         super().Set_Charge(charge_speed, offset)
 
     # Function to update the player's weapons

@@ -57,7 +57,7 @@ class Spear(Projectile):
 
     def Stabbing_Attack_Handler(self):
         self.Point_Towards_Mouse()
-        self.Set_Attack_Direction()
+        self.Set_Block_Direction()
         self.Stabbing_Attack()
 
 
@@ -85,8 +85,8 @@ class Spear(Projectile):
         
 
                 
-    def Set_Attack_Direction(self):
-        super().Set_Attack_Direction()
+    def Set_Block_Direction(self):
+        super().Set_Block_Direction()
         if self.entity.attack_direction[0] > 0:
             self.rotate *= -1
 

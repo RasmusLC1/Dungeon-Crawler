@@ -134,7 +134,7 @@ class Weapon(Item):
         if not self.entity:
             return
         self.entity.Attack_Direction_Handler(offset)
-        self.Set_Attack_Direction()
+        self.Set_Block_Direction()
         self.special_attack = self.charge_time
 
     # Initialise the charging of the weapon
@@ -190,9 +190,8 @@ class Weapon(Item):
     def Entity_Hit(self, entity):
         target_position = (self.pos[0] - 16 * self.entity.attack_direction[0], self.pos[1] - 16 * self.entity.attack_direction[1])
         self.game.clatter.Generate_Clatter(target_position, 200)
-
         damage = self.entity.strength * self.damage
-        entity.Damage_Taken(damage)
+        entity.Damage_Taken(damage, self.entity.attack_direction)
         entity.Set_Effect(self.effect, 3)
         self.enemy_hit = True
 
@@ -273,7 +272,7 @@ class Weapon(Item):
         self.attack_ready = state
 
     # Set the attack direction   
-    def Set_Attack_Direction(self):
+    def Set_Block_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
         self.entity.attack_direction = self.entity.attack_direction
         if not self.entity.attack_direction:

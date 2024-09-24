@@ -122,8 +122,10 @@ class Enemy(Moving_Entity):
     def Set_Locked_On_Target(self, value):
         self.locked_on_target = value
         
-    def Damage_Taken(self, damage):
-        super().Damage_Taken(damage)
+    def Damage_Taken(self, damage, direction = (0, 0)):
+        # No damage done simply return
+        if not super().Damage_Taken(damage, direction):
+            return
         if self.health <= 0:
             self.game.enemy_handler.Delete_Enemy(self)
             if self.distance_to_player < 150:

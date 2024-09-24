@@ -2,23 +2,15 @@ from scripts.items.weapons.weapon import Weapon
 
 
 import math
+import pygame
+
 class Shield(Weapon):
     def __init__(self, game, pos, size, damage_type = 'block'):
         super().__init__(game, pos, size, 'shield', 2, 5, 2, 'shield', damage_type)
         self.charging = 0 # Charging value will be alligned with the entity's
+        self.blocking = False
 
     
-    # Handle special attack charge
-    def Special_Attack(self):
-        if not self.entity:
-            return
-        
-        if self.Charge():
-            return
-        
-        if self.special_attack <= 0 or not self.equipped:
-            return
-        self.Initialise_Charge()
 
     def Set_Attack(self):
         pass
@@ -30,14 +22,29 @@ class Shield(Weapon):
             if not self.inventory_type:
                 return
             self.Set_Charging_Player()
-            self.Player_Shooting()
+            self.Player_Blocking()
         except TypeError as e:
-            print(f"Entity neither enemy nor player: {e}")
+            print(f"Shield blocking error{e}")
         
         if not self.inventory_type:
             return
 
         self.Set_Charging_Player()
+
+    
+    def Player_Blocking(self):
+        if self.is_charging:
+            self.entity.Attack_Direction_Handler()
+            self.entity.Set_Block_Direction(self.entity.target)
+            self.blocking = True
+            return
+        
+        if self.blocking:
+            self.entity.Set_Block_Direction((0,0))
+            self.blocking = False
+            return
+
+
 
 
     def Set_Equipped_Position(self, direction_y):
@@ -71,7 +78,7 @@ class Shield(Weapon):
         if self.flip_image:
             offset_x = 2
         else:
-            offset_x = -4
+            offset_x = 4
             # self.slash = True
         return offset_x
         
@@ -79,7 +86,7 @@ class Shield(Weapon):
         if self.flip_image:
             offset_x = -4
         else:
-            offset_x = 4
+            offset_x = -2
         return offset_x
 
     def Update_Flip(self):
