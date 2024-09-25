@@ -266,17 +266,17 @@ class Moving_Entity(PhysicsEntity):
         future_pos = (self.pos[0] + self.frame_movement[0], self.pos[1] + self.frame_movement[1])
         for enemy in self.nearby_enemies:
             if enemy != self and enemy.rect().colliderect(self.rect_future(future_pos)):
-                self.apply_repulsion(enemy, tilemap)
+                self.Apply_Repulsion(enemy, tilemap)
                 return enemy
         
         # Handle collision with the player
         if self.type != 'player' and self.game.player.rect().colliderect(self.rect_future(future_pos)):
-            self.apply_repulsion(self.game.player, tilemap)
+            self.Apply_Repulsion(self.game.player, tilemap)
             return self.game.player
                 
         return None
 
-    def apply_repulsion(self, other_entity, tilemap) -> None:
+    def Apply_Repulsion(self, other_entity, tilemap) -> None:
         # Check if entity is stronger than the other, if no then simply return as it cannot push it
         if self.strength < other_entity.strength:
             return
@@ -304,7 +304,6 @@ class Moving_Entity(PhysicsEntity):
 
     def rect_future(self, future_pos):
         return pygame.Rect(future_pos[0], future_pos[1], self.size[0], self.size[1])     
-    
     
 
     # Update only the nearby traps

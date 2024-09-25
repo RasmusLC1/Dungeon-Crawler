@@ -35,6 +35,10 @@ class Path_Finding():
 
         self.Set_Position_Holder()
 
+        self.Corner_Handling()
+
+
+
         self.Update_Stuck_Timer()
         if self.Stuck_Check():
             return
@@ -72,7 +76,7 @@ class Path_Finding():
         target = self.path[1]
 
         # Move the entity away from walls
-        self.Corner_Handling()
+        # self.Corner_Handling()
         if self.Path_Segment_Complete(target):
             return
         self.Calculate_Path_Segment(target)
@@ -80,6 +84,7 @@ class Path_Finding():
         
         return True
 
+    
 
     def Calculate_Path_Segment(self, target):
         target_pos = (target[0] * 16, target[1] * 16)
@@ -116,21 +121,20 @@ class Path_Finding():
 
         self.entity.Set_Locked_On_Target(500)
         return
+    
 
     # Move the entity if they're to close to a wall
-    def Corner_Handling(self):
-
-        
+    def Corner_Handling(self):        
         direction_x = 0
         direction_y = 0
         if self.entity.collisions['up']:
-            direction_y = -5
+            direction_y = -2
         if self.entity.collisions['down']:
-            direction_y = 5
+            direction_y = 2
         if self.entity.collisions['left']:
-            direction_x = 5
+            direction_x = 2
         if self.entity.collisions['right']:
-            direction_x = -5
+            direction_x = -2
         if direction_x or direction_y:
             self.entity.Set_Frame_movement((direction_x, direction_y))
             self.entity.Tile_Map_Collision_Detection(self.game.tilemap)
