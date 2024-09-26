@@ -41,6 +41,8 @@ class Keyboard_Handler:
                 pass
             if key_press.key == pygame.K_x:
                 self.game.player.Dash(offset)
+            if key_press.key == pygame.K_LALT:
+                self.game.player.Back_Step(offset)
         if key_press.type == pygame.KEYUP:
             if key_press.key == pygame.K_a:
                 self.game.movement[0] = False

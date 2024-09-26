@@ -15,6 +15,7 @@ class Player(Moving_Entity):
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.dashing = 0
+        self.back_step = 0
         self.animation_num_max = 3
         
         self.max_ammo = 30
@@ -43,8 +44,8 @@ class Player(Moving_Entity):
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
-        if self.dashing:
-            self.Dashing_Update(offset)
+        self.Dashing_Update()
+        self.Back_Step_Update()
 
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
@@ -113,10 +114,40 @@ class Player(Moving_Entity):
             else:
                 self.game.light_handler.Move_Light(self.pos, self.light_source)
 
-    def Back_Step(self):
-        pass
+    def Back_Step(self,  offset=(0, 0)):
+        if not self.back_step:
+            self.Attack_Direction_Handler(offset)
+            # Inverse attack Direction
+            self.attack_direction = pygame.math.Vector2(self.attack_direction[0] * -1, self.attack_direction[1] * -1)
+            self.back_step = 20
+            self.invincible = True
+
+    def Back_Step_Update(self):
+        if not self.back_step:
+            self.invincible = False
+            return
+        self.back_step = max(0, self.back_step - 1)
+        if self.back_step < 15:
+            return
+        
+        if self.attack_direction.length() > 0:
+        
+
+
+            self.friction = 0
+            self.max_speed = 40  # Adjust max speed speed for dashing distance
+
+
+            # Set the velocity directly based on dash without friction interference
+            self.velocity[0] = self.attack_direction[0] * 20
+            self.velocity[1] = self.attack_direction[1] * 20
+
 
     def Dashing_Update(self, offset=(0, 0)):
+        if not self.dashing:
+            self.invincible = False
+            return
+            
 
         if abs(self.dashing) in {60, 50}:
             for i in range(20):
@@ -152,6 +183,7 @@ class Player(Moving_Entity):
         if not self.dashing:
             self.Attack_Direction_Handler(offset)
             self.dashing = 60
+            self.invincible = True
         
         
     def Mouse_Handler(self):
