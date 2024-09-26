@@ -80,6 +80,7 @@ class Moving_Entity(PhysicsEntity):
 
         # Handle Blocking
         self.block_direction = (0,0)
+        self.invincible = False
 
          # Jumping attack
         self.jumping_animation_num = 0
@@ -341,6 +342,9 @@ class Moving_Entity(PhysicsEntity):
         if self.damage_cooldown:
             return False
         
+        if self.invincible:
+            return False
+        
         if self.Check_Blocking_Direction(direction):
             return False
 
@@ -410,7 +414,6 @@ class Moving_Entity(PhysicsEntity):
 
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         if not self.charging:
-            self.Stored_Position_Handler(offset)
             self.charging = min(12, charge_speed)
 
    
@@ -431,11 +434,6 @@ class Moving_Entity(PhysicsEntity):
         self.frame_movement = movement
 
     
-    def Stored_Position_Handler(self, offset=(0, 0)):
-        self.stored_position = self.pos.copy()
-        self.stored_position[0] -= offset[0]
-        self.stored_position[1] -= offset[1]     
-
 
     def Set_Target(self, pos):
         self.target = pos
