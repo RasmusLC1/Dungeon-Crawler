@@ -21,7 +21,17 @@ class Ray_Caster():
         self.default_activity = 700
 
     def Update(self, game):
-        # Handle tile activity degradation
+        
+        self.Check_Tile_Active(game)
+
+        self.Check_Enemy_Active(game)
+
+        self.Check_Chest_Active(game)
+
+        self.Check_Trap_Active(game)
+    
+    # Handle tile activity degradation
+    def Check_Tile_Active(self, game):
         for tile in self.tiles:
             if tile['active']:
                 tile['active'] -= 1
@@ -30,32 +40,8 @@ class Ray_Caster():
             if abs(distance) > self.inactive_distance:
                 tile['active'] = 0
                 self.tiles.remove(tile)
-
-        for enemy in self.enemies:
-            if enemy.active:
-                enemy.Reduce_Active()
-            else:
-                self.enemies.remove(enemy)
-            distance = math.sqrt((game.player.pos[0] - enemy.pos[0]) ** 2 + (game.player.pos[1] - enemy.pos[1]) ** 2)
-            if abs(distance) > self.inactive_distance:
-                enemy.Set_Active(0)
-                self.enemies.remove(enemy)
-
-
-        for chest in self.chests:
-            if chest.active:
-                chest.Reduce_Active()
-            else:
-                self.chests.remove(chest)
-                return
-            distance = abs(math.sqrt((game.player.pos[0] - chest.pos[0]) ** 2 + (game.player.pos[1] - chest.pos[1]) ** 2))
-            if abs(distance) > self.inactive_distance:
-                chest.Set_Active(0)
-                self.chests.remove(chest)
-            if chest.empty:
-                self.chests.remove(chest)
-                return
             
+    def Check_Trap_Active(self, game):
         for trap in self.traps:
             if trap.active:
                 trap.Reduce_Active()
@@ -66,6 +52,35 @@ class Ray_Caster():
                 trap.Set_Active(0)
                 self.traps.remove(trap)
 
+    def Check_Chest_Active(self, game):
+        for chest in self.chests:
+            if chest.active:
+                chest.Reduce_Active()
+            else:
+                self.chests.remove(chest)
+                return
+            distance = abs(math.sqrt((game.player.pos[0] - chest.pos[0]) ** 2 + (game.player.pos[1] - chest.pos[1]) ** 2))
+            if abs(distance) > self.inactive_distance:
+                chest.Set_Active(0)
+                if chest in self.chests:
+                    self.chests.remove(chest)
+            if chest.empty:
+                if chest in self.chests:
+                    self.chests.remove(chest)
+                return
+
+    def Check_Enemy_Active(self, game):
+        for enemy in self.enemies:
+            if enemy.active:
+                enemy.Reduce_Active()
+            else:
+                if enemy in self.enemies:
+                    self.enemies.remove(enemy)
+            distance = math.sqrt((game.player.pos[0] - enemy.pos[0]) ** 2 + (game.player.pos[1] - enemy.pos[1]) ** 2)
+            if abs(distance) > self.inactive_distance:
+                enemy.Set_Active(0)
+                if enemy in self.enemies:
+                    self.enemies.remove(enemy)
 
     def Check_Trap(self, pos):
         for trap in self.game.trap_handler.nearby_traps:
@@ -166,9 +181,8 @@ class Ray_Caster():
         spread_angle = 120  # Total spread of the fan (in degrees)
         angle_increment = spread_angle / (num_lines - 1) # Calculate the angle increment between each line
         # Calculate the starting angle
-        base_angle = math.atan2(self.game.player.direction_y_holder, self.game.player.direction_x_holder)
+        base_angle = math.atan2(self.game.player.view_direction[1], self.game.player.view_direction[0])
         start_angle = base_angle - math.radians(spread_angle / 2)
-        
         self.Check_For_Objects(self.game.player.pos)
         self.Find_Nearby_Entities()
         

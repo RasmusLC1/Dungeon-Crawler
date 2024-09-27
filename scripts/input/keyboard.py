@@ -38,11 +38,13 @@ class Keyboard_Handler:
                 self.game.chest_handler.Open_Chests(nearby_chests)
 
             if key_press.key == pygame.K_SPACE:
-                pass
+                self.game.player.Roll_Forward(offset)
             if key_press.key == pygame.K_x:
                 self.game.player.Dash(offset)
             if key_press.key == pygame.K_LALT:
                 self.game.player.Back_Step(offset)
+
+
         if key_press.type == pygame.KEYUP:
             if key_press.key == pygame.K_a:
                 self.game.movement[0] = False

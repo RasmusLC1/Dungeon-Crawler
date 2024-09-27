@@ -40,13 +40,16 @@ class Enemy(Moving_Entity):
         super().Update(tilemap, movement = movement)
         # self.animation = 'decrepit_bones'
 
-        self.direction_x_holder = self.direction_x 
-        self.direction_y_holder = self.direction_y
+        self.Set_Direction_Holder()
 
         self.Update_Alert_Cooldown()
         self.Update_Locked_On_Target()
 
-
+    
+    def Set_Direction_Holder(self):
+        if self.direction_x or self.direction_y:
+            self.direction_x_holder = self.direction_x
+            self.direction_y_holder = self.direction_y
 
     def Reset_Charge(self):
         self.charge = 0

@@ -343,12 +343,13 @@ class Moving_Entity(PhysicsEntity):
             return False
         
         if self.invincible:
+            self.damage_cooldown = 20
             return False
         
         if self.Check_Blocking_Direction(direction):
             return False
 
-        self.damage_cooldown = 10
+        self.damage_cooldown = 20
         self.health -= damage
         if self.health <= 0:
             self.Reset_Effects()

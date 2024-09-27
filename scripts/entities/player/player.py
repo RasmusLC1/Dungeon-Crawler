@@ -16,6 +16,7 @@ class Player(Moving_Entity):
         super().__init__(game, 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.dashing = 0
         self.back_step = 0
+        self.roll_forward = 0
         self.animation_num_max = 3
         
         self.max_ammo = 30
@@ -24,6 +25,7 @@ class Player(Moving_Entity):
         self.Set_Animation('idle_down')
         self.souls = 5
         self.nearby_chests = []
+        self.view_direction = (0,0)
 
         self.light_level = 5
         self.light_cooldown = 0
@@ -46,17 +48,21 @@ class Player(Moving_Entity):
         self.Mouse_Handler()
         self.Dashing_Update()
         self.Back_Step_Update()
+        self.Roll_Forward_Update()
 
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
         
         self.Update_Light()
 
-        self.Set_Direction_Holder()
+        self.View_Direction(offset)
 
         self.weapon_handler.Update(offset)
         
-       
+    def View_Direction(self, offset):
+        self.view_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
+        if self.view_direction.length() > 0:
+            self.view_direction.normalize_ip()
     
     def Increase_Souls(self, added_soul):
         self.souls += added_soul
@@ -131,8 +137,6 @@ class Player(Moving_Entity):
             return
         
         if self.attack_direction.length() > 0:
-        
-
 
             self.friction = 0
             self.max_speed = 40  # Adjust max speed speed for dashing distance
@@ -142,6 +146,29 @@ class Player(Moving_Entity):
             self.velocity[0] = self.attack_direction[0] * 20
             self.velocity[1] = self.attack_direction[1] * 20
 
+    def Roll_Forward(self,  offset=(0, 0)):
+        if not self.roll_forward:
+            self.Attack_Direction_Handler(offset)
+            self.roll_forward = 30
+            self.invincible = True
+
+    def Roll_Forward_Update(self):
+        if not self.roll_forward:
+            self.invincible = False
+            return
+        self.roll_forward = max(0, self.roll_forward - 1)
+        if self.roll_forward < 20:
+            return
+        
+        if self.attack_direction.length() > 0:
+
+            self.friction = 0
+            self.max_speed = 40  # Adjust max speed speed for dashing distance
+
+
+            # Set the velocity directly based on dash without friction interference
+            self.velocity[0] = self.attack_direction[0] * 20
+            self.velocity[1] = self.attack_direction[1] * 20
 
     def Dashing_Update(self, offset=(0, 0)):
         if not self.dashing:
@@ -189,10 +216,6 @@ class Player(Moving_Entity):
     def Mouse_Handler(self):
         self.Set_Target(self.game.mouse.player_mouse)
 
-    def Set_Direction_Holder(self):
-        if self.direction_x or self.direction_y:
-            self.direction_x_holder = self.direction_x
-            self.direction_y_holder = self.direction_y
 
     def Find_Nearby_Chests(self, range):
         self.nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.pos, range)
