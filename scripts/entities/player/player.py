@@ -4,6 +4,7 @@ from scripts.engine.particles.particle import Particle
 from scripts.spark import Spark
 from scripts.entities.player.player_effects import Player_Status_Effect_Handler
 from scripts.entities.player.player_weapon import Player_Weapon_Handler
+from scripts.entities.player.player_movement import Player_Movement
 
 
 import random
@@ -14,9 +15,7 @@ import pygame
 class Player(Moving_Entity):
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
-        self.dashing = 0
-        self.back_step = 0
-        self.roll_forward = 0
+        
         self.animation_num_max = 3
         
         self.max_ammo = 30
@@ -40,15 +39,13 @@ class Player(Moving_Entity):
         self.weapons = []
         self.status_effects = Player_Status_Effect_Handler(self)
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
-
+        self.movement_handler = Player_Movement(self.game, self)
 
     
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
-        self.Dashing_Update()
-        self.Back_Step_Update()
-        self.Roll_Forward_Update()
+        self.movement_handler.Update()
 
         if self.shootin_cooldown:
             self.shootin_cooldown -= 1
@@ -68,7 +65,7 @@ class Player(Moving_Entity):
         self.souls += added_soul
 
     def Entity_Collision_Detection(self, tilemap):
-        if self.dashing > 40:
+        if self.movement_handler.dashing > 40:
             return None
         return super().Entity_Collision_Detection(tilemap)
 
@@ -225,7 +222,7 @@ class Player(Moving_Entity):
 
     # Render player
     def Render(self, surf, offset=(0, 0)):
-        if abs(self.dashing) >= 50:
+        if abs(self.movement_handler.dashing) >= 50:
             return
         
         # Load and scale the entity images, split to allow better animation
@@ -261,7 +258,3 @@ class Player(Moving_Entity):
 
         # Render status effects
         self.status_effects.Render_Effects(self.game, surf, offset)
-
-        
-    
-
