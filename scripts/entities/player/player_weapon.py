@@ -148,7 +148,7 @@ class Player_Weapon_Handler():
             return 0
         # weapon.Set_Attack()
         if weapon.attacking:
-            cooldown = max(5 + weapon.attacking, 100/self.agility + weapon.attacking)
+            cooldown = max(5 + weapon.attacking, 100/self.player.agility + weapon.attacking)
             return cooldown
         return 0
     

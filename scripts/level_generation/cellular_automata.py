@@ -11,10 +11,10 @@ class Cellular_Automata():
         self.size_x = 70 + random.randint(-20, 20)
         self.size_y = 70 + random.randint(-20, 20)
         self.map = self.Create_Level()
-        self.Save_Map_To_File('test_map_1.txt', self.map)
+        # self.Save_Map_To_File('test_map_1.txt', self.map)
         self.Refine_Level(5)
         self.Close_Borders()
-        self.Save_Map_To_File('test_map.txt', self.map)
+        # self.Save_Map_To_File('test_map.txt', self.map)
 
 
     def Create_Level(self) -> None:
@@ -35,30 +35,30 @@ class Cellular_Automata():
                         for x in range(i-1, i+2):
                             if self.Within_Map_Bounds(x, y):
                                 if y != j or x != i:
-                                    if temp_map[y][x] == 1:
+                                    if temp_map[x][y] == 1:
                                         neighbour_wall_count += 1
                             else:
                                 neighbour_wall_count += 1
 
                     if neighbour_wall_count > 4:
-                        self.map[j][i] = 1
+                        self.map[i][j] = 1
                     else:
-                        self.map[j][i] = 0
+                        self.map[i][j] = 0
                 
     
     def Close_Borders(self):
         
         for j in range(self.size_y):
-            self.map[j][0] = 1
+            self.map[0][j] = 1
         
         for j in range(self.size_y):
-            self.map[j][self.size_x - 1] = 1
+            self.map[self.size_x - 1][j] = 1
 
         for i in range(self.size_x):
-            self.map[0][i] = 1
+            self.map[i][0] = 1
         
         for i in range(self.size_x):
-            self.map[self.size_y - 1][i] = 1
+            self.map[i][self.size_y - 1] = 1
 
 
                     
@@ -67,6 +67,6 @@ class Cellular_Automata():
         with open(file_path, 'w') as file:
             for y in range(self.size_y):
                 for x in range(self.size_x):
-                    file.write(str(map[y][x]) + ' ')
+                    file.write(str(map[x][y]) + ' ')
                 file.write('\n')  # New line after each row
 

@@ -4,7 +4,7 @@ class Noise_Map():
     def __init__(self, size_x, size_y) -> None:
         self.size_x = size_x
         self.size_y = size_y
-        self.map = [[0 for _ in range(self.size_x)] for _ in range(self.size_y)]
+        self.map = [[0 for _ in range(self.size_y)] for _ in range(self.size_x)]
         
 
     def Generate_Map(self, density):
@@ -12,9 +12,9 @@ class Noise_Map():
             for x in range(self.size_x):
                 value = random.randint(0, 100)
                 if value > density:
-                    self.map[y][x] = 0  # Floor
+                    self.map[x][y] = 0  # Floor
                 else:
-                    self.map[y][x] = 1  # Wall
+                    self.map[x][y] = 1  # Wall
 
     
 

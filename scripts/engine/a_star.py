@@ -26,6 +26,22 @@ class A_Star:
             self.flying_map = []
             self.ignore_lava_map = []
             self.path = []
+            self.custom_map = []
+
+    def Setup_Custom_Map(self, map, row, col):
+        self.custom_map = map.copy()
+        self.row = row
+        self.col = col
+
+        self.min_x = 0
+        self.max_x = row
+        self.min_y = 0
+        self.max_y = col
+
+        
+        
+        
+
 
     def Setup_Map(self, game):
         self.Extract_Map_Data(game)
@@ -185,6 +201,15 @@ class A_Star:
             path.append((col, row))
         return
     
+    def Set_Map(self, map):
+        if map == 'standard':
+            self.map = self.standard_map.copy()
+            
+        elif map == 'ignore_lava':
+            self.map = self.ignore_lava_map
+
+        elif map == 'custom':
+            self.map = self.custom_map.copy()  
 
     # Implement the A* search algorithm
     def a_star_search(self, path, src, dest, map = 'standard'):
@@ -193,14 +218,17 @@ class A_Star:
             
         elif map == 'ignore_lava':
             self.map = self.ignore_lava_map
-        
-        else:
-            self.map = self.standard_map
 
+        elif map == 'custom':
+            self.map = self.custom_map.copy()  
+
+        else:
+            pass
+        
         # Check if the source and destination are valid
         if not A_Star.is_valid(self, src[0], src[1]) or not A_Star.is_valid(self, dest[0], dest[1]):
             return
-
+        
         # Check if the source and destination are unblocked
         if not A_Star.is_unblocked(self, src[0], src[1]) or not A_Star.is_unblocked(self, dest[0], dest[1]):
             return
