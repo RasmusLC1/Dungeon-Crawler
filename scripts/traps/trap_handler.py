@@ -20,11 +20,7 @@ class Trap_Handler:
         self.game = game
 
         self.nearby_traps_cooldown = 0
-        # TODO: Create seperate spawner class
-        # Spawner initialisation
-        for spawner in self.game.tilemap.extract([('spawners', 0)]):
-            self.game.player.pos = spawner['pos']
-
+        
         self.Initialise()
         
 

@@ -32,13 +32,14 @@ from scripts.engine.fonts.symbols import Symbols
 from scripts.engine.clatter import Clatter
 from scripts.items.utility.text_box_handler import Text_Box_handler
 from scripts.engine.sound.sound_handler import Sound_Handler
+from scripts.level_generation.dungeon_generator import Dungeon_Generator
+
 
 
 
 import numpy as np
 
 import pygame
-from pygame.locals import *
 
 
 class Game:
@@ -78,12 +79,16 @@ class Game:
         self.souls_interface = Souls(self)
         self.keyboard_handler = Keyboard_Handler(self)
 
+        self.dungeon_generator = Dungeon_Generator(self)
+
 
 
         self.level = 0
         self.scroll = [0, 0]
 
+
         self.load_level(self.level)
+
 
         
 
@@ -99,6 +104,7 @@ class Game:
         return line_count
 
     def load_level(self, map_id):
+        self.dungeon_generator.Generate_Map()
         self.tilemap.load('data/maps/' + str(map_id) + '.json')
          # Setup handlers
         self.light_handler = Light_Handler(self)
@@ -110,8 +116,8 @@ class Game:
         self.projectiles = []
         for spawner in self.tilemap.extract([('spawners', 0)]):
             if spawner['variant'] == 0:
+                print(spawner['pos'])
                 self.player = Player(self, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
-                break
 
         self.enemy_handler = Enemy_Handler(self)
         self.trap_handler = Trap_Handler(self)
@@ -123,6 +129,8 @@ class Game:
         
         self.a_star.Setup_Map(self)
 
+
+    
         # Printing the map
         # for row in self.shadow_map:
         #     print(row)
