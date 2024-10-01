@@ -15,9 +15,8 @@ class Lava(Trap):
     def Update(self, entity):
         if self.rect().colliderect(entity.rect()):
             self.Cooldown = 20
-            if entity.type == 'player':
-                if entity.dashing:
-                    return
+            if entity.invincible:
+                return
             if entity.status_effects.wet:
                 entity.Set_Effect('dry', 1)
             if not entity.Set_Effect('fire', 5):

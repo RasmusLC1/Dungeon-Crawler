@@ -14,9 +14,8 @@ class Bear_Trap(Trap):
             self.Cooldown -= 1
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0:
-            if entity.type == 'player':
-                if entity.dashing:
-                    return
+            if entity.invincible:
+                return
                 
             entity.Damage_Taken(2)
             entity.Set_Effect('snare', 100)

@@ -11,9 +11,8 @@ class Top_Push_Trap(Trap):
     def Update(self, entity):
         # Trigger trap animation and snare
         if self.rect().colliderect(entity.rect()) and self.animation < 5:
-            if entity.type == 'player':
-                if entity.dashing:
-                    return
+            if entity.invincible:
+                return
             entity.Push(0, self.animation*6)
             if self.animation == 0:
                 self.animation += 1

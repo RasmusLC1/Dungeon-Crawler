@@ -10,9 +10,8 @@ class Spike_Poisoned(Trap):
 
     def Update(self, entity):
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 8 and self.animation < 12:
-            if entity.type == 'player':
-                if entity.dashing:
-                    return
+            if entity.invincible:
+                return
             entity.Damage_Taken(2)
             entity.Set_Effect('poison', random.randint(3,5))
 

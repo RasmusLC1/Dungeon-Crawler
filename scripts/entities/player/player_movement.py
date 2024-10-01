@@ -23,12 +23,12 @@ class Player_Movement():
             # Inverse attack Direction
             self.player.attack_direction = pygame.math.Vector2(self.player.attack_direction[0] * -1, self.player.attack_direction[1] * -1)
             self.back_step = 20
-            self.player.invincible = True
 
     def Back_Step_Update(self):
         if not self.back_step:
-            self.player.invincible = False
             return
+        
+        self.player.invincible = True
         self.back_step = max(0, self.back_step - 1)
         if self.back_step < 15:
             return
@@ -47,12 +47,12 @@ class Player_Movement():
         if not self.roll_forward:
             self.player.Attack_Direction_Handler(offset)
             self.roll_forward = 30
-            self.player.invincible = True
 
     def Roll_Forward_Update(self):
         if not self.roll_forward:
-            self.player.invincible = False
             return
+        
+        self.player.invincible = True
         self.roll_forward = max(0, self.roll_forward - 1)
         if self.roll_forward < 20:
             return
@@ -72,6 +72,7 @@ class Player_Movement():
             self.player.invincible = False
             return
             
+        self.player.invincible = True
 
         if abs(self.dashing) in {60, 50}:
             for i in range(20):
@@ -107,4 +108,3 @@ class Player_Movement():
         if not self.dashing:
             self.player.Attack_Direction_Handler(offset)
             self.dashing = 60
-            self.player.invincible = True

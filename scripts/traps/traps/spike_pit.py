@@ -15,9 +15,8 @@ class Spike_Pit(Trap):
   
         # Trigger trap animation and snare
         if self.rect().colliderect(entity.rect()) and not self.Cooldown:
-            if entity.type == 'player':
-                if entity.dashing:
-                    return
+            if entity.invincible:
+                return
             entity.Damage_Taken(5)
             self.Cooldown = 100
             if not self.animation:

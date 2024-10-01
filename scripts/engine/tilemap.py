@@ -181,6 +181,10 @@ class Tilemap:
     
     def Set_Light_Level(self, tile, new_light_level):
         tile['light'] = new_light_level
+
+    def Clear_Tilemap(self):
+        self.tilemap.clear()
+        self.offgrid_tiles.clear()
     
     # Render function that shows the entire screen
     def Render(self, surf, offset=(0, 0)):

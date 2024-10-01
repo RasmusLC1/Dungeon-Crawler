@@ -14,9 +14,8 @@ class Fire_Trap(Trap):
             self.Cooldown -= 1
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 7 and self.animation < 11:
-            if entity.type == 'player':
-                if entity.dashing:
-                    return
+            if entity.invincible:
+                return
                 
             entity.Set_Effect('fire', 3)
             self.Cooldown = 100
