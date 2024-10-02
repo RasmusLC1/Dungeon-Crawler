@@ -46,7 +46,10 @@ class Dungeon_Generator():
         for j in range(self.cellular_automata.size_y):
             for i in range(self.cellular_automata.size_x):
                 if self.cellular_automata.map[i][j] == 1: # Wall 
-                    self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'TopWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                    if not self.Wall_Checker(i, j):
+                        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'BottomWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+
+
                 elif self.cellular_automata.map[i][j] == 0: # Floor
                     value = random.randint(0, 100)
                     if value < 3:
@@ -55,7 +58,49 @@ class Dungeon_Generator():
                         self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                 elif self.cellular_automata.map[i][j] == 2:
                         self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-                    
+
+
+    def Wall_Checker(self, i, j):
+
+        # Handle Edge cases first to prevent crashes
+        if i <= 1:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'LeftWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            return True
+
+        elif i >= self.cellular_automata.size_x - 2:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'RightWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            return True
+        
+        elif j <= 1:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'TopWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            return True
+        
+        elif j >= self.cellular_automata.size_y - 2:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'BottomWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            return True
+        
+        wall_found = False
+
+        if self.cellular_automata.map[i + 1][j] != 1:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'LeftWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            wall_found = True
+
+        elif self.cellular_automata.map[i - 1][j] != 1:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'RightWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            wall_found = True
+
+
+        if self.cellular_automata.map[i][j - 1] != 1:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'TopWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            wall_found = True
+
+        elif self.cellular_automata.map[i][j + 1] != 1:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'BottomWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            wall_found = True
+            
+        return wall_found
+        
+ 
 
     def Generate_Lava(self):
         spawners = 0
