@@ -5,6 +5,8 @@ from scripts.engine.a_star import A_Star
 import random
 import os
 
+import math
+# TODO:  shrines, entrance and exit, keys 
 
 class Dungeon_Generator():
     def __init__(self, game) -> None:
@@ -15,6 +17,7 @@ class Dungeon_Generator():
         self.a_star = A_Star()
         self.traps = ['spike_trap', 'spike_poison_trap', 'Pit_trap', 'Pit_trap', 'Pit_trap']
         self.noise_map = Noise_Map
+        self.torches = []
 
 
 
@@ -23,8 +26,7 @@ class Dungeon_Generator():
         self.Delete_Map_File('data/maps/0.json')
         self.tilemap.Clear_Tilemap()
         self.cellular_automata.Create_Map()
-        # for row in self.cellular_automata.map:
-        #      print(row)
+
         self.Level_Structure()
         
         self.a_star.Setup_Custom_Map(self.cellular_automata.map, self.cellular_automata.size_x, self.cellular_automata.size_y)
@@ -51,14 +53,29 @@ class Dungeon_Generator():
 
 
                 elif self.cellular_automata.map[i][j] == 0: # Floor
-                    value = random.randint(0, 100)
-                    if value < 3:
-                        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[value], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-                    else:
-                        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                    self.Floor_Checker(i, j)
                 elif self.cellular_automata.map[i][j] == 2:
                         self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
 
+
+    # Spawns torches based on density, it then checks 
+    def Torch_Spawner(self, i, j, density):
+        spawn_torch = random.randint(0, density)
+        if spawn_torch == 1:
+            for torch in self.torches:
+                distance = math.sqrt((i - torch[0]) ** 2 + (j - torch[1]) ** 2)
+                if distance < 8:
+                    return
+            self.torches.append((i, j))
+            self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [i * 16, j * 16]})
+
+    def Floor_Checker(self, i, j):
+        value = random.randint(0, 100)
+        if value < 3:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[value], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+        else:
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.Torch_Spawner(i, j, 5)
 
     def Wall_Checker(self, i, j):
 
@@ -184,5 +201,3 @@ class Dungeon_Generator():
             
 
 
-
-    # TODO: Enemy spawning, loot, shrines, entrance and exit, keys 

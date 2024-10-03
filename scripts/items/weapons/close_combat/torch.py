@@ -8,7 +8,7 @@ class Torch(Weapon):
         super().__init__(game, pos, size, 'torch', 1, 3, 5, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
-        self.light_level = 12
+        self.light_level = 8
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.offset = (0,0)
