@@ -10,7 +10,9 @@ class Cellular_Automata():
     def Create_Map(self):
         self.map = self.Create_Level()
         # self.Save_Map_To_File('test_map_1.txt', self.map)
-        self.Refine_Level(5, self.map)
+        floor = 0
+        wall = 1
+        self.Refine_Level(floor, wall, self.size_x, self.size_y, 5, self.map)
         self.Close_Borders(0, 0, self.size_x, self.size_y)
         self.Save_Map_To_File('test_map.txt', self.map)
 
@@ -21,29 +23,29 @@ class Cellular_Automata():
         noise_map = Noise_Map()
         return noise_map.Create_Noise_Map(self.size_x, self.size_y)    
     
-    def Within_Map_Bounds(self, x, y) -> bool:
-        return 0 <= x < self.size_x and 0 <= y < self.size_y
+    def Within_Map_Bounds(self, x, y, size_x, size_y) -> bool:
+        return 0 <= x < size_x and 0 <= y < size_y
 
-    def Refine_Level(self, iterations, map):
+    def Refine_Level(self, value_1, value_2, size_x, size_y, iterations, map):
         for i in range(iterations):
             temp_map = [row.copy() for row in map]
 
-            for j in range(self.size_y):
-                for i in range(self.size_x):
+            for j in range(size_y):
+                for i in range(size_x):
                     neighbour_wall_count = 0
                     for y in range(j-1, j+2):
                         for x in range(i-1, i+2):
-                            if self.Within_Map_Bounds(x, y):
+                            if self.Within_Map_Bounds(x, y, size_x, size_y):
                                 if y != j or x != i:
-                                    if temp_map[x][y] == 1:
+                                    if temp_map[x][y] == value_2:
                                         neighbour_wall_count += 1
                             else:
                                 neighbour_wall_count += 1
 
                     if neighbour_wall_count > 4:
-                        map[i][j] = 1
+                        map[i][j] = value_2
                     else:
-                        map[i][j] = 0
+                        map[i][j] = value_1
 
                 
     def Generate_Treasure_Rooms(self):

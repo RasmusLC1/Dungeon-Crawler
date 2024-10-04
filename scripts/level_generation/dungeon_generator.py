@@ -16,7 +16,7 @@ class Dungeon_Generator():
         self.tilemap = Tilemap(self, tile_size=16)
         self.a_star = A_Star()
         self.traps = ['spike_trap', 'spike_poison_trap', 'Pit_trap', 'Pit_trap', 'Pit_trap']
-        self.noise_map = Noise_Map
+        self.noise_map = Noise_Map()
         self.torches = []
 
 
@@ -26,6 +26,31 @@ class Dungeon_Generator():
         self.Delete_Map_File('data/maps/0.json')
         self.tilemap.Clear_Tilemap()
         self.cellular_automata.Create_Map()
+
+        floor = 0
+        lava = 2
+        for i in range(5):
+            density = random.randint(60, 70)
+            size_x = random.randint(3, 5)
+            size_y = random.randint(3, 5)
+            start_x = random.randint(2, self.cellular_automata.size_x - size_x)
+            start_y = random.randint(2, self.cellular_automata.size_y - size_y)
+            lake_map = [[0 for _ in range(size_y)] for _ in range(size_x)]
+
+            self.noise_map.Generate_Map(40, lake_map, floor, lava, size_x, size_y)
+            self.cellular_automata.Refine_Level(floor, lava, size_x, size_y, 2, lake_map)
+            
+            i = 0
+            j = 0
+            for y in range(start_y, start_y + size_y):
+                i = 0
+                for x in range(start_x, start_x + size_x):
+                    if x >= self.cellular_automata.size_x- 2 or y >= self.cellular_automata.size_y - 2:
+                        break
+
+                    self.cellular_automata.map[x][y] = lake_map[i][j]
+                    i += 1
+                j += 1
 
         self.Level_Structure()
         
@@ -38,6 +63,13 @@ class Dungeon_Generator():
             self.Generate_Map()
 
             return
+        
+
+        
+
+        for row in self.cellular_automata.map:
+            print(row)
+
         
         self.Spawn_Loot(2)
         
@@ -58,7 +90,8 @@ class Dungeon_Generator():
                         self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
 
 
-    # Spawns torches based on density, it then checks 
+    # Spawns torches based on density, it then checks distance to nearest torch to prevent overlap
+    # Higher density = More torches
     def Torch_Spawner(self, i, j, density):
         spawn_torch = random.randint(0, density)
         if spawn_torch == 1:
@@ -75,7 +108,7 @@ class Dungeon_Generator():
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[value], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
         else:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-            self.Torch_Spawner(i, j, 5)
+            self.Torch_Spawner(i, j, 20)
 
     def Wall_Checker(self, i, j):
 
