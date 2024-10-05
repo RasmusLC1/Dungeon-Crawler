@@ -29,28 +29,8 @@ class Dungeon_Generator():
 
         floor = 0
         lava = 2
-        for i in range(5):
-            density = random.randint(60, 70)
-            size_x = random.randint(3, 5)
-            size_y = random.randint(3, 5)
-            start_x = random.randint(2, self.cellular_automata.size_x - size_x)
-            start_y = random.randint(2, self.cellular_automata.size_y - size_y)
-            lake_map = [[0 for _ in range(size_y)] for _ in range(size_x)]
-
-            self.noise_map.Generate_Map(40, lake_map, floor, lava, size_x, size_y)
-            self.cellular_automata.Refine_Level(floor, lava, size_x, size_y, 2, lake_map)
-            
-            i = 0
-            j = 0
-            for y in range(start_y, start_y + size_y):
-                i = 0
-                for x in range(start_x, start_x + size_x):
-                    if x >= self.cellular_automata.size_x- 2 or y >= self.cellular_automata.size_y - 2:
-                        break
-
-                    self.cellular_automata.map[x][y] = lake_map[i][j]
-                    i += 1
-                j += 1
+        
+        self.Spawn_Lakes(20, floor, lava)
 
         self.Level_Structure()
         
@@ -66,15 +46,34 @@ class Dungeon_Generator():
         
 
         
-
-        for row in self.cellular_automata.map:
-            print(row)
-
-        
         self.Spawn_Loot(2)
         
 
         self.tilemap.save('data/maps/0.json')
+
+    def Spawn_Lakes(self, iterations, value_1, value_2):
+        for i in range(iterations):
+
+            density = random.randint(30, 40)
+            size_x = random.randint(3, 5)
+            size_y = random.randint(3, 5)
+            start_x = random.randint(2, self.cellular_automata.size_x - size_x)
+            start_y = random.randint(2, self.cellular_automata.size_y - size_y)
+            lake_map = [[0 for _ in range(size_y)] for _ in range(size_x)]
+
+            self.noise_map.Generate_Map(density, lake_map, value_1, value_2, size_x, size_y)
+            self.cellular_automata.Refine_Level(value_1, value_2, size_x, size_y, 1, lake_map)
+            i = 0
+            j = 0
+            for y in range(start_y, start_y + size_y):
+                i = 0
+                for x in range(start_x, start_x + size_x):
+                    if x >= self.cellular_automata.size_x- 2 or y >= self.cellular_automata.size_y - 2:
+                        break
+
+                    self.cellular_automata.map[x][y] = lake_map[i][j]
+                    i += 1
+                j += 1
 
     def Level_Structure(self):
         for j in range(self.cellular_automata.size_y):
