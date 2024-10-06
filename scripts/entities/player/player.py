@@ -69,6 +69,9 @@ class Player(Moving_Entity):
         if self.movement_handler.dashing > 40:
             return None
         return super().Entity_Collision_Detection(tilemap)
+    
+    def Remove_Active_Weapon(self, hand):
+        self.weapon_handler.Remove_Active_Weapon(hand)
 
     def Attack_Direction_Handler(self, offset = (0,0)):
         super().Attack_Direction_Handler(offset)

@@ -37,18 +37,35 @@ class Text_Box():
             self.Render_Weapon(surf, text_box_pos)
         elif self.item.category == 'potion':
             self.Render_Potion(surf, text_box_pos)
+        elif self.item.category == 'loot':
+            if self.item.type == 'gold':
+                self.Render_Gold(surf, text_box_pos)
+            else:
+                self.Render_Loot(surf, text_box_pos)
+        else:
+            print(self.item.category)
 
+    
+    def Render_Loot(self, surf, text_box_pos):
+        self.game.default_font.Render_Word(surf, self.item.type, text_box_pos)
+
+        surf.blit(self.game.assets['gold'][0], (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.default_font.Render_Word(surf, str(self.item.value), (text_box_pos[0] + 10, text_box_pos[1] + 10))        
+    
+    def Render_Gold(self, surf, text_box_pos):
+        self.game.default_font.Render_Word(surf, self.item.type, text_box_pos)
+
+        surf.blit(self.game.assets['gold'][0], (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.default_font.Render_Word(surf, str(self.item.amount), (text_box_pos[0] + 10, text_box_pos[1] + 10)) 
 
     def Render_Potion(self, surf, text_box_pos):
-        effect = self.item.effect
-        
 
         self.game.default_font.Render_Word(surf, self.item.effect, text_box_pos)
 
-        self.game.symbols.Render_Symbol(surf, effect,  (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.symbols.Render_Symbol(surf, self.item.effect,  (text_box_pos[0], text_box_pos[1] + 10))
         self.game.default_font.Render_Word(surf, str(self.item.amount), (text_box_pos[0] + 10, text_box_pos[1] + 10))
 
-        surf.blit(self.game.assets['gold_coins'][0], (text_box_pos[0], text_box_pos[1] + 20))
+        surf.blit(self.game.assets['gold'][0], (text_box_pos[0], text_box_pos[1] + 20))
         self.game.default_font.Render_Word(surf, str(self.item.value), (text_box_pos[0] + 10, text_box_pos[1] + 20))        
 
 
@@ -63,5 +80,5 @@ class Text_Box():
         self.game.default_font.Render_Word(surf, str(self.item.damage), (text_box_pos[0] + 10, text_box_pos[1] + 10))
 
         # Render value
-        surf.blit(self.game.assets['gold_coins'][0], (text_box_pos[0], text_box_pos[1] + 20))
+        surf.blit(self.game.assets['gold'][0], (text_box_pos[0], text_box_pos[1] + 20))
         self.game.default_font.Render_Word(surf, str(self.item.value), (text_box_pos[0] + 10, text_box_pos[1] + 20))

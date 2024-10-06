@@ -13,6 +13,7 @@ from scripts.items.potions.fire_resistance_potion import Fire_Resistance_Potion
 from scripts.items.potions.freeze_resistance import Freeze_Resistance_Potion
 from scripts.items.potions.poison_resistance import Poison_Resistance_Potion
 from scripts.decoration.decoration import Decoration
+from scripts.items.loot.gold import Gold
 
 from scripts.items.weapons.close_combat.sword import Sword
 from scripts.items.weapons.close_combat.torch import Torch
@@ -68,7 +69,7 @@ class Chest(Decoration):
     def Open(self):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(0, 2)
+        self.loot_type = random.randint(5, 5)
 
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
@@ -79,6 +80,11 @@ class Chest(Decoration):
             if not self.Weapon_Spawner():
                 self.Open()
                 return
+        elif self.loot_type in range(4, 6):
+            rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
+            rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
+            gold = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(5,50))
+            self.game.item_handler.Add_Item(gold)
 
         # Call itself recursively if it should fail
         else:

@@ -13,7 +13,7 @@ class Item(PhysicsEntity):
         self.game = game
         self.item_ID = random.randint(1, 100000000) # Create a random ID between 1 and 100 million
         self.category = category
-        self.sub_type = ''
+        self.sub_type = type
         self.used = False
         self.picked_up = False
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot

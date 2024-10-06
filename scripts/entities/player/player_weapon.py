@@ -8,9 +8,9 @@ class Player_Weapon_Handler():
         self.active_weapon_left = None
         self.left_weapon_cooldown = 0
         self.active_weapon_right = None
+        self.right_weapon_cooldown = 0
         self.active_bow = None
         self.bow_cooldown = 0
-        self.right_weapon_cooldown = 0
         self.inventory_interaction = 0
 
 
@@ -155,6 +155,23 @@ class Player_Weapon_Handler():
     def Set_Inventory_Interaction(self, state):
         self.inventory_interaction = state
 
+    def Remove_Active_Weapon(self, hand):
+        if hand == 'left_hand' and self.active_weapon_left:
+            self.active_weapon_left = None
+            self.left_weapon_cooldown = 0
+            self.player.attacking = 0
+
+        if hand == 'right_hand' and self.active_weapon_right:
+            self.active_weapon_right = None
+            self.right_weapon_cooldown = 0
+            self.player.attacking = 0
+
+
+
+        
+
+
+        
 
     def Render_Weapons(self, surf, offset):
         if self.game.weapon_inventory.active_inventory == 0:

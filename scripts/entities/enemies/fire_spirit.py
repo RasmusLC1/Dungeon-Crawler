@@ -91,8 +91,8 @@ class Fire_Spirit(Enemy):
                 speed,
                 max_range,
                 'particle',
-                self.charge * 2,
-                direction,  # Pass the direction here
+                self.charge,
+                direction, 
                 self
             )
 

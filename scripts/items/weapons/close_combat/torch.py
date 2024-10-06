@@ -13,7 +13,7 @@ class Torch(Weapon):
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.offset = (0,0)
         self.fire_cooldown = 0
-        self.effect = 'Fire'
+        self.effect = 'fire'
 
 
     # Pick up the torch and update the general light in the area
@@ -104,7 +104,7 @@ class Torch(Weapon):
             fire_particle = Fire_Particle(
                 self.game,
                 self.entity.rect(),
-                (2, 2),
+                (4, 4),
                 'fire_particle',
                 damage,
                 speed,

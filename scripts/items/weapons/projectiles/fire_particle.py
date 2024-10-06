@@ -4,8 +4,8 @@ import pygame
 class Fire_Particle(Projectile):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, direction, entity):
         super().__init__(game, pos, size, type, damage, speed, range, weapon_class, 'fire')
-        self.delete_countdown = 30
-        self.special_attack = special_attack / 4
+        self.delete_countdown = 50
+        self.special_attack = special_attack 
         self.entity = entity
         self.direction = direction  # Store the direction vector
         self.attack_animation_max = 3

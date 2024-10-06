@@ -330,7 +330,7 @@ class Graphics_Loader:
 
     def Asset_Loot(self):
         loot = {
-            'gold_coins' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 8, 8),
+            'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 8, 8),
         }
         self.assets.update(loot)
 

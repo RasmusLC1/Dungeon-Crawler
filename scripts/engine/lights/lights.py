@@ -46,9 +46,11 @@ class Light():
                     break
 
                 new_light_level = max(0, self.light_level - i)
+                # Add the tile if it's darker than the current tile
                 if new_light_level > tile['light']:
                     self.game.tilemap.Set_Light_Level(tile, new_light_level)
-                self.tiles.append(tile)
+                    self.tiles.append(tile)
+                
 
     def Setup_Under_entity_Light(self):
         tile = self.game.tilemap.Current_Tile(self.pos)

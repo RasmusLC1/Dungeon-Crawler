@@ -192,7 +192,6 @@ class Weapon(Item):
         self.game.clatter.Generate_Clatter(target_position, 200)
         damage = self.entity.strength * self.damage
         entity.Damage_Taken(damage, self.entity.attack_direction)
-        entity.Set_Effect(self.effect, 3)
         self.enemy_hit = True
 
         # Set special status effect of weapon if weapon has one
