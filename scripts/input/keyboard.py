@@ -34,8 +34,12 @@ class Keyboard_Handler:
                 for item in nearby_items:
                     item.Pick_Up()
 
-                nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.game.player.pos, 30)
-                self.game.chest_handler.Open_Chests(nearby_chests)
+                
+                if self.Check_Chests():
+                    return
+                
+                if self.Check_Doors():
+                    return
 
             if key_press.key == pygame.K_SPACE:
                 self.game.player.movement_handler.Roll_Forward(offset)
@@ -55,6 +59,37 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_s:
                 self.game.movement[3] = False
     
+    def Check_Doors(self):
+        key_found = False
+        
+        
+        nearby_doors = self.game.door_handler.Find_Nearby_Doors(self.game.player.pos, 30)
+        if not nearby_doors:
+            return False
+        
+        for inventory_slot in self.game.item_inventory.inventory:
+            if not inventory_slot.item:
+                continue
+            
+            if inventory_slot.item.type == 'key':
+                inventory_slot.Remove_Item()
+                key_found = True
+                break
+
+        if not key_found:
+            return False
+        
+        if self.game.door_handler.Open_Doors(nearby_doors):
+            return True
+        
+        return False
+
+    def Check_Chests(self):
+        nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.game.player.pos, 30)
+        if self.game.chest_handler.Open_Chests(nearby_chests):
+            return True
+        return False
+
     def Inventory_Keybindings(self, inventory_index):
         inventory_slot = self.game.item_inventory.inventory[inventory_index]
         if inventory_slot.item:

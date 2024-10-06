@@ -103,11 +103,17 @@ class Dungeon_Generator():
 
     def Floor_Checker(self, i, j):
         value = random.randint(0, 100)
-        if value < 3:
+        if value < 2:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[value], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
         else:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-            self.Torch_Spawner(i, j, 20)
+            #TODO: IMPLEMENT PROPERLY
+            if value > 95:
+                self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'DoorClosed', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            else:
+                self.Torch_Spawner(i, j, 20)
+
+
 
     def Wall_Checker(self, i, j):
 

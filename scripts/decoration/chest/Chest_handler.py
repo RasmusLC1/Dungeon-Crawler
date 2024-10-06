@@ -12,13 +12,14 @@ class Chest_Handler:
 
     def Open_Chests(self, chests):
         if not chests:
-            return
-        self.game.clatter.Generate_Clatter(chests[0].pos, 150)
+            return False
 
         for chest in chests:
             chest.Open()
             self.chests.remove(chest)
             del(chest)
+        
+        return True
 
     def Find_Nearby_Chests(self, pos, max_distance):
         nearby_chests = []

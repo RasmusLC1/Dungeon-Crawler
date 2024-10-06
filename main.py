@@ -20,6 +20,7 @@ from scripts.interface.health_bar import Health_Bar
 from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.souls import Souls
 from scripts.decoration.chest.Chest_handler import Chest_Handler
+from scripts.decoration.doors.door_handler import Door_Handler
 from scripts.entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler
@@ -123,6 +124,7 @@ class Game:
         self.trap_handler = Trap_Handler(self)
         self.decoration_handler = Decoration_Handler(self)
         self.chest_handler = Chest_Handler(self)
+        self.door_handler = Door_Handler(self)
         self.item_handler = Item_Handler(self)
  
         

@@ -18,7 +18,7 @@ AUTOTILE_MAP = {
 
 # Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
-PHYSICS_TILES = {'wall', 'door', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall'}
+PHYSICS_TILES = {'wall', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall', 'DoorClosed'}
 AUTOTILE_TYPES = {'floor'}
 FLOOR_TTLES = {'floor'}
 
@@ -109,7 +109,12 @@ class Tilemap:
             if distance < normalised_max_distance:
                 nearby_tiles.append(tile)
         return nearby_tiles
-        
+    
+    def Update_Tile_Type(self, pos, new_type):
+        tile = self.Current_Tile(pos)
+        tile['type'] = new_type
+
+
     # Check for collision on relevant tile
     def Collision_Check(self, pos):
         tile = self.Current_Tile_Type(pos)
@@ -171,6 +176,7 @@ class Tilemap:
             neighbors = tuple(sorted(neighbors))
             if (tile['type'] in AUTOTILE_TYPES) and (neighbors in AUTOTILE_MAP):
                 tile['variant'] = AUTOTILE_MAP[neighbors]
+
 
 
     # Convert screen coordinates to isometric grid coordinates

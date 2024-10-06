@@ -1,7 +1,5 @@
 import pygame
 import random
-from scripts.weapon_generator import Weapon_Generator
-from scripts.items.item import Item
 from scripts.items.potions.health_potion import Health_Potion
 from scripts.items.potions.soul_potion import Soul_Potion
 from scripts.items.potions.regen_potion import Regen_Potion
@@ -14,6 +12,7 @@ from scripts.items.potions.freeze_resistance import Freeze_Resistance_Potion
 from scripts.items.potions.poison_resistance import Poison_Resistance_Potion
 from scripts.decoration.decoration import Decoration
 from scripts.items.loot.gold import Gold
+from scripts.items.loot.key import Key
 
 from scripts.items.weapons.close_combat.sword import Sword
 from scripts.items.weapons.close_combat.torch import Torch
@@ -83,8 +82,10 @@ class Chest(Decoration):
         elif self.loot_type in range(4, 6):
             rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
             rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-            gold = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(5,50))
-            self.game.item_handler.Add_Item(gold)
+            # gold = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(5,50))
+            loot = Key(self.game, (rand_pos_x, rand_pos_y))
+
+            self.game.item_handler.Add_Item(loot)
 
         # Call itself recursively if it should fail
         else:
@@ -96,7 +97,7 @@ class Chest(Decoration):
         self.game.item_handler.Reset_Nearby_Items_Cooldown()
         self.game.sound_handler.Play_Sound('chest_open', 0.15)
 
-        self.game.clatter.Generate_Clatter(self.pos, 5000) # Generate clatter to alert nearby enemies
+        self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
 
     def Potion_Spawner(self):
         rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
@@ -179,7 +180,8 @@ class Chest(Decoration):
         self.text_cooldown -= 1
 
 
-    
+    def Animation_Update(self):
+        pass
 
     def Render(self, surf, offset = (0,0)):
         if self.empty:

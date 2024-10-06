@@ -31,10 +31,8 @@ class Graphics_Loader:
         
 
     def Asset_Tile_List(self):
-        white = (255,255,255)
         tiles_assets = {
             'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 64, 16, 16),
-            'door' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 80, 16, 16),
             'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 128, 16, 16),
             'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 144, 16, 16),
             'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 1, 0, 0, 160, 16, 32),
@@ -43,6 +41,8 @@ class Graphics_Loader:
             'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
             'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
             'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 16, 16, 16, 16),
+            #TODO: Move into own class
+            'DoorClosed' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 16, 16),
         }
         self.assets.update(tiles_assets)
 
@@ -273,7 +273,6 @@ class Graphics_Loader:
 
 
     def Asset_Potion_List(self):
-        white = (255,255,255)
 
         potion_assets = {
             'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 16, 16,),
@@ -331,6 +330,7 @@ class Graphics_Loader:
     def Asset_Loot(self):
         loot = {
             'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 8, 8),
+            'key' : get_tiles_from_sheet('loot/key.png', 0, 0, 0, 0, 8, 8),
         }
         self.assets.update(loot)
 
