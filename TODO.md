@@ -61,6 +61,7 @@ Game Ideas
 
 
 # Weapons:
+    Implement better animations, bright arcs for where the damage area is
     # Torch, emits light and be be used to set enemies on fire, relatively low damage
     # Sword, best damage, little utility
     # Spear, can be thrown

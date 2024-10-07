@@ -107,7 +107,7 @@ class Dungeon_Generator():
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[value], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
         else:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-            #TODO: IMPLEMENT PROPERLY
+            #TODO: IMPLEMENT PROPERLY, Spawn room with loot
             if value > 95:
                 self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'DoorClosed', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             else:

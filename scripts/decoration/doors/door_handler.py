@@ -44,7 +44,7 @@ class Door_Handler:
 
 
     def Remove_Door(self, door):
-        # TODO: Create raycaster function
+        # TODO: Create raycaster function to detect door
         # self.game.ray_caster.Remove_Trap(door)
         if door in self.doors:
             self.doors.remove(door)

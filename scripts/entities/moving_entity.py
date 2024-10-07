@@ -90,6 +90,8 @@ class Moving_Entity(PhysicsEntity):
 
         # Status Effects
         self.status_effects = Status_Effect_Handler(self)
+        
+        self.damage_text = ''
 
 
     
@@ -337,6 +339,7 @@ class Moving_Entity(PhysicsEntity):
     def Update_Damage_Cooldown(self):
         if self.damage_cooldown:
             self.damage_cooldown -= 1
+            
 
     def Damage_Taken(self, damage, direction = (0, 0)):
         if self.damage_cooldown:
@@ -348,6 +351,8 @@ class Moving_Entity(PhysicsEntity):
         
         if self.Check_Blocking_Direction(direction):
             return False
+
+        self.damage_text = str(damage)
 
         self.damage_cooldown = 20
         self.health -= damage
@@ -523,3 +528,7 @@ class Moving_Entity(PhysicsEntity):
         # Render status effects
         #Fire
         self.status_effects.Render_Effects(self.game, surf, offset)
+
+        if self.damage_cooldown:
+            scroll_up_effect = 20 - self.damage_cooldown
+            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]))

@@ -41,8 +41,6 @@ class Graphics_Loader:
             'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 0, 16, 16),
             'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 16, 64, 16, 16),
             'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 16, 16, 16, 16),
-            #TODO: Move into own class
-            'DoorClosed' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 16, 16),
         }
         self.assets.update(tiles_assets)
 
@@ -238,6 +236,7 @@ class Graphics_Loader:
         white = (255,255,255)
         Objects_assets = {
             'Chest' : get_tiles_from_sheet('chest.png', 8, 0, 0, 0, 16, 16, white),
+            'DoorClosed' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 16, 16),
         }
         self.assets.update(Objects_assets)
 
@@ -337,6 +336,7 @@ class Graphics_Loader:
     def Asset_Font(self):
         font = {
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 8, 8),
+            'player_damage_font' : get_tiles_from_sheet('font/player_damage_font.png', 7, 5, 0, 0, 8, 8),
             'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 2, 0, 0, 8, 8),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 16, 16),
         }

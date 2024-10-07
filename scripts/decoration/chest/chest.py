@@ -166,19 +166,6 @@ class Chest(Decoration):
     def Reduce_Active(self):
         self.active -= 1
 
-    def render_text(self, surf, offset = (0,0)):
-        try:
-            font = pygame.font.Font('freesansbold.ttf', 10)
-        except Exception as e:
-            print(f"Font load error: {e}")
-        if self.loot_type == 3 and self.version > 2:
-            text = font.render(self.weapon_type, True, self.text_color)
-        else:
-            text = font.render(str(self.loot_amount), True, self.text_color)
-        surf.blit(text, (self.pos[0] - offset[0], self.pos[1] - offset[1] - self.text_animation))
-        self.text_animation += 1
-        self.text_cooldown -= 1
-
 
     def Animation_Update(self):
         pass
