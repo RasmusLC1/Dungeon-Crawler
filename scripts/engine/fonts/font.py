@@ -33,26 +33,36 @@ class Font():
         
         return char_positions
 
-    def Render_Word(self, surf, text, pos, font_style = 'default'):
+    # Find the appropriate Font
+    def Find_Font(self, font_style):
+        if font_style == 'default':
+            return self.font
+        elif font_style == 'player_damage':
+            return self.player_damage_font
+        else:
+            return self.font
+
+    # Render word by rendering characters in order
+    def Render_Word(self, surf, text, pos, alpha_level = 0, font_style = 'default',):
         
         # Get the positions of the characters in font_lookup
         char_positions = self.find_char_positions(text)
 
         if not char_positions:
             return
-        font = None
-        if font_style == 'default':
-            font = self.font
-        elif font_style == 'player_damage':
-            font = self.player_damage_font
-        else:
-            font = self.font
-
+        font = self.Find_Font(font_style)
+        
         # Iterate over the list of positions to render each character
         for i, font_position in enumerate(char_positions):
 
             try:
-                item_image = font[font_position]
+                item_image = font[font_position].convert_alpha()
+
+                # Set alpha value for fadeout
+                if alpha_level:
+                    alpha_value = max(0, min(255, 255 - alpha_level))
+                    item_image.set_alpha(alpha_value)
+
                 surf.blit(item_image, pos)
                 pos = (pos[0] + 7, pos[1])
             except Exception as e:

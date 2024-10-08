@@ -48,33 +48,6 @@ class Cellular_Automata():
                         map[i][j] = value_1
 
                 
-    def Generate_Treasure_Rooms(self):
-        for i in range(5):
-            max_size = 15
-            start_x = random.randint(0, self.size_x - max_size - 5)
-            start_y = random.randint(0, self.size_y - max_size - 5)
-            width = start_x + random.randint(7, max_size)
-            height = start_y + random.randint(7, max_size)
-
-            for j in range(start_x, height -1):
-                for i in range(start_y, width -1):
-                    self.map[i][j] = 0
-
-            
-            self.Close_Borders(start_x, start_y, width, height)
-
-            center_x = width // 2
-            center_y = height // 2
-
-            self.map[center_x][center_y] = 2
-
-            # Create door
-            for i in range(3):
-                self.map[center_x + i][0] = 0
-                self.map[center_x + i][height - 1] = 0
-                self.map[0][center_y + i] = 0
-                self.map[width - 1][center_y + i] = 0
-
 
         
 

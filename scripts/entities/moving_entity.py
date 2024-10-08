@@ -531,4 +531,4 @@ class Moving_Entity(PhysicsEntity):
 
         if self.damage_cooldown:
             scroll_up_effect = 20 - self.damage_cooldown
-            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]))
+            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)

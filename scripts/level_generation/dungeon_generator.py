@@ -86,7 +86,9 @@ class Dungeon_Generator():
                 elif self.cellular_automata.map[i][j] == 0: # Floor
                     self.Floor_Checker(i, j)
                 elif self.cellular_automata.map[i][j] == 2:
-                        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                    self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                elif self.cellular_automata.map[i][j] == 3:
+                    self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'DoorClosed', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
 
 
     # Spawns torches based on density, it then checks distance to nearest torch to prevent overlap
@@ -107,13 +109,34 @@ class Dungeon_Generator():
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[value], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
         else:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-            #TODO: IMPLEMENT PROPERLY, Spawn room with loot
-            if value > 95:
-                self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'DoorClosed', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-            else:
-                self.Torch_Spawner(i, j, 20)
+            self.Torch_Spawner(i, j, 20)
 
 
+    def Spawn_Loot_Room(self):
+        room_size_x = random.randint(5, 7)
+        room_size_y = random.randint(5, 7)
+        start_x = random.randint(room_size_x, self.cellular_automata.size_x - room_size_x)
+        start_y = random.randint(room_size_y, self.cellular_automata.size_y - room_size_y)
+
+        # Flatten the loot room and make it floors
+        for y in range(room_size_y):
+            for x in range(room_size_x):
+                self.cellular_automata.map[start_x + x][start_y + y] = 1 
+        
+        # Close the walls
+        self.cellular_automata.Close_Borders(start_x, start_y, room_size_x, room_size_y)
+
+        path = []
+
+        # Check if left side connects to player
+        self.a_star.a_star_search(path, [start_x, start_y + room_size_y / 2], [self.player_spawn[0], self.player_spawn[1]], 'test')
+
+        if path:
+            self.cellular_automata.map[start_x, start_y + room_size_y / 2] = 3
+
+        
+
+        
 
     def Wall_Checker(self, i, j):
 
@@ -155,31 +178,6 @@ class Dungeon_Generator():
             
         return wall_found
         
- 
-
-    def Generate_Lava(self):
-        spawners = 0
-        fails = 0
-        while spawners < 3:
-            spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
-            spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
-            if self.cellular_automata.map[spawner_x][spawner_y] == 1:
-                fails += 1
-                if fails > 10:
-                    return
-                continue
-            self.Generate_Lava_Lake()
-            spawners += 1
-        
-        return
-
-
-    
-    def Generate_Lava_Lake(self):
-        size = 20
-        density = random.randint(40, 60)
-        lava_map = [[0 for _ in range(self.size_y)] for _ in range(self.size_x)]
-        self.noi
 
     
     def Player_Spawn(self):
