@@ -49,10 +49,9 @@ Game Ideas
     # Raytracer that limits players vision, so enemies can sneak up from behind
     # Light engine
     # Clatter System where enemies are attracted to noise
+    # Dungeon generator
+    # Chunk system to prevent slowdown with larger maps
     Cards / Runes
-    Level editor
-    Dungeon generator
-    Chunk system to prevent slowdown with larger maps
 
 # Gameplay
     # Player can hold weapons
@@ -79,7 +78,7 @@ Game Ideas
     # Health
     # strength
     # movement
-    # Mana
+    # Soul
     # health regen, more health than health potion but slower
     # silence
     # invisibility
@@ -89,6 +88,40 @@ Game Ideas
     physical resistance
     luck
     vampire, heals based on damage dealt
+
+# Spells
+    You can have 3 spells equipped at a time
+    Can buy new spells or upgrade existing ones in shrines 
+
+    Costs souls each time it's cast
+    Two types of spells, passive spells and activated spells
+    Active Spells:
+        Dash,
+        Healing
+        Speed
+        Immunity
+        Invisibility
+        Silence
+        Door unlock
+        Directed Fire blast 
+        Circle Fire blast
+        Directed Ice blast 
+        Circle Ice blast
+        Poision Cloud
+        Lightning bolt
+        Random Teleport, to get out of bad situations
+        Scream, make enemies run away from you
+    
+    Passive Spells:
+        Light
+        Resistance
+        Shield charm, have 4 shield around you that grant immunity but breaks when damage taken
+        Thorns, enemies take damage when they hit you
+        Frost Shield, enemies freeze when damaging you
+        Vampiric touch, regen from damaging enemies
+        Arcane conduit, increase power level of your other spells
+
+
 
 
 # Arrows:
@@ -106,10 +139,11 @@ Game Ideas
 
 # Movements:
     # Dash, Move rapidly without hit detection to a location
+    # Roll, avoid damage and roll in the direction of the mouse
+    # Backstep, move backwards a little and be immune
+    # Block, block damage, if the player has shield block all damage, if not then it only blocks melee
+
     Teleport to a random destination, has x amount of charges
-    Run, double run speed for a short duration
-    Roll, avoid damage and roll in the direction of the mouse
-    Block, block damage, if the player has shield block all damage, if not then it only blocks melee
     Jump, can jump over 2 blocks with light armour, 1 with medium and 0 with heavy, takes stamina
     Swim in deep water, can't cross if in heavy armour
     Push certain objects and block
@@ -144,8 +178,8 @@ Game Ideas
 
 ## Ancient Tomb Enemies
     # Spider, shoots spiderweb that snares you, less damage
-    Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
     # Skeletons take more damage from blunt weapons, make more noise from rattle
+    Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
     Vampire, life steal, flying bat form when travelling, close combat
     Ghost, can go through walls, low health high damage, need special effect to damage
     Necromancer, boss mob, spawns skeletons, raises killed skeletons

@@ -13,6 +13,7 @@ class Inventory_Slot():
         self.Setup_Inventory_Texture()
         self.active = False
         self.activate_counter = 0
+        self.white_list_items = []
 
 
     def Setup_Inventory_Texture(self):
@@ -38,6 +39,9 @@ class Inventory_Slot():
         return
 
     def Add_Item(self, item):
+        if not item.category in self.white_list_items:
+            return False
+        
         item.active = True
         self.item = item
         self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
@@ -45,6 +49,7 @@ class Inventory_Slot():
             self.item.Set_Inventory_Type(self.inventory_type)
         else:
             self.item.Set_Inventory_Type(None)
+        return True
 
     def Remove_Item(self):
         self.item = None
@@ -54,6 +59,9 @@ class Inventory_Slot():
             return False
         self.item = None
         return True
+    
+    def Set_White_List(self, items):
+        self.white_list_items = items
 
     def Add_Background(self, background):
         self.background = background

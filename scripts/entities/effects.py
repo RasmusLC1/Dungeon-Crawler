@@ -74,6 +74,8 @@ class Status_Effect_Handler:
 
 
     def Set_Effect(self, effect, duration):
+        if self.entity.invincible:
+            return False
         if effect == 'snare':
             return self.Set_Snare(duration)
         elif effect == 'poison':

@@ -6,8 +6,9 @@ from copy import copy
 
 class Item_Inventory(Inventory):
     def __init__(self, game):
-        super().__init__(game, 7, 1)
+        super().__init__(game, 9, 1)
         self.Setup()
+        
 
     # Configure the inventory when Initialiased
     def Setup(self):
@@ -15,7 +16,10 @@ class Item_Inventory(Inventory):
             for i in range(self.x_size):
                 x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 65
                 y = j * self.size[0] + self.game.screen_height / self.game.render_scale - 20
-                self.inventory.append(Inventory_Slot(self.game, (x, y), self.size, None))
+                inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None)
+                inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
+                self.inventory.append(inventory_slot)
+
 
 
     def Item_Double_Click(self):

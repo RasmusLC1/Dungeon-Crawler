@@ -32,7 +32,7 @@ class Weapon_Inventory_Handler():
         else:
             self.active_inventory -= 1
 
-    def Render(self, surf, offset=(0, 0)):
+    def Render(self, surf):
         self.Render_Inventory(surf)
         # Render the current active inventory
         

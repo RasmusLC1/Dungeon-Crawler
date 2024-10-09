@@ -301,6 +301,8 @@ class Weapon(Item):
                 self.flip_image = False
    
 
+    def Set_Entity(self, entity):
+        self.entity = entity
    
 
     # Render the weapon inside inventory

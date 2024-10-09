@@ -43,7 +43,7 @@ class Player(Moving_Entity):
 
     
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
-        self.invincible = False
+        # self.invincible = False
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
         self.movement_handler.Update()

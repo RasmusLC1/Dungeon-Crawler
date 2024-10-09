@@ -20,7 +20,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Potion_List(self)
         Graphics_Loader.Asset_Decoration_List(self)
         Graphics_Loader.Asset_Weapons_List(self)
-        Graphics_Loader.Asset_Weapon_Inventory(self)
+        Graphics_Loader.Asset_Inventory(self)
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
 
@@ -222,12 +222,13 @@ class Graphics_Loader:
         }
         self.assets.update(Weapons_assets)
 
-    def Asset_Weapon_Inventory(self):
+    def Asset_Inventory(self):
         Weapon_Inventory_assets = {
-            'sword_shield' : get_tiles_from_sheet('weapon_inventory/sword_shield.png', 2, 0, 0, 0, 17, 17),
-            'duel_wield' : get_tiles_from_sheet('weapon_inventory/Duel_wield.png', 2, 0, 0, 0, 17, 17),
-            'bow_arrow' : get_tiles_from_sheet('weapon_inventory/Bow_Arrow.png', 2, 0, 0, 0, 17, 17),
-            'left_right' : get_tiles_from_sheet('weapon_inventory/left_right.png', 2, 0, 0, 0, 17, 17),
+            'sword_shield' : get_tiles_from_sheet('inventory/sword_shield.png', 2, 0, 0, 0, 17, 17),
+            'duel_wield' : get_tiles_from_sheet('inventory/Duel_wield.png', 2, 0, 0, 0, 17, 17),
+            'bow_arrow' : get_tiles_from_sheet('inventory/Bow_Arrow.png', 2, 0, 0, 0, 17, 17),
+            'left_right' : get_tiles_from_sheet('inventory/left_right.png', 2, 0, 0, 0, 17, 17),
+            'rune_background' : get_tiles_from_sheet('inventory/rune_background.png', 1, 0, 0, 0, 17, 17),
         }
         self.assets.update(Weapon_Inventory_assets)
 

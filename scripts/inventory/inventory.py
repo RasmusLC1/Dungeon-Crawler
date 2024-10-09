@@ -201,7 +201,9 @@ class Inventory:
 
         inventory_type_holder = item.inventory_type
         item.picked_up = True  # Ensure the item is marked as not picked up
-        inventory_slot.Add_Item(item)  # Place the item in the inventory slot
+        # Try to place the item in the inventory slot 
+        if not inventory_slot.Add_Item(item):  
+            return False
         inventory_slot.Set_Active(False)  # Deactivate the slot after placing the item
         if inventory_type_holder and item:
             item.Update_Player_Hand(inventory_type_holder)
@@ -250,7 +252,8 @@ class Inventory:
     def Overflow(self, item):
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
-                inventory_slot.Add_Item(item)
+                if not inventory_slot.Add_Item(item):
+                    continue
                 inventory_slot.item.Update()
                 return True
         return False
@@ -282,7 +285,8 @@ class Inventory:
         j = 0
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
-                inventory_slot.Add_Item(item)
+                if not inventory_slot.Add_Item(item):
+                    continue
                 self.game.item_handler.Remove_Item(item)
                 try:
                     inventory_slot.item.Update()

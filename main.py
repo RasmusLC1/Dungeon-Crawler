@@ -17,7 +17,6 @@ from scripts.traps.trap_handler import Trap_Handler
 from scripts.decoration.decoration_handler import Decoration_Handler
 from scripts.items.item_handler import Item_Handler
 from scripts.interface.health_bar import Health_Bar
-from scripts.interface.ammo_bar import Ammo_Bar
 from scripts.interface.souls import Souls
 from scripts.decoration.chest.Chest_handler import Chest_Handler
 from scripts.decoration.doors.door_handler import Door_Handler
@@ -26,6 +25,7 @@ from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
+from scripts.inventory.spell_inventory import Spell_Inventory
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
@@ -66,6 +66,7 @@ class Game:
         # TODO: PLACEHOLDER CODE, Implement proper class system later
         self.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
         self.weapon_inventory = Weapon_Inventory_Handler(self, 'warrior', self.proffeciency)
+        self.spell_inventory = Spell_Inventory(self)
         self.mouse = Mouse_Handler(self)
         self.ray_caster = Ray_Caster(self)
         self.a_star = A_Star()
@@ -75,7 +76,6 @@ class Game:
         self.clatter = Clatter(self)
         self.text_box_handler = Text_Box_handler(self)
         self.sound_handler = Sound_Handler(self)
-        Ammo_Bar.__init__(self)
         Health_Bar.__init__(self)
         self.souls_interface = Souls(self)
         self.keyboard_handler = Keyboard_Handler(self)
@@ -167,6 +167,7 @@ class Game:
 
             self.item_inventory.Update(self.render_scroll)
             self.weapon_inventory.Update(self.render_scroll)
+            self.spell_inventory.Update(self.render_scroll)
             self.souls_interface.Update()
             self.ray_caster.Update(self)
 
@@ -183,13 +184,15 @@ class Game:
         self.trap_handler.Render(self.ray_caster.traps, self.display, self.render_scroll)
 
         Health_Bar.Health_Bar(self)
-        Ammo_Bar.Attack_Recharge_Bar(self)
         self.souls_interface.Render(self.display)
         self.entities_render.Render(self.display, self.render_scroll)
         for particle in self.particles:
             particle.Render(self.display, self.render_scroll)
+
         self.item_inventory.Render(self.display)
-        self.weapon_inventory.Render(self.display, self.render_scroll)
+        self.weapon_inventory.Render(self.display)
+        self.spell_inventory.Render(self.display)
+
         self.text_box_handler.Render(self.display, self.render_scroll)
         self.player.status_effects.Render_Effects_Symbols(self.display)
 

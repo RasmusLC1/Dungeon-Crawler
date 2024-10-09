@@ -28,7 +28,9 @@ class Weapon_Inventory(Inventory):
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)
             inventory_slot.inventory_type = weapon_class[i]
+            inventory_slot.Set_White_List(['weapon'])
             self.inventory.append(inventory_slot)  # Add to instance's inventory
+        
 
         
     def Find_Inventory_Slot(self, searched_inventory_slot):
