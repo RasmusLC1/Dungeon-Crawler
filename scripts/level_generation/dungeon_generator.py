@@ -50,10 +50,7 @@ class Dungeon_Generator():
         if not self.Enemy_Spawner():
             self.Generate_Map()
             return
-        
-        
 
-        
         self.Spawn_Loot(2)
 
         self.Level_Structure()
@@ -139,54 +136,89 @@ class Dungeon_Generator():
             if distance < 20:
                 continue
 
-            # Flatten the loot room and make it floors
-            for y in range(start_y, start_y + size_y):
-                for x in range(start_x, start_x + size_x):
-                    if y == start_y:
-                        self.cellular_automata.map[x][y] = 1
-                    elif y == start_y + size_y - 1:
-                        self.cellular_automata.map[x][y] = 1
-                    elif x == start_x:
-                        self.cellular_automata.map[x][y] = 1
-                    elif x == start_x + size_x - 1:
-                        self.cellular_automata.map[x][y] = 1
-                    else:
-                        self.cellular_automata.map[x][y] = 0
+            self.Loot_Room_Structure(start_x, start_y, size_x, size_y)
             
-            # Close the walls
-            # self.cellular_automata.Close_Borders(start_x, start_y, start_x + size_x, start_y + size_y)
-            path = []
-
-            # Check if left side connects to player
-            y_door = start_y + size_y // 2
-            self.a_star.a_star_search(path, [start_x - 1, y_door], [self.player_spawn[0], self.player_spawn[1]], 'test')
-            if not path:
+            if not self.Generate_Loot_Room_Door(start_x, start_y, size_x, size_y):
                 fail += 1
                 if fail >= 10:
                     return False
                 continue
 
-            chest_count = 0
-            for y in range(start_y + 1, start_y + size_y - 1):
-                for x in range(start_x + 1, start_x + size_x -1):
-                    spawn_loot = random.randint(1, 3)
-                    if spawn_loot == 1:
-                        chest_count += 1
-                        self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (x * 16, y * 16)})
-            
-            # Spawn a chest in case nothing else spawns as a backup
-            if not chest_count:
-                self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (start_x + size_x // 2 * 16, start_y + size_y // 2 * 16)})
 
-
-            print("TESTTEST", [start_x - 1, y_door], [self.player_spawn[0], self.player_spawn[1]])
-            self.cellular_automata.map[start_x][y_door] = 3
+            self.Spawn_Chest_In_Loot_Room(start_x, start_y, size_x, size_y)
             success += 1
 
         return True
- 
+    
+    def Generate_Loot_Room_Door(self, start_x, start_y, size_x, size_y):
+        door_array = [1, 2, 3, 4]
 
+        path = []
+        # Randomize the array
+        random.shuffle(door_array)
+
+        # Check if left side connects to player
+        y_mid = start_y + size_y // 2
+        x_mid = start_x + size_x // 2
+
+        for i in range(4):
+            if door_array[i] == 1: # Left wall
+                self.a_star.a_star_search(path, [start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                self.cellular_automata.map[start_x][y_mid] = 3
+                break
+
+            elif door_array[i] == 2: # Right wall
+                self.a_star.a_star_search(path, [start_x + size_x, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                self.cellular_automata.map[start_x + size_x - 1][y_mid] = 3
+                break
+
+            elif door_array[i] == 3: # Top
+                self.a_star.a_star_search(path, [x_mid, start_y - 1], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                self.cellular_automata.map[x_mid][start_y] = 3
+                break
+            
+
+            elif door_array[i] == 4: # Bottom
+                self.a_star.a_star_search(path, [x_mid, start_y + size_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                self.cellular_automata.map[x_mid][start_y + size_y - 1] = 3
+                break
+
+        if not path:
+            return False
+        print("TESTTEST", [start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]])
         
+        return True
+
+
+    # Flatten the loot room and add walls to outside
+    def Loot_Room_Structure(self, start_x, start_y, size_x, size_y):
+        for y in range(start_y, start_y + size_y):
+            for x in range(start_x, start_x + size_x):
+                if y == start_y:
+                    self.cellular_automata.map[x][y] = 1
+                elif y == start_y + size_y - 1:
+                    self.cellular_automata.map[x][y] = 1
+                elif x == start_x:
+                    self.cellular_automata.map[x][y] = 1
+                elif x == start_x + size_x - 1:
+                    self.cellular_automata.map[x][y] = 1
+                else:
+                    self.cellular_automata.map[x][y] = 0
+
+    def Spawn_Chest_In_Loot_Room(self, start_x, start_y, size_x, size_y):
+        chest_count = 0
+        for y in range(start_y + 1, start_y + size_y - 1):
+            for x in range(start_x + 1, start_x + size_x -1):
+                spawn_loot = random.randint(1, 3)
+                if spawn_loot == 1:
+                    chest_count += 1
+                    self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (x * 16, y * 16)})
+        
+        # Spawn a chest in case nothing else spawns as a backup
+        if not chest_count:
+            self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (start_x + size_x // 2 * 16, start_y + size_y // 2 * 16)})
+
+
 
     def Wall_Checker(self, i, j):
 
@@ -283,6 +315,4 @@ class Dungeon_Generator():
         # Check if the file exists
         if os.path.exists(file_path):
             os.remove(file_path)
-            
-
-
+  

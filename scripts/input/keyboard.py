@@ -34,11 +34,10 @@ class Keyboard_Handler:
                 for item in nearby_items:
                     item.Pick_Up()
 
-                
-                if self.Check_Chests():
+                if self.Check_Doors():
                     return
                 
-                if self.Check_Doors():
+                if self.Check_Chests():
                     return
 
             if key_press.key == pygame.K_SPACE:
@@ -63,7 +62,7 @@ class Keyboard_Handler:
         key_found = False
         
         
-        nearby_doors = self.game.door_handler.Find_Nearby_Doors(self.game.player.pos, 30)
+        nearby_doors = self.game.door_handler.Find_Nearby_Doors(self.game.player.pos, 20)
         if not nearby_doors:
             return False
         
@@ -85,7 +84,7 @@ class Keyboard_Handler:
         return False
 
     def Check_Chests(self):
-        nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.game.player.pos, 30)
+        nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.game.player.pos, 10)
         if self.game.chest_handler.Open_Chests(nearby_chests):
             return True
         return False
