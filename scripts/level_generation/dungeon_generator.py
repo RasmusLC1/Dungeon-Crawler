@@ -31,7 +31,7 @@ class Dungeon_Generator():
         floor = 0
         lava = 2
         
-        self.Spawn_Lakes(20, floor, lava)
+        self.Spawn_Lakes(7, floor, lava)
 
         
         self.a_star.Setup_Custom_Map(self.cellular_automata.map, self.cellular_automata.size_x, self.cellular_automata.size_y)
@@ -53,7 +53,7 @@ class Dungeon_Generator():
             self.Generate_Map()
             return
 
-        self.Spawn_Loot(2)
+        self.Spawn_Chest(2)
 
         self.Level_Structure()
 
@@ -93,6 +93,11 @@ class Dungeon_Generator():
                         break
 
                     self.cellular_automata.map[x][y] = lake_map[i][j]
+                    if self.cellular_automata.map[x][y] == 0:
+                        spawn_loot = random.randint(0, 3)
+                        if spawn_loot == 1:
+                            self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * 16, y * 16]})
+
                     i += 1
                 j += 1
 
@@ -159,9 +164,24 @@ class Dungeon_Generator():
 
             self.Spawn_Chest_In_Loot_Room(start_x, start_y, size_x, size_y)
             success += 1
-
+        
+        self.Spawn_Loot(rooms, 'key')
+        
         return True
     
+    def Spawn_Loot(self, amount, item):
+        loot = 0
+        while loot <= amount:
+            pos_x = random.randint(2, self.cellular_automata.size_x - 3)
+            pos_y = random.randint(2, self.cellular_automata.size_y - 3)
+            if not self.cellular_automata.map[pos_x][pos_y] == 0:
+                continue
+            self.tilemap.offgrid_tiles.append({"type": item, "variant": 0, "pos": [pos_x * 16, pos_y * 16]})
+            loot += 1
+
+    
+
+
     def Generate_Loot_Room_Door(self, start_x, start_y, size_x, size_y):
         door_array = [1, 2, 3, 4]
 
@@ -197,7 +217,6 @@ class Dungeon_Generator():
 
         if not path:
             return False
-        print("TESTTEST", [start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]])
         
         return True
 
@@ -306,7 +325,7 @@ class Dungeon_Generator():
         
         return True
 
-    def Spawn_Loot(self, level):
+    def Spawn_Chest(self, level):
         loot_amount = random.randint(10 + level, 20 + level)
         loot = 0 
         path = []

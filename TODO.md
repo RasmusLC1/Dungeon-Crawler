@@ -95,6 +95,7 @@ Game Ideas
 
     Costs souls each time it's cast
     Two types of spells, passive spells and activated spells
+    Passive spells don't cost souls, but they are less powerful
     Active Spells:
         Dash,
         Healing
@@ -111,14 +112,14 @@ Game Ideas
         Lightning bolt
         Random Teleport, to get out of bad situations
         Scream, make enemies run away from you
+        Shield charm, have 4 shield around you that grant immunity but breaks when damage taken
+        Vampiric touch, regen from damaging enemies
     
     Passive Spells:
         Light
         Resistance
-        Shield charm, have 4 shield around you that grant immunity but breaks when damage taken
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
-        Vampiric touch, regen from damaging enemies
         Arcane conduit, increase power level of your other spells
 
 

@@ -1,6 +1,9 @@
 from scripts.decoration.decoration import Decoration
 from scripts.items.weapons.close_combat.torch import Torch
+from scripts.items.loot.key import Key
+from scripts.items.loot.gold import Gold
 import math
+import random
 
 # UPDATE for throwable weapons
 throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web']
@@ -16,6 +19,14 @@ class Item_Handler():
     def Initialise(self):
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
             self.items.append(Torch(self.game, torch['pos'], (16, 16)))
+        
+        for key in self.game.tilemap.extract([('key', 0)].copy()):
+            self.items.append(Key(self.game, key['pos']))
+
+        for gold in self.game.tilemap.extract([('gold', 0)].copy()):
+            amount = random.randint(20, 30)
+            self.items.append(Gold(self.game, gold['pos'], amount))
+
 
 
     def Add_Item(self, item):
@@ -90,7 +101,3 @@ class Item_Handler():
         self.nearby_item_cooldown = 30
         return True
 
-    def Render(self, items, surf, render_scroll = (0, 0)):
-        
-        for item in items:
-            item.Render(surf, render_scroll)

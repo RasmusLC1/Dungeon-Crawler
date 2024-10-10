@@ -243,10 +243,11 @@ class Inventory:
                     return   
                 self.Return_Item()
                 return
-            self.active_item.render_out_of_bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
+            self.active_item.Render_Out_Of_Bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
 
         else:
             self.Drag_Item(offset)
+            self.active_item.Render_In_Bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
             return
 
     def Overflow(self, item):

@@ -132,19 +132,63 @@ class Item(PhysicsEntity):
     def Damage_Taken(self, damage):
         self.damaged = damage
     
-    # Render legal position
     def Render(self, surf, offset=(0, 0)):
+        if self.picked_up:
+            self.Render_Inventory(surf, offset)
+        else:
+            self.Render_Floor(surf, offset)
+
+
+    # Render legal position
+    def Render_Inventory(self, surf, offset=(0, 0)):
 
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
+    def Render_Floor(self, surf, offset=(0, 0)):
+        
+        if not self.Update_Light_Level():
+            return
+        # Set image
+        item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        item_image =  pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
+        
+        # Set alpha value to make chest fade out
+        alpha_value = max(0, min(255, self.active))
+
+        if not alpha_value:
+            return
+        
+        item_image.set_alpha(alpha_value)
+
+        # Blit the dark layer
+        dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
+        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+
+        # Blit the chest layer on top the dark layer
+        item_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        
+        # Render the chest
+        surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+        
 
     # Render item with fadeout if it's in an illegal position
-    def render_out_of_bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
+    def Render_Out_Of_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
         # Calclate distance between player and mouse
         distance = max(20, 100 - self.Distance(player_pos, mouse_pos))
         item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         item_image.set_alpha(distance)
+        item_image = pygame.transform.scale(item_image, self.size)
+
+        # Render on Mouse position as the item position is not being updated
+        surf.blit(item_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+
+    
+    # Render item with fadeout if it's in an illegal position
+    def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
+        item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+
         item_image = pygame.transform.scale(item_image, self.size)
 
         # Render on Mouse position as the item position is not being updated
