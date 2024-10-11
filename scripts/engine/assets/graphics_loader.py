@@ -23,6 +23,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Inventory(self)
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
+        Graphics_Loader.Asset_Rune(self)
 
         
     def Asset_Background_List(self):
@@ -333,6 +334,31 @@ class Graphics_Loader:
             'key' : get_tiles_from_sheet('loot/key.png', 0, 0, 0, 0, 8, 8),
         }
         self.assets.update(loot)
+
+    def Asset_Rune(self):
+        rune = {
+            'arcane_conduit_rune' : get_tiles_from_sheet('runes/arcane_conduit_rune.png', 1, 0, 0, 0, 17, 17),
+            'dash_rune' : get_tiles_from_sheet('runes/dash_rune.png', 1, 0, 0, 0, 17, 17),
+            'fire_rune_cirlce' : get_tiles_from_sheet('runes/fire_rune_cirlce.png', 1, 0, 0, 0, 17, 17),
+            'fire_rune_resistance' : get_tiles_from_sheet('runes/fire_rune_resistance.png', 1, 0, 0, 0, 17, 17),
+            'fire_rune_shield' : get_tiles_from_sheet('runes/fire_rune_shield.png', 1, 0, 0, 0, 17, 17),
+            'fire_rune_spray' : get_tiles_from_sheet('runes/fire_rune_spray.png', 1, 0, 0, 0, 17, 17),
+            'frost_rune_circle' : get_tiles_from_sheet('runes/frost_rune_circle.png', 1, 0, 0, 0, 17, 17),
+            'frost_rune_resistance' : get_tiles_from_sheet('runes/frost_rune_resistance.png', 1, 0, 0, 0, 17, 17),
+            'frost_rune_shield' : get_tiles_from_sheet('runes/frost_rune_shield.png', 1, 0, 0, 0, 17, 17),
+            'frost_rune_spray' : get_tiles_from_sheet('runes/frost_rune_spray.png', 1, 0, 0, 0, 17, 17),
+            'healing_rune' : get_tiles_from_sheet('runes/healing_rune.png', 1, 0, 0, 0, 17, 17),
+            'invisibility_rune' : get_tiles_from_sheet('runes/invisibility_rune.png', 1, 0, 0, 0, 17, 17),
+            'key_rune' : get_tiles_from_sheet('runes/key_rune.png', 1, 0, 0, 0, 17, 17),
+            'light_rune' : get_tiles_from_sheet('runes/light_rune.png', 1, 0, 0, 0, 17, 17),
+            'resistance_rune' : get_tiles_from_sheet('runes/resistance_rune.png', 1, 0, 0, 0, 17, 17),
+            'shield_rune' : get_tiles_from_sheet('runes/shield_rune.png', 1, 0, 0, 0, 17, 17),
+            'silence_rune' : get_tiles_from_sheet('runes/silence_rune.png', 1, 0, 0, 0, 17, 17),
+            'speed_rune' : get_tiles_from_sheet('runes/speed_rune.png', 1, 0, 0, 0, 17, 17),
+            'strength_rune' : get_tiles_from_sheet('runes/strength_rune.png', 1, 0, 0, 0, 17, 17),
+            'vampiric_rune' : get_tiles_from_sheet('runes/vampiric_rune.png', 1, 0, 0, 0, 17, 17),
+        }
+        self.assets.update(rune)
 
     def Asset_Font(self):
         font = {

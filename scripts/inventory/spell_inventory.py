@@ -5,17 +5,17 @@ from copy import copy
 
 class Spell_Inventory(Inventory):
     def __init__(self, game):
-        super().__init__(game, 1, 3)
+        super().__init__(game, 3, 1)
         self.Setup_Inventory()
         
 
     # Configure the inventory when initialized
     def Setup_Inventory(self):
-        x_pos = self.game.screen_width / self.game.render_scale - 35
-        for i in range(self.y_size):
-            print("TEST")
-            y = i * self.size[0] + self.game.screen_height / self.game.render_scale - 55
-            inventory_slot = Inventory_Slot(self.game, (x_pos, y), self.size, None)
+        x_pos = self.game.screen_width / self.game.render_scale - 25
+        y_pos = self.game.screen_height / self.game.render_scale - 20
+        for i in range(self.x_size):
+            x = i * self.size[0] + self.game.screen_width / self.game.render_scale - 55
+            inventory_slot = Inventory_Slot(self.game, (x, y_pos), self.size, None)
             background = self.game.assets['rune_background'][0]
             inventory_slot.Add_Background(background)
             inventory_slot.inventory_type = 'spell'

@@ -65,6 +65,9 @@ class Player(Moving_Entity):
     def Increase_Souls(self, added_soul):
         self.souls += added_soul
 
+    def Decrease_Souls(self, subtract_soul):
+        self.souls -= subtract_soul
+
     def Entity_Collision_Detection(self, tilemap):
         if self.movement_handler.dashing > 40:
             return None
