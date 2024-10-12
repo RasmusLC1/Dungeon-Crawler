@@ -7,12 +7,14 @@ class Ray_Caster():
         self.enemies = []
         self.traps = []
         self.chests = []
+        self.doors = []
         self.decorations = []
 
         self.nearby_enemies = []
         self.nearby_traps = []
         self.nearby_decorations = []
         self.nearby_chest = []
+        self.nearby_doors = []
         
         self.nearby_cooldown = 0
         self.inactive_distance = 300
@@ -110,6 +112,7 @@ class Ray_Caster():
                     self.chests.append(chest)
                 else:
                     chest.Set_Active(self.default_activity)
+
     
     def Check_Decoration(self, pos):
         for decoration in self.nearby_decorations:
@@ -143,6 +146,9 @@ class Ray_Caster():
             if 'Wall' in tile['type']:
                 return False
             
+            if 'Door' in tile['type']:
+                return False
+            
             
         return True
     
@@ -156,12 +162,14 @@ class Ray_Caster():
         self.nearby_enemies.clear()
         self.nearby_decorations.clear()
         self.nearby_chest.clear()
+        self.nearby_doors.clear()
 
         # Assign new nerby lists
         player = self.game.player
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(player, 200)
         self.nearby_decorations = self.game.decoration_handler.find_nearby_decoration(player.pos, 200)
         self.nearby_chest = self.game.chest_handler.Find_Nearby_Chests(player.pos, 200)
+        self.nearby_doors = self.game.door_handler.Find_Nearby_Doors(player.pos, 200)
         self.nearby_cooldown = 20
         return
     

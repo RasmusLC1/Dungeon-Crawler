@@ -1,363 +1,193 @@
-from scripts.entities.entities import PhysicsEntity
-from scripts.entities.moving_entity import Moving_Entity
-from scripts.engine.particles.particle import Particle
-from scripts.spark import Spark
-from scripts.entities.player.player_effects import Player_Status_Effect_Handler
-from copy import copy
+import sys
 
-import random
-import math
 import pygame
 
 
-class Player(Moving_Entity):
-    def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
-        self.dashing = 0
-        self.animation_num_max = 3
+from scripts.engine.assets.graphics_loader import Graphics_Loader
+from scripts.engine.assets.audio_loader import Audio_Loader
+from scripts.input.keyboard import Keyboard_Handler
+from scripts.input.mouse import Mouse_Handler
+from scripts.entities.player.player import Player
+from scripts.engine.tilemap import Tilemap
+from scripts.engine.particles.particle_handler import Particle_Handler
+from scripts.traps.trap_handler import Trap_Handler
+from scripts.decoration.decoration_handler import Decoration_Handler
+from scripts.items.item_handler import Item_Handler
+from scripts.interface.health_bar import Health_Bar
+from scripts.interface.souls import Souls
+from scripts.decoration.chest.Chest_handler import Chest_Handler
+from scripts.decoration.doors.door_handler import Door_Handler
+from scripts.entities.enemies.enemy_handler import Enemy_Handler
+from scripts.engine.a_star import A_Star
+from scripts.engine.lights.light_handler import Light_Handler
+from scripts.inventory.item_inventory import Item_Inventory
+from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
+from scripts.inventory.spell_inventory import Spell_Inventory
+from scripts.engine.ray_caster import Ray_Caster 
+from scripts.entities.entity_renderer import Entity_Renderer
+from scripts.engine.fonts.font import Font
+from scripts.engine.fonts.symbols import Symbols
+from scripts.engine.clatter import Clatter
+from scripts.items.utility.text_box_handler import Text_Box_handler
+from scripts.engine.sound.sound_handler import Sound_Handler
+from scripts.level_generation.dungeon_generator import Dungeon_Generator
+from scripts.items.runes.rune_handler import Rune_Handler
+
+
+
+
+import numpy as np
+
+import pygame
+
+
+class Game:
+    def __init__(self):
+        pygame.init()
+        self.render_scale = 4
         
-        self.max_ammo = 30
-        self.ammo = 10
-        self.active_weapon_left = None
-        self.left_weapon_cooldown = 0
-        self.active_weapon_right = None
-        self.right_weapon_cooldown = 0
-        self.active_bow = None
-        self.bow_cooldown = 0
-        self.Set_Animation('idle_down')
-        self.souls = 5
-        self.nearby_chests = []
-
-        self.light_level = 5
-        self.light_cooldown = 0
-        # self.light_source = None
-        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
-        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
-
-        self.inventory_interaction = 0
-
-        self.coins = 0
-        self.shootin_cooldown = 0
-
-        self.weapons = []
-        self.status_effects = Player_Status_Effect_Handler(self)
-
-
-    
-    def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
-        super().Update(tilemap, movement=movement)
-        self.Mouse_Handler()
-        if self.dashing:
-            self.Dashing_Update(offset)
-
-        if self.shootin_cooldown:
-            self.shootin_cooldown -= 1
+        self.screen_width = 1280
+        self.screen_height = 960
+        self.screen = pygame.display.set_mode((1280, 960))
+        self.display = pygame.Surface((self.screen_width/self.render_scale, self.screen_height/self.render_scale))
+        self.render_scroll = (0,0)
+        self.clock = pygame.time.Clock()
         
-        self.Update_Light()
+        self.movement = [False, False, False, False]
+        self.assets = {}
+        Graphics_Loader.Run_All(self)
+        Audio_Loader.Run_All(self)
 
-        self.Set_Direction_Holder()
 
+        self.tilemap = Tilemap(self, tile_size=16)
+        self.item_inventory = Item_Inventory(self)
+        # TODO: PLACEHOLDER CODE, Implement proper class system later
+        self.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
+        self.weapon_inventory = Weapon_Inventory_Handler(self, 'warrior', self.proffeciency)
+        self.spell_inventory = Spell_Inventory(self)
+        self.mouse = Mouse_Handler(self)
+        self.ray_caster = Ray_Caster(self)
+        self.a_star = A_Star()
+        self.entities_render = Entity_Renderer(self)
+        self.default_font = Font(self)
+        self.symbols = Symbols(self)
+        self.clatter = Clatter(self)
+        self.text_box_handler = Text_Box_handler(self)
+        self.sound_handler = Sound_Handler(self)
+        Health_Bar.__init__(self)
+        self.souls_interface = Souls(self)
+        self.keyboard_handler = Keyboard_Handler(self)
+
+        self.dungeon_generator = Dungeon_Generator(self)
+
+
+
+        self.level = 0
+        self.scroll = [0, 0]
+
+
+        self.load_level(self.level)
+
+
+    def load_level(self, map_id):
+        self.dungeon_generator.Generate_Map()
+        self.tilemap.load('data/maps/' + str(map_id) + '.json')
+         # Setup handlers
+        self.light_handler = Light_Handler(self)
         
         
-        if self.game.weapon_inventory.active_inventory == 0:
-            self.Update_Left_Weapon(offset)
-            self.Update_Right_Weapon(offset)
-        elif self.game.weapon_inventory.active_inventory == 1:
-            self.Update_Bow(offset)
-        else:
-            print("INVENTORY MISSING")
-    
-    def Increase_Souls(self, added_soul):
-        self.souls += added_soul
+        self.particles = []
+        self.sparks = []
+        self.scroll = [0, 0]
+        self.projectiles = []
+        for spawner in self.tilemap.extract([('spawners', 0)]):
+            if spawner['variant'] == 0:
+                print(spawner['pos'])
+                self.player = Player(self, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
 
-    def Entity_Collision_Detection(self, tilemap):
-        if self.dashing > 40:
-            return None
-        return super().Entity_Collision_Detection(tilemap)
-
-    def Attack_Direction_Handler(self, offset = (0,0)):
-        super().Attack_Direction_Handler(offset)
-
-    def Set_Charge(self, charge_speed, offset=(0, 0)):
-        super().Set_Charge(charge_speed, offset)
-
-    # Function to update the player's weapons
-    # Each weapon needs it own method to handle it's cooldown
-    def Update_Left_Weapon(self, offset=(0, 0)):
-
-        if not self.active_weapon_left:
-            return
+        self.enemy_handler = Enemy_Handler(self)
+        self.trap_handler = Trap_Handler(self)
+        self.decoration_handler = Decoration_Handler(self)
+        self.chest_handler = Chest_Handler(self)
+        self.door_handler = Door_Handler(self)
+        self.item_handler = Item_Handler(self)
+        self.rune_handler = Rune_Handler(self)        
+        self.a_star.Setup_Map(self)
         
-        if self.inventory_interaction:
-            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
-            self.active_weapon_left.Reset_Charge()
-            return
-        
-        self.active_weapon_left.Set_Equipped_Position(self.direction_y_holder)
 
-        self.active_weapon_left.Update(offset)
-        if not self.active_weapon_left:
-            return
-        self.active_weapon_left.Update_Attack()
-        self.Attacking(self.active_weapon_left, offset)
+    # Get the scroll offset
+    def Camera_Scroll(self):
+        self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
+        self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
+        self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
-        
-        if self.left_weapon_cooldown:
-            self.left_weapon_cooldown -= 1
-            return
+    def Input_Handler(self):
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                self.mouse.Mouse_Input(event, self.render_scroll)
 
-        if not self.game.mouse.left_click:
-            return
-        
-        cooldown = self.Weapon_Attack(self.active_weapon_left)
-        
-        self.left_weapon_cooldown = max(self.left_weapon_cooldown, cooldown)
+                self.keyboard_handler.keyboard_Input(event, self.render_scroll)
 
-        return
-    
-    def Update_Right_Weapon(self, offset=(0, 0)):
-        # Return if there's no weapon
-        if not self.active_weapon_right:
-            return
-        # Update the weapon position and logic
-
-        if self.inventory_interaction:
-            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
-            self.active_weapon_right.Reset_Charge()
-            return
-
-        self.active_weapon_right.Set_Equipped_Position(self.direction_y_holder)
-        
-        self.active_weapon_right.Update(offset)
-        if not self.active_weapon_right:
-            return
-        self.active_weapon_right.Update_Attack()
-        self.Attacking(self.active_weapon_right, offset)
-        
-        # Handle weapon cooldown
-        if self.right_weapon_cooldown:
-            self.right_weapon_cooldown -= 1
-            return
-        
-        # Return if mouse has not been clicked
-        if not self.game.mouse.right_click:
-            return
-        # Attack with weapon
-        cooldown = self.Weapon_Attack(self.active_weapon_right)
-        
-        self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
-
-    
-    def Update_Bow(self, offset=(0, 0)):
-        # Return if there's no weapon
-        if not self.active_bow:
-            return
-        # Update the weapon position and logic
-
-        if self.inventory_interaction:
-            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
-            self.active_bow.Reset_Charge()
-            return
-
-        self.active_bow.Set_Equipped_Position(self.direction_y_holder)
-        
-        self.active_bow.Update(offset)
-        if not self.active_bow:
-            return
-        
-        self.active_bow.Update_Attack()
-        self.Attacking(self.active_bow, offset)
-        
-        # Handle weapon cooldown
-        if self.bow_cooldown:
-            self.bow_cooldown -= 1
-            return
-        
-        # Return if mouse has not been clicked
-        if not self.game.mouse.right_click:
-            return
-        # Attack with weapon
-        cooldown = self.Weapon_Attack(self.active_bow)
-        
-        self.bow_cooldown = max(self.bow_cooldown, cooldown)
-
-    
-    # Activate weapon attack, return cooldown time
-    def Weapon_Attack(self, weapon):
-        # Return if inventory has not been clicked
-        if self.game.mouse.inventory_clicked:
-            return 0
-        # weapon.Set_Attack()
-        if weapon.attacking:
-            cooldown = max(5 + weapon.attacking, 100/self.agility + weapon.attacking)
-            return cooldown
-        return 0
-    
-    def Attacking(self, weapon, offset=(0, 0)):
-        if weapon.attacking and not self.attacking:
-            self.Attack_Direction_Handler(offset)
-
-            direction_x = 5 * self.attack_direction[0]
-            direction_y = 5 * self.attack_direction[1]
-            self.Set_Frame_movement((direction_x, direction_y))
-            self.Tile_Map_Collision_Detection(self.game.tilemap)
-            self.attacking = weapon.attacking
-
-
-        if self.attacking == 1:
-            direction_x = - 5 * self.attack_direction[0]
-            direction_y = - 5 * self.attack_direction[1]
-            self.Set_Frame_movement((direction_x, direction_y))
-            self.Tile_Map_Collision_Detection(self.game.tilemap)
-
-        if self.attacking:
-            self.attacking -= 1
-
-    def Set_Active_Weapon(self, weapon, hand):  
-        if not weapon or not hand:
-            return False    
-        equipped_weapon = copy(weapon)
-        equipped_weapon.Set_In_Inventory(False)
-        if hand == 'left_hand':
-            equipped_weapon.Move(self.pos)
-            self.active_weapon_left = equipped_weapon
-            return
-        if hand == 'right_hand':
-            equipped_weapon.Move(self.pos)
-            self.active_weapon_right = equipped_weapon
-            return
-        if 'bow' in hand:
-            equipped_weapon.Move(self.pos)
-            self.active_bow = equipped_weapon
-
-    def Remove_Active_Weapon(self, hand):
-        if hand == 'left_hand' and self.active_weapon_left:
-            self.active_weapon_left = None
-        if hand == 'right_hand' and self.active_weapon_right:
-            self.active_weapon_right = None
-
-    def Set_Light_State(self, state):
-        self.light_source.active = state
-    
-    
-        
-    # Function to update the light around player
-    def Update_Light(self):
-        if self.light_source:
-            # Update all the light's around the player
-            # Do it only when the player light has been activated to prevent lag
-            if not self.light_source.active:
-                self.game.light_handler.Remove_Light(self.light_source)
-                self.game.light_handler.Restore_Light(self.light_source)
-                self.Set_Light_State(True)
-            else:
-                self.game.light_handler.Move_Light(self.pos, self.light_source)
-
-    def Back_Step(self):
-        pass
-
-    def Dashing_Update(self, offset=(0, 0)):
-
-        if abs(self.dashing) in {60, 50}:
-            for i in range(20):
-                angle = random.random() * math.pi * 2
-                speed = random.random() * 0.5 + 0.5
-                pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
-                self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
-
-        if self.dashing > 0:
-            self.dashing = max(0, self.dashing - 1)
-
-
-        if self.dashing > 50:
+    def Update(self):
+            fps = int(self.clock.get_fps())
+            pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
             
-            if self.attack_direction.length() > 0:
-                # Temporarily set friction to zero to avoid deceleration during dash
-                self.friction = 0
-                self.max_speed = 40  # Adjust max speed speed for dashing distance
+            self.player.Update(self.tilemap, (self.movement[1] - self.movement[0], self.movement[3] - self.movement[2]), self.render_scroll)
+            Particle_Handler.particle_update(self, self.render_scroll)
+            self.trap_handler.Update()
+            self.decoration_handler.Update()
+            self.item_handler.Update(self.render_scroll)
+            self.enemy_handler.Update()
+            self.entities_render.Update()
 
 
-                # Set the velocity directly based on dash without friction interference
-                self.velocity[0] = self.attack_direction[0] * self.dashing
-                self.velocity[1] = self.attack_direction[1] * self.dashing
+            self.item_inventory.Update(self.render_scroll)
+            self.weapon_inventory.Update(self.render_scroll)
+            self.spell_inventory.Update(self.render_scroll)
+            self.souls_interface.Update()
+            self.ray_caster.Update(self)
 
-                if abs(self.dashing) == 51:
-                    self.velocity[0] *= 0.1
-                    self.velocity[1] *= 0.1
+            self.mouse.Mouse_Update()
+            self.text_box_handler.Update()
+    
 
-                pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
-                self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
-
-    def Dash(self, offset=(0, 0)):
-        if not self.dashing:
-            self.Attack_Direction_Handler(offset)
-            self.dashing = 60
+    def Render(self):
+        self.display.blit(self.assets['background'], (0, 0))
         
+        self.ray_caster.Ray_Caster()
+        self.tilemap.render_tiles(self.ray_caster.tiles, self.display, offset=self.render_scroll)
+
+        self.trap_handler.Render(self.ray_caster.traps, self.display, self.render_scroll)
+
+        Health_Bar.Health_Bar(self)
+        self.souls_interface.Render(self.display)
+        self.entities_render.Render(self.display, self.render_scroll)
+        for particle in self.particles:
+            particle.Render(self.display, self.render_scroll)
+
+        self.item_inventory.Render(self.display)
+        self.weapon_inventory.Render(self.display)
+        self.spell_inventory.Render(self.display)
+
+        self.text_box_handler.Render(self.display, self.render_scroll)
+        self.player.status_effects.Render_Effects_Symbols(self.display)
+
+        self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
+
         
-    def Mouse_Handler(self):
-        self.Set_Target(self.game.mouse.player_mouse)
+    def run(self):  
+        while True:
 
-    def Set_Direction_Holder(self):
-        if self.direction_x or self.direction_y:
-            self.direction_x_holder = self.direction_x
-            self.direction_y_holder = self.direction_y
-
-    def Find_Nearby_Chests(self, range):
-        self.nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.pos, range)
-
-    def Set_Inventory_Interaction(self, state):
-        self.inventory_interaction = state
+            self.Camera_Scroll()
             
+            self.Render()
+            self.Update()
+            self.Input_Handler()
+            
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
+            pygame.display.update()
+            self.clock.tick(60)
 
-    # Render player
-    def Render(self, surf, offset=(0, 0)):
-        if abs(self.dashing) >= 50:
-            return
-        
-        # Load and scale the entity images, split to allow better animation
-        entity_image_head = self.game.assets[self.animation + '_head'][self.animation_num]
-        entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
-
-        entity_image_body = self.game.assets[self.animation + '_body'][self.animation_num]
-        entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
-
-        entity_image_legs = self.game.assets[self.animation + '_legs'][self.animation_num]
-        entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
-
-        if self.status_effects.invisibility:
-            # Set the alpha value to make the entity fade out, the lower the more invisible
-            alpha_value = max(0, min(255, self.active)) 
-            entity_image_head.set_alpha(alpha_value)
-            entity_image_body.set_alpha(alpha_value)
-            entity_image_legs.set_alpha(alpha_value)
-
-        if not "up" in self.animation:
-            surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
-            surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-            surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
-
-
-        self.Render_Weapons(surf, offset)
-        
-
-        if  "up" in self.animation:
-            surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
-            surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-            surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
-
-        # Render status effects
-        self.status_effects.Render_Effects(self.game, surf, offset)
-
-        
-    def Render_Weapons(self, surf, offset):
-        if self.game.weapon_inventory.active_inventory == 0:
-            if self.active_weapon_left:
-                self.active_weapon_left.Render_Equipped(surf, offset)
-            if self.active_weapon_right:
-                self.active_weapon_right.Render_Equipped(surf, offset)
-        elif self.game.weapon_inventory.active_inventory == 1:
-            if self.active_bow:
-                self.active_bow.Render_Equipped(surf, offset)
-        else:
-            print("INVENTORY MISSING")
-
+Game().run()

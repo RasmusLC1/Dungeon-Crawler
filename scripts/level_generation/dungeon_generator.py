@@ -332,7 +332,7 @@ class Dungeon_Generator():
         while loot < loot_amount:
             spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
-            if self.cellular_automata.map[spawner_x][spawner_y] == 1:
+            if self.cellular_automata.map[spawner_x][spawner_y] != 0:
                 continue
             self.a_star.a_star_search(path, [spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
             
