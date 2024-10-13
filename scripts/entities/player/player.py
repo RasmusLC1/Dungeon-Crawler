@@ -21,7 +21,7 @@ class Player(Moving_Entity):
         self.ammo = 10
         self.bow_cooldown = 0
         self.Set_Animation('idle_down')
-        self.souls = 5
+        self.souls = 500
         self.nearby_chests = []
         self.view_direction = (0,0)
 

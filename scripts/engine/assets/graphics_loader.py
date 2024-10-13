@@ -337,8 +337,9 @@ class Graphics_Loader:
 
     def Asset_Rune(self):
         rune = {
-            'arcane_conduit_rune' : get_tiles_from_sheet('runes/arcane_conduit_rune.png', 1, 0, 0, 0, 16, 16),
+            'healing_rune' : get_tiles_from_sheet('runes/healing_rune.png', 1, 0, 0, 0, 16, 16),
             'dash_rune' : get_tiles_from_sheet('runes/dash_rune.png', 1, 0, 0, 0, 16, 16),
+            'arcane_conduit_rune' : get_tiles_from_sheet('runes/arcane_conduit_rune.png', 1, 0, 0, 0, 16, 16),
             'fire_rune_cirlce' : get_tiles_from_sheet('runes/fire_rune_cirlce.png', 1, 0, 0, 0, 16, 16),
             'fire_rune_resistance' : get_tiles_from_sheet('runes/fire_rune_resistance.png', 1, 0, 0, 0, 16, 16),
             'fire_rune_shield' : get_tiles_from_sheet('runes/fire_rune_shield.png', 1, 0, 0, 0, 16, 16),
@@ -347,7 +348,6 @@ class Graphics_Loader:
             'frost_rune_resistance' : get_tiles_from_sheet('runes/frost_rune_resistance.png', 1, 0, 0, 0, 16, 16),
             'frost_rune_shield' : get_tiles_from_sheet('runes/frost_rune_shield.png', 1, 0, 0, 0, 16, 16),
             'frost_rune_spray' : get_tiles_from_sheet('runes/frost_rune_spray.png', 1, 0, 0, 0, 16, 16),
-            'healing_rune' : get_tiles_from_sheet('runes/healing_rune.png', 1, 0, 0, 0, 16, 16),
             'invisibility_rune' : get_tiles_from_sheet('runes/invisibility_rune.png', 1, 0, 0, 0, 16, 16),
             'key_rune' : get_tiles_from_sheet('runes/key_rune.png', 1, 0, 0, 0, 16, 16),
             'light_rune' : get_tiles_from_sheet('runes/light_rune.png', 1, 0, 0, 0, 16, 16),

@@ -12,8 +12,8 @@ class Renderer():
 
         self.game.trap_handler.Render(self.game.ray_caster.traps, self.game.display, self.game.render_scroll)
 
-        self.game.health_bar.Health_Bar()
         self.game.souls_interface.Render(self.game.display)
+        self.game.rune_handler.Render_Animation(self.game.display, self.game.render_scroll)
         self.game.entities_render.Render(self.game.display, self.game.render_scroll)
         for particle in self.game.particles:
             particle.Render(self.game.display, self.game.render_scroll)
@@ -25,5 +25,6 @@ class Renderer():
         self.game.text_box_handler.Render(self.game.display, self.game.render_scroll)
         self.game.player.status_effects.Render_Effects_Symbols(self.game.display)
         self.game.rune_handler.Render(self.game.display, self.game.render_scroll)
+        self.game.health_bar.Health_Bar()
 
         self.game.screen.blit(pygame.transform.scale(self.game.display, self.game.screen.get_size()), (0,0))

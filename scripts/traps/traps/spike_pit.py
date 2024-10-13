@@ -28,4 +28,3 @@ class Spike_Pit(Trap):
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0]-5, self.size[1]-5)
                     
-            

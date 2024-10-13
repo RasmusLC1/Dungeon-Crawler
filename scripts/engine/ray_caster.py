@@ -49,11 +49,14 @@ class Ray_Caster():
                 trap.Reduce_Active()
             else:
                 self.traps.remove(trap)
+                return
+            
             distance = math.sqrt((game.player.pos[0] - trap.pos[0]) ** 2 + (game.player.pos[1] - trap.pos[0]) ** 2)
             if abs(distance) > self.inactive_distance:
                 trap.Set_Active(0)
                 if trap in self.traps:
                     self.traps.remove(trap)
+    
 
     def Check_Chest_Active(self, game):
         for chest in self.chests:
@@ -138,7 +141,8 @@ class Ray_Caster():
         if tile:
             if not tile['active']:
                 tile['active'] = self.default_activity
-                self.tiles.append(tile)
+                if not 'trap' in tile['type']:
+                    self.tiles.append(tile)
             else:
                 tile['active'] = self.default_activity
 

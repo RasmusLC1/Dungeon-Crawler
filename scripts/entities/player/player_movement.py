@@ -108,3 +108,6 @@ class Player_Movement():
         if not self.dashing:
             self.player.Attack_Direction_Handler(offset)
             self.dashing = 60
+            return True
+        
+        return False

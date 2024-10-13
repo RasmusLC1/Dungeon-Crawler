@@ -43,7 +43,7 @@ class Trap:
 
         tile = self.game.tilemap.Current_Tile(self.pos)
 
-        
+     
         if tile['light'] > 0:
             light_level = min(255, tile['light'] * 25)
         else:

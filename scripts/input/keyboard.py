@@ -16,19 +16,19 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_s:
                 self.game.movement[3] = True
             if key_press.key == pygame.K_1:
-                self.Inventory_Keybindings(0)
+                self.Item_Inventory_Keybindings(0)
             if key_press.key == pygame.K_2:
-                self.Inventory_Keybindings(1)
+                self.Item_Inventory_Keybindings(1)
             if key_press.key == pygame.K_3:
-                self.Inventory_Keybindings(2)
+                self.Item_Inventory_Keybindings(2)
             if key_press.key == pygame.K_4:
-                self.Inventory_Keybindings(3)
+                self.Item_Inventory_Keybindings(3)
             if key_press.key == pygame.K_5:
-                self.Inventory_Keybindings(4)
+                self.Item_Inventory_Keybindings(4)
             if key_press.key == pygame.K_6:
-                self.Inventory_Keybindings(5)
+                self.Item_Inventory_Keybindings(5)
             if key_press.key == pygame.K_7:
-                self.Inventory_Keybindings(6)
+                self.Item_Inventory_Keybindings(6)
             if key_press.key == pygame.K_e:
                 nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.player.pos, 30)
                 for item in nearby_items:
@@ -42,8 +42,12 @@ class Keyboard_Handler:
 
             if key_press.key == pygame.K_SPACE:
                 self.game.player.movement_handler.Roll_Forward(offset)
+            if key_press.key == pygame.K_z:
+                self.Rune_Inventory_Keybindings(0)
             if key_press.key == pygame.K_x:
-                self.game.player.movement_handler.Dash(offset)
+                self.Rune_Inventory_Keybindings(1)
+            if key_press.key == pygame.K_c:
+                self.Rune_Inventory_Keybindings(2)
             if key_press.key == pygame.K_LALT:
                 self.game.player.movement_handler.Back_Step(offset)
 
@@ -89,8 +93,14 @@ class Keyboard_Handler:
             return True
         return False
 
-    def Inventory_Keybindings(self, inventory_index):
+    def Item_Inventory_Keybindings(self, inventory_index):
         inventory_slot = self.game.item_inventory.inventory[inventory_index]
+        if inventory_slot.item:
+            inventory_slot.item.Activate()
+            inventory_slot.Update()
+
+    def Rune_Inventory_Keybindings(self, inventory_index):
+        inventory_slot = self.game.rune_inventory.inventory[inventory_index]
         if inventory_slot.item:
             inventory_slot.item.Activate()
             inventory_slot.Update()
