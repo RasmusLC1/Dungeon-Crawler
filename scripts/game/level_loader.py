@@ -46,4 +46,8 @@ class Level_Loader():
         self.game.item_handler = Item_Handler(self.game)
         self.game.rune_handler = Rune_Handler(self.game)
 
+        
+        
+        test = self.game.rune_handler.Add_Rune_To_Rune_Inventory('healing_rune')
+        print(test)
         self.game.a_star.Setup_Map(self.game)

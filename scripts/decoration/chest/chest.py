@@ -104,26 +104,27 @@ class Chest(Decoration):
         rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
         potion_index = random.randint(0, len(self.potions) - 1)
         item = None
+        potion_amount = random.randint(1,3)
         if self.potions[potion_index] == 'health':
-            item = Health_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Health_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'regen':
-            item = Regen_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Regen_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'soul':
-            item = Soul_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Soul_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'speed':
-            item = Speed_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Speed_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'strength':
-            item = Strength_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Strength_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'invisibility':
-            item = Invisibility_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Invisibility_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'silence':
-            item = Silence_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Silence_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'fire_resistance':
-            item = Fire_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Fire_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'freeze_resistance':
-            item = Freeze_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Freeze_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
         elif self.potions[potion_index] == 'poison_resistance':
-            item = Poison_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), random.randint(1,3))
+            item = Poison_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
 
         
         if item:

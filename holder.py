@@ -22,7 +22,7 @@ from scripts.engine.a_star import A_Star
 from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
-from scripts.inventory.spell_inventory import Spell_Inventory
+from scripts.inventory.rune_inventory import Spell_Inventory
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font

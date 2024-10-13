@@ -38,7 +38,7 @@ class Dungeon_Generator():
 
         self.Player_Spawn()
         self.a_star.Set_Map('custom')
-        self.Spawn_Traps(2)
+        self.Spawn_Traps(1)
         
         if not self.Spawn_Loot_Room(4):
             self.Generate_Map()
@@ -162,7 +162,7 @@ class Dungeon_Generator():
                 continue
 
 
-            self.Spawn_Chest_In_Loot_Room(start_x, start_y, size_x, size_y)
+            self.Spawn_Loot_In_Loot_Room(start_x, start_y, size_x, size_y)
             success += 1
         
         self.Spawn_Loot(rooms, 'key')
@@ -236,17 +236,21 @@ class Dungeon_Generator():
                 else:
                     self.cellular_automata.map[x][y] = 0
 
-    def Spawn_Chest_In_Loot_Room(self, start_x, start_y, size_x, size_y):
-        chest_count = 0
+    def Spawn_Loot_In_Loot_Room(self, start_x, start_y, size_x, size_y):
+        loot_count = 0
         for y in range(start_y + 1, start_y + size_y - 1):
             for x in range(start_x + 1, start_x + size_x -1):
-                spawn_loot = random.randint(1, 3)
-                if spawn_loot == 1:
-                    chest_count += 1
+                spawn_loot = random.randint(0, 3)
+                if spawn_loot == 0:
+                    loot_count += 1
                     self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (x * 16, y * 16)})
+                elif spawn_loot == 1:
+                    loot_count += 1
+                    self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * 16, y * 16]})
+
         
         # Spawn a chest in case nothing else spawns as a backup
-        if not chest_count:
+        if not loot_count:
             self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (start_x + size_x // 2 * 16, start_y + size_y // 2 * 16)})
 
 

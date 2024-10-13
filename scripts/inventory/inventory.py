@@ -286,7 +286,9 @@ class Inventory:
         j = 0
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
+
                 if not inventory_slot.Add_Item(item):
+
                     continue
                 self.game.item_handler.Remove_Item(item)
                 try:

@@ -141,9 +141,9 @@ class Item(PhysicsEntity):
 
     # Render legal position
     def Render_Inventory(self, surf, offset=(0, 0)):
-
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        
         
     def Render_Floor(self, surf, offset=(0, 0)):
         

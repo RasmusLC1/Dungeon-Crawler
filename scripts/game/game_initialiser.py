@@ -1,6 +1,6 @@
 from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
-from scripts.inventory.spell_inventory import Spell_Inventory
+from scripts.inventory.rune_inventory import Rune_Inventory
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
@@ -48,7 +48,7 @@ class Game_Initialiser():
         # TODO: PLACEHOLDER CODE, Implement proper class system later
         self.game.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
         self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior', self.game.proffeciency)
-        self.game.spell_inventory = Spell_Inventory(self.game)
+        self.game.rune_inventory = Rune_Inventory(self.game)
         self.game.mouse = Mouse_Handler(self.game)
         self.game.ray_caster = Ray_Caster(self.game)
         self.game.a_star = A_Star()

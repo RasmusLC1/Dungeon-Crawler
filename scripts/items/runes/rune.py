@@ -2,7 +2,7 @@ from scripts.items.item import Item
 
 class Rune(Item):
     def __init__(self, game, type, pos, strength, soul_cost):
-        super().__init__(game,  type, 'rune', pos, (17, 17), 1)
+        super().__init__(game,  type, 'rune', pos, (16, 16), 1)
         self.max_amount = 1
         self.original_strength = strength
         self.current_strength = strength
@@ -10,6 +10,7 @@ class Rune(Item):
         self.current_soul_cost = soul_cost
         self.animation_time_max = 1
         self.animation_time = 0
+        self.active = False
 
     
     def Activate(self):
