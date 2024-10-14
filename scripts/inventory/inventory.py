@@ -150,8 +150,9 @@ class Inventory:
         if self.game.mouse.left_click == False:
             self.Place_Down_item()
             self.Reset_Inventory_Slot()
+            return False
 
-        return
+        return True
 
     def Place_Down_item(self):
         if not self.active_item.Place_Down():
@@ -180,6 +181,12 @@ class Inventory:
                 if inventory_slot.active:
                     return False
 
+                if self.Swap_Item(self.active_item, inventory_slot):
+                    return True
+
+                # if inventory_slot.item:
+                #     continue
+
                 if self.Move_Item(self.active_item, inventory_slot):
                     self.clicked_inventory_slot.item = None  # Clear the original slot
                     self.clicked_inventory_slot.Set_Active(False)  # Deactivate original slot
@@ -189,9 +196,6 @@ class Inventory:
     
     # Method to move an item into a slot
     def Move_Item(self, item, inventory_slot):
-        if inventory_slot.item:
-            return False
-        
         if item.category == 'weapon':
             try:
                 if not item.Check_Two_Handed_Left_Hand(inventory_slot):
@@ -199,6 +203,9 @@ class Inventory:
             except Exception as e:
                 print(f"Item is not a weapon {e}")
 
+
+        
+        
         inventory_type_holder = item.inventory_type
         item.picked_up = True  # Ensure the item is marked as not picked up
         # Try to place the item in the inventory slot 
@@ -209,6 +216,25 @@ class Inventory:
             item.Update_Player_Hand(inventory_type_holder)
 
         return True
+
+    # Swap the active item's inventory slot with the item in the hovered
+    # over inventory slot
+    def Swap_Item(self, item, inventory_slot):
+        if inventory_slot.item:
+            item_holder = inventory_slot.item
+            self.clicked_inventory_slot.Reset_Inventory_Slot()  # Clear the original slot
+            inventory_slot.Reset_Inventory_Slot()
+
+            # self.active_item = self.clicked_inventory_slot.item
+            self.clicked_inventory_slot.Add_Item(item_holder)
+            self.clicked_inventory_slot.item.active = False
+            self.clicked_inventory_slot = None
+            inventory_slot.Add_Item(self.active_item)
+
+            self.active_item = None  # Clear active item
+            return True
+        
+        return False
 
     # Method to remove an item from the inventory
     def Remove_Item(self, item, move_item):
@@ -241,12 +267,17 @@ class Inventory:
 
                 if self.Move_Item_To_New_Slot(offset):
                     return   
+                # Check if there is still an active Item
+                if not self.active_item:
+                    return
                 self.Return_Item()
                 return
             self.active_item.Render_Out_Of_Bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
 
         else:
-            self.Drag_Item(offset)
+            if not self.Drag_Item(offset):
+                return
+            
             self.active_item.Render_In_Bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
             return
 

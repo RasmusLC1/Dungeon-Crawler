@@ -18,7 +18,7 @@ class Rune_Inventory(Inventory):
             inventory_slot = Inventory_Slot(self.game, (x, y_pos), self.size, None)
             background = self.game.assets['rune_background'][0]
             inventory_slot.Add_Background(background)
-            inventory_slot.inventory_type = 'rune'
+            # inventory_slot.inventory_type = 'rune'
             inventory_slot.Set_White_List(['rune'])
             self.inventory.append(inventory_slot)  # Add to instance's inventory
         

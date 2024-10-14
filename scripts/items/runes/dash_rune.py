@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Dash_Rune(Rune):
-    def __init__(self, game, pos, strength, soul_cost):
-        super().__init__(game, 'dash_rune', pos, strength, soul_cost)
+    def __init__(self, game, pos):
+        super().__init__(game, 'dash_rune', pos, 10, 2)
         self.animation_time_max = 30
         self.effect = 'dash'
         self.animation_size_max = 15

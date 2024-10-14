@@ -47,9 +47,6 @@ class Level_Loader():
         self.game.rune_handler = Rune_Handler(self.game)
 
         
-        # Initialise test runes
-        self.game.rune_handler.Add_Rune_To_Rune_Inventory('healing_rune')
-        self.game.rune_handler.Add_Rune_To_Rune_Inventory('dash_rune')
 
-        
+
         self.game.a_star.Setup_Map(self.game)

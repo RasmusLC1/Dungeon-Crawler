@@ -3,8 +3,8 @@ from scripts.items.runes.rune import Rune
 import pygame
 
 class Healing_Rune(Rune):
-    def __init__(self, game, pos, strength, soul_cost):
-        super().__init__(game, 'healing_rune', pos, strength, soul_cost)
+    def __init__(self, game, pos):
+        super().__init__(game, 'healing_rune', pos, 10, 5)
         self.animation_time_max = 30
         self.effect = 'health'
         self.animation_size_max = 15
