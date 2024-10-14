@@ -10,15 +10,14 @@ class Symbols():
                                'hardness', 'regen', 'silence',
                                'luck', 'vampiric', 'fire',
                                'freeze', 'poison', 'wet',
-                               'block']
+                               'block', 'fire_resistance',
+                               'freeze_resistance', 'poison_resistance']
 
 
 
     def find_symbol_position(self, input_string):
         effect = input_string
-        if 'resistance' in input_string:
-            effect = effect.replace('_resistance', '')
-    
+        
         if effect.lower() in self.symbols_lookup:
             position = self.symbols_lookup.index(effect)
             return position

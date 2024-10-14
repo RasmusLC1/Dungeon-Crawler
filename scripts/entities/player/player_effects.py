@@ -105,14 +105,20 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
     def Fire_Resistance(self):
         if super().Fire_Resistance():
             self.Update_Effect_List('fire_resistance', self.fire_resistance)
+            self.Update_Effect_List('fire', self.fire)
+
 
     def Freeze_Resistance(self):
         if super().Freeze_Resistance():
             self.Update_Effect_List('freeze_resistance', self.freeze_resistance)
+            self.Update_Effect_List('freeze', self.frozen)
+
+
 
     def Poison_Resistance(self):
         if super().Poison_Resistance():
             self.Update_Effect_List('poison_resistance', self.poison_resistance)
+            self.Update_Effect_List('poison', self.poisoned)
 
 
     def Regen(self):

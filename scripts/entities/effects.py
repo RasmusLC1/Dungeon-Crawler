@@ -351,6 +351,8 @@ class Status_Effect_Handler:
 
         if self.fire_resistance >= self.fire_resistance_max:
             return False
+        
+        self.fire = 0
         self.fire_resistance = min(fire_resistance_time + self.fire_resistance, 10)
         return True
     
