@@ -17,6 +17,8 @@ from scripts.engine.assets.audio_loader import Audio_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.engine.a_star import A_Star
+from scripts.entities.player.player import Player
+
 
 
 
@@ -66,5 +68,10 @@ class Game_Initialiser():
 
         self.game.level = 0
         self.game.scroll = [0, 0]
+
+
+        # for spawner in self.game.tilemap.extract([('spawners', 0)]):
+        #     if spawner['variant'] == 0:
+        #         self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
 
         

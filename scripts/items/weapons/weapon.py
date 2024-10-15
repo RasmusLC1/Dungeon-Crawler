@@ -43,7 +43,7 @@ class Weapon(Item):
         self.special_attack = 0 # special attack counter
         self.return_to_holder = False # Return the weapon to original positon after stab
 
-
+   
     # General Update function
     def Update(self, offset = (0,0)):
         self.Update_Animation()

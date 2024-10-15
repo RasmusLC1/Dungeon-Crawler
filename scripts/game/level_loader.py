@@ -46,7 +46,7 @@ class Level_Loader():
         self.game.item_handler = Item_Handler(self.game)
         self.game.rune_handler = Rune_Handler(self.game)
 
-        
-
+           
 
         self.game.a_star.Setup_Map(self.game)
+

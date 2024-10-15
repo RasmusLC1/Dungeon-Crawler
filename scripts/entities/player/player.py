@@ -17,8 +17,6 @@ class Player(Moving_Entity):
         
         self.animation_num_max = 3
         
-        self.max_ammo = 30
-        self.ammo = 10
         self.bow_cooldown = 0
         self.Set_Animation('idle_down')
         self.souls = 500
@@ -31,24 +29,29 @@ class Player(Moving_Entity):
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
 
-
-        self.coins = 0
-        self.shootin_cooldown = 0
-
         self.weapons = []
         self.status_effects = Player_Status_Effect_Handler(self)
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
         self.movement_handler = Player_Movement(self.game, self)
 
-    
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['souls'] = self.souls
+        self.status_effects.Save_Data()
+        # self.saved_data['weapon_handler'] = self.weapon_handler
+
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.souls = data['souls']
+        self.status_effects.Load_Data(data)
+
+
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
         # self.invincible = False
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
         self.movement_handler.Update()
-
-        if self.shootin_cooldown:
-            self.shootin_cooldown -= 1
         
         self.Update_Light()
 

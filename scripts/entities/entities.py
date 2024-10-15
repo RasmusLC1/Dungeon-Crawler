@@ -15,10 +15,25 @@ class PhysicsEntity:
         self.light_level = 0
         self.game.entities_render.Add_Entity(self)
         self.render = True
+        self.saved_data = {}
 
 
+    def Save_Data(self):
+        self.saved_data['pos'] = self.pos
+        self.saved_data['size'] = self.size
+        self.saved_data['active'] = self.active
+        self.saved_data['light_level'] = self.light_level
+        self.saved_data['render'] = self.render
 
     
+    def Load_Data(self, data):
+        self.pos = data['pos']
+        self.size = data['size']
+        self.active = data['active']
+        self.light_level = data['light_level']
+        self.render = data['render']
+
+
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 

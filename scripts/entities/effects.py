@@ -48,7 +48,7 @@ class Status_Effect_Handler:
         self.speed_max = 10 
         self.speed_cooldown = 0
 
-        self.strength = 0 
+        self.strength = 0
         self.strength_max = 10 
         self.strength_cooldown = 0
 
@@ -72,6 +72,36 @@ class Status_Effect_Handler:
 
         self.snared = 0
 
+    def Save_Data(self):
+        self.entity.saved_data['fire'] = self.fire
+        self.entity.saved_data['poisoned'] = self.poisoned
+        self.entity.saved_data['frozen'] = self.frozen
+        self.entity.saved_data['wet'] = self.wet
+        self.entity.saved_data['regen'] = self.regen
+        self.entity.saved_data['speed'] = self.speed
+        self.entity.saved_data['speed_max'] = self.speed_max
+        self.entity.saved_data['strength'] = self.strength
+        self.entity.saved_data['strength_max'] = self.strength_max
+        self.entity.saved_data['invisibility'] = self.invisibility
+        self.entity.saved_data['fire_resistance'] = self.fire_resistance
+        self.entity.saved_data['freeze_resistance'] = self.freeze_resistance
+        self.entity.saved_data['poison_resistance'] = self.poison_resistance
+
+
+    def Load_Data(self, data):
+        self.fire = data['fire']
+        self.poisoned = data['poisoned']
+        self.frozen = data['frozen']
+        self.wet = data['wet']
+        self.regen = data['regen']
+        self.speed = data['speed']
+        self.speed_max = data['speed_max']
+        self.strength = data['strength']
+        self.strength_max = data['strength_max']
+        self.invisibility = data['invisibility']
+        self.fire_resistance = data['fire_resistance']
+        self.freeze_resistance = data['freeze_resistance']
+        self.poison_resistance = data['poison_resistance']
 
     def Set_Effect(self, effect, duration):
         if self.entity.invincible:

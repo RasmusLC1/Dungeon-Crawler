@@ -6,6 +6,7 @@ from scripts.game.camera_update import Camera_Update
 from scripts.game.input_update import Input_Update
 from scripts.game.logic_update import Logic_Update
 from scripts.game.renderer import Renderer
+from scripts.game.save_load_manager import Save_Load_Manager
 
 import pygame
 
@@ -18,10 +19,13 @@ class Game:
         self.level_loader = Level_Loader(self)
         self.level_loader.load_level(self.level)
 
+        self.save_load_manager = Save_Load_Manager(self, ".save", "save_data")
         self.input_update = Input_Update(self)
         self.camera_update = Camera_Update(self)
         self.logic_update = Logic_Update(self)
         self.renderer = Renderer(self)
+        self.save_load_manager.Load_Data_Structure()
+        
         
 
     def run(self):  

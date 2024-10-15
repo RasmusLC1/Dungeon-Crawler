@@ -28,6 +28,17 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
             'poison_resistance': {'current': 0}
         }
 
+    def Save_Data(self):
+        super().Save_Data()
+        self.entity.saved_data['silence'] = self.silence
+        self.entity.saved_data['effects'] = self.effects
+
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.silence = data['silence']
+        self.effects = data['effects']
+
     def Set_Effect(self, effect, duration):
         if super().Set_Effect(effect, duration):
            return True

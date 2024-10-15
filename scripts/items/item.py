@@ -30,6 +30,8 @@ class Item(PhysicsEntity):
         self.value = 100 # Placeholder gold value
         self.text_box = Text_Box(self.game, self)
 
+    
+
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if self.text_box.Update(hitbox_1, hitbox_2):
             return self
@@ -144,7 +146,7 @@ class Item(PhysicsEntity):
         item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
-        
+
     def Render_Floor(self, surf, offset=(0, 0)):
         
         if not self.Update_Light_Level():

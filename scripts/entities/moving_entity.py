@@ -93,7 +93,31 @@ class Moving_Entity(PhysicsEntity):
         
         self.damage_text = ''
 
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['health'] = self.health
+        self.saved_data['max_health'] = self.max_health
+        self.saved_data['strength'] = self.strength
+        self.saved_data['max_speed'] = self.max_speed
+        self.saved_data['agility'] = self.agility
+        self.saved_data['intelligence'] = self.intelligence
+        self.saved_data['stamina'] = self.stamina
+        self.saved_data['target'] = self.target
+        self.saved_data['invincible'] = self.invincible
+        self.status_effects.Save_Data()
 
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.health = data['health']
+        self.max_health = data['max_health']
+        self.strength = data['strength']
+        self.max_speed = data['max_speed']
+        self.agility = data['agility']
+        self.intelligence = data['intelligence']
+        self.stamina = data['stamina']
+        self.target = data['target']
+        self.invincible = data['invincible']
+        self.status_effects.Load_Data(data)
     
     # Set new action for animation
     def Set_Animation(self, action):
