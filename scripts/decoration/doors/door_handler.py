@@ -6,17 +6,48 @@ from scripts.decoration.doors.door import Door
 
 class Door_Handler:
     def __init__(self, game):
+        self.game = game       
         self.doors = []
         self.nearby_doors_cooldown = 0
-        self.game = game
-
-        
-        
+        self.saved_data = {}
 
     def Initialise(self):
         # door initialisation
         for door in self.game.tilemap.extract([('DoorClosed', 0)].copy(), True):
-            self.doors.append(Door(self.game, door['type'], door['pos'], (self.game.assets[door['type']][0].get_width(), self.game.assets[door['type']][0].get_height())))
+            size = (self.game.assets[door['type']][0].get_width(), self.game.assets[door['type']][0].get_height())
+            door = self.Spawn_Door(door['type'], door['pos'], size)
+            self.doors.append(door)
+            
+    
+    def Save_Door_Data(self):
+        for door in self.doors:
+            door.Save_Data()
+            self.saved_data[door.ID] = door.saved_data
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            
+            if not item_data:
+                continue
+            try:
+                type = item_data['type']
+                pos = item_data['pos']
+                size = item_data['size']
+                door = self.Spawn_Door(type, pos, size)
+                door.Load_Data(item_data)
+                self.doors.append(door)
+
+            except Exception as e:
+                pass
+                print("DATA WRONG", item_data, e)
+
+        for door in self.doors:
+            if not door.is_open:
+                continue
+            door.Open(False)
+
+    def Spawn_Door(self, type, pos, size):
+        return Door(self.game, type, pos, size)
 
 
     def Find_Nearby_Doors(self, player_pos, max_distance):
@@ -32,11 +63,10 @@ class Door_Handler:
     def Open_Doors(self, doors):
         if not doors:
             return False
-        print(doors)
         for door in doors:
             door.Open()
-            self.doors.remove(door)
-            del(door)
+            # self.doors.remove(door)
+            # del(door)
         
         return True
 

@@ -1,18 +1,10 @@
 import pygame
 import random
-from scripts.items.potions.health_potion import Health_Potion
-from scripts.items.potions.soul_potion import Soul_Potion
-from scripts.items.potions.regen_potion import Regen_Potion
-from scripts.items.potions.speed_potion import Speed_Potion
-from scripts.items.potions.strength_potion import Strength_Potion
-from scripts.items.potions.invisibility_potion import Invisibility_Potion
-from scripts.items.potions.silence_potion import Silence_Potion
-from scripts.items.potions.fire_resistance_potion import Fire_Resistance_Potion
-from scripts.items.potions.freeze_resistance import Freeze_Resistance_Potion
-from scripts.items.potions.poison_resistance import Poison_Resistance_Potion
 from scripts.decoration.decoration import Decoration
 from scripts.items.loot.gold import Gold
 from scripts.items.loot.key import Key
+from scripts.entities.entities import PhysicsEntity
+
 
 from scripts.items.weapons.weapon_handler import Weapon_Handler
 from scripts.items.potions.potion_handler import Potion_Handler
@@ -56,16 +48,16 @@ class Chest(Decoration):
 
     
 
-    def Save_Item_Data(self):
+    def Save_Data(self):
         super().Save_Data()
         self.saved_data['version'] = self.version
-        self.saved_data['chest_ID'] = self.chest_ID
+        self.saved_data['ID'] = self.ID
         
 
     def Load_Data(self, data):
         super().Load_Data(data)
         self.version = data['version']
-        self.chest_ID = data['chest_ID']
+        self.ID = data['ID']
 
 
 

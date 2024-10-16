@@ -2,7 +2,6 @@
 from scripts.entities.player.player import Player
 from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.traps.trap_handler import Trap_Handler
-from scripts.decoration.decoration_handler import Decoration_Handler
 from scripts.items.item_handler import Item_Handler
 
 from scripts.decoration.chest.Chest_handler import Chest_Handler
@@ -22,26 +21,24 @@ class Level_Loader():
         self.game = game
 
     def load_level_From_Save(self, map_id):
-        self.game.tilemap.load('data/maps/' + str(map_id) + '.json')
-        self.load_level()
+        self.load_level(map_id)
         self.game.save_load_manager.Load_Data_Structure() # Load data from save file
         # self.game.item_handler.Initialise()
 
 
-        
-
     def Load_Level_New_Map(self, map_id):
         self.game.dungeon_generator.Generate_Map()
-        self.game.tilemap.load('data/maps/' + str(map_id) + '.json')
-        self.load_level()
+        self.load_level(map_id)
         self.game.item_handler.Initialise()
         self.game.enemy_handler.Initialise()
         self.game.door_handler.Initialise()
         self.game.chest_handler.Initialise(3)
+        self.game.trap_handler.Initialise()
 
 
-    def load_level(self):
-
+    def load_level(self, map_id):
+        self.game.tilemap.Load('data/maps/' + str(map_id) + '.json')
+        
          # Setup handlers
         self.game.light_handler = Light_Handler(self.game)
         
@@ -59,7 +56,6 @@ class Level_Loader():
         self.game.item_handler = Item_Handler(self.game)
         self.game.particle_handler = Particle_Handler(self.game)
         self.game.trap_handler = Trap_Handler(self.game)
-        self.game.decoration_handler = Decoration_Handler(self.game)
         self.game.chest_handler = Chest_Handler(self.game)
         self.game.door_handler = Door_Handler(self.game)
         self.game.rune_handler = Rune_Handler(self.game)

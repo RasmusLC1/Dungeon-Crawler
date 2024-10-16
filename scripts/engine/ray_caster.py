@@ -170,7 +170,6 @@ class Ray_Caster():
         # Assign new nerby lists
         player = self.game.player
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(player, 200)
-        self.nearby_decorations = self.game.decoration_handler.find_nearby_decoration(player.pos, 200)
         self.nearby_chest = self.game.chest_handler.Find_Nearby_Chests(player.pos, 200)
         self.nearby_doors = self.game.door_handler.Find_Nearby_Doors(player.pos, 200)
         self.nearby_cooldown = 20

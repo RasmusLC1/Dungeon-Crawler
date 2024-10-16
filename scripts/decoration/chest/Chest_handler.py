@@ -29,13 +29,17 @@ class Chest_Handler:
     def Spawn_Chest(self, pos, version):
             return Chest(self.game, pos, version)  
 
-    def Save_Item_Data(self):
+    def Save_Chest_Data(self):
         for chest in self.chests:
             chest.Save_Data()
-            self.saved_data[chest.chest_ID] = chest.saved_data
+            self.saved_data[chest.ID] = chest.saved_data
 
     def Load_Data(self, data):
+        # Remove all chest in the tilemap
+        for chest in self.game.tilemap.extract([('Chest', 0)]):
+            continue
         for item_id, item_data in data.items():
+
             if not item_data:
                 continue
             try:
@@ -46,6 +50,7 @@ class Chest_Handler:
                 self.chests.append(chest)
 
             except Exception as e:
+                pass
                 print("DATA WRONG", item_data, e)
 
 

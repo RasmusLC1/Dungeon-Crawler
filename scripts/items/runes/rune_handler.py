@@ -46,7 +46,7 @@ class Rune_Handler():
         self.Add_Runes_To_Inventory_TEST()
         
 
-    def Rune_Spawner(self, name):
+    def Rune_Spawner(self, name, data = None):
         rune = None
         if 'healing' in name:
             rune = self.Init_Healing_Rune()
@@ -57,11 +57,14 @@ class Rune_Handler():
         elif 'key' in name:
             rune = self.Init_Key_Rune()
 
-        if rune:
-            self.game.item_handler.Add_Item(rune)
-
-
-            self.Initiailise_Rune(rune)
+        if not rune:
+            return False
+        
+        if data:
+            rune.Load_Data(data)
+        self.Initiailise_Rune(rune)
+        
+        return True
         
 
 

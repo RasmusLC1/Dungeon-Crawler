@@ -2,6 +2,7 @@ from scripts.entities.entities import PhysicsEntity
 
 import math
 import pygame
+import random
 
 class Trap(PhysicsEntity):
     def __init__(self, game, pos, size, type):
@@ -11,6 +12,25 @@ class Trap(PhysicsEntity):
         self.animation_cooldown = 0
         self.animation_max = 0
         self.render = False
+        self.ID = random.randint(1, 1000000)
+
+
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['ID'] = self.ID
+        self.saved_data['Cooldown'] = self.Cooldown
+        self.saved_data['animation'] = self.animation
+        self.saved_data['animation_cooldown'] = self.animation_cooldown
+        self.saved_data['animation_max'] = self.animation_max
+
+    
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.ID = data['ID']
+        self.Cooldown = data['Cooldown']
+        self.animation = data['animation']
+        self.animation_cooldown = data['animation_cooldown']
+        self.animation_max = data['animation_max']
 
     def Update(self, entity):
         pass
