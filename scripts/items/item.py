@@ -9,10 +9,9 @@ from scripts.items.utility.textbox import Text_Box
 
 class Item(PhysicsEntity):
     def __init__(self, game, type, category, pos, size, amount):
-        super().__init__(game, type, pos, size)
+        super().__init__(game, type, category, pos, size)
         self.game = game
         self.item_ID = random.randint(1, 100000000) # Create a random ID between 1 and 100 million
-        self.category = category
         self.sub_type = type
         self.used = False
         self.picked_up = False

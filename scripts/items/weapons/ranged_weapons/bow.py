@@ -72,7 +72,7 @@ class Bow(Weapon):
                 self.Set_Charging_Player()
                 self.Player_Shooting()
                 return
-            elif 'enemy' == self.entity.subtype:
+            elif 'enemy' == self.entity.category:
                 self.Set_Charging_Enemy()
                 return
         except TypeError as e:

@@ -85,7 +85,7 @@ class Projectile(Weapon):
         if not self.Update_Light_Level():
             return
         
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        weapon_image = self.game.assets[self.type][self.animation].convert_alpha()
 
         if self.special_attack:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)

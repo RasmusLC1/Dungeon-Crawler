@@ -9,9 +9,9 @@ class Entity_Renderer():
         self.nearby_entities_cooldown = 0
 
     def Update(self):
-        # if self.nearby_entities_cooldown:
-        #     self.nearby_entities_cooldown -= 1
-        #     return
+        if self.nearby_entities_cooldown:
+            self.nearby_entities_cooldown -= 1
+            return
         
         self.Find_Nearby_Entities()
         self.nearby_entities_cooldown = 50

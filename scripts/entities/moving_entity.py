@@ -9,9 +9,8 @@ from scripts.entities.entities import PhysicsEntity
 
 
 class Moving_Entity(PhysicsEntity):
-    def __init__(self, game, e_type, pos, size, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, e_type, pos, size)
-        self.subtype = e_type
+    def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, type, category, pos, size)
         self.velocity = [0, 0] # Velocity of the player
         
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False} # Check for wall collision in each direction

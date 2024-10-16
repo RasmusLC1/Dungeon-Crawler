@@ -12,8 +12,7 @@ import math
 
 class Enemy(Moving_Entity):
     def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, type, pos, size, health, strength, max_speed, agility, intelligence, stamina)
-        self.subtype = 'enemy'     
+        super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
 
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0

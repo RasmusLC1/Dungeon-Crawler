@@ -8,7 +8,7 @@ class Chest_Handler:
         depth = 3
         for chest in game.tilemap.extract([('Chest', 0)]):
             size = (game.assets[chest['type']][0].get_width(), game.assets[chest['type']][0].get_height())
-            self.chests.append(Chest(game, chest['pos'], size, chest['type'], depth))  
+            self.chests.append(Chest(game, chest['type'], chest['pos'], size, depth))  
 
     def Open_Chests(self, chests):
         if not chests:

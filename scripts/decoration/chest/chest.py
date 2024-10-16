@@ -23,8 +23,8 @@ from scripts.items.weapons.shields.shield import Shield
 
 
 class Chest(Decoration):
-    def __init__(self, game, pos, size, type, depth) -> None:
-        super().__init__(game, pos, size, type)
+    def __init__(self, game, type, pos, size, depth) -> None:
+        super().__init__(game, type, 'chest', pos, size)
         i = 0
         while i < 9:
             self.version = i

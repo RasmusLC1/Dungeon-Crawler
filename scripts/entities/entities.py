@@ -6,9 +6,10 @@ from scripts.engine.particles.particle import Particle
 
 
 class PhysicsEntity:
-    def __init__(self, game, e_type, pos, size):
+    def __init__(self, game, type, category, pos, size):
         self.game = game
-        self.type = e_type
+        self.category = category # Category = Potion, enemy, player, etc
+        self.type = type # Type = Specific type of entity
         self.pos = list(pos)
         self.size = size
         self.active = 0

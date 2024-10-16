@@ -17,7 +17,7 @@ class Door_Handler:
     def Initialise(self):
         # door initialisation
         for door in self.game.tilemap.extract([('DoorClosed', 0)].copy(), True):
-            self.doors.append(Door(self.game, door['pos'], (self.game.assets[door['type']][0].get_width(), self.game.assets[door['type']][0].get_height()), door['type']))
+            self.doors.append(Door(self.game, door['type'], door['pos'], (self.game.assets[door['type']][0].get_width(), self.game.assets[door['type']][0].get_height())))
 
 
     def Find_Nearby_Doors(self, player_pos, max_distance):

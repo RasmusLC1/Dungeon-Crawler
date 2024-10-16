@@ -108,7 +108,7 @@ class Weapon(Item):
                 if not self.inventory_type:
                     return
                 self.Set_Charging_Player()
-            elif 'enemy' == self.entity.subtype:
+            elif 'enemy' == self.entity.category:
                 self.Set_Charging_Enemy()
         except TypeError as e:
             print(f"Entity neither enemy nor player: {e}")
@@ -201,7 +201,7 @@ class Weapon(Item):
 
     # Check if enemy has hit the player
     def Player_Collision(self, weapon_rect):
-        if self.entity.subtype == 'enemy':
+        if self.entity.category == 'enemy':
             player = self.game.player
             if weapon_rect.colliderect(player.rect()):
                 self.Entity_Hit(player)

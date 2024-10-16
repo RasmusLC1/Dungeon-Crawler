@@ -3,8 +3,8 @@ from scripts.entities.entities import PhysicsEntity
 
 
 class Decoration(PhysicsEntity):
-    def __init__(self, game, pos, size, type) -> None:
-        super().__init__(game, type, pos, size)
+    def __init__(self, game, type, category, pos, size) -> None:
+        super().__init__(game, type, category, pos, size)
         self.game = game
         self.pos = pos
         self.size = size

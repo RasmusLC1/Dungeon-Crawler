@@ -75,13 +75,13 @@ class Item_Handler():
                 continue
 
 
-            if item.sub_type in throwable_weapons:
+            if item.type in throwable_weapons:
                 if not item.special_attack:
                     if not item.entity:
                         continue
                     # if item.entity.type == 'player':
                     #     continue
-                    if item.shoot_speed and item.entity.subtype == 'enemy' and not item.delete_countdown:
+                    if item.shoot_speed and item.entity.category == 'enemy' and not item.delete_countdown:
                         item.Set_Delete_Countdown(10)
                     continue
                 try:
@@ -89,7 +89,7 @@ class Item_Handler():
                         continue
                     item.Shoot()
                 except Exception as e:
-                    print(f"Item is not throwable {e}", item.sub_type)
+                    print(f"Item is not throwable {e}", item.type)
 
     def Reset_Nearby_Items_Cooldown(self):
         self.nearby_item_cooldown = 1

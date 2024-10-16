@@ -1,19 +1,16 @@
-import random
+from scripts.entities.entities import PhysicsEntity
+
 import math
 import pygame
 
-class Trap:
+class Trap(PhysicsEntity):
     def __init__(self, game, pos, size, type):
-        self.game = game
-        self.pos = pos
-        self.size = size
+        super().__init__(game, type, 'trap', pos, size)
         self.Cooldown = 0
         self.animation = 0
         self.animation_cooldown = 0
         self.animation_max = 0
-        self.type = type
-        self.active = 0
-        self.light = 0
+        self.render = False
 
     def Update(self, entity):
         pass

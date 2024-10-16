@@ -2,8 +2,8 @@ from scripts.decoration.decoration import Decoration
 
 
 class Door(Decoration):
-    def __init__(self, game, pos, size, type) -> None:
-        super().__init__(game, pos, size, type)
+    def __init__(self, game, type, pos, size) -> None:
+        super().__init__(game, type, 'door', pos, size)
         self.closed = True
 
     def Animation_Update(self):
