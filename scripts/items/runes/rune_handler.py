@@ -14,19 +14,37 @@ class Rune_Handler():
         self.Add_Runes_To_Inventory_TEST()
 
     def Initialise_Runes(self):
+        self.Init_Healing_Rune()
+        self.Init_Dash_Rune()
+        self.Init_Fire_Resistance_Rune()
+        self.Init_Key_Rune()
         
+    def Rune_Spawner(self, name):
+        if 'healing' in name:
+            self.Init_Healing_Rune()
+        elif 'dash' in name:
+            self.Init_Dash_Rune()
+        elif 'fire_resistance' in name:
+            self.Init_Fire_Resistance_Rune()
+        elif 'key' in name:
+            self.Init_Key_Rune()
+
+
+    def Init_Healing_Rune(self):
         healing_rune = Healing_Rune(self.game, (9999, 9999))
         self.Initiailise_Rune(healing_rune)
-
+    
+    def Init_Dash_Rune(self):
         dash_rune = Dash_Rune(self.game, (9999, 9999))
         self.Initiailise_Rune(dash_rune)
 
+    def Init_Fire_Resistance_Rune(self):
         fire_resistance_rune = Fire_Resistance_Rune(self.game, (9999, 9999))
         self.Initiailise_Rune(fire_resistance_rune)
 
+    def Init_Key_Rune(self):
         key_rune = Key_Rune(self.game, (9999, 9999))
         self.Initiailise_Rune(key_rune)
-
 
     def Initiailise_Rune(self, rune):
         self.Add_Rune_To_Dict(rune)

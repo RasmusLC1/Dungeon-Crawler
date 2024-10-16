@@ -14,12 +14,9 @@ from scripts.decoration.decoration import Decoration
 from scripts.items.loot.gold import Gold
 from scripts.items.loot.key import Key
 
-from scripts.items.weapons.close_combat.sword import Sword
-from scripts.items.weapons.close_combat.torch import Torch
-from scripts.items.weapons.projectiles.spear import Spear
-from scripts.items.weapons.ranged_weapons.bow import Bow
-from scripts.items.weapons.projectiles.arrow import Arrow
-from scripts.items.weapons.shields.shield import Shield
+from scripts.items.weapons.weapon_handler import Weapon_Handler
+from scripts.items.potions.potion_handler import Potion_Handler
+
 
 
 class Chest(Decoration):
@@ -37,15 +34,16 @@ class Chest(Decoration):
         self.text_cooldown = 0
         self.text_animation = 0
         self.text_color = (255, 255, 255)
-        self.weapon_type = ''
+        self.weapon_handler = Weapon_Handler(self.game)
+        self.potion_handler = Potion_Handler(self.game)
+
         self.active = 0
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
         self.weapons = [
             'sword',
-            # 'torch',
-            # 'spear',
-            # 'bow',
-            # 'arrow',
+            'spear',
+            'bow',
+            'arrow',
             'shield'
         ]
 
@@ -68,7 +66,7 @@ class Chest(Decoration):
     def Open(self):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(0, 2)
+        self.loot_type = random.randint(3, 3)
 
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
@@ -103,63 +101,17 @@ class Chest(Decoration):
         rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
         rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
         potion_index = random.randint(0, len(self.potions) - 1)
-        item = None
         potion_amount = random.randint(1,3)
-        if self.potions[potion_index] == 'health':
-            item = Health_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'regen':
-            item = Regen_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'soul':
-            item = Soul_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'speed':
-            item = Speed_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'strength':
-            item = Strength_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'invisibility':
-            item = Invisibility_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'silence':
-            item = Silence_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'fire_resistance':
-            item = Fire_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'freeze_resistance':
-            item = Freeze_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-        elif self.potions[potion_index] == 'poison_resistance':
-            item = Poison_Resistance_Potion(self.game, (rand_pos_x, rand_pos_y), potion_amount)
-
+        return self.potion_handler.Spawn_Potions(rand_pos_x, rand_pos_y, potion_amount, self.potions[potion_index])
         
-        if item:
-            self.game.item_handler.Add_Item(item)
-            return True
-        
-        return False
     
 
     def Weapon_Spawner(self):
         rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
         rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
         weapon_index = random.randint(0, len(self.weapons) - 1)
-        weapon = None
-        if self.weapons[weapon_index] == 'sword':
-            weapon = Sword(self.game, (rand_pos_x, rand_pos_y), (16,16))
-        elif self.weapons[weapon_index] == 'shield':
-            weapon = Shield(self.game, (rand_pos_x, rand_pos_y), (16,16))
-        elif self.weapons[weapon_index] == 'spear':
-            weapon = Spear(self.game, (rand_pos_x, rand_pos_y), (16,16))
-        elif self.weapons[weapon_index] == 'torch':
-            weapon = Torch(self.game, (rand_pos_x, rand_pos_y), (16,16))
-        elif self.weapons[weapon_index] == 'bow':
-            weapon = Bow(self.game, (rand_pos_x, rand_pos_y), (16,16))
-        elif self.weapons[weapon_index] == 'arrow':
-            loot_amount = min(20, max(self.loot_amount // 5, 3))
-            for i in range(loot_amount):
-                arrow = Arrow(self.game, (rand_pos_x, rand_pos_y), (16,16))
-                self.game.item_handler.Add_Item(arrow)
-            return True
-        if weapon:
-            self.game.item_handler.Add_Item(weapon)
-            return True
-        
-        return False
+        loot_amount = min(20, max(self.loot_amount // 5, 3))
+        return self.weapon_handler.Weapon_Spawner(self.weapons[weapon_index], rand_pos_x, rand_pos_y, loot_amount)
 
     def Set_Active(self, duration):
         self.active = duration

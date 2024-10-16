@@ -29,7 +29,26 @@ class Item(PhysicsEntity):
         self.value = 100 # Placeholder gold value
         self.text_box = Text_Box(self.game, self)
 
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['item_ID'] = self.item_ID
+        self.saved_data['sub_type'] = self.sub_type
+        self.saved_data['used'] = self.used
+        self.saved_data['picked_up'] = self.picked_up
+        self.saved_data['inventory_type'] = self.inventory_type
+        self.saved_data['amount'] = self.amount
+        self.saved_data['damaged'] = self.damaged
+
     
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.item_ID = data['item_ID']
+        self.sub_type = data['sub_type']
+        self.used = data['used']
+        self.picked_up = data['picked_up']
+        self.inventory_type = data['inventory_type']
+        self.amount = data['amount']
+        self.damaged = data['damaged']
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if self.text_box.Update(hitbox_1, hitbox_2):

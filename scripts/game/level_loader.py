@@ -44,6 +44,7 @@ class Level_Loader():
         self.game.chest_handler = Chest_Handler(self.game)
         self.game.door_handler = Door_Handler(self.game)
         self.game.item_handler = Item_Handler(self.game)
+        self.game.item_handler.Initialise()
         self.game.rune_handler = Rune_Handler(self.game)
 
            

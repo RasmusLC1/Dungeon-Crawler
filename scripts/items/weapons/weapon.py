@@ -13,7 +13,7 @@ class Weapon(Item):
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
         self.entity = None # Entity that holds the weapon
-        self.effect = '' # Special effects, like poision, ice, fire etc
+        self.effect = damage_type # Special effects, like poision, ice, fire etc
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
         self.hold_down = 0 # Timer for charge attacks
@@ -31,9 +31,7 @@ class Weapon(Item):
         self.distance_from_entity = 0 # Weapon's distance from entity, in case it needs to be retracted
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
         # Can be expanded to damaged or dirty versions of weapons later
-        self.sub_type = self.type # Sub_type can be used to make different variants of weapon
         self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
-        self.damage_type = damage_type # Default damage type, 
         
         self.charge_time = 0  # Tracks how long the button is held
         self.max_charge_time = 100  # Maximum time to fully charge
@@ -42,6 +40,33 @@ class Weapon(Item):
         self.charged_attack = False  # Determine if a charged attack should occur
         self.special_attack = 0 # special attack counter
         self.return_to_holder = False # Return the weapon to original positon after stab
+
+
+    def Save_Data(self):
+        if self.entity:
+            if self.entity.category == 'enemy':
+                return
+        super().Save_Data()
+        self.saved_data['damage'] = self.damage
+        self.saved_data['speed'] = self.speed
+        self.saved_data['range'] = self.range
+        self.saved_data['entity'] = self.entity
+        self.saved_data['effect'] = self.effect
+        self.saved_data['in_inventory'] = self.in_inventory
+        self.saved_data['equipped'] = self.equipped
+        self.saved_data['enemy_hit'] = self.enemy_hit
+
+    
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.damage = data['damage']
+        self.speed = data['speed']
+        self.range = data['range']
+        self.entity = data['entity']
+        self.effect = data['effect']
+        self.in_inventory = data['in_inventory']
+        self.equipped = data['equipped']
+        self.enemy_hit = data['enemy_hit']
 
    
     # General Update function

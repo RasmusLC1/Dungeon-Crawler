@@ -20,6 +20,8 @@ class PhysicsEntity:
 
 
     def Save_Data(self):
+        self.saved_data['category'] = self.category
+        self.saved_data['type'] = self.type
         self.saved_data['pos'] = self.pos
         self.saved_data['size'] = self.size
         self.saved_data['active'] = self.active
@@ -28,6 +30,8 @@ class PhysicsEntity:
 
     
     def Load_Data(self, data):
+        self.saved_data['category'] = self.category
+        self.saved_data['type'] = self.type
         self.pos = data['pos']
         self.size = data['size']
         self.active = data['active']

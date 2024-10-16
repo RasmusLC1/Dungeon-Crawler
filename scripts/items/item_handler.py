@@ -2,6 +2,7 @@ from scripts.decoration.decoration import Decoration
 from scripts.items.weapons.close_combat.torch import Torch
 from scripts.items.loot.key import Key
 from scripts.items.loot.gold import Gold
+from scripts.items.weapons.weapon_handler import Weapon_Handler
 import math
 import random
 
@@ -14,11 +15,28 @@ class Item_Handler():
         self.items = []
         self.nearby_items = []
         self.nearby_item_cooldown = 0
-        self.Initialise()
+        self.saved_data = {}
+        self.weapon_handler = Weapon_Handler(self.game)
+
+    def Save_Item_Data(self):
+        for item in self.items:
+            item.Save_Data()
+            self.saved_data[item.item_ID] = item.saved_data
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            if not item_data:
+                continue
+            try:
+                print(item_data['type'])
+            except Exception as e:
+                print("DATA WRONG", item_data, e)
+
+
 
     def Initialise(self):
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
-            self.items.append(Torch(self.game, torch['pos'], (16, 16)))
+            self.weapon_handler.Spawn_Torch(torch['pos'][0], torch['pos'][1])
         
         for key in self.game.tilemap.extract([('key', 0)].copy()):
             self.items.append(Key(self.game, key['pos']))

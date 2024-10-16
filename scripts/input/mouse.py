@@ -37,8 +37,6 @@ class Mouse_Handler:
                 self.click_pos = (key_press.pos[0] / 4, key_press.pos[1] / 4)
                 if self.time_since_last_click:
                     self.double_click = 20
-                    # self.hold_down_left = 0
-
                 self.time_since_last_click = 20
 
             if key_press.button == 3:  # Check for right click (button 3)

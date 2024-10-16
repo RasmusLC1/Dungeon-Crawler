@@ -10,6 +10,12 @@ class Projectile(Weapon):
         self.range_holder = range
 
 
+    def Load_Data(self, data):
+        
+        super().Load_Data(data)
+        self.range_holder = self.range
+
+
     def Set_Special_Attack(self, offset= (0,0)):
         super().Set_Special_Attack(offset)
         self.Point_Towards_Mouse()

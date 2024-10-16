@@ -76,7 +76,7 @@ class Text_Box():
         self.game.default_font.Render_Word(surf, self.item.type, text_box_pos)
 
         # Render Damage and damage type
-        self.game.symbols.Render_Symbol(surf, self.item.damage_type,  (text_box_pos[0], text_box_pos[1] + 10))
+        self.game.symbols.Render_Symbol(surf, self.item.effect,  (text_box_pos[0], text_box_pos[1] + 10))
         self.game.default_font.Render_Word(surf, str(self.item.damage), (text_box_pos[0] + 10, text_box_pos[1] + 10))
 
         # Render value

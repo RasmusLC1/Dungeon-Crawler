@@ -19,6 +19,23 @@ class Rune(Item):
         self.render = True
         self.picked_up = True
 
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['effect'] = self.effect
+        self.saved_data['original_strength'] = self.original_strength
+        self.saved_data['current_strength'] = self.current_strength
+        self.saved_data['original_soul_cost'] = self.original_soul_cost
+        self.saved_data['current_soul_cost'] = self.current_soul_cost
+    
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.effect = data['effect'] 
+        self.original_strength = data['original_strength'] 
+        self.current_strength = data['current_strength']
+        self.original_soul_cost = data['original_soul_cost'] 
+        self.current_soul_cost = data['current_soul_cost'] 
+
+
     def Update(self):
         pass
 

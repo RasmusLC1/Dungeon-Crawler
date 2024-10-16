@@ -221,15 +221,16 @@ class Inventory:
     # over inventory slot
     def Swap_Item(self, item, inventory_slot):
         if inventory_slot.item:
-            item_holder = inventory_slot.item
+            item_holder = inventory_slot.item # Save the item that is to be swapped
             self.clicked_inventory_slot.Reset_Inventory_Slot()  # Clear the original slot
             inventory_slot.Reset_Inventory_Slot()
 
-            # self.active_item = self.clicked_inventory_slot.item
-            self.clicked_inventory_slot.Add_Item(item_holder)
+            self.clicked_inventory_slot.Add_Item(item_holder) # Insert Item into the active inventory slot
+            self.game.player.Set_Active_Weapon(item_holder, self.clicked_inventory_slot.inventory_type) # Update the player's hand
             self.clicked_inventory_slot.item.active = False
             self.clicked_inventory_slot = None
-            inventory_slot.Add_Item(self.active_item)
+            inventory_slot.Add_Item(self.active_item) # Insert active item into now vacant inventory slot
+            self.game.player.Set_Active_Weapon(self.active_item, inventory_slot.inventory_type) # Update the player's hand
 
             self.active_item = None  # Clear active item
             return True

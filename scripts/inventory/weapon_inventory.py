@@ -31,7 +31,6 @@ class Weapon_Inventory(Inventory):
             inventory_slot.Set_White_List(['weapon'])
             self.inventory.append(inventory_slot)  # Add to instance's inventory
         
-
         
     def Find_Inventory_Slot(self, searched_inventory_slot):
         for inventory_slot in self.inventory:
