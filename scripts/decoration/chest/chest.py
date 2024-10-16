@@ -20,14 +20,9 @@ from scripts.items.potions.potion_handler import Potion_Handler
 
 
 class Chest(Decoration):
-    def __init__(self, game, type, pos, size, depth) -> None:
-        super().__init__(game, type, 'chest', pos, size)
-        i = 0
-        while i < 9:
-            self.version = i
-            if random.randint(depth, max(depth + 5, 10)) < max(depth + 2, 5):
-                break
-            i += 1
+    def __init__(self, game, pos, version) -> None:
+        super().__init__(game, 'chest', 'chest', pos, (16, 16))
+        self.version = version
         self.loot_type = 0
         self.empty = False
         self.loot_amount = 0
@@ -37,14 +32,13 @@ class Chest(Decoration):
         self.weapon_handler = Weapon_Handler(self.game)
         self.potion_handler = Potion_Handler(self.game)
 
-        self.active = 0
-        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+
         self.weapons = [
-            'sword',
-            'spear',
-            'bow',
+            # 'sword',
+            # 'spear',
+            # 'bow',
             'arrow',
-            'shield'
+            # 'shield'
         ]
 
         self.potions = [
@@ -59,6 +53,21 @@ class Chest(Decoration):
             'freeze_resistance',
             'poison_resistance',
         ]
+
+    
+
+    def Save_Item_Data(self):
+        super().Save_Data()
+        self.saved_data['version'] = self.version
+        self.saved_data['chest_ID'] = self.chest_ID
+        
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.version = data['version']
+        self.chest_ID = data['chest_ID']
+
+
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
@@ -102,7 +111,7 @@ class Chest(Decoration):
         rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
         potion_index = random.randint(0, len(self.potions) - 1)
         potion_amount = random.randint(1,3)
-        return self.potion_handler.Spawn_Potions(rand_pos_x, rand_pos_y, potion_amount, self.potions[potion_index])
+        return self.potion_handler.Spawn_Potions(self.potions[potion_index], rand_pos_x, rand_pos_y, potion_amount)
         
     
 
@@ -154,5 +163,3 @@ class Chest(Decoration):
         # Render the chest
         surf.blit(chest_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
-
-    

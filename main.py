@@ -13,18 +13,18 @@ import pygame
 
 class Game:
     def __init__(self):
+        self.save_load_manager = Save_Load_Manager(self, ".data", "save_data")
         self.game_initialiser = Game_Initialiser(self)
         self.game_initialiser.Initialise_Game()
 
         self.level_loader = Level_Loader(self)
-        self.level_loader.load_level(self.level)
+        # self.level_loader.load_level_From_Save(self.level)
+        self.level_loader.Load_Level_New_Map(self.level)
 
-        self.save_load_manager = Save_Load_Manager(self, ".save", "save_data")
         self.input_update = Input_Update(self)
         self.camera_update = Camera_Update(self)
         self.logic_update = Logic_Update(self)
         self.renderer = Renderer(self)
-        self.save_load_manager.Load_Data_Structure()
         
         
 

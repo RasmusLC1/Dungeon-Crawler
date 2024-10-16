@@ -11,7 +11,6 @@ class Door_Handler:
         self.game = game
 
         
-        self.Initialise()
         
 
     def Initialise(self):

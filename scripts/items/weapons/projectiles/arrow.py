@@ -3,12 +3,12 @@ import math
 import pygame
 
 class Arrow(Projectile):
-    def __init__(self, game, pos, size, damage_type = 'slash'):
+    def __init__(self, game, pos, size, amount = 1, damage_type = 'slash'):
         super().__init__(game, pos, size, 'arrow', 2, 2, 50, 'arrow',  damage_type)
         self.max_animation = 0
         
         self.max_amount = 20
-        self.amount = 1
+        self.amount = amount
 
 
     

@@ -20,10 +20,28 @@ import pygame
 class Level_Loader():
     def __init__(self, game) -> None:
         self.game = game
+
+    def load_level_From_Save(self, map_id):
+        self.game.tilemap.load('data/maps/' + str(map_id) + '.json')
+        self.load_level()
+        self.game.save_load_manager.Load_Data_Structure() # Load data from save file
+        # self.game.item_handler.Initialise()
+
+
         
-    def load_level(self, map_id):
+
+    def Load_Level_New_Map(self, map_id):
         self.game.dungeon_generator.Generate_Map()
         self.game.tilemap.load('data/maps/' + str(map_id) + '.json')
+        self.load_level()
+        self.game.item_handler.Initialise()
+        self.game.enemy_handler.Initialise()
+        self.game.door_handler.Initialise()
+        self.game.chest_handler.Initialise(3)
+
+
+    def load_level(self):
+
          # Setup handlers
         self.game.light_handler = Light_Handler(self.game)
         
@@ -32,20 +50,21 @@ class Level_Loader():
         self.game.sparks = []
         self.game.scroll = [0, 0]
         self.game.projectiles = []
+        # Spawn Player
         for spawner in self.game.tilemap.extract([('spawners', 0)]):
             if spawner['variant'] == 0:
-                print(spawner['pos'])
                 self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
 
-        self.game.particle_handler = Particle_Handler(self.game)
         self.game.enemy_handler = Enemy_Handler(self.game)
+        self.game.item_handler = Item_Handler(self.game)
+        self.game.particle_handler = Particle_Handler(self.game)
         self.game.trap_handler = Trap_Handler(self.game)
         self.game.decoration_handler = Decoration_Handler(self.game)
         self.game.chest_handler = Chest_Handler(self.game)
         self.game.door_handler = Door_Handler(self.game)
-        self.game.item_handler = Item_Handler(self.game)
-        self.game.item_handler.Initialise()
         self.game.rune_handler = Rune_Handler(self.game)
+        
+
 
            
 

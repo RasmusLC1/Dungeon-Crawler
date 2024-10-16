@@ -7,9 +7,7 @@ class Healing_Rune(Rune):
         super().__init__(game, 'healing_rune', pos, 10, 5)
         self.animation_time_max = 30
         self.effect = 'health'
-        self.animation_size_max = 15
-
-        
+        self.animation_size_max = 15        
 
     def Render_Animation(self, surf, offset=(0, 0)):
         if not self.animation_time:

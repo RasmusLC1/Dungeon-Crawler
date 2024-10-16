@@ -13,7 +13,6 @@ class Enemy_Handler():
         self.game = game
         self.enemies = []
         self.nearby_enemies = []
-        self.Initialise()
 
     
     def Initialise(self):

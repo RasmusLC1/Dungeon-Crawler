@@ -3,6 +3,8 @@ from scripts.items.weapons.close_combat.torch import Torch
 from scripts.items.loot.key import Key
 from scripts.items.loot.gold import Gold
 from scripts.items.weapons.weapon_handler import Weapon_Handler
+from scripts.items.potions.potion_handler import Potion_Handler
+from scripts.items.loot.loot_handler import Loot_Handler
 import math
 import random
 
@@ -17,6 +19,8 @@ class Item_Handler():
         self.nearby_item_cooldown = 0
         self.saved_data = {}
         self.weapon_handler = Weapon_Handler(self.game)
+        self.potion_handler = Potion_Handler(self.game)
+        self.loot_handler = Loot_Handler(self.game)
 
     def Save_Item_Data(self):
         for item in self.items:
@@ -28,7 +32,16 @@ class Item_Handler():
             if not item_data:
                 continue
             try:
-                print(item_data['type'])
+                type = item_data['type']
+                pos = item_data['pos']
+                amount = item_data['amount']
+                if item_data['category'] == 'weapon':
+                    self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount)
+                    continue
+                elif item_data['category'] == 'potion':
+                    self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount)
+                elif item_data['category'] == 'loot':
+                    self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount)
             except Exception as e:
                 print("DATA WRONG", item_data, e)
 
@@ -36,14 +49,15 @@ class Item_Handler():
 
     def Initialise(self):
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
-            self.weapon_handler.Spawn_Torch(torch['pos'][0], torch['pos'][1])
+            self.weapon_handler.Weapon_Spawner('torch', torch['pos'][0], torch['pos'][1])
         
         for key in self.game.tilemap.extract([('key', 0)].copy()):
-            self.items.append(Key(self.game, key['pos']))
+            self.loot_handler.Spawn_Key(key['pos'][0], key['pos'][1])
+
 
         for gold in self.game.tilemap.extract([('gold', 0)].copy()):
             amount = random.randint(20, 30)
-            self.items.append(Gold(self.game, gold['pos'], amount))
+            self.loot_handler.Spawn_Gold(gold['pos'][0], gold['pos'][1], amount)
 
 
 
@@ -118,4 +132,5 @@ class Item_Handler():
             return False
         self.nearby_item_cooldown = 30
         return True
+
 

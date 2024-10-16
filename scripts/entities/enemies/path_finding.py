@@ -266,7 +266,7 @@ class Path_Finding():
             if not self.Line_Of_Sight(self.entity.distance_to_player, dx, dy):
                 return False
             self.entity.direction = pygame.math.Vector2(dx, dy)
-            if self.entity.direction == 0:
+            if self.entity.direction[0] == 0 and self.entity.direction[1] == 0:
                 return False
             
             self.entity.direction.normalize_ip()

@@ -10,41 +10,72 @@ class Rune_Handler():
         self.game = game
         self.runes = {}
         self.active_runes = []
+        self.saved_data = {}
+        self.rune_types = ['healing_rune',
+                    'dash_rune',
+                    'fire_resistance_rune',
+                    'key_rune',
+                    ]              
+
         self.Initialise_Runes()
-        self.Add_Runes_To_Inventory_TEST()
+
 
     def Initialise_Runes(self):
-        self.Init_Healing_Rune()
-        self.Init_Dash_Rune()
-        self.Init_Fire_Resistance_Rune()
-        self.Init_Key_Rune()
+        for rune_type in self.rune_types:
+            self.Rune_Spawner(rune_type)
+
+        self.Add_Runes_To_Inventory_TEST()
         
+        
+    def Save_Item_Data(self):
+        for rune in self.runes:
+            rune.Save_Data()
+            self.saved_data[rune.type] = rune.saved_data
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            if not item_data:
+                continue
+            try:
+                type = item_data['type']
+                self.Rune_Spawner(type)
+            except Exception as e:
+                print("DATA WRONG", item_data, e)
+
+        # TODO: IMPLEMENT PROPER METHOD
+        self.Add_Runes_To_Inventory_TEST()
+        
+
     def Rune_Spawner(self, name):
+        rune = None
         if 'healing' in name:
-            self.Init_Healing_Rune()
+            rune = self.Init_Healing_Rune()
         elif 'dash' in name:
-            self.Init_Dash_Rune()
+            rune = self.Init_Dash_Rune()
         elif 'fire_resistance' in name:
-            self.Init_Fire_Resistance_Rune()
+            rune = self.Init_Fire_Resistance_Rune()
         elif 'key' in name:
-            self.Init_Key_Rune()
+            rune = self.Init_Key_Rune()
+
+        if rune:
+            self.game.item_handler.Add_Item(rune)
+
+
+            self.Initiailise_Rune(rune)
+        
 
 
     def Init_Healing_Rune(self):
-        healing_rune = Healing_Rune(self.game, (9999, 9999))
-        self.Initiailise_Rune(healing_rune)
+        return Healing_Rune(self.game, (9999, 9999))
     
     def Init_Dash_Rune(self):
-        dash_rune = Dash_Rune(self.game, (9999, 9999))
-        self.Initiailise_Rune(dash_rune)
+        return Dash_Rune(self.game, (9999, 9999))
 
     def Init_Fire_Resistance_Rune(self):
-        fire_resistance_rune = Fire_Resistance_Rune(self.game, (9999, 9999))
-        self.Initiailise_Rune(fire_resistance_rune)
+        return Fire_Resistance_Rune(self.game, (9999, 9999))
 
     def Init_Key_Rune(self):
-        key_rune = Key_Rune(self.game, (9999, 9999))
-        self.Initiailise_Rune(key_rune)
+        return Key_Rune(self.game, (9999, 9999))
 
     def Initiailise_Rune(self, rune):
         self.Add_Rune_To_Dict(rune)

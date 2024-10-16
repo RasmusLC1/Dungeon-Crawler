@@ -1,14 +1,53 @@
 from scripts.decoration.chest.chest import Chest
 import math
+import random
 
 class Chest_Handler:
     def __init__(self, game) -> None:
         self.game = game
         self.chests = []
-        depth = 3
-        for chest in game.tilemap.extract([('Chest', 0)]):
-            size = (game.assets[chest['type']][0].get_width(), game.assets[chest['type']][0].get_height())
-            self.chests.append(Chest(game, chest['type'], chest['pos'], size, depth))  
+        self.saved_data = {}
+
+    
+    def Initialise(self, depth):
+        for chest in self.game.tilemap.extract([('Chest', 0)]):
+            version = self.Set_Chest_Version(depth)
+            spawn_chest = self.Spawn_Chest(chest['pos'], version)
+            self.chests.append(spawn_chest)
+
+
+
+    def Set_Chest_Version(self, depth):
+        i = 0
+        while i < 9:
+            version = i
+            if random.randint(depth, max(depth + 5, 10)) < max(depth + 2, 5):
+                break
+            i += 1
+        return version
+    
+    def Spawn_Chest(self, pos, version):
+            return Chest(self.game, pos, version)  
+
+    def Save_Item_Data(self):
+        for chest in self.chests:
+            chest.Save_Data()
+            self.saved_data[chest.chest_ID] = chest.saved_data
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            if not item_data:
+                continue
+            try:
+                version = item_data['version']
+                pos = item_data['pos']
+                chest = self.Spawn_Chest(pos, version)
+                chest.Load_Data(item_data)
+                self.chests.append(chest)
+
+            except Exception as e:
+                print("DATA WRONG", item_data, e)
+
 
     def Open_Chests(self, chests):
         if not chests:

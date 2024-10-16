@@ -42,24 +42,24 @@ class Save_Load_Manager():
     def Load_Data_Structure(self):
         self.entities_to_load = [self.game.player,
                                 self.game.item_handler,
+                                self.game.rune_handler,
                                 # self.game.light_handler,
                                 # self.game.tilemap,
                                 # self.game.enemy_handler,
                                 # self.game.trap_handler,
                                 # self.game.chest_handler,
                                 # self.game.door_handler,
-                                # self.game.rune_handler,
                                 ]
         
         self.entities_to_load_names = ['player',
                                     'item_handler',
+                                    'rune_handler',
                                     #  'light_handler',
                                     #  'tilemap',
                                     #  'enemy_handler',
                                     # 'trap_handler',
                                     # 'chest_handler',
                                     # 'door_handler',
-                                    # 'rune_handler',
                                     ]
         self.Load_Game_Data()
         
@@ -70,24 +70,22 @@ class Save_Load_Manager():
 
         self.data_structures = [self.game.player.saved_data,
                                 self.game.item_handler.saved_data,
-                                # self.game.tilemap,
+                                self.game.rune_handler.saved_data,
+                                # self.game.chest_handler,
                                 # self.game.enemy_handler,
                                 # self.game.trap_handler,
-                                # self.game.chest_handler,
-                                # self.game.light_handler.saved_data,
                                 # self.game.door_handler,
-                                # self.game.rune_handler,
+                                # self.game.item_inventory,
                                 ]
         
         self.data_structure_names = ['player',
                                     'item_handler',
-                                    #  'light_handler',
-                                    #  'tilemap',
+                                    'rune_handler',
+                                    # 'chest_handler',
                                     #  'enemy_handler',
                                     # 'trap_handler',
-                                    # 'chest_handler',
                                     # 'door_handler',
-                                    # 'rune_handler',
+                                    # 'item_inventory',
                                     ]
 
         self.Save_Game_Data()
