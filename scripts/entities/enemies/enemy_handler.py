@@ -13,6 +13,27 @@ class Enemy_Handler():
         self.game = game
         self.enemies = []
         self.nearby_enemies = []
+        self.saved_data = {}
+
+
+    def Save_Enemy_Data(self):
+        for enemy in self.enemies:
+            enemy.Save_Data()
+            self.saved_data[enemy.ID] = enemy.saved_data
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            if not item_data:
+                continue
+            try:
+                type = item_data['type']
+                pos = item_data['pos']
+                size = item_data['size']
+                if item_data['category'] == 'enemy':
+                    self.Enemy_Spawner(type, pos, size, item_data)
+                    continue
+            except Exception as e:
+                print("DATA WRONG", item_data, e)
 
     
     def Initialise(self):
@@ -22,117 +43,132 @@ class Enemy_Handler():
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
             enemy_variant = random.randint(0, 4)
+            type = None
             if enemy_variant == 0: # Melee Decrepit Bones
-                self.Spawn_Melee_Decrepit_Bones(spawner)
+                type = 'melee_decripit_bones'
             elif enemy_variant == 1: # Ranged Decrepit Bones
-                self.Spawn_Ranged_Decrepit_Bones(spawner)
+                type = 'ranged_decripit_bones'
             elif enemy_variant == 2: # Fire spirit
-                self.Spawn_Fire_Spirit(spawner)
+                type = 'fire_spirit'
             elif enemy_variant == 3: # Ice spirit
-                self.Spawn_Ice_Spirit(spawner)
+                type = 'ice_spirit'
             elif enemy_variant == 4: # Spider
-                self.Spawn_Spider(spawner)
+                type = 'spider'
+            
+            if type:
+                pos = spawner['pos']
+                size = (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height())
+                self.Enemy_Spawner(type, pos, size)
 
-    def Spawn_Melee_Decrepit_Bones(self, spawner):
+    def Enemy_Spawner(self, type, pos, size, data = None):
+        if type == 'melee_decripit_bones':
+            enemy = self.Spawn_Melee_Decrepit_Bones(pos, size)
+        elif type == 'ranged_decripit_bones':
+            enemy = self.Spawn_Ranged_Decrepit_Bones(pos, size)
+        elif type == 'fire_spirit':
+            enemy = self.Spawn_Fire_Spirit(pos, size)
+        elif type == 'ice_spirit':
+            enemy = self.Spawn_Ice_Spirit(pos, size)
+        elif type == 'spider':
+            enemy = self.Spawn_Spider(pos, size)
+        
+        if enemy:
+            if data:
+                enemy.Load_Data(data)
+            self.enemies.append(enemy)
+
+    def Spawn_Melee_Decrepit_Bones(self, pos, size):
         health = 30
         strength = 2
         speed = 2
         agility = 2 
         intelligence = 2
         stamina = 2
-        self.enemies.append(Decrepit_Bones_Melee(
+        return Decrepit_Bones_Melee(
             self.game,
-            spawner['pos'], 
-            (self.game.assets[spawner['type']][0].get_width(),
-            self.game.assets[spawner['type']][0].get_height()),
+            pos, 
+            size,
             'decrepit_bones',
             health,
             strength,
             speed,
             agility,
             intelligence,
-            stamina))
+            stamina)
         
-    def Spawn_Ranged_Decrepit_Bones(self, spawner):
+    def Spawn_Ranged_Decrepit_Bones(self, pos, size):
         health = 30
         strength = 2
         speed = 2
         agility = 2 
         intelligence = 2
         stamina = 2
-        self.enemies.append(Decrepit_Bones_Ranged(
+        return Decrepit_Bones_Ranged(
             self.game,
-            spawner['pos'], 
-            (self.game.assets[spawner['type']][0].get_width(),
-            self.game.assets[spawner['type']][0].get_height()),
+            pos, 
+            size,
             'decrepit_bones',
             health,
             strength,
             speed,
             agility,
             intelligence,
-            stamina))
+            stamina)
         
-    def Spawn_Fire_Spirit(self, spawner):
+    def Spawn_Fire_Spirit(self, pos, size):
         health = 60
         strength = 4
         speed = 5
         agility = 4 
         intelligence = 2
         stamina = 2
-        self.enemies.append(
-            Fire_Spirit(self.game,
-                        spawner['pos'], 
-                        (self.game.assets[spawner['type']][0].get_width(),
-                            self.game.assets[spawner['type']][0].get_height()),
+        return Fire_Spirit(self.game,
+                            pos, 
+                            size,
                             'fire_spirit',
                             health,
                             strength,
                             speed,
                             agility,
                             intelligence,
-                            stamina))
+                            stamina)
         
 
-    def Spawn_Ice_Spirit(self, spawner):
+    def Spawn_Ice_Spirit(self, pos, size):
         health = 100
         strength = 7
         speed = 3
         agility = 3
         intelligence = 2
         stamina = 2
-        self.enemies.append(
-            Ice_Spirit(self.game,
-                        spawner['pos'], 
-                        (self.game.assets[spawner['type']][0].get_width(),
-                            self.game.assets[spawner['type']][0].get_height()),
-                            'ice_spirit',
-                            health,
-                            strength,
-                            speed,
-                            agility,
-                            intelligence,
-                            stamina))
+        return Ice_Spirit(self.game,
+                        pos, 
+                        size,
+                        'ice_spirit',
+                        health,
+                        strength,
+                        speed,
+                        agility,
+                        intelligence,
+                        stamina)
         
-    def Spawn_Spider(self, spawner):
+    def Spawn_Spider(self, pos, size):
         health = 80
         strength = 4
         speed = 3
         agility = 3
         intelligence = 5
         stamina = 2
-        self.enemies.append(
-            Spider(self.game,
-                        spawner['pos'], 
-                        (self.game.assets[spawner['type']][0].get_width(),
-                            self.game.assets[spawner['type']][0].get_height()),
-                            'spider',
-                            health,
-                            strength,
-                            speed,
-                            agility,
-                            intelligence,
-                            stamina))
+        return Spider(self.game,
+                    pos, 
+                    size,
+                    'spider',
+                    health,
+                    strength,
+                    speed,
+                    agility,
+                    intelligence,
+                    stamina)
 
 
     def Delete_Enemy(self, enemy):

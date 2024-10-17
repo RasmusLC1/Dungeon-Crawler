@@ -22,6 +22,7 @@ class Entity_Renderer():
     def Find_Nearby_Entities(self):
         self.nearby_entities.clear()
         for entity in self.entities:
+            
 
             if not entity.render:
                 continue
@@ -47,4 +48,3 @@ class Entity_Renderer():
     def Render(self, surf, offset = (0,0)):
         for entity in self.nearby_entities:
             entity.Render(surf, offset)
-

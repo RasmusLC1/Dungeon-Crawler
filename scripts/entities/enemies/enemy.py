@@ -13,7 +13,7 @@ import math
 class Enemy(Moving_Entity):
     def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
-
+        self.ID = random.randint(1, 100000000)
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0
         self.active_weapon = None
@@ -31,13 +31,36 @@ class Enemy(Moving_Entity):
 
         self.attack_symbol_offset = 20
     
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['alert_cooldown'] = self.alert_cooldown
+        self.saved_data['random_movement_cooldown'] = self.random_movement_cooldown
+        self.saved_data['distance_to_player'] = self.distance_to_player
+        self.saved_data['charge'] = self.charge
+        self.saved_data['attack_strategy'] = self.attack_strategy
+        self.saved_data['path_finding_strategy'] = self.path_finding_strategy
+        self.saved_data['locked_on_target'] = self.locked_on_target
+        self.saved_data['ID'] = self.ID
+
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.alert_cooldown = data['alert_cooldown']
+        self.random_movement_cooldown = data['random_movement_cooldown']
+        self.distance_to_player = data['distance_to_player']
+        self.charge = data['charge']
+        self.attack_strategy = data['attack_strategy']
+        self.path_finding_strategy = data['path_finding_strategy']
+        self.locked_on_target = data['locked_on_target']
+        self.ID = data['ID']
+
+
 
     def Update(self, tilemap, movement=(0, 0)):
         self.path_finding.Path_Finding(self.target)
         movement = self.direction
         
         super().Update(tilemap, movement = movement)
-        # self.animation = 'decrepit_bones'
 
         self.Set_Direction_Holder()
 

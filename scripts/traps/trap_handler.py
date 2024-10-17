@@ -11,7 +11,6 @@ from scripts.traps.traps.spider_web import Spider_Web
 import math
 
 
-
 class Trap_Handler:
     def __init__(self, game):
         self.game = game
@@ -221,11 +220,4 @@ class Trap_Handler:
 
     def Add_Trap(self, trap):
         self.traps.append(trap)
-
-    def Render(self, traps, surf, offset = (0,0)):
-        for trap in traps:
-            if not trap:
-                continue
-            
-            trap.Render(surf, offset)
 

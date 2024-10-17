@@ -40,6 +40,7 @@ class Save_Load_Manager():
         self.game.chest_handler.Save_Chest_Data()
         self.game.door_handler.Save_Door_Data()
         self.game.trap_handler.Save_Trap_Data()
+        self.game.enemy_handler.Save_Enemy_Data()
 
 
 
@@ -55,7 +56,7 @@ class Save_Load_Manager():
                                 self.game.chest_handler.saved_data,
                                 self.game.door_handler.saved_data,
                                 self.game.trap_handler.saved_data,
-                                # self.game.enemy_handler.saved_data,
+                                self.game.enemy_handler.saved_data,
                                 # self.game.item_inventory.saved_data,
                                 ]
         
@@ -65,7 +66,7 @@ class Save_Load_Manager():
                                     'chest_handler',
                                     'door_handler',
                                     'trap_handler',
-                                    #  'enemy_handler',
+                                     'enemy_handler',
                                     # 'item_inventory',
                                     ]
 
@@ -79,7 +80,7 @@ class Save_Load_Manager():
                                 self.game.chest_handler,
                                 self.game.door_handler,
                                 self.game.trap_handler,
-                                # self.game.enemy_handler,
+                                self.game.enemy_handler,
                                 ]
         
         self.entities_to_load_names = ['player',
@@ -88,7 +89,7 @@ class Save_Load_Manager():
                                     'chest_handler',
                                     'door_handler',
                                     'trap_handler',
-                                    #  'enemy_handler',
+                                     'enemy_handler',
                                     ]
         self.Load_Game_Data()
         

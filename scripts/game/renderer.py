@@ -10,7 +10,6 @@ class Renderer():
         self.game.ray_caster.Ray_Caster()
         self.game.tilemap.render_tiles(self.game.ray_caster.tiles, self.game.display, offset=self.game.render_scroll)
 
-        self.game.trap_handler.Render(self.game.ray_caster.traps, self.game.display, self.game.render_scroll)
 
         self.game.souls_interface.Render(self.game.display)
         self.game.rune_handler.Render_Animation(self.game.display, self.game.render_scroll)

@@ -141,8 +141,7 @@ class Ray_Caster():
         if tile:
             if not tile['active']:
                 tile['active'] = self.default_activity
-                if not 'trap' in tile['type']:
-                    self.tiles.append(tile)
+                self.tiles.append(tile)
             else:
                 tile['active'] = self.default_activity
 

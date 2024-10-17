@@ -196,8 +196,7 @@ class Tilemap:
     def Render(self, surf, offset=(0, 0)):
         for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
             for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):
-                # iso_x, iso_y = Tilemap.tile_isometric_to_grid(x,y)
-                # loc = str(iso_x) + ';' + str(iso_y)
+                
 
                 loc = str(x) + ';' + str(y)
                 if loc in self.tilemap:
@@ -210,30 +209,31 @@ class Tilemap:
     # Render function that only renders the tiles in the tiles array
     def render_tiles(self, tiles, surf, offset=(0, 0)):
         for tile in tiles:
-            if tile:
-                # Get the tile surface from the assets
-                tile_surface = self.game.assets[tile['type']][tile['variant']].copy()
-                
-                # Adjust the tile activeness calculation
-                tile_activeness = max(0, min(255, 700 - tile['active']))
-                
-                # Apply a non-linear scaling for a smoother transition
-                tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
+            if not tile:
+                continue
+            # Get the tile surface from the assets
+            tile_surface = self.game.assets[tile['type']][tile['variant']].copy()
+            
+            # Adjust the tile activeness calculation
+            tile_activeness = max(0, min(255, 700 - tile['active']))
+            
+            # Apply a non-linear scaling for a smoother transition
+            tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
 
-                if tile['light'] > 0:
-                    light_level = min(255, tile['light'] * 25)
-                else:
-                    light_level = 1
-                tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))
+            if tile['light'] > 0:
+                light_level = min(255, tile['light'] * 25)
+            else:
+                light_level = 1
+            tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))
 
-                # Create a darkening surface with an alpha channel
-                darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)
-                darkening_surface.fill((0, 0, 0, int(tile_darken_factor)))
-                
-                # Blit the darkening surface onto the tile surface
-                tile_surface.blit(darkening_surface, (0, 0))
-                
-                # Blit the darkened tile surface onto the main surface
-                surf.blit(tile_surface, (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))
+            # Create a darkening surface with an alpha channel
+            darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)
+            darkening_surface.fill((0, 0, 0, int(tile_darken_factor)))
+            
+            # Blit the darkening surface onto the tile surface
+            tile_surface.blit(darkening_surface, (0, 0))
+            
+            # Blit the darkened tile surface onto the main surface
+            surf.blit(tile_surface, (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))
 
 
