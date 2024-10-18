@@ -15,7 +15,45 @@ class Inventory:
         self.click_cooldown = 0
         self.clicked_inventory_slot = None
         self.inventory = []
+        self.saved_data = {}
 
+    def Save_Inventory_Data(self):
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                continue
+            inventory_slot.item.Save_Data()
+            self.saved_data[inventory_slot.index] = inventory_slot.item.saved_data
+            
+    def Load_Data(self, data):
+        for inventory in self.inventory:
+            print("TESTTEST")
+
+        index = 0
+        for item_id, item_data in data.items():
+            if not item_data:
+                continue
+            # print('TEST', item_data[index]['item_ID'])
+
+            for inventory_slot in self.inventory:
+
+                # print(item_data['item_id'])
+                if index != inventory_slot.index:
+                    continue
+
+                print(index, inventory_slot.index)
+                self.game.item_handler.Load_Item_From_Data(item_data)
+                item = self.game.item_handler.Find_Item(item_data['item_ID'])
+                if not item:
+                    continue
+
+                if item.category == 'weapon':
+                    item.Set_Entity(self.game.player)
+
+                inventory_slot.Add_Item(item)
+
+                # break
+
+            index += 1
 
     # General Update function
     def Update(self, offset=(0, 0)):

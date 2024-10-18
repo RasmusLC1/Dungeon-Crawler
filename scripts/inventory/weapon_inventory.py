@@ -4,9 +4,12 @@ from scripts.inventory.inventory import Inventory
 from copy import copy
 
 class Weapon_Inventory(Inventory):
-    def __init__(self, game, type):
+    def __init__(self, game, type, index):
         super().__init__(game, 2, 1)
         self.Setup_Inventory(type)
+        self.index = index
+
+        
 
     # Configure the inventory when initialized
     def Setup_Inventory(self, type):
@@ -21,17 +24,17 @@ class Weapon_Inventory(Inventory):
         else:
             print("WEAPON_CLASS NOT FOUND")
             return
-
+        index = 0
         for i in range(self.x_size):
             x = i * self.size[1] + 5
-            inventory_slot = Inventory_Slot(self.game, (x, 5), self.size, None)
+            inventory_slot = Inventory_Slot(self.game, (x, 5), self.size, None, index)
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)
             inventory_slot.inventory_type = weapon_class[i]
             inventory_slot.Set_White_List(['weapon'])
             self.inventory.append(inventory_slot)  # Add to instance's inventory
-        
-        
+            index += 1
+    
     def Find_Inventory_Slot(self, searched_inventory_slot):
         for inventory_slot in self.inventory:
             if inventory_slot.inventory_type == searched_inventory_slot.inventory_type:

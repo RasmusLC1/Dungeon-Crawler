@@ -46,9 +46,9 @@ class Game_Initialiser():
 
 
         self.game.tilemap = Tilemap(self.game, tile_size=16)
-        self.game.item_inventory = Item_Inventory(self.game)
         # TODO: PLACEHOLDER CODE, Implement proper class system later
         self.game.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
+        self.game.item_inventory = Item_Inventory(self.game)
         self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior', self.game.proffeciency)
         self.game.rune_inventory = Rune_Inventory(self.game)
         self.game.mouse = Mouse_Handler(self.game)

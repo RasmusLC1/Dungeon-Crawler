@@ -14,12 +14,29 @@ class Weapon_Inventory_Handler():
         self.player_proffeciency = proffeciency
         self.weapon_one = None
         self.weapon_two = None
+        self.saved_data = {}
 
         self.Add_Inventory_Slot()
 
+    def Save_Inventory_Data(self):
+        i = 0
+        for inventory in self.inventories:
+            inventory.Save_Inventory_Data()
+            self.saved_data[i] = inventory.Save_Inventory_Data()
+            i += 1
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            i = 0
+            for inventory in self.inventories:
+                if item_data[i] == inventory.index:
+                    inventory.Load_Data(item_data)
+                    i += 1
+                    continue
+
     def Add_Inventory_Slot(self):
-        self.inventories.append(Weapon_Inventory(self.game, 'left_right'))
-        self.inventories.append(Weapon_Inventory(self.game, 'bow_arrow'))
+        self.inventories.append(Weapon_Inventory(self.game, 'left_right', 0))
+        self.inventories.append(Weapon_Inventory(self.game, 'bow_arrow', 1))
 
 
     def Update(self, offset=(0, 0)):

@@ -1,11 +1,13 @@
 
 import pygame
 import pygame.freetype
+import random
 
 class Inventory_Slot():
-    def __init__(self, game, pos, size, item):
+    def __init__(self, game, pos, size, item, index):
         self.game = game
         self.pos = pos
+        self.index = index
         self.size = size
         self.item = item
         self.background = None
@@ -14,7 +16,8 @@ class Inventory_Slot():
         self.active = False
         self.activate_counter = 0
         self.white_list_items = []
-
+        self.saved_data = {}
+      
 
     def Setup_Inventory_Texture(self):
         light_grey = (211, 211, 211)
@@ -39,6 +42,8 @@ class Inventory_Slot():
         return
 
     def Add_Item(self, item):
+        if not item:
+            return False
         if not item.category in self.white_list_items:
             return False
         

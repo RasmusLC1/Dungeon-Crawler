@@ -7,8 +7,8 @@ import random
 
 
 class Decrepit_Bones_Melee(Enemy):
-    def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
+    def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, pos, size, 'decrepit_bones', health, strength, max_speed, agility, intelligence, stamina)
         self.animation_num_max = 3
 
         self.animation = 'decrepit_bones'
@@ -24,6 +24,7 @@ class Decrepit_Bones_Melee(Enemy):
 
         if self.distance_to_player > 30 and self.charge:
             self.charge = 0
+
 
     def Set_Idle(self):
         pass

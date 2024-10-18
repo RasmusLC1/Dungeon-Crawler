@@ -31,21 +31,25 @@ class Item_Handler():
         for item_id, item_data in data.items():
             if not item_data:
                 continue
-            try:
-                type = item_data['type']
-                pos = item_data['pos']
-                amount = item_data['amount']
-                if item_data['category'] == 'weapon':
-                    self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount)
-                    continue
-                elif item_data['category'] == 'potion':
-                    self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount)
-                elif item_data['category'] == 'loot':
-                    self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount)
-            except Exception as e:
-                print("DATA WRONG", item_data, e)
+            self.Load_Item_From_Data(item_data)
 
-
+    def Load_Item_From_Data(self, item_data):
+        try:
+            type = item_data['type']
+            pos = item_data['pos']
+            amount = item_data['amount']
+            if item_data['category'] == 'weapon':
+                self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
+            elif item_data['category'] == 'potion':
+                self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
+            elif item_data['category'] == 'loot':
+                self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount, item_data)
+            else:
+                return False
+            
+            return True
+        except Exception as e:
+            print("DATA WRONG", item_data, e)
 
     def Initialise(self):
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):
@@ -66,6 +70,13 @@ class Item_Handler():
             return
         self.items.append(item)
 
+    
+    def Find_Item(self, item_ID):
+        for item in self.items:
+            if item.item_ID == item_ID:
+                return item
+        
+        return None
 
     def Remove_Item(self, item, delete_item = False):
         if not item in self.items:

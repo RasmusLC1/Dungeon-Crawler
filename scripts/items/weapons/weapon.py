@@ -50,7 +50,6 @@ class Weapon(Item):
         self.saved_data['damage'] = self.damage
         self.saved_data['speed'] = self.speed
         self.saved_data['range'] = self.range
-        self.saved_data['entity'] = self.entity
         self.saved_data['effect'] = self.effect
         self.saved_data['in_inventory'] = self.in_inventory
         self.saved_data['equipped'] = self.equipped
@@ -62,7 +61,6 @@ class Weapon(Item):
         self.damage = data['damage']
         self.speed = data['speed']
         self.range = data['range']
-        self.entity = data['entity']
         self.effect = data['effect']
         self.in_inventory = data['in_inventory']
         self.equipped = data['equipped']
