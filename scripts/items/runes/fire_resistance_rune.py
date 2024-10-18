@@ -9,6 +9,7 @@ class Fire_Resistance_Rune(Rune):
         self.effect = 'fire_resistance'
         self.animation_size_max = 25
 
+
         
 
     def Render_Animation(self, surf, offset=(0, 0)):

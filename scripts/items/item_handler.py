@@ -44,6 +44,8 @@ class Item_Handler():
                 self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
             elif item_data['category'] == 'loot':
                 self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount, item_data)
+            elif item_data['category'] == 'rune':
+                self.game.rune_handler.Rune_Spawner(type, item_data)
             else:
                 return False
             

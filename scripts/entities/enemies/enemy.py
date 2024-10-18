@@ -14,6 +14,7 @@ class Enemy(Moving_Entity):
     def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.ID = random.randint(1, 100000000)
+        self.sub_type = type
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0
         self.active_weapon = None
@@ -41,6 +42,7 @@ class Enemy(Moving_Entity):
         self.saved_data['path_finding_strategy'] = self.path_finding_strategy
         self.saved_data['locked_on_target'] = self.locked_on_target
         self.saved_data['ID'] = self.ID
+        self.saved_data['sub_type'] = self.sub_type
 
 
     def Load_Data(self, data):
@@ -53,6 +55,7 @@ class Enemy(Moving_Entity):
         self.path_finding_strategy = data['path_finding_strategy']
         self.locked_on_target = data['locked_on_target']
         self.ID = data['ID']
+        self.sub_type = data['sub_type']
 
 
 

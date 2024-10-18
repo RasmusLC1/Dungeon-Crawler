@@ -9,6 +9,7 @@ class Key_Rune(Rune):
         self.effect = 'key'
         self.animation_size_max = 10
 
+
     def Activate(self):
         nearby_doors = self.game.door_handler.Find_Nearby_Doors(self.game.player.pos, 20)
         if not nearby_doors:

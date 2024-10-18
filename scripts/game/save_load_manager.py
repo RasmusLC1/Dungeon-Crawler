@@ -47,8 +47,8 @@ class Save_Load_Manager():
 
     def Inventory_Save_Data(self):
         self.game.item_inventory.Save_Inventory_Data()
-        # self.game.weapon_inventory.Save_Inventory_Data()
-        # self.game.rune_inventory.Save_Inventory_Data()
+        self.game.rune_inventory.Save_Inventory_Data()
+        self.game.weapon_inventory.Save_Inventory_Data()
 
     def Save_Data_Structure(self):
         self.Save_Data()
@@ -61,8 +61,8 @@ class Save_Load_Manager():
                                 self.game.trap_handler.saved_data,
                                 self.game.enemy_handler.saved_data,
                                 self.game.item_inventory.saved_data,
-                                # self.game.weapon_inventory.saved_data,
-                                # self.game.rune_inventory.saved_data,
+                                self.game.rune_inventory.saved_data,
+                                self.game.weapon_inventory.saved_data,
                                 ]
         
         self.data_structure_names = ['player',
@@ -73,8 +73,8 @@ class Save_Load_Manager():
                                     'trap_handler',
                                      'enemy_handler',
                                     'item_inventory',
-                                    # 'weapon_inventory',
-                                    # 'rune_inventory',
+                                    'rune_inventory',
+                                    'weapon_inventory',
                                     ]
 
         self.Save_Game_Data()
@@ -89,8 +89,8 @@ class Save_Load_Manager():
                                 self.game.trap_handler,
                                 self.game.enemy_handler,
                                 self.game.item_inventory,
-                                # self.game.weapon_inventory,
-                                # self.game.rune_inventory,
+                                self.game.rune_inventory,
+                                self.game.weapon_inventory,
                                 ]
         
         self.entities_to_load_names = ['player',
@@ -101,8 +101,8 @@ class Save_Load_Manager():
                                     'trap_handler',
                                      'enemy_handler',
                                      'item_inventory',
-                                    # 'weapon_inventory',
-                                    # 'rune_inventory',
+                                    'rune_inventory',
+                                    'weapon_inventory',
                                     ]
         self.Load_Game_Data()
         

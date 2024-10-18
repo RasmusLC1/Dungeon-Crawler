@@ -10,6 +10,7 @@ import random
 class Decrepit_Bones_Ranged(Enemy):
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, size, 'decrepit_bones', health, strength, max_speed, agility, intelligence, stamina)
+        self.sub_type = 'decrepit_bones_ranged'
         self.animation_num_max = 3
         self.attack_animation_num_max = 3
         self.attack_animation_num_cooldown_max = 100

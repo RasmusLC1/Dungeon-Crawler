@@ -22,17 +22,20 @@ class Weapon_Inventory_Handler():
         i = 0
         for inventory in self.inventories:
             inventory.Save_Inventory_Data()
-            self.saved_data[i] = inventory.Save_Inventory_Data()
+            self.saved_data[inventory.index] = inventory.saved_data
             i += 1
 
     def Load_Data(self, data):
         for item_id, item_data in data.items():
-            i = 0
+            if not item_data:
+                continue
+            # Extract the key value
+            key = next(iter(item_data))
             for inventory in self.inventories:
-                if item_data[i] == inventory.index:
-                    inventory.Load_Data(item_data)
-                    i += 1
+                if key != inventory.index:
                     continue
+                
+                inventory.Load_Data(item_data)
 
     def Add_Inventory_Slot(self):
         self.inventories.append(Weapon_Inventory(self.game, 'left_right', 0))

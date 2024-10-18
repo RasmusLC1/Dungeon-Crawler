@@ -34,6 +34,7 @@ class Level_Loader():
         self.game.door_handler.Initialise()
         self.game.chest_handler.Initialise(3)
         self.game.trap_handler.Initialise()
+        self.game.rune_handler.Initialise_Runes()
 
 
     def load_level(self, map_id):

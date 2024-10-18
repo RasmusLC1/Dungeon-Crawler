@@ -9,6 +9,30 @@ class Weapon_Inventory(Inventory):
         self.Setup_Inventory(type)
         self.index = index
 
+
+    def Load_Data(self, data):
+        for item_id, item_data in data.items():
+            if not item_data:
+                continue
+            # print('TEST', item_data[index]['item_ID'])
+            for inventory_slot in self.inventory:
+
+                # print(item_data['item_id'])
+                # print(index, inventory_slot.index)
+                if item_data['inventory_index'] != inventory_slot.index:
+                    continue
+
+                self.game.item_handler.Load_Item_From_Data(item_data)
+                item = self.game.item_handler.Find_Item(item_data['item_ID'])
+                if not item:
+                    continue
+
+                if item.category == 'weapon':
+                    item.Set_Entity(self.game.player)
+
+
+                inventory_slot.Add_Item(item)
+
         
 
     # Configure the inventory when initialized

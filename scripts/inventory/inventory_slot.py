@@ -50,6 +50,7 @@ class Inventory_Slot():
         item.active = True
         self.item = item
         self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
+        self.item.Set_Inventory_Index(self.index)
         if self.inventory_type:
             self.item.Set_Inventory_Type(self.inventory_type)
         else:

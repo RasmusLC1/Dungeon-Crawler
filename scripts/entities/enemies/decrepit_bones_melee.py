@@ -10,7 +10,7 @@ class Decrepit_Bones_Melee(Enemy):
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, size, 'decrepit_bones', health, strength, max_speed, agility, intelligence, stamina)
         self.animation_num_max = 3
-
+        self.sub_type = 'decrepit_bones_melee'
         self.animation = 'decrepit_bones'
         self.Equip_Weapon()
         self.max_charge = 70

@@ -118,7 +118,9 @@ class Arrow(Projectile):
             return False
         return super().Send_To_Inventory(inventory_slot, sending_inventory, receiving_inventory)
 
-
+    def Equip(self):
+        self.game.player.Set_Active_Weapon(self, self.inventory_type)
+        
         
     def Arrow_Inventory_Check(self, inventory_slot):
         if not 'arrow' in self.weapon_class:

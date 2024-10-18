@@ -25,22 +25,15 @@ class Inventory:
             self.saved_data[inventory_slot.index] = inventory_slot.item.saved_data
             
     def Load_Data(self, data):
-        for inventory in self.inventory:
-            print("TESTTEST")
 
-        index = 0
         for item_id, item_data in data.items():
             if not item_data:
                 continue
-            # print('TEST', item_data[index]['item_ID'])
-
             for inventory_slot in self.inventory:
 
-                # print(item_data['item_id'])
-                if index != inventory_slot.index:
+                if item_data['inventory_index'] != inventory_slot.index:
                     continue
-
-                print(index, inventory_slot.index)
+                
                 self.game.item_handler.Load_Item_From_Data(item_data)
                 item = self.game.item_handler.Find_Item(item_data['item_ID'])
                 if not item:
@@ -51,9 +44,7 @@ class Inventory:
 
                 inventory_slot.Add_Item(item)
 
-                # break
 
-            index += 1
 
     # General Update function
     def Update(self, offset=(0, 0)):

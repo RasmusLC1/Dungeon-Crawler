@@ -17,7 +17,6 @@ class Rune_Handler():
                     'key_rune',
                     ]              
 
-        self.Initialise_Runes()
 
 
     def Initialise_Runes(self):
@@ -38,12 +37,12 @@ class Rune_Handler():
                 continue
             try:
                 type = item_data['type']
-                self.Rune_Spawner(type)
+                self.Rune_Spawner(type, item_data)
             except Exception as e:
                 print("DATA WRONG", item_data, e)
 
         # TODO: IMPLEMENT PROPER METHOD
-        self.Add_Runes_To_Inventory_TEST()
+        # self.Add_Runes_To_Inventory_TEST()
         
 
     def Rune_Spawner(self, name, data = None):

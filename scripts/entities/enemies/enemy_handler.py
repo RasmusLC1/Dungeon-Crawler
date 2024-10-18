@@ -26,7 +26,7 @@ class Enemy_Handler():
             if not item_data:
                 continue
             try:
-                type = item_data['type']
+                type = item_data['sub_type']
                 pos = item_data['pos']
                 size = item_data['size']
                 if item_data['category'] == 'enemy':
@@ -44,8 +44,13 @@ class Enemy_Handler():
             spawner = spawners[spawner_index]
             enemy_variant = random.randint(0, 4)
             type = None
-            if enemy_variant < 2: # Melee Decrepit Bones
-                type = 'decripit_bones'
+            if enemy_variant < 5: # Melee Decrepit Bones
+                random_value = random.randint(0, 10)
+                if random_value < 7:
+                    type = 'decrepit_bones_melee'
+                else:
+                    type = 'decrepit_bones_ranged'
+
             elif enemy_variant == 2: # Fire spirit
                 type = 'fire_spirit'
             elif enemy_variant == 3: # Ice spirit
@@ -53,17 +58,17 @@ class Enemy_Handler():
             elif enemy_variant == 4: # Spider
                 type = 'spider'
             
+            print(type)
             if type:
                 pos = spawner['pos']
                 size = (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height())
                 self.Enemy_Spawner(type, pos, size)
 
     def Enemy_Spawner(self, type, pos, size, data = None):
-        if type == 'decripit_bones':
-            random_value = random.randint(0, 10)
-            if random_value < 7:
-                enemy = self.Spawn_Melee_Decrepit_Bones(pos, size)
-            else:
+        enemy = None
+        if type == 'decrepit_bones_melee':
+            enemy = self.Spawn_Melee_Decrepit_Bones(pos, size)
+        elif type == 'decrepit_bones_ranged':
                 enemy = self.Spawn_Ranged_Decrepit_Bones(pos, size)
         elif type == 'fire_spirit':
             enemy = self.Spawn_Fire_Spirit(pos, size)

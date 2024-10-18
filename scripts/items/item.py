@@ -17,6 +17,7 @@ class Item(PhysicsEntity):
         self.picked_up = False
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
         self.inventory_type = None
+        self.inventory_index = None
         self.animation_cooldown = 0
         self.animation_speed = 50
         self.amount = amount
@@ -38,6 +39,7 @@ class Item(PhysicsEntity):
         self.saved_data['inventory_type'] = self.inventory_type
         self.saved_data['amount'] = self.amount
         self.saved_data['damaged'] = self.damaged
+        self.saved_data['inventory_index'] = self.inventory_index
 
     
     def Load_Data(self, data):
@@ -49,6 +51,7 @@ class Item(PhysicsEntity):
         self.inventory_type = data['inventory_type']
         self.amount = data['amount']
         self.damaged = data['damaged']
+        self.inventory_index = data['inventory_index']
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if self.text_box.Update(hitbox_1, hitbox_2):
@@ -58,6 +61,9 @@ class Item(PhysicsEntity):
 
     def Activate(self):
         pass
+
+    def Set_Inventory_Index(self, index):
+        self.inventory_index = index
     
     def Find_Nearby_Entities(self, distance):
         # Set the player first so the player gets priority
