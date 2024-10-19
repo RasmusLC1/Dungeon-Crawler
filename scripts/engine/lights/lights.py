@@ -19,8 +19,10 @@ class Light():
         self.angle_cosines = [math.cos(math.radians(i * (self.field_of_view / self.number_rays))) * 16 for i in range(self.number_rays * self.light_level + 2)]
         self.angle_sines = [math.sin(math.radians(i * (self.field_of_view / self.number_rays))) * 16 for i in range(self.number_rays * self.light_level + 2)]
 
-    def Setup_Tile_Light(self):
+    def Update_Light_Level(self, new_light_level):
+        self.light_level = new_light_level
 
+    def Setup_Tile_Light(self):
         # Setup light_level under the light itself
         tile = self.game.tilemap.Current_Tile(self.pos)
         if self.Check_Tile(tile):

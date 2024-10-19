@@ -51,12 +51,13 @@ Game Ideas
     # Clatter System where enemies are attracted to noise
     # Dungeon generator
     # Chunk system to prevent slowdown with larger maps
+    # Save Load System
     Cards / Runes
 
 # Gameplay
     # Player can hold weapons
     # Attack
-    Defend
+    # Defend
 
 
 # Weapons:
@@ -97,13 +98,13 @@ Game Ideas
     Two types of spells, passive spells and activated spells
     Passive spells don't cost souls, but they are less powerful
     Active Spells:
-        Dash,
-        Healing
+        # Dash,
+        # Healing
         Speed
         Immunity
         Invisibility
         Silence
-        Door unlock
+        # Door unlock
         Directed Fire blast 
         Circle Fire blast
         Directed Ice blast 
@@ -116,7 +117,8 @@ Game Ideas
         Vampiric touch, regen from damaging enemies
     
     Passive Spells:
-        Light
+        # Regen
+        # Light
         Resistance
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you

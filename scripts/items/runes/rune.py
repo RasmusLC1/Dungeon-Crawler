@@ -48,6 +48,8 @@ class Rune(Item):
             self.Set_Animation_Time()
             self.Reset_Animation_Size()
 
+    def Remove_Rune_From_Inventory(self):
+        pass
 
     def Increase_cost(self, change):
         self.current_soul_cost += change

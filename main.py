@@ -18,8 +18,8 @@ class Game:
         self.game_initialiser.Initialise_Game()
 
         self.level_loader = Level_Loader(self)
-        self.level_loader.load_level_From_Save(self.level)
-        # self.level_loader.Load_Level_New_Map(self.level)
+        # self.level_loader.load_level_From_Save(self.level)
+        self.level_loader.Load_Level_New_Map(self.level)
 
         self.input_update = Input_Update(self)
         self.camera_update = Camera_Update(self)

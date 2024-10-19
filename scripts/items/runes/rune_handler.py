@@ -1,7 +1,10 @@
 from scripts.items.runes.healing_rune import Healing_Rune
 from scripts.items.runes.dash_rune import Dash_Rune
 from scripts.items.runes.fire_resistance_rune import Fire_Resistance_Rune
+from scripts.items.runes.freeze_resistance_rune import Freeze_Resistance_Rune
 from scripts.items.runes.key_rune import Key_Rune
+from scripts.items.runes.regen_rune import Regen_Rune
+from scripts.items.runes.light_rune import Light_Rune
 
 import pygame
 
@@ -15,6 +18,9 @@ class Rune_Handler():
                     'dash_rune',
                     'fire_resistance_rune',
                     'key_rune',
+                    'freeze_resistance_rune',
+                    'regen_rune',
+                    'light_rune'
                     ]              
 
 
@@ -53,9 +59,14 @@ class Rune_Handler():
             rune = self.Init_Dash_Rune()
         elif 'fire_resistance' in name:
             rune = self.Init_Fire_Resistance_Rune()
+        elif 'freeze_resistance' in name:
+            rune = self.Init_Freeze_Resistance_Rune()
         elif 'key' in name:
             rune = self.Init_Key_Rune()
-
+        elif 'regen' in name:
+            rune = self.Init_Regen_Rune()
+        elif 'light_rune' in name:
+            rune = self.Init_Light_Rune()
         if not rune:
             return False
         
@@ -76,8 +87,17 @@ class Rune_Handler():
     def Init_Fire_Resistance_Rune(self):
         return Fire_Resistance_Rune(self.game, (9999, 9999))
 
+    def Init_Freeze_Resistance_Rune(self):
+        return Freeze_Resistance_Rune(self.game, (9999, 9999))
+
     def Init_Key_Rune(self):
         return Key_Rune(self.game, (9999, 9999))
+
+    def Init_Regen_Rune(self):
+        return Regen_Rune(self.game, (9999, 9999))
+
+    def Init_Light_Rune(self):
+        return Light_Rune(self.game, (9999, 9999))
 
     def Initiailise_Rune(self, rune):
         self.Add_Rune_To_Dict(rune)
@@ -90,9 +110,9 @@ class Rune_Handler():
         self.runes[type].append(rune)
     
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('key_rune')
+        self.Add_Rune_To_Rune_Inventory('regen_rune')
         self.Add_Rune_To_Rune_Inventory('dash_rune')
-        self.Add_Rune_To_Rune_Inventory('fire_resistance_rune')
+        self.Add_Rune_To_Rune_Inventory('light_rune')
 
     def Add_Rune_To_Rune_Inventory(self, rune_type):
         if rune_type not in self.runes:

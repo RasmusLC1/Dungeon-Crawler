@@ -52,6 +52,8 @@ class Player(Moving_Entity):
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
         self.movement_handler.Update()
+        # print(self.light_source.light_level)
+
         
         self.Update_Light()
 
@@ -83,6 +85,7 @@ class Player(Moving_Entity):
 
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         super().Set_Charge(charge_speed, offset)
+        
 
     def Attacking(self, weapon, offset=(0, 0)):
         if weapon.attacking and not self.attacking:
@@ -105,15 +108,20 @@ class Player(Moving_Entity):
             self.attacking -= 1
 
 
-    def Set_Light_State(self, state):
-        self.light_source.active = state
     
     def Set_Inventory_Interaction(self, state):
         self.weapon_handler.Set_Inventory_Interaction(state)
 
     def Set_Active_Weapon(self, weapon, hand):  
         self.weapon_handler.Set_Active_Weapon(weapon, hand)
-        
+    
+    def Set_Light_State(self, state):
+        self.light_source.active = state
+
+
+    def Update_Light_Source(self, light_level):
+        self.light_source.Update_Light_Level(light_level)
+
     # Function to update the light around player
     def Update_Light(self):
         if self.light_source:
