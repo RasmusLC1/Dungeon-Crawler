@@ -237,8 +237,9 @@ class Graphics_Loader:
     def Asset_Interative_Objects_List(self):
         white = (255,255,255)
         Objects_assets = {
-            'Chest' : get_tiles_from_sheet('chest.png', 8, 0, 0, 0, 16, 16, white),
+            'Chest' : get_tiles_from_sheet('decoration/chest.png', 8, 0, 0, 0, 16, 16, white),
             'DoorClosed' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 16, 16),
+            'shrine' : get_tiles_from_sheet('decoration/shrine.png', 3, 0, 0, 0, 32, 32),
         }
         self.assets.update(Objects_assets)
 
