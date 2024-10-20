@@ -37,8 +37,8 @@ class Save_Load_Manager():
     def Save_Data(self):
         self.game.player.Save_Data()
         self.game.item_handler.Save_Item_Data()
-        self.game.chest_handler.Save_Chest_Data()
-        self.game.door_handler.Save_Door_Data()
+        self.game.decoration_handler.Save_Decoration_Data()
+        self.game.rune_handler.Save_Rune_Data()
         self.game.trap_handler.Save_Trap_Data()
         self.game.enemy_handler.Save_Enemy_Data()
         self.Inventory_Save_Data()
@@ -56,8 +56,7 @@ class Save_Load_Manager():
         self.data_structures = [self.game.player.saved_data,
                                 self.game.item_handler.saved_data,
                                 self.game.rune_handler.saved_data,
-                                self.game.chest_handler.saved_data,
-                                self.game.door_handler.saved_data,
+                                self.game.decoration_handler.saved_data,
                                 self.game.trap_handler.saved_data,
                                 self.game.enemy_handler.saved_data,
                                 self.game.item_inventory.saved_data,
@@ -68,8 +67,7 @@ class Save_Load_Manager():
         self.data_structure_names = ['player',
                                     'item_handler',
                                     'rune_handler',
-                                    'chest_handler',
-                                    'door_handler',
+                                    'decoration_handler',
                                     'trap_handler',
                                      'enemy_handler',
                                     'item_inventory',
@@ -84,8 +82,7 @@ class Save_Load_Manager():
         self.entities_to_load = [self.game.player,
                                 self.game.item_handler,
                                 self.game.rune_handler,
-                                self.game.chest_handler,
-                                self.game.door_handler,
+                                self.game.decoration_handler,
                                 self.game.trap_handler,
                                 self.game.enemy_handler,
                                 self.game.item_inventory,
@@ -96,8 +93,7 @@ class Save_Load_Manager():
         self.entities_to_load_names = ['player',
                                     'item_handler',
                                     'rune_handler',
-                                    'chest_handler',
-                                    'door_handler',
+                                    'decoration_handler',
                                     'trap_handler',
                                      'enemy_handler',
                                      'item_inventory',

@@ -4,8 +4,7 @@ from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.items.item_handler import Item_Handler
 
-from scripts.decoration.chest.Chest_handler import Chest_Handler
-from scripts.decoration.doors.door_handler import Door_Handler
+from scripts.decoration.decoration_handler import Decoration_Handler
 from scripts.entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.lights.light_handler import Light_Handler
 
@@ -31,8 +30,9 @@ class Level_Loader():
         self.load_level(map_id)
         self.game.item_handler.Initialise()
         self.game.enemy_handler.Initialise()
-        self.game.door_handler.Initialise()
-        self.game.chest_handler.Initialise(3)
+        # self.game.door_handler.Initialise()
+        # self.game.chest_handler.Initialise(3)
+        self.game.decoration_handler.Initialise(3)
         self.game.trap_handler.Initialise()
         self.game.rune_handler.Initialise_Runes()
 
@@ -57,8 +57,9 @@ class Level_Loader():
         self.game.item_handler = Item_Handler(self.game)
         self.game.particle_handler = Particle_Handler(self.game)
         self.game.trap_handler = Trap_Handler(self.game)
-        self.game.chest_handler = Chest_Handler(self.game)
-        self.game.door_handler = Door_Handler(self.game)
+        # self.game.chest_handler = Chest_Handler(self.game)
+        # self.game.door_handler = Door_Handler(self.game)
+        self.game.decoration_handler = Decoration_Handler(self.game)
         self.game.rune_handler = Rune_Handler(self.game)
         
 

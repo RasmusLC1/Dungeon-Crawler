@@ -8,13 +8,17 @@ class Ray_Caster():
         self.traps = []
         self.chests = []
         self.doors = []
+        self.items = []
         self.decorations = []
+        self.torhces = []
 
         self.nearby_enemies = []
         self.nearby_traps = []
+        self.nearby_torches = []
+        # self.nearby_chest = []
+        # self.nearby_doors = []
         self.nearby_decorations = []
-        self.nearby_chest = []
-        self.nearby_doors = []
+        self.nearby_items = []
         
         self.nearby_cooldown = 0
         self.inactive_distance = 300
@@ -28,7 +32,7 @@ class Ray_Caster():
 
         self.Check_Enemy_Active(game)
 
-        self.Check_Chest_Active(game)
+        self.Check_Decoration_Active(game)
 
         self.Check_Trap_Active(game)
     
@@ -57,22 +61,25 @@ class Ray_Caster():
                 if trap in self.traps:
                     self.traps.remove(trap)
     
-
-    def Check_Chest_Active(self, game):
-        for chest in self.chests:
-            if chest.active:
-                chest.Reduce_Active()
+            
+    def Check_Decoration_Active(self, game):
+        for decoration in self.decorations:
+            if decoration.active:
+                decoration.Reduce_Active()
             else:
-                self.chests.remove(chest)
+                self.decorations.remove(decoration)
                 return
-            distance = abs(math.sqrt((game.player.pos[0] - chest.pos[0]) ** 2 + (game.player.pos[1] - chest.pos[1]) ** 2))
+            distance = abs(math.sqrt((game.player.pos[0] - decoration.pos[0]) ** 2 + (game.player.pos[1] - decoration.pos[1]) ** 2))
             if abs(distance) > self.inactive_distance:
-                chest.Set_Active(0)
-                if chest in self.chests:
-                    self.chests.remove(chest)
-            if chest.empty:
-                if chest in self.chests:
-                    self.chests.remove(chest)
+                decoration.Set_Active(0)
+                if decoration in self.decorations:
+                    self.decorations.remove(decoration)
+            if decoration.type != 'chest':
+                return
+            
+            if decoration.empty:
+                if decoration in self.decorations:
+                    self.decorations.remove(decoration)
                 return
 
     def Check_Enemy_Active(self, game):
@@ -107,16 +114,17 @@ class Ray_Caster():
                 else:
                     enemy.Set_Active(300)
 
-    def Check_Chest(self, pos):
-        for chest in self.nearby_chest:
-            if self.rect(pos).colliderect(chest.rect()):
-                if not chest.active:
-                    chest.Set_Active(self.default_activity)
-                    self.chests.append(chest)
-                else:
-                    chest.Set_Active(self.default_activity)
 
-    
+
+    def Check_Item(self, pos):
+        for item in self.nearby_items:
+            if self.rect(pos).colliderect(item.rect()):
+                if not item.active:
+                    item.Set_Active(self.default_activity)
+                    self.items.append(item)
+                else:
+                    item.Set_Active(self.default_activity)
+
     def Check_Decoration(self, pos):
         for decoration in self.nearby_decorations:
             if self.rect(pos).colliderect(decoration.rect()):
@@ -132,7 +140,7 @@ class Ray_Caster():
 
                 if not item.active:
                     item.Set_Active(self.default_activity)
-                    self.decorations.append(item)
+                    self.items.append(item)
                 else:
                     item.Set_Active(self.default_activity)
 
@@ -163,14 +171,16 @@ class Ray_Caster():
         # Clear the lists before assigning new values to them
         self.nearby_enemies.clear()
         self.nearby_decorations.clear()
-        self.nearby_chest.clear()
-        self.nearby_doors.clear()
+        self.nearby_items.clear()
+        # self.nearby_chest.clear()
+        # self.nearby_doors.clear()
 
         # Assign new nerby lists
         player = self.game.player
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(player, 200)
-        self.nearby_chest = self.game.chest_handler.Find_Nearby_Chests(player.pos, 200)
-        self.nearby_doors = self.game.door_handler.Find_Nearby_Doors(player.pos, 200)
+        # self.nearby_chest = self.game.chest_handler.Find_Nearby_Chests(player.pos, 200)
+        # self.nearby_doors = self.game.door_handler.Find_Nearby_Doors(player.pos, 200)
+        self.nearby_decorations = self.game.decoration_handler.Find_Nearby_Decorations(player.pos, 200)
         self.nearby_cooldown = 20
         return
     
@@ -180,9 +190,8 @@ class Ray_Caster():
             return False
         self.Check_Trap(pos)
         self.Check_Enemy(pos)
-        self.Check_Chest(pos)
-        self.Check_Items(pos)
         self.Check_Decoration(pos)
+        self.Check_Items(pos)
         return True
 
     def Ray_Caster(self):

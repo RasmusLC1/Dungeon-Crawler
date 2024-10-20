@@ -15,8 +15,6 @@ class Door(Decoration):
         self.is_open = data['is_open']
 
 
-    def Animation_Update(self):
-        pass
 
     def Open(self, generate_clatter = True):
         self.is_open = True

@@ -11,7 +11,7 @@ import pygame
 class Rune_Handler():
     def __init__(self, game):
         self.game = game
-        self.runes = {}
+        self.runes = []
         self.active_runes = []
         self.saved_data = {}
         self.rune_types = ['healing_rune',
@@ -32,9 +32,10 @@ class Rune_Handler():
         self.Add_Runes_To_Inventory_TEST()
         
         
-    def Save_Item_Data(self):
+    def Save_Rune_Data(self):
         for rune in self.runes:
             rune.Save_Data()
+            print(rune.active, rune.type)
             self.saved_data[rune.type] = rune.saved_data
 
     def Load_Data(self, data):
@@ -46,6 +47,8 @@ class Rune_Handler():
                 self.Rune_Spawner(type, item_data)
             except Exception as e:
                 print("DATA WRONG", item_data, e)
+
+
 
         # TODO: IMPLEMENT PROPER METHOD
         # self.Add_Runes_To_Inventory_TEST()
@@ -72,6 +75,11 @@ class Rune_Handler():
         
         if data:
             rune.Load_Data(data)
+            if rune.active:
+                for active_rune in self.active_runes:
+                    if rune.type == active_rune.type:
+                        return
+                self.active_runes.append(rune)
         self.Initiailise_Rune(rune)
         
         return True
@@ -100,27 +108,27 @@ class Rune_Handler():
         return Light_Rune(self.game, (9999, 9999))
 
     def Initiailise_Rune(self, rune):
-        self.Add_Rune_To_Dict(rune)
+        if rune in self.runes:
+            return
+        self.runes.append(rune)
         self.game.item_handler.Add_Item(rune)
     
-    def Add_Rune_To_Dict(self, rune):
-        type = rune.type
-        if type not in self.runes:
-            self.runes[type] = []
-        self.runes[type].append(rune)
-    
+
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('regen_rune')
         self.Add_Rune_To_Rune_Inventory('dash_rune')
         self.Add_Rune_To_Rune_Inventory('light_rune')
 
     def Add_Rune_To_Rune_Inventory(self, rune_type):
-        if rune_type not in self.runes:
-            return False
-        rune = self.runes[rune_type][0]
-        rune.active = True
-        self.active_runes.append(rune)
-        self.game.rune_inventory.Add_Item(rune)
+        for rune in self.runes:
+            if rune_type != rune.type:
+                continue
+            
+            print(rune_type)
+            rune.active = True
+            self.active_runes.append(rune)
+            self.game.rune_inventory.Add_Item(rune)
+            return
 
 
     def Update(self, offset = (0,0)):

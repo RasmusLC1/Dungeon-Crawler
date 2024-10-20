@@ -120,10 +120,6 @@ class Chest(Decoration):
     def Reduce_Active(self):
         self.active -= 1
 
-
-    def Animation_Update(self):
-        pass
-
     def Render(self, surf, offset = (0,0)):
         if self.empty:
             return

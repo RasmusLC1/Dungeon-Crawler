@@ -20,7 +20,6 @@ class Dash_Rune(Rune):
     def Update(self):
         if not self.clicked:
             return
-        
         if self.game.mouse.left_click:
             if not self.game.player.movement_handler.Dash(self.game.render_scroll):
                 return

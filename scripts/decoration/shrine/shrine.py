@@ -3,8 +3,12 @@ import random
 
 class Shrine(Decoration):
     def __init__(self, game, type, pos, size) -> None:
-        super().__init__(game, type, 'door', pos, size)
+        super().__init__(game, type, 'shrine', pos, size)
         self.is_open = False
+        self.attack_animation_num = 0
+        self.attack_animation_num_max = 0
+        self.attack_animation_num_cooldown = 0
+        self.attack_animation_num_cooldown_max = 50
 
     def Save_Data(self):
         super().Save_Data()
@@ -14,18 +18,13 @@ class Shrine(Decoration):
         super().Load_Data(data)
         self.is_open = data['is_open']
 
+    def Update_Animation(self):
+        if self.animation_cooldown:
+            self.animation_cooldown -= 1
+        else:
+            self.animation_cooldown = self.animation_speed
+            self.animation = random.randint(0,self.max_animation)
 
-    def Animation_Update(self):
-        pass
-
-    def Open(self, generate_clatter = True):
-        self.is_open = True
-        x = self.pos[0] // 16
-        y = self.pos[1] // 16
-        self.game.tilemap.tilemap[str(x) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
-        if generate_clatter:
-            self.game.clatter.Generate_Clatter(self.pos, 300) # Generate clatter to alert nearby enemies
-
-
-    
+    def Open(self, generate_clatter = False):
+        print("TEST")
 

@@ -197,26 +197,22 @@ class Dungeon_Generator():
             if door_array[i] == 1: # Left wall
                 self.a_star.a_star_search(path, [start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'test')
                 self.cellular_automata.map[start_x][y_mid] = 3
-                self.cellular_automata.map[start_x - 1][y_mid] = 0
                 break
 
             elif door_array[i] == 2: # Right wall
                 self.a_star.a_star_search(path, [start_x + size_x, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'test')
                 self.cellular_automata.map[start_x + size_x - 1][y_mid] = 3
-                self.cellular_automata.map[start_x + size_x][y_mid] = 0
                 break
 
             elif door_array[i] == 3: # Top
                 self.a_star.a_star_search(path, [x_mid, start_y - 1], [self.player_spawn[0], self.player_spawn[1]], 'test')
                 self.cellular_automata.map[x_mid][start_y] = 3
-                self.cellular_automata.map[x_mid][start_y + 1] = 0
                 break
             
 
             elif door_array[i] == 4: # Bottom
                 self.a_star.a_star_search(path, [x_mid, start_y + size_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
                 self.cellular_automata.map[x_mid][start_y + size_y - 1] = 3
-                self.cellular_automata.map[x_mid][start_y + size_y] = 0
                 break
 
         if not path:

@@ -26,6 +26,7 @@ class Rune(Item):
         self.saved_data['current_strength'] = self.current_strength
         self.saved_data['original_soul_cost'] = self.original_soul_cost
         self.saved_data['current_soul_cost'] = self.current_soul_cost
+        self.saved_data['active'] = self.active
     
     def Load_Data(self, data):
         super().Load_Data(data)
@@ -34,6 +35,7 @@ class Rune(Item):
         self.current_strength = data['current_strength']
         self.original_soul_cost = data['original_soul_cost'] 
         self.current_soul_cost = data['current_soul_cost'] 
+        self.active = data['active'] 
 
 
     def Update(self):
