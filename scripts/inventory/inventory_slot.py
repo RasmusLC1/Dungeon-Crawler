@@ -40,6 +40,11 @@ class Inventory_Slot():
         if self.item and self.item.used:
             self.item = None
         return
+    
+    def Update_Item(self):
+        if not self.item:
+            return
+        self.item.Update()
 
     def Add_Item(self, item):
         if not item:

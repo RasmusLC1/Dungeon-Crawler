@@ -24,7 +24,15 @@ class Rune_Inventory(Inventory):
             self.inventory.append(inventory_slot)  # Add to instance's inventory
             index +=1
         
+    def Key_Board_Input(self):
+        keyboard = self.game.keyboard_handler
 
+        if keyboard.z_pressed:
+            self.Activate_Inventory_Slot(0)
+        elif keyboard.x_pressed:
+            self.Activate_Inventory_Slot(1)
+        elif keyboard.c_pressed:
+            self.Activate_Inventory_Slot(2)
         
     def Find_Inventory_Slot(self, searched_inventory_slot):
         for inventory_slot in self.inventory:

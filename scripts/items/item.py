@@ -18,6 +18,7 @@ class Item(PhysicsEntity):
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
         self.inventory_type = None
         self.inventory_index = None
+        self.activate_cooldown = 0
         self.animation_cooldown = 0
         self.animation_speed = 50
         self.amount = amount
@@ -53,14 +54,26 @@ class Item(PhysicsEntity):
         self.damaged = data['damaged']
         self.inventory_index = data['inventory_index']
 
+    def Update(self):
+        self.Update_Activate_Cooldown()
+
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if self.text_box.Update(hitbox_1, hitbox_2):
             return self
         else:
             return None
-
+    
     def Activate(self):
-        pass
+        if self.activate_cooldown:
+            return False
+        
+        self.activate_cooldown = 20
+        return True
+
+    def Update_Activate_Cooldown(self):
+        if self.activate_cooldown <= 0:
+            return
+        self.activate_cooldown = max(0, self.activate_cooldown - 1)
 
     def Set_Inventory_Index(self, index):
         self.inventory_index = index

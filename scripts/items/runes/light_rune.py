@@ -8,6 +8,8 @@ class Light_Rune(Rune):
         self.effect = 'light'
 
     def Update(self):
+        super().Update()
+
         if self.game.player.light_source.light_level < self.current_strength:
             self.game.player.Update_Light_Source(self.current_strength)
 

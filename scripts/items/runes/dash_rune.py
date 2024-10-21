@@ -12,12 +12,12 @@ class Dash_Rune(Rune):
 
 
     def Activate(self):
-        if self.game.player.souls < self.current_soul_cost:
-            return
-        
+        if not super().Activate():
+            return    
         self.clicked = True
     
     def Update(self):
+        super().Update()
         if not self.clicked:
             return
         if self.game.mouse.left_click:

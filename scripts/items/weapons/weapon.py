@@ -69,6 +69,7 @@ class Weapon(Item):
    
     # General Update function
     def Update(self, offset = (0,0)):
+        super().Update()
         self.Update_Animation()
         self.Special_Attack()
         if not self.entity:

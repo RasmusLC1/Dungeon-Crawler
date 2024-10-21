@@ -88,7 +88,6 @@ class Decoration_Handler():
         player_pos = self.game.player.pos
         decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         decoration = decorations[0]
-        print(decoration.type)
         if decoration.type == 'chest':
             decoration.Open()
         elif decoration.type == 'door':
@@ -126,6 +125,21 @@ class Decoration_Handler():
         door.Open()
         return True
     
+    def Open_Door_Without_Key(self, decorations):
+        player_pos = self.game.player.pos
+        decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
+
+        for decoration in self.decorations:
+            if decoration.type != 'door':
+                continue
+
+            decoration.Open()
+            self.decorations.remove(decoration)
+            del(decoration)
+            return True
+        
+        return False
+
     def Add_Decoration(self, decoration):
         if decoration in self.decorations:
             return

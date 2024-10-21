@@ -21,7 +21,7 @@ class State_Machine():
 
     def Game_State(self):
         if self.game_state == self.game_state_list[0]:
-            self.Game_Load(True)
+            self.Game_Load(False)
         elif self.game_state == self.game_state_list[1]:
             self.Game_Loop()
         elif self.game_state == self.game_state_list[2]:
@@ -37,7 +37,7 @@ class State_Machine():
         if load_from_save:
             self.game.level_loader.load_level_From_Save(self.game.level)
         else:
-            self.level_loader.Load_Level_New_Map(self.level)
+            self.game.level_loader.Load_Level_New_Map(self.game.level)
 
         self.game_state = self.game_state_list[1]
 

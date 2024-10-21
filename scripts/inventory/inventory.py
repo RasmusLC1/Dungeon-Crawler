@@ -33,7 +33,7 @@ class Inventory:
 
                 if item_data['inventory_index'] != inventory_slot.index:
                     continue
-                
+
                 self.game.item_handler.Load_Item_From_Data(item_data)
                 item = self.game.item_handler.Find_Item(item_data['item_ID'])
                 if not item:
@@ -49,8 +49,8 @@ class Inventory:
     # General Update function
     def Update(self, offset=(0, 0)):
         self.Active_Item(offset)
-
         for inventory_slot in self.inventory:
+            inventory_slot.Update_Item()
             if not self.Update_Inventory_Slot_Item_Animation(inventory_slot):
                 continue
             # Check if the mouse has been clicked, if no we skip that inventory
@@ -62,8 +62,19 @@ class Inventory:
             if self.Pickup_Item_To_Move(inventory_slot):
                 return
             
+            
         self.Item_Click()
+        self.Key_Board_Input()
         return
+
+    def Key_Board_Input(self):
+        pass
+
+    def Activate_Inventory_Slot(self, index):
+        inventory_slot = self.inventory[index]
+        if inventory_slot.item:
+            inventory_slot.item.Activate()
+            inventory_slot.Update()
 
     # Activates when mouse has been held down for 10 ticks and
     # the inventory slot is not active anymore 

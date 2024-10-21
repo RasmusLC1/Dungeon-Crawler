@@ -21,6 +21,8 @@ class Passive_Rune(Rune):
         self.count_down = data['count_down'] 
 
     def Update(self):
+        super().Update()
+
         self.Update_Count_Down()
         self.Trigger_Effect()
 
@@ -42,4 +44,4 @@ class Passive_Rune(Rune):
 
 
     def Activate(self):
-        return
+        pass

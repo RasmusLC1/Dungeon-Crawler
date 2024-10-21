@@ -22,7 +22,23 @@ class Item_Inventory(Inventory):
                 self.inventory.append(inventory_slot)
                 index += 1
 
+    def Key_Board_Input(self):
+        keyboard = self.game.keyboard_handler
 
+        if keyboard._1_pressed:
+            self.Activate_Inventory_Slot(0)
+        elif keyboard._2_pressed:
+            self.Activate_Inventory_Slot(1)
+        elif keyboard._3_pressed:
+            self.Activate_Inventory_Slot(2)
+        elif keyboard._4_pressed:
+            self.Activate_Inventory_Slot(3)
+        elif keyboard._5_pressed:
+            self.Activate_Inventory_Slot(4)
+        elif keyboard._6_pressed:
+            self.Activate_Inventory_Slot(5)
+
+    
 
     def Item_Double_Click(self):
         if not super().Item_Double_Click():

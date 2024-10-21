@@ -14,7 +14,7 @@ class Entity_Renderer():
             return
         
         self.Find_Nearby_Entities()
-        self.nearby_entities_cooldown = 50
+        self.nearby_entities_cooldown = 10
         self.nearby_entities.sort(key=lambda entity: entity.pos[1])
 
     

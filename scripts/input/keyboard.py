@@ -4,6 +4,25 @@ import pygame
 class Keyboard_Handler:
     def __init__(self, game) -> None:
         self.game = game
+        self.a_pressed = False
+        self.w_pressed = False
+        self.s_pressed = False
+        self.d_pressed = False
+        self.e_pressed = False
+        self.z_pressed = False
+        self.x_pressed = False
+        self.c_pressed = False
+        self.space_pressed = False
+        self.alt_pressed = False
+        self._1_pressed = False
+        self._2_pressed = False
+        self._3_pressed = False
+        self._4_pressed = False
+        self._5_pressed = False
+        self._6_pressed = False
+        self._7_pressed = False
+        self._8_pressed = False
+        self._9_pressed = False
 
     def keyboard_Input(self, key_press, offset=(0, 0)):
         if key_press.type == pygame.KEYDOWN:
@@ -16,19 +35,19 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_s:
                 self.game.movement[3] = True
             if key_press.key == pygame.K_1:
-                self.Item_Inventory_Keybindings(0)
+                self._1_pressed = True
             if key_press.key == pygame.K_2:
-                self.Item_Inventory_Keybindings(1)
+                self._2_pressed = True
             if key_press.key == pygame.K_3:
-                self.Item_Inventory_Keybindings(2)
+                self._3_pressed = True
             if key_press.key == pygame.K_4:
-                self.Item_Inventory_Keybindings(3)
+                self._4_pressed = True
             if key_press.key == pygame.K_5:
-                self.Item_Inventory_Keybindings(4)
+                self._5_pressed = True
             if key_press.key == pygame.K_6:
-                self.Item_Inventory_Keybindings(5)
+                self._6_pressed = True
             if key_press.key == pygame.K_7:
-                self.Item_Inventory_Keybindings(6)
+                self._7_pressed = True
             if key_press.key == pygame.K_e:
                 nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.player.pos, 30)
                 for item in nearby_items:
@@ -40,11 +59,11 @@ class Keyboard_Handler:
             if key_press.key == pygame.K_SPACE:
                 self.game.player.movement_handler.Roll_Forward(offset)
             if key_press.key == pygame.K_z:
-                self.Rune_Inventory_Keybindings(0)
+                self.z_pressed = True
             if key_press.key == pygame.K_x:
-                self.Rune_Inventory_Keybindings(1)
+                self.x_pressed = True
             if key_press.key == pygame.K_c:
-                self.Rune_Inventory_Keybindings(2)
+                self.c_pressed = True
             if key_press.key == pygame.K_LALT:
                 self.game.player.movement_handler.Back_Step(offset)
 
@@ -58,6 +77,26 @@ class Keyboard_Handler:
                 self.game.movement[2] = False
             if key_press.key == pygame.K_s:
                 self.game.movement[3] = False
+            if key_press.key == pygame.K_1:
+                self._1_pressed = False
+            if key_press.key == pygame.K_2:
+                self._2_pressed = False
+            if key_press.key == pygame.K_3:
+                self._3_pressed = False
+            if key_press.key == pygame.K_4:
+                self._4_pressed = False
+            if key_press.key == pygame.K_5:
+                self._5_pressed = False
+            if key_press.key == pygame.K_6:
+                self._6_pressed = False
+            if key_press.key == pygame.K_7:
+                self._7_pressed = False
+            if key_press.key == pygame.K_z:
+                self.z_pressed = False
+            if key_press.key == pygame.K_x:
+                self.x_pressed = False
+            if key_press.key == pygame.K_c:
+                self.c_pressed = False
     
     
 

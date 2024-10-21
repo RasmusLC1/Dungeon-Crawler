@@ -38,17 +38,18 @@ class Rune(Item):
         self.active = data['active'] 
 
 
-    def Update(self):
-        pass
-
     
     def Activate(self):
+        if not super().Activate():
+            return False
         if self.game.player.souls < self.current_soul_cost:
-            return
+            return False
         if self.game.player.Set_Effect(self.effect, self.current_strength):
             self.game.player.Decrease_Souls(self.current_soul_cost)
             self.Set_Animation_Time()
             self.Reset_Animation_Size()
+        return True
+    
 
     def Remove_Rune_From_Inventory(self):
         pass
