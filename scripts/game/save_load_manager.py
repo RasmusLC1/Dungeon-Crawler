@@ -12,32 +12,30 @@ class Save_Load_Manager():
         self.data_structure_names = []
         self.saved_data = {}
 
-    def save_data(self, data, name):
-        data_file = open(self.save_folder+"/"+name+self.file_extension, "wb")
-        pickle.dump(data, data_file)
-
-
-        
 
     def Load_Game_Data(self, name):
-        data_file = open(self.save_folder+"/"+name+self.file_extension, "rb")
+        file_name = self.save_folder+"/"+name+self.file_extension
+        # Graceful exit if file does not exists
+        if not self.Check_For_File(file_name):
+            print("File not found\t", file_name)
+            exit(0)
+        data_file = open(file_name, "rb")
+        
         data = pickle.load(data_file)
         
+        # Iterate over the data and assign it correctly to the appropriate entity
         for index, name in enumerate(self.entities_to_load_names):
             entity = self.entities_to_load[index]
             entity_data = data[name]
-            print(entity)
             entity.Load_Data(entity_data)
 
-    def check_for_file(self, name):
-        return os.path.exists(self.save_folder+"/"+name+self.file_extension)
+    def Check_For_File(self, file_name):
+        return os.path.exists(file_name)
 
 
-    def Save_Game_Data(self):
-        self.save_data(self.saved_data, 'save_Data')
-
-        # for index, file in enumerate(self.data_structures):
-        #     self.save_data(file, self.data_structure_names[index])
+    def Save_Game_Data(self, name):
+        data_file = open(self.save_folder+"/"+name+self.file_extension, "wb")
+        pickle.dump(self.saved_data, data_file)
 
     # Initialise the data that needs to be saved
     def Save_Data(self):
@@ -86,7 +84,7 @@ class Save_Load_Manager():
             
 
 
-        self.Save_Game_Data()
+        self.Save_Game_Data('save_Data')
 
 
     def Load_Data_Structure(self):

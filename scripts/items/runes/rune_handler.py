@@ -124,7 +124,6 @@ class Rune_Handler():
             if rune_type != rune.type:
                 continue
             
-            print(rune_type)
             rune.active = True
             self.active_runes.append(rune)
             self.game.rune_inventory.Add_Item(rune)
