@@ -10,28 +10,34 @@ class Save_Load_Manager():
         self.data_structures = []
         self.entities_to_load = []
         self.data_structure_names = []
+        self.saved_data = {}
 
     def save_data(self, data, name):
         data_file = open(self.save_folder+"/"+name+self.file_extension, "wb")
         pickle.dump(data, data_file)
 
-    def Load_Data(self, name, entity):
-        data_file = open(self.save_folder+"/"+name+self.file_extension, "rb")
-        data = pickle.load(data_file)
-        entity.Load_Data(data)
 
         
+
+    def Load_Game_Data(self, name):
+        data_file = open(self.save_folder+"/"+name+self.file_extension, "rb")
+        data = pickle.load(data_file)
+        
+        for index, name in enumerate(self.entities_to_load_names):
+            entity = self.entities_to_load[index]
+            entity_data = data[name]
+            print(entity)
+            entity.Load_Data(entity_data)
 
     def check_for_file(self, name):
         return os.path.exists(self.save_folder+"/"+name+self.file_extension)
 
-    def Load_Game_Data(self):
-        for index, entity in enumerate(self.entities_to_load):
-            self.Load_Data(self.entities_to_load_names[index], entity)
 
     def Save_Game_Data(self):
-        for index, file in enumerate(self.data_structures):
-            self.save_data(file, self.data_structure_names[index])
+        self.save_data(self.saved_data, 'save_Data')
+
+        # for index, file in enumerate(self.data_structures):
+        #     self.save_data(file, self.data_structure_names[index])
 
     # Initialise the data that needs to be saved
     def Save_Data(self):
@@ -74,6 +80,11 @@ class Save_Load_Manager():
                                     'rune_inventory',
                                     'weapon_inventory',
                                     ]
+        
+        for index, name in enumerate(self.data_structure_names):
+            self.saved_data[name] = self.data_structures[index]
+            
+
 
         self.Save_Game_Data()
 
@@ -100,5 +111,5 @@ class Save_Load_Manager():
                                     'rune_inventory',
                                     'weapon_inventory',
                                     ]
-        self.Load_Game_Data()
+        self.Load_Game_Data('save_Data')
         
