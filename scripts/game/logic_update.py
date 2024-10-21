@@ -14,6 +14,7 @@ class Logic_Update():
             self.game.particle_handler.particle_update(self.game.render_scroll)
             self.game.trap_handler.Update()
             self.game.item_handler.Update(self.game.render_scroll)
+            self.game.decoration_handler.Update()
             self.game.enemy_handler.Update()
             self.game.entities_render.Update()
 

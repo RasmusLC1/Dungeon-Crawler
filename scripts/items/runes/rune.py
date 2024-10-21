@@ -51,6 +51,7 @@ class Rune(Item):
         return True
     
 
+
     def Remove_Rune_From_Inventory(self):
         pass
 

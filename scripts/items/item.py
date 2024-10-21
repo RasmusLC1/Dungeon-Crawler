@@ -67,7 +67,7 @@ class Item(PhysicsEntity):
         if self.activate_cooldown:
             return False
         
-        self.activate_cooldown = 20
+        self.activate_cooldown = 60
         return True
 
     def Update_Activate_Cooldown(self):

@@ -26,99 +26,88 @@ class Keyboard_Handler:
 
     def keyboard_Input(self, key_press, offset=(0, 0)):
         if key_press.type == pygame.KEYDOWN:
-            if key_press.key == pygame.K_a:
-                self.game.movement[0] = True
-            if key_press.key == pygame.K_d:
-                self.game.movement[1] = True
-            if key_press.key == pygame.K_w:
-                self.game.movement[2] = True
-            if key_press.key == pygame.K_s:
-                self.game.movement[3] = True
-            if key_press.key == pygame.K_1:
-                self._1_pressed = True
-            if key_press.key == pygame.K_2:
-                self._2_pressed = True
-            if key_press.key == pygame.K_3:
-                self._3_pressed = True
-            if key_press.key == pygame.K_4:
-                self._4_pressed = True
-            if key_press.key == pygame.K_5:
-                self._5_pressed = True
-            if key_press.key == pygame.K_6:
-                self._6_pressed = True
-            if key_press.key == pygame.K_7:
-                self._7_pressed = True
-            if key_press.key == pygame.K_e:
-                nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.player.pos, 30)
-                for item in nearby_items:
-                    item.Pick_Up()
-
-                self.Check_Decorations()
-                
-
-            if key_press.key == pygame.K_SPACE:
-                self.game.player.movement_handler.Roll_Forward(offset)
-            if key_press.key == pygame.K_z:
-                self.z_pressed = True
-            if key_press.key == pygame.K_x:
-                self.x_pressed = True
-            if key_press.key == pygame.K_c:
-                self.c_pressed = True
-            if key_press.key == pygame.K_LALT:
-                self.game.player.movement_handler.Back_Step(offset)
+            self.Key_Down(key_press)
 
 
         if key_press.type == pygame.KEYUP:
-            if key_press.key == pygame.K_a:
-                self.game.movement[0] = False
-            if key_press.key == pygame.K_d:
-                self.game.movement[1] = False
-            if key_press.key == pygame.K_w:
-                self.game.movement[2] = False
-            if key_press.key == pygame.K_s:
-                self.game.movement[3] = False
-            if key_press.key == pygame.K_1:
-                self._1_pressed = False
-            if key_press.key == pygame.K_2:
-                self._2_pressed = False
-            if key_press.key == pygame.K_3:
-                self._3_pressed = False
-            if key_press.key == pygame.K_4:
-                self._4_pressed = False
-            if key_press.key == pygame.K_5:
-                self._5_pressed = False
-            if key_press.key == pygame.K_6:
-                self._6_pressed = False
-            if key_press.key == pygame.K_7:
-                self._7_pressed = False
-            if key_press.key == pygame.K_z:
-                self.z_pressed = False
-            if key_press.key == pygame.K_x:
-                self.x_pressed = False
-            if key_press.key == pygame.K_c:
-                self.c_pressed = False
-    
-    
+            self.Key_Up(key_press)
+            
+    def Key_Down(self, key_press):
+        if key_press.key == pygame.K_a:
+            self.game.movement[0] = True
+        if key_press.key == pygame.K_d:
+            self.game.movement[1] = True
+        if key_press.key == pygame.K_w:
+            self.game.movement[2] = True
+        if key_press.key == pygame.K_s:
+            self.game.movement[3] = True
+        if key_press.key == pygame.K_1:
+            self._1_pressed = True
+        if key_press.key == pygame.K_2:
+            self._2_pressed = True
+        if key_press.key == pygame.K_3:
+            self._3_pressed = True
+        if key_press.key == pygame.K_4:
+            self._4_pressed = True
+        if key_press.key == pygame.K_5:
+            self._5_pressed = True
+        if key_press.key == pygame.K_6:
+            self._6_pressed = True
+        if key_press.key == pygame.K_7:
+            self._7_pressed = True
+        if key_press.key == pygame.K_e:
+            self.e_pressed = True                
 
-    def Check_Decorations(self):      
-        nearby_decorations = self.game.decoration_handler.Find_Nearby_Decorations(self.game.player.pos, 20)
-        if not nearby_decorations:
-            return False
-        
-        self.game.decoration_handler.Open_Decoration(nearby_decorations)
+        if key_press.key == pygame.K_SPACE:
+            self.space_pressed = True
+        if key_press.key == pygame.K_LALT:
+            self.alt_pressed = True
+        if key_press.key == pygame.K_z:
+            self.z_pressed = True
+        if key_press.key == pygame.K_x:
+            self.x_pressed = True
+        if key_press.key == pygame.K_c:
+            self.c_pressed = True
+
+    def Key_Up(self, key_press):
+        if key_press.key == pygame.K_a:
+            self.game.movement[0] = False
+        if key_press.key == pygame.K_d:
+            self.game.movement[1] = False
+        if key_press.key == pygame.K_w:
+            self.game.movement[2] = False
+        if key_press.key == pygame.K_s:
+            self.game.movement[3] = False
+        if key_press.key == pygame.K_e:
+            self.e_pressed = False
+        if key_press.key == pygame.K_1:
+            self._1_pressed = False
+        if key_press.key == pygame.K_2:
+            self._2_pressed = False
+        if key_press.key == pygame.K_3:
+            self._3_pressed = False
+        if key_press.key == pygame.K_4:
+            self._4_pressed = False
+        if key_press.key == pygame.K_5:
+            self._5_pressed = False
+        if key_press.key == pygame.K_6:
+            self._6_pressed = False
+        if key_press.key == pygame.K_7:
+            self._7_pressed = False
+        if key_press.key == pygame.K_z:
+            self.z_pressed = False
+        if key_press.key == pygame.K_x:
+            self.x_pressed = False
+        if key_press.key == pygame.K_c:
+            self.c_pressed = False
+        if key_press.key == pygame.K_SPACE:
+            self.space_pressed = False
+        if key_press.key == pygame.K_LALT:
+            self.alt_pressed = False
 
 
-    def Item_Inventory_Keybindings(self, inventory_index):
-        inventory_slot = self.game.item_inventory.inventory[inventory_index]
-        if inventory_slot.item:
-            inventory_slot.item.Activate()
-            inventory_slot.Update()
-
-    def Rune_Inventory_Keybindings(self, inventory_index):
-        inventory_slot = self.game.rune_inventory.inventory[inventory_index]
-        if inventory_slot.item:
-            inventory_slot.item.Activate()
-            inventory_slot.Update()
+    def Set_E_Key(self, state):
+        self.e_pressed = state
 
     # # Debugging and adjustment function, modify depending on animation needing to be done
     # def Animation_Adjustment_Helper(self, key_press):

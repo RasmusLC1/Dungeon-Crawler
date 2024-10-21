@@ -63,12 +63,31 @@ class Decoration_Handler():
                 pass
                 print("DATA WRONG", item_data, e)
 
+    def Update(self):
+        self.Check_Keyboard_Input()
+
+
     def Spawn_Door(self, pos, size):
         return Door(self.game, 'door', pos, size)
     
     def Spawn_Chest(self, pos, version):
         return Chest(self.game, pos, version)  
     
+    def Check_Keyboard_Input(self):
+        if self.game.keyboard_handler.e_pressed:
+
+            if not self.Check_Decorations():
+                return
+            self.game.keyboard_handler.Set_E_Key(False)
+
+
+    def Check_Decorations(self):      
+        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 20)
+        if not nearby_decorations:
+            return False
+        
+        self.Open_Decoration(nearby_decorations)
+        return True
 
     def Find_Nearby_Decorations(self, player_pos, max_distance):
         

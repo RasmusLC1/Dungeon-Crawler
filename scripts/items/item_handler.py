@@ -104,6 +104,7 @@ class Item_Handler():
 
 
     def Update(self, offset = (0,0)):
+        self.Check_Keyboard_Input()
         if self.Update_Nearby_Items_Cooldown():
             self.nearby_items.clear()
             self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)
@@ -135,6 +136,22 @@ class Item_Handler():
                     item.Shoot()
                 except Exception as e:
                     print(f"Item is not throwable {e}", item.type)
+
+    def Check_Keyboard_Input(self):
+        if self.game.keyboard_handler.e_pressed:
+            if not self.Pick_Up_Items():
+                return
+            self.game.keyboard_handler.Set_E_Key(False)
+    
+    def Pick_Up_Items(self) -> bool:
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 30)
+        if not nearby_items:
+            return False
+        player_pos = self.game.player.pos
+        nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
+        
+        nearby_items[0].Pick_Up()
+        return True
 
     def Reset_Nearby_Items_Cooldown(self):
         self.nearby_item_cooldown = 1

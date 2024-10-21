@@ -11,18 +11,39 @@ class Player_Movement():
         self.dashing = 0
         self.back_step = 0
         self.roll_forward = 0
+        self.stamina = 0
+
     
     def Update(self):
+        self.Update_Stamina()
         self.Dashing_Update()
         self.Back_Step_Update()
         self.Roll_Forward_Update()
+        self.Check_Keyboard_input()
+
+    def Update_Stamina(self):
+        if self.stamina <= 0:
+            return
+        self.stamina = max(0, self.stamina - 1)
+
+    def Set_Stamina(self, value):
+        self.stamina = value
+
+    def Check_Keyboard_input(self):
+        keyboard = self.game.keyboard_handler
+        if keyboard.space_pressed:
+            self.Roll_Forward(self.game.render_scroll)
+        elif keyboard.alt_pressed:
+            self.Back_Step(self.game.render_scroll)
 
     def Back_Step(self,  offset=(0, 0)):
-        if not self.back_step:
-            self.player.Attack_Direction_Handler(offset)
-            # Inverse attack Direction
-            self.player.attack_direction = pygame.math.Vector2(self.player.attack_direction[0] * -1, self.player.attack_direction[1] * -1)
-            self.back_step = 20
+        if self.back_step or self.stamina:
+            return
+        self.player.Attack_Direction_Handler(offset)
+        # Inverse attack Direction
+        self.player.attack_direction = pygame.math.Vector2(self.player.attack_direction[0] * -1, self.player.attack_direction[1] * -1)
+        self.back_step = 20
+        self.Set_Stamina(60)
 
     def Back_Step_Update(self):
         if not self.back_step:
@@ -44,9 +65,11 @@ class Player_Movement():
             self.player.velocity[1] = self.player.attack_direction[1] * 20
 
     def Roll_Forward(self,  offset=(0, 0)):
-        if not self.roll_forward:
-            self.player.Attack_Direction_Handler(offset)
-            self.roll_forward = 30
+        if self.roll_forward or self.stamina:
+            return
+        self.player.Attack_Direction_Handler(offset)
+        self.roll_forward = 30
+        self.Set_Stamina(120)
 
     def Roll_Forward_Update(self):
         if not self.roll_forward:
