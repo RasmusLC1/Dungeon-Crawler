@@ -7,8 +7,8 @@ class Logic_Update():
         self.game = game
 
     def Update(self):
-            fps = int(self.game.clock.get_fps())
-            pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
+            
+            self.Check_Keyboard_Input()
             
             self.game.player.Update(self.game.tilemap, (self.game.movement[1] - self.game.movement[0], self.game.movement[3] - self.game.movement[2]), self.game.render_scroll)
             self.game.particle_handler.particle_update(self.game.render_scroll)
@@ -30,3 +30,7 @@ class Logic_Update():
             self.game.text_box_handler.Update()
 
             
+    def Check_Keyboard_Input(self):
+         if self.game.keyboard_handler.escape_pressed:
+            self.game.keyboard_handler.Set_Escape_Key(False)
+            self.game.state_machine.Set_State(3)

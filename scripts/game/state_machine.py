@@ -13,7 +13,6 @@ class State_Machine():
         self.game_state = self.game_state_list[0]
         self.game.game_initialiser = Game_Initialiser(self.game)
         self.game.level_loader = Level_Loader(self.game)
-        self.game.input_update = Input_Update(self.game)
         self.game.camera_update = Camera_Update(self.game)
         self.game.logic_update = Logic_Update(self.game)
         self.game.renderer = Renderer(self.game)
@@ -31,6 +30,9 @@ class State_Machine():
         elif self.game_state == self.game_state_list[4]:
             self.Shrine_Menu()
 
+    def Set_State(self, index):
+        self.game_state = self.game_state_list[index]
+
     def Game_Load(self, load_from_save = False):
         self.game.game_initialiser.Initialise_Game()
 
@@ -45,13 +47,13 @@ class State_Machine():
         self.game.camera_update.Camera_Scroll()
         self.game.renderer.Render()
         self.game.logic_update.Update()
-        self.game.input_update.Input_Handler()
 
     def Start_Menu(self):
         pass
 
     def Pause_Menu(self):
-        pass
+        self.game.pause_menu.Update()
+        self.game.pause_menu.Render(self.game.display)
 
     def Shrine_Menu(self):
         pass

@@ -18,6 +18,8 @@ from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.engine.a_star import A_Star
 from scripts.entities.player.player import Player
+from scripts.menu.pause_menu import Pause_Menu
+
 
 
 
@@ -37,12 +39,13 @@ class Game_Initialiser():
         self.game.screen = pygame.display.set_mode((1280, 960))
         self.game.display = pygame.Surface((self.game.screen_width/self.game.render_scale, self.game.screen_height/self.game.render_scale))
         self.game.render_scroll = (0,0)
-        self.game.clock = pygame.time.Clock()
         
         self.game.movement = [False, False, False, False]
         self.game.assets = {}
         Graphics_Loader.Run_All(self.game)
         Audio_Loader.Run_All(self.game)
+        self.game.pause_menu = Pause_Menu(self.game)
+
 
 
         self.game.tilemap = Tilemap(self.game, tile_size=16)

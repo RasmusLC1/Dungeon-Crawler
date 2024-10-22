@@ -8,6 +8,7 @@ class Mouse_Handler:
         self.click_pos = (0, 0)  # Get the position of the last click
         self.mpos = (0, 0)  # Mouse position with offset
         self.player_mouse = (0, 0)  # Mouse position without offset
+        self.menu_mouse = (0, 0) # Mouse without renderscale
         self.hold_down_left = 0  # Left mouse button hold down time in ticks
         self.hold_down_right = 0  # Right mouse button hold down time in ticks
         self.time_since_last_click = 0  # Check the time since last click
@@ -95,8 +96,15 @@ class Mouse_Handler:
 
     def Player_Mouse_Update(self):
         mouse_pos = pygame.mouse.get_pos()
-        self.player_mouse = (mouse_pos[0] / 4 + self.game.render_scroll[0], mouse_pos[1] / 4 + self.game.render_scroll[1])
+        self.player_mouse = (mouse_pos[0] / self.game.render_scale + self.game.render_scroll[0], mouse_pos[1] / self.game.render_scale + self.game.render_scroll[1])
 
+
+    def Menu_Mouse_Update(self):
+        mouse_pos = pygame.mouse.get_pos()
+        self.menu_mouse = (mouse_pos[0] / self.game.render_scale, mouse_pos[1] / self.game.render_scale)
+
+    def Reset_Click_Pos(self):
+        self.click_pos = (0, 0)
 
     # Reduce inventory clicked time
     def Decrement_Inventory_Clicked(self):
@@ -114,3 +122,8 @@ class Mouse_Handler:
     # Mouse movement collision, add offset to remove it
     def rect_pos(self, offset = (0, 0)):
         return pygame.Rect(self.mpos[0] - offset[0], self.mpos[1]  - offset[1], 1, 1)  
+    
+    # Mouse movement collision, add offset to remove it
+    def rect_pos_menu(self, offset = (0, 0)):
+        return pygame.Rect(self.menu_mouse[0], self.menu_mouse[1], 1, 1)  
+    

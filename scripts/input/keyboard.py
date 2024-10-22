@@ -14,6 +14,7 @@ class Keyboard_Handler:
         self.c_pressed = False
         self.space_pressed = False
         self.alt_pressed = False
+        self.escape_pressed = False
         self._1_pressed = False
         self._2_pressed = False
         self._3_pressed = False
@@ -68,6 +69,8 @@ class Keyboard_Handler:
             self.x_pressed = True
         if key_press.key == pygame.K_c:
             self.c_pressed = True
+        if key_press.key == pygame.K_ESCAPE:
+            self.escape_pressed = True
 
     def Key_Up(self, key_press):
         if key_press.key == pygame.K_a:
@@ -104,10 +107,15 @@ class Keyboard_Handler:
             self.space_pressed = False
         if key_press.key == pygame.K_LALT:
             self.alt_pressed = False
+        if key_press.key == pygame.K_ESCAPE:
+            self.escape_pressed = False
 
 
     def Set_E_Key(self, state):
         self.e_pressed = state
+
+    def Set_Escape_Key(self, state):
+        self.escape_pressed = state
 
     # # Debugging and adjustment function, modify depending on animation needing to be done
     # def Animation_Adjustment_Helper(self, key_press):

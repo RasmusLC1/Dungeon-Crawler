@@ -22,14 +22,23 @@ class Game:
         # self.level_loader.Load_Level_New_Map(self.level)
 
         self.state_machine = State_Machine(self)
+        self.input_update = Input_Update(self)
+        self.clock = pygame.time.Clock()
+
+
         
         
         
 
     def run(self):  
         while True:
+            fps = int(self.clock.get_fps())
+            pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
+            
+            
             self.state_machine.Game_State()
             
+            self.input_update.Input_Handler()
             
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
             pygame.display.update()
