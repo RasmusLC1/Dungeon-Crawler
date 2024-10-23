@@ -214,7 +214,7 @@ class Item(PhysicsEntity):
 
     # Render item with fadeout if it's in an illegal position
     def Render_Out_Of_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
-        # Calclate distance between player and mouse
+        # Calculate distance between player and mouse
         distance = max(20, 100 - self.Distance(player_pos, mouse_pos))
         item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         item_image.set_alpha(distance)

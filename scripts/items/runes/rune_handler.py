@@ -24,6 +24,11 @@ class Rune_Handler():
                     ]              
 
 
+    def Clear_Runes(self):
+        self.runes.clear()
+        self.active_runes.clear()
+        self.saved_data.clear()
+
 
     def Initialise_Runes(self):
         for rune_type in self.rune_types:

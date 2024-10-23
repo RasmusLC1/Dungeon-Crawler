@@ -8,7 +8,8 @@ class Light_Handler():
         self.lights = []
         self.nearby_light_cooldown = 0
 
-
+    def Clear_Lights(self):
+        self.lights.clear()
     
     # Creates a lightsource
     def Add_Light(self, pos, light_level):

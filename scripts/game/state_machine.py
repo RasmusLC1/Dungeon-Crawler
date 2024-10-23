@@ -5,12 +5,13 @@ from scripts.game.logic_update import Logic_Update
 from scripts.game.renderer import Renderer
 from scripts.game.game_initialiser import Game_Initialiser
 from scripts.game.level_loader import Level_Loader
+import pygame
+import sys
 
 class State_Machine():
     def __init__(self, game) -> None:
         self.game = game
-        self.game_state_list = ['load_game', 'game', 'start_menu', 'pause_menu', 'shrine_menu']
-        self.game_state = self.game_state_list[0]
+        self.game_state = 'init'
         self.game.game_initialiser = Game_Initialiser(self.game)
         self.game.level_loader = Level_Loader(self.game)
         self.game.camera_update = Camera_Update(self.game)
@@ -19,41 +20,62 @@ class State_Machine():
 
 
     def Game_State(self):
-        if self.game_state == self.game_state_list[0]:
-            self.Game_Load(False)
-        elif self.game_state == self.game_state_list[1]:
+        # print(self.game_state)
+        if self.game_state == 'run_game':
             self.Game_Loop()
-        elif self.game_state == self.game_state_list[2]:
-            self.Start_Menu()
-        elif self.game_state == self.game_state_list[3]:
+        elif self.game_state == 'main_menu':
+            self.Main_Menu()
+        elif self.game_state == 'pause_menu':
             self.Pause_Menu()
-        elif self.game_state == self.game_state_list[4]:
+        elif self.game_state == 'shrine_menu':
             self.Shrine_Menu()
+        elif self.game_state == 'exit_game':
+            self.Exit_Game()
+        elif self.game_state == 'load_game':
+            self.Game_Load()
+        elif self.game_state == 'new_game':
+            self.New_Game()
+        elif self.game_state == 'init':
+            self.Initialise_Game()
 
-    def Set_State(self, index):
-        self.game_state = self.game_state_list[index]
-
-    def Game_Load(self, load_from_save = False):
+    def Initialise_Game(self):
         self.game.game_initialiser.Initialise_Game()
+        self.game_state = 'main_menu'
 
-        if load_from_save:
-            self.game.level_loader.load_level_From_Save(self.game.level)
-        else:
-            self.game.level_loader.Load_Level_New_Map(self.game.level)
 
-        self.game_state = self.game_state_list[1]
+    def Set_State(self, state):
+        self.game_state = state
+        
+
+    def Game_Load(self):
+
+        self.game.level_loader.load_level_From_Save(self.game.level)
+
+        self.Set_State('run_game')
+
+    
+    def New_Game(self):
+        self.game.level_loader.Load_Level_New_Map(self.game.level)
+
+        self.Set_State('run_game')
 
     def Game_Loop(self):
         self.game.camera_update.Camera_Scroll()
         self.game.renderer.Render()
         self.game.logic_update.Update()
 
-    def Start_Menu(self):
-        pass
+    def Main_Menu(self):
+        self.game.menu_handler.Select_Menu('main_menu')
+        
 
     def Pause_Menu(self):
-        self.game.pause_menu.Update()
-        self.game.pause_menu.Render(self.game.display)
+        self.game.menu_handler.Select_Menu('pause_menu')
 
     def Shrine_Menu(self):
         pass
+
+    def Exit_Game(self):
+        self.game.save_load_manager.Save_Data_Structure()
+        pygame.quit()
+        sys.exit()
+

@@ -37,6 +37,10 @@ class Weapon_Inventory_Handler():
                 
                 inventory.Load_Data(item_data)
 
+    def Clear_Inventory(self):
+        for inventory in self.inventories:
+            inventory.Clear_Inventory()
+
     def Add_Inventory_Slot(self):
         self.inventories.append(Weapon_Inventory(self.game, 'left_right', 0))
         self.inventories.append(Weapon_Inventory(self.game, 'bow_arrow', 1))

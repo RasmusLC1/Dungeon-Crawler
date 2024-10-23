@@ -18,7 +18,7 @@ from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.engine.a_star import A_Star
 from scripts.entities.player.player import Player
-from scripts.menu.pause_menu import Pause_Menu
+from scripts.menu.menu_handler import Menu_Handler
 
 
 
@@ -44,16 +44,19 @@ class Game_Initialiser():
         self.game.assets = {}
         Graphics_Loader.Run_All(self.game)
         Audio_Loader.Run_All(self.game)
-        self.game.pause_menu = Pause_Menu(self.game)
+        self.game.menu_handler = Menu_Handler(self.game)
 
+        self.initialise_Engine()
 
-
-        self.game.tilemap = Tilemap(self.game, tile_size=16)
         # TODO: PLACEHOLDER CODE, Implement proper class system later
         self.game.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
-        self.game.item_inventory = Item_Inventory(self.game)
-        self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior', self.game.proffeciency)
-        self.game.rune_inventory = Rune_Inventory(self.game)
+        
+        
+
+        self.game.level = 0
+        self.game.scroll = [0, 0]
+
+    def initialise_Engine(self):
         self.game.mouse = Mouse_Handler(self.game)
         self.game.ray_caster = Ray_Caster(self.game)
         self.game.a_star = A_Star()
@@ -68,13 +71,6 @@ class Game_Initialiser():
         self.game.keyboard_handler = Keyboard_Handler(self.game)
         
         self.game.dungeon_generator = Dungeon_Generator(self.game)
-
-        self.game.level = 0
-        self.game.scroll = [0, 0]
-
-
-        # for spawner in self.game.tilemap.extract([('spawners', 0)]):
-        #     if spawner['variant'] == 0:
-        #         self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
+        self.game.tilemap = Tilemap(self.game, tile_size=16)
 
         

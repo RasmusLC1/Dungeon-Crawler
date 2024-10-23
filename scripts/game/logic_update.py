@@ -33,4 +33,4 @@ class Logic_Update():
     def Check_Keyboard_Input(self):
          if self.game.keyboard_handler.escape_pressed:
             self.game.keyboard_handler.Set_Escape_Key(False)
-            self.game.state_machine.Set_State(3)
+            self.game.state_machine.Set_State('pause_menu')

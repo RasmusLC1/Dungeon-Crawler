@@ -40,6 +40,12 @@ class Trap_Handler:
             except Exception as e:
                 print("DATA WRONG", item_data, e)
 
+    def Clear_Traps(self):
+        self.traps.clear()
+        self.nearby_traps.clear()
+        self.saved_data.clear()
+
+
     def Initialise(self):
         # Spike initialisation
         for trap in self.game.tilemap.extract([('spike_trap', 0)].copy(), True):

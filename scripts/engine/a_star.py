@@ -39,7 +39,14 @@ class A_Star:
         self.max_y = col
 
         
-        
+    def Clear_Map(self):
+        self.positions.clear()
+        self.map.clear()
+        self.standard_map.clear()
+        self.flying_map.clear()
+        self.ignore_lava_map.clear()
+        self.path.clear()
+        self.custom_map.clear()
         
 
 

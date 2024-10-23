@@ -28,9 +28,11 @@ class Item_Handler():
             self.saved_data[item.item_ID] = item.saved_data
 
     def Load_Data(self, data):
+
         for item_id, item_data in data.items():
             if not item_data:
                 continue
+
             self.Load_Item_From_Data(item_data)
 
     def Load_Item_From_Data(self, item_data):
@@ -52,6 +54,12 @@ class Item_Handler():
             return True
         except Exception as e:
             print("DATA WRONG", item_data, e)
+
+
+    def Clear_Items(self):
+        self.items.clear()
+        self.nearby_items.clear()
+        self.saved_data.clear()
 
     def Initialise(self):
         for torch in self.game.tilemap.extract([('torch', 0)].copy()):

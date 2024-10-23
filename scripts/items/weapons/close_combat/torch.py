@@ -27,7 +27,7 @@ class Torch(Weapon):
 
     def Update(self, offset=(0, 0)):
         super().Update(offset)
-        self.light_source.Move_Light(self.pos)
+        # self.light_source.Move_Light(self.pos)
 
     def Update_Attack_Animation(self):
         super().Update_Attack_Animation()
@@ -120,6 +120,15 @@ class Torch(Weapon):
     def Set_Special_Attack(self, offset = (0,0)):
         super().Set_Special_Attack(offset)
         self.offset = offset
+
+    def Set_Equip(self, state):
+        super().Set_Equip(state)
+
+        if state:
+            self.game.player.Update_Light_Source(self.light_level)
+        else:
+            self.game.player.Update_Light_Source(4)
+            
 
     def Place_Down(self):
         # Parent class Place_down function

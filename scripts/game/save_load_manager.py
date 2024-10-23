@@ -34,6 +34,11 @@ class Save_Load_Manager():
 
 
     def Save_Game_Data(self, name):
+        file_path = (self.save_folder+"/"+name+self.file_extension)
+        try:
+            os.remove(file_path)
+        except FileNotFoundError:
+            print("File not found")
         data_file = open(self.save_folder+"/"+name+self.file_extension, "wb")
         pickle.dump(self.saved_data, data_file)
 

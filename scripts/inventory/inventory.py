@@ -44,7 +44,9 @@ class Inventory:
 
                 inventory_slot.Add_Item(item)
 
-
+    def Clear_Inventory(self):
+        for inventory_slot in self.inventory:
+            inventory_slot.Remove_Item()
 
     # General Update function
     def Update(self, offset=(0, 0)):

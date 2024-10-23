@@ -35,6 +35,12 @@ class Enemy_Handler():
             except Exception as e:
                 print("DATA WRONG", item_data, e)
 
+    def Clear_Enemies(self):
+        self.enemies.clear()
+        self.nearby_enemies.clear()
+        self.saved_data.clear()
+
+
     
     def Initialise(self):
         spawners = self.game.tilemap.extract([('spawners', 1)])
@@ -58,7 +64,6 @@ class Enemy_Handler():
             elif enemy_variant == 4: # Spider
                 type = 'spider'
             
-            print(type)
             if type:
                 pos = spawner['pos']
                 size = (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height())

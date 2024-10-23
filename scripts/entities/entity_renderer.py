@@ -8,6 +8,10 @@ class Entity_Renderer():
         self.nearby_entities = []
         self.nearby_entities_cooldown = 0
 
+    def Clear_Entities(self):
+        self.entities.clear()
+        self.nearby_entities.clear()
+
     def Update(self):
         if self.nearby_entities_cooldown:
             self.nearby_entities_cooldown -= 1

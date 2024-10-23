@@ -10,8 +10,12 @@ class Decoration_Handler():
     def __init__(self, game) -> None:
         self.game = game       
         self.decorations = []
-        self.nearby_doors_cooldown = 0
+        self.nearby_decoration_cooldown = 0
         self.saved_data = {}
+
+    def Clear_Decorations(self):
+        self.decorations.clear()
+        self.saved_data.clear()
 
 
     def Initialise(self, depth = 0):
