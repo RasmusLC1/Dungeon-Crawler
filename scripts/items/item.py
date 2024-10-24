@@ -88,11 +88,10 @@ class Item(PhysicsEntity):
 
     def Pick_Up(self):
         # First Check if the player is colliding with the object as this is priority
-        if self.rect().colliderect(self.game.player.rect()):
-            if self.game.item_inventory.Add_Item(self):
-                self.picked_up = True
-                self.game.entities_render.Remove_Entity(self)
-                return self.game.player
+        if self.game.item_inventory.Add_Item(self):
+            self.picked_up = True
+            self.game.entities_render.Remove_Entity(self)
+            return self.game.player
         
         self.Find_Nearby_Entities(10)
         for entity in self.nearby_entities:

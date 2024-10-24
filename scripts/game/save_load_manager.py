@@ -51,6 +51,7 @@ class Save_Load_Manager():
         self.game.trap_handler.Save_Trap_Data()
         self.game.enemy_handler.Save_Enemy_Data()
         self.Inventory_Save_Data()
+        self.game.tilemap.Save_Tile_Data()
 
     
 

@@ -28,7 +28,6 @@ class Level_Loader():
         # Initialise the engine again upon load to prevent memory leaks
         self.game.game_initialiser.initialise_Engine()
 
-        print("LOAD LEVEL FROM SAVE", map_id)
         self.load_level(map_id)
         self.game.save_load_manager.Load_Data_Structure() # Load data from save file
 

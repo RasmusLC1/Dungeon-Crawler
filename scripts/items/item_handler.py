@@ -149,12 +149,15 @@ class Item_Handler():
         if self.game.keyboard_handler.e_pressed:
             if not self.Pick_Up_Items():
                 return
-            self.game.keyboard_handler.Set_E_Key(False)
+            else:
+                self.game.keyboard_handler.Set_E_Key(False)
     
     def Pick_Up_Items(self) -> bool:
-        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 30)
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 10)
         if not nearby_items:
             return False
+        for item in nearby_items:
+            print(item)
         player_pos = self.game.player.pos
         nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         

@@ -79,13 +79,12 @@ class Decoration_Handler():
     
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:
-
             if not self.Check_Decorations():
                 return
             self.game.keyboard_handler.Set_E_Key(False)
 
 
-    def Check_Decorations(self):      
+    def Check_Decorations(self):
         nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 20)
         if not nearby_decorations:
             return False

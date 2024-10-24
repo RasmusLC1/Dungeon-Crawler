@@ -35,21 +35,17 @@ class Player(Moving_Entity):
         self.movement_handler = Player_Movement(self.game, self)
 
     def Save_Data(self):
-        print("TESTTEST")
         super().Save_Data()
         self.saved_data['souls'] = self.souls
         self.status_effects.Save_Data()
-        print("TESTTESTETSTESTT222222", self.pos)
 
         # self.saved_data['weapon_handler'] = self.weapon_handler
 
 
     def Load_Data(self, data):
-        print("TESTTESTETST", self.pos)
         super().Load_Data(data)
         self.souls = data['souls']
         self.status_effects.Load_Data(data)
-        print("TESTTESTETSTESTT222222", self.pos)
 
 
 

@@ -28,7 +28,36 @@ class Tilemap:
         self.tile_size = tile_size
         self.tilemap = {}
         self.offgrid_tiles = []
+        self.saved_data = {}
     
+    def Save_Tile_Data(self):
+        self.saved_data['tilemap'] = self.tilemap
+        self.saved_data['offgrid_tiles'] = self.offgrid_tiles
+
+    def Load_Data(self, data):
+        for loaded_tile in  data['tilemap']:
+            if not loaded_tile:
+                continue
+            for key, value in self.tilemap:
+                print("KEY AND VALUE", key, value) 
+                if not tile:
+                    continue
+                print("TILE: ", tile['pos'])
+                print(tile['pos'])
+                if tile['pos'] == tile['pos']:
+                    tile['active'] = loaded_tile['active']
+                    tile['light'] = loaded_tile['light']
+                    break
+
+        for loaded_tile in  data['offgrid_tiles']:
+            for tile in self.tilemap:
+                if tile['pos'] == tile['pos']:
+                    tile['active'] = loaded_tile['active']
+                    tile['light'] = loaded_tile['light']
+                    break
+
+
+            
 
     def extract(self, id_pairs, keep=False):
         matches = []
