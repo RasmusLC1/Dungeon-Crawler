@@ -57,6 +57,16 @@ class Dungeon_Generator():
 
         self.Level_Structure()
 
+
+        # for i in range(10):
+        #     x_pos = random.randint(5, self.cellular_automata.size_x - 5)
+        #     y_pos = random.randint(5, self.cellular_automata.size_y - 5)
+        #     if self.cellular_automata.map[x_pos][y_pos] != 0:
+        #         continue
+        #     self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [x_pos * 16, y_pos * 16]})
+            
+
+
         
 
         self.tilemap.save('data/maps/0.json')
@@ -306,7 +316,10 @@ class Dungeon_Generator():
         self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 0, 'pos': (self.player_spawn[0] * 16, self.player_spawn[1] * 16)})
 
         self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [self.player_spawn[0] * 16, self.player_spawn[1] * 16]})
-    
+
+        self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [self.player_spawn[0] * 16 - 20, self.player_spawn[1] * 16 - 20]})
+
+
     def Enemy_Spawner(self):
         spawners = 0
         fails = 0

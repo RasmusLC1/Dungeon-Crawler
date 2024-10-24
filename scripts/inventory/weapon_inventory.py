@@ -14,11 +14,8 @@ class Weapon_Inventory(Inventory):
         for item_id, item_data in data.items():
             if not item_data:
                 continue
-            # print('TEST', item_data[index]['item_ID'])
             for inventory_slot in self.inventory:
 
-                # print(item_data['item_id'])
-                # print(index, inventory_slot.index)
                 if item_data['inventory_index'] != inventory_slot.index:
                     continue
 

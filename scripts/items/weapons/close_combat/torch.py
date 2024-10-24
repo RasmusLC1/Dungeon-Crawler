@@ -27,7 +27,6 @@ class Torch(Weapon):
 
     def Update(self, offset=(0, 0)):
         super().Update(offset)
-        # self.light_source.Move_Light(self.pos)
 
     def Update_Attack_Animation(self):
         super().Update_Attack_Animation()

@@ -35,6 +35,9 @@ class Weapon_Handler():
         
         if data:
             weapon.Load_Data(data)
+            if weapon.equipped:
+                weapon.entity = self.game.player
+                weapon.Equip()
         
         self.game.item_handler.Add_Item(weapon)
 

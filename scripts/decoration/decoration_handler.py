@@ -2,6 +2,7 @@ import pygame
 from scripts.entities.entities import PhysicsEntity
 from scripts.decoration.chest.chest import Chest
 from scripts.decoration.doors.door import Door
+from scripts.decoration.shrine.shrine import Shrine
 import random
 import math
 
@@ -29,6 +30,11 @@ class Decoration_Handler():
             version = self.Set_Chest_Version(depth)
             spawn_chest = self.Spawn_Chest(chest['pos'], version)
             self.decorations.append(spawn_chest)
+
+        for shrine in self.game.tilemap.extract([('Shrine', 0)]):
+            spawn_shrine = self.Spawn_Shrine(shrine['pos'])
+            self.decorations.append(spawn_shrine)
+            print(spawn_shrine.pos, self.game.player.pos)
 
     def Set_Chest_Version(self, depth):
         i = 0
@@ -69,6 +75,8 @@ class Decoration_Handler():
 
     def Update(self):
         self.Check_Keyboard_Input()
+        for decoration in self.decorations:
+            decoration.Update()
 
 
     def Spawn_Door(self, pos, size):
@@ -76,6 +84,9 @@ class Decoration_Handler():
     
     def Spawn_Chest(self, pos, version):
         return Chest(self.game, pos, version)  
+    
+    def Spawn_Shrine(self, pos):
+        return Shrine(self.game, pos)  
     
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:
@@ -85,6 +96,10 @@ class Decoration_Handler():
 
 
     def Check_Decorations(self):
+        # Check Shrine First since it's bigger
+        if self.Nearby_Shrine():
+            return True
+        
         nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 20)
         if not nearby_decorations:
             return False
@@ -103,25 +118,51 @@ class Decoration_Handler():
         
         return nearby_decorations
     
-    def Open_Decoration(self, decorations):
+    def Open_Decoration(self, decorations):      
         if not decorations:
             return False
         
         player_pos = self.game.player.pos
         decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         decoration = decorations[0]
+        
+        if self.Nearby_Chest(decoration):
+            return True
+        
+        if self.Nearby_Door(decoration):
+            return True
+
+        
+        
+        return False
+    
+    def Nearby_Chest(self, decoration):
         if decoration.type == 'chest':
             decoration.Open()
-        elif decoration.type == 'door':
+            self.decorations.remove(decoration)
+            del(decoration)
+            return True
+
+    def Nearby_Door(self, decoration):
+        if decoration.type == 'door':
             if not self.Open_Door_With_Key(decoration):
                 return False
-        else:
-            return False
+            self.decorations.remove(decoration)
+            del(decoration)
+            return True
         
-        self.decorations.remove(decoration)
-        del(decoration)
-        
-        return True
+        return False
+
+    def Nearby_Shrine(self):
+        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 50)
+        for decoration in nearby_decorations:
+            if decoration.type == 'shrine':
+                if not decoration.rect().colliderect(self.game.player.rect()):
+                    continue
+                decoration.Open()
+                return True
+            
+        return False
     
     def Sort_Decorations(self, decorations):
         player_pos = self.game.player.pos

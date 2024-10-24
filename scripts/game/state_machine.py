@@ -72,7 +72,7 @@ class State_Machine():
         self.game.menu_handler.Select_Menu('pause_menu')
 
     def Shrine_Menu(self):
-        pass
+        self.game.menu_handler.Select_Menu('shrine_menu')
 
     def Exit_Game(self):
         self.game.save_load_manager.Save_Data_Structure()

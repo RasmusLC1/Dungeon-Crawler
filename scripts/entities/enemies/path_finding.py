@@ -244,7 +244,7 @@ class Path_Finding():
             return True
         
         if self.entity.distance_to_player > max_range :
-            return self.Charge_player(300)
+            return self.Charge_player(150)
         
         return self.Run_Away(60)
 
@@ -255,7 +255,7 @@ class Path_Finding():
         if self.direct_pathing_cooldown:
             self.direct_pathing_cooldown = max(0, self.direct_pathing_cooldown - 1)
             return True
-        return self.Charge_player(300)  
+        return self.Charge_player(200)  
         # Player is close, so the enemy charge directly
         
     def Run_Away(self, distance):

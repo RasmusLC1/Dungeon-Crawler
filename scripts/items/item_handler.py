@@ -156,8 +156,6 @@ class Item_Handler():
         nearby_items = self.Find_Nearby_Item(self.game.player.pos, 10)
         if not nearby_items:
             return False
-        for item in nearby_items:
-            print(item)
         player_pos = self.game.player.pos
         nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         

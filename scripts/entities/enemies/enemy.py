@@ -41,6 +41,7 @@ class Enemy(Moving_Entity):
         self.saved_data['attack_strategy'] = self.attack_strategy
         self.saved_data['path_finding_strategy'] = self.path_finding_strategy
         self.saved_data['locked_on_target'] = self.locked_on_target
+        self.saved_data['target'] = self.target
         self.saved_data['ID'] = self.ID
         self.saved_data['sub_type'] = self.sub_type
 
@@ -56,6 +57,7 @@ class Enemy(Moving_Entity):
         self.locked_on_target = data['locked_on_target']
         self.ID = data['ID']
         self.sub_type = data['sub_type']
+        self.target = data['target']
 
 
 
