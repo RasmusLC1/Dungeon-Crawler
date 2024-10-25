@@ -1,0 +1,33 @@
+from scripts.menu.button import Button
+import math
+
+class Rune_Button(Button):
+    def __init__(self, game, pos, size, text, effect, color = (0, 0, 0)) -> None:
+        super().__init__(game, pos, size, text, 'None', False, color)
+        self.effect = effect
+
+    def Activate(self, rune):
+        if self.effect == 'souls':
+            amount = -1 * math.ceil(rune.original_soul_cost / 10)
+            return rune.Modify_Souls_Cost(amount)
+
+        elif self.effect == 'strength':
+            amount = math.ceil(rune.original_strength / 10)
+            return rune.Modify_strength(amount)
+
+    def Update(self, rune):
+        self.game.mouse.Menu_Mouse_Update()
+        if self.rect().colliderect(self.game.mouse.rect_pos_menu()):
+            color_0 = min(50, self.background_color[0] + self.button_speed)
+            color_1 = min(50, self.background_color[1] + self.button_speed)
+            color_2 = min(50, self.background_color[2] + self.button_speed)
+            self.background_color = (color_0, color_1, color_2)
+            self.rect_surface.fill(self.background_color)
+
+            if self.rect().colliderect(self.game.mouse.rect_click()):
+                self.game.mouse.Reset_Click_Pos()
+                return self.Activate(rune)
+            return False
+        
+        self.Reset_Color()
+        return False

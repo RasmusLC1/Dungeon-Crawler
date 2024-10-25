@@ -75,6 +75,17 @@ Game Ideas
     Whip, can be used for movement
     magic Staff, improved spells but poor melee damage, different staffs for different lores of magic
 
+# Items
+    Rare objects found in loot rooms
+    Pendant of light, Revive the player one time for 100 gold
+    Pendant of Faith, Highlights traps
+    Lantern, Sets the player light to 7, passive light
+    Totem of Power, increases Rune power, stacks with more totems
+    Totem of Strength, increases strength
+    Totem of Luck, gives a chance to cancel negative card
+    
+
+
 # Potions
     # Health
     # strength

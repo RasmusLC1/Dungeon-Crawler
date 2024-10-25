@@ -5,6 +5,7 @@ import pygame
 class Rune(Item):
     def __init__(self, game, type, pos, strength, soul_cost):
         super().__init__(game,  type, 'rune', pos, (16, 16), 1)
+        self.menu_pos = pos
         self.max_amount = 1
         self.original_strength = strength
         self.current_strength = strength
@@ -27,6 +28,7 @@ class Rune(Item):
         self.saved_data['original_soul_cost'] = self.original_soul_cost
         self.saved_data['current_soul_cost'] = self.current_soul_cost
         self.saved_data['active'] = self.active
+        self.saved_data['menu_pos'] = self.menu_pos
     
     def Load_Data(self, data):
         super().Load_Data(data)
@@ -36,6 +38,7 @@ class Rune(Item):
         self.original_soul_cost = data['original_soul_cost'] 
         self.current_soul_cost = data['current_soul_cost'] 
         self.active = data['active'] 
+        self.menu_pos = data['menu_pos']
 
 
     
@@ -50,22 +53,23 @@ class Rune(Item):
             self.Reset_Animation_Size()
         return True
     
-
+    def Set_Saved_Pos(self, pos):
+        self.menu_pos = pos
 
     def Remove_Rune_From_Inventory(self):
         pass
 
-    def Increase_cost(self, change):
+    def Modify_Souls_Cost(self, change):
+        if self.current_soul_cost + change < 3:
+            return False
         self.current_soul_cost += change
+        return True
 
-    def Decrease_cost(self, change):
-        self.current_soul_cost -= change
 
-    def Increase_srength(self, change):
+    def Modify_strength(self, change):
         self.current_strength += change
+        return True
 
-    def Decrease_strength(self, change):
-        self.current_strength -= change
 
     def Set_Animation_Time(self):
         self.animation_time = self.animation_time_max
@@ -91,6 +95,13 @@ class Rune(Item):
         item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - 3, self.pos[1] - 3))
 
+    # Defualt the Render function to render in inventory
+    def Render_Menu(self, surf):
+        item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], self.size)  
+        surf.blit(item_image, (self.menu_pos[0], self.menu_pos[1]))
     
     def Render_Animation(self, surf, offset=(0, 0)):
         pass
+
+    def Menu_Rect(self):
+        return pygame.Rect(self.menu_pos[0], self.menu_pos[1], self.size[0], self.size[1])

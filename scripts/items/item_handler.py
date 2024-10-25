@@ -53,7 +53,7 @@ class Item_Handler():
             
             return True
         except Exception as e:
-            print("DATA WRONG", item_data, e)
+            print("DATA WRONG ITEM HANDLER", item_data, e)
 
 
     def Clear_Items(self):

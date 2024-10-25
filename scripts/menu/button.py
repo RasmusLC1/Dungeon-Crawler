@@ -1,14 +1,14 @@
 import pygame
 
 class Button():
-    def __init__(self, game, pos, size, text, game_state_index, save_game = False, color = (0, 0, 0)) -> None:
+    def __init__(self, game, pos, size, text, game_state, save_game = False, color = (0, 0, 0)) -> None:
         self.game = game
         self.size = size
         self.pos = pos
         self.text = text
         self.background_color = color
         self.background_color_holder = color
-        self.game_state_index = game_state_index
+        self.game_state = game_state
         self.text_length = len(text)
         self.rect_surface = pygame.Surface(self.size)
         self.rect_surface.fill(self.background_color)
@@ -46,7 +46,7 @@ class Button():
         if self.save_game:
             self.game.save_load_manager.Save_Data_Structure()
 
-        self.game.state_machine.Set_State(self.game_state_index)
+        self.game.state_machine.Set_State(self.game_state)
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])

@@ -51,7 +51,7 @@ class Rune_Handler():
                 type = item_data['type']
                 self.Rune_Spawner(type, item_data)
             except Exception as e:
-                print("DATA WRONG", item_data, e)
+                print("DATA WRONG RUNE HANDLER", item_data, e)
 
 
 
@@ -124,6 +124,7 @@ class Rune_Handler():
         self.Add_Rune_To_Rune_Inventory('key_rune')
         self.Add_Rune_To_Rune_Inventory('fire_resistance_rune')
 
+    # Add runes to Active Inventory
     def Add_Rune_To_Rune_Inventory(self, rune_type):
         for rune in self.runes:
             if rune_type != rune.type:

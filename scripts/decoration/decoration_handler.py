@@ -66,12 +66,15 @@ class Decoration_Handler():
                 elif type == 'chest':
                     version = item_data['version']
                     decoration = self.Spawn_Chest(pos, version)
+                elif type == 'shrine':
+                    decoration = self.Spawn_Shrine(pos)
+                else:
+                    print(type)
                 decoration.Load_Data(item_data)
                 self.decorations.append(decoration)
 
             except Exception as e:
-                pass
-                print("DATA WRONG", item_data, e)
+                print("DATA WRONG DECORATION HANDLER", item_data, e)
 
     def Update(self):
         self.Check_Keyboard_Input()

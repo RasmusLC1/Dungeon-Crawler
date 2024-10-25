@@ -74,6 +74,9 @@ class State_Machine():
     def Shrine_Menu(self):
         self.game.menu_handler.Select_Menu('shrine_menu')
 
+
+
+
     def Exit_Game(self):
         self.game.save_load_manager.Save_Data_Structure()
         pygame.quit()

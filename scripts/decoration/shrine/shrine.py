@@ -32,9 +32,12 @@ class Shrine(Decoration):
             self.animation_cooldown = 20
             self.animation = random.randint(0,self.max_animation)
 
-    def Open(self, generate_clatter = False):
-        print("TEST")
+    def Open(self):
+        self.game.menu_handler.shrine_menu.Randomise_Runes()
         self.game.state_machine.Set_State('shrine_menu')
+        self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+        
+
 
 
     def Render(self, surf, offset = (0,0)):
@@ -50,12 +53,6 @@ class Shrine(Decoration):
         
         shrine_image.set_alpha(alpha_value)
 
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(shrine_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        # Blit the chest layer on top the dark layer
-        shrine_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         
         # Render the chest
         surf.blit(shrine_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
