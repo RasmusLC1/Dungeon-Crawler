@@ -9,24 +9,29 @@ class Shrine_Menu(Menu):
         self.runes = []
         self.upgrade_rune = None
         self.Init_Rune_Upgrade_Buttons()
+        self.rune_highlight = pygame.Surface((20, 20))
+        self.rune_highlight.fill((120, 120, 120))
+
+        self.rune_text_clear = pygame.Surface((110, 25))
+        self.rune_text_clear.fill((20, 20, 20))
     
     def Init_Rune_Upgrade_Buttons(self):
         self.rune_upgrade_buttons = []
         width = self.game.screen_width // self.game.render_scale // 2
         button_size_x = 100
-        self.Generate_Rune_Button((width - button_size_x // 2 + 50, 100), (button_size_x, 20), 'soul', 'souls')
-        self.Generate_Rune_Button((width - button_size_x // 2 + 50, 130), (button_size_x, 20), 'Strength', 'strength')
+        self.Generate_Rune_Button((width - button_size_x // 2, 100), (button_size_x, 20), 'Souls', 'souls', (100, 100, 150))
+        self.Generate_Rune_Button((width - button_size_x // 2, 130), (button_size_x, 20), 'Strength', 'strength', (140, 0, 0))
 
         
 
     def Init_Buttons(self):
         self.buttons = []
-        width = self.game.screen_width // self.game.render_scale // 2
+        width = self.game.screen_width // self.game.render_scale
         button_size_x = 100
-        self.Generate_Button((width - button_size_x // 2, 50), (button_size_x, 20), 'resume', 'run_game')
+        self.Generate_Button((width - button_size_x - 10, 10), (button_size_x, 20), 'resume', 'run_game', False, (100, 100, 100))
     
-    def Generate_Rune_Button(self, pos, size, text, effect):
-        rune_button = Rune_Button(self.game, pos, size, text, effect)
+    def Generate_Rune_Button(self, pos, size, text, effect, color = (0, 0, 0)):
+        rune_button = Rune_Button(self.game, pos, size, text, effect, color)
         self.rune_upgrade_buttons.append(rune_button)
 
     def Update(self):
@@ -46,6 +51,9 @@ class Shrine_Menu(Menu):
             if rune.Menu_Rect().colliderect(self.game.mouse.rect_click()):
                 self.game.mouse.Reset_Click_Pos()
                 self.upgrade_rune = rune
+                # Clear the previous text
+                self.game.display.blit(self.rune_text_clear, (20, 20))
+
 
     def Check_Keyboard_Input(self):
          if self.game.keyboard_handler.escape_pressed:
@@ -60,7 +68,7 @@ class Shrine_Menu(Menu):
     
     def Set_Active_Runes_Menu_Pos(self):
         self.runes = self.game.rune_handler.active_runes
-        pos_x = 100
+        pos_x = 20
         pos_y = 100
         for rune in self.runes:
             rune.menu_pos = (pos_x, pos_y)
@@ -69,6 +77,13 @@ class Shrine_Menu(Menu):
 
     def Render(self, surf):
         super().Render(surf)
+
+        if self.upgrade_rune:
+            surf.blit(self.rune_highlight, (self.upgrade_rune.menu_pos[0] - 2, self.upgrade_rune.menu_pos[1] - 2))
+            self.game.default_font.Render_Word(surf, "Souls Cost:  " + str(self.upgrade_rune.current_soul_cost), (20, 20))        
+            self.game.default_font.Render_Word(surf, "Strength:    " + str(self.upgrade_rune.current_strength), (20, 32))        
+
+            
         for rune in self.runes:
             rune.Render_Menu(surf)
 

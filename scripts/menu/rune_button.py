@@ -18,9 +18,9 @@ class Rune_Button(Button):
     def Update(self, rune):
         self.game.mouse.Menu_Mouse_Update()
         if self.rect().colliderect(self.game.mouse.rect_pos_menu()):
-            color_0 = min(50, self.background_color[0] + self.button_speed)
-            color_1 = min(50, self.background_color[1] + self.button_speed)
-            color_2 = min(50, self.background_color[2] + self.button_speed)
+            color_0 = min(250, min(self.background_color_holder[0] * 1.3, self.background_color[0] + self.button_speed))
+            color_1 = min(250, min(self.background_color_holder[1] * 1.3, self.background_color[1] + self.button_speed))
+            color_2 = min(250, min(self.background_color_holder[2] * 1.3, self.background_color[2] + self.button_speed))
             self.background_color = (color_0, color_1, color_2)
             self.rect_surface.fill(self.background_color)
 

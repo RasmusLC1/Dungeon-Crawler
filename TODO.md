@@ -176,28 +176,32 @@ Game Ideas
 
 
 # Enemies:
-    Each enemy has an intelligence level and personality that determines it's ability to think
-        Personality:
-            - Agression, number from 1 to 10 that determines its behaviour and makes it more likely to attack and stay in combat
-            - Intelligence, 1-10, higher intelligence avoids traps and attacks from the shadows
-            - Hunter type
-                - pack swarms the player
-                - Solo, goes after the player alone
-                - Scout, looks for and calls allies to attack the player
-                - Sentry, calls enemies in a wide range to notify if they spot the player, but they don't move unless they see the player
-                - Ambusher, waits and attacks the player
-                - Support, supports the other enemies with healing
-                - Ranged, shoots the player from range 
-                - Melee, attacks the player up close
+    Enemies start out basic but can upgrade to elite as dungeon effects trigger
+    Spawn enemies using dungeon director when effects trigger
+    - pack swarms the player
+    - Solo, goes after the player alone
+    - Scout, looks for and calls allies to attack the player
+    - Sentry, calls enemies in a wide range to notify if they spot the player, but they don't move unless they see the player
+    - Ambusher, waits and attacks the player
+    - Support, supports the other enemies with healing
+    - Ranged, shoots the player from range 
+    - Melee, attacks the player up close
 
 ## Ancient Tomb Enemies
-    # Spider, shoots spiderweb that snares you, less damage
-    # Skeletons take more damage from blunt weapons, make more noise from rattle
+    # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
     Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
+    # Skeletons take more damage from blunt weapons, make more noise from rattle  -> Upgrades to Wight Lord
+    Wight Lord, elite armoured skeleton with shield and sword
+    Ghost, can go through walls, low health high damage, need special effect to damage -> Upgrades to Reaper
+    Reaper, elite melee enemy with scythe sweep attack
     Vampire, life steal, flying bat form when travelling, close combat
-    Ghost, can go through walls, low health high damage, need special effect to damage
-    Necromancer, boss mob, spawns skeletons, raises killed skeletons
+    Crypt Ghoul, bone club, fast -> Upgrades to Crypt Horror
+    Crypt Horror, Elite high damage and strength, fast
+    Wolves, fast and high damage  -> Upgrades to WereWolf
+    WereWolf, Elite enemy high mass fast, high damage
+    Necromancer, elite mob, spawns skeletons, raises killed skeletons
     Gargoyle, sentry that waits for players and blends into the envoirement
+    Eyes of Evil, floating eyes that shoot at range, Snare
 
 ## Crystal Caverns enemies
     # Spider, shoots spiderweb that snares you, less damage

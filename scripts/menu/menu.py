@@ -21,8 +21,8 @@ class Menu():
         pass
 
 
-    def Generate_Button(self, pos, size, text, menu_state, save_game = False):
-        button = Button(self.game, pos, size, text, menu_state, save_game)
+    def Generate_Button(self, pos, size, text, menu_state, save_game = False, color = (0, 0, 0)):
+        button = Button(self.game, pos, size, text, menu_state, save_game, color)
         self.buttons.append(button)
 
 
