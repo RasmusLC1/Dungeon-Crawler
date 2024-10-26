@@ -40,7 +40,6 @@ class Rune_Handler():
     def Save_Rune_Data(self):
         for rune in self.runes:
             rune.Save_Data()
-            print(rune.active, rune.type)
             self.saved_data[rune.type] = rune.saved_data
 
     def Load_Data(self, data):

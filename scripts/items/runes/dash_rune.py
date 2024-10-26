@@ -4,7 +4,7 @@ import pygame
 
 class Dash_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'dash_rune', pos, 10, 2)
+        super().__init__(game, 'dash_rune', pos, 10, 10)
         self.animation_time_max = 30
         self.effect = 'dash'
         self.animation_size_max = 15

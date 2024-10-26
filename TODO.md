@@ -31,11 +31,12 @@ Game Ideas
         Example could be buying keys to get to lower levels quicker
         Permanent upgrades for character like more health
     There are shrines in the dungeon where you can pay with souls of slain enemies to buy upgrades
-        Upgrades could be temporarily calming the dungeon so that no new enemies spawn
-        More gold on the floor
-        Key to the next floor in case you cannot find one
-        Weapon or artifact to help you
-        Temporary rune for this run
+        Shrines are found in boss rooms, risk damage to upgrade
+        Different Shrines do different things:
+            Rune shrine, Upgrade and Buy runes
+            Character shrine, upgrade character
+            Artifact Shrine, buy and upgrade weapons and artifacts
+        
     Game ends when you die, you can buy resurrection tombs to prevent this, but it will be money you could spend on other upgrades instead
         Each resurrection tomb gets more expensive
         

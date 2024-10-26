@@ -165,7 +165,7 @@ class A_Star:
     # Check if a cell is unblocked
     def is_unblocked(self, row, col):
         # First check if row and col indices are within the valid range
-        if col > self.max_x or col < self.min_x or row > self.max_y or row < self.min_y:
+        if col >= self.max_x or col <= self.min_x or row >= self.max_y or row <= self.min_y:
             return False
 
         return self.map[row][col] == 0

@@ -1,16 +1,19 @@
 from scripts.items.item import Item
 import pygame
+import math
 
 
 class Rune(Item):
-    def __init__(self, game, type, pos, strength, soul_cost):
+    def __init__(self, game, type, pos, power, soul_cost):
         super().__init__(game,  type, 'rune', pos, (16, 16), 1)
         self.menu_pos = pos
         self.max_amount = 1
-        self.original_strength = strength
-        self.current_strength = strength
+        self.upgrade_cost = math.ceil(soul_cost / 3)
+        self.original_power = power
+        self.current_power = power
         self.original_soul_cost = soul_cost
         self.current_soul_cost = soul_cost
+        self.min_soul_cost = math.ceil(self.original_soul_cost / 10)
         self.animation_time_max = 1
         self.animation_time = 0
         self.animation_size = 0
@@ -23,8 +26,9 @@ class Rune(Item):
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['effect'] = self.effect
-        self.saved_data['original_strength'] = self.original_strength
-        self.saved_data['current_strength'] = self.current_strength
+        self.saved_data['upgrade_cost'] = self.upgrade_cost
+        self.saved_data['original_power'] = self.original_power
+        self.saved_data['current_power'] = self.current_power
         self.saved_data['original_soul_cost'] = self.original_soul_cost
         self.saved_data['current_soul_cost'] = self.current_soul_cost
         self.saved_data['active'] = self.active
@@ -33,12 +37,14 @@ class Rune(Item):
     def Load_Data(self, data):
         super().Load_Data(data)
         self.effect = data['effect'] 
-        self.original_strength = data['original_strength'] 
-        self.current_strength = data['current_strength']
+        self.upgrade_cost = data['upgrade_cost'] 
+        self.original_power = data['original_power'] 
+        self.current_power = data['current_power']
         self.original_soul_cost = data['original_soul_cost'] 
         self.current_soul_cost = data['current_soul_cost'] 
         self.active = data['active'] 
         self.menu_pos = data['menu_pos']
+        
 
 
     
@@ -47,7 +53,7 @@ class Rune(Item):
             return False
         if self.game.player.souls < self.current_soul_cost:
             return False
-        if self.game.player.Set_Effect(self.effect, self.current_strength):
+        if self.game.player.Set_Effect(self.effect, self.current_power):
             self.game.player.Decrease_Souls(self.current_soul_cost)
             self.Set_Animation_Time()
             self.Reset_Animation_Size()
@@ -60,14 +66,17 @@ class Rune(Item):
         pass
 
     def Modify_Souls_Cost(self, change):
-        if self.current_soul_cost + change < 3:
+        if self.current_soul_cost + change < self.min_soul_cost:
             return False
         self.current_soul_cost += change
         return True
 
-
-    def Modify_strength(self, change):
-        self.current_strength += change
+    def Modify_Upgrade_Cost(self, change):
+        self.upgrade_cost += change
+        return True
+    
+    def Modify_Power(self, change):
+        self.current_power += change
         return True
 
 

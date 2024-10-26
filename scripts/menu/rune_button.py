@@ -11,9 +11,9 @@ class Rune_Button(Button):
             amount = -1 * math.ceil(rune.original_soul_cost / 10)
             return rune.Modify_Souls_Cost(amount)
 
-        elif self.effect == 'strength':
-            amount = math.ceil(rune.original_strength / 10)
-            return rune.Modify_strength(amount)
+        elif self.effect == 'power':
+            amount = math.ceil(rune.original_power / 10)
+            return rune.Modify_Power(amount)
 
     def Update(self, rune):
         self.game.mouse.Menu_Mouse_Update()
