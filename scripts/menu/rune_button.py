@@ -14,6 +14,9 @@ class Rune_Button(Button):
         elif self.effect == 'power':
             amount = math.ceil(rune.original_power / 10)
             return rune.Modify_Power(amount)
+        
+        elif self.effect == 'purchase':
+            return True
 
     def Update(self, rune):
         self.game.mouse.Menu_Mouse_Update()

@@ -35,9 +35,9 @@ class Level_Loader():
     def Initialise_Level(self):
         self.game.item_handler.Initialise()
         self.game.enemy_handler.Initialise()
+        self.game.rune_handler.Initialise_Runes()
         self.game.decoration_handler.Initialise(3)
         self.game.trap_handler.Initialise()
-        self.game.rune_handler.Initialise_Runes()
 
     def Load_Level_New_Map(self, map_id):
         self.game.game_initialiser.initialise_Engine()

@@ -10,8 +10,8 @@ class Light_Rune(Rune):
     def Update(self):
         super().Update()
 
-        if self.game.player.light_source.light_level < self.current_strength:
-            self.game.player.Update_Light_Source(self.current_strength)
+        if self.game.player.light_source.light_level < self.current_power:
+            self.game.player.Update_Light_Source(self.current_power)
 
     def Remove_Rune_From_Inventory(self):
         self.game.player.Update_Light_Source(4)

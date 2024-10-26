@@ -134,6 +134,15 @@ class Rune_Handler():
             self.game.rune_inventory.Add_Item(rune)
             return
 
+    def Remove_Rune_From_Inventory(self, rune_type):
+        for rune in self.runes:
+            if rune_type != rune.type:
+                continue
+            
+            rune.active = False
+            self.active_runes.remove(rune)
+            self.game.rune_inventory.Remove_Item(rune, True)
+            return
 
     def Update(self, offset = (0,0)):
         for rune in self.active_runes:

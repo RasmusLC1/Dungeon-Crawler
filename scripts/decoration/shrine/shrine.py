@@ -12,14 +12,31 @@ class Shrine(Decoration):
         self.light_level = 8
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+        self.available_rune = None
+        
+
 
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['is_open'] = self.is_open
+        if not self.available_rune:
+            self.saved_data['rune_type'] = ''
+            return
+        
+        self.saved_data['rune_type'] = self.available_rune.type
+
 
     def Load_Data(self, data):
         super().Load_Data(data)
         self.is_open = data['is_open']
+        rune_type = data['rune_type']
+        if not rune_type:
+            return
+        for rune in self.game.rune_handler.runes:
+            if rune.type == rune_type:
+                self.available_rune = rune
+                break
+
 
     def Update(self):
         self.Update_Animation()
@@ -33,12 +50,30 @@ class Shrine(Decoration):
             self.animation = random.randint(0,self.max_animation)
 
     def Open(self):
-        self.game.menu_handler.shrine_menu.Randomise_Runes()
+        if not self.is_open:
+            self.Select_Available_Rune()
+            self.game.menu_handler.shrine_menu.Initialise_Runes(self.available_rune)
+        
+        else:
+            self.game.menu_handler.shrine_menu.Initialise_Runes()
+            
         self.game.state_machine.Set_State('shrine_menu')
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
         
 
+    def Select_Available_Rune(self):
+        random_rune = random.randint(0, len(self.game.rune_handler.runes) - 1)
 
+        rune = self.game.rune_handler.runes[random_rune]
+
+        if rune in self.game.rune_handler.active_runes:
+            self.Select_Available_Rune()
+            return
+        
+        self.available_rune = rune
+        self.available_rune.Set_Menu_Pos((self.game.screen_width // self.game.render_scale - 50, self.game.screen_height // 2 // self.game.render_scale))
+        self.is_open = True
+        print("TESTTESTTEST")
 
     def Render(self, surf, offset = (0,0)):
         if not self.Update_Light_Level():

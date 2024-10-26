@@ -8,7 +8,7 @@ class Rune(Item):
         super().__init__(game,  type, 'rune', pos, (16, 16), 1)
         self.menu_pos = pos
         self.max_amount = 1
-        self.upgrade_cost = math.ceil(soul_cost / 3)
+        self.upgrade_cost = max(10, math.ceil(soul_cost / 3))
         self.original_power = power
         self.current_power = power
         self.original_soul_cost = soul_cost
@@ -22,6 +22,8 @@ class Rune(Item):
         self.effect = ''
         self.render = True
         self.picked_up = True
+        self.cost_to_buy = soul_cost // 2 * power // 2
+        self.being_purchased = False
 
     def Save_Data(self):
         super().Save_Data()
@@ -59,7 +61,7 @@ class Rune(Item):
             self.Reset_Animation_Size()
         return True
     
-    def Set_Saved_Pos(self, pos):
+    def Set_Menu_Pos(self, pos):
         self.menu_pos = pos
 
     def Remove_Rune_From_Inventory(self):
@@ -105,12 +107,12 @@ class Rune(Item):
         surf.blit(item_image, (self.pos[0] - 3, self.pos[1] - 3))
 
     # Defualt the Render function to render in inventory
-    def Render_Menu(self, surf):
-        item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], self.size)  
+    def Render_Menu(self, surf, scale = 1.5):
+        item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], (self.size[0] * scale, self.size[1] * scale))  
         surf.blit(item_image, (self.menu_pos[0], self.menu_pos[1]))
     
     def Render_Animation(self, surf, offset=(0, 0)):
         pass
 
     def Menu_Rect(self):
-        return pygame.Rect(self.menu_pos[0], self.menu_pos[1], self.size[0], self.size[1])
+        return pygame.Rect(self.menu_pos[0], self.menu_pos[1], (self.size[0] * 1.5), (self.size[1] * 1.5))
