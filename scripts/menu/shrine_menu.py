@@ -23,6 +23,10 @@ class Shrine_Menu(Menu):
         self.rune_text_clear = pygame.Surface((140, 35))
         self.rune_text_clear.fill((20, 20, 20))
 
+        # Text refresh, covers the previous text
+        self.soul_text_clear = pygame.Surface((30, 12))
+        self.soul_text_clear.fill((20, 20, 20))
+
     
     def Init_Rune_Upgrade_Buttons(self):
         self.rune_upgrade_buttons = []
@@ -81,7 +85,7 @@ class Shrine_Menu(Menu):
     def Rune_Upgrade(self):
         # Handle upgrading costs
         self.game.player.Decrease_Souls(self.active_rune.upgrade_cost)
-        new_upgrade_cost = math.ceil(self.active_rune.upgrade_cost /  10)
+        new_upgrade_cost = math.ceil(self.active_rune.upgrade_cost /  5)
         self.active_rune.Modify_Upgrade_Cost(new_upgrade_cost)
 
 
@@ -121,6 +125,8 @@ class Shrine_Menu(Menu):
         self.game.rune_handler.Remove_Rune_From_Inventory(rune_to_replace.type)
 
         self.game.rune_handler.Add_Rune_To_Rune_Inventory(self.available_rune.type)
+        self.game.player.Decrease_Souls(self.available_rune.cost_to_buy)
+
         self.Set_Active_Runes_Menu_Pos()
         self.available_rune = None
         self.available_rune_name = ''
@@ -128,6 +134,8 @@ class Shrine_Menu(Menu):
 
 
         
+    def Reset_Rune_Bought(self):
+        self.rune_bought = False
 
 
 
@@ -165,7 +173,7 @@ class Shrine_Menu(Menu):
             soul_symbol_x_pos_offset = 120 + 8 * len(str(self.active_rune.upgrade_cost))
             self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 42), 1.5)
 
-
+        surf.blit(self.soul_text_clear, (self.game.souls_interface.pos_x - 20, self.game.souls_interface.pos_y - 2))
         self.game.souls_interface.Render(self.game.display)
 
 

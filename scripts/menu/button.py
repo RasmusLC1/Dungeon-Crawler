@@ -28,9 +28,11 @@ class Button():
             if self.rect().colliderect(self.game.mouse.rect_click()):
                 self.game.mouse.Reset_Click_Pos()
                 self.Activate()
-            return
+                return True
+            return False
         
         self.Reset_Color()
+        return False
         
     def Reset_Color(self):
         if self.background_color == self.background_color_holder:

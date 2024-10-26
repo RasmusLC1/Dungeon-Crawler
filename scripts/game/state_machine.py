@@ -74,6 +74,9 @@ class State_Machine():
     def Shrine_Menu(self):
         self.game.menu_handler.Select_Menu('shrine_menu')
 
+        # Reset the buy menu if exited
+        if self.game_state != 'shrine_menu':
+            self.game.menu_handler.shrine_menu.Reset_Rune_Bought()
 
 
 

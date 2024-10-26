@@ -68,6 +68,8 @@ class Rune(Item):
         pass
 
     def Modify_Souls_Cost(self, change):
+        if self.game.player.souls < self.upgrade_cost:
+            return False
         if self.current_soul_cost + change < self.min_soul_cost:
             return False
         self.current_soul_cost += change
@@ -78,6 +80,8 @@ class Rune(Item):
         return True
     
     def Modify_Power(self, change):
+        if self.game.player.souls < self.upgrade_cost:
+            return False
         self.current_power += change
         return True
 

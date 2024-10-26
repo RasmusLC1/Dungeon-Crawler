@@ -7,6 +7,8 @@ class Souls:
         self.animation = 0
         self.cooldown = 0
         self.max_animation = 3
+        self.pos_x = self.game.screen_width // self.game.render_scale - 20
+        self.pos_y = 20
 
     def Update(self):
         if not self.cooldown:
@@ -29,15 +31,13 @@ class Souls:
 
 
     def Render(self, surf):
-        rect_x = self.game.screen_width / self.game.render_scale - 20
-        rect_y = 20
 
-        new_x = self.move_text_based_on_soul(self.game.player.souls, rect_x)
+        new_x = self.move_text_based_on_soul(self.game.player.souls, self.pos_x)
 
 
         # Render the text
-        self.game.default_font.Render_Word(surf, str(self.game.player.souls), (new_x, rect_y))
+        self.game.default_font.Render_Word(surf, str(self.game.player.souls), (new_x, self.pos_y))
 
 
         scaled_soul_image = pygame.transform.scale(self.game.assets['souls'][self.animation], (8, 8))
-        surf.blit(scaled_soul_image, (rect_x + 10, rect_y))
+        surf.blit(scaled_soul_image, (self.pos_x + 10, self.pos_y))
