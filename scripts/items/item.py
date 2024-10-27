@@ -6,7 +6,6 @@ from scripts.items.utility.textbox import Text_Box
 
 
 
-
 class Item(PhysicsEntity):
     def __init__(self, game, type, category, pos, size, amount):
         super().__init__(game, type, category, pos, size)
@@ -58,6 +57,7 @@ class Item(PhysicsEntity):
         self.Update_Activate_Cooldown()
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
+        
         if self.text_box.Update(hitbox_1, hitbox_2):
             return self
         else:

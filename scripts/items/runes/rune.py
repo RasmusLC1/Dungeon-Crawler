@@ -47,8 +47,7 @@ class Rune(Item):
         self.active = data['active'] 
         self.menu_pos = data['menu_pos']
         
-
-
+    
     
     def Activate(self):
         if not super().Activate():

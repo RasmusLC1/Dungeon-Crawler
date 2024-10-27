@@ -11,7 +11,8 @@ class Symbols():
                                'luck', 'vampiric', 'fire',
                                'freeze', 'poison', 'wet',
                                'block', 'fire_resistance',
-                               'freeze_resistance', 'poison_resistance']
+                               'freeze_resistance', 'poison_resistance',
+                               'power', 'gold']
 
 
 

@@ -43,11 +43,7 @@ class Rune_Inventory(Inventory):
             
         return False
     
-    def Add_Item(self, rune):
-        if not super().Add_Item(rune):
-            return
-        
-
+    
 
     def Item_Double_Click(self):
         if not super().Item_Double_Click():

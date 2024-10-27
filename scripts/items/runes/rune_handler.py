@@ -6,6 +6,7 @@ from scripts.items.runes.key_rune import Key_Rune
 from scripts.items.runes.regen_rune import Regen_Rune
 from scripts.items.runes.light_rune import Light_Rune
 
+import math
 import pygame
 
 class Rune_Handler():
@@ -53,10 +54,10 @@ class Rune_Handler():
                 print("DATA WRONG RUNE HANDLER", item_data, e)
 
 
-
-        # TODO: IMPLEMENT PROPER METHOD
-        # self.Add_Runes_To_Inventory_TEST()
-        
+    def Update(self, offset = (0,0)):
+        for rune in self.active_runes:
+            rune.Update()
+  
 
     def Rune_Spawner(self, name, data = None):
         rune = None
@@ -132,6 +133,7 @@ class Rune_Handler():
             rune.active = True
             self.active_runes.append(rune)
             self.game.rune_inventory.Add_Item(rune)
+            self.game.item_handler.Add_Item(rune)
             return
 
     def Remove_Rune_From_Inventory(self, rune_type):
@@ -142,11 +144,21 @@ class Rune_Handler():
             rune.active = False
             self.active_runes.remove(rune)
             self.game.rune_inventory.Remove_Item(rune, True)
+            self.game.item_handler.Remove_Item(rune)
+
             return
 
-    def Update(self, offset = (0,0)):
+    
+    def Find_Nearby_Runes(self, entity_pos, max_distance):
+        entity_pos = (entity_pos[0] - self.game.render_scroll[0], entity_pos[1] - self.game.render_scroll[1])
+        nearby_runes = []
         for rune in self.active_runes:
-            rune.Update()
+            # Calculate the Euclidean distance
+            distance = math.sqrt((entity_pos[0] - rune.pos[0]) ** 2 + (entity_pos[1] - rune.pos[1]) ** 2)
+            if distance < max_distance:
+                nearby_runes.append(rune)
+
+        return nearby_runes
 
 
     def Render_Animation(self, surf, offset = (0, 0)):

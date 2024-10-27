@@ -14,18 +14,14 @@ class Shrine_Menu(Menu):
         self.available_rune_name = ''
         self.rune_bought = False
         self.Init_Rune_Upgrade_Buttons()
+        self.rect_surface.set_alpha(255)
+
 
         # Highlights which rune is active
         self.rune_highlight = pygame.Surface((30, 30))
-        self.rune_highlight.fill((120, 120, 120))
+        self.rune_highlight.fill((150, 150, 150))
 
-        # Text refresh, covers the previous text
-        self.rune_text_clear = pygame.Surface((140, 35))
-        self.rune_text_clear.fill((20, 20, 20))
 
-        # Text refresh, covers the previous text
-        self.soul_text_clear = pygame.Surface((30, 12))
-        self.soul_text_clear.fill((20, 20, 20))
 
     
     def Init_Rune_Upgrade_Buttons(self):
@@ -36,9 +32,6 @@ class Shrine_Menu(Menu):
         self.Generate_Rune_Button((width - button_size_x // 2, 130), (button_size_x, 20), 'Power', 'power', (140, 0, 0))
         self.Generate_Rune_Button((width - button_size_x // 2, 115), (button_size_x, 20), 'Purchase', 'purchase', (140, 0, 0))
 
-        # Button clear in case the rune has no strength or soul cost
-        self.button_hide_box = pygame.Surface((button_size_x + 20, 50))
-        self.button_hide_box.fill((20, 20, 20))
         
 
     def Init_Buttons(self):
@@ -74,9 +67,6 @@ class Shrine_Menu(Menu):
     def Rune_Button_Press(self, rune_button):
         # Return True if successfully upgraded
         if rune_button.Update(self.active_rune):
-            # Clear Button and info text
-            self.game.display.blit(self.rune_text_clear, (20, 20))
-            self.game.display.blit(self.button_hide_box, (self.rune_upgrade_buttons[0].pos))
             if rune_button.effect == 'purchase':
                 self.rune_bought = True
             else:
@@ -98,8 +88,6 @@ class Shrine_Menu(Menu):
                     return
                 self.active_rune = rune
                 # Clear the previous text
-                self.game.display.blit(self.rune_text_clear, (20, 20))
-                self.game.display.blit(self.button_hide_box, (self.rune_upgrade_buttons[0].pos))
                 return
 
         if not self.available_rune:
@@ -109,14 +97,12 @@ class Shrine_Menu(Menu):
             self.game.mouse.Reset_Click_Pos()
 
             self.active_rune = self.available_rune
-            self.game.display.blit(self.rune_text_clear, (20, 20))
-            self.game.display.blit(self.button_hide_box, (self.rune_upgrade_buttons[0].pos))
 
             return
 
     def Replace_Rune(self, rune_to_replace):
         if not self.rune_bought:
-            return
+            return False
         
         clear_available_rune = pygame.Surface((50, 60))
         clear_available_rune.fill((20,20,20)) # Gold color
@@ -131,6 +117,8 @@ class Shrine_Menu(Menu):
         self.available_rune = None
         self.available_rune_name = ''
         self.rune_bought = False
+        self.active_rune = None
+        return True
 
 
         
@@ -173,7 +161,6 @@ class Shrine_Menu(Menu):
             soul_symbol_x_pos_offset = 120 + 8 * len(str(self.active_rune.upgrade_cost))
             self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 42), 1.5)
 
-        surf.blit(self.soul_text_clear, (self.game.souls_interface.pos_x - 20, self.game.souls_interface.pos_y - 2))
         self.game.souls_interface.Render(self.game.display)
 
 

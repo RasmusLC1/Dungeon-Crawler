@@ -28,7 +28,13 @@ class Text_Box_handler():
             self.current_item = inventory_slot.item.Update_Text_Box(inventory_slot.item.rect(), self.game.mouse.rect_pos(self.game.render_scroll))
             if self.current_item:
                 return
-            
+        
+        for inventory_slot in self.game.rune_inventory.inventory:
+            if not inventory_slot.item:
+                continue
+            self.current_item = inventory_slot.item.Update_Text_Box(inventory_slot.item.rect(), self.game.mouse.rect_pos(self.game.render_scroll))
+            if self.current_item:
+                return
 
     def Update_Nearby_Items(self):
         if self.nearby_item_cooldown:
@@ -37,10 +43,12 @@ class Text_Box_handler():
 
         self.nearby_item_cooldown = 30
         self.nearby_items.clear()
-        
 
         self.nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.mouse.player_mouse, 100)
-        
+        # nearby_runes = self.game.rune_handler.Find_Nearby_Runes(self.game.mouse.player_mouse, 100)
+        # if not nearby_runes:
+        #     return True
+        # self.nearby_items.extend(nearby_runes)
         return True
     
 
