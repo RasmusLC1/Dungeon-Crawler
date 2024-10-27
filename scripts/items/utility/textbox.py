@@ -27,12 +27,8 @@ class Text_Box():
             item_name = item_name.replace('_potion', '')
         return item_name
 
-    def Render(self, surf, offset=(0, 0)):
-        if not self.render:
-            return
-        item_name = self.Edit_Item_Name()
-
-        # Scale
+    def Text_Box_Setup(self, surf, item_name, offset):
+        # Scale the textbox to the name of the item
         item_name_len = len(item_name)
         x_size = 8 * item_name_len + 5
         y_size = 30
@@ -48,8 +44,16 @@ class Text_Box():
             text_box_pos = (self.item.pos[0] - offset[0], self.item.pos[1] - offset[1] - y_size)
 
         surf.blit(rectangle_surface, text_box_pos)
-        self.game.default_font.Render_Word(surf, item_name, text_box_pos)
+        return text_box_pos
 
+    def Render(self, surf, offset=(0, 0)):
+        if not self.render:
+            return
+        item_name = self.Edit_Item_Name()
+
+        
+        text_box_pos = self.Text_Box_Setup(surf, item_name, offset)
+        self.game.default_font.Render_Word(surf, item_name, text_box_pos)
 
         if self.item.category == 'weapon':
             self.Render_Weapon(surf, text_box_pos)

@@ -163,9 +163,9 @@ class Dungeon_Generator():
             if distance < 20:
                 continue
 
-            self.Loot_Room_Structure(start_x, start_y, size_x, size_y)
             
-            if not self.Generate_Loot_Room_Door(start_x, start_y, size_x, size_y):
+            self.Room_Structure_Rectangle(start_x, start_y, size_x, size_y)
+            if not self.Generate_Room_Rectangle_Door(start_x, start_y, size_x, size_y):
                 fail += 1
                 if fail >= 10:
                     return False
@@ -192,7 +192,7 @@ class Dungeon_Generator():
     
 
 
-    def Generate_Loot_Room_Door(self, start_x, start_y, size_x, size_y):
+    def Generate_Room_Rectangle_Door(self, start_x, start_y, size_x, size_y):
         door_array = [1, 2, 3, 4]
 
         path = []
@@ -232,7 +232,8 @@ class Dungeon_Generator():
 
 
     # Flatten the loot room and add walls to outside
-    def Loot_Room_Structure(self, start_x, start_y, size_x, size_y):
+    # 1 = Wall, 0 = Floor
+    def Room_Structure_Rectangle(self, start_x, start_y, size_x, size_y):
         for y in range(start_y, start_y + size_y):
             for x in range(start_x, start_x + size_x):
                 if y == start_y:
@@ -245,6 +246,38 @@ class Dungeon_Generator():
                     self.cellular_automata.map[x][y] = 1
                 else:
                     self.cellular_automata.map[x][y] = 0
+
+    def Room_Structure_Circle(self, center_x, center_y, radius):
+        
+        spawn_door = random.randint(0, 1)
+
+        for y in range(center_y - radius, center_y + radius + 1):
+            for x in range(center_x - radius, center_x + radius + 1):
+                # Calculate the distance from the center
+                distance = ((x - center_x) ** 2 + (y - center_y) ** 2) ** 0.5
+                if distance == radius:
+                    self.Spawn_Door(spawn_door, center_x, x, center_y, y)
+
+                elif distance <= radius:
+                    # Floor inside the circle
+                    self.cellular_automata.map[x][y] = 0
+                elif distance <= radius + 1:
+                    # Walls around the circular floor
+                    self.cellular_automata.map[x][y] = 1
+
+    def Spawn_Door(self, spawn_door, center_x, x, center_y, y):
+        # Check if door is being spawned on x or y axis
+        if spawn_door == 0:
+            if x == center_x:
+                self.cellular_automata.map[x][y] = 3
+                return
+        elif spawn_door == 1:
+            if y == center_y:
+                self.cellular_automata.map[x][y] = 3
+                return
+        # Spawn wall if door is not spawned
+        self.cellular_automata.map[x][y] = 1
+
 
     def Spawn_Loot_In_Loot_Room(self, start_x, start_y, size_x, size_y):
         loot_count = 0
