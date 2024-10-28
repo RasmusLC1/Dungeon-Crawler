@@ -36,6 +36,9 @@ Game Ideas
             Rune shrine, Upgrade and Buy runes
             Character shrine, upgrade character
             Artifact Shrine, buy and upgrade weapons and artifacts
+        Boss Room initialised as an object with a radius, closes doors and locks player in.
+            Spawns boss mob when player is x from center
+            Spawns Shrine when boss mob is defeated
         
     Game ends when you die, you can buy resurrection tombs to prevent this, but it will be money you could spend on other upgrades instead
         Each resurrection tomb gets more expensive

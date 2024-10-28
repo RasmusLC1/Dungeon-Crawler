@@ -146,10 +146,13 @@ class Decoration_Handler():
             del(decoration)
             return True
 
-    def Nearby_Door(self, decoration):
+    def Nearby_Door(self, decoration, key = True):
         if decoration.type == 'door':
-            if not self.Open_Door_With_Key(decoration):
-                return False
+            if key:
+                if not self.Open_Door_With_Key(decoration):
+                    return False
+            else:
+                decoration.Open()
             self.decorations.remove(decoration)
             del(decoration)
             return True
@@ -191,20 +194,15 @@ class Decoration_Handler():
         door.Open()
         return True
     
-    def Open_Door_Without_Key(self, decorations):
-        player_pos = self.game.player.pos
-        decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
-
-        for decoration in self.decorations:
-            if decoration.type != 'door':
-                continue
-
-            decoration.Open()
-            self.decorations.remove(decoration)
-            del(decoration)
-            return True
+    def Open_Door_Without_Key(self):
+        decorations = self.Find_Nearby_Decorations(self.game.player.pos, 40)
+        sorted_decorations = self.Sort_Decorations(decorations)
+        for decoration in sorted_decorations:
+            if decoration.type == 'door':
+                return self.Nearby_Door(decoration, False)
         
         return False
+
 
     def Add_Decoration(self, decoration):
         if decoration in self.decorations:

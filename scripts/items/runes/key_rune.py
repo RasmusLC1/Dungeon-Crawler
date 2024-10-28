@@ -13,11 +13,8 @@ class Key_Rune(Rune):
     def Activate(self):
         if not super().Activate():
             return
-        nearby_doors = self.game.decoration_handler.Find_Nearby_Decorations(self.game.player.pos, 50)
-        if not nearby_doors:
-            return
-
-        if not self.game.decoration_handler.Open_Door_Without_Key(nearby_doors):
+        
+        if not self.game.decoration_handler.Open_Door_Without_Key():
             return
         
         self.game.player.Decrease_Souls(self.current_soul_cost)

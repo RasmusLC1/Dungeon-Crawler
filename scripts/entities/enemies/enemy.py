@@ -11,8 +11,9 @@ import math
 
 
 class Enemy(Moving_Entity):
-    def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
+
+        super().__init__(game, type, 'enemy', pos, (8, 15), health, strength, max_speed, agility, intelligence, stamina)
         self.ID = random.randint(1, 100000000)
         self.sub_type = type
         self.random_movement_cooldown = 0

@@ -18,8 +18,8 @@ class Cellular_Automata():
 
 
     def Create_Level(self) -> None:
-        self.size_x = 70 + random.randint(-20, 20)
-        self.size_y = 70 + random.randint(-20, 20)
+        self.size_x = 100 + random.randint(-20, 20)
+        self.size_y = 100 + random.randint(-20, 20)
         noise_map = Noise_Map()
         return noise_map.Create_Noise_Map(self.size_x, self.size_y)    
     

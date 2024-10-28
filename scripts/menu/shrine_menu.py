@@ -15,6 +15,7 @@ class Shrine_Menu(Menu):
         self.rune_bought = False
         self.Init_Rune_Upgrade_Buttons()
         self.rect_surface.set_alpha(255)
+        self.shrine = None
 
 
         # Highlights which rune is active
@@ -48,10 +49,14 @@ class Shrine_Menu(Menu):
     def Update(self):
         super().Update()
         self.Rune_Interactions()
+        self.game.souls_interface.Update()
 
+        self.Update_Rune_Buttons()
+
+    
+    def Update_Rune_Buttons(self):
         if not self.active_rune:
             return
-        
         for rune_button in self.rune_upgrade_buttons:
             # Don't update buttons if the rune cannot use that upgrade
             if self.active_rune.original_soul_cost == 0 and rune_button.effect == 'souls':
@@ -62,8 +67,6 @@ class Shrine_Menu(Menu):
             
             self.Rune_Button_Press(rune_button)
 
-        self.game.souls_interface.Update()
-    
     def Rune_Button_Press(self, rune_button):
         # Return True if successfully upgraded
         if rune_button.Update(self.active_rune):
@@ -118,6 +121,7 @@ class Shrine_Menu(Menu):
         self.available_rune_name = ''
         self.rune_bought = False
         self.active_rune = None
+        self.shrine.Remove_Available_Rune()
         return True
 
 
@@ -133,8 +137,9 @@ class Shrine_Menu(Menu):
             self.game.state_machine.Set_State('run_game')
 
     # Get a random Rune
-    def Initialise_Runes(self, available_rune = None):
+    def Initialise_Runes(self, shrine, available_rune = None):
         self.Set_Active_Runes_Menu_Pos()
+        self.shrine = shrine
         if not available_rune:
             return
         self.available_rune = available_rune
@@ -160,6 +165,7 @@ class Shrine_Menu(Menu):
             self.game.default_font.Render_Word(surf, "Upgrade Cost: " + str(self.active_rune.upgrade_cost), (20, 44))
             soul_symbol_x_pos_offset = 120 + 8 * len(str(self.active_rune.upgrade_cost))
             self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 42), 1.5)
+
 
         self.game.souls_interface.Render(self.game.display)
 

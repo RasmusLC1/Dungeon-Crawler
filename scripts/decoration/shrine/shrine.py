@@ -49,13 +49,17 @@ class Shrine(Decoration):
             self.animation_cooldown = 20
             self.animation = random.randint(0,self.max_animation)
 
+    def Remove_Available_Rune(self):
+        self.available_rune = None
+
     def Open(self):
         if not self.is_open:
             self.Select_Available_Rune()
-            self.game.menu_handler.shrine_menu.Initialise_Runes(self.available_rune)
         
+        if self.available_rune:
+            self.game.menu_handler.shrine_menu.Initialise_Runes(self, self.available_rune)
         else:
-            self.game.menu_handler.shrine_menu.Initialise_Runes()
+            self.game.menu_handler.shrine_menu.Initialise_Runes(self)
             
         self.game.state_machine.Set_State('shrine_menu')
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies

@@ -28,9 +28,8 @@ class Enemy_Handler():
             try:
                 type = item_data['sub_type']
                 pos = item_data['pos']
-                size = item_data['size']
                 if item_data['category'] == 'enemy':
-                    self.Enemy_Spawner(type, pos, size, item_data)
+                    self.Enemy_Spawner(type, pos, item_data)
                     continue
             except Exception as e:
                 print("DATA WRONG", item_data, e)
@@ -66,28 +65,27 @@ class Enemy_Handler():
             
             if type:
                 pos = spawner['pos']
-                size = (self.game.assets[spawner['type']][0].get_width(), self.game.assets[spawner['type']][0].get_height())
-                self.Enemy_Spawner(type, pos, size)
+                self.Enemy_Spawner(type, pos)
 
-    def Enemy_Spawner(self, type, pos, size, data = None):
+    def Enemy_Spawner(self, type, pos, data = None):
         enemy = None
         if type == 'decrepit_bones_melee':
-            enemy = self.Spawn_Melee_Decrepit_Bones(pos, size)
+            enemy = self.Spawn_Melee_Decrepit_Bones(pos)
         elif type == 'decrepit_bones_ranged':
-                enemy = self.Spawn_Ranged_Decrepit_Bones(pos, size)
+                enemy = self.Spawn_Ranged_Decrepit_Bones(pos)
         elif type == 'fire_spirit':
-            enemy = self.Spawn_Fire_Spirit(pos, size)
+            enemy = self.Spawn_Fire_Spirit(pos)
         elif type == 'ice_spirit':
-            enemy = self.Spawn_Ice_Spirit(pos, size)
+            enemy = self.Spawn_Ice_Spirit(pos)
         elif type == 'spider':
-            enemy = self.Spawn_Spider(pos, size)
+            enemy = self.Spawn_Spider(pos)
         
         if enemy:
             if data:
                 enemy.Load_Data(data)
             self.enemies.append(enemy)
 
-    def Spawn_Melee_Decrepit_Bones(self, pos, size):
+    def Spawn_Melee_Decrepit_Bones(self, pos):
         health = 30
         strength = 2
         speed = 2
@@ -97,7 +95,6 @@ class Enemy_Handler():
         return Decrepit_Bones_Melee(
             self.game,
             pos, 
-            size,
             health,
             strength,
             speed,
@@ -105,7 +102,7 @@ class Enemy_Handler():
             intelligence,
             stamina)
         
-    def Spawn_Ranged_Decrepit_Bones(self, pos, size):
+    def Spawn_Ranged_Decrepit_Bones(self, pos):
         health = 30
         strength = 2
         speed = 2
@@ -115,7 +112,6 @@ class Enemy_Handler():
         return Decrepit_Bones_Ranged(
             self.game,
             pos, 
-            size,
             health,
             strength,
             speed,
@@ -123,7 +119,7 @@ class Enemy_Handler():
             intelligence,
             stamina)
         
-    def Spawn_Fire_Spirit(self, pos, size):
+    def Spawn_Fire_Spirit(self, pos):
         health = 60
         strength = 4
         speed = 5
@@ -132,7 +128,6 @@ class Enemy_Handler():
         stamina = 2
         return Fire_Spirit(self.game,
                             pos, 
-                            size,
                             'fire_spirit',
                             health,
                             strength,
@@ -142,7 +137,7 @@ class Enemy_Handler():
                             stamina)
         
 
-    def Spawn_Ice_Spirit(self, pos, size):
+    def Spawn_Ice_Spirit(self, pos):
         health = 100
         strength = 7
         speed = 3
@@ -151,7 +146,6 @@ class Enemy_Handler():
         stamina = 2
         return Ice_Spirit(self.game,
                         pos, 
-                        size,
                         'ice_spirit',
                         health,
                         strength,
@@ -160,7 +154,8 @@ class Enemy_Handler():
                         intelligence,
                         stamina)
         
-    def Spawn_Spider(self, pos, size):
+
+    def Spawn_Spider(self, pos):
         health = 80
         strength = 4
         speed = 3
@@ -169,7 +164,6 @@ class Enemy_Handler():
         stamina = 2
         return Spider(self.game,
                     pos, 
-                    size,
                     'spider',
                     health,
                     strength,

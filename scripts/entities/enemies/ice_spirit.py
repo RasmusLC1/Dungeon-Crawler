@@ -7,8 +7,8 @@ import random
 
 
 class Ice_Spirit(Enemy):
-    def __init__(self, game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, size, type, health, strength, max_speed, agility, intelligence, stamina)
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina)
         self.animation = 'ice_spirit'
         self.animation_num_max = 3
         self.path_finding_strategy = 'standard'
