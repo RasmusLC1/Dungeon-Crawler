@@ -48,8 +48,6 @@ class Game_Initialiser():
 
         self.initialise_Engine()
 
-        # TODO: PLACEHOLDER CODE, Implement proper class system later
-        self.game.proffeciency = {'sword, shield, bow, arrow, axe, mace'}
         
         
 

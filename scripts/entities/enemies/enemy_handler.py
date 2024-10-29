@@ -191,3 +191,11 @@ class Enemy_Handler():
             if distance < max_distance and not enemy == entity:
                 nearby_enemies.append(enemy)
         return nearby_enemies
+
+
+    def Find_Enemy(self, ID):
+        for enemy in self.enemies:
+            if enemy.ID == ID:
+                return enemy
+            
+        return None

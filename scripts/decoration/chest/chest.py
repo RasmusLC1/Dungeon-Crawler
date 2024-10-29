@@ -65,6 +65,9 @@ class Chest(Decoration):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
     def Open(self):
+        if self.empty:
+            return
+        
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
         self.loot_type = random.randint(0, 2)

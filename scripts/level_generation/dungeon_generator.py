@@ -13,7 +13,7 @@ floor = 0
 wall = 1
 lava = 2
 door = 3
-traps = 4
+trap = 4
 boss_room = 5
 
 class Dungeon_Generator():
@@ -71,7 +71,7 @@ class Dungeon_Generator():
 
 
 
-    # Spawn traps if density is greater than spawn trap, goes from 0 to 100
+    # Spawn trap if density is greater than spawn trap, goes from 0 to 100
     def Spawn_Traps(self, density):
         for y in range(1, self.cellular_automata.size_y - 1):
             for x in range(1, self.cellular_automata.size_x - 1):
@@ -79,7 +79,7 @@ class Dungeon_Generator():
                     continue
                 spawn_trap = random.randint(0, 100)
                 if spawn_trap < density:
-                    self.cellular_automata.map[x][y] = traps
+                    self.cellular_automata.map[x][y] = trap
 
     
     def Spawn_Lakes(self, iterations, value_1, value_2):
@@ -124,8 +124,8 @@ class Dungeon_Generator():
                 elif self.cellular_automata.map[i][j] == lava:
                     self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                 elif self.cellular_automata.map[i][j] == door:
-                    self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'DoorClosed', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-                elif self.cellular_automata.map[i][j] == traps:
+                    self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Door_Basic', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                elif self.cellular_automata.map[i][j] == trap:
                     trap_type = random.randint(0, 2)
                     self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[trap_type], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                     
@@ -154,7 +154,7 @@ class Dungeon_Generator():
         radius = 0
 
         while fail < 10:
-            radius = random.randint(7, 10)
+            radius = random.randint(6, 8)
             start_x = random.randint(radius * 2, self.cellular_automata.size_x - radius * 2)
             start_y = random.randint(radius * 2, self.cellular_automata.size_y - radius * 2)
             
@@ -167,8 +167,21 @@ class Dungeon_Generator():
 
 
         self.Room_Structure_Circle(start_x, start_y, radius)
-        self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [start_x * 16, start_y * 16]})
-        self.tilemap.offgrid_tiles.append({"type": 'boss_room', "variant": 0, "pos": [start_x * 16, start_y * 16], "radius": radius})
+        # self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [start_x * 16, start_y * 16]})
+        self.tilemap.offgrid_tiles.append({"type": 'Boss_Room', "variant": 0, "pos": [start_x * 16, start_y * 16], "radius": radius})
+
+        trap_number = random.randint(1, 5)
+        i = 0
+        while i < trap_number:
+            pos_x = random.randint(start_x - radius + 1, start_x + radius - 1)
+            pos_y = random.randint(start_y - radius + 1, start_y + radius - 1)
+            
+            distance_from_center = math.sqrt((pos_x - start_x) ** 2 + (pos_y - start_y) ** 2)
+            print(distance_from_center)
+            if distance_from_center <= 2:
+                continue
+            self.cellular_automata.map[pos_x][pos_y] = trap
+            i += 1
 
 
 

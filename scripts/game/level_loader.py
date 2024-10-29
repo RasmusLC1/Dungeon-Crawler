@@ -84,7 +84,7 @@ class Level_Loader():
             for spawner in self.game.tilemap.extract([('spawners', 0)]):
                 if spawner['variant'] == 0:
                     print("PLAYER SPAWN")
-                    self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 4, 10, 5, 5)
+                    self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 5, 10, 5, 5)
                     break
 
 
@@ -105,12 +105,12 @@ class Level_Loader():
         for spawner in self.game.tilemap.extract([('spawners', 0)]):
             if spawner['variant'] == 0:
                 print("PLAYER SPAWN")
-                self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 7, 10, 5, 5)
+                self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 10, 10, 5, 5)
                 break
                 
         
         self.game.item_inventory = Item_Inventory(self.game)
-        self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior', self.game.proffeciency)
+        self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior')
         self.game.rune_inventory = Rune_Inventory(self.game)
         self.game.enemy_handler = Enemy_Handler(self.game)
         self.game.item_handler = Item_Handler(self.game)

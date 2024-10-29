@@ -90,7 +90,6 @@ class Item_Handler():
 
     def Remove_Item(self, item, delete_item = False):
         if not item in self.items:
-            print("ITEM DOES NOT EXISTS", item)
             return
         
         self.items.remove(item)

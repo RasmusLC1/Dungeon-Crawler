@@ -18,7 +18,7 @@ AUTOTILE_MAP = {
 
 # Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
-PHYSICS_TILES = {'wall', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall', 'DoorClosed'}
+PHYSICS_TILES = {'wall', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall', 'Door_Basic'}
 AUTOTILE_TYPES = {'floor'}
 FLOOR_TTLES = {'floor'}
 

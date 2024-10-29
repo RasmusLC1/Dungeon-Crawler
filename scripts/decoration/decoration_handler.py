@@ -3,6 +3,7 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.decoration.chest.chest import Chest
 from scripts.decoration.doors.door import Door
 from scripts.decoration.shrine.shrine import Shrine
+from scripts.decoration.boss_room.boss_room import Boss_Room
 import random
 import math
 
@@ -19,22 +20,23 @@ class Decoration_Handler():
         self.saved_data.clear()
 
 
+    # TODO: Implement Level depth for boss room, chest and Shrine
     def Initialise(self, depth = 0):
         # door initialisation
-        for door in self.game.tilemap.extract([('DoorClosed', 0)].copy(), True):
+        for door in self.game.tilemap.extract([('Door_Basic', 0)].copy(), True):
             size = (self.game.assets[door['type']][0].get_width(), self.game.assets[door['type']][0].get_height())
             door = self.Spawn_Door(door['pos'], size)
-            self.decorations.append(door)
 
         for chest in self.game.tilemap.extract([('Chest', 0)]):
             version = self.Set_Chest_Version(depth)
             spawn_chest = self.Spawn_Chest(chest['pos'], version)
-            self.decorations.append(spawn_chest)
 
         for shrine in self.game.tilemap.extract([('Shrine', 0)]):
             spawn_shrine = self.Spawn_Shrine(shrine['pos'])
-            self.decorations.append(spawn_shrine)
-            print(spawn_shrine.pos, self.game.player.pos)
+
+        for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
+            temp_level = 3
+            spawn_boss_room = self.Spawn_Boss_Room(boss_room['pos'], boss_room['radius'], temp_level)
 
     def Set_Chest_Version(self, depth):
         i = 0
@@ -68,6 +70,10 @@ class Decoration_Handler():
                     decoration = self.Spawn_Chest(pos, version)
                 elif type == 'shrine':
                     decoration = self.Spawn_Shrine(pos)
+                elif type == 'boss_room':
+                    radius = item_data['radius']
+                    level = item_data['level']
+                    decoration = self.Spawn_Boss_Room(pos, radius, level)
                 else:
                     print(type)
                 decoration.Load_Data(item_data)
@@ -83,14 +89,26 @@ class Decoration_Handler():
 
 
     def Spawn_Door(self, pos, size):
-        return Door(self.game, 'door', pos, size)
-    
+        door = Door(self.game, 'door', pos, size)
+        self.decorations.append(door)
+        return door
+
     def Spawn_Chest(self, pos, version):
-        return Chest(self.game, pos, version)  
+        chest = Chest(self.game, pos, version)  
+        self.decorations.append(chest)
+        return chest
+
     
     def Spawn_Shrine(self, pos):
-        return Shrine(self.game, pos)  
+        shrine = Shrine(self.game, pos)  
+        self.decorations.append(shrine)
+        return shrine
     
+    def Spawn_Boss_Room(self, pos, radius, level):
+        boss_room = Boss_Room(self.game, pos, radius, level)  
+        self.decorations.append(boss_room)
+        return boss_room
+
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:
             if not self.Check_Decorations():
@@ -173,7 +191,6 @@ class Decoration_Handler():
     def Sort_Decorations(self, decorations):
         player_pos = self.game.player.pos
         decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
-        print(decorations[0])
         return decorations
 
 

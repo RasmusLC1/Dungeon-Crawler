@@ -52,11 +52,11 @@ class Moving_Entity(PhysicsEntity):
         self.max_health = self.health
         
         # Movement variables
-        self.friction = self.game.render_scale # Friction, set to the renderscale
+        self.friction = 16 / self.game.render_scale # Friction, set to the renderscale
         self.friction_holder = self.friction # Holder for friction to reset it
-        self.acceleration = agility / 10
+        self.acceleration = agility / 40 * self.game.render_scale
         self.acceleration_holder = self.acceleration # accelarition holder to reset it
-        self.max_speed = max_speed + agility / 5 # Max speed of the entity
+        self.max_speed = max_speed + agility / 20 * self.game.render_scale # Max speed of the entity
         self.max_speed_holder = self.max_speed # Max speed holder to reset it
 
 
@@ -141,7 +141,7 @@ class Moving_Entity(PhysicsEntity):
     
     def Update_Movement(self, movement):
         # Apply acceleration to velocity based on input
-        self.velocity[0] += movement[0] * self.acceleration 
+        self.velocity[0] += movement[0] * self.acceleration
         self.velocity[1] += movement[1] * self.acceleration
 
         # Clamp the velocity to max speed
