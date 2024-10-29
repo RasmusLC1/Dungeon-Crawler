@@ -45,8 +45,10 @@ class Dungeon_Generator():
         self.Player_Spawn()
         self.a_star.Set_Map('custom')
         self.Spawn_Traps(1)
-        
-        if not self.Spawn_Loot_Room(4):
+        # Spawn more loot rooms in lower levels of dungeon
+        # TODO: PROPER LEVEL SYSTEM
+        temp_level = 5
+        if not self.Spawn_Loot_Room(temp_level):
             self.Generate_Map()
             return
         
@@ -185,10 +187,12 @@ class Dungeon_Generator():
 
 
 
-    def Spawn_Loot_Room(self, rooms):
+    def Spawn_Loot_Room(self, level):
 
         success = 0
         fail = 0
+
+        rooms = random.randint(level, level + 4)
 
         while success <= rooms:
             size_x = random.randint(4, 6)
@@ -205,7 +209,7 @@ class Dungeon_Generator():
             self.Room_Structure_Rectangle(start_x, start_y, size_x, size_y)
             if not self.Generate_Doors_Room_Rectangle(start_x, start_y, size_x, size_y):
                 fail += 1
-                if fail >= 10:
+                if fail >= 10 + level:
                     return False
                 continue
 
@@ -332,7 +336,7 @@ class Dungeon_Generator():
         loot_count = 0
         for y in range(start_y + 1, start_y + size_y - 1):
             for x in range(start_x + 1, start_x + size_x -1):
-                spawn_loot = random.randint(0, 3)
+                spawn_loot = random.randint(0, 3 + loot_count)
                 if spawn_loot == 0:
                     loot_count += 1
                     self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (x * 16, y * 16)})

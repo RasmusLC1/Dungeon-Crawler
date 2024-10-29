@@ -52,8 +52,9 @@ class Inventory_Slot():
         if not item.category in self.white_list_items:
             return False
         
-        item.active = True
         self.item = item
+        self.item.active = True
+        self.item.picked_up = True
         self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
         self.item.Set_Inventory_Index(self.index)
         if self.inventory_type:
