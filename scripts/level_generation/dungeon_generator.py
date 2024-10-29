@@ -173,8 +173,8 @@ class Dungeon_Generator():
         trap_number = random.randint(1, 5)
         i = 0
         while i < trap_number:
-            pos_x = random.randint(start_x - radius + 1, start_x + radius - 1)
-            pos_y = random.randint(start_y - radius + 1, start_y + radius - 1)
+            pos_x = random.randint(start_x - radius + 1, start_x + radius - 2)
+            pos_y = random.randint(start_y - radius + 1, start_y + radius - 2)
             
             distance_from_center = math.sqrt((pos_x - start_x) ** 2 + (pos_y - start_y) ** 2)
             print(distance_from_center)
@@ -321,28 +321,9 @@ class Dungeon_Generator():
         
         if y == center_y: # x axis
             self.cellular_automata.map[x][y] = door
-            torch_pos_x = x * 16
-            torch_pos_y = y * 16
-            if x > center_x: # spawn Right Wall wall torches
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x - 16, torch_pos_y + 16]})
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x - 16, torch_pos_y - 16]})
             
-            elif x < center_x: # Spawn Left Wall torches
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x + 16, torch_pos_y + 16]})
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x + 16, torch_pos_y - 16]})
-
         elif x == center_x: # y axis
             self.cellular_automata.map[x][y] = door
-            torch_pos_x = x * 16
-            torch_pos_y = y * 16
-            if y > center_y: # Spawn upper wall torches
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x + 16, torch_pos_y - 16]})
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x - 16, torch_pos_y - 16]})
-            
-            elif y < center_y: # Spawn upper wall torches
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x + 16, torch_pos_y + 16]})
-                self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [torch_pos_x - 16, torch_pos_y + 16]})
-        else:# Spawn wall if door is not spawned
             self.cellular_automata.map[x][y] = wall
 
         return

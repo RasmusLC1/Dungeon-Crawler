@@ -88,8 +88,10 @@ class Boss_Room():
             self.pos,
         )
         self.Close_Room()
+        self.Spawn_Torches()
         # Replace Entrances with walls to lock in player
-        
+    
+    # Replace doors with walls when player enters
     def Close_Room(self):
         x = self.pos[0] // 16
         y = self.pos[1] // 16
@@ -98,7 +100,7 @@ class Boss_Room():
         self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'TopWall', 'variant': 0, 'pos': (x, y - self.radius), 'active': 0, 'light': 0}
         self.game.tilemap.tilemap[str(x) + ';' + str(y + self.radius)] = {'type': 'BottomWall', 'variant': 0, 'pos': (x, y + self.radius), 'active': 0, 'light': 0}
 
-
+    # Open room by removing walls after player defeats boss
     def Open_Room(self):
         x = self.pos[0] // 16
         y = self.pos[1] // 16
@@ -107,6 +109,21 @@ class Boss_Room():
         self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y - self.radius), 'active': 0, 'light': 0}
         self.game.tilemap.tilemap[str(x) + ';' + str(y + self.radius)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y + self.radius), 'active': 0, 'light': 0}
 
+
+    # Spawn torches around the doors when the player enters
+    def Spawn_Torches(self):
+
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.radius * 16 + 16, self.pos[1] + 16)) # Left top
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.radius * 16 + 16, self.pos[1] - 16)) # Left bottom
+
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.radius * 16 - 16, self.pos[1] + 16)) # Right top
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.radius * 16 - 16, self.pos[1] - 16)) # Right bottom
+
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - 16, self.pos[1] - self.radius * 16 + 16)) # top Left
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + 16, self.pos[1] - self.radius * 16 + 16)) # top Right
+
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - 16, self.pos[1] + self.radius * 16 - 16)) # Bottom Left
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + 16, self.pos[1] + self.radius * 16 - 16)) # Bottom Right
 
     def Calculate_Distance(self):
         if self.activated:
@@ -125,5 +142,6 @@ class Boss_Room():
         
         return False
     
+    # rect function for compatability
     def rect(self):
         return pygame.Rect(999999, 999999, 1, 1)
