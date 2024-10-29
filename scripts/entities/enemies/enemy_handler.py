@@ -84,6 +84,7 @@ class Enemy_Handler():
             if data:
                 enemy.Load_Data(data)
             self.enemies.append(enemy)
+        return enemy
 
     def Spawn_Melee_Decrepit_Bones(self, pos):
         health = 30

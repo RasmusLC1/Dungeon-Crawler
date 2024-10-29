@@ -54,7 +54,7 @@ class Player(Moving_Entity):
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
         self.movement_handler.Update()
-        # print(self.light_source.light_level)
+        # print(self.pos)
 
         
         self.Update_Light()

@@ -35,7 +35,7 @@ class Mouse_Handler:
 
             if key_press.button == 1:  # Check for left click (button 1)
                 self.left_click = True
-                self.click_pos = (key_press.pos[0] / 4, key_press.pos[1] / 4)
+                self.click_pos = (key_press.pos[0] / self.game.render_scale, key_press.pos[1] / self.game.render_scale)
                 if self.time_since_last_click:
                     self.double_click = 20
                 self.time_since_last_click = 20

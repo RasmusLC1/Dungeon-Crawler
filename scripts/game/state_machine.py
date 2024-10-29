@@ -13,10 +13,11 @@ class State_Machine():
         self.game = game
         self.game_state = 'init'
         self.game.game_initialiser = Game_Initialiser(self.game)
+        self.game.game_initialiser.Initialise_Game()
+        self.game.renderer = Renderer(self.game)
         self.game.level_loader = Level_Loader(self.game)
         self.game.camera_update = Camera_Update(self.game)
         self.game.logic_update = Logic_Update(self.game)
-        self.game.renderer = Renderer(self.game)
 
 
     def Game_State(self):
@@ -39,7 +40,6 @@ class State_Machine():
             self.Initialise_Game()
 
     def Initialise_Game(self):
-        self.game.game_initialiser.Initialise_Game()
         self.game_state = 'main_menu'
 
 

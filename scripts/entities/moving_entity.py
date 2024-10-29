@@ -141,7 +141,7 @@ class Moving_Entity(PhysicsEntity):
     
     def Update_Movement(self, movement):
         # Apply acceleration to velocity based on input
-        self.velocity[0] += movement[0] * self.acceleration
+        self.velocity[0] += movement[0] * self.acceleration 
         self.velocity[1] += movement[1] * self.acceleration
 
         # Clamp the velocity to max speed

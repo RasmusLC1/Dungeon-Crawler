@@ -19,10 +19,20 @@ class Boss_Room():
     # Close Doors and replace with walls
     def Spawn_Boss(self):
         # Spawn Temp decrepit bones
-        self.game.enemy_handler.Enemy_Spawner(
+        # TODO: REPLACE WITH BOSS MOB
+        self.boss = self.game.enemy_handler.Enemy_Spawner(
             'decrepit_bones_melee',
-            
+            self.pos,
         )
+        
+        x = self.pos[0] // 16
+        y = self.pos[1] // 16
+        # Replace Entrances with walls to lock in player
+        self.game.tilemap.tilemap[str(x - self.radius) + ';' + str(y)] = {'type': 'LeftWall', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+        self.game.tilemap.tilemap[str(x + self.radius) + ';' + str(y)] = {'type': 'RightWall', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+        self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'TopWall', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+        self.game.tilemap.tilemap[str(x) + ';' + str(y + self.radius)] = {'type': 'BottomWall', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+
 
     def Calculate_Distance(self):
         if self.distance_cooldown:
