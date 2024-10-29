@@ -11,6 +11,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Dusty_Bones_List(self)
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
+        Graphics_Loader.Wight_King_Spirit_List(self)
         Graphics_Loader.Asset_Spider_List(self)
         Graphics_Loader.Asset_Enemy_Symbols_List(self)
         Graphics_Loader.Asset_Player_List(self)
@@ -162,6 +163,18 @@ class Graphics_Loader:
         }
         self.assets.update(entities_assets)
 
+    def Wight_King_Spirit_List(self):
+        entities_assets = {
+            'wight_king_head': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 0, 20, 8),
+            'wight_king_body': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 9, 20, 8),
+            'wight_king_legs': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 15, 20, 4),
+
+            'wight_king_attack_head': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 0, 20, 8),
+            'wight_king_attack_body': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 9, 20, 8),
+            'wight_king_attack_legs': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 15, 20, 4),
+        }
+        self.assets.update(entities_assets)
+
     def Asset_Spider_List(self):
         entities_assets = {
             'spider_idle_head': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 0, 16, 8),
@@ -191,6 +204,8 @@ class Graphics_Loader:
             'spider_on_back_head': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 0, 16, 8),
             'spider_on_back_body': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 9, 16, 6),
             'spider_on_back_legs': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 15, 16, 2),
+
+            
         }
         self.assets.update(entities_assets)
 

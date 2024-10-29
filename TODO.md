@@ -87,6 +87,7 @@ Game Ideas
     Totem of Power, increases Rune power, stacks with more totems
     Totem of Strength, increases strength
     Totem of Luck, gives a chance to cancel negative card
+    Compass that points towards boss room
     
 
 
