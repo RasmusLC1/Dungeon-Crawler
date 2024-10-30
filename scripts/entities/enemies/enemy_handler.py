@@ -4,6 +4,7 @@ from scripts.entities.enemies.decrepit_bones_ranged import Decrepit_Bones_Ranged
 from scripts.entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.enemies.ice_spirit import Ice_Spirit
 from scripts.entities.enemies.spider import Spider
+from scripts.entities.enemies.wight_king import Wight_King
 
 import random
 import math
@@ -47,7 +48,7 @@ class Enemy_Handler():
         for i in range(10):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(0, 4)
+            enemy_variant = random.randint(5, 5)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(0, 10)
@@ -62,7 +63,8 @@ class Enemy_Handler():
                 type = 'ice_spirit'
             elif enemy_variant == 4: # Spider
                 type = 'spider'
-            
+            elif enemy_variant == 5: # Wight King
+                type = 'wight_king'
             if type:
                 pos = spawner['pos']
                 self.Enemy_Spawner(type, pos)
@@ -79,6 +81,8 @@ class Enemy_Handler():
             enemy = self.Spawn_Ice_Spirit(pos)
         elif type == 'spider':
             enemy = self.Spawn_Spider(pos)
+        elif type == 'wight_king':
+            enemy = self.Spawn_Wight_King(pos)
         
         if enemy:
             if data:
@@ -172,7 +176,22 @@ class Enemy_Handler():
                     agility,
                     intelligence,
                     stamina)
-
+    
+    def Spawn_Wight_King(self, pos):
+        health = 150
+        strength = 3
+        speed = 3
+        agility = 6
+        intelligence = 5
+        stamina = 5
+        return Wight_King(self.game,
+                    pos, 
+                    health,
+                    strength,
+                    speed,
+                    agility,
+                    intelligence,
+                    stamina)
 
     def Delete_Enemy(self, enemy):
         if enemy in self.enemies:

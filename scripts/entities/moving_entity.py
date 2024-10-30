@@ -75,11 +75,16 @@ class Moving_Entity(PhysicsEntity):
         self.attack_animation_num = 0
         self.attack_animation_num_max = 0
         self.attack_animation_num_cooldown = 0
-        self.attack_animation_num_cooldown_max = 50
+        self.attack_animation_num_cooldown_max = 10
 
         # Handle Blocking
         self.block_direction = (0,0)
         self.invincible = False
+
+        # Assign size for body parts
+        self.head_size = (16, 12)
+        self.body_size = (16, 9)
+        self.leg_size = (16, 3)
 
          # Jumping attack
         self.jumping_animation_num = 0
@@ -195,7 +200,6 @@ class Moving_Entity(PhysicsEntity):
 
 
     def Update_Animation(self) -> None:
-        
         if not self.animation_num_cooldown:
             self.animation_num += 1
             if self.animation_num > self.animation_num_max:
@@ -210,7 +214,7 @@ class Moving_Entity(PhysicsEntity):
             self.attack_animation_num += 1
             if self.attack_animation_num > self.attack_animation_num_max:
                 self.attack_animation_num = 0
-            self.attack_animation_num_cooldown = 10
+            self.attack_animation_num_cooldown = self.attack_animation_num_cooldown_max
         else:
             self.attack_animation_num_cooldown = max(0, self.attack_animation_num_cooldown - 1)
 
@@ -419,7 +423,6 @@ class Moving_Entity(PhysicsEntity):
 
         
     def Attack_Direction_Handler(self, offset = (0, 0)):
-
         self.Set_Attack_Direction()
         
         if self.attack_direction[0] < 0:
@@ -508,13 +511,13 @@ class Moving_Entity(PhysicsEntity):
 
         # Load and scale the entity images, split to allow better animation
         entity_image_head = self.game.assets[self.animation + '_head'][animation_num]
-        entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
+        entity_image_head = pygame.transform.scale(entity_image_head, self.head_size)
 
         entity_image_body = self.game.assets[self.animation + '_body'][animation_num]
-        entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
+        entity_image_body = pygame.transform.scale(entity_image_body, self.body_size)
 
         entity_image_legs = self.game.assets[self.animation + '_legs'][animation_num]
-        entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
+        entity_image_legs = pygame.transform.scale(entity_image_legs, self.leg_size)
         
         # Set the alpha value to make the entity fade out, the lower the more invisible
         alpha_value = max(0, min(255, self.active)) 
@@ -542,11 +545,11 @@ class Moving_Entity(PhysicsEntity):
         entity_image_legs.blit(dark_surface_legs, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
         surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 9))
+                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + self.body_size[1]))
         surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), 
                 (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 12))
+                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - self.head_size[1]))
 
         # Render status effects
         #Fire
