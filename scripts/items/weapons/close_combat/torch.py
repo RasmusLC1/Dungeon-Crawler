@@ -41,31 +41,31 @@ class Torch(Weapon):
     def Attack_Align_Weapon(self):
         if 'left' in self.inventory_type:
             if self.flip_image:
-                self.Move((self.pos[0] - 3, self.pos[1] - 2))
+                self.Move((self.pos[0] - 3, self.pos[1]))
             else:
-                self.Move((self.pos[0] + 3, self.pos[1] - 2))
+                self.Move((self.pos[0] + 3, self.pos[1]))
             return
         if 'right' in self.inventory_type:
             if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]):
-                self.Move((self.pos[0], self.pos[1] - 2))
+                self.Move((self.pos[0], self.pos[1]))
             elif self.flip_image:
-                self.Move((self.pos[0] + 3, self.pos[1] - 2))
+                self.Move((self.pos[0] + 3, self.pos[1]))
             else:
-                self.Move((self.pos[0] + 4, self.pos[1] - 2))
+                self.Move((self.pos[0] + 4, self.pos[1]))
             return
         
     
     def Set_Equipped_Position(self, direction_y):
         if 'left' in self.inventory_type:
             if direction_y < 0:
-                self.Move((self.entity.pos[0] - 5 , self.entity.pos[1] - 10 ))
+                self.Move((self.entity.pos[0] - 5 , self.entity.pos[1]))
             else:
-                self.Move((self.entity.pos[0] + 5 , self.entity.pos[1] - 10))
+                self.Move((self.entity.pos[0] + 5 , self.entity.pos[1]))
         elif 'right' in self.inventory_type:
             if  direction_y < 0:
-                self.Move((self.entity.pos[0] + 7, self.entity.pos[1] - 10))
+                self.Move((self.entity.pos[0] + 7, self.entity.pos[1]))
             else:
-                self.Move((self.entity.pos[0] - 7, self.entity.pos[1] - 10))
+                self.Move((self.entity.pos[0] - 7, self.entity.pos[1]))
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
 

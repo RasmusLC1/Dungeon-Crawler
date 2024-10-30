@@ -126,7 +126,7 @@ class Sword(Weapon):
                 y_offset = - 15
                     
             new_x_pos = int(self.pos[0]) + self.slash_distance * self.entity.attack_direction[0]
-            new_y_pos = int(self.pos[1]) + self.slash_distance * self.entity.attack_direction[1] + y_offset
+            new_y_pos = int(self.pos[1]) + self.slash_distance * self.entity.attack_direction[1]
             self.Move((new_x_pos, new_y_pos))
 
             if self.slash_distance <= self.range:
@@ -173,7 +173,7 @@ class Sword(Weapon):
             self.flip_image = True
         self.rotate = self.stored_rotation
         new_x_pos = self.entity.pos[0] + self.entity.attack_direction[0] * 10
-        new_y_pos = self.entity.pos[1] + self.entity.attack_direction[1] * 10 - 10
+        new_y_pos = self.entity.pos[1] + self.entity.attack_direction[1] * 10
         self.Move((new_x_pos, new_y_pos))
         self.charging = self.entity.charging
         self.enemy_hit = False
@@ -201,20 +201,20 @@ class Sword(Weapon):
             if direction_y < 0:
                 if not self.attacking:
                     self.rotate = 10
-                self.Move((self.entity.pos[0] - 4, self.entity.pos[1] - 12))
+                self.Move((self.entity.pos[0] - 4, self.entity.pos[1]))
             else:
                 if not self.attacking:
                     offset_x = self.Rotate_Left()
-                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] - 5))
+                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1]))
         elif 'right' in self.inventory_type:
             if  direction_y < 0:
                 if not self.attacking:
                     self.rotate = 60
-                self.Move((self.entity.pos[0] + 1, self.entity.pos[1] - 12))
+                self.Move((self.entity.pos[0] + 1, self.entity.pos[1]))
             else:
                 if not self.attacking:
                     offset_x = self.Rotate_Right()
-                self.Move((self.entity.pos[0] + offset_x, self.entity.pos[1] - 5))
+                self.Move((self.entity.pos[0] + offset_x, self.entity.pos[1]))
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
 

@@ -209,7 +209,7 @@ class Enemy(Moving_Entity):
     
     def Render(self, surf, offset = (0,0)):
         super().Render(surf, offset)
-        if self.active < 20:
+        if self.active < 30:
             return
         self.Render_Weapons(surf, offset)
         self.Render_Health_Bar(surf, offset)

@@ -29,8 +29,8 @@ class Chest(Decoration):
             # 'sword',
             # 'spear',
             # 'bow',
-            'arrow',
-            # 'shield'
+            # 'arrow',
+            'shield'
         ]
 
         self.potions = [
@@ -70,7 +70,7 @@ class Chest(Decoration):
         
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(0, 2)
+        self.loot_type = random.randint(3, 3)
 
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():

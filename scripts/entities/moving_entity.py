@@ -510,46 +510,27 @@ class Moving_Entity(PhysicsEntity):
             animation_num = self.jumping_animation_num
 
         # Load and scale the entity images, split to allow better animation
-        entity_image_head = self.game.assets[self.animation + '_head'][animation_num]
-        entity_image_head = pygame.transform.scale(entity_image_head, self.head_size)
+        entity_image = self.game.assets[self.animation][animation_num]
+        entity_image = pygame.transform.scale(entity_image, self.size)
 
-        entity_image_body = self.game.assets[self.animation + '_body'][animation_num]
-        entity_image_body = pygame.transform.scale(entity_image_body, self.body_size)
-
-        entity_image_legs = self.game.assets[self.animation + '_legs'][animation_num]
-        entity_image_legs = pygame.transform.scale(entity_image_legs, self.leg_size)
         
         # Set the alpha value to make the entity fade out, the lower the more invisible
         alpha_value = max(0, min(255, self.active)) 
         if not alpha_value:
             return
         
-        entity_image_head.set_alpha(alpha_value)
-        entity_image_body.set_alpha(alpha_value)
-        entity_image_legs.set_alpha(alpha_value)
+        entity_image.set_alpha(alpha_value)
 
          # Create a darkening surface that is affected by darkness
-        dark_surface_head = pygame.Surface(entity_image_head.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))  
-
-        dark_surface_body = pygame.Surface(entity_image_body.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_body.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        dark_surface_legs = pygame.Surface(entity_image_legs.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_legs.fill((self.light_level, self.light_level, self.light_level, 255))
+        dark_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface.fill((self.light_level, self.light_level, self.light_level, 255))  
 
 
         # Apply darkening effect using BLEND_RGBA_MULT
-        entity_image_head.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        entity_image_body.blit(dark_surface_body, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        entity_image_legs.blit(dark_surface_legs, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        entity_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
-        surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + self.body_size[1]))
-        surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), 
+        surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), 
                 (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-        surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - self.head_size[1]))
 
         # Render status effects
         #Fire

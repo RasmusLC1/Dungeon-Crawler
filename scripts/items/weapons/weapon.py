@@ -344,7 +344,6 @@ class Weapon(Item):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
-        
         surf.blit( pygame.transform.flip(weapon_image, self.flip_image, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
   
@@ -401,7 +400,6 @@ class Weapon(Item):
         dark_surface.fill((self.light_level, self.light_level, self.light_level, 255))  
 
         weapon_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-
 
         surf.blit(
             pygame.transform.flip(weapon_image, self.flip_image, False),

@@ -46,7 +46,7 @@ class Bow(Weapon):
     def Set_Attack_Position(self):
         new_x_pos = 0
         new_y_pos = 0
-        new_y_pos = self.entity.rect().center[1] + self.entity.attack_direction[1] * 2 - 12
+        new_y_pos = self.entity.rect().center[1] + self.entity.attack_direction[1] - 5
         if self.entity.attack_direction[0] < 0:
             self.flip_image = False
             new_x_pos = self.entity.rect().midleft[0] - 4
@@ -58,7 +58,7 @@ class Bow(Weapon):
 
     # Set the position of the bow when not drawn
     def Set_Equipped_Position(self, direction_y):
-        self.Move((self.entity.pos[0] + 2, self.entity.pos[1] - 6))
+        self.Move((self.entity.pos[0] + 2, self.entity.pos[1]))
         self.rotate = -30
     
 

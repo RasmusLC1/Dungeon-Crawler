@@ -48,26 +48,25 @@ class Shield(Weapon):
 
 
     def Set_Equipped_Position(self, direction_y):
-        
         offset_x = 0
         if self.entity.flip[0] and not self.attacking:
             self.flip_image = True
         else:
             self.flip_image = False
         if 'left' in self.inventory_type:
-            if direction_y < 0:
-                self.Move((self.entity.pos[0] - 4, self.entity.pos[1] - 12 - self.blocking))
+            if self.entity.direction_y < 0:
+                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] - self.blocking))
             else:
                 if not self.attacking:
                     offset_x = self.Rotate_Left()
-                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] - self.blocking))
+                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] + 5 - self.blocking))
         elif 'right' in self.inventory_type:
-            if  direction_y < 0:
-                self.Move((self.entity.pos[0] + 1, self.entity.pos[1] - 12- self.blocking))
+            if  self.entity.direction_y < 0:
+                self.Move((self.entity.pos[0] + offset_x , self.entity.pos[1] - self.blocking))
             else:
                 if not self.attacking:
                     offset_x = self.Rotate_Right()
-                self.Move((self.entity.pos[0] + offset_x, self.entity.pos[1] - self.blocking))
+                self.Move((self.entity.pos[0] + offset_x, self.entity.pos[1] + 5 - self.blocking))
         else:
             print("DIRECTION NOT FOUND", self.inventory_type)
 

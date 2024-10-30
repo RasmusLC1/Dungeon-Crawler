@@ -153,35 +153,22 @@ class Player(Moving_Entity):
             return
         
         # Load and scale the entity images, split to allow better animation
-        entity_image_head = self.game.assets[self.animation + '_head'][self.animation_num]
-        entity_image_head = pygame.transform.scale(entity_image_head, (16, 12))
-
-        entity_image_body = self.game.assets[self.animation + '_body'][self.animation_num]
-        entity_image_body = pygame.transform.scale(entity_image_body, (16, 9))
-
-        entity_image_legs = self.game.assets[self.animation + '_legs'][self.animation_num]
-        entity_image_legs = pygame.transform.scale(entity_image_legs, (16, 3))
+        entity_image= self.game.assets[self.animation][self.animation_num]
 
         if self.status_effects.invisibility:
             # Set the alpha value to make the entity fade out, the lower the more invisible
             alpha_value = max(0, min(255, self.active)) 
-            entity_image_head.set_alpha(alpha_value)
-            entity_image_body.set_alpha(alpha_value)
-            entity_image_legs.set_alpha(alpha_value)
+            entity_image.set_alpha(alpha_value)
 
         if not "up" in self.animation:
-            surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
-            surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-            surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
+            surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
 
         self.weapon_handler.Render_Weapons(surf, offset)
         
 
         if  "up" in self.animation:
-            surf.blit(pygame.transform.flip(entity_image_legs, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] + 6))
-            surf.blit(pygame.transform.flip(entity_image_body, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
-            surf.blit(pygame.transform.flip(entity_image_head, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1] - 8))
+            surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
         # Render status effects
         self.status_effects.Render_Effects(self.game, surf, offset)

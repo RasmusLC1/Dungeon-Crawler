@@ -8,7 +8,7 @@ import random
 
 class Wight_King(Enemy):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, (15, 20))
+        super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, (20, 20))
         self.animation_num_max = 4
         self.attack_animation_num_max = 4
         self.attack_animation_num_cooldown_max = 8
@@ -16,11 +16,6 @@ class Wight_King(Enemy):
         self.animation = 'wight_king'
         self.Equip_Weapon()
         self.max_charge = 70
-
-        # Assign size for body parts
-        self.head_size = (20, 10)
-        self.body_size = (20, 13)
-        self.leg_size = (20, 5)
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)

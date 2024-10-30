@@ -86,124 +86,75 @@ class Graphics_Loader:
     def Asset_Player_List(self):
         entities_assets = {
 
-            'player_idle_down_head': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 0, 16, 8),
-            'player_idle_down_body': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 9, 16, 6),
-            'player_idle_down_legs': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 15, 16, 2),
+            'player_idle_down': get_tiles_from_sheet('entities/player/idle_down.png', 4, 0, 0, 0, 16, 16),
 
-            'player_idle_up_head': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 0, 16, 8),
-            'player_idle_up_body': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 9, 16, 6),
-            'player_idle_up_legs': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 15, 16, 2),
+            'player_idle_up': get_tiles_from_sheet('entities/player/idle_up.png', 4, 0, 0, 0, 16, 16),
             
-            'player_standing_still_down_head': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 0, 16, 8),
-            'player_standing_still_down_body': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 9, 16, 6),
-            'player_standing_still_down_legs': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 15, 16, 3),
+            'player_standing_still_down': get_tiles_from_sheet('entities/player/standing_still_down.png', 4, 0, 0, 0, 16, 16),
 
-            'player_standing_still_up_head': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 0, 16, 8),
-            'player_standing_still_up_body': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 9, 16, 6),
-            'player_standing_still_up_legs': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 15, 16, 2),
+            'player_standing_still_up': get_tiles_from_sheet('entities/player/standing_still_up.png', 4, 0, 0, 0, 16, 16),
 
-            'player_running_down_head': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 0, 16, 8),
-            'player_running_down_body': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 9, 16, 6),
-            'player_running_down_legs': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 15, 16, 2),
+            'player_running_down': get_tiles_from_sheet('entities/player/running_down.png', 4, 0, 0, 0, 16, 16),
 
-            'player_running_up_head': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 0, 16, 8),
-            'player_running_up_body': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 9, 16, 6),
-            'player_running_up_legs': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 15, 16, 2),
+            'player_running_up': get_tiles_from_sheet('entities/player/running_up.png', 4, 0, 0, 0, 16, 16),
             
 
-            'player_attack_head': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 0, 16, 8),
-            'player_attack_body': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 9, 16, 6),
-            'player_attack_legs': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 15, 16, 2),
-
-
-            'gun': load_image('gun.png'),
-            'projectile': load_image('projectile.png'),
+            'player_attack': get_tiles_from_sheet('entities/player/player_attack.png', 4, 0, 0, 0, 16, 16),
         }
+        
         self.assets.update(entities_assets)
 
     def Asset_Dusty_Bones_List(self):
         entities_assets = {
-            'decrepit_bones_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 16, 8),
-            'decrepit_bones_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 9, 16, 6),
-            'decrepit_bones_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 15, 16, 2),
+            'decrepit_bones': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 16, 16),
 
-            'decrepit_bones_attack_head': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 16, 8),
-            'decrepit_bones_attack_body': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 9, 16, 6),
-            'decrepit_bones_attack_legs': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 15, 16, 2),
+            'decrepit_bones_attack': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 16, 16),
 
         }
         self.assets.update(entities_assets)
 
     def Asset_Fire_Spirit_List(self):
         entities_assets = {
-            'fire_spirit_standing_still_head': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 0, 16, 8),
-            'fire_spirit_standing_still_body': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 9, 16, 6),
-            'fire_spirit_standing_still_legs': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 15, 16, 2),
+            'fire_spirit_standing_still': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 0, 16, 16),
 
-            'fire_spirit_running_head': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 0, 16, 8),
-            'fire_spirit_running_body': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 9, 16, 6),
-            'fire_spirit_running_legs': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 15, 16, 2),
+            'fire_spirit_running': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_moving.png', 3, 0, 0, 0, 16, 16),
 
-            'fire_spirit_attack_head': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 0, 16, 8),
-            'fire_spirit_attack_body': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 9, 16, 6),
-            'fire_spirit_attack_legs': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 15, 16, 2),
+            'fire_spirit_attack': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_attacking.png', 3, 0, 0, 0, 16, 16),
 
         }
         self.assets.update(entities_assets)
 
     def Asset_Ice_Spirit_List(self):
         entities_assets = {
-            'ice_spirit_head': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 0, 16, 8),
-            'ice_spirit_body': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 9, 16, 6),
-            'ice_spirit_legs': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 15, 16, 2),
+            'ice_spirit': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 0, 16, 16),
 
-            'ice_spirit_attack_head': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 0, 16, 8),
-            'ice_spirit_attack_body': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 9, 16, 6),
-            'ice_spirit_attack_legs': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 15, 16, 2),
+            'ice_spirit_attack': get_tiles_from_sheet('entities/enemies/ice_spirit/ice_spirit_idle.png', 3, 0, 0, 0, 16, 16),
         }
         self.assets.update(entities_assets)
 
     def Wight_King_Spirit_List(self):
         entities_assets = {
-            'wight_king_head': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 0, 20, 8),
-            'wight_king_body': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 9, 20, 8),
-            'wight_king_legs': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 15, 20, 4),
+            'wight_king': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 0, 20, 20),
 
-            'wight_king_attack_head': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 0, 20, 8),
-            'wight_king_attack_body': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 9, 20, 8),
-            'wight_king_attack_legs': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 15, 20, 4),
+            'wight_king_attack': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 0, 20, 20),
         }
         self.assets.update(entities_assets)
 
     def Asset_Spider_List(self):
         entities_assets = {
-            'spider_idle_head': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 0, 16, 8),
-            'spider_idle_body': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 9, 16, 6),
-            'spider_idle_legs': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 15, 16, 2),
+            'spider_idle': get_tiles_from_sheet('entities/enemies/spider/spider_idle.png', 4, 0, 0, 0, 16, 16),
 
-            'spider_running_head': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 0, 16, 8),
-            'spider_running_body': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 9, 16, 6),
-            'spider_running_legs': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 15, 16, 2),
+            'spider_running': get_tiles_from_sheet('entities/enemies/spider/spider_running.png', 4, 0, 0, 0, 16, 16),
 
-            'friendly_spider_idle_head': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 0, 16, 8),
-            'friendly_spider_idle_body': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 9, 16, 6),
-            'friendly_spider_idle_legs': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 15, 16, 2),
+            'friendly_spider_idle': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_idle.png', 4, 0, 0, 0, 16, 16),
 
-            'friendly_spider_running_head': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 0, 16, 8),
-            'friendly_spider_running_body': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 9, 16, 6),
-            'friendly_spider_running_legs': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 15, 16, 2),
+            'friendly_spider_running': get_tiles_from_sheet('entities/enemies/spider/friendly_spider_running.png', 4, 0, 0, 0, 16, 16),
 
-            'spider_attack_head': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 0, 16, 8),
-            'spider_attack_body': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 9, 16, 6),
-            'spider_attack_legs': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 15, 16, 2),
+            'spider_attack': get_tiles_from_sheet('entities/enemies/spider/spider_attacking.png', 3, 0, 0, 0, 16, 16),
 
-            'spider_jumping_head': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 0, 16, 8),
-            'spider_jumping_body': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 9, 16, 6),
-            'spider_jumping_legs': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 15, 16, 2),
+            'spider_jumping': get_tiles_from_sheet('entities/enemies/spider/spider_jumping.png', 8, 0, 0, 0, 16, 16),
 
-            'spider_on_back_head': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 0, 16, 8),
-            'spider_on_back_body': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 9, 16, 6),
-            'spider_on_back_legs': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 15, 16, 2),
+            'spider_on_back': get_tiles_from_sheet('entities/enemies/spider/spider_on_back.png', 8, 0, 0, 0, 16, 16),
 
             
         }
