@@ -57,7 +57,7 @@ class Keyboard_Handler:
         if key_press.key == pygame.K_7:
             self._7_pressed = True
         if key_press.key == pygame.K_e:
-            self.e_pressed = True                
+            self.e_pressed = True
 
         if key_press.key == pygame.K_SPACE:
             self.space_pressed = True

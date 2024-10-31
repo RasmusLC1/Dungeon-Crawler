@@ -49,67 +49,67 @@ class Trap_Handler:
     def Initialise(self):
         # Spike initialisation
         for trap in self.game.tilemap.extract([('spike_trap', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
             
         # Spike initialisation
         for trap in self.game.tilemap.extract([('spike_poison_trap', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
 
         # top pusher initialisation
         for trap in self.game.tilemap.extract([('TopPush_trap', 0)].copy()):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
 
         # Bear Trap initialisation
         for trap in self.game.tilemap.extract([('Bear_trap', 0)].copy()):
-            self.Trap_Spawner(trap['pos'], (16, 16), trap['type'])
+            self.Trap_Spawner(trap.pos, (16, 16), trap.type)
 
         # Spike pit initialisation
         for trap in self.game.tilemap.extract([('Pit_trap', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
         for trap in self.game.tilemap.extract([('Lava_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
         for trap in self.game.tilemap.extract([('shallow_water_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
 
         for trap in self.game.tilemap.extract([('medium_water_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
         for trap in self.game.tilemap.extract([('deep_water_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
 
         for trap in self.game.tilemap.extract([('shallow_ice_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
 
 
         for trap in self.game.tilemap.extract([('medium_ice_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
         for trap in self.game.tilemap.extract([('deep_ice_env', 0)].copy(), True):
-            size = (self.game.assets[trap['type']][0].get_width(), self.game.assets[trap['type']][0].get_height())
-            self.Trap_Spawner(trap['pos'], size, trap['type'])
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
 
         for trap in self.game.tilemap.extract([('Fire_trap', 0)].copy()):
-            self.Trap_Spawner(trap['pos'], (16, 16), trap['type'])
+            self.Trap_Spawner(trap.pos, (16, 16), trap.type)
 
         for trap in self.game.tilemap.extract([('spider_web', 3)].copy()):
-            self.Trap_Spawner(trap['pos'], (16, 16), trap['type'])
+            self.Trap_Spawner(trap.pos, (16, 16), trap.type)
 
     def Trap_Spawner(self, pos, size, type, data = None):
         trap = None

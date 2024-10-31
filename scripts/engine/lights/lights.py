@@ -26,7 +26,7 @@ class Light():
         # Setup light_level under the light itself
         tile = self.game.tilemap.Current_Tile(self.pos)
         if self.Check_Tile(tile):
-            if self.light_level > tile['light']:
+            if self.light_level > tile.light_level:
                 self.game.tilemap.Set_Light_Level(tile, self.light_level)
                 self.tiles.append(tile)
             else: # If the current tile is brigther than the lightsource, then just return as nothing can be updated
@@ -49,7 +49,7 @@ class Light():
 
                 new_light_level = max(0, self.light_level - i)
                 # Add the tile if it's darker than the current tile
-                if new_light_level > tile['light']:
+                if new_light_level > tile.light_level:
                     self.game.tilemap.Set_Light_Level(tile, new_light_level)
                     self.tiles.append(tile)
                 
@@ -57,18 +57,18 @@ class Light():
     def Setup_Under_entity_Light(self):
         tile = self.game.tilemap.Current_Tile(self.pos)
         if tile:
-            if self.light_level > tile['light']:
-                tile['light'] = self.light_level
+            if self.light_level > tile.light_level:
+                tile.light_level= self.light_level
                 self.tiles.append(tile)
-            if 'Wall' in tile['type']:
+            if 'Wall' in tile.type:
                 return
         else:
             return
 
     def Check_Tile(self, tile):
-        if not tile:
+        if not tile or not tile.type:
             return False
-        if 'Wall' in tile['type']:
+        if 'Wall' in tile.type:
             return False
         return True
     
@@ -90,7 +90,7 @@ class Light():
         if not self.tiles: 
             return False
         for tile in self.tiles:
-            tile['light'] = 0
+            tile.light_level = 0
         self.tiles.clear()
 
         return True

@@ -60,8 +60,8 @@ class Trap(PhysicsEntity):
         tile = self.game.tilemap.Current_Tile(self.pos)
 
      
-        if tile['light'] > 0:
-            light_level = min(255, tile['light'] * 25)
+        if tile.light_level > 0:
+            light_level = min(255, tile.light_level * 25)
         else:
             light_level = 1
         tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))

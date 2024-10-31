@@ -23,7 +23,7 @@ class Door(Decoration):
         self.is_open = True
         x = self.pos[0] // 16
         y = self.pos[1] // 16
-        self.game.tilemap.tilemap[str(x) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+        self.game.tilemap.Add_Tile('Floor', 0, (x, y), self.active, self.light_level)
         
         
         if generate_clatter:

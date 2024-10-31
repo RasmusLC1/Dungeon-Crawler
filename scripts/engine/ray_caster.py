@@ -39,12 +39,12 @@ class Ray_Caster():
     # Handle tile activity degradation
     def Check_Tile_Active(self, game):
         for tile in self.tiles:
-            if tile['active']:
-                tile['active'] -= 1
+            if tile.active:
+                tile.active -= 1
             # Find distance from player and if it's greater than 300, delete it
-            distance = math.sqrt((game.player.pos[0] - tile['pos'][0] * 16) ** 2 + (game.player.pos[1] - tile['pos'][1] * 16) ** 2)
+            distance = math.sqrt((game.player.pos[0] - tile.pos[0] * 16) ** 2 + (game.player.pos[1] - tile.pos[1] * 16) ** 2)
             if abs(distance) > self.inactive_distance:
-                tile['active'] = 0
+                tile.active = 0
                 self.tiles.remove(tile)
             
     def Check_Trap_Active(self, game):
@@ -147,16 +147,19 @@ class Ray_Caster():
     def Check_Tile(self, pos):
         tile = self.game.tilemap.Current_Tile(pos)
         if tile:
-            if not tile['active']:
-                tile['active'] = self.default_activity
+            if not tile.active:
+                tile.active = self.default_activity
                 self.tiles.append(tile)
             else:
-                tile['active'] = self.default_activity
-
-            if 'Wall' in tile['type']:
+                tile.active = self.default_activity
+            if not tile.type:
+                print(tile)
                 return False
             
-            if 'Door' in tile['type']:
+            if 'Wall' in tile.type:
+                return False
+            
+            if 'Door' in tile.type:
                 return False
             
             

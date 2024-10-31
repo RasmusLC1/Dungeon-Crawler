@@ -10,7 +10,7 @@ class Renderer():
         self.game.display.blit(self.back_ground_image, (0, 0))
         
         self.game.ray_caster.Ray_Caster()
-        self.game.tilemap.render_tiles(self.game.ray_caster.tiles, self.game.display, offset=self.game.render_scroll)
+        self.game.tilemap.Render_Tiles(self.game.ray_caster.tiles, self.game.display, offset=self.game.render_scroll)
 
 
         self.game.souls_interface.Render(self.game.display)

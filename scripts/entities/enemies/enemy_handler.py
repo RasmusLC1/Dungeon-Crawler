@@ -48,7 +48,7 @@ class Enemy_Handler():
         for i in range(10):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(0, 5)
+            enemy_variant = random.randint(3, 3)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(0, 10)
@@ -66,7 +66,7 @@ class Enemy_Handler():
             elif enemy_variant == 5: # Wight King
                 type = 'wight_king'
             if type:
-                pos = spawner['pos']
+                pos = spawner.pos
                 self.Enemy_Spawner(type, pos)
 
     def Enemy_Spawner(self, type, pos, data = None):

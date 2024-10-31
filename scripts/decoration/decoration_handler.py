@@ -24,19 +24,20 @@ class Decoration_Handler():
     def Initialise(self, depth = 0):
         # door initialisation
         for door in self.game.tilemap.extract([('Door_Basic', 0)].copy(), True):
-            size = (self.game.assets[door['type']][0].get_width(), self.game.assets[door['type']][0].get_height())
-            door = self.Spawn_Door(door['pos'], size)
+            size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
+            self.Spawn_Door(door.pos, size)
 
         for chest in self.game.tilemap.extract([('Chest', 0)]):
             version = self.Set_Chest_Version(depth)
-            spawn_chest = self.Spawn_Chest(chest['pos'], version)
+            self.Spawn_Chest(chest.pos, version)
 
         for shrine in self.game.tilemap.extract([('Shrine', 0)]):
-            spawn_shrine = self.Spawn_Shrine(shrine['pos'])
+            spawn_shrine = self.Spawn_Shrine(shrine.pos)
 
         for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
             temp_level = 3
-            spawn_boss_room = self.Spawn_Boss_Room(boss_room['pos'], boss_room['radius'], temp_level)
+            radius = random.randint(5, 7)
+            self.Spawn_Boss_Room(boss_room.pos, radius, temp_level)
 
     def Set_Chest_Version(self, depth):
         i = 0

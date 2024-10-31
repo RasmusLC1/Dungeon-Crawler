@@ -70,7 +70,7 @@ class Light_Handler():
         tile = self.game.tilemap.Current_Tile(pos)
         if not tile:
             return
-        light_level = min(255, tile['light'] * 25)
+        light_level = min(255, tile.light_level * 25)
 
         light_level = abs(light_level - 255)
         light_level = max(50, 255 - light_level)
