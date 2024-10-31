@@ -14,6 +14,8 @@ class Moving_Entity(PhysicsEntity):
         self.velocity = [0, 0] # Velocity of the player
         
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False} # Check for wall collision in each direction
+        self.update_tile_cooldown = 0
+
 
         self.animation_state = 'up'
         self.idle_count = 0
@@ -80,7 +82,6 @@ class Moving_Entity(PhysicsEntity):
         self.block_direction = (0,0)
         self.invincible = False
 
-
          # Jumping attack
         self.jumping_animation_num = 0
         self.jumping_animation_num_max = 0
@@ -133,11 +134,12 @@ class Moving_Entity(PhysicsEntity):
 
 
         self.Update_Traps()
-        self.Nearby_Enemies(40)
+        self.Nearby_Enemies(3)
         self.Update_Damage_Cooldown()
         self.Charge_Update()
 
         self.Movement(movement, tilemap)
+        self.Update_Tile()
     
     def Update_Movement(self, movement):
         # Apply acceleration to velocity based on input
@@ -192,6 +194,17 @@ class Moving_Entity(PhysicsEntity):
 
         self.last_frame_movement = self.frame_movement
     
+    def Update_Tile(self):
+        if self.update_tile_cooldown:
+            self.update_tile_cooldown -= 1
+
+        self.update_tile_cooldown = 10
+        new_tile = str(int(self.pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(self.pos[1] // self.game.tilemap.tile_size))
+        if new_tile != self.tile:
+            self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+            self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
+            self.tile = new_tile
+
 
 
     def Update_Animation(self) -> None:

@@ -18,6 +18,7 @@ class Tilemap:
         self.tile_size = tile_size
         self.tilemap = {}
         self.offgrid_tiles = []
+        self.update_timer = 0
         self.saved_data = {}
      
 
@@ -26,7 +27,7 @@ class Tilemap:
         json.dump({'tilemap': self.tilemap, 'tile_size': self.tile_size, 'offgrid': self.offgrid_tiles}, f)
         f.close()
     
-
+    
     # Load in tilemap and offgrid and instantiate tiles
     def Load(self, path):
         f = open(path, 'r')
@@ -36,14 +37,7 @@ class Tilemap:
         
         tilemap = map_data['tilemap']
         for tile_key in tilemap:
-            tile_values = tilemap[tile_key]
-            type = tile_values['type']
-            variant = tile_values['variant']
-            pos = tuple(map(int, tile_key.split(';')))
-            active = tile_values['active']
-            light_level = tile_values['light']
-            tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level)
-            self.tilemap[tile_key] = tile
+            self.Generate_Tile(tile_key, tilemap)
 
         offgrid_tiles = map_data['offgrid']
 
@@ -52,10 +46,21 @@ class Tilemap:
             variant = tile_values['variant']
             pos = (tile_values['pos'][0], tile_values['pos'][1])
             
-            tile = Offgrid_Tile(self.game, type, variant, pos, self.tile_size, active, light_level)
+            tile = Tile(self.game, type, variant, pos, self.tile_size, 0, 0, False)
             self.offgrid_tiles.append(tile)
 
-
+    def Generate_Tile(self, tile_key, tilemap):
+        tile_values = tilemap[tile_key]
+        type = tile_values['type']
+        variant = tile_values['variant']
+        pos = tuple(map(int, tile_key.split(';')))
+        active = tile_values['active']
+        light_level = tile_values['light']
+        physics = False
+        if 'Wall' in type or 'Door' in type:
+            physics = True
+        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
+        self.tilemap[tile_key] = tile
 
 
     # Takes an ID an looks for matches in tilemap and offgrid tiles
@@ -78,6 +83,21 @@ class Tilemap:
         
         return matches
 
+    def Search_Tiles(self, max_distance, center):
+        pos = tuple(map(int, center.split(';')))
+        entities = []
+        for x in range(pos[0] - max_distance, pos[0] + max_distance):
+            for y in range(pos[1] - max_distance, pos[1] + max_distance):
+                tile = self.tilemap[str(x // 16) + ';' + str(y // 16)]
+        
+
+
+    # Add an remove entities from tiles dynamically as needed
+    def Remove_Entity_From_Tile(self, tile_key, entity_ID):
+        self.tilemap[tile_key].Clear_Entity(entity_ID)
+
+    def Add_Entity_To_Tile(self, tile_key, entity):
+        self.tilemap[tile_key].Add_Entity(entity)
 
     # Get the position of tiles in the tilemap
     def Get_Pos(self):
@@ -170,14 +190,14 @@ class Tilemap:
     def solid_check(self, pos):
         tile_loc = str(int(pos[0] // self.tile_size)) + ';' + str(int(pos[1] // self.tile_size))
         if tile_loc in self.tilemap:
-            if self.tilemap[tile_loc].type in PHYSICS_TILES:
+            if self.tilemap[tile_loc].physics:
                 return self.tilemap[tile_loc]
     
     # Check for physics tiles
     def physics_rects_around(self, pos):
         rects = []
         for tile in self.tiles_around(pos):
-            if tile.type in PHYSICS_TILES:
+            if tile.physics:
                 rects.append(pygame.Rect(tile.pos[0] * self.tile_size, tile.pos[1] * self.tile_size, self.tile_size, self.tile_size))
         return rects
     
