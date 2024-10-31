@@ -20,6 +20,10 @@ class Tilemap:
         self.offgrid_tiles = []
         self.update_timer = 0
         self.saved_data = {}
+        self.min_x = 99999
+        self.max_x = -99999
+        self.min_y = 99999
+        self.max_y = -99999
      
 
     def save(self, path):
@@ -49,6 +53,7 @@ class Tilemap:
             tile = Tile(self.game, type, variant, pos, self.tile_size, 0, 0, False)
             self.offgrid_tiles.append(tile)
 
+
     def Generate_Tile(self, tile_key, tilemap):
         tile_values = tilemap[tile_key]
         type = tile_values['type']
@@ -61,6 +66,10 @@ class Tilemap:
             physics = True
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         self.tilemap[tile_key] = tile
+        self.min_x = min(self.min_x, pos[0])
+        self.max_x = max(self.max_x, pos[0])
+        self.min_y = min(self.min_y, pos[0])
+        self.max_y = max(self.max_y, pos[0])
 
 
     # Takes an ID an looks for matches in tilemap and offgrid tiles
@@ -83,15 +92,34 @@ class Tilemap:
         
         return matches
 
-    def Search_Tiles(self, max_distance, center):
-        pos = tuple(map(int, center.split(';')))
-        entities = []
-        for x in range(pos[0] - max_distance, pos[0] + max_distance):
-            for y in range(pos[1] - max_distance, pos[1] + max_distance):
-                tile = self.tilemap[str(x // 16) + ';' + str(y // 16)]
+    def Search_Tiles(self, max_distance, pos, category):
+        pos = (pos[0] // 16, pos[1] // 16)
         
+        
+        entities = []
+        for x in range(math.floor(pos[0] - max_distance), math.floor(pos[0] + max_distance)):
+            for y in range(math.floor(pos[1] - max_distance), math.floor(pos[1] + max_distance)):
+                if x < self.min_x or y < self.min_y:
+                    continue
 
+                if x > self.max_x or y > self.max_y:
+                    continue
 
+                tile_key = str(x) + ';' + str(y)
+                tile = self.tilemap[tile_key]
+                if not tile.entities:
+                    continue
+
+                new_entities = tile.Search_Entities(category)
+                if not new_entities:
+                    continue
+                        
+                entities.extend(new_entities)
+
+        
+        return entities
+                    
+                    
     # Add an remove entities from tiles dynamically as needed
     def Remove_Entity_From_Tile(self, tile_key, entity_ID):
         self.tilemap[tile_key].Clear_Entity(entity_ID)
@@ -137,8 +165,8 @@ class Tilemap:
         else:
             return None
     
-    def Add_Tile(self, type, variant, pos, active = 0, light_level = 0):
-        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level)
+    def Add_Tile(self, type, variant, pos, physics, active = 0, light_level = 0):
+        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         tile_key = ';'.join(map(str, pos))
         del self.tilemap[tile_key]
         self.tilemap[tile_key] = tile
@@ -149,6 +177,8 @@ class Tilemap:
         check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
         if check_loc in self.tilemap:
             tile = self.tilemap[check_loc]
+            if not tile:
+                return None
             if not tile.type:
                 return None
             return self.tilemap[check_loc]

@@ -25,6 +25,18 @@ class Tile():
     def Set_Light_Level(self, new_light_level):
         self.light_level = new_light_level
 
+    def Search_Entities(self, category):
+        entities = []
+        for entity in self.entities:
+            if not entity.category == category:
+                continue
+
+            entities.append(entity)
+
+        return entities
+
+        
+
     def Add_Entity(self, entity):
         if entity in self.entities:
             return

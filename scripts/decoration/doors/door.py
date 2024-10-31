@@ -3,7 +3,7 @@ import random
 
 class Door(Decoration):
     def __init__(self, game, type, pos, size) -> None:
-        super().__init__(game, type, 'door', pos, size)
+        super().__init__(game, type, pos, size)
         self.is_open = False
 
     def Save_Data(self):
@@ -23,7 +23,7 @@ class Door(Decoration):
         self.is_open = True
         x = self.pos[0] // 16
         y = self.pos[1] // 16
-        self.game.tilemap.Add_Tile('Floor', 0, (x, y), self.active, self.light_level)
+        self.game.tilemap.Add_Tile('Floor', 0, (x, y), False, self.active, self.light_level)
         
         
         if generate_clatter:

@@ -122,7 +122,7 @@ class Decoration_Handler():
         if self.Nearby_Shrine():
             return True
         
-        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 20)
+        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 2)
         if not nearby_decorations:
             return False
         
@@ -131,15 +131,26 @@ class Decoration_Handler():
 
     def Find_Nearby_Decorations(self, player_pos, max_distance):
         
+
+        nearby_decorations = []
+        if max_distance <= 5:
+            nearby_decorations = self.game.tilemap.Search_Tiles(max_distance, player_pos, 'decoration')
+            
+        else:
+            nearby_decorations = self.Find_Nearby_Decorations_Long_Distance(player_pos, max_distance)
+        
+        
+        return nearby_decorations
+    
+    def Find_Nearby_Decorations_Long_Distance(self, player_pos, max_distance):
         nearby_decorations = []
         for decoration in self.decorations:
             # Calculate the Euclidean distance
             distance = math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_decorations.append(decoration)
-        
         return nearby_decorations
-    
+
     def Open_Decoration(self, decorations):      
         if not decorations:
             return False
@@ -161,6 +172,9 @@ class Decoration_Handler():
     def Nearby_Chest(self, decoration):
         if decoration.type == 'chest':
             decoration.Open()
+            if not decoration in self.decorations:
+                return False
+            
             self.decorations.remove(decoration)
             del(decoration)
             return True
@@ -177,7 +191,7 @@ class Decoration_Handler():
         return False
 
     def Nearby_Shrine(self):
-        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 50)
+        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 4)
         for decoration in nearby_decorations:
             if decoration.type == 'shrine':
                 if not decoration.rect().colliderect(self.game.player.rect()):
@@ -211,7 +225,7 @@ class Decoration_Handler():
         return True
     
     def Open_Door_Without_Key(self):
-        decorations = self.Find_Nearby_Decorations(self.game.player.pos, 40)
+        decorations = self.Find_Nearby_Decorations(self.game.player.pos, 3)
         sorted_decorations = self.Sort_Decorations(decorations)
         for decoration in sorted_decorations:
             if decoration.type == 'door':

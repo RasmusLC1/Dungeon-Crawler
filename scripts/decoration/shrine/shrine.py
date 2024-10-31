@@ -4,7 +4,7 @@ import pygame
 
 class Shrine(Decoration):
     def __init__(self, game, pos) -> None:
-        super().__init__(game, 'shrine', 'shrine', pos, (32, 32))
+        super().__init__(game, 'shrine', pos, (32, 32))
         self.is_open = False
         self.animation = 0
         self.animation_cooldown = 0

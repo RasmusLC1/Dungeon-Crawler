@@ -6,7 +6,7 @@ class Boss_Room():
     def __init__(self, game, pos, radius, level) -> None:
         self.game = game
         self.type = 'boss_room'
-        self.category = 'decoration'
+        self.category = 'boss_room'
         self.ID = random.randint(1, 100000)
 
         self.pos = pos

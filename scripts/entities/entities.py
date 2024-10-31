@@ -17,7 +17,7 @@ class PhysicsEntity:
         self.light_level = 0
         self.game.entities_render.Add_Entity(self)
         self.render = True
-        self.tile = str(self.pos[0] // 16) + ';' + str(self.pos[1] // 16)
+        self.tile = str(int(self.pos[0]) // 16) + ';' + str(int(self.pos[1]) // 16)
         # self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
         self.saved_data = {}
 
