@@ -26,13 +26,12 @@ class Entity_Renderer():
     def Find_Nearby_Entities(self):
         self.nearby_entities.clear()
         for entity in self.entities:
-            
-
             if not entity.render:
                 continue
             distance = Helper_Functions.Abs_Distance_Float(entity.pos, self.game.player.pos) 
             if distance < 300:
                 self.nearby_entities.append(entity)
+
 
     def Add_Entity(self, entity):
         if entity in self.entities:

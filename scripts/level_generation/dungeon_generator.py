@@ -1,6 +1,6 @@
 from scripts.level_generation.cellular_automata import Cellular_Automata
 from scripts.level_generation.noise_map import Noise_Map
-from scripts.engine.tilemap import Tilemap
+from scripts.engine.tilemap.tilemap import Tilemap
 from scripts.engine.a_star import A_Star
 import random
 import os

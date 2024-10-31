@@ -11,7 +11,7 @@ from scripts.engine.sound.sound_handler import Sound_Handler
 from scripts.level_generation.dungeon_generator import Dungeon_Generator
 from scripts.interface.health_bar import Health_Bar
 from scripts.interface.souls import Souls
-from scripts.engine.tilemap import Tilemap
+from scripts.engine.tilemap.tilemap import Tilemap
 from scripts.engine.assets.graphics_loader import Graphics_Loader
 from scripts.engine.assets.audio_loader import Audio_Loader
 from scripts.input.keyboard import Keyboard_Handler

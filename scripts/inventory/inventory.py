@@ -26,7 +26,7 @@ class Inventory:
             
     def Load_Data(self, data):
 
-        for item_id, item_data in data.items():
+        for ID, item_data in data.items():
             if not item_data:
                 continue
             for inventory_slot in self.inventory:
@@ -35,7 +35,7 @@ class Inventory:
                     continue
 
                 self.game.item_handler.Load_Item_From_Data(item_data)
-                item = self.game.item_handler.Find_Item(item_data['item_ID'])
+                item = self.game.item_handler.Find_Item(item_data['ID'])
                 if not item:
                     continue
 
@@ -140,7 +140,7 @@ class Inventory:
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 continue
-            if inventory_slot.item.item_ID == item.item_ID:
+            if inventory_slot.item.ID == item.ID:
                 return inventory_slot
             
         return None
@@ -286,7 +286,7 @@ class Inventory:
             if not inventory_slot.item:
                 continue
             # Compare Item ID's
-            if inventory_slot.item.item_ID == item.item_ID:
+            if inventory_slot.item.ID == item.ID:
                 inventory_slot.Set_Active(False)  # Deactivate the slot
                 inventory_slot.item = None  # Remove the item from the slot
                 return True

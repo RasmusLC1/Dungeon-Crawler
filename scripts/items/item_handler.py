@@ -25,11 +25,11 @@ class Item_Handler():
     def Save_Item_Data(self):
         for item in self.items:
             item.Save_Data()
-            self.saved_data[item.item_ID] = item.saved_data
+            self.saved_data[item.ID] = item.saved_data
 
     def Load_Data(self, data):
 
-        for item_id, item_data in data.items():
+        for ID, item_data in data.items():
             if not item_data:
                 continue
 
@@ -84,9 +84,9 @@ class Item_Handler():
         self.items.append(item)
 
     
-    def Find_Item(self, item_ID):
+    def Find_Item(self, ID):
         for item in self.items:
-            if item.item_ID == item_ID:
+            if item.ID == ID:
                 return item
         
         return None

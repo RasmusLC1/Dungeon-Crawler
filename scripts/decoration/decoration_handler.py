@@ -54,7 +54,7 @@ class Decoration_Handler():
             self.saved_data[decoration.ID] = decoration.saved_data
 
     def Load_Data(self, data):
-        for item_id, item_data in data.items():
+        for ID, item_data in data.items():
             
             if not item_data:
                 continue

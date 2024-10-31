@@ -81,10 +81,6 @@ class Moving_Entity(PhysicsEntity):
         self.block_direction = (0,0)
         self.invincible = False
 
-        # Assign size for body parts
-        self.head_size = (16, 12)
-        self.body_size = (16, 9)
-        self.leg_size = (16, 3)
 
          # Jumping attack
         self.jumping_animation_num = 0

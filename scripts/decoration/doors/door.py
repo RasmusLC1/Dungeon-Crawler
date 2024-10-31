@@ -15,12 +15,14 @@ class Door(Decoration):
         self.is_open = data['is_open']
 
 
-
+    # TODO: IMPLEMENT walls that can be walked through, I.E walls without physics in tilemap
     def Open(self, generate_clatter = True):
         self.is_open = True
         x = self.pos[0] // 16
         y = self.pos[1] // 16
         self.game.tilemap.tilemap[str(x) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+        
+        
         if generate_clatter:
             self.game.clatter.Generate_Clatter(self.pos, 300) # Generate clatter to alert nearby enemies
 

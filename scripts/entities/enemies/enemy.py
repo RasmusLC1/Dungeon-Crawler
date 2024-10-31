@@ -2,6 +2,7 @@ from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
 from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.entities.enemies.path_finding import Path_Finding
+from scripts.entities.enemies.attack_strategies import Attack_Stategies
 
 
 import random
@@ -11,10 +12,9 @@ import math
 
 
 class Enemy(Moving_Entity):
-    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (8, 15)):
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (16, 16)):
 
         super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
-        self.ID = random.randint(1, 100000000)
         self.sub_type = type
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0
@@ -23,6 +23,7 @@ class Enemy(Moving_Entity):
         self.target = self.game.player.pos # Default target is set to player
 
         self.path_finding = Path_Finding(game, self) # Pathfinding logic for enemy
+        self.attack_strategies = Attack_Stategies(game, self) # Pathfinding logic for enemy
         self.distance_to_player = 9999 # Distance to player
         self.charge = 0 # Determines when the enemy attacks
         self.max_charge = 50 # Determines when the enemy is ready to attack
@@ -113,22 +114,22 @@ class Enemy(Moving_Entity):
         return None
     
     def Attack(self):
-        if self.attacking:
-            self.attacking -= 1
-            return False
+        
         # Check if the player is invisible
         if self.game.player.status_effects.invisibility:
             return False
-        self.attacking = 50
         return True
 
     def Set_Attack_Direction(self):
-        if not self.attacking:
+        if not self.charge:
             self.attack_direction = (0, 0)
             return
         
         super().Set_Attack_Direction()
         
+    def Attack_Strategy(self):
+        return self.attack_strategies.Attack_Strategy()
+
 
     def Update_Movement(self, movement):
         return super().Update_Movement(movement)

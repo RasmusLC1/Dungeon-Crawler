@@ -298,7 +298,7 @@ class Weapon(Item):
     def Set_Block_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
         self.entity.attack_direction = self.entity.attack_direction
-        if not self.entity.attack_direction:
+        if not self.entity.attack_direction[0] or not self.entity.attack_direction[1]:
             return
         # self.entity.attack_direction = pygame.math.Vector2(self.entity.attack_direction[0], self.entity.attack_direction[1])
         self.entity.attack_direction.normalize_ip()

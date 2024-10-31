@@ -23,7 +23,7 @@ class Enemy_Handler():
             self.saved_data[enemy.ID] = enemy.saved_data
 
     def Load_Data(self, data):
-        for item_id, item_data in data.items():
+        for ID, item_data in data.items():
             if not item_data:
                 continue
             try:
@@ -48,7 +48,7 @@ class Enemy_Handler():
         for i in range(10):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(5, 5)
+            enemy_variant = random.randint(0, 5)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(0, 10)

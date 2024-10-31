@@ -11,7 +11,7 @@ class Weapon_Inventory(Inventory):
 
 
     def Load_Data(self, data):
-        for item_id, item_data in data.items():
+        for ID, item_data in data.items():
             if not item_data:
                 continue
             for inventory_slot in self.inventory:
@@ -20,7 +20,7 @@ class Weapon_Inventory(Inventory):
                     continue
 
                 self.game.item_handler.Load_Item_From_Data(item_data)
-                item = self.game.item_handler.Find_Item(item_data['item_ID'])
+                item = self.game.item_handler.Find_Item(item_data['ID'])
                 if not item:
                     continue
 

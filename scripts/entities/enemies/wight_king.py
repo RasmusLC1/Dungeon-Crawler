@@ -14,15 +14,16 @@ class Wight_King(Enemy):
         self.attack_animation_num_cooldown_max = 8
         self.sub_type = 'wight_king'
         self.animation = 'wight_king'
+        self.attack_strategy = 'medium_range'
         self.Equip_Weapon()
-        self.max_charge = 70
+        self.max_charge = 40
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
         self.Update_Active_Weapon()
         self.Weapon_Cooldown()
         self.Update_Animation()
-        if self.distance_to_player < 20:
+        if self.distance_to_player < 30:
             self.Attack()
 
         if self.distance_to_player > 30 and self.charge:

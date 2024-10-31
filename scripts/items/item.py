@@ -10,7 +10,6 @@ class Item(PhysicsEntity):
     def __init__(self, game, type, category, pos, size, amount):
         super().__init__(game, type, category, pos, size)
         self.game = game
-        self.item_ID = random.randint(1, 100000000) # Create a random ID between 1 and 100 million
         self.sub_type = type
         self.used = False
         self.picked_up = False
@@ -32,7 +31,7 @@ class Item(PhysicsEntity):
 
     def Save_Data(self):
         super().Save_Data()
-        self.saved_data['item_ID'] = self.item_ID
+        self.saved_data['ID'] = self.ID
         self.saved_data['sub_type'] = self.sub_type
         self.saved_data['used'] = self.used
         self.saved_data['picked_up'] = self.picked_up
@@ -44,7 +43,7 @@ class Item(PhysicsEntity):
     
     def Load_Data(self, data):
         super().Load_Data(data)
-        self.item_ID = data['item_ID']
+        self.ID = data['ID']
         self.sub_type = data['sub_type']
         self.used = data['used']
         self.picked_up = data['picked_up']

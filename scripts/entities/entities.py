@@ -8,6 +8,7 @@ from scripts.engine.particles.particle import Particle
 class PhysicsEntity:
     def __init__(self, game, type, category, pos, size):
         self.game = game
+        self.ID = random.randint(1, 10000000)
         self.category = category # Category = Potion, enemy, player, etc
         self.type = type # Type = Specific type of entity
         self.pos = list(pos)
