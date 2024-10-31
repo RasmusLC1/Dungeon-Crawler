@@ -50,7 +50,6 @@ class Save_Load_Manager():
         self.game.rune_handler.Save_Rune_Data()
         self.game.trap_handler.Save_Trap_Data()
         self.Inventory_Save_Data()
-        self.game.tilemap.Save_Tile_Data()
         self.game.decoration_handler.Save_Decoration_Data()
 
     

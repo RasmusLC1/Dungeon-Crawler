@@ -34,9 +34,12 @@ class Player(Moving_Entity):
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
         self.movement_handler = Player_Movement(self.game, self)
 
+
+
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['souls'] = self.souls
+        self.saved_data['max_speed'] = self.max_speed
         self.status_effects.Save_Data()
 
         # self.saved_data['weapon_handler'] = self.weapon_handler
@@ -45,6 +48,7 @@ class Player(Moving_Entity):
     def Load_Data(self, data):
         super().Load_Data(data)
         self.souls = data['souls']
+        self.max_speed = data['max_speed']
         self.status_effects.Load_Data(data)
 
 

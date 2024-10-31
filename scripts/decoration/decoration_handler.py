@@ -171,8 +171,6 @@ class Decoration_Handler():
                     return False
             else:
                 decoration.Open()
-            self.decorations.remove(decoration)
-            del(decoration)
             return True
         
         return False

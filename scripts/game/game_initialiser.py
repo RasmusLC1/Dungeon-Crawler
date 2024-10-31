@@ -17,7 +17,6 @@ from scripts.engine.assets.audio_loader import Audio_Loader
 from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.engine.a_star import A_Star
-from scripts.entities.player.player import Player
 from scripts.menu.menu_handler import Menu_Handler
 
 

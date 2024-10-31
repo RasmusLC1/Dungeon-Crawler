@@ -56,9 +56,8 @@ class Moving_Entity(PhysicsEntity):
         self.friction_holder = self.friction # Holder for friction to reset it
         self.acceleration = agility / 40 * self.game.render_scale
         self.acceleration_holder = self.acceleration # accelarition holder to reset it
-        self.max_speed = max_speed + agility / 20 * self.game.render_scale # Max speed of the entity
+        self.max_speed = max_speed * self.game.render_scale / 2 + agility / 10 # Max speed of the entity
         self.max_speed_holder = self.max_speed # Max speed holder to reset it
-
 
         # Determined by the entities agility
         self.left_weapon_cooldown = 0 

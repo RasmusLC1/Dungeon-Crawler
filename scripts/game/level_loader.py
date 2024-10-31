@@ -105,7 +105,7 @@ class Level_Loader():
         for spawner in self.game.tilemap.extract([('spawners', 0)]):
             if spawner['variant'] == 0:
                 print("PLAYER SPAWN")
-                self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 10, 10, 5, 5)
+                self.game.player = Player(self.game, spawner['pos'], (8, 16), 100, 5, 5, 10, 5, 5)
                 break
                 
         

@@ -10,9 +10,12 @@ class Door(Decoration):
         super().Save_Data()
         self.saved_data['is_open'] = self.is_open
 
+
     def Load_Data(self, data):
         super().Load_Data(data)
         self.is_open = data['is_open']
+        if self.is_open:
+            self.Open(False)
 
 
     # TODO: IMPLEMENT walls that can be walked through, I.E walls without physics in tilemap
