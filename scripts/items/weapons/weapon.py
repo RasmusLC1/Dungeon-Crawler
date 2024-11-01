@@ -7,8 +7,8 @@ import math
 
 
 class Weapon(Item):
-    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, damage_type = 'slash'):
-        super().__init__(game, type, 'weapon', pos, size, 1)
+    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, damage_type = 'slash', add_to_tile = True):
+        super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon

@@ -134,7 +134,7 @@ class Decoration_Handler():
 
         nearby_decorations = []
         if max_distance <= 5:
-            nearby_decorations = self.game.tilemap.Search_Tiles(max_distance, player_pos, 'decoration')
+            nearby_decorations = self.game.tilemap.Search_Nearby_Tiles(max_distance, player_pos, 'decoration')
             
         else:
             nearby_decorations = self.Find_Nearby_Decorations_Long_Distance(player_pos, max_distance)

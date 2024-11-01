@@ -44,8 +44,6 @@ class Tile():
         self.entities.append(entity)
 
     def Clear_Entity(self, entity_ID):
-        if entity_ID not in self.entities:
-            return
         for entity in self.entities:
             if entity.ID == entity_ID:
                 self.entities.remove(entity)

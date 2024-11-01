@@ -68,8 +68,9 @@ class Tilemap:
         self.tilemap[tile_key] = tile
         self.min_x = min(self.min_x, pos[0])
         self.max_x = max(self.max_x, pos[0])
-        self.min_y = min(self.min_y, pos[0])
-        self.max_y = max(self.max_y, pos[0])
+        self.min_y = min(self.min_y, pos[1])
+        self.max_y = max(self.max_y, pos[1])
+        
 
 
     # Takes an ID an looks for matches in tilemap and offgrid tiles
@@ -92,17 +93,17 @@ class Tilemap:
         
         return matches
 
-    def Search_Tiles(self, max_distance, pos, category):
+    def Search_Nearby_Tiles(self, max_distance, pos, category):
         pos = (pos[0] // 16, pos[1] // 16)
         
         
         entities = []
         for x in range(math.floor(pos[0] - max_distance), math.floor(pos[0] + max_distance)):
             for y in range(math.floor(pos[1] - max_distance), math.floor(pos[1] + max_distance)):
-                if x < self.min_x or y < self.min_y:
+                if x <= self.min_x or y <= self.min_y:
                     continue
 
-                if x > self.max_x or y > self.max_y:
+                if x >= self.max_x or y >= self.max_y:
                     continue
 
                 tile_key = str(x) + ';' + str(y)
@@ -125,6 +126,8 @@ class Tilemap:
         self.tilemap[tile_key].Clear_Entity(entity_ID)
 
     def Add_Entity_To_Tile(self, tile_key, entity):
+        if not tile_key in self.tilemap:
+            return
         self.tilemap[tile_key].Add_Entity(entity)
 
     # Get the position of tiles in the tilemap

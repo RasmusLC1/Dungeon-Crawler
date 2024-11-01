@@ -39,7 +39,7 @@ class Inventory:
                 if not item:
                     continue
 
-                if item.category == 'weapon':
+                if item.sub_category == 'weapon':
                     item.Set_Entity(self.game.player)
 
                 inventory_slot.Add_Item(item)
@@ -119,7 +119,7 @@ class Inventory:
     # Handle double clicking behaviour, return True if valid double click
     def Item_Double_Click(self):
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
-            if self.clicked_inventory_slot.item.category == 'weapon':
+            if self.clicked_inventory_slot.item.sub_category == 'weapon':
                 self.clicked_inventory_slot.Set_Active(True)
                 self.game.mouse.Reset_Double_Click()
                 return True
@@ -238,7 +238,7 @@ class Inventory:
     
     # Method to move an item into a slot
     def Move_Item(self, item, inventory_slot):
-        if item.category == 'weapon':
+        if item.sub_category == 'weapon':
             try:
                 if not item.Check_Two_Handed_Left_Hand(inventory_slot):
                     return False

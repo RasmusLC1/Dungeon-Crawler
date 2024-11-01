@@ -36,7 +36,7 @@ class Text_Box():
         rectangle_color = (0, 0, 0, 200)  # Black with 50% transparency (128 out of 255)
         rectangle_surface.fill(rectangle_color)
         if self.item.picked_up:
-            if self.item.category == 'rune':
+            if self.item.sub_category == 'rune':
                 text_box_pos = (self.game.screen_width // self.game.render_scale - x_size - 10, self.item.pos[1] -  y_size - 10)
             else:
                 text_box_pos = (self.item.pos[0], self.item.pos[1] -  y_size)
@@ -55,23 +55,23 @@ class Text_Box():
         text_box_pos = self.Text_Box_Setup(surf, item_name, offset)
         self.game.default_font.Render_Word(surf, item_name, text_box_pos)
 
-        if self.item.category == 'weapon':
+        if self.item.sub_category == 'weapon':
             self.Render_Weapon(surf, text_box_pos)
 
-        elif self.item.category == 'potion':
+        elif self.item.sub_category == 'potion':
             self.Render_Potion(surf, text_box_pos)
 
-        elif self.item.category == 'loot':
+        elif self.item.sub_category == 'loot':
             if self.item.type == 'gold':
                 self.Render_Gold(surf, text_box_pos)
             else:
                 self.Render_Loot(surf, text_box_pos)
 
-        elif self.item.category == 'rune':
+        elif self.item.sub_category == 'rune':
             self.Render_Rune(surf, text_box_pos)
 
         else:
-            print(self.item.category)
+            print(self.item.sub_category)
 
     def Render_Rune(self, surf, text_box_pos):
         # Render Soul Cost

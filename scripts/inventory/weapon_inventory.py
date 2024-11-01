@@ -24,7 +24,7 @@ class Weapon_Inventory(Inventory):
                 if not item:
                     continue
 
-                if item.category == 'weapon':
+                if item.sub_category == 'weapon':
                     item.Set_Entity(self.game.player)
 
 

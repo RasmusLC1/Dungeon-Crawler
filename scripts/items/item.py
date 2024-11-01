@@ -7,10 +7,11 @@ from scripts.items.utility.textbox import Text_Box
 
 
 class Item(PhysicsEntity):
-    def __init__(self, game, type, category, pos, size, amount):
-        super().__init__(game, type, category, pos, size)
+    def __init__(self, game, type, sub_category, pos, size, amount, add_to_tile = True):
+        super().__init__(game, type, 'item', pos, size)
         self.game = game
         self.sub_type = type
+        self.sub_category = sub_category
         self.used = False
         self.picked_up = False
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
@@ -28,11 +29,15 @@ class Item(PhysicsEntity):
         self.delete_countdown = 0
         self.value = 100 # Placeholder gold value
         self.text_box = Text_Box(self.game, self)
+        if add_to_tile:
+            self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
+
 
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['ID'] = self.ID
         self.saved_data['sub_type'] = self.sub_type
+        self.saved_data['sub_category'] = self.sub_category
         self.saved_data['used'] = self.used
         self.saved_data['picked_up'] = self.picked_up
         self.saved_data['inventory_type'] = self.inventory_type
@@ -45,6 +50,7 @@ class Item(PhysicsEntity):
         super().Load_Data(data)
         self.ID = data['ID']
         self.sub_type = data['sub_type']
+        self.sub_category = data['sub_category']
         self.used = data['used']
         self.picked_up = data['picked_up']
         self.inventory_type = data['inventory_type']
@@ -78,11 +84,11 @@ class Item(PhysicsEntity):
         self.inventory_index = index
     
     def Find_Nearby_Entities(self, distance):
-        # Set the player first so the player gets priority
-        distance_player = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
-        if distance_player < distance:
-            self.nearby_entities.append(self.game.player)
-        self.nearby_entities.extend(self.game.enemy_handler.Find_Nearby_Enemies(self, distance))
+        # # Set the player first so the player gets priority
+        # distance_player = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
+        # if distance_player < distance:
+        #     self.nearby_entities.append(self.game.player)
+        self.nearby_entities = self.game.enemy_handler.Find_Nearby_Enemies(self, distance)
 
 
     def Pick_Up(self):
@@ -90,15 +96,20 @@ class Item(PhysicsEntity):
         if self.game.item_inventory.Add_Item(self):
             self.picked_up = True
             self.game.entities_render.Remove_Entity(self)
+            self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+
+
             return self.game.player
         
-        self.Find_Nearby_Entities(10)
+        self.Find_Nearby_Entities(2)
         for entity in self.nearby_entities:
             if not self.rect().colliderect(entity.rect()):
                 continue
             if self.game.item_inventory.Add_Item(self):
                 self.picked_up = False
                 self.game.entities_render.Remove_Entity(self)
+                self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+
                 return entity
                 
         return None
@@ -156,6 +167,14 @@ class Item(PhysicsEntity):
     # Update position
     def Move(self, new_pos):
         self.pos = new_pos
+
+    def Update_Tile(self, new_pos):
+
+        new_tile = str(int(new_pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(new_pos[1] // self.game.tilemap.tile_size))
+        if new_tile != self.tile:
+            self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+            self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
+            self.tile = new_tile
 
     def Update_Delete_Cooldown(self):
         if not self.delete_countdown:

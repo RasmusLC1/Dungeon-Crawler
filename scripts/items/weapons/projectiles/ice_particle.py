@@ -3,7 +3,7 @@ import pygame
 
 class Ice_Particle(Projectile):
     def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, direction, entity):
-        super().__init__(game, pos, size, type, damage, speed, range, weapon_class, 'ice')
+        super().__init__(game, pos, size, type, damage, speed, range, weapon_class, 'ice', False)
         self.special_attack = special_attack / 4
         self.entity = entity
         self.direction = direction  # Store the direction vector

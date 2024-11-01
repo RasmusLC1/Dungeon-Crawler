@@ -49,7 +49,7 @@ class Inventory_Slot():
     def Add_Item(self, item):
         if not item:
             return False
-        if not item.category in self.white_list_items:
+        if not item.sub_category in self.white_list_items:
             return False
         
         self.item = item

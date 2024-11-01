@@ -40,13 +40,13 @@ class Item_Handler():
             type = item_data['type']
             pos = item_data['pos']
             amount = item_data['amount']
-            if item_data['category'] == 'weapon':
+            if item_data['sub_category'] == 'weapon':
                 self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
-            elif item_data['category'] == 'potion':
+            elif item_data['sub_category'] == 'potion':
                 self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
-            elif item_data['category'] == 'loot':
+            elif item_data['sub_category'] == 'loot':
                 self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount, item_data)
-            elif item_data['category'] == 'rune':
+            elif item_data['sub_category'] == 'rune':
                 self.game.rune_handler.Rune_Spawner(type, item_data)
             else:
                 return False
@@ -103,21 +103,28 @@ class Item_Handler():
 
     def Find_Nearby_Item(self, entity_pos, max_distance):
         nearby_items = []
+        if max_distance <= 5:
+            nearby_items = self.game.tilemap.Search_Nearby_Tiles(max_distance, entity_pos, 'item')
+        else:
+            nearby_items = self.Search_For_Nearby_Items(entity_pos, max_distance)
+        
+        return nearby_items
+
+    def Search_For_Nearby_Items(self, entity_pos, max_distance):
+        nearby_items = []
         for item in self.items:
             # Calculate the Euclidean distance
             distance = math.sqrt((entity_pos[0] - item.pos[0]) ** 2 + (entity_pos[1] - item.pos[1]) ** 2)
             if distance < max_distance:
                 nearby_items.append(item)
 
-        
         return nearby_items
-
 
     def Update(self, offset = (0,0)):
         self.Check_Keyboard_Input()
         if self.Update_Nearby_Items_Cooldown():
             self.nearby_items.clear()
-            self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 200)
+            self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 4)
         
         for item in self.items:
 
@@ -155,7 +162,7 @@ class Item_Handler():
                 self.game.keyboard_handler.Set_E_Key(False)
     
     def Pick_Up_Items(self) -> bool:
-        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 10)
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 2)
         if not nearby_items:
             return False
         player_pos = self.game.player.pos

@@ -5,7 +5,7 @@ import math
 
 class Rune(Item):
     def __init__(self, game, type, pos, power, soul_cost):
-        super().__init__(game,  type, 'rune', pos, (16, 16), 1)
+        super().__init__(game,  type, 'rune', pos, (16, 16), 1, False)
         self.menu_pos = pos
         self.max_amount = 1
         self.upgrade_cost = max(10, math.ceil(soul_cost / 3))
