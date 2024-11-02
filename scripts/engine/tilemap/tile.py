@@ -34,7 +34,10 @@ class Tile():
             entities.append(entity)
 
         return entities
-
+    
+    def Set_Entity_Active(self):
+        for entity in self.entities:
+            entity.Set_Active(self.active)
         
 
     def Add_Entity(self, entity):

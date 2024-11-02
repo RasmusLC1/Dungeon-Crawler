@@ -42,7 +42,10 @@ class Light():
                 pos_x = self.pos[0] + cos_angle * i
                 pos_y = self.pos[1] + sin_angle * i
 
-                tile = self.game.tilemap.Current_Tile((pos_x, pos_y))
+                try:
+                    tile = self.game.tilemap.Current_Tile((pos_x, pos_y))
+                except Exception as e:
+                    print("DATA WRONG, LIGHT HANDLER", (pos_x, pos_y), e)
 
                 if not self.Check_Tile(tile):
                     break

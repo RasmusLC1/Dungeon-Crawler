@@ -24,7 +24,7 @@ class Logic_Update():
             self.game.rune_inventory.Update(self.game.render_scroll)
             self.game.souls_interface.Update()
             self.game.rune_handler.Update(self.game.render_scroll)
-            self.game.ray_caster.Update(self.game)
+            self.game.ray_caster.Update()
 
             self.game.mouse.Mouse_Update()
             self.game.text_box_handler.Update()

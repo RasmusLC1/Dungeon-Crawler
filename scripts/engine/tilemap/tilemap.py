@@ -119,8 +119,12 @@ class Tilemap:
 
         
         return entities
-                    
-                    
+
+    # return the entities on a tile           
+    def Get_Tile_Entities(self, tile_key):
+        return self.tilemap[tile_key].entities
+
+
     # Add an remove entities from tiles dynamically as needed
     def Remove_Entity_From_Tile(self, tile_key, entity_ID):
         self.tilemap[tile_key].Clear_Entity(entity_ID)
