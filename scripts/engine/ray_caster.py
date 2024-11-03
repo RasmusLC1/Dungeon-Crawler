@@ -3,21 +3,7 @@ import pygame
 
 class Ray_Caster():
     def __init__(self, game):
-        self.entities = []
         self.tiles = []
-        self.enemies = []
-        self.traps = []
-        self.chests = []
-        self.doors = []
-        self.items = []
-        self.decorations = []
-        self.torhces = []
-
-        self.nearby_enemies = []
-        self.nearby_traps = []
-        self.nearby_torches = []
-        self.nearby_decorations = []
-        self.nearby_items = []
         
         self.nearby_cooldown = 0
         self.inactive_distance = 300
@@ -89,15 +75,6 @@ class Ray_Caster():
                 if not self.Check_Tile((pos_x, pos_y)):
                     break
     
-        
-
-    def Remove_Trap(self, trap):
-        if trap in self.traps:  
-            self.traps.remove(trap)
-
-    def Remove_Chest(self, chest):
-        if chest in self.chests:
-            self.chests.remove(chest)
 
     def rect(self, pos):
         return pygame.Rect(pos[0], pos[1], 10, 10)
