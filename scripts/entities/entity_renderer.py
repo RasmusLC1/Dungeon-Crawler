@@ -6,16 +6,12 @@ class Entity_Renderer():
         self.game = game
         self.entities = []
         self.nearby_entities = []
-        self.nearby_entities_cooldown = 0
 
     def Clear_Entities(self):
         self.entities.clear()
         self.nearby_entities.clear()
 
     def Update(self):
-        if self.nearby_entities_cooldown:
-            self.nearby_entities_cooldown -= 1
-            return
         
         self.Find_Nearby_Entities()
         self.nearby_entities_cooldown = 10
@@ -25,13 +21,18 @@ class Entity_Renderer():
 
     def Find_Nearby_Entities(self):
         self.nearby_entities.clear()
+        entities = []
+        for tile in self.game.ray_caster.tiles:
+            entities.extend(tile.entities)
+
+
         for entity in self.entities:
             if not entity.render:
                 continue
             distance = Helper_Functions.Abs_Distance_Float(entity.pos, self.game.player.pos) 
             if distance < 300:
                 self.nearby_entities.append(entity)
-
+                
 
     def Add_Entity(self, entity):
         if entity in self.entities:

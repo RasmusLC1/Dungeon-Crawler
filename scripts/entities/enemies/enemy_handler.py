@@ -45,10 +45,10 @@ class Enemy_Handler():
     def Initialise(self):
         spawners = self.game.tilemap.extract([('spawners', 1)])
         spawners_length = len(spawners)
-        for i in range(10):
+        for i in range(20):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(3, 3)
+            enemy_variant = random.randint(0, 5)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(0, 10)

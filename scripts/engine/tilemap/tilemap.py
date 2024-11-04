@@ -175,8 +175,8 @@ class Tilemap:
     def Add_Tile(self, type, variant, pos, physics, active = 0, light_level = 0):
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         tile_key = ';'.join(map(str, pos))
-        del self.tilemap[tile_key]
-        self.tilemap[tile_key] = tile
+        self.tilemap[tile_key] = None
+        # self.tilemap[tile_key] = tile
         
     # Check what tile is in a given position and return the full tile
     def Current_Tile(self, pos):
@@ -186,8 +186,8 @@ class Tilemap:
             tile = self.tilemap[check_loc]
             if not tile:
                 return None
-            if not tile.type:
-                return None
+            # if not tile.type:
+            #     return None
             return self.tilemap[check_loc]
         else:
             return None
