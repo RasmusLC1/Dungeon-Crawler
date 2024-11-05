@@ -29,6 +29,8 @@ class Logic_Update():
             self.game.mouse.Mouse_Update()
             self.game.text_box_handler.Update()
 
+
+
             
     def Check_Keyboard_Input(self):
          if self.game.keyboard_handler.escape_pressed:

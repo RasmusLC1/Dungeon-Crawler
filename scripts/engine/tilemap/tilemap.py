@@ -93,6 +93,7 @@ class Tilemap:
         
         return matches
 
+
     def Search_Nearby_Tiles(self, max_distance, pos, category):
         pos = (pos[0] // 16, pos[1] // 16)
         
@@ -145,6 +146,8 @@ class Tilemap:
     def Get_Tile_Size(self):
         return self.tile_size
     
+    
+
     # Get surrounding tiles
     def tiles_around(self, pos):
         tiles = []
@@ -283,7 +286,6 @@ class Tilemap:
                 continue
             # Get the tile surface from the assets
             tile_surface = self.game.assets[tile.type][tile.variant].copy()
-            
             # Adjust the tile activeness calculation
             tile_activeness = max(0, min(255, 700 - tile.active))
             

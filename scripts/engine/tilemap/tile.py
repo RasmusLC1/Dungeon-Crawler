@@ -13,8 +13,6 @@ class Tile():
         self.physics = physics
         self.entities = []
 
-    def Print_Type(self):
-        print('type: ', self.pos)
 
     def Set_Type(self, new_type):
         self.type = new_type
@@ -24,6 +22,9 @@ class Tile():
 
     def Set_Light_Level(self, new_light_level):
         self.light_level = new_light_level
+
+    def Set_Active(self, new_active_level):
+        self.active = max(new_active_level, self.active)
 
     def Search_Entities(self, category):
         entities = []

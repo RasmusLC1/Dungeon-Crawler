@@ -66,6 +66,7 @@ class Player(Moving_Entity):
         self.View_Direction(offset)
 
         self.weapon_handler.Update(offset)
+
         
     def View_Direction(self, offset):
         self.view_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])

@@ -11,6 +11,12 @@ class Ray_Caster():
         self.game = game
         self.default_activity = 700
 
+        # Basic raycasting attributes
+        self.num_lines = 20 # Define the number of lines and the spread angle (in degrees)
+        self.spread_angle = 140  # Total spread of the fan (in degrees)
+        self.angle_increment = self.spread_angle / (self.num_lines - 1) # Calculate the angle increment between each line
+        self.angles = []
+
     def Update(self):
         
         self.Check_Tile_Active()
@@ -38,10 +44,10 @@ class Ray_Caster():
         tile = self.game.tilemap.Current_Tile(pos)
         if tile:
             if not tile.active:
-                tile.active = self.default_activity
+                tile.Set_Active(self.default_activity)
                 self.tiles.append(tile)
             else:
-                tile.active = self.default_activity
+                tile.Set_Active(self.default_activity)
             if not tile.type:
                 print(tile)
                 return False
@@ -56,20 +62,17 @@ class Ray_Caster():
         return True
 
     def Ray_Caster(self):
-        # Basic raycasting attributes
-        num_lines = 20 # Define the number of lines and the spread angle (in degrees)
-        spread_angle = 120  # Total spread of the fan (in degrees)
-        angle_increment = spread_angle / (num_lines - 1) # Calculate the angle increment between each line
+        
         # Calculate the starting angle
         base_angle = math.atan2(self.game.player.view_direction[1], self.game.player.view_direction[0])
-        start_angle = base_angle - math.radians(spread_angle / 2)
+        start_angle = base_angle - math.radians(self.spread_angle / 2)
         self.Check_Tile(self.game.player.pos)
         
 
         # Look for tiles that hit the rays
-        for j in range(num_lines):
+        for j in range(self.num_lines):
+            angle = start_angle + j * math.radians(self.angle_increment)
             for i in range(1, 13):
-                angle = start_angle + j * math.radians(angle_increment)
                 pos_x = self.game.player.pos[0] + math.cos(angle) * 16 * i
                 pos_y = self.game.player.pos[1] + math.sin(angle) * 16 * i
                 if not self.Check_Tile((pos_x, pos_y)):
