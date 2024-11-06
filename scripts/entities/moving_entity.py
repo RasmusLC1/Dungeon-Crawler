@@ -54,7 +54,7 @@ class Moving_Entity(PhysicsEntity):
         self.max_health = self.health
         
         # Movement variables
-        self.friction = 16 / self.game.render_scale # Friction, set to the renderscale
+        self.friction = self.game.tilemap.tile_size / self.game.render_scale # Friction, set to the renderscale
         self.friction_holder = self.friction # Holder for friction to reset it
         self.acceleration = agility / 40 * self.game.render_scale
         self.acceleration_holder = self.acceleration # accelarition holder to reset it

@@ -3,7 +3,7 @@ import random
 
 class Key(Item):
     def __init__(self, game, pos):
-        super().__init__(game, 'key', 'loot', pos, (10, 10), 1)
+        super().__init__(game, 'key', 'loot', pos, (20, 20), 1)
         self.value = 1
 
     def Update_Animation(self):

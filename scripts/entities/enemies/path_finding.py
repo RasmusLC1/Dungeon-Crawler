@@ -12,11 +12,11 @@ class Path_Finding():
         self.pos_holder = (0,0)
         self.path = [] # Path to destination
 
-        # self.pos in 16/16 tileformat
+        # self.pos in self.game.tilemap.tile_size/self.game.tilemap.tile_size tileformat
         self.src_x = 0
         self.src_y = 0
 
-        # destination in 16/16 tileformat
+        # destination in self.game.tilemap.tile_size/self.game.tilemap.tile_size tileformat
         self.des_x = 0
         self.des_y = 0
 
@@ -87,7 +87,7 @@ class Path_Finding():
     
 
     def Calculate_Path_Segment(self, target):
-        target_pos = (target[0] * 16, target[1] * 16)
+        target_pos = (target[0] * self.game.tilemap.tile_size, target[1] * self.game.tilemap.tile_size)
         self.entity.direction = pygame.math.Vector2(target_pos[0] - self.entity.pos[0], target_pos[1] - self.entity.pos[1])
         if self.entity.direction.length() > 0:
             self.entity.direction.normalize_ip()
@@ -96,8 +96,8 @@ class Path_Finding():
     def Path_Segment_Complete(self, target):
 
         # Use a threshold for reaching the target to avoid precision issues
-        reach_threshold = 16
-        if math.hypot(self.entity.pos[0] - target[0] * 16, self.entity.pos[1] - target[1] * 16) > reach_threshold:
+        reach_threshold = self.game.tilemap.tile_size
+        if math.hypot(self.entity.pos[0] - target[0] * self.game.tilemap.tile_size, self.entity.pos[1] - target[1] * self.game.tilemap.tile_size) > reach_threshold:
             return False
 
         self.entity.direction = (0, 0)
@@ -187,10 +187,10 @@ class Path_Finding():
 
     
     def Calculate_Position(self):
-        self.src_x = round(self.entity.pos[0] // 16) - self.game.a_star.min_x 
-        self.src_y = round(self.entity.pos[1] // 16) - self.game.a_star.min_y 
+        self.src_x = round(self.entity.pos[0] // self.game.tilemap.tile_size) - self.game.a_star.min_x 
+        self.src_y = round(self.entity.pos[1] // self.game.tilemap.tile_size) - self.game.a_star.min_y 
         
     def Calculate_Destination_Position(self, destination):
-        self.des_x = round(destination[0] // 16) - self.game.a_star.min_x 
-        self.des_y = round(destination[1] // 16) - self.game.a_star.min_y 
+        self.des_x = round(destination[0] // self.game.tilemap.tile_size) - self.game.a_star.min_x 
+        self.des_y = round(destination[1] // self.game.tilemap.tile_size) - self.game.a_star.min_y 
 

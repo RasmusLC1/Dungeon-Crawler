@@ -212,7 +212,7 @@ class Weapon(Item):
         return None
     
     def Entity_Hit(self, entity):
-        target_position = (self.pos[0] - 16 * self.entity.attack_direction[0], self.pos[1] - 16 * self.entity.attack_direction[1])
+        target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
         self.game.clatter.Generate_Clatter(target_position, 200)
         damage = self.entity.strength * self.damage
         entity.Damage_Taken(damage, self.entity.attack_direction)
@@ -241,7 +241,7 @@ class Weapon(Item):
             return True
         
         if 'Wall' in tile.type:
-            target_position = (self.pos[0] - 16 * self.entity.attack_direction[0], self.pos[1] - 16 * self.entity.attack_direction[1])
+            target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
             self.game.clatter.Generate_Clatter(target_position, 400)
             return False
         
