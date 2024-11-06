@@ -27,7 +27,7 @@ class Door(Decoration):
         
         self.render = False
         if generate_clatter:
-            self.game.clatter.Generate_Clatter(self.pos, 300) # Generate clatter to alert nearby enemies
+            self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
 
 
     

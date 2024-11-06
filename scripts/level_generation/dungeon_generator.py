@@ -21,7 +21,8 @@ class Dungeon_Generator():
         self.game = game
         self.player_spawn = (0, 0)
         self.cellular_automata = Cellular_Automata()
-        self.tilemap = Tilemap(self, tile_size=16)
+        self.tile_size = 32
+        self.tilemap = Tilemap(self, tile_size=self.tile_size)
         self.a_star = A_Star()
         # TODO: IMPLEMENT MORE TRAPS AND ADD THEM HERE
         self.traps = ['spike_trap', 'spike_poison_trap', 'Pit_trap']
@@ -108,7 +109,7 @@ class Dungeon_Generator():
                     if self.cellular_automata.map[x][y] == floor:
                         spawn_loot = random.randint(0, 3)
                         if spawn_loot == 1:
-                            self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * 16, y * 16]})
+                            self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * self.tile_size, y * self.tile_size]})
 
                     i += 1
                 j += 1
@@ -142,7 +143,7 @@ class Dungeon_Generator():
                 if distance < 8:
                     return
             self.torches.append((i, j))
-            self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [i * 16, j * 16]})
+            self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [i * self.tile_size, j * self.tile_size]})
 
     def Floor_Checker(self, i, j):
         self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
@@ -169,8 +170,8 @@ class Dungeon_Generator():
 
 
         self.Room_Structure_Circle(start_x, start_y, radius)
-        # self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [start_x * 16, start_y * 16]})
-        self.tilemap.offgrid_tiles.append({"type": 'Boss_Room', "variant": 0, "pos": [start_x * 16, start_y * 16], "radius": radius})
+        # self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [start_x * self.tile_size, start_y * self.tile_size]})
+        self.tilemap.offgrid_tiles.append({"type": 'Boss_Room', "variant": 0, "pos": [start_x * self.tile_size, start_y * self.tile_size], "radius": radius})
 
         trap_number = random.randint(1, 5)
         i = 0
@@ -228,7 +229,7 @@ class Dungeon_Generator():
             pos_y = random.randint(2, self.cellular_automata.size_y - 3)
             if not self.cellular_automata.map[pos_x][pos_y] == floor:
                 continue
-            self.tilemap.offgrid_tiles.append({"type": item, "variant": 0, "pos": [pos_x * 16, pos_y * 16]})
+            self.tilemap.offgrid_tiles.append({"type": item, "variant": 0, "pos": [pos_x * self.tile_size, pos_y * self.tile_size]})
             loot += 1
 
     
@@ -339,15 +340,15 @@ class Dungeon_Generator():
                 spawn_loot = random.randint(0, 3 + loot_count)
                 if spawn_loot == 0:
                     loot_count += 1
-                    self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (x * 16, y * 16)})
+                    self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (x * self.tile_size, y * self.tile_size)})
                 elif spawn_loot == 1:
                     loot_count += 1
-                    self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * 16, y * 16]})
+                    self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * self.tile_size, y * self.tile_size]})
 
         
         # Spawn a chest in case nothing else spawns as a backup
         if not loot_count:
-            self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (start_x + size_x // 2 * 16, start_y + size_y // 2 * 16)})
+            self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (start_x + size_x // 2 * self.tile_size, start_y + size_y // 2 * self.tile_size)})
 
 
 
@@ -399,9 +400,9 @@ class Dungeon_Generator():
             for x in range(self.player_spawn[0] - 5, self.player_spawn[0] + 5):
                 self.tilemap.tilemap[str(x) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
         
-        self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 0, 'pos': (self.player_spawn[0] * 16, self.player_spawn[1] * 16)})
+        self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 0, 'pos': (self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size)})
 
-        self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [self.player_spawn[0] * 16, self.player_spawn[1] * 16]})
+        self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size]})
 
 
 
@@ -417,7 +418,7 @@ class Dungeon_Generator():
             self.a_star.a_star_search(path, [spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
             
             if path:
-                self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 1, 'pos': (spawner_x * 16, spawner_y * 16)})
+                self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 1, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})
                 spawners += 1
             else:
                 fails += 1
@@ -439,7 +440,7 @@ class Dungeon_Generator():
             self.a_star.a_star_search(path, [spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
             
             if path:
-                self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (spawner_x * 16, spawner_y * 16)})
+                self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})
                 loot += 1
 
 

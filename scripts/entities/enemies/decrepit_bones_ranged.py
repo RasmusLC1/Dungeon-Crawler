@@ -67,10 +67,10 @@ class Decrepit_Bones_Ranged(Enemy):
         random_weapon = random.randint(0, 1)
 
         if random_weapon == 0:
-            weapon = Bow(self.game, self.pos, (16,16))
+            weapon = Bow(self.game, self.pos)
 
         elif random_weapon == 1:
-            weapon = Bow(self.game, self.pos, (16,16))
+            weapon = Bow(self.game, self.pos)
 
 
         if not weapon:

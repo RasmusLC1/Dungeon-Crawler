@@ -13,7 +13,7 @@ PHYSICS_TILES = {'wall', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall', 'Door
 FLOOR_TTLES = {'floor'}
 
 class Tilemap:
-    def __init__(self, game, tile_size=16) -> None:
+    def __init__(self, game, tile_size=32) -> None:
         self.game = game
         self.tile_size = tile_size
         self.tilemap = {}
@@ -95,7 +95,7 @@ class Tilemap:
 
 
     def Search_Nearby_Tiles(self, max_distance, pos, category):
-        pos = (pos[0] // 16, pos[1] // 16)
+        pos = (pos[0] // self.tile_size, pos[1] // self.tile_size)
         
         
         entities = []
@@ -198,7 +198,7 @@ class Tilemap:
     # Finds nearby tiles 
     def Find_Nearby_Tiles(self, pos, max_distance):
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
-        normalised_max_distance = max_distance // 16
+        normalised_max_distance = max_distance // self.tile_size
         nearby_tiles = []
         for tile_key in self.tilemap:
             tile = self.tilemap[tile_key]

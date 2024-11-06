@@ -5,8 +5,8 @@ import math
 import pygame
 
 class Shield(Weapon):
-    def __init__(self, game, pos, size, damage_type = 'block'):
-        super().__init__(game, pos, size, 'shield', 2, 5, 2, 'shield', damage_type)
+    def __init__(self, game, pos, damage_type = 'block'):
+        super().__init__(game, pos, 'shield', 2, 5, 2, 'shield', damage_type)
         # self.charging = 0 # Charging value will be alligned with the entity's
         self.blocking = 0
 

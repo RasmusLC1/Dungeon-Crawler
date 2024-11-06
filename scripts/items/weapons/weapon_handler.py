@@ -45,23 +45,23 @@ class Weapon_Handler():
 
 
     def Spawn_Sword(self, pos_x, pos_y):
-        return Sword(self.game, (pos_x, pos_y), (16,16))
+        return Sword(self.game, (pos_x, pos_y))
 
     
     def Spawn_Shield(self, pos_x, pos_y):
-        return Shield(self.game, (pos_x, pos_y), (16,16))
+        return Shield(self.game, (pos_x, pos_y))
 
     def Spawn_Spear(self, pos_x, pos_y):
-        return Spear(self.game, (pos_x, pos_y), (16,16))
+        return Spear(self.game, (pos_x, pos_y))
 
     def Spawn_Torch(self, pos_x, pos_y):
-        return Torch(self.game, (pos_x, pos_y), (16,16))
+        return Torch(self.game, (pos_x, pos_y))
 
 
     def Spawn_Bow(self, pos_x, pos_y):
-        return Bow(self.game, (pos_x, pos_y), (16,16))
+        return Bow(self.game, (pos_x, pos_y))
 
 
     def Spawn_Arrow(self, pos_x, pos_y, amount):
-        return Arrow(self.game, (pos_x, pos_y), (16,16), amount)
+        return Arrow(self.game, (pos_x, pos_y), amount)
 

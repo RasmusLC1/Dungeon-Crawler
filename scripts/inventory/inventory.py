@@ -9,7 +9,7 @@ class Inventory:
         self.y_size = y_size
         self.game = game
         self.available_pos = []
-        self.size = (17, 17)
+        self.size = (34, 34)
         self.active_item = None
         self.item_clicked = 0
         self.click_cooldown = 0

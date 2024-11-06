@@ -5,8 +5,8 @@ import pygame
 
 
 class Bow(Weapon):
-    def __init__(self, game, pos, size):
-        super().__init__(game, pos, size, 'bow', 3, 8, 10, 'ranged')
+    def __init__(self, game, pos):
+        super().__init__(game, pos, 'bow', 3, 8, 10, 'ranged')
         self.max_animation = 0
         self.attack_animation_max = 2
         self.distance_from_player = 0

@@ -12,7 +12,7 @@ import math
 
 
 class Enemy(Moving_Entity):
-    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (16, 16)):
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (32, 32)):
 
         super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
         self.sub_type = type

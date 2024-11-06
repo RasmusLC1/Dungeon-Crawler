@@ -8,7 +8,7 @@ import random
 
 class Wight_King(Enemy):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, (20, 20))
+        super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, (40, 40))
         self.animation_num_max = 4
         self.attack_animation_num_max = 4
         self.attack_animation_num_cooldown_max = 8

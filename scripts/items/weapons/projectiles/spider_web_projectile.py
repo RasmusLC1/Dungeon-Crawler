@@ -6,8 +6,8 @@ import pygame
 
 
 class Spider_Web_Projectile(Projectile):
-    def __init__(self, game, pos, size, type, damage, speed, range, weapon_class, special_attack, direction, entity):
-        super().__init__(game, pos, size, type, damage, speed, range, weapon_class, 'blunt', False)
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, special_attack, direction, entity):
+        super().__init__(game, pos, type, damage, speed, range, weapon_class, 'blunt', (5, 5), False)
         self.special_attack = special_attack / 4
         self.entity = entity
         self.direction = direction  # Store the direction vector

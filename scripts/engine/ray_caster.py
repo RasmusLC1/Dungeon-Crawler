@@ -6,7 +6,7 @@ class Ray_Caster():
         self.tiles = []
         
         self.nearby_cooldown = 0
-        self.inactive_distance = 300
+        self.inactive_distance = 600
         
         self.game = game
         self.default_activity = 700
@@ -34,7 +34,7 @@ class Ray_Caster():
             if tile.active:
                 tile.active -= 1
             # Find distance from player and if it's greater than 300, delete it
-            distance = math.sqrt((self.game.player.pos[0] - tile.pos[0] * 16) ** 2 + (self.game.player.pos[1] - tile.pos[1] * 16) ** 2)
+            distance = math.sqrt((self.game.player.pos[0] - tile.pos[0] * self.game.tilemap.tile_size) ** 2 + (self.game.player.pos[1] - tile.pos[1] * self.game.tilemap.tile_size) ** 2)
             if abs(distance) > self.inactive_distance:
                 tile.active = 0
                 self.tiles.remove(tile)
@@ -73,8 +73,8 @@ class Ray_Caster():
         for j in range(self.num_lines):
             angle = start_angle + j * math.radians(self.angle_increment)
             for i in range(1, 13):
-                pos_x = self.game.player.pos[0] + math.cos(angle) * 16 * i
-                pos_y = self.game.player.pos[1] + math.sin(angle) * 16 * i
+                pos_x = self.game.player.pos[0] + math.cos(angle) * self.game.tilemap.tile_size * i
+                pos_y = self.game.player.pos[1] + math.sin(angle) * self.game.tilemap.tile_size * i
                 if not self.Check_Tile((pos_x, pos_y)):
                     break
     

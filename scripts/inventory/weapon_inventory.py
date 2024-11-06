@@ -47,7 +47,7 @@ class Weapon_Inventory(Inventory):
             return
         index = 0
         for i in range(self.x_size):
-            x = i * self.size[1] + 5
+            x = i * self.size[1] + 10
             inventory_slot = Inventory_Slot(self.game, (x, 5), self.size, None, index)
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)

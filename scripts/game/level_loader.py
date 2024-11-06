@@ -81,11 +81,7 @@ class Level_Loader():
         if not self.initialised:
             self.Initial_Setup()
         else:
-            for spawner in self.game.tilemap.extract([('spawners', 0)]):
-                if spawner.variant == 0:
-                    print("PLAYER SPAWN")
-                    self.game.player = Player(self.game, spawner.pos, (8, 16), 100, 5, 5, 10, 5, 5)
-                    break
+            self.Spawn_Player()
 
 
         self.game.a_star.Setup_Map(self.game)
@@ -100,13 +96,9 @@ class Level_Loader():
         self.game.sparks = []
         self.game.scroll = [0, 0]
         # Spawn Player
-        # if not self.initialised:
-
-        for spawner in self.game.tilemap.extract([('spawners', 0)]):
-            if spawner.variant == 0:
-                print("PLAYER SPAWN")
-                self.game.player = Player(self.game, spawner.pos, (8, 16), 100, 5, 5, 10, 5, 5)
-                break
+        self.Spawn_Player()
+        
+        
                 
         
         self.game.item_inventory = Item_Inventory(self.game)
@@ -119,3 +111,9 @@ class Level_Loader():
         self.game.decoration_handler = Decoration_Handler(self.game)
         self.game.rune_handler = Rune_Handler(self.game)
         self.initialised = True
+
+    def Spawn_Player(self):
+        for spawner in self.game.tilemap.extract([('spawners', 0)]):
+            if spawner.variant == 0:
+                self.game.player = Player(self.game, spawner.pos, (8, 16), 100, 5, 5, 10, 5, 5)
+                return

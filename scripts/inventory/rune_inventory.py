@@ -11,8 +11,8 @@ class Rune_Inventory(Inventory):
 
     # Configure the inventory when initialized
     def Setup_Inventory(self):
-        x_pos = self.game.screen_width / self.game.render_scale - 25
-        y_pos = self.game.screen_height / self.game.render_scale - 20
+        x_pos = self.game.screen_width / self.game.render_scale - 50
+        y_pos = self.game.screen_height / self.game.render_scale - 40
         index = 0
         for i in range(self.x_size):
             x = i * self.size[0] + self.game.screen_width / self.game.render_scale - 55

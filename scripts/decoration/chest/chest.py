@@ -13,7 +13,7 @@ from scripts.items.potions.potion_handler import Potion_Handler
 
 class Chest(Decoration):
     def __init__(self, game, pos, version) -> None:
-        super().__init__(game, 'chest', pos, (16, 16))
+        super().__init__(game, 'chest', pos, (32, 32))
         self.version = version
         self.loot_type = 0
         self.empty = False

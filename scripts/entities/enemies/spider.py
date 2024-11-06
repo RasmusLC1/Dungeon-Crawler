@@ -119,7 +119,6 @@ class Spider(Enemy):
 
         spider_web = Spider_Web_Projectile(self.game,
                                     self.rect(),
-                                    (5, 5),
                                     'spider_web',
                                     damage,
                                     speed,
