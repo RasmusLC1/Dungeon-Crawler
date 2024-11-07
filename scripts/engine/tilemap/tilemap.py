@@ -15,7 +15,7 @@ FLOOR_TTLES = {'floor'}
 class Tilemap:
     def __init__(self, game, tile_size=32) -> None:
         self.game = game
-        self.tile_size = tile_size
+        self.tile_size = 32
         self.tilemap = {}
         self.offgrid_tiles = []
         self.update_timer = 0
@@ -109,6 +109,9 @@ class Tilemap:
 
                 tile_key = str(x) + ';' + str(y)
                 tile = self.tilemap[tile_key]
+                if not tile:
+                    continue
+
                 if not tile.entities:
                     continue
 
@@ -178,8 +181,8 @@ class Tilemap:
     def Add_Tile(self, type, variant, pos, physics, active = 0, light_level = 0):
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         tile_key = ';'.join(map(str, pos))
-        self.tilemap[tile_key] = None
-        # self.tilemap[tile_key] = tile
+        self.game.ray_caster.Remove_Tile(self.tilemap[tile_key]) # Remove old tile from renderer 
+        self.tilemap[tile_key] = tile
         
     # Check what tile is in a given position and return the full tile
     def Current_Tile(self, pos):
@@ -237,6 +240,9 @@ class Tilemap:
     def physics_rects_around(self, pos):
         rects = []
         for tile in self.tiles_around(pos):
+            if not tile:
+                print(tile, pos)
+                continue
             if tile.physics:
                 rects.append(pygame.Rect(tile.pos[0] * self.tile_size, tile.pos[1] * self.tile_size, self.tile_size, self.tile_size))
         return rects
@@ -245,6 +251,9 @@ class Tilemap:
     def floor_rects_around(self, pos):
         rects = []
         for tile in self.tiles_around(pos):
+            if not tile:
+                print(tile, pos)
+                continue
             if tile.type in FLOOR_TTLES:
                 rects.append(pygame.Rect(tile.pos[0] * self.tile_size, tile.pos[1] * self.tile_size, self.tile_size, self.tile_size))
         return rects

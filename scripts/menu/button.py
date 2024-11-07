@@ -55,6 +55,6 @@ class Button():
 
     def Render(self, surf):
         surf.blit(self.rect_surface, self.pos)
-        self.game.default_font.Render_Word(surf, self.text, (round(self.pos[0] + self.size[0] // 2 - self.text_length * 4), self.pos[1] + self.size[1] // 2 - 4))        
+        self.game.default_font.Render_Word(surf, self.text, (round(self.pos[0] + self.size[0] // 2 - self.text_length * 8), self.pos[1] + self.size[1] // 2 - 8))        
 
 

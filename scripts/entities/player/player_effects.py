@@ -56,15 +56,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         if effect in self.effects:
             self.effects[effect]['current'] = value
 
-    def Render_Effects_Symbols(self, surf):
-        x_pos = 10
-        y_pos = 30
-        for effect_key, data in self.effects.items():
-            if data['current']:
-                self.entity.game.symbols.Render_Symbol(surf, effect_key, (x_pos, y_pos))
-                self.entity.game.default_font.Render_Word(surf, str(data['current']), (x_pos + 10, y_pos))
-
-                y_pos += 10
+    
 
     # Set Strength effect, doesn't work when poisoned
     def Set_Silence(self, silence_time):
@@ -137,5 +129,12 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
             self.Update_Effect_List('regen', self.regen)
     
 
+    def Render_Effects_Symbols(self, surf):
+        x_pos = 20
+        y_pos = 60
+        for effect_key, data in self.effects.items():
+            if data['current']:
+                self.entity.game.symbols.Render_Symbol(surf, effect_key, (x_pos, y_pos))
+                self.entity.game.default_font.Render_Word(surf, str(data['current']), (x_pos + 20, y_pos))
 
-
+                y_pos += 20

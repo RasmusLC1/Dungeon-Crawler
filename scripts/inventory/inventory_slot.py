@@ -55,7 +55,7 @@ class Inventory_Slot():
         self.item = item
         self.item.active = True
         self.item.picked_up = True
-        self.item.Move((self.pos[0] + 3, self.pos[1] + 3))
+        self.item.Move((self.pos[0] + 5, self.pos[1] + 5))
         self.item.Set_Inventory_Index(self.index)
         if self.inventory_type:
             self.item.Set_Inventory_Type(self.inventory_type)
@@ -110,4 +110,4 @@ class Inventory_Slot():
         x_offset = 9
         if self.item.amount > 10:
             x_offset = 5
-        self.game.default_font.Render_Word(surf, str(self.item.amount), (self.pos[0] + x_offset, self.pos[1] + 9))
+        self.game.default_font.Render_Word(surf, str(self.item.amount), (self.pos[0] + x_offset, self.pos[1] + self.item.size[1]))

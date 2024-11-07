@@ -18,7 +18,6 @@ class PhysicsEntity:
         self.game.entities_render.Add_Entity(self)
         self.render = True
         self.tile = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
-        # self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
         self.saved_data = {}
 
 

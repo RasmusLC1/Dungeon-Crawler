@@ -93,8 +93,8 @@ class Boss_Room():
     
     # Replace doors with walls when player enters
     def Close_Room(self):
-        x = self.pos[0] // 16
-        y = self.pos[1] // 16
+        x = self.pos[0] // self.game.tilemap.tile_size
+        y = self.pos[1] // self.game.tilemap.tile_size
         self.game.tilemap.tilemap[str(x - self.radius) + ';' + str(y)] = {'type': 'LeftWall', 'variant': 0, 'pos': (x - self.radius, y), 'active': 0, 'light': 0}
         self.game.tilemap.tilemap[str(x + self.radius) + ';' + str(y)] = {'type': 'RightWall', 'variant': 0, 'pos': (x + self.radius, y), 'active': 0, 'light': 0}
         self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'TopWall', 'variant': 0, 'pos': (x, y - self.radius), 'active': 0, 'light': 0}
@@ -102,8 +102,8 @@ class Boss_Room():
 
     # Open room by removing walls after player defeats boss
     def Open_Room(self):
-        x = self.pos[0] // 16
-        y = self.pos[1] // 16
+        x = self.pos[0] // self.game.tilemap.tile_size
+        y = self.pos[1] // self.game.tilemap.tile_size
         self.game.tilemap.tilemap[str(x - self.radius) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x - self.radius, y), 'active': 0, 'light': 0}
         self.game.tilemap.tilemap[str(x + self.radius) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x + self.radius, y), 'active': 0, 'light': 0}
         self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y - self.radius), 'active': 0, 'light': 0}
@@ -113,17 +113,17 @@ class Boss_Room():
     # Spawn torches around the doors when the player enters
     def Spawn_Torches(self):
 
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.radius * 16 + 16, self.pos[1] + 16)) # Left top
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.radius * 16 + 16, self.pos[1] - 16)) # Left bottom
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.radius * self.game.tilemap.tile_size + self.game.tilemap.tile_size, self.pos[1] + self.game.tilemap.tile_size)) # Left top
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.radius * self.game.tilemap.tile_size + self.game.tilemap.tile_size, self.pos[1] - self.game.tilemap.tile_size)) # Left bottom
 
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.radius * 16 - 16, self.pos[1] + 16)) # Right top
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.radius * 16 - 16, self.pos[1] - 16)) # Right bottom
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.radius * self.game.tilemap.tile_size - self.game.tilemap.tile_size, self.pos[1] + self.game.tilemap.tile_size)) # Right top
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.radius * self.game.tilemap.tile_size - self.game.tilemap.tile_size, self.pos[1] - self.game.tilemap.tile_size)) # Right bottom
 
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - 16, self.pos[1] - self.radius * 16 + 16)) # top Left
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + 16, self.pos[1] - self.radius * 16 + 16)) # top Right
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.game.tilemap.tile_size, self.pos[1] - self.radius * self.game.tilemap.tile_size + self.game.tilemap.tile_size)) # top Left
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.game.tilemap.tile_size, self.pos[1] - self.radius * self.game.tilemap.tile_size + self.game.tilemap.tile_size)) # top Right
 
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - 16, self.pos[1] + self.radius * 16 - 16)) # Bottom Left
-        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + 16, self.pos[1] + self.radius * 16 - 16)) # Bottom Right
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] - self.game.tilemap.tile_size, self.pos[1] + self.radius * self.game.tilemap.tile_size - self.game.tilemap.tile_size)) # Bottom Left
+        self.game.item_handler.Spawn_Weapon('torch', (self.pos[0] + self.game.tilemap.tile_size, self.pos[1] + self.radius * self.game.tilemap.tile_size - self.game.tilemap.tile_size)) # Bottom Right
 
     def Calculate_Distance(self):
         if self.activated:

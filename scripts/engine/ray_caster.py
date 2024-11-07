@@ -38,7 +38,11 @@ class Ray_Caster():
             if abs(distance) > self.inactive_distance:
                 tile.active = 0
                 self.tiles.remove(tile)
-
+    
+    def Remove_Tile(self, tile):
+        if tile not in self.tiles:
+            return
+        self.tiles.remove(tile)
 
     def Check_Tile(self, pos):
         tile = self.game.tilemap.Current_Tile(pos)

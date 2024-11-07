@@ -28,10 +28,11 @@ class Shrine_Menu(Menu):
     def Init_Rune_Upgrade_Buttons(self):
         self.rune_upgrade_buttons = []
         width = self.game.screen_width // self.game.render_scale // 2
-        button_size_x = 100
-        self.Generate_Rune_Button((width - button_size_x // 2, 100), (button_size_x, 20), 'Souls', 'souls', (100, 100, 150))
-        self.Generate_Rune_Button((width - button_size_x // 2, 130), (button_size_x, 20), 'Power', 'power', (140, 0, 0))
-        self.Generate_Rune_Button((width - button_size_x // 2, 115), (button_size_x, 20), 'Purchase', 'purchase', (140, 0, 0))
+        button_size_x = 200
+        button_size_y = 40
+        self.Generate_Rune_Button((width - button_size_x // 2, 200), (button_size_x, button_size_y), 'Souls', 'souls', (100, 100, 150))
+        self.Generate_Rune_Button((width - button_size_x // 2, 260), (button_size_x, button_size_y), 'Power', 'power', (140, 0, 0))
+        self.Generate_Rune_Button((width - button_size_x // 2, 230), (button_size_x, button_size_y), 'Purchase', 'purchase', (140, 0, 0))
 
         
 
@@ -39,8 +40,9 @@ class Shrine_Menu(Menu):
         self.buttons = []
         width = self.game.screen_width // self.game.render_scale // 2
         height = self.game.screen_height // self.game.render_scale
-        button_size_x = 100
-        self.Generate_Button((width - button_size_x // 2, height - 40), (button_size_x, 20), 'resume', 'run_game', False, (100, 100, 100))
+        button_size_x = 200
+        button_size_y = 40
+        self.Generate_Button((width - button_size_x // 2, height - button_size_y), (button_size_x, button_size_y), 'resume', 'run_game', False, (100, 100, 100))
     
     def Generate_Rune_Button(self, pos, size, text, effect, color = (0, 0, 0)):
         rune_button = Rune_Button(self.game, pos, size, text, effect, color)

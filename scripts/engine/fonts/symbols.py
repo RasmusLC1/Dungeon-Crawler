@@ -32,7 +32,7 @@ class Symbols():
 
             # Iterate over the list of positions to render each character
             item_image = self.symbols[symbol_position]
-            item_image = pygame.transform.scale(item_image, (8 * scale, 8 * scale))
+            item_image = pygame.transform.scale(item_image, (16 * scale, 16 * scale))
             surf.blit(item_image, pos)
         except Exception as e:
             print(f'WRONG Symbol INPUT {e}', text, pos)
