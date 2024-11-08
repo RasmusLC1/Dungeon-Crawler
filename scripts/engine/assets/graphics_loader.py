@@ -4,7 +4,7 @@ from scripts.engine.utility.utils import load_image, load_images, Animation, get
 class Graphics_Loader:
     def Run_All(self):
         Graphics_Loader.Asset_Background_List(self)
-        Graphics_Loader.Asset_Tile_List(self)
+        Graphics_Loader.Asset_Crypt_Tile_List(self)
         Graphics_Loader.Asset_Trap_List(self)
         Graphics_Loader.Asset_Effect_List(self)
         Graphics_Loader.Asset_Particles_List(self)
@@ -32,17 +32,27 @@ class Graphics_Loader:
         self.assets.update(background_assets)
         
 
-    def Asset_Tile_List(self):
+    # def Asset_Tile_List(self):
+    #     tiles_assets = {
+    #         'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 128, 32, 32),
+    #         'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 256, 32, 32),
+    #         'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 288, 32, 32),
+    #         'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 1, 0, 0, 320, 32, 32),
+    #         'LeftWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 0, 0, 32, 32),
+    #         'RightWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 160, 0, 32, 32),
+    #         'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 32, 0, 32, 32),
+    #         'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 32, 64, 32, 32),
+    #         'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 32, 32, 32, 32),
+    #     }
+    #     self.assets.update(tiles_assets)
+
+    def Asset_Crypt_Tile_List(self):
         tiles_assets = {
-            'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 128, 32, 32),
-            'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 256, 32, 32),
-            'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 288, 32, 32),
-            'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 1, 0, 0, 320, 32, 32),
-            'LeftWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 0, 0, 32, 32),
-            'RightWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 160, 0, 32, 32),
-            'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 32, 0, 32, 32),
-            'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 32, 64, 32, 32),
-            'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 32, 32, 32, 32),
+            'floor' : get_tiles_from_sheet('crypt_assets/crypt_floor.png', 5, 1, 0, 0, 32, 32),
+            'wall_top' : get_tiles_from_sheet('crypt_assets/wall_top.png', 3, 0, 0, 0, 32, 32),
+            'wall_side' : get_tiles_from_sheet('crypt_assets/wall_side.png', 3, 0, 0, 0, 32, 32),
+            'wall' : get_tiles_from_sheet('crypt_assets/wall_side.png', 3, 0, 0, 0, 32, 32),
+            'wall_bottom' : get_tiles_from_sheet('crypt_assets/wall_bottom.png', 0, 3, 0, 0, 32, 32),
         }
         self.assets.update(tiles_assets)
 

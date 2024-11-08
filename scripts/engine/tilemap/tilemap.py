@@ -9,7 +9,7 @@ import copy
 
 # Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
-PHYSICS_TILES = {'wall', 'LeftWall', 'RightWall', 'TopWall', 'BottomWall', 'Door_Basic'}
+PHYSICS_TILES = {'wall', 'wall_side', 'wall_top', 'wall_bottom', 'Door_Basic'}
 FLOOR_TTLES = {'floor'}
 
 class Tilemap:
@@ -62,8 +62,11 @@ class Tilemap:
         active = tile_values['active']
         light_level = tile_values['light']
         physics = False
-        if 'Wall' in type or 'Door' in type:
+        if 'wall' in type or 'Door' in type:
             physics = True
+
+        if 'floor' in type:
+            print(variant)
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         self.tilemap[tile_key] = tile
         self.min_x = min(self.min_x, pos[0])
@@ -221,7 +224,7 @@ class Tilemap:
         tile = self.Current_Tile_Type(pos)
         if not tile:
             return False
-        if tile.type == 'Floor':
+        if tile.type == 'floor':
             return True
         else:
             return False

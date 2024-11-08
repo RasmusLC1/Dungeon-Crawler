@@ -56,7 +56,7 @@ class Ray_Caster():
                 print(tile)
                 return False
             
-            if 'Wall' in tile.type:
+            if 'wall' in tile.type:
                 return False
             
             if 'Door' in tile.type:

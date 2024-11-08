@@ -119,7 +119,7 @@ class Dungeon_Generator():
             for i in range(self.cellular_automata.size_x):
                 if self.cellular_automata.map[i][j] == wall: 
                     if not self.Wall_Checker(i, j):
-                        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'BottomWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
 
 
                 elif self.cellular_automata.map[i][j] == floor: # Floor
@@ -146,7 +146,8 @@ class Dungeon_Generator():
             self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [i * self.tile_size, j * self.tile_size]})
 
     def Floor_Checker(self, i, j):
-        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Floor', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+        variant = random.randint(0, 11)
+        self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'floor', 'variant': variant, 'pos': (i, j), 'active': 0, 'light': 0}
         self.Torch_Spawner(i, j, 20)
 
 
@@ -356,38 +357,38 @@ class Dungeon_Generator():
 
         # Handle Edge cases first to prevent crashes
         if i <= 1:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'LeftWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
 
         elif i >= self.cellular_automata.size_x - 2:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'RightWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
         
         elif j <= 1:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'TopWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
         
         elif j >= self.cellular_automata.size_y - 2:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'BottomWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
         
         wall_found = False
 
         if self.cellular_automata.map[i + 1][j] != wall:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'LeftWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             wall_found = True
 
         elif self.cellular_automata.map[i - 1][j] != wall:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'RightWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             wall_found = True
 
 
         if self.cellular_automata.map[i][j - 1] != wall:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'TopWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             wall_found = True
 
         elif self.cellular_automata.map[i][j + 1] != wall:
-            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'BottomWall', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+            self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
             wall_found = True
             
         return wall_found
@@ -396,9 +397,11 @@ class Dungeon_Generator():
     
     def Player_Spawn(self):
         self.player_spawn = (20, 20)
-        for y in range(self.player_spawn[1] - 5, self.player_spawn[1] + 5):
-            for x in range(self.player_spawn[0] - 5, self.player_spawn[0] + 5):
-                self.tilemap.tilemap[str(x) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y), 'active': 0, 'light': 0}
+        for y in range(self.player_spawn[1] - 3, self.player_spawn[1] + 3):
+            for x in range(self.player_spawn[0] - 3, self.player_spawn[0] + 3):
+                variant = random.randint(0, 11)
+
+                self.tilemap.tilemap[str(x) + ';' + str(y)] = {'type': 'floor', 'variant': variant, 'pos': (x, y), 'active': 0, 'light': 0}
         
         self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 0, 'pos': (self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size)})
 

@@ -58,10 +58,10 @@ class Wight_King(Enemy):
         random_weapon = random.randint(0, 1)
 
         if random_weapon == 0:
-            weapon = Sword(self.game, self.pos, (16,16))
+            weapon = Sword(self.game, self.pos)
 
         elif random_weapon == 1:
-            weapon = Spear(self.game, self.pos, (16,16))
+            weapon = Spear(self.game, self.pos)
         
 
         if not weapon:

@@ -205,7 +205,7 @@ class Enemy(Moving_Entity):
                     break
 
     def Future_Rect(self, direction):
-             return pygame.Rect(self.pos[0] + direction[0]*16, self.pos[1] + direction[1]*16, self.size[0], self.size[1])
+             return pygame.Rect(self.pos[0] + direction[0]*32, self.pos[1] + direction[1]*32, self.size[0], self.size[1])
 
     
     def Render(self, surf, offset = (0,0)):

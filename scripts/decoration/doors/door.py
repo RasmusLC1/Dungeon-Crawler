@@ -23,7 +23,7 @@ class Door(Decoration):
         self.is_open = True
         x = self.pos[0] // self.game.tilemap.tile_size
         y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.Add_Tile('Floor', 0, (x, y), False, 0, self.light_level)
+        self.game.tilemap.Add_Tile('floor', 0, (x, y), False, 0, self.light_level)
         self.render = False
         if generate_clatter:
             self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
