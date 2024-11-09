@@ -50,9 +50,10 @@ class Graphics_Loader:
         tiles_assets = {
             'floor' : get_tiles_from_sheet('crypt_assets/crypt_floor.png', 5, 1, 0, 0, 32, 32),
             'wall_top' : get_tiles_from_sheet('crypt_assets/wall_top.png', 3, 0, 0, 0, 32, 32),
-            'wall_side' : get_tiles_from_sheet('crypt_assets/wall_side.png', 3, 0, 0, 0, 32, 32),
-            'wall' : get_tiles_from_sheet('crypt_assets/wall_side.png', 3, 0, 0, 0, 32, 32),
-            'wall_bottom' : get_tiles_from_sheet('crypt_assets/wall_bottom.png', 0, 3, 0, 0, 32, 32),
+            'wall_left' : get_tiles_from_sheet('crypt_assets/wall_left.png', 0, 3, 0, 0, 32, 32),
+            'wall_right' : get_tiles_from_sheet('crypt_assets/wall_right.png', 0, 3, 0, 0, 32, 32),
+            'wall_middle' : get_tiles_from_sheet('crypt_assets/wall_middle.png', 0, 3, 0, 0, 32, 32),
+            'wall_bottom' : get_tiles_from_sheet('crypt_assets/wall_bottom.png', 3, 0, 0, 0, 32, 32),
         }
         self.assets.update(tiles_assets)
 

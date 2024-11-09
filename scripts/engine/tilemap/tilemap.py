@@ -9,7 +9,7 @@ import copy
 
 # Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
-PHYSICS_TILES = {'wall', 'wall_side', 'wall_top', 'wall_bottom', 'Door_Basic'}
+PHYSICS_TILES = {'wall', 'wall_left', 'wall_right', 'wall_middle', 'wall_top', 'wall_bottom', 'Door_Basic'}
 FLOOR_TTLES = {'floor'}
 
 class Tilemap:
