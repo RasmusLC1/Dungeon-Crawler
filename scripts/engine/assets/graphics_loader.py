@@ -54,6 +54,7 @@ class Graphics_Loader:
             'wall_right' : get_tiles_from_sheet('crypt_assets/wall_right.png', 0, 3, 0, 0, 32, 32),
             'wall_middle' : get_tiles_from_sheet('crypt_assets/wall_middle.png', 0, 3, 0, 0, 32, 32),
             'wall_bottom' : get_tiles_from_sheet('crypt_assets/wall_bottom.png', 3, 0, 0, 0, 32, 32),
+            'wall_bottom_corner' : get_tiles_from_sheet('crypt_assets/wall_bottom_corner.png', 2, 0, 0, 0, 32, 32),
         }
         self.assets.update(tiles_assets)
 

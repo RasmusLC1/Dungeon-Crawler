@@ -65,8 +65,6 @@ class Tilemap:
         if 'wall' in type or 'Door' in type:
             physics = True
 
-        if 'floor' in type:
-            print(variant)
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         self.tilemap[tile_key] = tile
         self.min_x = min(self.min_x, pos[0])
