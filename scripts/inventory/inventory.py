@@ -187,9 +187,9 @@ class Inventory:
         # Render legal item position and move it
         self.active_item.Render(self.game.display, offset)  
         self.active_item.Move(self.game.mouse.mpos)
-
         # Add item back to item list when released in legal position
         if self.game.mouse.left_click == False:
+
             self.Place_Down_item()
             self.Reset_Inventory_Slot()
             return False
@@ -197,10 +197,12 @@ class Inventory:
         return True
 
     def Place_Down_item(self):
-        if not self.active_item.Place_Down():
+        if self.active_item.Place_Down():
             self.game.item_handler.Add_Item(self.active_item)
-            self.game.entities_render.Add_Entity(self.active_item)
-
+            # self.game.entities_render.Add_Entity(self.active_item)
+            self.active_item.picked_up = False
+            self.active_item.Set_Tile()
+            print(self.active_item.pos, self.active_item.tile)
         self.active_item = None
         
     # Set the inventory to be inactive again
@@ -302,9 +304,9 @@ class Inventory:
             return
         # Check for out of bounds 
         item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
-        if item_out_of_bounds == False:
+        if not item_out_of_bounds:
 
-            if self.game.mouse.left_click == False:
+            if not self.game.mouse.left_click:
 
                 if self.Move_Item_To_New_Slot(offset):
                     return   

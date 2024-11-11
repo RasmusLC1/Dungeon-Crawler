@@ -27,7 +27,8 @@ class Ray_Caster():
     def Update_Entities(self):
         for tile in self.tiles:
             tile.Set_Entity_Active()
-    
+
+
     # Handle tile activity degradation
     def Check_Tile_Active(self):
         for tile in self.tiles:
@@ -42,10 +43,11 @@ class Ray_Caster():
     def Remove_Tile(self, tile):
         if tile not in self.tiles:
             return
+        tile.active = 0
         self.tiles.remove(tile)
 
-    def Check_Tile(self, pos):
-        tile = self.game.tilemap.Current_Tile(pos)
+    def Check_Tile(self, tile):
+        tile = self.game.tilemap.Current_Tile(tile)
         if tile:
             if not tile.active:
                 tile.Set_Active(self.default_activity)
@@ -56,10 +58,7 @@ class Ray_Caster():
                 print(tile)
                 return False
             
-            if 'wall' in tile.type:
-                return False
-            
-            if 'Door' in tile.type:
+            if tile.physics:
                 return False
             
             
@@ -70,7 +69,7 @@ class Ray_Caster():
         # Calculate the starting angle
         base_angle = math.atan2(self.game.player.view_direction[1], self.game.player.view_direction[0])
         start_angle = base_angle - math.radians(self.spread_angle / 2)
-        self.Check_Tile(self.game.player.pos)
+        self.Check_Tile(self.game.player.tile)
         
 
         # Look for tiles that hit the rays
@@ -79,7 +78,9 @@ class Ray_Caster():
             for i in range(1, 13):
                 pos_x = self.game.player.pos[0] + math.cos(angle) * self.game.tilemap.tile_size * i
                 pos_y = self.game.player.pos[1] + math.sin(angle) * self.game.tilemap.tile_size * i
-                if not self.Check_Tile((pos_x, pos_y)):
+                tile_key = str(int(pos_x) // self.game.tilemap.tile_size) + ';' + str(int(pos_y) // self.game.tilemap.tile_size)
+
+                if not self.Check_Tile(tile_key):
                     break
     
 

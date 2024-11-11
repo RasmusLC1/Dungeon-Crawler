@@ -115,13 +115,14 @@ class Item(PhysicsEntity):
         return None
 
     def Place_Down(self):
-        nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 20)
+        nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 3)
         for trap in nearby_traps:
+            print(trap)
+            print(self.damaged)
             trap.Update(self)
             if self.damaged:
-                return True
-        self.picked_up = False
-        return False
+                return False
+        return True
 
     def Update_Animation(self):
         if self.animation_cooldown:
@@ -152,9 +153,9 @@ class Item(PhysicsEntity):
         if self.Distance(player_pos, mouse_pos) < 40:
             
             # Check if it it touches a floor tile
-            for rect in tilemap.floor_rects_around(mouse_pos):
-                if not self.rect().colliderect(rect):
-                    return False
+            # for rect in tilemap.floor_rects_around(mouse_pos):
+            #     if not self.rect().colliderect(rect):
+            #         return True
             # Check for walls
             for rect in tilemap.physics_rects_around(mouse_pos):
                 if self.rect().colliderect(rect):

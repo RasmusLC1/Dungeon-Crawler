@@ -132,6 +132,8 @@ class Tilemap:
 
     # Add an remove entities from tiles dynamically as needed
     def Remove_Entity_From_Tile(self, tile_key, entity_ID):
+        if not tile_key in self.tilemap:
+            return
         self.tilemap[tile_key].Clear_Entity(entity_ID)
 
     def Add_Entity_To_Tile(self, tile_key, entity):
@@ -163,13 +165,13 @@ class Tilemap:
         return tiles
     
     # Check what tile type is in a given position
-    def Current_Tile_Type(self, pos):
-        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
-        check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
-        if check_loc in self.tilemap:
-            return self.tilemap[check_loc].type
-        else:
-            return None
+    # def Current_Tile_Type(self, tile_key):
+    #     # tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
+    #     # check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
+    #     if tile_key in self.tilemap:
+    #         return self.tilemap[tile_key].type
+    #     else:
+    #         return None
         
     # Check what tile type is in a given position
     def Current_Tile_Type_Without_Offset(self, pos):
@@ -186,18 +188,12 @@ class Tilemap:
         self.tilemap[tile_key] = tile
         
     # Check what tile is in a given position and return the full tile
-    def Current_Tile(self, pos):
-        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
-        check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
-        if check_loc in self.tilemap:
-            tile = self.tilemap[check_loc]
-            if not tile:
-                return None
-            # if not tile.type:
-            #     return None
-            return self.tilemap[check_loc]
-        else:
+    def Current_Tile(self, tile_key):
+        tile = self.tilemap[tile_key]
+        if not tile:
             return None
+        return self.tilemap[tile_key]
+
 
     # Finds nearby tiles 
     def Find_Nearby_Tiles(self, pos, max_distance):
@@ -260,13 +256,6 @@ class Tilemap:
         return rects
     
 
-
-
-    # Convert screen coordinates to isometric grid coordinates
-    def tile_isometric_to_grid(x, y):
-        grid_x = (x // 10 + y // 5) // 2
-        grid_y = (y // 5 - x // 10) // 2
-        return int(grid_x), int(grid_y)
     
     def Set_Light_Level(self, tile, new_light_level):
         tile.Set_Light_Level(new_light_level)
@@ -276,6 +265,7 @@ class Tilemap:
         self.offgrid_tiles.clear()
     
     # Render function that shows the entire screen
+    # Not really used
     def Render(self, surf, offset=(0, 0)):
         for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
             for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):

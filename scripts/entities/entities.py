@@ -17,7 +17,7 @@ class PhysicsEntity:
         self.light_level = 0
         self.game.entities_render.Add_Entity(self)
         self.render = True
-        self.tile = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
+        self.Set_Tile()
         self.saved_data = {}
 
 
@@ -59,6 +59,9 @@ class PhysicsEntity:
 
     def Set_Effect(self, effect, duration):
         pass
+    
+    def Set_Tile(self):
+        self.tile = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
 
 
     def Reset_Effects(self):
@@ -77,7 +80,7 @@ class PhysicsEntity:
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on
-        tile = self.game.tilemap.Current_Tile(self.pos)
+        tile = self.game.tilemap.Current_Tile(self.tile)
         if not tile:
             return True
         if tile.light_level == self.light_level:

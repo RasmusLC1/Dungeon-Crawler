@@ -93,7 +93,9 @@ class Attack_Stategies():
             angle = i * math.radians(angle_radians)
             pos_x = self.entity.pos[0] + math.cos(angle) * 16 * i
             pos_y = self.entity.pos[1] + math.sin(angle) * 16 * i
-            if not self.game.ray_caster.Check_Tile((pos_x, pos_y)):
+            tile_key = str(int(pos_x) // self.game.tilemap.tile_size) + ';' + str(int(pos_y) // self.game.tilemap.tile_size)
+
+            if not self.game.ray_caster.Check_Tile(tile_key):
                     return False
         return True
 

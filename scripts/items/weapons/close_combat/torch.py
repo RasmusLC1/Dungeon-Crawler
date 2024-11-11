@@ -8,9 +8,9 @@ class Torch(Weapon):
         super().__init__(game, pos, 'torch', 1, 3, 5, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
-        self.light_level = 8
-        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
-        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+        self.light_level = 10
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level, self.tile)
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.offset = (0,0)
         self.fire_cooldown = 0
         self.effect = 'fire'
@@ -131,13 +131,14 @@ class Torch(Weapon):
 
     def Place_Down(self):
         # Parent class Place_down function
-        super().Place_Down()
+        if not super().Place_Down():
+            return False
 
         
         # Set the player light to False to trigger a general update of the light
         # levels around the player and move the torch light to the new location
-        self.game.player.Set_Light_State(False)
-        self.light_source.Move_Light(self.pos)
+        # self.game.player.Set_Light_State(False)
+        self.light_source.Move_Light(self.pos, self.tile)
         self.light_source.picked_up = False
         
-        return False
+        return True

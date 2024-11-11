@@ -9,7 +9,7 @@ class Lava(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 2)
         self.light_level = 10
-        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level, self.tile)
         
 
     def Update(self, entity):

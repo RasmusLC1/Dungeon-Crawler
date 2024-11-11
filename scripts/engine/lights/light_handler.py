@@ -12,8 +12,8 @@ class Light_Handler():
         self.lights.clear()
     
     # Creates a lightsource
-    def Add_Light(self, pos, light_level):
-        light = Light(self.game, pos, light_level)
+    def Add_Light(self, pos, light_level, tile):
+        light = Light(self.game, pos, light_level, tile)
         self.lights.append(light)
         return light
     
@@ -32,42 +32,43 @@ class Light_Handler():
         return nearby_lights
 
     
-    def Move_Light(self, pos, light_source):
+    def Move_Light(self, pos, light_source, tile):
 
         # Move the light to the new position
         light_source.pos_holder = light_source.pos
+        light_source.tile = tile
         light_source.pos = pos
 
         # Recalculate the light at the new position
         light_source.Setup_Tile_Light()
 
         # Update all nearby lights after moving
-        nearby_lights = self.Find_Nearby_Lights(light_source.pos, 50)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos, 100)
         for light in nearby_lights:
             light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources
 
         
 
     def Remove_Light(self, light_source):
-        light_source.Delete_Light()
+        # light_source.Delete_Light()
         # Update all nearby lights after moving
-        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 100)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
         for light in nearby_lights:
             light.Delete_Light()  # Recalculate the light for the nearby light sources
 
         
 
     def Restore_Light(self, light_source):
-        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 100)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
 
         for light in nearby_lights:
             light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources
 
     # Set the lightlevel of an object based on the tile it is on
-    def Initialise_Light_Level(self, pos):
+    def Initialise_Light_Level(self, tile):
 
         # Set the light level based on the tile that the entity is placed on
-        tile = self.game.tilemap.Current_Tile(pos)
+        tile = self.game.tilemap.Current_Tile(tile)
         if not tile:
             return
         light_level = min(255, tile.light_level * 25)

@@ -57,7 +57,7 @@ class Trap(PhysicsEntity):
         # Apply a non-linear scaling for a smoother transition
         tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
 
-        tile = self.game.tilemap.Current_Tile(self.pos)
+        tile = self.game.tilemap.Current_Tile(self.tile)
 
      
         if tile.light_level > 0:

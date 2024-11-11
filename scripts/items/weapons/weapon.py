@@ -589,13 +589,14 @@ class Weapon(Item):
 
 
     def Place_Down(self):
-        super().Place_Down()
+        if not super().Place_Down():
+            return False
         self.entity = None
         self.in_inventory = False
         if self.equipped:
             self.game.player.Remove_Active_Weapon(self.inventory_type)
             self.Set_Equip(False)
-        return False
+        return True
 
     def Set_In_Inventory(self, state):
         self.in_inventory = state

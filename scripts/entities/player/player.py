@@ -23,11 +23,9 @@ class Player(Moving_Entity):
         self.nearby_chests = []
         self.view_direction = (0,0)
 
-        self.light_level = 4
         self.light_cooldown = 0
-        # self.light_source = None
-        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
-        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, 2, self.tile)
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
 
         self.weapons = []
         self.status_effects = Player_Status_Effect_Handler(self)
@@ -139,7 +137,7 @@ class Player(Moving_Entity):
                 self.game.light_handler.Restore_Light(self.light_source)
                 self.Set_Light_State(True)
             else:
-                self.game.light_handler.Move_Light(self.pos, self.light_source)
+                self.game.light_handler.Move_Light(self.pos, self.light_source, self.tile)
         
         
     def Mouse_Handler(self):
