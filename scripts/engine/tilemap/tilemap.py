@@ -1,6 +1,5 @@
 from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.engine.tilemap.tile import Tile
-from scripts.engine.tilemap.offgrid_tile import Offgrid_Tile
 
 import json
 import pygame
@@ -189,6 +188,8 @@ class Tilemap:
         
     # Check what tile is in a given position and return the full tile
     def Current_Tile(self, tile_key):
+        if not tile_key in self.tilemap:
+            return None
         tile = self.tilemap[tile_key]
         if not tile:
             return None
@@ -284,28 +285,7 @@ class Tilemap:
         for tile in tiles:
             if not tile:
                 continue
-            # Get the tile surface from the assets
-            tile_surface = self.game.assets[tile.type][tile.variant].copy()
-            # Adjust the tile activeness calculation
-            tile_activeness = max(0, min(255, 700 - tile.active))
+            tile.Render(surf, offset)
             
-            # Apply a non-linear scaling for a smoother transition
-            tile_darken_factor = min(255, (255 * (1 - math.exp(-tile_activeness / 255)) + 150))
-
-            if tile.light_level > 0:
-                light_level = min(255, tile.light_level * 25)
-            else:
-                light_level = 1
-            tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))
-
-            # Create a darkening surface with an alpha channel
-            darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)
-            darkening_surface.fill((0, 0, 0, int(tile_darken_factor)))
-            
-            # Blit the darkening surface onto the tile surface
-            tile_surface.blit(darkening_surface, (0, 0))
-            
-            # Blit the darkened tile surface onto the main surface
-            surf.blit(tile_surface, (tile.pos[0] * self.tile_size - offset[0], tile.pos[1] * self.tile_size - offset[1]))
 
 

@@ -199,10 +199,8 @@ class Inventory:
     def Place_Down_item(self):
         if self.active_item.Place_Down():
             self.game.item_handler.Add_Item(self.active_item)
-            # self.game.entities_render.Add_Entity(self.active_item)
             self.active_item.picked_up = False
             self.active_item.Set_Tile()
-            print(self.active_item.pos, self.active_item.tile)
         self.active_item = None
         
     # Set the inventory to be inactive again

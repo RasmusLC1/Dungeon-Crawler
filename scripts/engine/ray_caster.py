@@ -28,7 +28,6 @@ class Ray_Caster():
         for tile in self.tiles:
             tile.Set_Entity_Active()
 
-
     # Handle tile activity degradation
     def Check_Tile_Active(self):
         for tile in self.tiles:

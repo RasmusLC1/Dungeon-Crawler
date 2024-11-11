@@ -73,7 +73,10 @@ class Light():
             return
 
     def Check_Tile(self, tile):
-        if not tile or not tile.type:
+        if not tile:
+            return False
+        
+        if not tile.type:
             return False
         
         if tile.physics:
@@ -102,7 +105,7 @@ class Light():
         for tile in self.tiles:
             tile.light_level = 0
             tile.active = 0
-        
+
         self.tiles.clear()
         return True
 

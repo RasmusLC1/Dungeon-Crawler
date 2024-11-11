@@ -15,7 +15,7 @@ class PhysicsEntity:
         self.size = size
         self.active = 0
         self.light_level = 0
-        self.game.entities_render.Add_Entity(self)
+        # self.game.entities_render.Add_Entity(self)
         self.render = True
         self.Set_Tile()
         self.saved_data = {}
@@ -62,7 +62,10 @@ class PhysicsEntity:
     
     def Set_Tile(self):
         self.tile = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
-
+        tile = self.game.tilemap.Current_Tile(self.tile)
+        if not tile:
+            return
+        tile.Add_Entity(self)
 
     def Reset_Effects(self):
         # Status Effects

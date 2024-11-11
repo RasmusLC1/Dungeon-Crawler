@@ -8,8 +8,7 @@ class Torch(Weapon):
         super().__init__(game, pos, 'torch', 1, 3, 5, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
-        self.light_level = 10
-        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level, self.tile)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, 10, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.offset = (0,0)
         self.fire_cooldown = 0
@@ -20,7 +19,7 @@ class Torch(Weapon):
     def Pick_Up(self):
         if not super().Pick_Up():
             return
-        self.light_source.picked_up = True
+        # self.light_source.picked_up = True
         # self.game.player.Set_Light_State(False)
         self.game.light_handler.Remove_Light(self.light_source)
         self.game.light_handler.Restore_Light(self.light_source)
@@ -103,7 +102,6 @@ class Torch(Weapon):
             fire_particle = Fire_Particle(
                 self.game,
                 self.entity.rect(),
-                (4, 4),
                 'fire_particle',
                 damage,
                 speed,
@@ -138,7 +136,7 @@ class Torch(Weapon):
         # Set the player light to False to trigger a general update of the light
         # levels around the player and move the torch light to the new location
         # self.game.player.Set_Light_State(False)
+        self.game.light_handler.Add_Light_Source(self.light_source)
         self.light_source.Move_Light(self.pos, self.tile)
-        self.light_source.picked_up = False
         
         return True

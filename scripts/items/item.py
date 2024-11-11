@@ -117,11 +117,10 @@ class Item(PhysicsEntity):
     def Place_Down(self):
         nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 3)
         for trap in nearby_traps:
-            print(trap)
-            print(self.damaged)
             trap.Update(self)
             if self.damaged:
                 return False
+        self.Set_Tile()
         return True
 
     def Update_Animation(self):
@@ -150,13 +149,8 @@ class Item(PhysicsEntity):
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):
         # Check if distance is legal, update to account for player strength later
-        if self.Distance(player_pos, mouse_pos) < 40:
+        if self.Distance(player_pos, mouse_pos) < 80:
             
-            # Check if it it touches a floor tile
-            # for rect in tilemap.floor_rects_around(mouse_pos):
-            #     if not self.rect().colliderect(rect):
-            #         return True
-            # Check for walls
             for rect in tilemap.physics_rects_around(mouse_pos):
                 if self.rect().colliderect(rect):
                     return False

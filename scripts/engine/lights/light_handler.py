@@ -17,6 +17,9 @@ class Light_Handler():
         self.lights.append(light)
         return light
     
+    def Add_Light_Source(self, light_source):
+        self.lights.append(light_source)
+
     def distance_from_center(light, center_pos):
         pos = light.pos
         return math.sqrt((pos[0] - center_pos[0]) ** 2 + (pos[1] - center_pos[1]) ** 2)
@@ -55,6 +58,9 @@ class Light_Handler():
         nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
         for light in nearby_lights:
             light.Delete_Light()  # Recalculate the light for the nearby light sources
+        
+        if light_source in self.lights:
+            self.lights.remove(light_source)
 
         
 

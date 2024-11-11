@@ -73,7 +73,6 @@ class Ice_Spirit(Enemy):
         ice_particle = Ice_Particle(
                 self.game,
                 self.rect(),
-                (3, 3),
                 'ice_particle',
                 damage,
                 speed,
