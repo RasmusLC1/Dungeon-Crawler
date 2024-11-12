@@ -73,11 +73,9 @@ class Ice_Spirit(Enemy):
         ice_particle = Ice_Particle(
                 self.game,
                 self.rect(),
-                'ice_particle',
                 damage,
                 speed,
                 max_range,
-                'particle',
                 self.charge,
                 direction,  # Pass the direction here
                 self

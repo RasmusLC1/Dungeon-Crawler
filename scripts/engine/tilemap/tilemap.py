@@ -78,6 +78,8 @@ class Tilemap:
         matches = []
         for tile in self.offgrid_tiles:
             if (tile.type, tile.variant) in id_pairs:
+                if tile.type == 'Boss_Room':
+                    print(vars(tile))
                 matches.append(copy.copy(tile))
                 if not keep:
                     self.offgrid_tiles.remove(tile)
@@ -184,6 +186,7 @@ class Tilemap:
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
         tile_key = ';'.join(map(str, pos))
         self.game.ray_caster.Remove_Tile(self.tilemap[tile_key]) # Remove old tile from renderer 
+        self.tilemap[tile_key] = None
         self.tilemap[tile_key] = tile
         
     # Check what tile is in a given position and return the full tile
@@ -193,7 +196,8 @@ class Tilemap:
         tile = self.tilemap[tile_key]
         if not tile:
             return None
-        return self.tilemap[tile_key]
+        
+        return tile
 
 
     # Finds nearby tiles 

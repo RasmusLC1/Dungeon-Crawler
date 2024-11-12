@@ -593,6 +593,7 @@ class Weapon(Item):
             return False
         self.entity = None
         self.in_inventory = False
+        self.picked_up = False
         if self.equipped:
             self.game.player.Remove_Active_Weapon(self.inventory_type)
             self.Set_Equip(False)

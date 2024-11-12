@@ -1,8 +1,8 @@
 from scripts.items.weapons.projectiles.projectile import Projectile
 
 class Ice_Particle(Projectile):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, special_attack, direction, entity):
-        super().__init__(game, pos, type, damage, speed, range, weapon_class, 'ice', (6, 6), False)
+    def __init__(self, game, pos, damage, speed, range, special_attack, direction, entity):
+        super().__init__(game, pos, 'ice_particle', damage, speed, range, 'particle', 'ice', (10, 10), False)
         self.special_attack = special_attack / 4
         self.entity = entity
         self.direction = direction  # Store the direction vector

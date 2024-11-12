@@ -394,10 +394,12 @@ class Moving_Entity(PhysicsEntity):
 
         self.damage_cooldown = 20
         self.health -= damage
-        if self.health <= 0:
+
+        if self.health <= 0: # Entity dead
             self.Reset_Effects()
             self.Update_Status_Effects()
-
+            tile = self.game.tilemap.Current_Tile(self.tile)
+            tile.Clear_Entity(self.ID)
         return True
 
     

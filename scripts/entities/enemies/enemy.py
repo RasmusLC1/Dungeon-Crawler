@@ -172,6 +172,9 @@ class Enemy(Moving_Entity):
         if not super().Damage_Taken(damage, direction):
             return
         if self.health <= 0:
+            
+            self.Drop_Weapon()
+
             self.game.enemy_handler.Delete_Enemy(self)
             if self.distance_to_player < 150:
                 self.game.player.Increase_Souls(5)
@@ -179,7 +182,18 @@ class Enemy(Moving_Entity):
 
 
         self.direction = pygame.math.Vector2(self.direction_x, self.direction_y)
+
+    def Drop_Weapon(self):
+        if not self.active_weapon:
+            return
         
+        self.active_weapon.pos = self.pos.copy()
+        self.active_weapon.Set_Equip(False)
+        self.active_weapon.Place_Down()
+        self.game.item_handler.Add_Item(self.active_weapon)
+        self.active_weapon.Set_Tile()
+        self.active_weapon = None
+
     def Trap_Collision_Handler(self):
         for trap in self.nearby_traps:
             if self.rect().colliderect(trap.rect()):
@@ -220,7 +234,7 @@ class Enemy(Moving_Entity):
         health_fraction = self.health / self.max_health
 
         # Map the fraction to an index from 0 to 9 (assuming 10 total images)
-        health_index = int((1 - health_fraction) * 9)  # Invert fraction and scale to index range
+        health_index = max(-1, min(int((1 - health_fraction) * 9), 9))  # Invert fraction and scale to index range
 
         # Correct potential rounding issues at full health
         if self.health == self.max_health:

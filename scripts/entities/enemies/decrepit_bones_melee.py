@@ -74,6 +74,7 @@ class Decrepit_Bones_Melee(Enemy):
         del(weapon)
         return True
     
+    
     def Update_Active_Weapon(self, offset=(0, 0)):
         if not self.active_weapon:
             return

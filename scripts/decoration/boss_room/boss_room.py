@@ -1,6 +1,8 @@
 import math
 import pygame
 import random
+from scripts.items.weapons.weapon_handler import Weapon_Handler
+
 
 class Boss_Room():
     def __init__(self, game, pos, radius, level) -> None:
@@ -8,6 +10,7 @@ class Boss_Room():
         self.type = 'boss_room'
         self.category = 'boss_room'
         self.ID = random.randint(1, 100000)
+        self.weapon_handler = Weapon_Handler(self.game)
 
         self.pos = pos
         self.boss = None
@@ -89,25 +92,25 @@ class Boss_Room():
         )
         self.Close_Room()
         self.Spawn_Torches()
-        # Replace Entrances with walls to lock in player
     
     # Replace doors with walls when player enters
     def Close_Room(self):
         x = self.pos[0] // self.game.tilemap.tile_size
         y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.tilemap[str(x - self.radius) + ';' + str(y)] = {'type': 'LeftWall', 'variant': 0, 'pos': (x - self.radius, y), 'active': 0, 'light': 0}
-        self.game.tilemap.tilemap[str(x + self.radius) + ';' + str(y)] = {'type': 'RightWall', 'variant': 0, 'pos': (x + self.radius, y), 'active': 0, 'light': 0}
-        self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'TopWall', 'variant': 0, 'pos': (x, y - self.radius), 'active': 0, 'light': 0}
-        self.game.tilemap.tilemap[str(x) + ';' + str(y + self.radius)] = {'type': 'BottomWall', 'variant': 0, 'pos': (x, y + self.radius), 'active': 0, 'light': 0}
+        self.game.tilemap.Add_Tile('wall_left', 0, (x - self.radius, y), True, 0, 0)
+        self.game.tilemap.Add_Tile('wall_right', 0, (x + self.radius, y), True, 0, 0)
+        self.game.tilemap.Add_Tile('wall_top', 0, (x, y - self.radius), True, 0, 0)
+        self.game.tilemap.Add_Tile('wall_bottom', 0, (x, y + self.radius), True, 0, 0)
 
     # Open room by removing walls after player defeats boss
     def Open_Room(self):
         x = self.pos[0] // self.game.tilemap.tile_size
         y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.tilemap[str(x - self.radius) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x - self.radius, y), 'active': 0, 'light': 0}
-        self.game.tilemap.tilemap[str(x + self.radius) + ';' + str(y)] = {'type': 'Floor', 'variant': 0, 'pos': (x + self.radius, y), 'active': 0, 'light': 0}
-        self.game.tilemap.tilemap[str(x) + ';' + str(y - self.radius)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y - self.radius), 'active': 0, 'light': 0}
-        self.game.tilemap.tilemap[str(x) + ';' + str(y + self.radius)] = {'type': 'Floor', 'variant': 0, 'pos': (x, y + self.radius), 'active': 0, 'light': 0}
+        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x - self.radius, y), False, 0, 0)
+        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x + self.radius, y), False, 0, 0)
+        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x, y - self.radius), False, 0, 0)
+        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x, y + self.radius), False, 0, 0)
+
 
 
     # Spawn torches around the doors when the player enters
@@ -132,9 +135,9 @@ class Boss_Room():
         if self.distance_cooldown > 0:
             self.distance_cooldown -= 1
             return False
-        
         # Calculate distance and set the cooldown to the distance to avoid computation
         distance = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)        
+        print(distance)
         self.distance_cooldown = distance // 10
         # print(distance)
         if distance < self.radius * 12:

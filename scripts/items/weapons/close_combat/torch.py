@@ -102,11 +102,9 @@ class Torch(Weapon):
             fire_particle = Fire_Particle(
                 self.game,
                 self.entity.rect(),
-                'fire_particle',
                 damage,
                 speed,
                 max_range,
-                'particle',
                 self.special_attack,
                 direction,  # Pass the direction here
                 self.entity

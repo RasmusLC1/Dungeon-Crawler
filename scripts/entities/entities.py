@@ -39,6 +39,8 @@ class PhysicsEntity:
         self.active = data['active']
         self.light_level = data['light_level']
         self.render = data['render']
+        self.Set_Tile()
+
 
 
     def rect(self):

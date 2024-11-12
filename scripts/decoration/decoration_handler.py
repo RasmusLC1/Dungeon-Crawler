@@ -32,7 +32,7 @@ class Decoration_Handler():
             self.Spawn_Chest(chest.pos, version)
 
         for shrine in self.game.tilemap.extract([('Shrine', 0)]):
-            spawn_shrine = self.Spawn_Shrine(shrine.pos)
+            self.Spawn_Shrine(shrine.pos)
 
         for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
             temp_level = 3

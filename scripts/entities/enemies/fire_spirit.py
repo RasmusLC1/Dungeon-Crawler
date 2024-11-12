@@ -85,11 +85,9 @@ class Fire_Spirit(Enemy):
             fire_particle = Fire_Particle(
                 self.game,
                 self.rect(),
-                'fire_particle',
                 damage,
                 speed,
                 max_range,
-                'particle',
                 self.charge,
                 direction, 
                 self

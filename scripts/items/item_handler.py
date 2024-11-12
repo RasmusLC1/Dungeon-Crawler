@@ -137,7 +137,7 @@ class Item_Handler():
                 self.items.remove(item)
                 continue
 
-
+            # Shoot projectile
             if item.type in throwable_weapons:
                 if not item.special_attack:
                     if not item.entity:
@@ -159,10 +159,11 @@ class Item_Handler():
             if not self.Pick_Up_Items():
                 return
             else:
+                print("ITEMHANDLER")
                 self.game.keyboard_handler.Set_E_Key(False)
     
     def Pick_Up_Items(self) -> bool:
-        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 2)
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 1)
         if not nearby_items:
             return False
         player_pos = self.game.player.pos

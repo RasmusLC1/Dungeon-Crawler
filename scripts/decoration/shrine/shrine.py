@@ -4,14 +4,14 @@ import pygame
 
 class Shrine(Decoration):
     def __init__(self, game, pos) -> None:
-        super().__init__(game, 'shrine', pos, (32, 32))
+        super().__init__(game, 'shrine', pos, (64, 64))
         self.is_open = False
         self.animation = 0
         self.animation_cooldown = 0
         self.max_animation = 3
         self.light_level = 8
-        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level)
-        self.light_level = self.game.light_handler.Initialise_Light_Level(self.pos)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level, self.tile)
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.available_rune = None
         
 
