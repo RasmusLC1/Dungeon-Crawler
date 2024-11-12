@@ -186,7 +186,7 @@ class Sword(Weapon):
         self.stored_rotation = self.rotate
         self.entity.Set_Charge(self.special_attack / 4)
         self.charging = self.entity.charging
-        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack) # Find nearby enemies to attack
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 8) # Find nearby enemies to attack
         self.special_attack = 0
 
 

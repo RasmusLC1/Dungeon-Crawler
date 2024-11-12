@@ -159,7 +159,6 @@ class Item_Handler():
             if not self.Pick_Up_Items():
                 return
             else:
-                print("ITEMHANDLER")
                 self.game.keyboard_handler.Set_E_Key(False)
     
     def Pick_Up_Items(self) -> bool:

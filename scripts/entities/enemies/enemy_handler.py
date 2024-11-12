@@ -204,12 +204,21 @@ class Enemy_Handler():
                 
 
     def Find_Nearby_Enemies(self, entity, max_distance):
+        if max_distance <= 5:
+            return self.game.tilemap.Search_Nearby_Tiles(max_distance, entity.pos, 'enemy')
+        else:
+            return self.Find_Nearby_Enemies_Long(entity, max_distance)
+    
+    # Long distance enemy search
+    def Find_Nearby_Enemies_Long(self, entity, max_distance):
         nearby_enemies = []
         for enemy in self.enemies:
             distance = math.sqrt((entity.pos[0] - enemy.pos[0]) ** 2 + (entity.pos[1] - enemy.pos[1]) ** 2)
             if distance < max_distance and not enemy == entity:
                 nearby_enemies.append(enemy)
         return nearby_enemies
+    
+
 
 
     def Find_Enemy(self, ID):

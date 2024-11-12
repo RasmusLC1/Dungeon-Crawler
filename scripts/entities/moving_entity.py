@@ -367,10 +367,7 @@ class Moving_Entity(PhysicsEntity):
             self.nearby_enemies_cooldown = max(0, self.nearby_enemies_cooldown - 1)
             return
         self.nearby_enemies.clear()
-        if max_distance <= 5:
-            self.nearby_enemies = self.game.tilemap.Search_Nearby_Tiles(max_distance, self.pos, 'enemy')
-        else:
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, max_distance)
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, max_distance)
         self.nearby_enemies_cooldown = 20
         return
 

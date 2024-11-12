@@ -186,7 +186,10 @@ class Enemy(Moving_Entity):
     def Drop_Weapon(self):
         if not self.active_weapon:
             return
-        
+        # Remove weapon from Tile
+        tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
+        tile.Clear_Entity(self.active_weapon.ID)
+
         self.active_weapon.pos = self.pos.copy()
         self.active_weapon.Set_Equip(False)
         self.active_weapon.Place_Down()

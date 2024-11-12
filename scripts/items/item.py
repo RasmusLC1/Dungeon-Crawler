@@ -84,10 +84,6 @@ class Item(PhysicsEntity):
         self.inventory_index = index
     
     def Find_Nearby_Entities(self, distance):
-        # # Set the player first so the player gets priority
-        # distance_player = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)
-        # if distance_player < distance:
-        #     self.nearby_entities.append(self.game.player)
         self.nearby_entities = self.game.enemy_handler.Find_Nearby_Enemies(self, distance)
 
 

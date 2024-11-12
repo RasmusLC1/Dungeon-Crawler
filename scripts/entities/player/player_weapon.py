@@ -1,4 +1,5 @@
 from copy import copy
+import pygame
 
 
 class Player_Weapon_Handler():
@@ -12,6 +13,7 @@ class Player_Weapon_Handler():
         self.active_bow = None
         self.bow_cooldown = 0
         self.inventory_interaction = 0
+
 
 
     def Update(self, offset = (0, 0)):
@@ -39,6 +41,8 @@ class Player_Weapon_Handler():
         if 'bow' in hand:
             equipped_weapon.Move(self.player.pos)
             self.active_bow = equipped_weapon
+
+    
 
     # Function to update the player's weapons
     # Each weapon needs it own method to handle it's cooldown
@@ -174,6 +178,7 @@ class Player_Weapon_Handler():
         
 
     def Render_Weapons(self, surf, offset):
+
         if self.game.weapon_inventory.active_inventory == 0:
             if self.active_weapon_left:
                 self.active_weapon_left.Render_Equipped(surf, offset)

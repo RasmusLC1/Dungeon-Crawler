@@ -34,6 +34,7 @@ class Player(Moving_Entity):
 
 
 
+
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['souls'] = self.souls
@@ -95,6 +96,7 @@ class Player(Moving_Entity):
     def Attacking(self, weapon, offset=(0, 0)):
         if weapon.attacking and not self.attacking:
             self.Attack_Direction_Handler(offset)
+
 
             direction_x = 5 * self.attack_direction[0]
             direction_y = 5 * self.attack_direction[1]
