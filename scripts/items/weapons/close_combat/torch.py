@@ -30,6 +30,14 @@ class Torch(Weapon):
     def Update_Attack_Animation(self):
         super().Update_Attack_Animation()
 
+    def Update_Attack(self):
+        if not super().Update_Attack():
+            return False
+        
+        
+
+        self.Set_Attack_Hitbox_Size((32, 16))
+
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:
             self.light_level = 8

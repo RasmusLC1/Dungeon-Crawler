@@ -21,6 +21,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Potion_List(self)
         Graphics_Loader.Asset_Decoration_List(self)
         Graphics_Loader.Asset_Weapons_List(self)
+        Graphics_Loader.Asset_Weapons_Effects(self)
         Graphics_Loader.Asset_Inventory(self)
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
@@ -89,8 +90,8 @@ class Graphics_Loader:
     
     def Asset_Particles_List(self):
         particle_assets = {
-        'fire_particle': get_tiles_from_sheet('particles/fire_particle/fire_particle.png', 3, 0, 0, 0, 2, 2),
-        'ice_particle': get_tiles_from_sheet('particles/ice_particle/ice_particle.png', 3, 0, 0, 0, 2, 2),
+        'fire_particle': get_tiles_from_sheet('particles/fire_particle/fire_particle.png', 3, 0, 0, 0, 4, 4),
+        'ice_particle': get_tiles_from_sheet('particles/ice_particle/ice_particle.png', 3, 0, 0, 0, 4, 4),
         }
         self.assets.update(particle_assets)
 
@@ -198,6 +199,12 @@ class Graphics_Loader:
 
             'shield': get_tiles_from_sheet('weapons/shields.png', 4, 4, 0, 0, 32, 32),
             'shield_attack': get_tiles_from_sheet('weapons/shields.png', 4, 4, 0, 0, 32, 32),
+        }
+        self.assets.update(Weapons_assets)
+
+    def Asset_Weapons_Effects(self):
+        Weapons_assets = {
+            'base_cut_effect' : get_tiles_from_sheet('weapons/weapon_effects/base_cut_attack.png', 6, 0, 0, 0, 64, 64),
         }
         self.assets.update(Weapons_assets)
 

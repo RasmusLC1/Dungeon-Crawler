@@ -41,7 +41,7 @@ class Weapon(Item):
         self.special_attack = 0 # special attack counter
         self.return_to_holder = False # Return the weapon to original positon after stab
 
-        self.attack_hitbox_size = (32, 32)
+        self.attack_hitbox_size = (1, 1)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
         #TODO: REMOVE
         self.attack_hitbox_TEST = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
@@ -179,7 +179,6 @@ class Weapon(Item):
             # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:
                 continue
-            print(self.attack_hitbox.center, enemy.rect().center)
             # Check for collision with enemy
             if self.attack_hitbox.colliderect(enemy.rect()):
                 self.Entity_Hit(enemy)
@@ -307,6 +306,40 @@ class Weapon(Item):
     def Change_Rotate(self, change):
         self.rotate += change
 
+    
+    # Compute the hitbox for the weapon when attacking
+    def Set_Attack_Hitbox(self):
+        if not self.entity:
+            return
+        pos_x = self.entity.rect().center[0] - 2 + self.entity.attack_direction[0] * self.game.tilemap.tile_size
+        pos_y = self.entity.rect().center[1] - 2 + self.entity.attack_direction[1] * self.game.tilemap.tile_size
+        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
+
+    def Set_Attack_Hitbox_Render_TEST(self, offset):
+        if not self.entity:
+            return
+        pos_x = self.entity.rect().center[0] - 2 + self.entity.attack_direction[0] * self.game.tilemap.tile_size - offset[0]
+        pos_y = self.entity.rect().center[1] - 2 + self.entity.attack_direction[1] * self.game.tilemap.tile_size - offset[1]
+        self.attack_hitbox_TEST = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
+
+    def Set_Attack_Hitbox_Size(self, size):
+        # Invert size if attacking horrizontally using slice
+        if abs(self.entity.attack_direction[1]) < 0.35:
+            size = size[::-1]
+        self.attack_hitbox_size = size
+
+    def Rotate_Attack_Effect_Animation(self):
+        
+        # Get the direction
+        dx = self.game.mouse.click_pos[0] * self.game.render_scale - self.entity.pos[0]
+        dy = self.game.mouse.click_pos[1] * self.game.render_scale - self.entity.pos[1]
+
+        # Calculate the angle in degrees
+        rotation = abs(math.degrees(math.atan2(dx, dy)))
+        if self.entity.attack_direction[0] < 0:
+            rotation *= -1
+        return rotation
+
 
     def Set_Entity(self, entity):
         self.entity = entity
@@ -338,6 +371,33 @@ class Weapon(Item):
     def Stabbing_Attack(self):
         pass
 
+    def Attack_Effect_Flip(self):
+        flip_animation_x = False
+        flip_animation_y = True
+
+        if self.entity.attack_direction[0] < 0:
+            if abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]) - 0.2:
+                flip_animation_y = False
+
+        
+
+        if self.entity.attack_direction[1] > 0:
+            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]) - 0.2:
+                flip_animation_y = False
+            
+
+        if self.entity.attack_direction[1] < 0:
+            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]) - 0.1:
+                flip_animation_x = True
+                flip_animation_y = False
+
+        if self.entity.attack_direction[0] > 0:
+            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]):
+                flip_animation_y = False
+                flip_animation_x = False
+        
+        return (flip_animation_x, flip_animation_y)
+
     # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         
@@ -356,29 +416,37 @@ class Weapon(Item):
         surf.blit( pygame.transform.flip(weapon_image, self.flip_image, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
-        # TODO: TEST FUNCTION REMOVE
-        if self.attacking:
-            self.Set_Attack_Hitbox_Render_TEST(offset)
-            pygame.draw.rect(surf, (255, 0, 0), self.attack_hitbox_TEST)
-  
-
-    # Compute the hitbox for the weapon when attacking
-    def Set_Attack_Hitbox(self):
-        if not self.entity:
+        self.Render_Attack_Effect(surf, offset)
+    
+    def Render_Attack_Effect(self, surf, offset):
+        if not self.attacking:
             return
-        pos_x = self.entity.pos[0] + self.entity.attack_direction[0] * self.game.tilemap.tile_size
-        pos_y = self.pos[1] + self.entity.attack_direction[1] * self.game.tilemap.tile_size
-        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
+        
+        pos_x = self.entity.pos[0] - offset[0]
+        pos_y = self.entity.pos[1] - offset[1] - 40
+        
+        flip_orientation = self.Attack_Effect_Flip()
 
-
-    def Set_Attack_Hitbox_Render_TEST(self, offset):
-        if not self.entity:
-            return
-        pos_x = self.entity.pos[0] + self.entity.attack_direction[0] * self.game.tilemap.tile_size - offset[0]
-        pos_y = self.pos[1] + self.entity.attack_direction[1] * self.game.tilemap.tile_size - offset[1]
-        self.attack_hitbox_TEST = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
-
+        if self.entity.attack_direction[0] < 0:
+            pos_x += self.entity.attack_direction[0] * 50
+        else:
+            pos_x += self.entity.attack_direction[0] * 10
+        
+        if self.entity.attack_direction[1] < 0:
+            pos_y += self.entity.attack_direction[1] * 10
+        else:
+            pos_y += self.entity.attack_direction[1] * 50
+        
+        animation_frame = int(7 * (1 - (self.attacking / 32)))
+        attack_effect = self.game.assets['base_cut_effect'][animation_frame].convert_alpha()
+        # attack_effect.set_alpha()
+        rotation = self.Rotate_Attack_Effect_Animation()
+        attack_effect = pygame.transform.rotate(attack_effect, rotation)
+        surf.blit(pygame.transform.flip(attack_effect, flip_orientation[0], flip_orientation[1]),
+                                        (pos_x, pos_y))
             
+
+
 
     # Render basic function on the map
     def Render(self, surf, offset=(0, 0)):

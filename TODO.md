@@ -196,7 +196,7 @@ Game Ideas
     # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
     Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
     # Skeletons take more damage from blunt weapons, make more noise from rattle  -> Upgrades to Wight Lord
-    Wight Lord, elite armoured skeleton with shield and sword
+    Wight Lord, elite armoured skeleton with shield and sword, can dash to close range
     Ghost, can go through walls, low health high damage, need special effect to damage -> Upgrades to Reaper
     Reaper, elite melee enemy with scythe sweep attack
     Vampire, life steal, flying bat form when travelling, close combat
@@ -204,7 +204,7 @@ Game Ideas
     Crypt Horror, Elite high damage and strength, fast
     Wolves, fast and high damage  -> Upgrades to WereWolf
     WereWolf, Elite enemy high mass fast, high damage
-    Necromancer, elite mob, spawns skeletons, raises killed skeletons
+    Necromancer, elite mob, spawns skeletons, raises killed skeletons, atacks with poision orb shots  
     Gargoyle, sentry that waits for players and blends into the envoirement
     Eyes of Evil, floating eyes that shoot at range, Snare
 
