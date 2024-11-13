@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, size = (32, 32), add_to_tile = True):
-        super().__init__(game, pos, type, damage, speed, range, weapon_class,  damage_type, size, add_to_tile)
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+        super().__init__(game, pos, type, damage, speed, range, weapon_class,  damage_type, attack_type, size, add_to_tile)
         self.shoot_speed = 0
         self.pickup_allowed = True
         self.range_holder = range

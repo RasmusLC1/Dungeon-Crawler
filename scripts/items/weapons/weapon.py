@@ -7,13 +7,14 @@ import math
 
 
 class Weapon(Item):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
         self.entity = None # Entity that holds the weapon
         self.effect = damage_type # Special effects, like poision, ice, fire etc
+        self.attack_type = attack_type # Different kinds of attacks, like cutting and stabbing
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
         self.hold_down = 0 # Timer for charge attacks
@@ -32,7 +33,6 @@ class Weapon(Item):
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
         # Can be expanded to damaged or dirty versions of weapons later
         self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
-        
         self.charge_time = 0  # Tracks how long the button is held
         self.max_charge_time = 100  # Maximum time to fully charge
         self.is_charging = False  # Tracks if the player is charging
@@ -43,10 +43,7 @@ class Weapon(Item):
 
         self.attack_hitbox_size = (1, 1)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
-        #TODO: REMOVE
-        self.attack_hitbox_TEST = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
-
-
+        
 
     def Save_Data(self):
         if self.entity:
@@ -315,30 +312,12 @@ class Weapon(Item):
         pos_y = self.entity.rect().center[1] - 2 + self.entity.attack_direction[1] * self.game.tilemap.tile_size
         self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
 
-    def Set_Attack_Hitbox_Render_TEST(self, offset):
-        if not self.entity:
-            return
-        pos_x = self.entity.rect().center[0] - 2 + self.entity.attack_direction[0] * self.game.tilemap.tile_size - offset[0]
-        pos_y = self.entity.rect().center[1] - 2 + self.entity.attack_direction[1] * self.game.tilemap.tile_size - offset[1]
-        self.attack_hitbox_TEST = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
 
     def Set_Attack_Hitbox_Size(self, size):
         # Invert size if attacking horrizontally using slice
         if abs(self.entity.attack_direction[1]) < 0.35:
             size = size[::-1]
         self.attack_hitbox_size = size
-
-    def Rotate_Attack_Effect_Animation(self):
-        
-        # Get the direction
-        dx = self.game.mouse.click_pos[0] * self.game.render_scale - self.entity.pos[0]
-        dy = self.game.mouse.click_pos[1] * self.game.render_scale - self.entity.pos[1]
-
-        # Calculate the angle in degrees
-        rotation = abs(math.degrees(math.atan2(dx, dy)))
-        if self.entity.attack_direction[0] < 0:
-            rotation *= -1
-        return rotation
 
 
     def Set_Entity(self, entity):
@@ -370,33 +349,33 @@ class Weapon(Item):
 
     def Stabbing_Attack(self):
         pass
+    
+    def Rotate_Attack_Effect_Animation(self):
+        
+        # Get the direction using attack_direction
+        dx = self.entity.pos[0] + self.entity.attack_direction[0] * 100 - self.entity.pos[0]
+        dy = self.entity.pos[1] + self.entity.attack_direction[1] * 100 - self.entity.pos[1]
 
-    def Attack_Effect_Flip(self):
-        flip_animation_x = False
-        flip_animation_y = True
+        # Calculate the angle in degrees
+        rotation = math.degrees(math.atan2(dx, dy))
+        return rotation
 
+
+    def Attack_Effect_Position(self, offset):
+        pos_x = self.entity.pos[0] - offset[0]
+        pos_y = self.entity.pos[1] - offset[1] - 30
         if self.entity.attack_direction[0] < 0:
-            if abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]) - 0.2:
-                flip_animation_y = False
-
+            pos_x += self.entity.attack_direction[0] * 50
+        else:
+            pos_x += self.entity.attack_direction[0] * 10
         
-
-        if self.entity.attack_direction[1] > 0:
-            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]) - 0.2:
-                flip_animation_y = False
-            
-
+        pos_y_offset = 10
         if self.entity.attack_direction[1] < 0:
-            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]) - 0.1:
-                flip_animation_x = True
-                flip_animation_y = False
+            pos_y += self.entity.attack_direction[1] * 20
+        else:
+            pos_y += self.entity.attack_direction[1] * 30
 
-        if self.entity.attack_direction[0] > 0:
-            if abs(self.entity.attack_direction[0]) < abs(self.entity.attack_direction[1]):
-                flip_animation_y = False
-                flip_animation_x = False
-        
-        return (flip_animation_x, flip_animation_y)
+        return (pos_x, pos_y)
 
     # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
@@ -422,28 +401,18 @@ class Weapon(Item):
         if not self.attacking:
             return
         
-        pos_x = self.entity.pos[0] - offset[0]
-        pos_y = self.entity.pos[1] - offset[1] - 40
-        
-        flip_orientation = self.Attack_Effect_Flip()
-
-        if self.entity.attack_direction[0] < 0:
-            pos_x += self.entity.attack_direction[0] * 50
-        else:
-            pos_x += self.entity.attack_direction[0] * 10
-        
-        if self.entity.attack_direction[1] < 0:
-            pos_y += self.entity.attack_direction[1] * 10
-        else:
-            pos_y += self.entity.attack_direction[1] * 50
+        pos = self.Attack_Effect_Position(offset)
         
         animation_frame = int(7 * (1 - (self.attacking / 32)))
-        attack_effect = self.game.assets['base_cut_effect'][animation_frame].convert_alpha()
+        effect_type = self.effect + '_' + self.attack_type + '_effect'
+        attack_effect = self.game.assets[effect_type][animation_frame].convert_alpha()
         # attack_effect.set_alpha()
         rotation = self.Rotate_Attack_Effect_Animation()
         attack_effect = pygame.transform.rotate(attack_effect, rotation)
-        surf.blit(pygame.transform.flip(attack_effect, flip_orientation[0], flip_orientation[1]),
-                                        (pos_x, pos_y))
+        flip_y = False
+        if self.entity.attack_direction[0] > 0 and abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
+            flip_y = True
+        surf.blit( pygame.transform.flip(attack_effect, False, flip_y), (pos[0], pos[1]))
             
 
 
@@ -504,10 +473,7 @@ class Weapon(Item):
             pygame.transform.flip(weapon_image, self.flip_image, False),
                                   (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
-        # TODO: TEST FUNCTION REMOVE
-        if self.attacking:
-            self.Set_Attack_Hitbox_Render_TEST(offset)
-            pygame.draw.rect(surf, (255, 0, 0), self.attack_hitbox_TEST)
+
 
     # Inventory Logic below
     #######################################################

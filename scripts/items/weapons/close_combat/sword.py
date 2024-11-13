@@ -28,11 +28,13 @@ class Sword(Weapon):
         self.Point_Towards_Mouse()
         self.Set_Block_Direction()
         
-        if self.slash:
+        if self.slash: # Handle Slashing
             self.sub_type = 'sword_attack'
+            self.attack_type = 'cut'
             self.Slash_Attack()
-        else:
+        else: # Handle Stabbing
             self.sub_type = 'sword'
+            self.attack_type = 'stab'
             self.Stabbing_Attack()
 
     def Update_Flip(self):
