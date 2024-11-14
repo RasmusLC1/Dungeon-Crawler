@@ -44,6 +44,8 @@ class Inventory_Slot():
     def Update_Item(self):
         if not self.item:
             return
+        if self.item.sub_category == 'weapon':
+            return
         self.item.Update()
 
     def Add_Item(self, item):

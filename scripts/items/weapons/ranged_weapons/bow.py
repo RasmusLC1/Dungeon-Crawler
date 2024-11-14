@@ -62,7 +62,7 @@ class Bow(Weapon):
         self.rotate = -30
     
 
-    def Charge_Attack(self, offset = (0, 0)):
+    def Set_Weapon_Charge(self, offset = (0, 0)):
         try:
             if 'player' == self.entity.type:
                 # Check that the weapon is in a weapon inventory

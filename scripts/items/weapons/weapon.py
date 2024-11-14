@@ -5,7 +5,6 @@ import random
 import pygame
 import math
 
-
 class Weapon(Item):
     def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
@@ -17,29 +16,24 @@ class Weapon(Item):
         self.attack_type = attack_type # Different kinds of attacks, like cutting and stabbing
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
-        self.hold_down = 0 # Timer for charge attacks
-        self.hold_down_counter = 0 # Timer for charge attacks
-        self.animation_speed = 30 # Animation speed that it cycles through animations
-        self.max_animation = 0 # Max amount of animations
         self.attacking = 0 # The time it takes for the attack to complete
+        self.max_animation = 0 # Max amount of animations
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
         self.attack_animation_counter = 0 # Animation countdown that ticks up to animation time
         self.enemy_hit = False # Prevent double damage on attacks
-        self.flip_image = False # Check if image is flipped
         self.rotate = 0 # Rotation value of weapon
-        self.distance_from_entity = 0 # Weapon's distance from entity, in case it needs to be retracted
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
         # Can be expanded to damaged or dirty versions of weapons later
         self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
         self.charge_time = 0  # Tracks how long the button is held
         self.max_charge_time = 100  # Maximum time to fully charge
         self.is_charging = False  # Tracks if the player is charging
-        self.attack_ready = False  # Track when the attack is ready to be triggered
-        self.charged_attack = False  # Determine if a charged attack should occur
         self.special_attack = 0 # special attack counter
-        self.return_to_holder = False # Return the weapon to original positon after stab
+
+        self.weapon_cooldown = 0
+        self.weapon_cooldown_max = 50 # How fast the weapon can attack
 
         self.attack_hitbox_size = (1, 1)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
@@ -79,13 +73,8 @@ class Weapon(Item):
             return False
         
             
-        self.Charge_Attack(offset)
-        if self.entity.category == 'enemy':
-            self.Point_Towards_Mouse_Enemy()
-
-        if not self.attacking:
-            self.Point_Towards_Mouse_Player()
-
+        self.Set_Weapon_Charge(offset)
+        
         return True
 
 
@@ -101,24 +90,69 @@ class Weapon(Item):
 
     # Initialise the attack and reset attack values
     def Set_Attack(self):
-        if not self.attack_ready:
-            return
         if not self.Check_Entity_Cooldown():
             return
         self.attacking = max(self.attack_animation_max * 3, int(100 / self.speed))
         self.enemy_hit = False  # Reset at the start of a new attack
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
         self.charge_time = 0  # Reset charge time
-        self.rotate = 0
-        self.Set_Attack_Ready(False) # Reset attack trigger
-        self.charged_attack = False  # Reset charged attack flag
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
-    
-    
-    
-    # Handle weapon charging
-    def Charge_Attack(self, offset = (0, 0)):
+        self.Set_Rotation()
 
+        
+
+    def Set_Rotation(self):
+        if self.entity.category == 'enemy':
+            self.Point_Towards_Mouse_Enemy()
+        else:
+            self.Point_Towards_Mouse_Player() 
+
+
+    # Handle weapon charging
+    def Set_Weapon_Charge(self, offset = (0, 0)):
+        if self.weapon_cooldown:
+            print(self.weapon_cooldown)
+
+            self.weapon_cooldown = max(0, self.weapon_cooldown - 1)
+            return
+        print(self.weapon_cooldown)
+        self.Charge_Player_Or_Enemy()
+        
+        if self.Check_Charge():
+            return
+        
+        self.Determine_Attack_Type(offset)
+
+
+    def Determine_Attack_Type(self, offset):
+        # If the button is released quickly
+        if self.charge_time > 0 and self.charge_time <= 20:
+            self.Set_Attack()  # Trigger the attack
+            self.Reset_Weapon_Charge()
+            return
+        
+        # Trigger special attack if mouse if held for > 20 frames
+        elif self.charge_time > 20:
+            self.Set_Special_Attack(offset)
+            self.Reset_Weapon_Charge()
+            return
+
+    def Reset_Weapon_Charge(self):
+        self.charge_time = 0  # Reset the charge time
+        self.weapon_cooldown = self.weapon_cooldown_max
+        return
+
+    def Check_Charge(self):
+        if not self.is_charging:
+            return False
+        
+        # Increase charge time while holding the button
+        self.charge_time += 1
+        if self.charge_time >= self.max_charge_time:
+            self.charge_time = self.max_charge_time  # Cap the charge time
+        return True
+   
+    def Charge_Player_Or_Enemy(self):
         try:
             if 'enemy' == self.entity.category:
                 self.Set_Charging_Enemy()
@@ -129,25 +163,6 @@ class Weapon(Item):
                 self.Set_Charging_Player()
         except TypeError as e:
             print(f"Entity neither enemy nor player: {e}")
-
-        
-        if self.is_charging:
-            # Increase charge time while holding the button
-            self.charge_time += 1
-            if self.charge_time >= self.max_charge_time:
-                self.charge_time = self.max_charge_time  # Cap the charge time
-                self.charged_attack = True  # Mark the attack as charged
-        else:
-            # If the button is released
-            if self.charge_time > 0 and self.charge_time < 20:
-                self.Set_Attack_Ready(True)  # Ready to trigger an attack
-                self.Set_Attack()  # Trigger the attack
-            if self.charge_time > 20:
-                self.Set_Special_Attack(offset)
-            self.charge_time = 0  # Reset the charge time
-
-   
-
     
     
     # Return False if entity weapon cooldown is not off
@@ -197,6 +212,7 @@ class Weapon(Item):
         self.entity.Attack_Direction_Handler(offset)
         self.Set_Block_Direction()
         self.special_attack = self.charge_time
+        self.Set_Rotation()
 
     # Initialise the charging of the weapon
     def Set_Charging_Player(self):
@@ -223,11 +239,9 @@ class Weapon(Item):
     # Update attack animation logic
     def Update_Attack_Animation(self):
         
-        if self.attacking <= 1:
-            self.sub_type = self.type
-            self.attacking = 0
-            self.attack_animation = 0
+        if self.Reset_Attack():
             return
+        
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack_' + self.attack_type
         self.attacking -= 1
@@ -239,7 +253,16 @@ class Weapon(Item):
                 self.attack_animation = 0
         return
     
-     
+    def Reset_Attack(self):
+        if not self.attacking <= 1:
+            return False
+        
+        self.sub_type = self.type
+        self.attacking = 0
+        self.attack_animation = 0
+        self.rotate = 0
+        return True
+        
 
     # Set the attack direction   
     def Set_Block_Direction(self):
@@ -272,13 +295,6 @@ class Weapon(Item):
         # Calculate the angle in degrees
         self.rotate = math.degrees(math.atan2(dx, dy))
        
-    # Check if the weapon sprites needs to be flipped
-    def Update_Flip(self):
-        if abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
-            if self.entity.attack_direction[0] < 0:
-                self.flip_image = True
-            else:
-                self.flip_image = False
 
    # Check if enemy has hit the player
     def Player_Collision(self, weapon_rect):
@@ -340,9 +356,6 @@ class Weapon(Item):
     def Set_Damage(self, damage):
         self.damage = damage
 
-    # Input true or False
-    def Set_Attack_Ready(self, state) -> None:
-        self.attack_ready = state
 
     def Special_Attack(self):
         pass
@@ -391,7 +404,6 @@ class Weapon(Item):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
-        # self.Update_Flip()
         surf.blit( pygame.transform.flip(weapon_image, False, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         

@@ -16,7 +16,7 @@ class Shield(Weapon):
         pass
       
 
-    def Charge_Attack(self, offset = (0, 0)):
+    def Set_Weapon_Charge(self, offset = (0, 0)):
         try:
             # Check that the weapon is in a weapon inventory
             if not self.inventory_type:
