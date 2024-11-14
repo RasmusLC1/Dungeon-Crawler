@@ -77,9 +77,14 @@ class Weapon(Item):
         self.Special_Attack()
         if not self.entity:
             return False
-        self.Update_Flip()
         
+            
         self.Charge_Attack(offset)
+        if self.entity.category == 'enemy':
+            self.Point_Towards_Mouse_Enemy()
+
+        if not self.attacking:
+            self.Point_Towards_Mouse_Player()
 
         return True
 
@@ -224,7 +229,7 @@ class Weapon(Item):
             self.attack_animation = 0
             return
         self.animation = self.attack_animation
-        self.sub_type = self.type + '_attack'
+        self.sub_type = self.type + '_attack_' + self.attack_type
         self.attacking -= 1
         self.attack_animation_counter += 1
         if self.attack_animation_counter >= self.attack_animation_time:
@@ -247,20 +252,29 @@ class Weapon(Item):
         return
 
     # Point the weapon towards the mouse
-    def Point_Towards_Mouse(self):
-        self.rotate = 0
-        
-        # Get the direction
-        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
-        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
+    def Point_Towards_Mouse_Enemy(self):
+        # Get the direction using attack_direction
+        dx = self.entity.pos[0] + self.entity.attack_direction[0] * 100 - self.entity.pos[0]
+        dy = self.entity.pos[1] + self.entity.attack_direction[1] * 100 - self.entity.pos[1]
 
         # Calculate the angle in degrees
-        self.rotate = math.degrees(math.atan2(dy, dx)) + 90
+        self.rotate = math.degrees(math.atan2(dx, dy))
+    
 
+    # Point the weapon towards the mouse
+    def Point_Towards_Mouse_Player(self):
+        if self.entity.category != 'player':
+            return
+        # Get the direction using attack_direction
+        dx = self.entity.pos[0] + self.entity.view_direction[0] * 100 - self.entity.pos[0]
+        dy = self.entity.pos[1] + self.entity.view_direction[1] * 100 - self.entity.pos[1]
+
+        # Calculate the angle in degrees
+        self.rotate = math.degrees(math.atan2(dx, dy))
        
     # Check if the weapon sprites needs to be flipped
     def Update_Flip(self):
-        if abs(self.entity.attack_direction[0]) >= abs(self.entity.attack_direction[1]):
+        if abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
             if self.entity.attack_direction[0] < 0:
                 self.flip_image = True
             else:
@@ -298,10 +312,6 @@ class Weapon(Item):
         self.is_charging = 0
         self.charge_time = 0
         return
-
-    # Change the rotation
-    def Change_Rotate(self, change):
-        self.rotate += change
 
     
     # Compute the hitbox for the weapon when attacking
@@ -349,16 +359,7 @@ class Weapon(Item):
 
     def Stabbing_Attack(self):
         pass
-    
-    def Rotate_Attack_Effect_Animation(self):
-        
-        # Get the direction using attack_direction
-        dx = self.entity.pos[0] + self.entity.attack_direction[0] * 100 - self.entity.pos[0]
-        dy = self.entity.pos[1] + self.entity.attack_direction[1] * 100 - self.entity.pos[1]
 
-        # Calculate the angle in degrees
-        rotation = math.degrees(math.atan2(dx, dy))
-        return rotation
 
 
     def Attack_Effect_Position(self, offset):
@@ -369,7 +370,6 @@ class Weapon(Item):
         else:
             pos_x += self.entity.attack_direction[0] * 10
         
-        pos_y_offset = 10
         if self.entity.attack_direction[1] < 0:
             pos_y += self.entity.attack_direction[1] * 20
         else:
@@ -388,11 +388,11 @@ class Weapon(Item):
 
     # Render the weapon in entity's hand
     def Render_Equipped(self, surf, offset=(0, 0)):
-        
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         if self.rotate:
-            weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
-        surf.blit( pygame.transform.flip(weapon_image, self.flip_image, False),
+            weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
+        # self.Update_Flip()
+        surf.blit( pygame.transform.flip(weapon_image, False, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
         self.Render_Attack_Effect(surf, offset)
@@ -407,8 +407,7 @@ class Weapon(Item):
         effect_type = self.effect + '_' + self.attack_type + '_effect'
         attack_effect = self.game.assets[effect_type][animation_frame].convert_alpha()
         # attack_effect.set_alpha()
-        rotation = self.Rotate_Attack_Effect_Animation()
-        attack_effect = pygame.transform.rotate(attack_effect, rotation)
+        attack_effect = pygame.transform.rotate(attack_effect, self.rotate)
         flip_y = False
         if self.entity.attack_direction[0] > 0 and abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
             flip_y = True
@@ -470,7 +469,7 @@ class Weapon(Item):
         weapon_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
         surf.blit(
-            pygame.transform.flip(weapon_image, self.flip_image, False),
+            pygame.transform.flip(weapon_image, False, False),
                                   (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
 

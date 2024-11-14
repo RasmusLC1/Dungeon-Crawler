@@ -75,8 +75,8 @@ Game Ideas
     Halberd, swing and stab attack, charge attack
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
     Axe, can break wood doors
+    Hatchet, small axe, faster than axe
     Mace/Hammer, can break certain walls and enviorement, special ground pound to stun nearby enemies
-    Whip, can be used for movement
     magic Staff, improved spells but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
 
 # Items

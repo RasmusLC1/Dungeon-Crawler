@@ -22,11 +22,11 @@ class Attack_Stategies():
         if self.entity.attack_strategy == 'direct':
             return self.Direct_Pathing()
         elif self.entity.attack_strategy == 'long_range':
-            return self.Keep_Distance(100, 80)
+            return self.Keep_Distance(200, 160)
         elif self.entity.attack_strategy == 'medium_range':
-            return self.Keep_Distance(60, 40)
+            return self.Keep_Distance(120, 80)
         elif self.entity.attack_strategy == 'short_range':
-            return self.Keep_Distance(40, 20)
+            return self.Keep_Distance(80, 40)
         elif self.entity.attack_strategy == 'keep_position':
             self.entity.direction = (0, 0)
             return True

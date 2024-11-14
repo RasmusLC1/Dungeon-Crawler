@@ -183,13 +183,14 @@ class Graphics_Loader:
     def Asset_Weapons_List(self):
         Weapons_assets = {
             'sword' : get_tiles_from_sheet('weapons/sword/sword.png', 3, 0, 0, 0, 32, 32),
-            'sword_attack' : get_tiles_from_sheet('weapons/sword/sword_attack.png', 3, 0, 0, 0, 32, 32),
+            'sword_attack_cut' : get_tiles_from_sheet('weapons/sword/sword.png', 3, 0, 0, 0, 32, 32),
+            'sword_attack_stab' : get_tiles_from_sheet('weapons/sword/sword_attack.png', 3, 0, 0, 0, 32, 32),
             
             'torch': get_tiles_from_sheet('weapons/torch/torch.png', 8, 0, 0, 0, 32, 32),
-            'torch_attack': get_tiles_from_sheet('weapons/torch/torch_attack.png', 8, 0, 0, 0, 32, 32),
+            'torch_attack_cut': get_tiles_from_sheet('weapons/torch/torch_attack.png', 8, 0, 0, 0, 32, 32),
             
             'spear': get_tiles_from_sheet('weapons/spear/spear.png', 8, 0, 0, 0, 32, 32),
-            'spear_attack': get_tiles_from_sheet('weapons/spear/spear.png', 8, 0, 0, 0, 32, 32),
+            'spear_attack_stab': get_tiles_from_sheet('weapons/spear/spear.png', 8, 0, 0, 0, 32, 32),
             
             'bow': get_tiles_from_sheet('weapons/bow/bow.png', 0, 0, 0, 0, 32, 32),
             'bow_attack': get_tiles_from_sheet('weapons/bow/bow_attack.png', 2, 0, 0, 0, 32, 32),
@@ -201,7 +202,17 @@ class Graphics_Loader:
             'shield_attack': get_tiles_from_sheet('weapons/shield/shields.png', 4, 4, 0, 0, 32, 32),
 
             'halberd': get_tiles_from_sheet('weapons/halberd/halberd.png', 6, 0, 0, 0, 32, 32),
+            'halberd_attack_stab': get_tiles_from_sheet('weapons/halberd/halberd_stab_attack.png', 6, 0, 0, 0, 50, 32),
+            'halberd_attack_cut': get_tiles_from_sheet('weapons/halberd/halberd_cut_attack.png', 13, 0, 0, 0, 32, 32),
+
+            'battle_axe': get_tiles_from_sheet('weapons/battle_axe/battle_axe.png', 5, 0, 0, 0, 32, 32),
+            'battle_axe_attack_cut': get_tiles_from_sheet('weapons/battle_axe/battle_axe_cut_attack.png', 15, 0, 0, 0, 32, 32),
             
+            'hammer': get_tiles_from_sheet('weapons/hammer/hammer.png', 6, 0, 0, 0, 32, 32),
+            'hammer_attack_cut': get_tiles_from_sheet('weapons/hammer/hammer_cut_attack.png', 9, 0, 0, 0, 32, 32),
+
+            'hatchet': get_tiles_from_sheet('weapons/hatchet/hatchet.png', 7, 0, 0, 0, 32, 32),
+            'hatchet_attack_cut': get_tiles_from_sheet('weapons/hatchet/hatchet_cut_attack.png', 8, 0, 0, 0, 32, 32),
         }
         self.assets.update(Weapons_assets)
 
