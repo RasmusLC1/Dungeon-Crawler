@@ -4,12 +4,13 @@ import pygame.freetype
 import random
 
 class Inventory_Slot():
-    def __init__(self, game, pos, size, item, index):
+    def __init__(self, game, pos, size, item, index, key = None):
         self.game = game
         self.pos = pos
         self.index = index
         self.size = size
         self.item = item
+        self.key = key
         self.background = None
         self.inventory_type = None
         self.Setup_Inventory_Texture()
@@ -97,11 +98,13 @@ class Inventory_Slot():
             surf.blit(background_image, self.pos)
 
 
+
         if self.item and not self.active:
             self.item.Render(surf)
         else:
             return
 
+        self.Render_Key(surf)
         if not self.item.amount > 1:
             return
         
@@ -113,3 +116,11 @@ class Inventory_Slot():
         if self.item.amount > 10:
             x_offset = 5
         self.game.default_font.Render_Word(surf, str(self.item.amount), (self.pos[0] + x_offset, self.pos[1] + self.item.size[1]))
+
+    def Render_Key(self, surf):
+        if not self.key:
+            return
+        # x_offset = 9
+        # if self.item.amount > 10:
+        #     x_offset = 5
+        self.game.default_font.Render_Word(surf, str(self.key), (self.pos[0], self.pos[1]))

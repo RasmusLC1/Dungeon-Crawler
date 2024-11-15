@@ -111,11 +111,9 @@ class Weapon(Item):
     # Handle weapon charging
     def Set_Weapon_Charge(self, offset = (0, 0)):
         if self.weapon_cooldown:
-            print(self.weapon_cooldown)
 
             self.weapon_cooldown = max(0, self.weapon_cooldown - 1)
             return
-        print(self.weapon_cooldown)
         self.Charge_Player_Or_Enemy()
         
         if self.Check_Charge():
@@ -395,8 +393,6 @@ class Weapon(Item):
         
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-
-
 
 
     # Render the weapon in entity's hand

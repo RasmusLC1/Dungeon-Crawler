@@ -13,14 +13,13 @@ class Item_Inventory(Inventory):
     # Configure the inventory when Initialiased
     def Setup(self):
         index = 0
-        for j in range(self.y_size):
-            for i in range(self.x_size):
-                x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
-                y = j * self.size[0] + self.game.screen_height / self.game.render_scale - 40
-                inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, index)
-                inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
-                self.inventory.append(inventory_slot)
-                index += 1
+        for i in range(self.x_size):
+            x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
+            y = self.game.screen_height / self.game.render_scale - 40
+            inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, index, str(i + 1))
+            inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
+            self.inventory.append(inventory_slot)
+            index += 1
 
     def Key_Board_Input(self):
         keyboard = self.game.keyboard_handler
@@ -37,7 +36,12 @@ class Item_Inventory(Inventory):
             self.Activate_Inventory_Slot(4)
         elif keyboard._6_pressed:
             self.Activate_Inventory_Slot(5)
-
+        elif keyboard._7_pressed:
+            self.Activate_Inventory_Slot(6)
+        elif keyboard._8_pressed:
+            self.Activate_Inventory_Slot(7)
+        elif keyboard._9_pressed:
+            self.Activate_Inventory_Slot(8)
     
 
     def Item_Double_Click(self):

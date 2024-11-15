@@ -91,7 +91,7 @@ class Arrow(Projectile):
         self.Drop_Weapon_After_Shot()
 
     def Point_Towards_Mouse(self):
-        super().Point_Towards_Mouse()
+        self.Set_Rotation()
         if self.entity.attack_direction[0] < 0:
             self.rotate += 90
             self.flip_image = True
