@@ -72,7 +72,6 @@ class Weapon(Item):
         if not self.entity:
             return False
         
-            
         self.Set_Weapon_Charge(offset)
         
         return True
@@ -627,6 +626,11 @@ class Weapon(Item):
 
     def Set_Equip(self, state):
         self.equipped = state
+        if state:
+            self.render = False
+        else:
+            self.render = True
+
 
     # Check for out of bounds, return true if valid, else false
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset = (0,0)):

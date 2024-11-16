@@ -51,14 +51,16 @@ class Decrepit_Bones_Melee(Enemy):
     def Equip_Weapon(self):
         weapon = None
 
-        random_weapon = random.randint(0, 1)
+        random_weapon = random.randint(0, 2)
 
         if random_weapon == 0:
             weapon = Sword(self.game, self.pos)
 
         elif random_weapon == 1:
             weapon = Spear(self.game, self.pos)
-        
+
+        elif random_weapon == 2:
+            weapon = Torch(self.game, self.pos)
 
         if not weapon:
             return False

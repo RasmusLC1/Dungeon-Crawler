@@ -8,7 +8,7 @@ class Torch(Weapon):
         super().__init__(game, pos, 'torch', 1, 3, 5, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
-        self.light_source = self.game.light_handler.Add_Light(self.pos, 10, self.tile)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.offset = (0,0)
         self.fire_cooldown = 0
@@ -24,11 +24,7 @@ class Torch(Weapon):
         self.game.light_handler.Remove_Light(self.light_source)
         self.game.light_handler.Restore_Light(self.light_source)
 
-    def Update(self, offset=(0, 0)):
-        super().Update(offset)
 
-    def Update_Attack_Animation(self):
-        super().Update_Attack_Animation()
 
     def Update_Attack(self):
         if not super().Update_Attack():

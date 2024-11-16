@@ -396,6 +396,8 @@ class Moving_Entity(PhysicsEntity):
             self.Reset_Effects()
             self.Update_Status_Effects()
             tile = self.game.tilemap.Current_Tile(self.tile)
+            if not tile:
+                return True
             tile.Clear_Entity(self.ID)
         return True
 

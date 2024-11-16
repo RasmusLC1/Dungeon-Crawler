@@ -41,4 +41,6 @@ class Entity_Renderer():
 
     def Render(self, surf, offset = (0,0)):
         for entity in self.entities:
+            if not entity.render:
+                continue
             entity.Render(surf, offset)

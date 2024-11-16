@@ -15,6 +15,7 @@ class PhysicsEntity:
         self.size = size
         self.active = 0
         self.light_level = 0
+        self.invincible = False # If something needs to be indestructable
         # self.game.entities_render.Add_Entity(self)
         self.render = True
         self.Set_Tile()

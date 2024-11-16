@@ -188,6 +188,12 @@ class Enemy(Moving_Entity):
             return
         # Remove weapon from Tile
         tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
+        if not tile:
+            self.active_weapon.Set_Tile()
+            tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
+            if not tile:
+                return
+
         tile.Clear_Entity(self.active_weapon.ID)
 
         self.active_weapon.pos = self.pos.copy()
