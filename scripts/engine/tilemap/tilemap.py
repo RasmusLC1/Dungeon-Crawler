@@ -52,6 +52,8 @@ class Tilemap:
             tile = Tile(self.game, type, variant, pos, self.tile_size, 0, 0, False)
             self.offgrid_tiles.append(tile)
 
+        self.Check_Next_To_Wall()
+
 
     def Generate_Tile(self, tile_key, tilemap):
         tile_values = tilemap[tile_key]
@@ -94,6 +96,28 @@ class Tilemap:
                     del self.tilemap[loc]
         
         return matches
+
+    # Runs one time when loading, but expensive to compute
+    def Check_Next_To_Wall(self):
+        for tile_key in self.tilemap:
+            if 'wall' in self.tilemap[tile_key].type:
+                self.tilemap[tile_key].Set_Next_To_Wall(True)
+                continue
+
+            
+            x_key, y_key = map(int, tile_key.split(";"))
+            for x in range(x_key - 1, x_key + 1):
+                for y in range(y_key - 1, y_key + 1):
+                    key = str(x) + ';' + str(y)
+                    if not key in self.tilemap:
+                        continue
+
+                    if 'wall' in self.tilemap[key].type:
+                        self.tilemap[tile_key].Set_Next_To_Wall(True)
+                        break
+
+                if self.tilemap[tile_key].next_to_Wall:
+                    break
 
 
     def Search_Nearby_Tiles(self, max_distance, pos, category):

@@ -13,6 +13,7 @@ class Tile():
         self.active = active
         self.light_level = light_level
         self.physics = physics
+        self.next_to_Wall = False
         self.entities = []
 
 
@@ -27,6 +28,10 @@ class Tile():
 
     def Set_Active(self, new_active_level):
         self.active = max(new_active_level, self.active)
+
+    def Set_Next_To_Wall(self, state):
+        self.next_to_Wall = state
+
 
     def Search_Entities(self, category):
         entities = []
