@@ -104,7 +104,7 @@ class Tilemap:
                 self.tilemap[tile_key].Set_Next_To_Wall(True)
                 continue
 
-            
+
             x_key, y_key = map(int, tile_key.split(";"))
             for x in range(x_key - 1, x_key + 1):
                 for y in range(y_key - 1, y_key + 1):

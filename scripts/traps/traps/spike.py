@@ -11,6 +11,9 @@ class Spike(Trap):
 
     def Update(self, entity):
 
+        if entity.category == 'item':
+            return
+
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 3:
             if entity.invincible:
                 return

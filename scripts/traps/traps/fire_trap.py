@@ -12,6 +12,9 @@ class Fire_Trap(Trap):
     def Update(self, entity):
         if self.Cooldown > 0:
             self.Cooldown -= 1
+        
+        if entity.category == 'item':
+            return
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 7 and self.animation < 11:
             if entity.invincible:

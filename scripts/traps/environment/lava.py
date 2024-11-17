@@ -13,6 +13,8 @@ class Lava(Trap):
         
 
     def Update(self, entity):
+        if entity.category == 'item':
+            return
         if self.rect().colliderect(entity.rect()):
             self.Cooldown = 20
             if entity.invincible:

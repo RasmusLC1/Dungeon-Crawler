@@ -63,8 +63,20 @@ class Ray_Caster():
             
         return True
 
+    def Add_Tile_Around_Player(self):
+        radius = 2
+        (center_x, center_y) = tuple(map(int, self.game.player.tile.split(';')))
+        for y in range(center_y - radius, center_y + radius + 1):
+            for x in range(center_x - radius, center_x + radius + 1):
+                tile_key = str(x) + ';' + str(y)
+                if not self.Check_Tile(tile_key):
+                    break
+
+
     def Ray_Caster(self):
         
+        self.Add_Tile_Around_Player()
+
         # Calculate the starting angle
         base_angle = math.atan2(self.game.player.view_direction[1], self.game.player.view_direction[0])
         start_angle = base_angle - math.radians(self.spread_angle / 2)

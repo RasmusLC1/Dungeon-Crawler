@@ -10,6 +10,8 @@ class Ice(Trap):
         self.animation = random.randint(0, 1)
 
     def Update(self, entity):
+        if entity.category == 'item':
+            return
         if self.rect().colliderect(entity.rect()):
 
             if self.type == 'shallow_ice_env':

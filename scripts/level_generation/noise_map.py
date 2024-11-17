@@ -20,6 +20,6 @@ class Noise_Map():
         self.map = [[0 for _ in range(size_y)] for _ in range(size_x)]
         floor = 0
         wall = 1
-        density = 56
+        density = 57
         self.Generate_Map(density, self.map, floor, wall, size_x, size_y)
         return self.map

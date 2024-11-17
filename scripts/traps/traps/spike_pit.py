@@ -12,7 +12,10 @@ class Spike_Pit(Trap):
         # Resetting Trap
         if self.Cooldown > 0:
             self.Cooldown -= 1
-  
+
+        if entity.category == 'item':
+            return
+
         # Trigger trap animation and snare
         if self.rect().colliderect(entity.rect()) and not self.Cooldown:
             if entity.invincible:

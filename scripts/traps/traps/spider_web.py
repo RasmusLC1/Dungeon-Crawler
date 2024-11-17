@@ -36,6 +36,8 @@ class Spider_Web(Trap):
 
     
     def entity_hit(self, entity):
+        if entity.category == 'item':
+            return
         if entity == self.entity:
             return
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0:

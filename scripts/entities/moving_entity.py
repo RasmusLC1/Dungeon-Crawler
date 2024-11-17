@@ -432,7 +432,7 @@ class Moving_Entity(PhysicsEntity):
         
         return False
 
-
+    
         
     def Attack_Direction_Handler(self, offset = (0, 0)):
         self.Set_Attack_Direction()
@@ -466,12 +466,12 @@ class Moving_Entity(PhysicsEntity):
     def Charge_Update(self):
         if self.charging <= 0:
             return
-        self.max_speed = 20  # Adjust max speed speed for dashing distance
+        self.max_speed = 40  # Adjust max speed speed for dashing distance
         self.charging = max(0, self.charging - 1)
         
 
-        self.velocity[0] = self.attack_direction[0] * 50
-        self.velocity[1] = self.attack_direction[1] * 50
+        self.velocity[0] = self.attack_direction[0] * 100
+        self.velocity[1] = self.attack_direction[1] * 100
 
 
     def Set_Frame_movement(self, movement):
@@ -482,6 +482,11 @@ class Moving_Entity(PhysicsEntity):
     def Set_Target(self, pos):
         self.target = pos
 
+    def Reduce_Movement(self, factor):
+        self.max_speed = self.max_speed // factor
+
+    def Reset_Max_Speed(self):
+        self.max_speed = self.max_speed_holder
         
     # Push the entity in the given direction
     def Push(self, x_direction, y_direction):

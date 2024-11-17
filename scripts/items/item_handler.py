@@ -162,7 +162,7 @@ class Item_Handler():
                 self.game.keyboard_handler.Set_E_Key(False)
     
     def Pick_Up_Items(self) -> bool:
-        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 1)
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 2)
         if not nearby_items:
             return False
         player_pos = self.game.player.pos

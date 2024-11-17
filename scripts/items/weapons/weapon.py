@@ -85,6 +85,7 @@ class Weapon(Item):
         self.Update_Attack_Animation()
         self.Attack_Collision_Check()
         self.Attack_Align_Weapon()
+        self.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
         return True
 
     # Initialise the attack and reset attack values
@@ -258,6 +259,7 @@ class Weapon(Item):
         self.attacking = 0
         self.attack_animation = 0
         self.rotate = 0
+        self.entity.Reset_Max_Speed()
         return True
         
 
