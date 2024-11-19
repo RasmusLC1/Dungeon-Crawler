@@ -28,8 +28,7 @@ class Player_Weapon_Handler():
     def Set_Active_Weapon(self, weapon, hand):  
         if not weapon or not hand:
             return False    
-        equipped_weapon = copy(weapon)
-        equipped_weapon.Set_In_Inventory(False)
+        equipped_weapon = weapon
         if hand == 'left_hand':
             equipped_weapon.Move(self.player.pos)
             self.active_weapon_left = equipped_weapon

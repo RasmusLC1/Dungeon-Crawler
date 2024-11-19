@@ -1,7 +1,6 @@
 import pygame
 from scripts.inventory.inventory_slot import Inventory_Slot
 from scripts.inventory.inventory import Inventory
-from copy import copy
 
 class Weapon_Inventory(Inventory):
     def __init__(self, game, type, index):
@@ -30,7 +29,9 @@ class Weapon_Inventory(Inventory):
 
                 inventory_slot.Add_Item(item)
 
-        
+    def Update(self, offset = (0,0)):
+        super().Update(offset)
+        self.Render_Weapon(self.game.display)
 
     # Configure the inventory when initialized
     def Setup_Inventory(self, type):
@@ -71,3 +72,10 @@ class Weapon_Inventory(Inventory):
         self.clicked_inventory_slot.item.Handle_Double_Click(self, self.game.item_inventory)
 
     
+    # Custom render function for equipped slots to render the weapon in hand and inventory
+    def Render_Weapon(self, surf):
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                continue
+            weapon_image = self.game.assets[inventory_slot.item.type][0]
+            surf.blit(weapon_image, inventory_slot.pos)
