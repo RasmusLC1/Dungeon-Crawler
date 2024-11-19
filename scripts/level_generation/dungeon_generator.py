@@ -433,7 +433,8 @@ class Dungeon_Generator():
         
         self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 0, 'pos': (self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size)})
 
-        self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size]})
+        self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [self.player_spawn[0] * self.tile_size - 50, self.player_spawn[1] * self.tile_size]})
+        self.tilemap.offgrid_tiles.append({"type": "Chest", "variant": 0, "pos": [self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size]})
 
 
 

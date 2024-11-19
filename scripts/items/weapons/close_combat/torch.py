@@ -5,7 +5,7 @@ import math
 
 class Torch(Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, 'torch', 1, 3, 5, 'one_handed_melee', 'fire')
+        super().__init__(game, pos, 'torch', 1, 3, 5, 6, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
         self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
@@ -36,10 +36,11 @@ class Torch(Weapon):
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:
-            self.light_level = 8
+            self.light_source.Update_Light_Level(8)
+            self.Reset_Special_Attack()
             return
         self.Fire_Particle_Creation()
-        self.light_level = 12
+        self.light_source.Update_Light_Level(12)
         
     
     def Set_Equipped_Position(self, direction_y):

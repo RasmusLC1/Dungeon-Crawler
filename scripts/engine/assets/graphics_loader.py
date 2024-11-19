@@ -33,20 +33,6 @@ class Graphics_Loader:
         self.assets.update(background_assets)
         
 
-    # def Asset_Tile_List(self):
-    #     tiles_assets = {
-    #         'wall' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 3, 0, 0, 128, 32, 32),
-    #         'trapdoor' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 5, 0, 0, 256, 32, 32),
-    #         'banner' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 2, 0, 0, 288, 32, 32),
-    #         'stair' : get_tiles_from_sheet('tiles/dungeon/dungeon.png', 1, 0, 0, 320, 32, 32),
-    #         'LeftWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 0, 0, 32, 32),
-    #         'RightWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 0, 5, 160, 0, 32, 32),
-    #         'TopWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 32, 0, 32, 32),
-    #         'BottomWall' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 0, 32, 64, 32, 32),
-    #         'Floor' : get_tiles_from_sheet('tiles/dungeon/Dungeon_Tileset.png', 3, 2, 32, 32, 32, 32),
-    #     }
-    #     self.assets.update(tiles_assets)
-
     def Asset_Crypt_Tile_List(self):
         tiles_assets = {
             'floor' : get_tiles_from_sheet('crypt_assets/crypt_floor.png', 5, 1, 0, 0, 32, 32),
@@ -202,7 +188,7 @@ class Graphics_Loader:
             'shield_attack': get_tiles_from_sheet('weapons/shield/shields.png', 4, 4, 0, 0, 32, 32),
 
             'halberd': get_tiles_from_sheet('weapons/halberd/halberd.png', 6, 0, 0, 0, 32, 32),
-            'halberd_attack_stab': get_tiles_from_sheet('weapons/halberd/halberd_stab_attack.png', 6, 0, 0, 0, 50, 32),
+            'halberd_attack_stab': get_tiles_from_sheet('weapons/halberd/halberd_stab_attack.png', 6, 0, 0, 0, 32, 50),
             'halberd_attack_cut': get_tiles_from_sheet('weapons/halberd/halberd_cut_attack.png', 13, 0, 0, 0, 32, 32),
 
             'battle_axe': get_tiles_from_sheet('weapons/battle_axe/battle_axe.png', 5, 0, 0, 0, 32, 32),

@@ -3,11 +3,13 @@ import math
 import pygame
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, attack_type = 'cut', size = (32, 32), add_to_tile = True):
-        super().__init__(game, pos, type, damage, speed, range, weapon_class,  damage_type, attack_type, size, add_to_tile)
+    def __init__(self, game, pos, type, damage, speed, range, attack_speed, weapon_class, damage_type, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+        super().__init__(game, pos, type, damage, speed, range, attack_speed, weapon_class,  damage_type, attack_type, size, add_to_tile)
         self.shoot_speed = 0
         self.pickup_allowed = True
         self.range_holder = range
+        self.entity_strength = 0
+        self.attack_direction = (0, 0)
 
 
     def Load_Data(self, data):
@@ -18,13 +20,20 @@ class Projectile(Weapon):
 
     def Set_Special_Attack(self, offset= (0,0)):
         super().Set_Special_Attack(offset)
-        self.Point_Towards_Mouse()
+        if not self.entity:
+            return
+        
+        if self.entity.category == 'player':
+            self.Point_Towards_Mouse_Player()
+        else:
+            self.Point_Towards_Mouse_Enemy()
 
     def Initialise_Shooting(self, speed):
         if not self.shoot_speed:
+            self.render = True
             self.range = self.range_holder
             self.active = 255
-            self.shoot_speed = speed
+            self.shoot_speed = speed * 2
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack * 2)
             return True
         return False
@@ -34,10 +43,17 @@ class Projectile(Weapon):
         if not self.Update_Range():
             self.shoot_speed = 0
             self.special_attack = 0
+            self.shoot_speed = 0
+            self.picked_up = False
+            self.equipped = False
+            self.in_inventory = False
+            self.entity = None
             return  
 
-        dir_x = self.pos[0] + self.entity.attack_direction[0] * self.shoot_speed
-        dir_y = self.pos[1] + self.entity.attack_direction[1] * self.shoot_speed
+        dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
+        dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
+
+        self.Update_Tile(self.pos)
         
         if not self.Check_Tile((dir_x, dir_y)):
             self.special_attack = 0
@@ -46,12 +62,12 @@ class Projectile(Weapon):
             return None
         self.Move((dir_x, dir_y))
         # Check for collision with enemy
-        entity = self.Attack_Collision_Check()
-        if entity:
+        entity_hit = self.Attack_Collision_Check()
+        if entity_hit:
             self.special_attack = 0
             self.range = 0
             self.shoot_speed = 0
-            return entity
+            return entity_hit
         return None
 
     def Update_Range(self):
@@ -64,14 +80,14 @@ class Projectile(Weapon):
     def Drop_Weapon_After_Shot(self):
         active_inventory = self.game.weapon_inventory.active_inventory
         weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-        if self.entity.type == 'player':
+        if self.entity.category == 'player':
             self.entity.Remove_Active_Weapon(self.inventory_type)
             weapon_inventory.Remove_Item(self, True)
             self.game.item_handler.Add_Item(self)
-        self.game.entities_render.Add_Entity(self)
-        self.picked_up = False
-        self.equipped = False
-        self.in_inventory = False
+        self.attack_direction = self.entity.attack_direction
+        self.entity_strength = self.entity.strength
+        self.Place_Down()
+
 
     def Pick_Up(self):
         if self.delete_countdown:

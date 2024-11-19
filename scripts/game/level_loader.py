@@ -115,5 +115,5 @@ class Level_Loader():
     def Spawn_Player(self):
         for spawner in self.game.tilemap.extract([('spawners', 0)]):
             if spawner.variant == 0:
-                self.game.player = Player(self.game, spawner.pos, (28, 28), 100, 5, 5, 10, 5, 5)
+                self.game.player = Player(self.game, spawner.pos, (28, 28), 100, 5, 5, 5, 5, 5)
                 return

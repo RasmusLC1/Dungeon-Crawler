@@ -39,8 +39,11 @@ class Text_Box():
             if self.item.sub_category == 'rune':
                 text_box_pos = (self.game.screen_width // self.game.render_scale - x_size - 20, self.item.pos[1] -  y_size - 20)
             else:
+                print("PICKED UP")
+                print(vars(self.item))
                 text_box_pos = (self.item.pos[0], self.item.pos[1] -  y_size)
         else:
+            print("Not picked up")
             text_box_pos = (self.item.pos[0] - offset[0], self.item.pos[1] - offset[1] - y_size)
 
         surf.blit(rectangle_surface, text_box_pos)

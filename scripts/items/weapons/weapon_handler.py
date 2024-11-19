@@ -1,4 +1,5 @@
 from scripts.items.weapons.close_combat.sword import Sword
+from scripts.items.weapons.close_combat.halberd import Halberd
 from scripts.items.weapons.close_combat.torch import Torch
 from scripts.items.weapons.projectiles.spear import Spear
 from scripts.items.weapons.ranged_weapons.bow import Bow
@@ -14,6 +15,9 @@ class Weapon_Handler():
         weapon = None
         if 'sword' in name:
             weapon = self.Spawn_Sword(pos_x, pos_y)
+
+        if 'halberd' in name:
+            weapon = self.Spawn_Halberd(pos_x, pos_y)
 
         elif 'shield' in name:
             weapon = self.Spawn_Shield(pos_x, pos_y)
@@ -47,6 +51,8 @@ class Weapon_Handler():
     def Spawn_Sword(self, pos_x, pos_y):
         return Sword(self.game, (pos_x, pos_y))
 
+    def Spawn_Halberd(self, pos_x, pos_y):
+        return Halberd(self.game, (pos_x, pos_y))
     
     def Spawn_Shield(self, pos_x, pos_y):
         return Shield(self.game, (pos_x, pos_y))

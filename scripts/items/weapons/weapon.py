@@ -6,11 +6,12 @@ import pygame
 import math
 
 class Weapon(Item):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, speed, range, attack_speed, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
+        self.attack_speed = attack_speed # weapons attack speed from 1 to 10
         self.entity = None # Entity that holds the weapon
         self.effect = damage_type # Special effects, like poision, ice, fire etc
         self.attack_type = attack_type # Different kinds of attacks, like cutting and stabbing
@@ -18,10 +19,19 @@ class Weapon(Item):
         self.equipped = False # Is the weapon currently equipped and can be used to attack
         self.attacking = 0 # The time it takes for the attack to complete
         self.max_animation = 0 # Max amount of animations
+
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
-        self.attack_animation_counter = 0 # Animation countdown that ticks up to animation time
+        self.attack_animation_counter = 0 # Animation countdown that ticks up to time
+        
+        self.attack_effect_animation = 0 # current effect animation frame
+        self.attack_effect_animation_max = 7 # Amount of effect animation frames
+        self.attack_effect_animation_time = 0 # Time it takes to change between frames
+        self.attack_effect_animation_counter = 0 # Animation countdown that ticks up to time
+
+
+
         self.enemy_hit = False # Prevent double damage on attacks
         self.rotate = 0 # Rotation value of weapon
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
@@ -83,6 +93,7 @@ class Weapon(Item):
             return False
             
         self.Update_Attack_Animation()
+        self.Update_Attack_Effect_Animation()
         self.Attack_Collision_Check()
         self.Attack_Align_Weapon()
         self.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
@@ -92,11 +103,13 @@ class Weapon(Item):
     def Set_Attack(self):
         if not self.Check_Entity_Cooldown():
             return
-        self.attacking = max(self.attack_animation_max * 3, int(100 / self.speed))
+        # Compute attack each time to account for changing entity agility level
+        self.attacking = max(int((self.attack_speed * 30) // self.entity.agility), self.attack_animation_max) 
         self.enemy_hit = False  # Reset at the start of a new attack
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
         self.charge_time = 0  # Reset charge time
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
+        self.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
 
         
@@ -212,6 +225,9 @@ class Weapon(Item):
         self.special_attack = self.charge_time
         self.Set_Rotation()
 
+    def Reset_Special_Attack(self):
+        self.rotate = 0
+
     # Initialise the charging of the weapon
     def Set_Charging_Player(self):
         # Detect if the player is holding down the button
@@ -260,6 +276,8 @@ class Weapon(Item):
         self.attack_animation = 0
         self.rotate = 0
         self.entity.Reset_Max_Speed()
+        self.Reset_Attack_Effect_Animation()
+
         return True
         
 
@@ -372,6 +390,22 @@ class Weapon(Item):
     def Stabbing_Attack(self):
         pass
 
+    def Set_Attack_Effect_Animation_Time(self):
+        self.attack_effect_animation_time = self.attacking / self.attack_effect_animation_max
+
+    def Update_Attack_Effect_Animation(self):
+        if self.attack_effect_animation_counter >= self.attack_effect_animation_time:
+            self.attack_effect_animation_counter = 0
+            self.attack_effect_animation = min(self.attack_effect_animation + 1, self.attack_animation_max)
+            return
+
+        self.attack_effect_animation_counter += 1
+
+    def Reset_Attack_Effect_Animation(self):
+        self.attack_animation_counter = 0
+        self.attack_effect_animation_time = 0
+        self.attack_effect_animation = 0
+
 
 
     def Attack_Effect_Position(self, offset):
@@ -389,22 +423,7 @@ class Weapon(Item):
 
         return (pos_x, pos_y)
 
-    # Render the weapon inside inventory
-    def Render_In_Inventory(self, surf, offset=(0, 0)):
-        
-        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-
-
-    # Render the weapon in entity's hand
-    def Render_Equipped(self, surf, offset=(0, 0)):
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-        if self.rotate:
-            weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
-        surf.blit( pygame.transform.flip(weapon_image, False, False),
-                    (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        
-        self.Render_Attack_Effect(surf, offset)
+   
     
     def Render_Attack_Effect(self, surf, offset):
         if not self.attacking:
@@ -412,9 +431,8 @@ class Weapon(Item):
         
         pos = self.Attack_Effect_Position(offset)
         
-        animation_frame = int(7 * (1 - (self.attacking / 32)))
         effect_type = self.effect + '_' + self.attack_type + '_effect'
-        attack_effect = self.game.assets[effect_type][animation_frame].convert_alpha()
+        attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         # attack_effect.set_alpha()
         attack_effect = pygame.transform.rotate(attack_effect, self.rotate)
         flip_y = False
@@ -457,7 +475,26 @@ class Weapon(Item):
         # Render the chest
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
+     # Render the weapon inside inventory
+    def Render_In_Inventory(self, surf, offset=(0, 0)):
         
+        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
+        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+
+    # Render the weapon in entity's hand
+    def Render_Equipped(self, surf, offset=(0, 0)):
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        if self.rotate:
+            weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
+
+        flip_x = False
+        if self.attacking and self.entity.attack_direction[0] < 0:
+            flip_x = True
+        surf.blit( pygame.transform.flip(weapon_image, False, flip_x),
+                    (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        
+        self.Render_Attack_Effect(surf, offset)    
         
 
     # Render the weapon in entity's hand
@@ -673,6 +710,7 @@ class Weapon(Item):
     def Place_Down(self):
         if not super().Place_Down():
             return False
+        print("TEST")
         self.entity = None
         self.in_inventory = False
         self.picked_up = False

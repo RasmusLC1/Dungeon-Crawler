@@ -62,7 +62,6 @@ class Item(PhysicsEntity):
         self.Update_Activate_Cooldown()
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
-        
         if self.text_box.Update(hitbox_1, hitbox_2):
             return self
         else:
