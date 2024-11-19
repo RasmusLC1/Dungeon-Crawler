@@ -1,7 +1,3 @@
-from scripts.decoration.decoration import Decoration
-from scripts.items.weapons.close_combat.torch import Torch
-from scripts.items.loot.key import Key
-from scripts.items.loot.gold import Gold
 from scripts.items.weapons.weapon_handler import Weapon_Handler
 from scripts.items.potions.potion_handler import Potion_Handler
 from scripts.items.loot.loot_handler import Loot_Handler
@@ -9,7 +5,7 @@ import math
 import random
 
 # UPDATE for throwable weapons
-throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web']
+throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web', 'hatchet']
 
 class Item_Handler():
     def __init__(self, game):
@@ -28,7 +24,6 @@ class Item_Handler():
             self.saved_data[item.ID] = item.saved_data
 
     def Load_Data(self, data):
-
         for ID, item_data in data.items():
             if not item_data:
                 continue
@@ -127,7 +122,6 @@ class Item_Handler():
             self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 4)
         
         for item in self.items:
-
             if item.Update_Delete_Cooldown():
                 if not item.delete_countdown:
                     self.Remove_Item(item, True)
@@ -150,7 +144,7 @@ class Item_Handler():
                         continue
                     item.Shoot()
                 except Exception as e:
-                    print(f"Item is not throwable {e}", item.type)
+                    print(f"Item is not throwable {e}", item.type, item.entity)
 
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:

@@ -93,7 +93,6 @@ class Item(PhysicsEntity):
             self.game.entities_render.Remove_Entity(self)
             self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
 
-
             return self.game.player
         
         self.Find_Nearby_Entities(2)

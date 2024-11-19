@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, speed, range, attack_speed, weapon_class, damage_type, attack_type = 'cut', size = (32, 32), add_to_tile = True):
-        super().__init__(game, pos, type, damage, speed, range, attack_speed, weapon_class,  damage_type, attack_type, size, add_to_tile)
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+        super().__init__(game, pos, type, damage, speed, range, weapon_class,  damage_type, attack_type, size, add_to_tile)
         self.shoot_speed = 0
         self.pickup_allowed = True
         self.range_holder = range
@@ -12,10 +12,17 @@ class Projectile(Weapon):
         self.attack_direction = (0, 0)
 
 
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['shoot_speed'] = self.shoot_speed
+        self.saved_data['range_holder'] = self.range_holder
+
+
     def Load_Data(self, data):
         
         super().Load_Data(data)
-        self.range_holder = self.range
+        self.range_holder = data['range_holder'] 
+        self.shoot_speed = data['shoot_speed']
 
 
     def Set_Special_Attack(self, offset= (0,0)):
@@ -47,7 +54,7 @@ class Projectile(Weapon):
             self.picked_up = False
             self.equipped = False
             self.in_inventory = False
-            self.entity = None
+            self.Set_Entity(None)
             return  
 
         dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
@@ -71,6 +78,7 @@ class Projectile(Weapon):
         return None
 
     def Update_Range(self):
+        print(self.range)
         if not self.range:
             return False
         
@@ -86,8 +94,8 @@ class Projectile(Weapon):
             self.game.item_handler.Add_Item(self)
         self.attack_direction = self.entity.attack_direction
         self.entity_strength = self.entity.strength
-        self.Place_Down()
-
+        self.in_inventory = False
+        self.picked_up = False
 
     def Pick_Up(self):
         if self.delete_countdown:

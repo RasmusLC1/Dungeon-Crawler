@@ -39,8 +39,9 @@ class Inventory:
                 if not item:
                     continue
 
-                if item.sub_category == 'weapon':
+                if 'weapon' in item.sub_category:
                     item.Set_Entity(self.game.player)
+                    print(item)
 
                 inventory_slot.Add_Item(item)
 
@@ -226,8 +227,6 @@ class Inventory:
                 if self.Swap_Item(self.active_item, inventory_slot):
                     return True
 
-                # if inventory_slot.item:
-                #     continue
 
                 if self.Move_Item(self.active_item, inventory_slot):
                     self.clicked_inventory_slot.item = None  # Clear the original slot

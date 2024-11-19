@@ -2,17 +2,17 @@ from scripts.items.weapons.projectiles.projectile import Projectile
 import math
 import pygame
 
-class Spear(Projectile):
+class Hatchet(Projectile):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'spear', 3, 6, 20, 'two_handed_melee', damage_type, 'stab')
+        super().__init__(game, pos, 'hatchet', 3, 8, 20, 'one_handed_melee', damage_type, 'cut')
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0
         
     
-
     def Shoot(self):
         self.Initialise_Shooting(self.entity_strength)
+        self.rotate += 5
 
         super().Shoot()
 

@@ -6,7 +6,7 @@ import pygame
 
 class Shield(Weapon):
     def __init__(self, game, pos, damage_type = 'block'):
-        super().__init__(game, pos, 'shield', 2, 5, 2, 5, 'shield', damage_type)
+        super().__init__(game, pos, 'shield', 2, 5, 2, 'shield', damage_type)
         # self.charging = 0 # Charging value will be alligned with the entity's
         self.blocking = 0
 

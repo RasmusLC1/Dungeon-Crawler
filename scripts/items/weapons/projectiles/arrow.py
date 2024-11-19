@@ -4,7 +4,7 @@ import pygame
 
 class Arrow(Projectile):
     def __init__(self, game, pos, amount = 1, damage_type = 'slash'):
-        super().__init__(game, pos, 'arrow', 2, 2, 50, 3, 'arrow',  damage_type)
+        super().__init__(game, pos, 'arrow', 2, 2, 50, 'arrow',  damage_type)
         self.max_animation = 0
         
         self.max_amount = 20

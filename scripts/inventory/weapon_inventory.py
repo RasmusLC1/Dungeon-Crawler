@@ -9,26 +9,6 @@ class Weapon_Inventory(Inventory):
         self.index = index
 
 
-    def Load_Data(self, data):
-        for ID, item_data in data.items():
-            if not item_data:
-                continue
-            for inventory_slot in self.inventory:
-
-                if item_data['inventory_index'] != inventory_slot.index:
-                    continue
-
-                self.game.item_handler.Load_Item_From_Data(item_data)
-                item = self.game.item_handler.Find_Item(item_data['ID'])
-                if not item:
-                    continue
-
-                if item.sub_category == 'weapon':
-                    item.Set_Entity(self.game.player)
-
-
-                inventory_slot.Add_Item(item)
-
     def Update(self, offset = (0,0)):
         super().Update(offset)
         self.Render_Weapon(self.game.display)

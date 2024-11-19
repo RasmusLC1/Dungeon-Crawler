@@ -6,7 +6,7 @@ import math
 
 class Halberd(Weapon):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'halberd', 3, 6, 8, 8, 'two_handed_melee', damage_type)
+        super().__init__(game, pos, 'halberd', 3, 8, 8, 'two_handed_melee', damage_type)
         self.max_charge_time = 50
         self.max_animation = 3
         self.attack_animation_max = 3 
@@ -53,7 +53,7 @@ class Halberd(Weapon):
             return
         
         if self.special_attack <= 0 or not self.equipped:
-            self.Reset_Special_Attack()
+            # self.Reset_Special_Attack()
             return
         self.Initialise_Charge()
         

@@ -2,6 +2,7 @@ from scripts.items.weapons.close_combat.sword import Sword
 from scripts.items.weapons.close_combat.halberd import Halberd
 from scripts.items.weapons.close_combat.torch import Torch
 from scripts.items.weapons.projectiles.spear import Spear
+from scripts.items.weapons.projectiles.hatchet import Hatchet
 from scripts.items.weapons.ranged_weapons.bow import Bow
 from scripts.items.weapons.projectiles.arrow import Arrow
 from scripts.items.weapons.shields.shield import Shield
@@ -16,8 +17,11 @@ class Weapon_Handler():
         if 'sword' in name:
             weapon = self.Spawn_Sword(pos_x, pos_y)
 
-        if 'halberd' in name:
+        elif 'halberd' in name:
             weapon = self.Spawn_Halberd(pos_x, pos_y)
+
+        elif 'hatchet' in name:
+            weapon = self.Spawn_Hatchet(pos_x, pos_y)
 
         elif 'shield' in name:
             weapon = self.Spawn_Shield(pos_x, pos_y)
@@ -43,7 +47,8 @@ class Weapon_Handler():
                 weapon.entity = self.game.player
                 weapon.Equip()
         
-        self.game.item_handler.Add_Item(weapon)
+        if weapon.in_inventory:
+            self.game.item_handler.Add_Item(weapon)
 
         return True
 
@@ -54,6 +59,9 @@ class Weapon_Handler():
     def Spawn_Halberd(self, pos_x, pos_y):
         return Halberd(self.game, (pos_x, pos_y))
     
+    def Spawn_Hatchet(self, pos_x, pos_y):
+        return Hatchet(self.game, (pos_x, pos_y))
+
     def Spawn_Shield(self, pos_x, pos_y):
         return Shield(self.game, (pos_x, pos_y))
 

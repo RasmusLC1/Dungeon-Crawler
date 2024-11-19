@@ -3,7 +3,7 @@ import pygame
 
 class Fire_Particle(Projectile):
     def __init__(self, game, pos, damage, speed, range, special_attack, direction, entity):
-        super().__init__(game, pos, 'fire_particle', damage, speed, range,  0, 'particle', 'fire', 'cut', (10, 10), False)
+        super().__init__(game, pos, 'fire_particle', damage, speed, range, 'particle', 'fire', 'cut', (10, 10), False)
         self.delete_countdown = 50
         self.special_attack = special_attack 
         self.entity = entity

@@ -6,12 +6,11 @@ import pygame
 import math
 
 class Weapon(Item):
-    def __init__(self, game, pos, type, damage, speed, range, attack_speed, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = speed # Speed of the weapon
         self.range = range # Range of the weapon
-        self.attack_speed = attack_speed # weapons attack speed from 1 to 10
         self.entity = None # Entity that holds the weapon
         self.effect = damage_type # Special effects, like poision, ice, fire etc
         self.attack_type = attack_type # Different kinds of attacks, like cutting and stabbing
@@ -61,6 +60,10 @@ class Weapon(Item):
         self.saved_data['in_inventory'] = self.in_inventory
         self.saved_data['equipped'] = self.equipped
         self.saved_data['enemy_hit'] = self.enemy_hit
+        self.saved_data['rotate'] = self.rotate
+        self.saved_data['attacking'] = self.attacking
+        self.saved_data['special_attack'] = self.special_attack
+        
 
     
     def Load_Data(self, data):
@@ -72,6 +75,9 @@ class Weapon(Item):
         self.in_inventory = data['in_inventory']
         self.equipped = data['equipped']
         self.enemy_hit = data['enemy_hit']
+        self.rotate = data['rotate']
+        self.attacking = data['attacking']
+        self.special_attack = data['special_attack']
 
    
     # General Update function
@@ -104,7 +110,7 @@ class Weapon(Item):
         if not self.Check_Entity_Cooldown():
             return
         # Compute attack each time to account for changing entity agility level
-        self.attacking = max(int((self.attack_speed * 30) // self.entity.agility), self.attack_animation_max) 
+        self.attacking = max(int((self.speed * 30) // self.entity.agility), self.attack_animation_max) 
         self.enemy_hit = False  # Reset at the start of a new attack
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
         self.charge_time = 0  # Reset charge time
@@ -478,7 +484,7 @@ class Weapon(Item):
      # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         
-        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
+        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][0], self.size)  
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
@@ -530,7 +536,7 @@ class Weapon(Item):
 
         if not self.entity:
             return False
-        
+        print(self.entity)
         self.Pickup_Reset_Weapon(self.entity)
         return True
     
@@ -601,11 +607,11 @@ class Weapon(Item):
         move_successful = receiving_inventory.Move_Item(self, inventory_slot)
         # If the move was successful, remove it from the sending inventory
         if move_successful:
-
+            self.Reset_Weapon()
             # Remove item from old inventory and save the inventory type
             inventory_type_holder = self.inventory_type
 
-            sending_inventory.Remove_Item(self, move_successful)
+            sending_inventory.Remove_Item(self, True)
             # send weapon into weapon inventory, checked by seeing if it has an inventory_type
             if self.inventory_type:
 
@@ -622,6 +628,12 @@ class Weapon(Item):
         
         return False
     
+    def Reset_Weapon(self):
+        self.rotate = 0
+        self.attacking = 0
+        self.sub_type = self.type
+        self.animation = 0
+
     # Add weapons from a sending inventory to a receiving inventory using drag
     # Example: weapon_inventory (sending) -> inventory (receiving) 
     def Move_To_Other_Inventory(self, sending_inventory, receiving_inventory, offset = (0,0)):
@@ -710,7 +722,6 @@ class Weapon(Item):
     def Place_Down(self):
         if not super().Place_Down():
             return False
-        print("TEST")
         self.entity = None
         self.in_inventory = False
         self.picked_up = False
