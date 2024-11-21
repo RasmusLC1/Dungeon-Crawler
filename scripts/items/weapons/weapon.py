@@ -97,7 +97,6 @@ class Weapon(Item):
     def Update_Attack(self):
         if not self.attacking:
             return False
-            
         self.Update_Attack_Animation()
         self.Update_Attack_Effect_Animation()
         self.Attack_Collision_Check()
@@ -433,10 +432,10 @@ class Weapon(Item):
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         # attack_effect.set_alpha()
         attack_effect = pygame.transform.rotate(attack_effect, self.rotate)
-        flip_y = False
+        flip_x = False
         if self.entity.attack_direction[0] > 0 and abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
-            flip_y = True
-        surf.blit( pygame.transform.flip(attack_effect, False, flip_y), (pos[0], pos[1]))
+            flip_x = True
+        surf.blit( pygame.transform.flip(attack_effect, flip_x, False), (pos[0], pos[1]))
         
 
     # Render basic function on the map
@@ -489,7 +488,7 @@ class Weapon(Item):
         flip_x = False
         if self.attacking and self.entity.attack_direction[0] < 0:
             flip_x = True
-        surf.blit( pygame.transform.flip(weapon_image, False, flip_x),
+        surf.blit( pygame.transform.flip(weapon_image, flip_x, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
         self.Render_Attack_Effect(surf, offset)    
@@ -528,7 +527,6 @@ class Weapon(Item):
 
         if not self.entity:
             return False
-        print(self.entity)
         self.Pickup_Reset_Weapon(self.entity)
         return True
     
@@ -541,7 +539,18 @@ class Weapon(Item):
         self.light_level = 10
 
     def Set_Equipped_Position(self, direction_y):
-        pass
+        if 'left' in self.inventory_type:
+            if direction_y < 0:
+                self.Move((self.entity.pos[0] - 5 , self.entity.pos[1]))
+            else:
+                self.Move((self.entity.pos[0] + 5 , self.entity.pos[1]))
+        elif 'right' in self.inventory_type:
+            if  direction_y < 0:
+                self.Move((self.entity.pos[0] + 7, self.entity.pos[1]))
+            else:
+                self.Move((self.entity.pos[0] - 7, self.entity.pos[1]))
+        else:
+            print("DIRECTION NOT FOUND", self.inventory_type)
 
 
     # Initialise the double clikc

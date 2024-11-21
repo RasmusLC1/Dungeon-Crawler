@@ -450,8 +450,10 @@ class Moving_Entity(PhysicsEntity):
             # TODO: UPDATE to attack up when that has been animated
             self.Set_Animation('attack')
 
-    def Set_Attack_Direction(self):
-        self.attack_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
+    def Set_Attack_Direction(self, attack_direction = None):
+        if not attack_direction:
+            attack_direction = self.target
+        self.attack_direction = pygame.math.Vector2(attack_direction[0] - self.pos[0], attack_direction[1] - self.pos[1])
         if not self.attack_direction:
             return
         self.attack_direction.normalize_ip()

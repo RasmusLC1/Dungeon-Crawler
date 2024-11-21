@@ -25,19 +25,7 @@ class Halberd(Weapon):
         else: # Handle Stabbing
             self.Stabbing_Attack() 
     
-    def Set_Equipped_Position(self, direction_y):
-        if 'left' in self.inventory_type:
-            if direction_y < 0:
-                self.Move((self.entity.pos[0] - 5 , self.entity.pos[1]))
-            else:
-                self.Move((self.entity.pos[0] + 5 , self.entity.pos[1]))
-        elif 'right' in self.inventory_type:
-            if  direction_y < 0:
-                self.Move((self.entity.pos[0] + 7, self.entity.pos[1]))
-            else:
-                self.Move((self.entity.pos[0] - 7, self.entity.pos[1]))
-        else:
-            print("DIRECTION NOT FOUND", self.inventory_type)
+  
 
     def Set_Attack(self):
         self.attack_type = random.choice(['cut', 'stab']) # Set either cut or stab

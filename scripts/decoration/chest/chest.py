@@ -31,9 +31,10 @@ class Chest(Decoration):
             # 'bow',
             # 'arrow',
             # 'shield',
-            # 'torch'
-            # 'halberd'
-            'hatchet'
+            # 'torch',
+            # 'halberd',
+            # 'hatchet',
+            'battle_axe'
         ]
 
         self.potions = [

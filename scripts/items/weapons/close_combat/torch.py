@@ -10,7 +10,6 @@ class Torch(Weapon):
         self.attack_animation_max = 5
         self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
-        self.offset = (0,0)
         self.fire_cooldown = 0
         self.effect = 'fire'
 
@@ -40,21 +39,7 @@ class Torch(Weapon):
             return
         self.Fire_Particle_Creation()
         self.light_source.Update_Light_Level(12)
-        
-    
-    def Set_Equipped_Position(self, direction_y):
-        if 'left' in self.inventory_type:
-            if direction_y < 0:
-                self.Move((self.entity.pos[0] - 5 , self.entity.pos[1]))
-            else:
-                self.Move((self.entity.pos[0] + 5 , self.entity.pos[1]))
-        elif 'right' in self.inventory_type:
-            if  direction_y < 0:
-                self.Move((self.entity.pos[0] + 7, self.entity.pos[1]))
-            else:
-                self.Move((self.entity.pos[0] - 7, self.entity.pos[1]))
-        else:
-            print("DIRECTION NOT FOUND", self.inventory_type)
+
 
     
     def Fire_Particle_Creation(self):
@@ -102,7 +87,6 @@ class Torch(Weapon):
 
     def Set_Special_Attack(self, offset = (0,0)):
         super().Set_Special_Attack(offset)
-        self.offset = offset
 
     def Set_Equip(self, state):
         super().Set_Equip(state)

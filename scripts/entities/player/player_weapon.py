@@ -170,12 +170,6 @@ class Player_Weapon_Handler():
             self.player.attacking = 0
 
 
-
-        
-
-
-        
-
     def Render_Weapons(self, surf, offset):
 
         if self.game.weapon_inventory.active_inventory == 0:
