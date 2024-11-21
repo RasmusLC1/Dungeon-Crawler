@@ -2,8 +2,8 @@ from scripts.items.weapons.projectiles.projectile import Projectile
 import pygame
 
 class Fire_Particle(Projectile):
-    def __init__(self, game, pos, damage, speed, range, special_attack, direction, entity):
-        super().__init__(game, pos, 'fire_particle', damage, speed, range, 'particle', 'fire', 'cut', (10, 10), False)
+    def __init__(self, game, pos, damage, speed, shoot_distance, special_attack, direction, entity):
+        super().__init__(game, pos, 'fire_particle', damage, speed, 2, 'particle', 'fire', shoot_distance, 'cut', (10, 10), False)
         self.delete_countdown = 50
         self.special_attack = special_attack 
         self.entity = entity
@@ -18,24 +18,13 @@ class Fire_Particle(Projectile):
             self.Initialise_Shooting(self.speed)
 
         # Use the stored direction to move the particle
-        dir = (
+        self.pos = (
             self.pos[0] + self.direction[0] * self.shoot_speed,
             self.pos[1] + self.direction[1] * self.shoot_speed
         )
-        if not self.Check_Tile(dir):
-            self.special_attack = 0
-            self.range = 0
-            return None
-    
-        # entity = super().Shoot()
-        self.Move(dir)
-        # Check for collision with enemy
-        entity = self.Attack_Collision_Check()
+        entity = super().Shoot()
         if entity:
-            self.special_attack = 0
-            self.range = 0
-            return entity
-        return None
+            self.Set_Special_Attack(0)
         
         
     def Update_Text_Box(self, hitbox_1, hitbox_2):

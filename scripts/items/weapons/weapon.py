@@ -9,7 +9,7 @@ class Weapon(Item):
     def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
-        self.speed = speed # Speed of the weapon
+        self.speed = 10 - speed # Speed of the weapon
         self.range = range # Range of the weapon
         self.entity = None # Entity that holds the weapon
         self.effect = damage_type # Special effects, like poision, ice, fire etc
@@ -44,7 +44,7 @@ class Weapon(Item):
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
 
-        self.attack_hitbox_size = (1, 1)
+        self.attack_hitbox_size = (5, 5)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
         
 
@@ -200,7 +200,6 @@ class Weapon(Item):
         if self.enemy_hit:
             return None
         
-
         self.Set_Attack_Hitbox()
 
 
@@ -334,11 +333,11 @@ class Weapon(Item):
     #TODO: Make a formula for better computing clatter distance
     # Return False on collision
     def Check_Tile(self, new_pos):
-        tile = self.game.tilemap.Current_Tile(new_pos)
+        tile_key = str(int(new_pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(new_pos[1] // self.game.tilemap.tile_size))
+        tile = self.game.tilemap.Current_Tile(tile_key)
         if not tile:
             return True
-        
-        if 'Wall' in tile.type:
+        if 'wall' in tile.type:
             target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
             self.game.clatter.Generate_Clatter(target_position, 400)
             return False
@@ -359,14 +358,7 @@ class Weapon(Item):
             return
         pos_x = self.entity.rect().center[0] - 2 + self.entity.attack_direction[0] * self.game.tilemap.tile_size
         pos_y = self.entity.rect().center[1] - 2 + self.entity.attack_direction[1] * self.game.tilemap.tile_size
-        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0], self.attack_hitbox_size[1])
-
-
-    def Set_Attack_Hitbox_Size(self, size):
-        # Invert size if attacking horrizontally using slice
-        if abs(self.entity.attack_direction[1]) < 0.35:
-            size = size[::-1]
-        self.attack_hitbox_size = size
+        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0] * self.range, self.attack_hitbox_size[1] * self.range)
 
 
     def Set_Entity(self, entity):
@@ -445,9 +437,7 @@ class Weapon(Item):
         if self.entity.attack_direction[0] > 0 and abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
             flip_y = True
         surf.blit( pygame.transform.flip(attack_effect, False, flip_y), (pos[0], pos[1]))
-            
-
-
+        
 
     # Render basic function on the map
     def Render(self, surf, offset=(0, 0)):
@@ -456,6 +446,8 @@ class Weapon(Item):
         # the weapon has been picked up
         
         if self.in_inventory:
+            if self.equipped:
+                return
             self.Render_In_Inventory(surf)
         
         if not self.Update_Light_Level():

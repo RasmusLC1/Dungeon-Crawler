@@ -6,7 +6,7 @@ import math
 
 class Halberd(Weapon):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'halberd', 3, 8, 8, 'two_handed_melee', damage_type)
+        super().__init__(game, pos, 'halberd', 3, 2, 8, 'two_handed_melee', damage_type)
         self.max_charge_time = 50
         self.max_animation = 3
         self.attack_animation_max = 3 

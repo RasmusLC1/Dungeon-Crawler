@@ -235,6 +235,8 @@ Game Ideas
 
     Crystal Caverns, High armour enemies, crystals that emit light, Rare gems
 
+    Aztec Temple, 
+
     Lava forge, lots of lava, enemies are immune to fire and deal fire damage, rare weapons
 
     Ice Cave, Lots of ice, enemies are immune to freeze and deal freeze damage, breakable walls are more common
@@ -242,10 +244,3 @@ Game Ideas
     Ancient ruins, undead enemies, rare runes
 
     Water caves, need to traverse lots of water, Deep water contains enemies, look for shallow water. More Treasure chests
-
-
-
-{'game': <__main__.Game object at 0x000001793C57BE50>, 'ID': 1640679, 'category': 'item', 'type': 'hatchet', 'pos': (724.2528735664465, 250.48978931801142), 'size': (32, 32), 'active': 699, 'light_level': 200, 'invincible': False, 'render': True, 'tile': '22;8', 'saved_data': {}, 'sub_type': 'hatchet', 'sub_category': 'weapon', 'used': False, 'picked_up': False, 'move_inventory_slot': False, 'inventory_type': 'left_hand', 'inventory_index': 0, 'activate_cooldown': 0, 'animation_cooldown': 43, 'animation_speed': 50, 'amount': 1, 'max_amount': 0, 'damaged': False, 'max_animation': 3, 'animation': 2, 'nearby_entities': [], 'delete_countdown': 0, 'value': 100, 'text_box': <scripts.items.utility.textbox.Text_Box object at 0x000001795CB96EC0>, 'damage': 3, 'speed': 8, 'range': 5, 'entity': <scripts.entities.player.player.Player object at 0x000001795DFE4040>, 'effect': 'slash', 'attack_type': 'cut', 'in_inventory': False, 'equipped': True, 'attacking': 
-0, 'attack_animation': 0, 'attack_animation_max': 3, 'attack_animation_time': 0, 'attack_animation_counter': 0, 'attack_effect_animation': 0, 'attack_effect_animation_max': 7, 'attack_effect_animation_time': 0, 'attack_effect_animation_counter': 0, 'enemy_hit': False, 'rotate': 200.16278257403047, 'nearby_enemies': [], 'weapon_class': 'one_handed_melee', 'charge_time': 0, 'max_charge_time': 100, 'is_charging': 0, 'special_attack': 100, 'weapon_cooldown': 49, 'weapon_cooldown_max': 50, 'attack_hitbox_size': (1, 1), 'attack_hitbox': <rect(635, 329, 1, 1)>, 'shoot_speed': 10, 'pickup_allowed': True, 'range_holder': 20, 'entity_strength': 5, 'attack_direction': <Vector2(0.817519, -0.575901)>, 'distance_from_player': 0}
-
-{'game': <__main__.Game object at 0x000002335DE4BE50>, 'ID': 1640679, 'category': 'item', 'type': 'hatchet', 'pos': (718.625, 253.375), 'size': (32, 32), 'active': True, 'light_level': 210, 'invincible': False, 'render': False, 'tile': '8;13', 'saved_data': {'category': 'item', 'type': 'hatchet'}, 'sub_type': 'hatchet', 'sub_category': 'weapon', 'used': False, 'picked_up': False, 'move_inventory_slot': False, 'inventory_type': 'left_hand', 'inventory_index': 0, 'activate_cooldown': 0, 'animation_cooldown': 36, 'animation_speed': 50, 'amount': 1, 'max_amount': 0, 'damaged': False, 'max_animation': 3, 'animation': 3, 'nearby_entities': [], 'delete_countdown': 0, 'value': 100, 'text_box': <scripts.items.utility.textbox.Text_Box object at 0x000002337779A6B0>, 'damage': 3, 'speed': 8, 'range': 0, 'entity': <scripts.entities.player.player.Player object at 0x000002337E514040>, 'effect': 'slash', 'attack_type': 'cut', 'in_inventory': False, 'equipped': True, 'attacking': 0, 'attack_animation': 0, 'attack_animation_max': 3, 'attack_animation_time': 0, 'attack_animation_counter': 0, 'attack_effect_animation': 0, 'attack_effect_animation_max': 7, 'attack_effect_animation_time': 0, 'attack_effect_animation_counter': 0, 'enemy_hit': False, 'rotate': -93.87681559241068, 'nearby_enemies': [], 'weapon_class': 'one_handed_melee', 'charge_time': 0, 'max_charge_time': 100, 'is_charging': 0, 'special_attack': 100, 'weapon_cooldown': 49, 'weapon_cooldown_max': 50, 'attack_hitbox_size': (1, 1), 'attack_hitbox': <rect(263, 445, 1, 1)>, 'shoot_speed': 0, 'pickup_allowed': True, 'range_holder': 0, 'entity_strength': 5, 'attack_direction': <Vector2(-0.997712, -0.0676116)>, 'distance_from_player': 0}

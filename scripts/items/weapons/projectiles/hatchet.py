@@ -4,7 +4,7 @@ import pygame
 
 class Hatchet(Projectile):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'hatchet', 3, 8, 20, 'one_handed_melee', damage_type, 'cut')
+        super().__init__(game, pos, 'hatchet', 3, 7, 4, 'one_handed_melee', damage_type, 20, 'cut')
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0

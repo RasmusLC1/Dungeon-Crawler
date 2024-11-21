@@ -3,11 +3,12 @@ import math
 import pygame
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, pos, type, damage, speed, range, weapon_class,  damage_type, attack_type, size, add_to_tile)
         self.shoot_speed = 0
+        self.shoot_distance = shoot_distance
         self.pickup_allowed = True
-        self.range_holder = range
+        self.shoot_distance_holder = shoot_distance
         self.entity_strength = 0
         self.attack_direction = (0, 0)
 
@@ -15,13 +16,15 @@ class Projectile(Weapon):
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['shoot_speed'] = self.shoot_speed
-        self.saved_data['range_holder'] = self.range_holder
+        self.saved_data['shoot_distance'] = self.shoot_distance
+        self.saved_data['shoot_distance_holder'] = self.shoot_distance_holder
 
 
     def Load_Data(self, data):
         
         super().Load_Data(data)
-        self.range_holder = data['range_holder'] 
+        self.shoot_distance = data['shoot_distance'] 
+        self.shoot_distance_holder = data['shoot_distance_holder'] 
         self.shoot_speed = data['shoot_speed']
 
 
@@ -38,16 +41,16 @@ class Projectile(Weapon):
     def Initialise_Shooting(self, speed):
         if not self.shoot_speed:
             self.render = True
-            self.range = self.range_holder
+            self.shoot_distance = self.shoot_distance_holder
             self.active = 255
             self.shoot_speed = speed * 2
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.special_attack * 2)
+            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * 2)
             return True
         return False
 
 
     def Shoot(self):
-        if not self.Update_Range():
+        if not self.Update_Shoot_Distance():
             self.shoot_speed = 0
             self.special_attack = 0
             self.shoot_speed = 0
@@ -64,25 +67,47 @@ class Projectile(Weapon):
         
         if not self.Check_Tile((dir_x, dir_y)):
             self.special_attack = 0
-            self.range = 0
+            self.shoot_distance = 0
             self.shoot_speed = 0
             return None
         self.Move((dir_x, dir_y))
         # Check for collision with enemy
-        entity_hit = self.Attack_Collision_Check()
+        entity_hit = self.Attack_Collision_Check_Projectile()
         if entity_hit:
             self.special_attack = 0
-            self.range = 0
+            self.shoot_distance = 0
             self.shoot_speed = 0
             return entity_hit
         return None
+    
+    # Check for collision on attack
+    def Attack_Collision_Check_Projectile(self):
+        
+        self.Set_Attack_Hitbox_Render_TEST(self.game.render_scroll)
+        pygame.draw.rect(self.game.display, (255, 0, 0), self.attack_hitbox)
 
-    def Update_Range(self):
-        print(self.range)
-        if not self.range:
+        # Handle enemy attack collision check for player
+        player_collision_result = self.Player_Collision(self.attack_hitbox)
+        if player_collision_result:
+            return player_collision_result
+
+        for enemy in self.nearby_enemies:
+            # Check if the enemy is on damage cooldown
+            if enemy.damage_cooldown:
+                continue
+            # Check for collision with enemy
+            if self.rect().colliderect(enemy.rect()):
+                self.Entity_Hit(enemy)
+                # Return enemy in case further effects need to be added such as knockback
+                return enemy
+            
+        return None
+
+    def Update_Shoot_Distance(self):
+        if not self.shoot_distance:
             return False
         
-        self.range = max(0, self.range - 1)
+        self.shoot_distance = max(0, self.shoot_distance - 1)
         return True
 
     def Drop_Weapon_After_Shot(self):
@@ -101,6 +126,7 @@ class Projectile(Weapon):
         if self.delete_countdown:
             return
         return super().Pick_Up()
+    
 
     # For some reason calling the parent function does not work for render
     def Render(self, surf, offset=(0, 0)):

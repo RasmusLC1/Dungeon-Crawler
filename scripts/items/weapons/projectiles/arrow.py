@@ -4,7 +4,7 @@ import pygame
 
 class Arrow(Projectile):
     def __init__(self, game, pos, amount = 1, damage_type = 'slash'):
-        super().__init__(game, pos, 'arrow', 2, 2, 50, 'arrow',  damage_type)
+        super().__init__(game, pos, 'arrow', 2, 2, 2, 'arrow',  damage_type, 50)
         self.max_animation = 0
         
         self.max_amount = 20
@@ -33,7 +33,7 @@ class Arrow(Projectile):
         #     print(self.special_attack)
         self.Initialise_Shooting(max(3, self.entity.strength))
         
-        if not self.Update_Range():
+        if not self.Update_Shoot_Distance():
             self.special_attack = 0
             return None
         return self.Collision_Detection()   
