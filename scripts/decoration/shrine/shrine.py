@@ -75,9 +75,7 @@ class Shrine(Decoration):
             return
         
         self.available_rune = rune
-        self.available_rune.Set_Menu_Pos((self.game.screen_width // self.game.render_scale - 50, self.game.screen_height // 2 // self.game.render_scale))
         self.is_open = True
-        print("TESTTESTTEST")
 
     def Render(self, surf, offset = (0,0)):
         if not self.Update_Light_Level():

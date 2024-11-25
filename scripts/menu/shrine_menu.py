@@ -19,7 +19,7 @@ class Shrine_Menu(Menu):
 
 
         # Highlights which rune is active
-        self.rune_highlight = pygame.Surface((30, 30))
+        self.rune_highlight = pygame.Surface((60, 60))
         self.rune_highlight.fill((150, 150, 150))
 
 
@@ -147,26 +147,53 @@ class Shrine_Menu(Menu):
         self.available_rune = available_rune
         rune_name = available_rune.type
         self.available_rune_name = rune_name.replace('_rune', '')
+        self.available_rune.Set_Menu_Pos((self.game.screen_width // self.game.render_scale - 100, self.game.screen_height // 2 // self.game.render_scale))
+
 
     
     def Set_Active_Runes_Menu_Pos(self):
         self.runes = self.game.rune_handler.active_runes
-        pos_x = 20
+        pos_x = 40
         pos_y = 100
         for rune in self.runes:
             rune.Set_Menu_Pos((pos_x, pos_y))
-            pos_y += 30
+            pos_y += 60
+
+        
+    def Purchase_Button(self, surf, rune_button):
+        if rune_button.effect != 'purchase':
+            return False
+        
+        if self.rune_bought:
+            pos_x = self.game.screen_width // self.game.render_scale // 2 - 20
+            pos_y = rune_button.pos[1] + rune_button.size[1] // 2 - 8
+            self.game.default_font.Render_Word(surf, 'Select Rune', (pos_x, pos_y))
+            self.game.default_font.Render_Word(surf, 'To Replace', (pos_x, pos_y + 12))
+            
+            return True
+        pos_x = rune_button.pos[0] + rune_button.size[0] - 40
+        pos_y = rune_button.pos[1] + rune_button.size[1] // 2 - 8
+        rune_button.Render(surf)
+
+        self.game.default_font.Render_Word(surf, str(self.active_rune.cost_to_buy), (pos_x, pos_y))
+        soul_symbol_x_pos_offset = 16 * len(str(self.active_rune.upgrade_cost))
+
+        self.game.symbols.Render_Symbol(surf, 'soul', (pos_x + soul_symbol_x_pos_offset, pos_y - 2), 1.5)
+        return True
+
+
 
 
     def Render(self, surf):
         super().Render(surf)
         if self.active_rune:
-            surf.blit(self.rune_highlight, (self.active_rune.menu_pos[0] - 3, self.active_rune.menu_pos[1] - 3))
+            surf.blit(self.rune_highlight, (self.active_rune.menu_pos[0] - 6, self.active_rune.menu_pos[1] - 6))
             self.game.default_font.Render_Word(surf, "Souls Cost:   " + str(self.active_rune.current_soul_cost), (20, 20))        
-            self.game.default_font.Render_Word(surf, "Power:        " + str(self.active_rune.current_power), (20, 32))        
-            self.game.default_font.Render_Word(surf, "Upgrade Cost: " + str(self.active_rune.upgrade_cost), (20, 44))
-            soul_symbol_x_pos_offset = 120 + 8 * len(str(self.active_rune.upgrade_cost))
-            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 42), 1.5)
+            self.game.default_font.Render_Word(surf, "Power:        " + str(self.active_rune.current_power), (20, 44))        
+            self.game.default_font.Render_Word(surf, "Upgrade Cost: " + str(self.active_rune.upgrade_cost), (20, 68))
+            soul_symbol_x_pos_offset = 240 + 10 * len(str(self.active_rune.upgrade_cost))
+            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 66), 1.5)
+            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 18), 1.5)
 
 
         self.game.souls_interface.Render(self.game.display)
@@ -178,7 +205,7 @@ class Shrine_Menu(Menu):
 
         # Handle available rune
         if self.available_rune:
-            self.game.default_font.Render_Word(surf, self.available_rune_name, (self.available_rune.menu_pos[0] - 5, self.available_rune.menu_pos[1] - 15))
+            self.game.default_font.Render_Word(surf, self.available_rune_name, (self.available_rune.menu_pos[0] - 10, self.available_rune.menu_pos[1] - 15))
 
             self.available_rune.Render_Menu(surf)
 
@@ -207,27 +234,5 @@ class Shrine_Menu(Menu):
             if rune_button.effect == 'purchase':
                 continue
             rune_button.Render(surf)
-
-
-    def Purchase_Button(self, surf, rune_button):
-        if rune_button.effect != 'purchase':
-            return False
-        
-        if self.rune_bought:
-            pos_x = self.game.screen_width // self.game.render_scale // 2 - 20
-            pos_y = rune_button.pos[1] + rune_button.size[1] // 2 
-            self.game.default_font.Render_Word(surf, 'Select Rune', (pos_x, pos_y))
-            self.game.default_font.Render_Word(surf, 'To Replace', (pos_x, pos_y + 12))
-            
-            return True
-        pos_x = rune_button.pos[0] + rune_button.size[0] - 20
-        pos_y = rune_button.pos[1] + rune_button.size[1] // 2 - 4
-        rune_button.Render(surf)
-
-        self.game.default_font.Render_Word(surf, str(self.active_rune.cost_to_buy), (pos_x, pos_y))
-        soul_symbol_x_pos_offset = 12 * len(str(self.active_rune.upgrade_cost))
-
-        self.game.symbols.Render_Symbol(surf, 'soul', (pos_x + soul_symbol_x_pos_offset, pos_y - 2), 1.5)
-        return True
 
 
