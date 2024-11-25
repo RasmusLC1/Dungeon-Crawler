@@ -136,6 +136,7 @@ class Rune_Handler():
             self.game.item_handler.Add_Item(rune)
             return
 
+    # Only one of each rune, so easy filter by rune_type return when found
     def Remove_Rune_From_Inventory(self, rune_type):
         for rune in self.runes:
             if rune_type != rune.type:
@@ -146,7 +147,9 @@ class Rune_Handler():
             self.game.rune_inventory.Remove_Item(rune, True)
             self.game.item_handler.Remove_Item(rune)
 
-            return
+            return True
+    
+        return False
 
     
     def Find_Nearby_Runes(self, entity_pos, max_distance):

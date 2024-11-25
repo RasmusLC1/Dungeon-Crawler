@@ -3,7 +3,7 @@ from scripts.items.weapons.projectiles.projectile import Projectile
 class Ice_Particle(Projectile):
     def __init__(self, game, pos, damage, speed, shoot_distance, special_attack, direction, entity):
         super().__init__(game, pos, 'ice_particle', damage, speed, 1, 'particle', 'ice', shoot_distance, 'cut', (10, 10), False)
-        self.special_attack = special_attack / 4
+        self.special_attack = special_attack // 4
         self.entity = entity
         self.direction = direction  # Store the direction vector
         self.attack_animation_max = 3
@@ -39,3 +39,4 @@ class Ice_Particle(Projectile):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+

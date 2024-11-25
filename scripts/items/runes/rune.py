@@ -23,7 +23,6 @@ class Rune(Item):
         self.render = True
         self.picked_up = True
         self.cost_to_buy = soul_cost // 2 * power // 2
-        self.being_purchased = False
 
     def Save_Data(self):
         super().Save_Data()

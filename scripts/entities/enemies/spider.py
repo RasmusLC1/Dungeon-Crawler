@@ -40,7 +40,7 @@ class Spider(Enemy):
         self.Update_Shot_Fired()        
         self.Update_Attack_Cooldown()
 
-        if self.distance_to_player > 50 and self.attack_strategy != 'medium_range':
+        if self.distance_to_player > 100 and self.attack_strategy != 'medium_range':
             self.charge = 0
             self.attack_strategy = 'medium_range'
 
@@ -57,7 +57,7 @@ class Spider(Enemy):
             self.Jump_Attack()
             return
 
-        if self.distance_to_player <= 50:
+        if self.distance_to_player <= 100:
             self.Ranged_Attack()
             return
         
@@ -109,13 +109,7 @@ class Spider(Enemy):
 
         damage = 1
         speed = 1
-        max_range = 140
-
-        base_angle = math.atan2(self.attack_direction[1], self.attack_direction[0])
-
-        pos_x = math.cos(base_angle) * speed
-        pos_y = math.sin(base_angle) * speed
-        direction = (pos_x, pos_y)
+        max_range = 280
 
         spider_web = Spider_Web_Projectile(self.game,
                                     self.rect(),
@@ -125,7 +119,7 @@ class Spider(Enemy):
                                     max_range,
                                     'particle',
                                     self.charge,
-                                    direction,  # Pass the direction here
+                                    self.attack_direction,  
                                     self
                                 )
         
