@@ -333,26 +333,37 @@ class Inventory:
     # Add item to the inventory
     def Add_Item(self, item):
         # Check if an item can have more than one charge, example health potion is 3
-        if item.max_amount > 1:
-            for inventory_slot in self.inventory:
-                if inventory_slot.item:
-                    inventory_slot.item.Update()
-                    if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
-
-                        inventory_slot.item.Increase_Amount(item.amount)
-                        # Handle overflow and send it to the new available position
-                        if inventory_slot.item.amount > inventory_slot.item.max_amount:
-                            new_amount = inventory_slot.item.amount - inventory_slot.item.max_amount
-                            new_item = copy(item)
-                            new_item.Set_Amount(new_amount)
-                            # Add item to item list if there is no room
-                            if not self.Overflow(new_item):
-                                new_item.Update()
-                                self.game.item_handler.Add_Item(new_item)
-                        self.game.item_handler.Remove_Item(item)
-                        inventory_slot.item.Update()
-                        return True
+        if self.Add_Item_To_Inventory_Slot_Merge(item):
+            return True
                     
+        
+        return self.Add_Item_To_Inventory_Slot(item)
+
+    # Add items and merge items to prevent item loss
+    def Add_Item_To_Inventory_Slot_Merge(self, item):
+        if not item.max_amount > 1:
+            return False
+        for inventory_slot in self.inventory:
+            if inventory_slot.item:
+                inventory_slot.item.Update()
+                if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
+
+                    inventory_slot.item.Increase_Amount(item.amount)
+                    # Handle overflow and send it to the new available position
+                    if inventory_slot.item.amount > inventory_slot.item.max_amount:
+                        new_amount = inventory_slot.item.amount - inventory_slot.item.max_amount
+                        new_item = copy(item)
+                        new_item.Set_Amount(new_amount)
+                        # Add item to item list if there is no room
+                        if not self.Overflow(new_item):
+                            new_item.Update()
+                            self.game.item_handler.Add_Item(new_item)
+                    self.game.item_handler.Remove_Item(item)
+                    inventory_slot.item.Update()
+                    return True
+
+    # Add items without checking for slot merging
+    def Add_Item_To_Inventory_Slot(self, item):
         i = 0
         j = 0
         for inventory_slot in self.inventory:
@@ -373,8 +384,8 @@ class Inventory:
             if i >= self.x_size:
                 i = 0
                 j += 1
-
         return False
+
 
     def Get_Items(self):
         items = []

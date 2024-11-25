@@ -284,8 +284,15 @@ class Tilemap:
                 rects.append(pygame.Rect(tile.pos[0] * self.tile_size, tile.pos[1] * self.tile_size, self.tile_size, self.tile_size))
         return rects
     
+    def Render_All_Tiles(self):
+        self.game.ray_caster.Set_Disable_Distance_Debugger(True)
+        for tile_key in self.tilemap:
+            self.tilemap[tile_key].Render_All()
+            self.game.ray_caster.Add_Tile(self.tilemap[tile_key])
 
     
+
+
     def Set_Light_Level(self, tile, new_light_level):
         tile.Set_Light_Level(new_light_level)
 

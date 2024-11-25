@@ -11,6 +11,8 @@ class Ray_Caster():
         self.game = game
         self.default_activity = 700
 
+        self.disable_distance_debugger = False
+
         # Basic raycasting attributes
         self.num_lines = 20 # Define the number of lines and the spread angle (in degrees)
         self.spread_angle = 140  # Total spread of the fan (in degrees)
@@ -18,6 +20,8 @@ class Ray_Caster():
         self.angles = []
 
     def Update(self):
+        if self.disable_distance_debugger:
+            return
         
         self.Check_Tile_Active()
 
@@ -35,6 +39,8 @@ class Ray_Caster():
                 tile.active -= 1
             # Find distance from player and if it's greater than 300, delete it
             distance = math.sqrt((self.game.player.pos[0] - tile.pos[0] * self.game.tilemap.tile_size) ** 2 + (self.game.player.pos[1] - tile.pos[1] * self.game.tilemap.tile_size) ** 2)
+            
+            
             if abs(distance) > self.inactive_distance:
                 tile.active = 0
                 self.tiles.remove(tile)
@@ -62,6 +68,9 @@ class Ray_Caster():
             
             
         return True
+    
+    def Add_Tile(self, tile):
+        self.tiles.append(tile)
 
     def Add_Tile_Around_Player(self):
         radius = 2
@@ -97,3 +106,7 @@ class Ray_Caster():
 
     def rect(self, pos):
         return pygame.Rect(pos[0], pos[1], 10, 10)
+    
+
+    def Set_Disable_Distance_Debugger(self, state):
+        self.disable_distance_debugger = state

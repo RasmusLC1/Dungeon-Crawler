@@ -59,6 +59,9 @@ class Keyboard_Handler:
         if key_press.key == pygame.K_e:
             self.e_pressed = True
 
+        if key_press.key == pygame.K_p:
+            self.game.tilemap.Render_All_Tiles()
+
         if key_press.key == pygame.K_SPACE:
             self.space_pressed = True
         if key_press.key == pygame.K_LALT:

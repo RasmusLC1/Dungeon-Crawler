@@ -28,7 +28,7 @@ class Game:
     def run(self):  
         while True:
             fps = int(self.clock.get_fps())
-            pygame.display.set_caption('Dungeons of Madness             FPS: ' + str(fps))
+            pygame.display.set_caption('Dungeon Crawler             FPS: ' + str(fps))
             
             
             self.state_machine.Game_State()

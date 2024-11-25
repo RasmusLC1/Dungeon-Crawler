@@ -5,6 +5,7 @@ import pygame
 class Projectile(Weapon):
     def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, pos, type, damage, speed, range, weapon_class,  damage_type, attack_type, size, add_to_tile)
+        self.speed = speed
         self.shoot_speed = 0
         self.shoot_distance = shoot_distance
         self.pickup_allowed = True
@@ -38,6 +39,7 @@ class Projectile(Weapon):
         else:
             self.Point_Towards_Mouse_Enemy()
 
+    # Run once to setup the shooting
     def Initialise_Shooting(self, speed):
         if not self.shoot_speed:
             self.render = True
@@ -49,16 +51,11 @@ class Projectile(Weapon):
         return False
 
 
+    # Continously updated shooting effect
     def Shoot(self):
-        if not self.Update_Shoot_Distance():
-            self.shoot_speed = 0
-            self.special_attack = 0
-            self.shoot_speed = 0
-            self.picked_up = False
-            self.equipped = False
-            self.in_inventory = False
-            self.Set_Entity(None)
-            return  
+        
+        if self.Reset_Shot():
+            return
 
         dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
         dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
@@ -80,10 +77,22 @@ class Projectile(Weapon):
             return entity_hit
         return None
     
+    # Reset the weapon after the maximum distance has been rached
+    def Reset_Shot(self):
+        if self.Update_Shoot_Distance():
+            return False
+        self.shoot_speed = 0
+        self.special_attack = 0
+        self.shoot_speed = 0
+        self.picked_up = False
+        self.equipped = False
+        self.in_inventory = False
+        self.Set_Entity(None)
+        return True
+
     # Check for collision on attack
     def Attack_Collision_Check_Projectile(self):
         
-        self.Set_Attack_Hitbox_Render_TEST(self.game.render_scroll)
         pygame.draw.rect(self.game.display, (255, 0, 0), self.attack_hitbox)
 
         # Handle enemy attack collision check for player

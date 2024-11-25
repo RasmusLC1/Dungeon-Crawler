@@ -31,7 +31,7 @@ class Dungeon_Generator():
 
 
 
-
+    # Customise the internal map structure
     def Generate_Map(self):
         self.Delete_Map_File('data/maps/0.json')
         self.tilemap.Clear_Tilemap()

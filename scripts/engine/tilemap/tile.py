@@ -32,6 +32,10 @@ class Tile():
     def Set_Next_To_Wall(self, state):
         self.next_to_Wall = state
 
+    def Render_All(self):
+        self.Set_Light_Level(200)
+        self.Set_Active(200000)
+
 
     def Search_Entities(self, category):
         entities = []

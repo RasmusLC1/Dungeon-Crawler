@@ -7,7 +7,7 @@ import scripts.engine.assets.graphics_loader
 from scripts.engine.tilemap.tilemap import Tilemap
 from scripts.engine.assets.graphics_loader import Graphics_Loader
 
-RENDER_SCALE = 2.0
+RENDER_SCALE = 256
 
 class Editor:
     def __init__(self):
@@ -21,7 +21,7 @@ class Editor:
         self.asset_loader = Graphics_Loader()
         
         self.assets = {}
-        Graphics_Loader.Asset_Tile_List(self)
+        Graphics_Loader.Asset_Crypt_Tile_List(self)
         Graphics_Loader.Asset_Trap_List(self)
         Graphics_Loader.Asset_Objects_List(self)
         Graphics_Loader.Asset_Interative_Objects_List(self)
@@ -36,7 +36,7 @@ class Editor:
         self.tilemap = Tilemap(self, tile_size=16)
         
         try:
-            self.tilemap.load('map.json')
+            self.tilemap.Load('map.json')
         except FileNotFoundError:
             pass
         

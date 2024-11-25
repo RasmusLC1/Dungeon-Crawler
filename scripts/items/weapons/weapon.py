@@ -404,7 +404,7 @@ class Weapon(Item):
         self.attack_effect_animation = 0
 
 
-
+    # Handle computing the weapon's attack effect position
     def Attack_Effect_Position(self, offset):
         pos_x = self.entity.pos[0] - offset[0]
         pos_y = self.entity.pos[1] - offset[1] - 30
@@ -421,7 +421,7 @@ class Weapon(Item):
         return (pos_x, pos_y)
 
    
-    
+    # Handle rendering the weapons attack effect
     def Render_Attack_Effect(self, surf, offset):
         if not self.attacking:
             return
@@ -432,10 +432,20 @@ class Weapon(Item):
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         # attack_effect.set_alpha()
         attack_effect = pygame.transform.rotate(attack_effect, self.rotate)
-        flip_x = False
-        if self.entity.attack_direction[0] > 0 and abs(self.entity.attack_direction[0]) > abs(self.entity.attack_direction[1]):
-            flip_x = True
-        surf.blit( pygame.transform.flip(attack_effect, flip_x, False), (pos[0], pos[1]))
+        surf.blit( pygame.transform.flip(attack_effect, False, False), (pos[0], pos[1]))
+
+
+    # Render the weapon in entity's hand and rotate towards target
+    def Render_Equipped(self, surf, offset=(0, 0)):
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        if self.rotate:
+            weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
+
+        surf.blit( pygame.transform.flip(weapon_image, False, False),
+                    (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        
+        self.Render_Attack_Effect(surf, offset)    
+        
         
 
     # Render basic function on the map
@@ -479,20 +489,7 @@ class Weapon(Item):
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
-    # Render the weapon in entity's hand
-    def Render_Equipped(self, surf, offset=(0, 0)):
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-        if self.rotate:
-            weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
 
-        flip_x = False
-        if self.attacking and self.entity.attack_direction[0] < 0:
-            flip_x = True
-        surf.blit( pygame.transform.flip(weapon_image, flip_x, False),
-                    (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        
-        self.Render_Attack_Effect(surf, offset)    
-        
 
     # Render the weapon in entity's hand
     def Render_Equipped_Enemy(self, surf, offset=(0, 0)):

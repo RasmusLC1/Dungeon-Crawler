@@ -24,7 +24,7 @@ class Player(Moving_Entity):
         self.view_direction = (0,0)
 
         self.light_cooldown = 0
-        self.light_source = self.game.light_handler.Add_Light(self.pos, 4, self.tile)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, 2, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
 
         self.weapons = []

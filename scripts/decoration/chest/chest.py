@@ -26,28 +26,28 @@ class Chest(Decoration):
 
 
         self.weapons = [
-            # 'sword',
-            # 'spear',
-            # 'bow',
-            # 'arrow',
-            # 'shield',
-            # 'torch',
-            # 'halberd',
-            # 'hatchet',
+            'sword',
+            'spear',
+            'bow',
+            'arrow',
+            'shield',
+            'torch',
+            'halberd',
+            'hatchet',
             'battle_axe'
         ]
 
         self.potions = [
-            # 'health',
+            'health',
             'regen',
-            # 'soul',
-            # 'speed',
-            # 'strength',
-            # 'invisibility',
-            # 'silence',
-            # 'fire_resistance',
-            # 'freeze_resistance',
-            # 'poison_resistance',
+            'soul',
+            'speed',
+            'strength',
+            'invisibility',
+            'silence',
+            'fire_resistance',
+            'freeze_resistance',
+            'poison_resistance',
         ]
 
     
