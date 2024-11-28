@@ -21,6 +21,7 @@ class Weapon(Item):
 
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
+        self.special_attack_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
         self.attack_animation_counter = 0 # Animation countdown that ticks up to time
         
@@ -40,6 +41,7 @@ class Weapon(Item):
         self.max_charge_time = 100  # Maximum time to fully charge
         self.is_charging = False  # Tracks if the player is charging
         self.special_attack = 0 # special attack counter
+        self.max_special_attack = 20 # Limit for special attack
 
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
@@ -148,7 +150,7 @@ class Weapon(Item):
             return
         
         # Trigger special attack if mouse if held for > 20 frames
-        elif self.charge_time > 20:
+        elif self.charge_time > self.max_special_attack:
             self.Set_Special_Attack(offset)
             self.Reset_Weapon_Charge()
             return
@@ -226,7 +228,7 @@ class Weapon(Item):
             return
         self.entity.Attack_Direction_Handler(offset)
         self.Set_Block_Direction()
-        self.special_attack = self.charge_time
+        self.special_attack = min(self.charge_time, self.max_special_attack)
         self.Set_Rotation()
 
     def Reset_Special_Attack(self):
@@ -387,6 +389,11 @@ class Weapon(Item):
     def Stabbing_Attack(self):
         pass
 
+    
+    def Set_Special_Attack_Effect_Animation_Time(self):
+        self.attack_effect_animation_time = self.special_attack / self.special_attack_animation_max
+        print("TEST")
+
     def Set_Attack_Effect_Animation_Time(self):
         self.attack_effect_animation_time = self.attacking / self.attack_effect_animation_max
 
@@ -394,6 +401,16 @@ class Weapon(Item):
         if self.attack_effect_animation_counter >= self.attack_effect_animation_time:
             self.attack_effect_animation_counter = 0
             self.attack_effect_animation = min(self.attack_effect_animation + 1, self.attack_animation_max)
+            return
+
+        self.attack_effect_animation_counter += 1
+
+
+    def Update_Special_Attack_Effect_Animation(self):
+        if self.attack_effect_animation_counter >= self.attack_effect_animation_time:
+            print(self.attack_effect_animation_time)
+            self.attack_effect_animation_counter = 0
+            self.attack_effect_animation = min(self.attack_effect_animation + 1, self.special_attack_animation_max)
             return
 
         self.attack_effect_animation_counter += 1

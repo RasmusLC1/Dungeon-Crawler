@@ -64,7 +64,7 @@ class Enemy(Moving_Entity):
 
 
     def Update(self, tilemap, movement=(0, 0)):
-        self.path_finding.Path_Finding(self.target)
+        self.path_finding.Path_Finding()
         movement = self.direction
         
         super().Update(tilemap, movement = movement)

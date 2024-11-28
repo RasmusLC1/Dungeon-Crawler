@@ -97,10 +97,8 @@ class Level_Loader():
         self.game.scroll = [0, 0]
         # Spawn Player
         self.Spawn_Player()
-        
-        
-                
-        
+ 
+ 
         self.game.item_inventory = Item_Inventory(self.game)
         self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior')
         self.game.rune_inventory = Rune_Inventory(self.game)

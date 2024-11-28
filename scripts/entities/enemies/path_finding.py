@@ -30,15 +30,14 @@ class Path_Finding():
 
 
 
-    def Path_Finding(self, target, look_for_new_path = False):
+    def Path_Finding(self, look_for_new_path = False):
         self.Calculate_Distance_To_Player()
 
         self.Set_Position_Holder()
 
         self.Corner_Handling()
 
-
-
+        # Checks if the enemy is stuck
         self.Update_Stuck_Timer()
         if self.Stuck_Check():
             return

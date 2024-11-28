@@ -28,8 +28,7 @@ class Spider_Web_Projectile(Projectile):
                 self.Set_Special_Attack(0)
             return
 
-        print(self.shoot_speed, self.attack_direction)
-        entity = super().Shoot()
+        super().Shoot()
 
         self.Entity_Collision_Detection()
 
