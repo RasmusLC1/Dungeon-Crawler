@@ -21,7 +21,7 @@ class Weapon(Item):
 
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
-        self.special_attack_animation_max = 1 # Maximum amount of attack animations
+        self.special_attack_effect_animation_max = 1 # Maximum amount of attack animations
         self.attack_animation_time = 0 # Time to shift to new animation
         self.attack_animation_counter = 0 # Animation countdown that ticks up to time
         
@@ -391,8 +391,7 @@ class Weapon(Item):
 
     
     def Set_Special_Attack_Effect_Animation_Time(self):
-        self.attack_effect_animation_time = self.special_attack / self.special_attack_animation_max
-        print("TEST")
+        self.attack_effect_animation_time = self.special_attack / self.special_attack_effect_animation_max
 
     def Set_Attack_Effect_Animation_Time(self):
         self.attack_effect_animation_time = self.attacking / self.attack_effect_animation_max
@@ -408,9 +407,8 @@ class Weapon(Item):
 
     def Update_Special_Attack_Effect_Animation(self):
         if self.attack_effect_animation_counter >= self.attack_effect_animation_time:
-            print(self.attack_effect_animation_time)
             self.attack_effect_animation_counter = 0
-            self.attack_effect_animation = min(self.attack_effect_animation + 1, self.special_attack_animation_max)
+            self.attack_effect_animation = min(self.attack_effect_animation + 1, self.special_attack_effect_animation_max)
             return
 
         self.attack_effect_animation_counter += 1
@@ -442,7 +440,6 @@ class Weapon(Item):
     def Render_Attack_Effect(self, surf, offset):
         if not self.attacking:
             return
-        
         pos = self.Attack_Effect_Position(offset)
         
         effect_type = self.effect + '_' + self.attack_type + '_effect'
