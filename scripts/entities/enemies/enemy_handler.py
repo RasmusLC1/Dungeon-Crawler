@@ -48,7 +48,7 @@ class Enemy_Handler():
         for i in range(20):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(0, 5)
+            enemy_variant = random.randint(0, 2)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(0, 10)
@@ -207,10 +207,10 @@ class Enemy_Handler():
         if max_distance <= 5:
             return self.game.tilemap.Search_Nearby_Tiles(max_distance, entity.pos, 'enemy')
         else:
-            return self.Find_Nearby_Enemies_Long(entity, max_distance)
+            return self.Find_Nearby_Enemies_Long_Distance(entity, max_distance)
     
     # Long distance enemy search
-    def Find_Nearby_Enemies_Long(self, entity, max_distance):
+    def Find_Nearby_Enemies_Long_Distance(self, entity, max_distance):
         nearby_enemies = []
         for enemy in self.enemies:
             distance = math.sqrt((entity.pos[0] - enemy.pos[0]) ** 2 + (entity.pos[1] - enemy.pos[1]) ** 2)
