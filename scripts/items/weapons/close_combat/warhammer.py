@@ -26,18 +26,24 @@ class Warhammer(Weapon):
         
         self.special_attack -= 1
         self.Smash_Attack_Effect()
+        self.Smash_Attack()
 
+        
+    def Smash_Attack(self):
+        if self.special_attack != self.max_special_attack // 2:
+            return
+        damage_holder = self.damage
+        self.damage = 1 # quarter damage on stun
+        # Stun nearby enemies
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3)
+        for enemy in self.nearby_enemies:
+            enemy.Set_Effect('snare', self.max_special_attack * 2)
+            self.Entity_Hit(enemy)
 
-        if self.special_attack == self.max_special_attack // 2:
-            damage_holder = self.damage
-            self.damage = 1 # quarter damage on stun
-            # Stun nearby enemies
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3)
-            for enemy in self.nearby_enemies:
-                enemy.Set_Effect('snare', self.max_special_attack * 2)
-                self.Entity_Hit(enemy)
-
-            self.damage = damage_holder # Reset Damage
+        self.damage = damage_holder # Reset Damage
+        self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
+        return
+    
         
     def Smash_Attack_Effect(self):
         self.Update_Special_Attack_Effect_Animation()

@@ -167,6 +167,8 @@ class Weapon(Item):
         if not self.is_charging:
             return False
         
+        # Slow the entity whilst charging weapon
+        self.entity.Reduce_Movement(4)
         # Increase charge time while holding the button
         self.charge_time += 1
         if self.charge_time >= self.max_charge_time:

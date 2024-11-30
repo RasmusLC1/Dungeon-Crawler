@@ -202,6 +202,9 @@ class Graphics_Loader:
 
             'warhammer': get_tiles_from_sheet('weapons/warhammer/warhammer.png', 6, 0, 0, 0, 32, 32),
             'warhammer_attack_cut': get_tiles_from_sheet('weapons/warhammer/warhammer_cut_attack.png', 12, 0, 0, 0, 32, 32),
+
+            'crossbow': get_tiles_from_sheet('weapons/crossbow/crossbow.png', 8, 0, 0, 0, 32, 32),
+            'crossbow_attack': get_tiles_from_sheet('weapons/crossbow/crossbow_attack.png', 2, 0, 0, 0, 32, 32),
         }
         self.assets.update(Weapons_assets)
 

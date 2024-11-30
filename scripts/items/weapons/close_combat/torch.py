@@ -8,6 +8,7 @@ class Torch(Weapon):
         super().__init__(game, pos, 'torch', 1, 2, 3, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
+        self.max_special_attack = 80
         self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.fire_cooldown = 0
@@ -43,6 +44,7 @@ class Torch(Weapon):
 
     
     def Fire_Particle_Creation(self):
+        print(self.special_attack)
         # Handle cooldown for spacing between fire particles
         if self.fire_cooldown:
             self.fire_cooldown -= 1
@@ -82,7 +84,7 @@ class Torch(Weapon):
                 direction,  # Pass the direction here
                 self.entity
             )
-
+            print(self.special_attack)
             self.game.item_handler.Add_Item(fire_particle)
 
     def Set_Special_Attack(self, offset = (0,0)):

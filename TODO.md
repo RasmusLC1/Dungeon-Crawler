@@ -65,18 +65,18 @@ Game Ideas
 
 
 # Weapons:
-    Implement better animations, bright arcs for where the damage area is
+    # Implement better animations, bright arcs for where the damage area is
     # Torch, emits light and be be used to set enemies on fire, relatively low damage
     # Sword, best damage, little utility
     # Spear, can be thrown
     # Shield, can block damage, can be used to rocket jump with bomb
     # Bow, can press button, different arrows that can do certain things
+    # Axe, can break wood doors
+    # Hatchet, small axe, faster than axe
+    # Mace/Hammer, can break certain walls and enviorement, special ground pound to stun nearby enemies
+    # Halberd, swing and stab attack, charge attack
     Crossbow, Same as bow, but takes longer to load, but can be preloaded
-    Halberd, swing and stab attack, charge attack
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
-    Axe, can break wood doors
-    Hatchet, small axe, faster than axe
-    Mace/Hammer, can break certain walls and enviorement, special ground pound to stun nearby enemies
     magic Staff, improved spells but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
 
 # Items

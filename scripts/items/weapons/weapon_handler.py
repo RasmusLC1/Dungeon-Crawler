@@ -7,6 +7,7 @@ from scripts.items.weapons.projectiles.spear import Spear
 from scripts.items.weapons.projectiles.hatchet import Hatchet
 from scripts.items.weapons.projectiles.hammer import Hammer
 from scripts.items.weapons.ranged_weapons.bow import Bow
+from scripts.items.weapons.ranged_weapons.crossbow import Crossbow
 from scripts.items.weapons.projectiles.arrow import Arrow
 from scripts.items.weapons.shields.shield import Shield
 
@@ -17,7 +18,6 @@ class Weapon_Handler():
 
     def Weapon_Spawner(self, name, pos_x, pos_y, amount = 0, data = None):
         weapon = None
-        print(name)
         if 'sword' == name:
             weapon = self.Spawn_Sword(pos_x, pos_y)
 
@@ -31,7 +31,6 @@ class Weapon_Handler():
             weapon = self.Spawn_Hammer(pos_x, pos_y)
 
         elif 'warhammer' == name:
-            print("TEST")
             weapon = self.Spawn_Warhammer(pos_x, pos_y)
 
         elif 'battle_axe' == name:
@@ -48,6 +47,9 @@ class Weapon_Handler():
 
         elif 'bow' == name:
             weapon = self.Spawn_Bow(pos_x, pos_y)
+
+        elif 'crossbow' == name:
+            weapon = self.Spawn_Crossbow(pos_x, pos_y)
 
         elif 'arrow' in name:
             weapon = self.Spawn_Arrow(pos_x, pos_y, amount)
@@ -99,6 +101,8 @@ class Weapon_Handler():
     def Spawn_Bow(self, pos_x, pos_y):
         return Bow(self.game, (pos_x, pos_y))
 
+    def Spawn_Crossbow(self, pos_x, pos_y):
+        return Crossbow(self.game, (pos_x, pos_y))
 
     def Spawn_Arrow(self, pos_x, pos_y, amount):
         return Arrow(self.game, (pos_x, pos_y), amount)

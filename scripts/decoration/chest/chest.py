@@ -29,14 +29,15 @@ class Chest(Decoration):
             # 'sword',
             # 'spear',
             # 'bow',
-            # 'arrow',
+            'arrow',
             # 'shield',
             # 'torch',
             # 'halberd',
             # 'hatchet',
             # 'battle_axe',
-            'warhammer',
+            # 'warhammer',
             # 'hammer',
+            'crossbow',
         ]
 
         self.potions = [
