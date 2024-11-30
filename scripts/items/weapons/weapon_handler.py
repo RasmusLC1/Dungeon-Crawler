@@ -1,6 +1,7 @@
 from scripts.items.weapons.close_combat.sword import Sword
 from scripts.items.weapons.close_combat.halberd import Halberd
 from scripts.items.weapons.close_combat.torch import Torch
+from scripts.items.weapons.close_combat.warhammer import Warhammer
 from scripts.items.weapons.close_combat.battle_axe import Battle_Axe
 from scripts.items.weapons.projectiles.spear import Spear
 from scripts.items.weapons.projectiles.hatchet import Hatchet
@@ -16,31 +17,36 @@ class Weapon_Handler():
 
     def Weapon_Spawner(self, name, pos_x, pos_y, amount = 0, data = None):
         weapon = None
-        if 'sword' in name:
+        print(name)
+        if 'sword' == name:
             weapon = self.Spawn_Sword(pos_x, pos_y)
 
-        elif 'halberd' in name:
+        elif 'halberd' == name:
             weapon = self.Spawn_Halberd(pos_x, pos_y)
 
-        elif 'hatchet' in name:
+        elif 'hatchet' == name:
             weapon = self.Spawn_Hatchet(pos_x, pos_y)
 
-        elif 'hammer' in name:
+        elif 'hammer' == name:
             weapon = self.Spawn_Hammer(pos_x, pos_y)
 
-        elif 'battle_axe' in name:
+        elif 'warhammer' == name:
+            print("TEST")
+            weapon = self.Spawn_Warhammer(pos_x, pos_y)
+
+        elif 'battle_axe' == name:
             weapon = self.Spawn_Battle_Axe(pos_x, pos_y)
 
-        elif 'shield' in name:
+        elif 'shield' == name:
             weapon = self.Spawn_Shield(pos_x, pos_y)
 
-        elif 'spear' in name:
+        elif 'spear' == name:
             weapon = self.Spawn_Spear(pos_x, pos_y)
 
-        elif 'torch' in name:
+        elif 'torch' == name:
             weapon = self.Spawn_Torch(pos_x, pos_y)
 
-        elif 'bow' in name:
+        elif 'bow' == name:
             weapon = self.Spawn_Bow(pos_x, pos_y)
 
         elif 'arrow' in name:
@@ -73,6 +79,9 @@ class Weapon_Handler():
     
     def Spawn_Hammer(self, pos_x, pos_y):
         return Hammer(self.game, (pos_x, pos_y))
+    
+    def Spawn_Warhammer(self, pos_x, pos_y):
+        return Warhammer(self.game, (pos_x, pos_y))
     
     def Spawn_Battle_Axe(self, pos_x, pos_y):
         return Battle_Axe(self.game, (pos_x, pos_y))

@@ -184,6 +184,7 @@ Game Ideas
 # Enemies:
     Enemies start out basic but can upgrade to elite as dungeon effects trigger
     Spawn enemies using dungeon director when effects trigger
+    Enemies have a difficulty attribute to make the spawning dynamic
     - pack swarms the player
     - Solo, goes after the player alone
     - Scout, looks for and calls allies to attack the player

@@ -7,19 +7,18 @@ import pygame
 class Battle_Axe(Weapon):
     def __init__(self, game, pos):
         super().__init__(game, pos, 'battle_axe', 1, 2, 3, 'two_handed_melee')
-        self.max_animation = 5
-        self.attack_animation_max = 5
+        self.max_animation = 4
+        self.attack_animation_max = 14
         self.special_attack_effect_animation_max = 8
         self.spin_index = 0
         self.spin_countdown = 0
         self.max_special_attack = 32
-        self.spin_attacking = False
-        self.spin_attack_directions = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        self.spin_attack_directions = [[1, 0], [0, 1], [-1, 0], [0, -1]] # Attack direction for the entity
 
 
 
     def Special_Attack(self):
-        if not self.spin_attacking or not self.equipped:
+        if not self.special_attack_active or not self.equipped:
             return
         
         if self.special_attack <= 0:
@@ -41,13 +40,11 @@ class Battle_Axe(Weapon):
         for enemy in self.nearby_enemies:
             distance = math.sqrt((self.entity.pos[0] - enemy.pos[0]) ** 2 + (self.entity.pos[1] - enemy.pos[1]) ** 2)
             if distance <= 40:
-                damage = self.entity.strength * self.damage
-                enemy.Damage_Taken(damage, self.entity.attack_direction)
+                self.Entity_Hit(enemy)
             
 
     def Set_Special_Attack(self, offset=...):
         self.attack_type = 'spin'
-        self.spin_attacking = True
         super().Set_Special_Attack(offset)
         self.Set_Special_Attack_Effect_Animation_Time()
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 4)
@@ -55,9 +52,7 @@ class Battle_Axe(Weapon):
     def Reset_Special_Attack(self):
         self.attack_type = 'cut'
         self.spin_countdown = 0
-        self.attack_effect_animation = 0
-        self.attack_effect_animation_counter = 0
-        self.spin_attacking = 0
+        
         return super().Reset_Special_Attack()
 
     def Spin_Attack_Effect(self):

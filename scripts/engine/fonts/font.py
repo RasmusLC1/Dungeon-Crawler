@@ -66,5 +66,5 @@ class Font():
                 surf.blit(item_image, pos)
                 pos = (pos[0] + 14, pos[1])
             except Exception as e:
-                print(f"WRONG SYMBOL: {e}")
+                print(f"WRONG SYMBOL FONT: {e}")
             

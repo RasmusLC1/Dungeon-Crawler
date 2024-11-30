@@ -42,6 +42,8 @@ class Weapon(Item):
         self.is_charging = False  # Tracks if the player is charging
         self.special_attack = 0 # special attack counter
         self.max_special_attack = 20 # Limit for special attack
+        self.special_attack_active = False # Check if weapon is special attacking
+
 
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
@@ -231,9 +233,15 @@ class Weapon(Item):
         self.Set_Block_Direction()
         self.special_attack = min(self.charge_time, self.max_special_attack)
         self.Set_Rotation()
+        self.special_attack_active = True
+
 
     def Reset_Special_Attack(self):
         self.rotate = 0
+        self.special_attack_active = False
+        self.attack_effect_animation = 0
+        self.attack_effect_animation_counter = 0
+
 
     # Initialise the charging of the weapon
     def Set_Charging_Player(self):
