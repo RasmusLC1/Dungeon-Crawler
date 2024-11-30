@@ -46,7 +46,8 @@ class Projectile(Weapon):
             self.shoot_distance = self.shoot_distance_holder
             self.active = 255
             self.shoot_speed = speed * 2
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * 2)
+            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * 10)
+
             return True
         return False
 
@@ -104,6 +105,7 @@ class Projectile(Weapon):
             # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:
                 continue
+
             # Check for collision with enemy
             if self.rect().colliderect(enemy.rect()):
                 self.Entity_Hit(enemy)

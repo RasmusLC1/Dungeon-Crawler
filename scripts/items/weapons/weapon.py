@@ -55,6 +55,7 @@ class Weapon(Item):
             if self.entity.category == 'enemy':
                 return
         super().Save_Data()
+        
         self.saved_data['damage'] = self.damage
         self.saved_data['speed'] = self.speed
         self.saved_data['range'] = self.range

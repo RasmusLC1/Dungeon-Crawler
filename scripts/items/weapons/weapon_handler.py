@@ -4,6 +4,7 @@ from scripts.items.weapons.close_combat.torch import Torch
 from scripts.items.weapons.close_combat.battle_axe import Battle_Axe
 from scripts.items.weapons.projectiles.spear import Spear
 from scripts.items.weapons.projectiles.hatchet import Hatchet
+from scripts.items.weapons.projectiles.hammer import Hammer
 from scripts.items.weapons.ranged_weapons.bow import Bow
 from scripts.items.weapons.projectiles.arrow import Arrow
 from scripts.items.weapons.shields.shield import Shield
@@ -23,6 +24,9 @@ class Weapon_Handler():
 
         elif 'hatchet' in name:
             weapon = self.Spawn_Hatchet(pos_x, pos_y)
+
+        elif 'hammer' in name:
+            weapon = self.Spawn_Hammer(pos_x, pos_y)
 
         elif 'battle_axe' in name:
             weapon = self.Spawn_Battle_Axe(pos_x, pos_y)
@@ -45,13 +49,14 @@ class Weapon_Handler():
         if not weapon:
             return False
         
+        
         if data:
             weapon.Load_Data(data)
             if weapon.equipped:
                 weapon.entity = self.game.player
                 weapon.Equip()
         
-        if weapon.in_inventory:
+        if not weapon.in_inventory:
             self.game.item_handler.Add_Item(weapon)
 
         return True
@@ -65,6 +70,9 @@ class Weapon_Handler():
     
     def Spawn_Hatchet(self, pos_x, pos_y):
         return Hatchet(self.game, (pos_x, pos_y))
+    
+    def Spawn_Hammer(self, pos_x, pos_y):
+        return Hammer(self.game, (pos_x, pos_y))
     
     def Spawn_Battle_Axe(self, pos_x, pos_y):
         return Battle_Axe(self.game, (pos_x, pos_y))
