@@ -44,7 +44,6 @@ class Torch(Weapon):
 
     
     def Fire_Particle_Creation(self):
-        print(self.special_attack)
         # Handle cooldown for spacing between fire particles
         if self.fire_cooldown:
             self.fire_cooldown -= 1
@@ -84,7 +83,6 @@ class Torch(Weapon):
                 direction,  # Pass the direction here
                 self.entity
             )
-            print(self.special_attack)
             self.game.item_handler.Add_Item(fire_particle)
 
     def Set_Special_Attack(self, offset = (0,0)):

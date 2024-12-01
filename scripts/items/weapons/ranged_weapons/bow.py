@@ -137,16 +137,6 @@ class Bow(Weapon):
                 self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
         return False
 
-   
-
-
-    def Shoot_Arrow(self):
-        arrow_damage = min(2, self.charge_time // 10)
-        arrow_speed = max(3, self.charge_time // 10)
-        self.arrow.Set_Damage(arrow_damage)
-        self.arrow.Set_Speed(arrow_speed)
-        self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
-        self.arrow.Special_Attack()
 
     def Reset_Bow(self):
         # Reset only if necessary to avoid redundant calls

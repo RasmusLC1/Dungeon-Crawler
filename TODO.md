@@ -57,6 +57,7 @@ Game Ideas
     # Chunk system to prevent slowdown with larger maps
     # Save Load System
     Cards / Runes
+    Minimap, adjust rendering scale for minimap and only display tiles that has been in raycaster
 
 # Gameplay
     # Player can hold weapons
@@ -140,6 +141,7 @@ Game Ideas
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
         Arcane conduit, increase power level of your other spells
+        Auto pickup of items
 
 
 
@@ -236,7 +238,7 @@ Game Ideas
 
     Crystal Caverns, High armour enemies, crystals that emit light, Rare gems
 
-    Aztec Temple, 
+    Aztec Temple, dinosaurs worship, dinosaur skull masks for some enemies, 
 
     Lava forge, lots of lava, enemies are immune to fire and deal fire damage, rare weapons
 
