@@ -64,8 +64,7 @@ class Weapon_Handler():
                 weapon.entity = self.game.player
                 weapon.Equip()
         
-        if not weapon.in_inventory:
-            self.game.item_handler.Add_Item(weapon)
+        self.game.item_handler.Add_Item(weapon)
 
         return True
 

@@ -33,7 +33,6 @@ class Inventory:
 
                 if item_data['inventory_index'] != inventory_slot.index:
                     continue
-
                 self.game.item_handler.Load_Item_From_Data(item_data)
                 item = self.game.item_handler.Find_Item(item_data['ID'])
                 if not item:
@@ -41,7 +40,6 @@ class Inventory:
 
                 if 'weapon' in item.sub_category:
                     item.Set_Entity(self.game.player)
-                    print(item)
 
                 inventory_slot.Add_Item(item)
 

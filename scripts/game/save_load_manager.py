@@ -29,6 +29,20 @@ class Save_Load_Manager():
             entity_data = data[name]
             entity.Load_Data(entity_data)
 
+
+    def Clear_Data_File(self, name):
+        file_name = self.save_folder+"/"+name+self.file_extension
+        if not self.Check_For_File(file_name):
+            print("File not found\t", file_name)
+            exit(0)
+        try:
+            os.remove(file_name)
+            print(f"File deleted: {file_name}")
+        except Exception as e:
+            print(f"Error deleting file: {file_name}\n{e}")
+            exit(0)
+
+
     def Check_For_File(self, file_name):
         return os.path.exists(file_name)
 
