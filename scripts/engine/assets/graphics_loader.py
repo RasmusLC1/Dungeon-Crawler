@@ -26,6 +26,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
         Graphics_Loader.Asset_Rune(self)
+        Graphics_Loader.Asset_Menu(self)
 
         
     def Asset_Background_List(self):
@@ -394,3 +395,9 @@ class Graphics_Loader:
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 32, 32),
         }
         self.assets.update(font)
+
+    def Asset_Menu(self):
+        menu = {
+            'loading_bar' : get_tiles_from_sheet('menu/loading_screen.png', 6, 0, 0, 0, 96, 96),
+        }
+        self.assets.update(menu)

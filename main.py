@@ -22,7 +22,9 @@ class Game:
 
 
         
-        
+    def Update_Display(self):
+        self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
+        pygame.display.update()
         
 
     def run(self):  
@@ -35,8 +37,10 @@ class Game:
             
             self.input_update.Input_Handler()
             
-            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
-            pygame.display.update()
+            self.Update_Display()
             self.clock.tick(60)
 
+
+
 Game().run()
+

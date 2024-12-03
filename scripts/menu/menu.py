@@ -7,7 +7,7 @@ class Menu():
         self.background_color = (20, 20, 20)
         self.size_x = self.game.screen_width // self.game.render_scale
         self.size_y = self.game.screen_height // self.game.render_scale
-
+        self.buttons = []
         self.pos_x = 0
         self.pos_y = 0
         alpha = 2
@@ -36,8 +36,8 @@ class Menu():
     def Render(self, surf):
 
         surf.blit(self.rect_surface, (self.pos_x, self.pos_y))
-
         for button in self.buttons:
+
             button.Render(surf)
 
 

@@ -55,8 +55,7 @@ class State_Machine():
 
     
     def New_Game(self):
-        self.game.save_load_manager.Clear_Data_File('save_Data')
-
+        self.game.menu_handler.Loading_Menu_Reset()
         self.game.level_loader.Load_Level_New_Map(self.game.level)
 
         self.Set_State('run_game')

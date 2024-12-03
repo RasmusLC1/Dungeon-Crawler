@@ -37,7 +37,6 @@ class Shrine_Menu(Menu):
         
 
     def Init_Buttons(self):
-        self.buttons = []
         width = self.game.screen_width // self.game.render_scale // 2
         height = self.game.screen_height // self.game.render_scale
         button_size_x = 200

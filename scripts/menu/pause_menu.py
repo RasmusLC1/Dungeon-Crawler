@@ -7,7 +7,6 @@ class Pause_Menu(Menu):
         
 
     def Init_Buttons(self):
-        self.buttons = []
         width = self.game.screen_width // self.game.render_scale // 2
         button_size_x = 200
         button_size_y = 40

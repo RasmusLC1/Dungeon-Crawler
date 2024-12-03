@@ -1,5 +1,10 @@
 Game Ideas
 
+LOADING PAGE:
+Menu screen that renders parts of a loading bar every time a step in dungeon generator generates a new chunk
+Save it in a seperate class that accepts an increment from dungeon generator
+
+
 # Dungeon Crawler Gameplay Ideas
     Earn money from Dungeon to pay for inn at night
     Collect companions from prison cells in Dungeon

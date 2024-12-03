@@ -27,4 +27,3 @@ class Renderer():
         self.game.player.status_effects.Render_Effects_Symbols(self.game.display)
         self.game.health_bar.Health_Bar()
 
-        self.game.screen.blit(pygame.transform.scale(self.game.display, self.game.screen.get_size()), (0,0))

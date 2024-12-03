@@ -27,16 +27,18 @@ class Dungeon_Generator():
         # TODO: IMPLEMENT MORE TRAPS AND ADD THEM HERE
         self.traps = ['spike_trap', 'spike_poison_trap', 'Pit_trap']
         self.noise_map = Noise_Map()
+        
         self.torches = []
 
 
 
     # Customise the internal map structure
     def Generate_Map(self):
-        self.Delete_Map_File('data/maps/0.json')
+        self.Update_Load_Menu(1)
+
         self.tilemap.Clear_Tilemap()
         self.cellular_automata.Create_Map()
-
+        self.Update_Load_Menu(2)
 
         self.Spawn_Lakes(7, floor, lava)
 
@@ -46,13 +48,16 @@ class Dungeon_Generator():
         self.Player_Spawn()
         self.a_star.Set_Map('custom')
         self.Spawn_Traps(1)
+        self.Update_Load_Menu(3)
+
         # Spawn more loot rooms in lower levels of dungeon
         # TODO: PROPER LEVEL SYSTEM
         temp_level = 5
         if not self.Spawn_Loot_Room(temp_level):
             self.Generate_Map()
-            return
-        
+            return        
+        self.Update_Load_Menu(4)
+
         self.Spawn_Boss_Room()
 
         self.a_star.Setup_Custom_Map(self.cellular_automata.map, self.cellular_automata.size_x, self.cellular_automata.size_y)
@@ -63,14 +68,18 @@ class Dungeon_Generator():
         if not self.Enemy_Spawner():
             self.Generate_Map()
             return
-
+        self.Update_Load_Menu(5)
+        
         self.Spawn_Chest(2)
 
         self.Level_Structure()
     
 
+        self.Update_Load_Menu(6)
         self.tilemap.save('data/maps/0.json')
 
+    def Update_Load_Menu(self, value):
+        self.game.menu_handler.Loading_Menu_Update(value)
 
 
 
