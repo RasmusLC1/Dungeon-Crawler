@@ -28,7 +28,7 @@ class Chest(Decoration):
         self.weapons = [
             # 'sword',
             # 'spear',
-            # 'bow',
+            'bow',
             'arrow',
             # 'shield',
             # 'torch',
@@ -37,7 +37,7 @@ class Chest(Decoration):
             # 'battle_axe',
             # 'warhammer',
             # 'hammer',
-            'crossbow',
+            # 'crossbow',
         ]
 
         self.potions = [
@@ -77,8 +77,8 @@ class Chest(Decoration):
         
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(3, 3)
-
+        # self.loot_type = random.randint(0, 3) # Spawn normal
+        self.loot_type = 3 # Weapon spawning test
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
                 self.Open()

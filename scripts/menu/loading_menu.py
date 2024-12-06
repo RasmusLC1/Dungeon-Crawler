@@ -9,10 +9,6 @@ class Loading_Menu(Menu):
         self.rect_surface.set_alpha(250)
         self.load_state = 0
         self.max_load_state = 6
-        self.rect_surface = pygame.Surface((self.size_x, self.size_y))
-        self.rect_surface.set_alpha(0)
-        self.rect_surface.fill((255, 0, 0))
-        self.back_ground_image = pygame.transform.scale(self.game.assets['background'], (self.game.screen_width/self.game.render_scale, self.game.screen_height/self.game.render_scale))
 
         
 
@@ -30,7 +26,6 @@ class Loading_Menu(Menu):
         
 
     def Render(self, surf):
-        self.game.display.blit(self.back_ground_image, (0, 0))
         
 
         super().Render(surf)

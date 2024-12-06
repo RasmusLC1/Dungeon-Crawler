@@ -13,7 +13,6 @@ class Fire_Particle(Projectile):
 
 
     def Shoot(self):
-        print(vars(self))
         if not self.shoot_speed:
             self.Initialise_Shooting(self.speed)
         # Use the stored direction to move the particle

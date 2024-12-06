@@ -2,31 +2,31 @@ from scripts.items.weapons.weapon import Weapon
 from scripts.items.weapons.projectiles.arrow import Arrow
 import math
 import pygame
-import inspect
 
 
 class Bow(Weapon):
     def __init__(self, game, pos):
         super().__init__(game, pos, 'bow', 3, 8, 10, 'ranged')
         self.max_animation = 0
-        self.is_charging = 0
         self.attack_animation_max = 2
         self.distance_from_player = 0
         self.attack_animation_counter = 0
-        self.max_special_attack = 50
-        self.ready_to_shoot = False
         self.arrow = None
+        self.direction = (0, 0)
 
 
     def Update(self, offset = (0,0)):
         if self.arrow:
-            # self.arrow.Set_Equipped_Position()
             self.arrow.Set_Active(self.active)
             self.arrow.Set_Light_Level(self.light_level)
-        
         return super().Update(offset)
     
 
+    def Set_Speed(self, speed):
+        self.speed = speed
+
+    def Set_Attack(self):
+        pass
     
     def Update_Animation(self):
         if self.is_charging:
@@ -34,16 +34,11 @@ class Bow(Weapon):
         super().Update_Animation()
 
 
-    # Set the position of the bow when not drawn
-    def Set_Equipped_Position(self, direction_y):
-        self.Move((self.entity.pos[0] + 2, self.entity.pos[1]))
-        self.rotate = -30
-
     def Update_Attack_Animation(self):
         self.sub_type = self.type + '_attack'
         self.animation = self.attack_animation
         self.Set_Block_Direction()
-        self.Set_Rotation()
+        self.Point_Towards_Mouse()
         self.Set_Attack_Position()
 
 
@@ -61,59 +56,76 @@ class Bow(Weapon):
 
         self.Move((new_x_pos, new_y_pos))
 
+    # Set the position of the bow when not drawn
+    def Set_Equipped_Position(self, direction_y):
+        self.Move((self.entity.pos[0] + 2, self.entity.pos[1]))
+        self.rotate = -30
+    
 
-    # Charging the crossbow
-    def Set_Weapon_Charge(self, offset):
-        if not self.entity:
-            return
-        
-        if self.entity.category == "player":
-            self.is_charging = self.game.mouse.hold_down_left
-        
-        if self.is_charging == 10:
-            self.game.sound_handler.Play_Sound('bow_draw', 1)
+    def Set_Weapon_Charge(self, offset = (0, 0)):
+        try:
+            if 'player' == self.entity.category:
+                # Check that the weapon is in a weapon inventory
 
-        if not self.is_charging or self.is_charging > self.max_special_attack:
-            return
-        if self.ready_to_shoot:
-            self.Set_Attack()
-            return
-        
-
-        if self.is_charging < self.max_special_attack:
-            return
-        self.ready_to_shoot = True
-
+                if not self.inventory_type:
+                    return
+                self.Set_Charging_Player()
+                self.Player_Shooting()
+                return
+            elif 'enemy' == self.entity.category:
+                self.Set_Charging_Enemy()
+                return
+        except TypeError as e:
+            print(f"Entity neither enemy nor player: {e}")
         
 
     
-    def Set_Attack(self):
-        if not self.ready_to_shoot:
-            return
-        self.Find_Arrow()
-        self.game.sound_handler.Play_Sound('arrow_shot', 1)
-        self.ready_to_shoot = False
-        self.Shoot_Arrow()
-        self.Reset_Bow()
-        self.Set_Rotation()
+    def Player_Shooting(self):
+        if self.is_charging:
+            self.Update_Attack_Animation()
+            if not self.charge_time:
+                self.attack_animation_time = self.max_charge_time // (self.attack_animation_max + 1)
+            # Increase charge time while holding the button
+            self.charge_time += 1
+            if self.charge_time >= self.max_charge_time:
+                self.charge_time = self.max_charge_time  # Cap the charge time
+                self.charged_attack = True  # Mark the attack as charged
+            else:
+                self.attack_animation_counter += 1
+                if not self.arrow:
+                    if not self.Find_Arrow():
+                        self.Reset_Bow()
+                        return
+                    
+                    self.game.entities_render.Remove_Entity(self.arrow) # Remove the arrow
+                    
+                    self.game.sound_handler.Play_Sound('bow_draw', 1)
+                if self.attack_animation_time <= self.attack_animation_counter:
+                    self.attack_animation_counter = 0
+                    self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
 
+        elif self.charge_time > 0:
+            self.game.sound_handler.Play_Sound('arrow_shot', 1)
 
+            self.Shoot_Arrow()
+            self.Reset_Bow()
 
     def Enemy_Shooting(self):
         if not self.entity.charge:
             return False
 
         if self.is_charging > 70:
-            self.is_charging = 120
+            # print(vars(self.arrow))
+            self.charge_time = 120
             self.arrow.Set_Special_Attack(self.is_charging)
             self.arrow.Set_Delete_Countdown(50)
             self.Shoot_Arrow()
             self.Reset_Bow()
             return True
         
-        self.is_charging = self.entity.charge
-        if self.is_charging >= self.is_charging:
-            self.is_charging = self.is_charging  # Cap the charge time
+        # self.charge_time = self.entity.charge
+        if self.is_charging >= self.max_charge_time:
+            self.is_charging = self.max_charge_time  # Cap the charge time
             self.charged_attack = True  # Mark the attack as charged
         else:
             self.attack_animation_counter += 1
@@ -125,22 +137,11 @@ class Bow(Weapon):
                 self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
         return False
 
-   
-
-
-    def Shoot_Arrow(self):
-        arrow_damage = 30
-        arrow_speed = 1
-        self.arrow.shoot_speed = 4
-        self.arrow.Set_Damage(arrow_damage)
-        self.arrow.Set_Speed(arrow_speed)
-        self.game.item_handler.Add_Item(self.arrow)
-
 
     def Reset_Bow(self):
         # Reset only if necessary to avoid redundant calls
-        if self.arrow or self.is_charging <= 0:
-            self.is_charging = 0
+        if self.arrow or self.charge_time > 0:
+            self.charge_time = 0
             self.charged_attack = False
             self.animation = 0
             self.attack_animation_counter = 0
@@ -148,12 +149,11 @@ class Bow(Weapon):
             self.arrow = None
 
     def Find_Arrow(self):
-        if self.arrow:
-            return True
         weapon_inventory = self.game.weapon_inventory.inventories[1]
         inventory_slot = weapon_inventory.inventory[1]
         if not inventory_slot.item:
             return False
+        # print(inventory_slot.item.type)
         
         if not inventory_slot.item.type == 'arrow':
             return False
@@ -161,30 +161,53 @@ class Bow(Weapon):
         if not inventory_slot.item.amount > 0:
             return False
         
-        
-        if not self.Spawn_Arrow():
-            return False
-        
+        self.Spawn_Arrow()
         inventory_slot.item.Decrease_Amount(1)
         inventory_slot.Remove_Item_On_Amount()
+        
+
         return True
+
+
+    def Shoot_Arrow(self):
+        if not self.arrow:
+            return
+        arrow_damage = max(8, self.charge_time // 10)
+        arrow_speed = max(10, self.charge_time // 10)
+        self.arrow.Set_Damage(arrow_damage)
+        self.arrow.Set_Speed(arrow_speed)
+        self.arrow.Set_Special_Attack(self.charge_time, self.game.render_scroll)
+        self.arrow.Special_Attack()
+        self.arrow = None
 
 
     def Spawn_Arrow(self):
-        if self.arrow:  # Check if arrow already exists to prevent duplication
-            False
+        if not self.arrow:  # Check if arrow already exists to prevent duplication
+            arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), (16, 16))
+            self.arrow = arrow
+            self.entity.Attack_Direction_Handler(self.game.render_scroll)
 
-        arrow = Arrow(self.game, (self.pos[0] + 2, self.pos[1]), 1, (16, 16))
-        self.arrow = arrow
-        self.entity.Attack_Direction_Handler(self.game.render_scroll)
+            self.arrow.Shooting_Setup(self.entity, self.entity.attack_direction)
 
-        self.arrow.Shooting_Setup(self.entity, self.entity.attack_direction)
-        return True
+
+
+    # Point the weapon towards the mouse
+    def Point_Towards_Mouse(self):
+        self.rotate = 0
         
+        # Get the direction
+        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
+        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
+
+        # Calculate the angle in degrees
+        self.rotate = math.degrees(math.atan2(dy, dx))
+        self.rotate *= -1
+
 
 
     def Modify_Offset(self, rotate):
         self.rotate += rotate
+        print(self.rotate)
 
     def Send_To_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
         if not self.Bow_Inventory_Check(inventory_slot):
@@ -192,6 +215,7 @@ class Bow(Weapon):
         return super().Send_To_Inventory(inventory_slot, sending_inventory, receiving_inventory)
 
     def Bow_Inventory_Check(self, inventory_slot):
+        print(inventory_slot.inventory_type)
 
         if not 'bow' in self.type:
             return True

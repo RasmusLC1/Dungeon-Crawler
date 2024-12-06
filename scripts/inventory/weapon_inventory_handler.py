@@ -21,20 +21,23 @@ class Weapon_Inventory_Handler():
         i = 0
         for inventory in self.inventories:
             inventory.Save_Inventory_Data()
-            self.saved_data[inventory.index] = inventory.saved_data
+            self.saved_data[i] = inventory.saved_data
             i += 1
 
+
+    # The data is stored for each weapon inventory in order, so simply iterate over them and load the data
     def Load_Data(self, data):
+        i = 0
         for ID, item_data in data.items():
             if not item_data:
+                i += 1
+
                 continue
-            # Extract the key value
-            key = next(iter(item_data))
-            for inventory in self.inventories:
-                if key != inventory.index:
-                    continue
-                
-                inventory.Load_Data(item_data)
+            if i > 1:
+                return
+            print(item_data)
+            self.inventories[i].Load_Data(item_data)
+            i += 1
 
     def Clear_Inventory(self):
         for inventory in self.inventories:

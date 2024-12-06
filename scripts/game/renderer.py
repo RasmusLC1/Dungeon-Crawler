@@ -27,3 +27,5 @@ class Renderer():
         self.game.player.status_effects.Render_Effects_Symbols(self.game.display)
         self.game.health_bar.Health_Bar()
 
+
+    

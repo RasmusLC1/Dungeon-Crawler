@@ -17,6 +17,7 @@ class Player_Weapon_Handler():
 
 
     def Update(self, offset = (0, 0)):
+        
         if self.game.weapon_inventory.active_inventory == 0:
             self.Update_Left_Weapon(offset)
             self.Update_Right_Weapon(offset)
@@ -26,6 +27,7 @@ class Player_Weapon_Handler():
             print("INVENTORY MISSING")
 
     def Set_Active_Weapon(self, weapon, hand):  
+        
         if not weapon or not hand:
             return False    
         equipped_weapon = weapon

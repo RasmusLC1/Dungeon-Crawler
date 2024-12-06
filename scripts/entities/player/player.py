@@ -53,11 +53,11 @@ class Player(Moving_Entity):
 
 
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
+
         # self.invincible = False
         super().Update(tilemap, movement=movement)
         self.Mouse_Handler()
         self.movement_handler.Update()
-        # print(self.pos)
 
         
         self.Update_Light()
@@ -120,6 +120,7 @@ class Player(Moving_Entity):
         self.weapon_handler.Set_Inventory_Interaction(state)
 
     def Set_Active_Weapon(self, weapon, hand):  
+
         self.weapon_handler.Set_Active_Weapon(weapon, hand)
     
     def Set_Light_State(self, state):
