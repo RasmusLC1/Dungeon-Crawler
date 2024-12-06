@@ -47,6 +47,8 @@ class Projectile(Weapon):
             self.active = 255
             self.shoot_speed = speed * 2
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * 10)
+            if self.entity.category == "enemy":
+                self.nearby_enemies.append(self.game.player)
 
             return True
         return False
@@ -54,9 +56,9 @@ class Projectile(Weapon):
 
     # Continously updated shooting effect
     def Shoot(self):
-        
         if self.Reset_Shot():
             return
+       
 
         dir_x = self.pos[0] + self.attack_direction[0] * self.shoot_speed
         dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
@@ -69,8 +71,10 @@ class Projectile(Weapon):
             self.shoot_speed = 0
             return None
         self.Move((dir_x, dir_y))
+        entity_hit = None
         # Check for collision with enemy
         entity_hit = self.Attack_Collision_Check_Projectile()
+
         if entity_hit:
             self.special_attack = 0
             self.shoot_distance = 0
@@ -93,14 +97,6 @@ class Projectile(Weapon):
 
     # Check for collision on attack
     def Attack_Collision_Check_Projectile(self):
-        
-        pygame.draw.rect(self.game.display, (255, 0, 0), self.attack_hitbox)
-
-        # Handle enemy attack collision check for player
-        player_collision_result = self.Player_Collision(self.attack_hitbox)
-        if player_collision_result:
-            return player_collision_result
-
         for enemy in self.nearby_enemies:
             # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:

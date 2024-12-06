@@ -67,8 +67,11 @@ class Crossbow(Weapon):
         if not self.entity:
             return
         
-        if self.entity.category == "player":
-            self.is_charging = self.game.mouse.hold_down_left
+        if self.entity.category == "enemy":
+            self.Enemy_Shooting()
+            return
+
+        self.is_charging = self.game.mouse.hold_down_left
         
         if self.is_charging == 10:
             self.game.sound_handler.Play_Sound('bow_draw', 1)
@@ -105,24 +108,18 @@ class Crossbow(Weapon):
 
         if self.is_charging > 70:
             self.is_charging = 120
-            self.arrow.Set_Special_Attack(self.is_charging)
+            self.Spawn_Arrow()
             self.arrow.Set_Delete_Countdown(50)
             self.Shoot_Arrow()
             self.Reset_Bow()
             return True
         
         self.is_charging = self.entity.charge
-        if self.is_charging >= self.is_charging:
-            self.is_charging = self.is_charging  # Cap the charge time
-            self.charged_attack = True  # Mark the attack as charged
-        else:
-            self.attack_animation_counter += 1
-            self.Spawn_Arrow()
-            self.game.item_handler.Add_Item(self.arrow)
+        self.attack_animation_counter += 1
 
-            if self.attack_animation_time <= self.attack_animation_counter:
-                self.attack_animation_counter = 0
-                self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
+        if self.attack_animation_time <= self.attack_animation_counter:
+            self.attack_animation_counter = 0
+            self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
         return False
 
    
@@ -130,8 +127,7 @@ class Crossbow(Weapon):
 
     def Shoot_Arrow(self):
         arrow_damage = 30
-        arrow_speed = 1
-        self.arrow.shoot_speed = 4
+        arrow_speed = 3
         self.arrow.Set_Damage(arrow_damage)
         self.arrow.Set_Speed(arrow_speed)
         self.game.item_handler.Add_Item(self.arrow)
@@ -141,7 +137,6 @@ class Crossbow(Weapon):
         # Reset only if necessary to avoid redundant calls
         if self.arrow or self.is_charging <= 0:
             self.is_charging = 0
-            self.charged_attack = False
             self.animation = 0
             self.attack_animation_counter = 0
             self.attack_animation = 0

@@ -28,10 +28,10 @@ class Decrepit_Bones_Ranged(Enemy):
         super().Update(tilemap, movement)
         self.Update_Left_Weapon()
         self.Weapon_Cooldown()
-        if self.distance_to_player < 100 and self.distance_to_player > 40:
+        if self.distance_to_player < 200 and self.distance_to_player > 80:
             self.Attack()
 
-        if self.distance_to_player > 110 and self.charge:
+        if self.distance_to_player > 250 and self.charge:
             self.charge = 0
 
     def Set_Idle(self):

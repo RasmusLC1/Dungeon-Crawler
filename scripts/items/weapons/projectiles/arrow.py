@@ -13,7 +13,7 @@ class Arrow(Projectile):
 
     
     def Set_Speed(self, speed):
-        self.speed += speed
+        self.speed = speed
 
     def Update_Flip(self):
         pass
