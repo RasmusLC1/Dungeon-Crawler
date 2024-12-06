@@ -20,6 +20,13 @@ class Inventory_Slot():
         self.saved_data = {}
       
 
+
+    def Update_Pos(self, pos):
+        self.pos = pos
+        if self.item:
+            self.Move_Item()
+
+
     def Setup_Inventory_Texture(self):
         light_grey = (211, 211, 211)
         self.box_surface = pygame.Surface(self.size)
@@ -49,6 +56,10 @@ class Inventory_Slot():
             return
         self.item.Update()
 
+    def Move_Item(self):
+        self.item.Move((self.pos[0] + 5, self.pos[1] + 5))
+
+
     def Add_Item(self, item):
         if not item:
             return False
@@ -58,7 +69,7 @@ class Inventory_Slot():
         self.item = item
         self.item.active = True
         self.item.picked_up = True
-        self.item.Move((self.pos[0] + 5, self.pos[1] + 5))
+        self.Move_Item()
         self.item.Set_Inventory_Index(self.index)
         if self.inventory_type:
             self.item.Set_Inventory_Type(self.inventory_type)

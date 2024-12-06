@@ -5,6 +5,8 @@ class Text_Box():
         self.game = game
         self.item = item
         self.render = False
+        self.x_size = 0
+        self.y_size = 0
 
     def Update(self, hitbox_1, hitbox_2):
         
@@ -26,22 +28,38 @@ class Text_Box():
         if 'potion' in item_name:
             item_name = item_name.replace('_potion', '')
         return item_name
+    
+    def Set_Text_Box_pos(self, offset):
+        text_box_pos = (0,0)
+        # Render itembox different depending on if it's picked up or not
+        if self.item.picked_up:
+            # Move rune textbox to the left since they are located far right 
+            if self.item.sub_category == 'rune':
+                text_box_pos = (self.game.screen_width // self.game.render_scale - self.x_size - 20, self.item.pos[1] -  self.y_size - 20)
+            else:
+                text_box_pos = (self.item.pos[0], self.item.pos[1] -  self.y_size)
+        else:
+            text_box_pos = (self.item.pos[0] - offset[0], self.item.pos[1] - offset[1] - self.y_size)
+        
+        return text_box_pos
+    
+    def Set_Text_Box_Size(self, item_name):
+        if self.item.sub_category == "weapon":
+            self.y_size = 100
+        else:
+            self.y_size = 60
+        item_name_len = len(item_name)
+        self.x_size = 15 * item_name_len 
+        rectangle_surface = pygame.Surface((self.x_size, self.y_size), pygame.SRCALPHA)
+        rectangle_color = (0, 0, 0, 200)  # Black with 50% transparency (128 out of 255)
+        rectangle_surface.fill(rectangle_color)
+        return rectangle_surface
 
     def Text_Box_Setup(self, surf, item_name, offset):
         # Scale the textbox to the name of the item
-        item_name_len = len(item_name)
-        x_size = 16 * item_name_len + 5
-        y_size = 60
-        rectangle_surface = pygame.Surface((x_size, y_size), pygame.SRCALPHA)
-        rectangle_color = (0, 0, 0, 200)  # Black with 50% transparency (128 out of 255)
-        rectangle_surface.fill(rectangle_color)
-        if self.item.picked_up:
-            if self.item.sub_category == 'rune':
-                text_box_pos = (self.game.screen_width // self.game.render_scale - x_size - 20, self.item.pos[1] -  y_size - 20)
-            else:
-                text_box_pos = (self.item.pos[0], self.item.pos[1] -  y_size)
-        else:
-            text_box_pos = (self.item.pos[0] - offset[0], self.item.pos[1] - offset[1] - y_size)
+        
+        rectangle_surface = self.Set_Text_Box_Size(item_name)
+        text_box_pos = self.Set_Text_Box_pos(offset)
 
         surf.blit(rectangle_surface, text_box_pos)
         return text_box_pos
@@ -98,18 +116,25 @@ class Text_Box():
         self.game.default_font.Render_Word(surf, str(self.item.amount), (text_box_pos[0] + 20, text_box_pos[1] + 20))
 
         self.game.symbols.Render_Symbol(surf, 'gold',  (text_box_pos[0], text_box_pos[1] + 40))
-
         self.game.default_font.Render_Word(surf, str(self.item.value), (text_box_pos[0] + 20, text_box_pos[1] + 40))        
 
 
 
 
     def Render_Weapon(self, surf, text_box_pos):
-
+        
         # Render Damage and damage type
         self.game.symbols.Render_Symbol(surf, self.item.effect,  (text_box_pos[0], text_box_pos[1] + 20))
         self.game.default_font.Render_Word(surf, str(self.item.damage), (text_box_pos[0] + 20, text_box_pos[1] + 20))
 
+        # Render Damage and damage type
+        self.game.symbols.Render_Symbol(surf, "speed",  (text_box_pos[0], text_box_pos[1] + 40))
+        self.game.default_font.Render_Word(surf, str(self.item.speed), (text_box_pos[0] + 20, text_box_pos[1] + 40))
+
+        # Render Damage and damage type
+        self.game.symbols.Render_Symbol(surf, 'arrow',  (text_box_pos[0], text_box_pos[1] + 60))
+        self.game.default_font.Render_Word(surf, str(self.item.range), (text_box_pos[0] + 20, text_box_pos[1] + 60))
+
         # Render value
-        surf.blit(self.game.assets['gold'][0], (text_box_pos[0], text_box_pos[1] + 40))
-        self.game.default_font.Render_Word(surf, str(self.item.value), (text_box_pos[0] + 20, text_box_pos[1] + 40))
+        surf.blit(self.game.assets['gold'][0], (text_box_pos[0], text_box_pos[1] + 80))
+        self.game.default_font.Render_Word(surf, str(self.item.value), (text_box_pos[0] + 20, text_box_pos[1] + 80))

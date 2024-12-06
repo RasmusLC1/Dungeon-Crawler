@@ -12,7 +12,7 @@ class Symbols():
                                'freeze', 'poison', 'wet',
                                'block', 'fire_resistance',
                                'freeze_resistance', 'poison_resistance',
-                               'power', 'gold']
+                               'power', 'gold', 'arrow']
 
 
 

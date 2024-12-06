@@ -15,6 +15,8 @@ class Button():
         self.button_speed = 4
         self.save_game = save_game
 
+    def Update_Pos(self, pos):
+        self.pos = pos
     
     def Update(self):
         self.game.mouse.Menu_Mouse_Update()

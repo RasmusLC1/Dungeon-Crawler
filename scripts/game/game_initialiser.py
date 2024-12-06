@@ -33,9 +33,9 @@ class Game_Initialiser():
         pygame.init()
         self.game.render_scale = 2
         
-        self.game.screen_width = 1280
-        self.game.screen_height = 960
-        self.game.screen = pygame.display.set_mode((1280, 960))
+        self.game.screen_width = 1500
+        self.game.screen_height = 1000
+        self.game.screen = pygame.display.set_mode((self.game.screen_width, self.game.screen_height), pygame.RESIZABLE)
         self.game.display = pygame.Surface((self.game.screen_width/self.game.render_scale, self.game.screen_height/self.game.render_scale))
         self.game.render_scroll = (0,0)
         

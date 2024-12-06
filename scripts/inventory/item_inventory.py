@@ -14,12 +14,16 @@ class Item_Inventory(Inventory):
     def Setup(self):
         index = 0
         for i in range(self.x_size):
-            x = i * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
-            y = self.game.screen_height / self.game.render_scale - 40
+            (x, y) = self.Set_Inventory_Slot_Pos(i)
             inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, index, str(i + 1))
             inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
             self.inventory.append(inventory_slot)
             index += 1
+
+    def Set_Inventory_Slot_Pos(self, index):
+        x = index * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
+        y = self.game.screen_height / self.game.render_scale - 40
+        return (x, y)
 
     def Key_Board_Input(self):
         keyboard = self.game.keyboard_handler

@@ -28,8 +28,8 @@ class Weapon_Inventory(Inventory):
             return
         index = 0
         for i in range(self.x_size):
-            x = i * self.size[1] + 10
-            inventory_slot = Inventory_Slot(self.game, (x, 5), self.size, None, index)
+            (x, y) = self.Set_Inventory_Slot_Pos(i)
+            inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, index)
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)
             inventory_slot.inventory_type = weapon_class[i]
@@ -37,6 +37,12 @@ class Weapon_Inventory(Inventory):
             self.inventory.append(inventory_slot)  # Add to instance's inventory
             index += 1
     
+    def Set_Inventory_Slot_Pos(self, index):
+        x = index * self.size[1] + 10
+        y = 5
+        return (x, y)
+
+
     def Find_Inventory_Slot(self, searched_inventory_slot):
         for inventory_slot in self.inventory:
             if inventory_slot.inventory_type == searched_inventory_slot.inventory_type:

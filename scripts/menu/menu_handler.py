@@ -34,3 +34,10 @@ class Menu_Handler():
     def Loading_Menu_Update(self, value):
         self.loading_menu.Update(value)
         self.loading_menu.Render(self.game.display)
+
+
+    def Resize_Menus(self):
+        self.pause_menu.Set_Screen_Size(True) 
+        self.main_menu.Set_Screen_Size(True)
+        self.shrine_menu.Set_Screen_Size(True)
+        self.loading_menu.Set_Screen_Size(True)

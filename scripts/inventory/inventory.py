@@ -43,6 +43,14 @@ class Inventory:
 
                 inventory_slot.Add_Item(item)
 
+    def Set_Inventory_Slot_Pos(self, index):
+        pass
+
+    def Update_Inventory_Slot_Pos(self):
+        for index, inventory_slot in enumerate(self.inventory):
+            pos = self.Set_Inventory_Slot_Pos(index)
+            inventory_slot.Update_Pos(pos)
+
     def Clear_Inventory(self):
         for inventory_slot in self.inventory:
             inventory_slot.Remove_Item()

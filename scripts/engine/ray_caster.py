@@ -6,7 +6,7 @@ class Ray_Caster():
         self.tiles = []
         
         self.nearby_cooldown = 0
-        self.inactive_distance = 600
+        self.inactive_distance = 800
         
         self.game = game
         self.default_activity = 700
@@ -95,7 +95,7 @@ class Ray_Caster():
         # Look for tiles that hit the rays
         for j in range(self.num_lines):
             angle = start_angle + j * math.radians(self.angle_increment)
-            for i in range(1, 13):
+            for i in range(1, round(6 * self.game.render_scale)):
                 pos_x = self.game.player.pos[0] + math.cos(angle) * self.game.tilemap.tile_size * i
                 pos_y = self.game.player.pos[1] + math.sin(angle) * self.game.tilemap.tile_size * i
                 tile_key = str(int(pos_x) // self.game.tilemap.tile_size) + ';' + str(int(pos_y) // self.game.tilemap.tile_size)

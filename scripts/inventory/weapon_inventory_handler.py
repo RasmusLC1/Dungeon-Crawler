@@ -24,6 +24,10 @@ class Weapon_Inventory_Handler():
             self.saved_data[i] = inventory.saved_data
             i += 1
 
+    def Update_Inventory_Slot_Pos(self):
+        for inventory in self.inventories:
+            inventory.Update_Inventory_Slot_Pos()
+        
 
     # The data is stored for each weapon inventory in order, so simply iterate over them and load the data
     def Load_Data(self, data):
@@ -35,7 +39,6 @@ class Weapon_Inventory_Handler():
                 continue
             if i > 1:
                 return
-            print(item_data)
             self.inventories[i].Load_Data(item_data)
             i += 1
 

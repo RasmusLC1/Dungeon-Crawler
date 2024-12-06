@@ -25,13 +25,17 @@ class State_Machine():
         if self.game_state == 'run_game':
             self.Game_Loop()
         elif self.game_state == 'main_menu':
-            self.Main_Menu()
+            self.Main_Menu(False)
+        elif self.game_state == 'return_main_menu':
+            self.Main_Menu(True)
         elif self.game_state == 'pause_menu':
             self.Pause_Menu()
         elif self.game_state == 'shrine_menu':
             self.Shrine_Menu()
         elif self.game_state == 'exit_game':
-            self.Exit_Game()
+            self.Exit_Game(False)
+        elif self.game_state == 'exit_game_save':
+            self.Exit_Game(True)
         elif self.game_state == 'load_game':
             self.Game_Load()
         elif self.game_state == 'new_game':
@@ -65,8 +69,11 @@ class State_Machine():
         self.game.renderer.Render()
         self.game.logic_update.Update()
 
-    def Main_Menu(self):
+    def Main_Menu(self, save_game):
         self.game.menu_handler.Select_Menu('main_menu')
+        if save_game:
+            self.game.save_load_manager.Save_Data_Structure()
+
         
 
     def Pause_Menu(self):
@@ -81,8 +88,9 @@ class State_Machine():
 
 
 
-    def Exit_Game(self):
-        self.game.save_load_manager.Save_Data_Structure()
+    def Exit_Game(self, save_game):
+        if save_game:
+            self.game.save_load_manager.Save_Data_Structure()
         pygame.quit()
         sys.exit()
 

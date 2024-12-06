@@ -3,8 +3,10 @@ import pygame
 class Renderer():
     def __init__(self, game) -> None:
         self.game = game
-        self.back_ground_image = pygame.transform.scale(self.game.assets['background'], (self.game.screen_width/self.game.render_scale, self.game.screen_height/self.game.render_scale))
+        self.Update_Background_Image()
 
+    def Update_Background_Image(self):
+        self.back_ground_image = pygame.transform.scale(self.game.assets['background'], (self.game.screen_width/self.game.render_scale, self.game.screen_height/self.game.render_scale))
 
     def Render(self):
         self.game.display.blit(self.back_ground_image, (0, 0))

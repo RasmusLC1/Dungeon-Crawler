@@ -11,19 +11,25 @@ class Rune_Inventory(Inventory):
 
     # Configure the inventory when initialized
     def Setup_Inventory(self):
-        y_pos = self.game.screen_height / self.game.render_scale - 40
         index = 0
         symbols = ['z', 'x', 'c']
         for i in range(self.x_size):
-            x = i * self.size[0] + self.game.screen_width / self.game.render_scale - 110
-            inventory_slot = Inventory_Slot(self.game, (x, y_pos), self.size, None, index, symbols[i])
+            (x_pos, y_pos) = self.Set_Inventory_Slot_Pos(index)
+            inventory_slot = Inventory_Slot(self.game, (x_pos, y_pos), self.size, None, index, symbols[i])
             background = self.game.assets['rune_background'][0]
             inventory_slot.Add_Background(background)
             # inventory_slot.inventory_type = 'rune'
             inventory_slot.Set_White_List(['rune'])
             self.inventory.append(inventory_slot)  # Add to instance's inventory
             index +=1
-        
+    
+    def Set_Inventory_Slot_Pos(self, index):
+        x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 110
+        y_pos = self.game.screen_height / self.game.render_scale - 40
+        return (x_pos, y_pos)
+
+
+
     def Key_Board_Input(self):
         keyboard = self.game.keyboard_handler
 
