@@ -19,6 +19,7 @@ class Weapon(Item):
         self.attacking = 0 # The time it takes for the attack to complete
         self.max_animation = 0 # Max amount of animations
 
+        self.flip_x = False
         self.attack_animation = 0 # Current attack animation
         self.attack_animation_max = 1 # Maximum amount of attack animations
         self.special_attack_effect_animation_max = 1 # Maximum amount of attack animations
@@ -94,7 +95,7 @@ class Weapon(Item):
             return False
         
         self.Set_Weapon_Charge(offset)
-        
+        self.Set_Flip_X()
         return True
 
 
@@ -121,6 +122,8 @@ class Weapon(Item):
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
         self.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
+        self.rotate += 90
+
 
         
 
@@ -239,6 +242,8 @@ class Weapon(Item):
 
 
     def Reset_Special_Attack(self):
+        if not self.special_attack_active:
+            return
         self.rotate = 0
         self.special_attack_active = False
         self.attack_effect_animation = 0
@@ -272,7 +277,6 @@ class Weapon(Item):
         
         if self.Reset_Attack():
             return
-        
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack_' + self.attack_type
         self.attacking -= 1
@@ -323,12 +327,16 @@ class Weapon(Item):
         if self.entity.category != 'player':
             return
         # Get the direction using attack_direction
-        dx = self.entity.pos[0] + self.entity.view_direction[0] * 100 - self.entity.pos[0]
-        dy = self.entity.pos[1] + self.entity.view_direction[1] * 100 - self.entity.pos[1]
-
+        dx = self.game.mouse.mpos[0] - self.entity.pos[0]
+        dy = self.game.mouse.mpos[1] - self.entity.pos[1]
         # Calculate the angle in degrees
-        self.rotate = math.degrees(math.atan2(dx, dy))
-       
+        self.rotate = abs(math.degrees(math.atan2(dx, dy)))
+
+    def Set_Flip_X(self):
+        if self.entity.attack_direction[0] < 0:
+            self.flip_x = True
+        else:
+            self.flip_x = False
 
    # Check if enemy has hit the player
     def Player_Collision(self, weapon_rect):
@@ -412,7 +420,6 @@ class Weapon(Item):
             self.attack_effect_animation_counter = 0
             self.attack_effect_animation = min(self.attack_effect_animation + 1, self.attack_animation_max)
             return
-
         self.attack_effect_animation_counter += 1
 
 
@@ -452,12 +459,11 @@ class Weapon(Item):
         if not self.attacking:
             return
         pos = self.Attack_Effect_Position(offset)
-        
         effect_type = self.effect + '_' + self.attack_type + '_effect'
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         # attack_effect.set_alpha()
         attack_effect = pygame.transform.rotate(attack_effect, self.rotate)
-        surf.blit( pygame.transform.flip(attack_effect, False, False), (pos[0], pos[1]))
+        surf.blit( pygame.transform.flip(attack_effect, self.flip_x, False), (pos[0], pos[1]))
 
 
     # Render the weapon in entity's hand and rotate towards target
@@ -466,7 +472,7 @@ class Weapon(Item):
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
 
-        surf.blit( pygame.transform.flip(weapon_image, False, False),
+        surf.blit( pygame.transform.flip(weapon_image, self.flip_x, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
         self.Render_Attack_Effect(surf, offset)    
