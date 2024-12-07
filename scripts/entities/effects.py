@@ -321,7 +321,7 @@ class Status_Effect_Handler:
             
         if not self.speed_cooldown:
             self.speed -= 1
-            self.speed_cooldown = random.randint(40, 60)
+            self.speed_cooldown = random.randint(130, 160)
             return True
         
         return False
@@ -348,7 +348,7 @@ class Status_Effect_Handler:
 
         if not self.strength_cooldown:
             self.strength -= 1
-            self.strength_cooldown = random.randint(40, 60)
+            self.strength_cooldown = random.randint(130, 160)
             return True
         
         return False
@@ -365,13 +365,13 @@ class Status_Effect_Handler:
         if not self.invisibility:
             return False
         
-        self.entity.active = max(0, min(255, 110 - self.invisibility * 10))
+        self.entity.Set_Alpha_Value(max(0, 110 - self.invisibility * 10))
 
         if self.invisibility_cooldown:
             self.invisibility_cooldown -= 1
         else:
             self.invisibility -= 1
-            self.invisibility_cooldown = random.randint(40, 60)
+            self.invisibility_cooldown = random.randint(130, 160)
             return True
         return False
     
@@ -393,7 +393,7 @@ class Status_Effect_Handler:
             self.fire_resistance_cooldown -= 1
         else:
             self.fire_resistance -= 1
-            self.fire_resistance_cooldown = random.randint(80, 100)
+            self.fire_resistance_cooldown = random.randint(200, 250)
             return True
         
         return False
@@ -413,7 +413,7 @@ class Status_Effect_Handler:
             self.freeze_resistance_cooldown -= 1
         else:
             self.freeze_resistance -= 1
-            self.freeze_resistance_cooldown = random.randint(80, 100)
+            self.freeze_resistance_cooldown = random.randint(200, 250)
             return True
         
         return False
@@ -433,7 +433,7 @@ class Status_Effect_Handler:
             self.poison_resistance_cooldown -= 1
         else:
             self.poison_resistance -= 1
-            self.poison_resistance_cooldown = random.randint(80, 100)
+            self.poison_resistance_cooldown = random.randint(200, 250)
             return True
         
         return False
@@ -477,7 +477,7 @@ class Status_Effect_Handler:
         
         self.Health(random.randint(3, 5))
         self.regen -= 1
-        self.regen_cooldown = random.randint(40, 60)
+        self.regen_cooldown = random.randint(80, 100)
         self.Effect_Animation('regen_animation_cooldown', 'regen_animation', self.regen_animation_max, self.regen_animation_cooldown_max)
         return True
 

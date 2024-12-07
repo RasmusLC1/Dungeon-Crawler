@@ -61,6 +61,8 @@ class Moving_Entity(PhysicsEntity):
         self.max_speed = max_speed * self.game.render_scale + agility / 10 # Max speed of the entity
         self.max_speed_holder = self.max_speed # Max speed holder to reset it
 
+        self.alpha_value = 255
+
         # Determined by the entities agility
         self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
@@ -130,6 +132,7 @@ class Moving_Entity(PhysicsEntity):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.Update_Movement(movement)
+        self.Update_Alpha_Value()
         self.Update_Status_Effects()
 
 
@@ -513,13 +516,24 @@ class Moving_Entity(PhysicsEntity):
     def Set_Block_Direction(self, direction):
         self.block_direction = direction
 
-    
+    # Set the alpha value to make the entity fade out, the lower the more invisible
+    def Update_Alpha_Value(self):
+        self.alpha_value = max(0, min(255, self.active)) 
+
+    # Set the alpha value to a custom value for invisibility
+    def Set_Alpha_Value(self, value):
+        self.alpha_value = value
+
     # Render entity
     def Render(self, surf, offset=(0, 0)):
+        # Check if entity is in view distance first, if no there's no point computing the rest
+        if not self.alpha_value:
+            return
         # Don't Render the enemy if their light level is very low
         # Simulates low visibility
         if not self.Update_Light_Level():
             return
+        
         animation_num = self.animation_num
 
         if 'attack' in self.animation:
@@ -533,12 +547,9 @@ class Moving_Entity(PhysicsEntity):
         entity_image = pygame.transform.scale(entity_image, self.size)
 
         
-        # Set the alpha value to make the entity fade out, the lower the more invisible
-        alpha_value = max(0, min(255, self.active)) 
-        if not alpha_value:
-            return
         
-        entity_image.set_alpha(alpha_value)
+        
+        entity_image.set_alpha(self.alpha_value)
 
          # Create a darkening surface that is affected by darkness
         dark_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()

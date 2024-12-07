@@ -150,8 +150,7 @@ class Player(Moving_Entity):
     def Find_Nearby_Chests(self, range):
         self.nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.pos, range)
 
-    
-            
+
 
     # Render player
     def Render(self, surf, offset=(0, 0)):
@@ -161,10 +160,8 @@ class Player(Moving_Entity):
         # Load and scale the entity images, split to allow better animation
         entity_image= self.game.assets[self.animation][self.animation_num]
 
-        if self.status_effects.invisibility:
-            # Set the alpha value to make the entity fade out, the lower the more invisible
-            alpha_value = max(0, min(255, self.active)) 
-            entity_image.set_alpha(alpha_value)
+        
+        entity_image.set_alpha(self.alpha_value)
 
         if not "up" in self.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))

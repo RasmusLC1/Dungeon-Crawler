@@ -74,7 +74,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
             self.silence_cooldown -= 1
         else:
             self.silence -= 1
-            self.silence_cooldown = random.randint(40, 60)
+            self.silence_cooldown = random.randint(120, 160)
             self.Update_Effect_List('silence', self.silence)
 
     def OnFire(self):
