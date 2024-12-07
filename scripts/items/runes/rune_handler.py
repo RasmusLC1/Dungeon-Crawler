@@ -1,10 +1,31 @@
-from scripts.items.runes.healing_rune import Healing_Rune
-from scripts.items.runes.dash_rune import Dash_Rune
-from scripts.items.runes.fire_resistance_rune import Fire_Resistance_Rune
-from scripts.items.runes.freeze_resistance_rune import Freeze_Resistance_Rune
-from scripts.items.runes.key_rune import Key_Rune
-from scripts.items.runes.regen_rune import Regen_Rune
-from scripts.items.runes.light_rune import Light_Rune
+from scripts.items.runes.basic_runes.healing_rune import Healing_Rune
+from scripts.items.runes.basic_runes.invisibility_rune import Inivisibility_Rune
+from scripts.items.runes.basic_runes.strength_rune import Strength_Rune
+from scripts.items.runes.basic_runes.silence_rune import Silence_Rune
+from scripts.items.runes.basic_runes.speed_rune import Speed_Rune
+from scripts.items.runes.basic_runes.vampiric_rune import Vampiric_Rune
+
+from scripts.items.runes.random_runes.dash_rune import Dash_Rune
+from scripts.items.runes.random_runes.key_rune import Key_Rune
+
+from scripts.items.runes.fire_runes.fire_resistance_rune import Fire_Resistance_Rune
+from scripts.items.runes.fire_runes.fire_circle_rune import Fire_Circle_Rune
+from scripts.items.runes.fire_runes.fire_shield_rune import Fire_shield_Rune
+from scripts.items.runes.fire_runes.fire_spray_rune import Fire_Spray_Rune
+
+from scripts.items.runes.freeze_runes.freeze_resistance_rune import Freeze_Resistance_Rune
+from scripts.items.runes.freeze_runes.freeze_circle_rune import Freeze_Circle_Rune
+from scripts.items.runes.freeze_runes.freeze_shield_rune import Freeze_Shield_Rune
+from scripts.items.runes.freeze_runes.freeze_spray_rune import Freeze_Spray_Rune
+
+
+from scripts.items.runes.passive_runes.regen_rune import Regen_Rune
+
+
+from scripts.items.runes.constant_runes.light_rune import Light_Rune
+from scripts.items.runes.constant_runes.arcane_conduit_rune import Arcane_Conduit_Rune
+from scripts.items.runes.constant_runes.resistance_rune import Resistance_Rune
+from scripts.items.runes.constant_runes.shield_rune import Shield_Rune
 
 import math
 import pygame
@@ -21,7 +42,21 @@ class Rune_Handler():
                     'key_rune',
                     'freeze_resistance_rune',
                     'regen_rune',
-                    'light_rune'
+                    'light_rune',
+                    'invisibility_rune',
+                    'strength_rune',
+                    'silence_rune',
+                    'speed_rune',
+                    'vampiric_rune',
+                    'fire_circle_rune',
+                    'fire_shield_rune',
+                    'fire_spray_rune',
+                    'freeze_circle_rune',
+                    'freeze_shield_rune',
+                    'freeze_spray_rune',
+                    'arcane_conduit_rune',
+                    'resistance_rune',
+                    'shield_rune'
                     ]              
 
 
@@ -75,6 +110,34 @@ class Rune_Handler():
             rune = self.Init_Regen_Rune()
         elif 'light_rune' in name:
             rune = self.Init_Light_Rune()
+        elif 'invisibility_rune' in name:
+            rune = self.Init_Inivisibility_Rune()
+        elif 'strength_rune' in name:
+            rune = self.Init_Strength_Rune()
+        elif 'silence_rune' in name:
+            rune = self.Init_Silence_Rune()
+        elif 'speed_rune' in name:
+            rune = self.Init_Speed_Rune()
+        elif 'vampiric_rune' in name:
+            rune = self.Init_Vampiric_Rune()
+        elif 'fire_circle_rune' in name:
+            rune = self.Init_Fire_Circle_Rune()
+        elif 'fire_shield_rune' in name:
+            rune = self.Init_Fire_shield_Rune()
+        elif 'fire_spray_rune' in name:
+            rune = self.Init_Fire_Spray_Rune()
+        elif 'freeze_circle_rune' in name:
+            rune = self.Init_Freeze_Circle_Rune()
+        elif 'freeze_shield_rune' in name:
+            rune = self.Init_Freeze_Shield_Rune()
+        elif 'freeze_spray_rune' in name:
+            rune = self.Init_Freeze_Spray_Rune()
+        elif 'arcane_conduit_rune' in name:
+            rune = self.Init_Arcane_Conduit_Rune()
+        elif 'resistance_rune' in name:
+            rune = self.Init_Resistance_Rune()
+        elif 'shield_rune' in name:
+            rune = self.Init_Shield_Rune()        
         if not rune:
             return False
         
@@ -112,6 +175,60 @@ class Rune_Handler():
     def Init_Light_Rune(self):
         return Light_Rune(self.game, (9999, 9999))
 
+    def Init_Inivisibility_Rune(self):
+        return Inivisibility_Rune(self.game, (9999, 9999))
+    
+    def Init_Strength_Rune(self):
+        return Strength_Rune(self.game, (9999, 9999))
+    
+    def Init_Silence_Rune(self):
+        return Silence_Rune(self.game, (9999, 9999))
+    
+    def Init_Speed_Rune(self):
+        return Speed_Rune(self.game, (9999, 9999))
+    
+    def Init_Vampiric_Rune(self):
+        return Vampiric_Rune(self.game, (9999, 9999))
+    
+    def Init_(self):
+        return Light_Rune(self.game, (9999, 9999))
+    
+    def Init_Fire_Circle_Rune(self):
+        return Fire_Circle_Rune(self.game, (9999, 9999))
+    
+    def Init_(self):
+        return Light_Rune(self.game, (9999, 9999))
+    
+    def Init_Fire_shield_Rune(self):
+        return Fire_shield_Rune(self.game, (9999, 9999))
+    
+    def Init_Fire_Spray_Rune(self):
+        return Fire_Spray_Rune(self.game, (9999, 9999))
+    
+    def Init_Freeze_Circle_Rune(self):
+        return Freeze_Circle_Rune(self.game, (9999, 9999))
+    
+    def Init_Freeze_Shield_Rune(self):
+        return Freeze_Shield_Rune(self.game, (9999, 9999))
+    
+    def Init_Freeze_Spray_Rune(self):
+        return Freeze_Spray_Rune(self.game, (9999, 9999))
+    
+    def Init_(self):
+        return Light_Rune(self.game, (9999, 9999))
+    
+    def Init_Arcane_Conduit_Rune(self):
+        return Arcane_Conduit_Rune(self.game, (9999, 9999))
+    
+    def Init_Resistance_Rune(self):
+        return Resistance_Rune(self.game, (9999, 9999))
+    
+    def Init_Shield_Rune(self):
+        return Shield_Rune(self.game, (9999, 9999))
+
+    
+    
+
     def Initiailise_Rune(self, rune):
         if rune in self.runes:
             return
@@ -120,9 +237,9 @@ class Rune_Handler():
     
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('freeze_resistance_rune')
-        self.Add_Rune_To_Rune_Inventory('key_rune')
-        self.Add_Rune_To_Rune_Inventory('fire_resistance_rune')
+        self.Add_Rune_To_Rune_Inventory('speed_rune')
+        self.Add_Rune_To_Rune_Inventory('silence_rune')
+        self.Add_Rune_To_Rune_Inventory('invisibility_rune')
 
     # Add runes to Active Inventory
     def Add_Rune_To_Rune_Inventory(self, rune_type):

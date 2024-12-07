@@ -1,4 +1,4 @@
-from scripts.items.runes.passive_rune import Passive_Rune
+from scripts.items.runes.passive_runes.passive_rune import Passive_Rune
 
 import pygame
 

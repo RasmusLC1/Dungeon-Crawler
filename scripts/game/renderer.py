@@ -16,8 +16,8 @@ class Renderer():
 
 
         self.game.souls_interface.Render(self.game.display)
-        self.game.rune_handler.Render_Animation(self.game.display, self.game.render_scroll)
         self.game.entities_render.Render(self.game.display, self.game.render_scroll)
+        self.game.rune_handler.Render_Animation(self.game.display, self.game.render_scroll)
         for particle in self.game.particles:
             particle.Render(self.game.display, self.game.render_scroll)
 

@@ -18,3 +18,6 @@ class Light_Rune(Rune):
 
     def Activate(self):
         pass
+    
+    def Render_Animation(self):
+        pass

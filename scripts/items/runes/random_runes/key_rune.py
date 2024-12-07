@@ -21,7 +21,3 @@ class Key_Rune(Rune):
         self.Set_Animation_Time()
         self.Reset_Animation_Size()
         return
-
-
-    def Render_Animation(self, surf, offset=(0, 0)):
-        pass

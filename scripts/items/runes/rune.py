@@ -114,7 +114,13 @@ class Rune(Item):
         surf.blit(item_image, (self.menu_pos[0], self.menu_pos[1]))
     
     def Render_Animation(self, surf, offset=(0, 0)):
-        pass
+        if not self.animation_time:
+            return
+        inversed_animation_size = (20 - self.animation_size) / 10 + 1
+        
+        self.game.symbols.Render_Symbol(surf, self.effect,  (self.game.player.pos[0] - offset[0] + 8 - inversed_animation_size, self.game.player.pos[1] - offset[1] - inversed_animation_size), inversed_animation_size)
+        
+
 
     def Menu_Rect(self):
         return pygame.Rect(self.menu_pos[0], self.menu_pos[1], (self.size[0] * 1.5), (self.size[1] * 1.5))

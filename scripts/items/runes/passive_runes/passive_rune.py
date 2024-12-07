@@ -41,6 +41,8 @@ class Passive_Rune(Rune):
         trigger_value = random.randint(0, 100)
         if trigger_value < self.chance_to_trigger:
             self.game.player.Set_Effect(self.effect, self.current_power)
+            self.Set_Animation_Time()
+            self.Reset_Animation_Size()
 
 
     def Activate(self):
