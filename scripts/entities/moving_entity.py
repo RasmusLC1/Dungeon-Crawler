@@ -4,7 +4,7 @@ import pygame
 
 from scripts.engine.particles.particle import Particle
 from scripts.engine.utility.helper_functions import Helper_Functions 
-from scripts.entities.effects import Status_Effect_Handler
+from scripts.entities.effects.effects import Status_Effect_Handler
 from scripts.entities.entities import PhysicsEntity
 
 

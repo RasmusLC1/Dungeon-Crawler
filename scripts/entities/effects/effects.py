@@ -1,18 +1,22 @@
 import math
 import random
 import pygame
+from scripts.entities.effects.fire import Fire
 
 
 class Status_Effect_Handler:
     def __init__(self, entity):
         self.entity = entity
 
-        self.fire = 0
-        self.fire_cooldown = 0
-        self.fire_animation = 0
-        self.fire_animation_max = 7
-        self.fire_animation_cooldown = 0
-        self.fire_animation_cooldown_max = 20
+        self.active_effects = []
+        self.fire = Fire(self.entity)
+
+        # self.fire = 0
+        # self.fire_cooldown = 0
+        # self.fire_animation = 0
+        # self.fire_animation_max = 7
+        # self.fire_animation_cooldown = 0
+        # self.fire_animation_cooldown_max = 20
 
         self.poisoned = 0
         self.poisoned_cooldown = 0
@@ -117,7 +121,7 @@ class Status_Effect_Handler:
         elif effect == 'freeze_resistance':
             return self.Set_Freeze_Resistance(duration)
         elif effect == 'fire':
-            return self.Set_On_Fire(duration)
+            return self.fire.Set_Effect(duration)
         elif effect == 'fire_resistance':
             return self.Set_Fire_Resistance(duration)
         elif effect == 'wet':
@@ -141,7 +145,7 @@ class Status_Effect_Handler:
         
     def Update_Status_Effects(self):
         
-        self.OnFire()
+        self.fire.Update_Effect()
         self.Regen()
         self.Snare()
         self.Poison()
@@ -157,7 +161,7 @@ class Status_Effect_Handler:
     def Render_Effects(self, game, surf, offset=(0, 0)):
         # Render status effects
         #Fire
-        self.Render_Effect(game, surf, self.fire, self.fire_animation, 'fire', offset)
+        # self.Render_Effect(game, surf, self.fire, self.fire_animation, 'fire', offset)
         # Posion
         self.Render_Effect(game, surf, self.poisoned, self.poison_animation, 'poison', offset)
         # Frozen

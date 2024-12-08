@@ -1,4 +1,4 @@
-from scripts.entities.effects import Status_Effect_Handler
+from scripts.entities.effects.effects import Status_Effect_Handler
 
 
 import random
