@@ -17,7 +17,7 @@ class Attack_Stategies():
 
     # Return True if pathing updated else false
     def Attack_Strategy(self) -> bool:
-        if self.game.player.status_effects.invisibility:
+        if self.game.player.effects.invisibility.effect:
             return False
         if self.entity.attack_strategy == 'direct':
             return self.Direct_Pathing()

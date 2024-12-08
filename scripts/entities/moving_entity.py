@@ -91,7 +91,7 @@ class Moving_Entity(PhysicsEntity):
         self.jumping_animation_num_cooldown_max = 50
 
         # Status Effects
-        self.status_effects = Status_Effect_Handler(self)
+        self.effects = Status_Effect_Handler(self)
         
         self.damage_text = ''
 
@@ -106,7 +106,7 @@ class Moving_Entity(PhysicsEntity):
         self.saved_data['stamina'] = self.stamina
         self.saved_data['target'] = self.target
         self.saved_data['invincible'] = self.invincible
-        self.status_effects.Save_Data()
+        self.effects.Save_Data()
 
     def Load_Data(self, data):
         super().Load_Data(data)
@@ -119,7 +119,7 @@ class Moving_Entity(PhysicsEntity):
         self.stamina = data['stamina']
         self.target = data['target']
         self.invincible = data['invincible']
-        self.status_effects.Load_Data(data)
+        self.effects.Load_Data(data)
     
     # Set new action for animation
     def Set_Animation(self, action):
@@ -508,10 +508,10 @@ class Moving_Entity(PhysicsEntity):
         self.friction = self.friction_holder
         self.max_speed = self.max_speed_holder
         self.strength = self.strength_holder
-        self.status_effects.Update_Status_Effects()
+        self.effects.Update_Status_Effects()
     
     def Set_Effect(self, effect, duration):
-        return self.status_effects.Set_Effect(effect, duration)
+        return self.effects.Set_Effect(effect, duration)
 
     def Set_Block_Direction(self, direction):
         self.block_direction = direction
@@ -564,7 +564,7 @@ class Moving_Entity(PhysicsEntity):
 
         # Render status effects
         #Fire
-        self.status_effects.Render_Effects(self.game, surf, offset)
+        self.effects.Render_Effects(surf, offset)
 
         if self.damage_cooldown:
             scroll_up_effect = 20 - self.damage_cooldown

@@ -12,11 +12,11 @@ class Water(Trap):
     def Update(self, entity):
         if self.rect().colliderect(entity.rect()):
             if self.type == 'shallow_water_env':
-                entity.Set_Effect('slow', 2)
+                entity.Set_Effect('slow_down', 2)
             elif self.type == 'medium_water_env':
-                entity.Set_Effect('slow', 4)
+                entity.Set_Effect('slow_down', 4)
             elif self.type == 'deep_water_env':
-                entity.Set_Effect('slow', 8)
+                entity.Set_Effect('slow_down', 8)
             entity.Set_Effect('wet', 2)
 
     def Animation_Update(self):

@@ -18,7 +18,7 @@ class Spike(Trap):
             if entity.invincible:
                 return
             entity.Damage_Taken(2)
-            entity.Set_Effect('Slow_Down', 4)
+            entity.Set_Effect('slow_down', 4)
             
 
     def Animation_Update(self):

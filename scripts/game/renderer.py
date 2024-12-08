@@ -26,7 +26,7 @@ class Renderer():
         self.game.rune_inventory.Render(self.game.display)
 
         self.game.text_box_handler.Render(self.game.display, self.game.render_scroll)
-        self.game.player.status_effects.Render_Effects_Symbols(self.game.display)
+        self.game.player.effects.Render_Effects_Symbols(self.game.display)
         self.game.health_bar.Health_Bar()
 
 

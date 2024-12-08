@@ -19,11 +19,11 @@ class Lava(Trap):
             self.Cooldown = 20
             if entity.invincible:
                 return
-            if entity.status_effects.wet:
-                entity.Set_Effect('dry', 1)
+            if entity.effects.wet.effect:
+                entity.effects.wet.Decrease_Effect()
             if not entity.Set_Effect('fire', 5):
                 return
-            entity.Set_Effect('slow', 4)
+            entity.Set_Effect('slow_down', 4)
             entity.Damage_Taken(5)
 
     def Animation_Update(self):

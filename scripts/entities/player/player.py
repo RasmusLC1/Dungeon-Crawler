@@ -28,7 +28,7 @@ class Player(Moving_Entity):
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
 
         self.weapons = []
-        self.status_effects = Player_Status_Effect_Handler(self)
+        self.effects = Player_Status_Effect_Handler(self)
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
         self.movement_handler = Player_Movement(self.game, self)
 
@@ -39,7 +39,7 @@ class Player(Moving_Entity):
         super().Save_Data()
         self.saved_data['souls'] = self.souls
         self.saved_data['max_speed'] = self.max_speed
-        self.status_effects.Save_Data()
+        self.effects.Save_Data()
 
         # self.saved_data['weapon_handler'] = self.weapon_handler
 
@@ -48,7 +48,7 @@ class Player(Moving_Entity):
         super().Load_Data(data)
         self.souls = data['souls']
         self.max_speed = data['max_speed']
-        self.status_effects.Load_Data(data)
+        self.effects.Load_Data(data)
 
 
 
@@ -174,7 +174,7 @@ class Player(Moving_Entity):
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
         # Render status effects
-        self.status_effects.Render_Effects(self.game, surf, offset)
+        self.effects.Render_Effects(surf, offset)
 
         if self.damage_cooldown:
             scroll_up_effect = 20 - self.damage_cooldown
