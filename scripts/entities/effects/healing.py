@@ -2,9 +2,9 @@ from scripts.entities.effects.effect import Effect
 import random
 
 
-class Health(Effect):
+class Healing(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'health', 0, 0)
+        super().__init__(entity, 'healing', 0, 0)
 
     
     def Set_Effect(self, effect_time):

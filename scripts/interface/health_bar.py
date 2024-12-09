@@ -13,20 +13,19 @@ class Health_Bar:
 
 
     
-    def normalize_health(current_health, max_health, bar_length):
+    def normalize_health(self, current_health, max_health, bar_length):
         # Calculate the normalization factor
         normalization_factor = bar_length / max_health
         
         # Calculate the normalized health
         normalized_health = current_health * normalization_factor
-        
         return normalized_health
     
     def Health_Bar(self):
         bar_length=80
         rect_x = 20
         rect_y = self.game.screen_height / self.game.render_scale - 20
-        normalised_health = Health_Bar.normalize_health(self.game.player.health, self.game.player.max_health, bar_length)
+        normalised_health = self.normalize_health(self.game.player.health, self.game.player.max_health, bar_length)
         rect_height = 5
         
 

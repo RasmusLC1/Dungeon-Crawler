@@ -73,6 +73,7 @@ class State_Machine():
         self.game.menu_handler.Select_Menu('main_menu')
         if save_game:
             self.game.save_load_manager.Save_Data_Structure()
+            self.game_state = "main_menu"
 
         
 

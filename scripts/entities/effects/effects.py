@@ -10,7 +10,7 @@ from scripts.entities.effects.fire_resistance import Fire_Resistance
 from scripts.entities.effects.frozen_resistance import Frozen_Resistance
 from scripts.entities.effects.poison_resistance import Poison_Resistance
 from scripts.entities.effects.snare import Snare
-from scripts.entities.effects.health import Health
+from scripts.entities.effects.healing import Healing
 from scripts.entities.effects.slow_down import Slow_Down
 
 class Status_Effect_Handler:
@@ -41,7 +41,7 @@ class Status_Effect_Handler:
 
         self.snare = Snare(self.entity)
 
-        self.health = Health(self.entity)
+        self.healing = Healing(self.entity)
         
         self.slow_down = Slow_Down(self.entity)
 
@@ -58,7 +58,7 @@ class Status_Effect_Handler:
             "poison_resistance": self.poison_resistance,
             "frozen_resistance": self.Frozen_Resistance,
             "snare": self.snare,
-            "health": self.health,
+            "healing": self.healing,
             "slow_down": self.slow_down,
         }
         
@@ -69,16 +69,22 @@ class Status_Effect_Handler:
 
     def Save_Data(self):
         for effect in self.effects.values():
-            effect.Save_Data()
-            self.saved_data[effect.effect_type] = effect.saved_data
+            self.saved_data[effect.effect_type] = effect.Save_Data()
+
+        return self.saved_data
 
 
     def Load_Data(self, data):
         for ID, effect_data in data.items():
             if not effect_data:
                 continue
-        print(ID, effect_data)
-        self.effects[ID].Load_Data(effect_data)
+            
+            if not ID in self.effects:
+                continue
+            try:
+                self.effects[ID].Load_Data(effect_data)
+            except Exception as e:
+                print(f"Wrong loaded data{e}", effect_data, ID)
 
     def Set_Effect(self, effect, duration):
         if self.entity.invincible:

@@ -19,6 +19,7 @@ class Effect():
         self.saved_data['cooldown'] = self.cooldown
         self.saved_data['animation'] = self.animation
         self.saved_data['animation_cooldown'] = self.animation_cooldown
+        return self.saved_data
 
 
     def Load_Data(self, data):

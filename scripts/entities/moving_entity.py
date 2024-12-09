@@ -106,7 +106,8 @@ class Moving_Entity(PhysicsEntity):
         self.saved_data['stamina'] = self.stamina
         self.saved_data['target'] = self.target
         self.saved_data['invincible'] = self.invincible
-        self.effects.Save_Data()
+        self.saved_data.update(self.effects.Save_Data())
+
 
     def Load_Data(self, data):
         super().Load_Data(data)

@@ -39,16 +39,16 @@ class Player(Moving_Entity):
         super().Save_Data()
         self.saved_data['souls'] = self.souls
         self.saved_data['max_speed'] = self.max_speed
-        self.effects.Save_Data()
+
 
         # self.saved_data['weapon_handler'] = self.weapon_handler
 
 
     def Load_Data(self, data):
+
         super().Load_Data(data)
         self.souls = data['souls']
         self.max_speed = data['max_speed']
-        self.effects.Load_Data(data)
 
 
 
