@@ -27,15 +27,8 @@ class Regen(Effect):
         if self.entity.effects.poisoned.effect:
             return False
         
-        self.Health(random.randint(3, 5))
+        self.entity.effects.Set_Effect("healing", random.randint(3, 5))
         self.effect -= 1
         self.cooldown = random.randint(80, 100)
         self.Effect_Animation_Cooldown()
-        return True
-    
-    # Return true if health was successfull
-    def Health(self, health):
-        if self.entity.health >= self.entity.max_health:
-            return False     
-        self.entity.health = min(self.entity.max_health, self.entity.health + health)
         return True

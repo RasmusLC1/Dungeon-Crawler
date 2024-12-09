@@ -95,5 +95,5 @@ class Ice_Spirit(Enemy):
         if self.wet:
             freeze_time *= 2
             self.wet = 0
-        self.Set_Effect('health', freeze_time)
+        self.Set_Effect('healing', freeze_time)
         return False

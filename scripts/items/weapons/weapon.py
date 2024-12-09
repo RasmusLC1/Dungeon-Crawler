@@ -6,13 +6,13 @@ import pygame
 import math
 
 class Weapon(Item):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, damage_type = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, speed, range, weapon_class, effect = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = 10 - speed # Speed of the weapon
         self.range = range # Range of the weapon
         self.entity = None # Entity that holds the weapon
-        self.effect = damage_type # Special effects, like poision, ice, fire etc
+        self.effect = effect # Special effects, like poision, ice, fire etc
         self.attack_type = attack_type # Different kinds of attacks, like cutting and stabbing
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
@@ -265,6 +265,15 @@ class Weapon(Item):
         damage = self.entity.strength * self.damage
         entity.Damage_Taken(damage, self.entity.attack_direction)
         self.enemy_hit = True
+
+        # Check if weapon is vampiric first, to avoid double healing
+        if self.effect == "vampiric":
+            self.entity.Set_Effect("healing", damage // 2)
+            return
+        
+        if self.entity.effect.vampiric.effect:
+            self.entity.Set_Effect("healing", damage // 2)
+
 
         # Set special status effect of weapon if weapon has one
         if self.effect:

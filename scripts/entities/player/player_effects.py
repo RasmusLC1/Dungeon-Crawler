@@ -7,7 +7,8 @@ import random
 class Player_Status_Effect_Handler(Status_Effect_Handler):
     def __init__(self, entity):
         super().__init__(entity)
-        self.effects["silence"] = Silence(entity)
+        self.silence =  Silence(entity)
+        self.effects["silence"] = self.silence
 
 
     def Render_Effects_Symbols(self, surf):

@@ -5,8 +5,8 @@ import random
 import math
 
 class Sword(Weapon):
-    def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'sword', 3, 6, 5, 'one_handed_melee', damage_type)
+    def __init__(self, game, pos, effect = 'vampiric'):
+        super().__init__(game, pos, 'sword', 3, 6, 5, 'one_handed_melee', effect)
         self.max_charge_time = 50
         self.max_animation = 3
         self.attack_animation_max = 3 

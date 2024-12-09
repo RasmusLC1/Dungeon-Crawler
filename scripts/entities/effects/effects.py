@@ -12,6 +12,7 @@ from scripts.entities.effects.poison_resistance import Poison_Resistance
 from scripts.entities.effects.snare import Snare
 from scripts.entities.effects.healing import Healing
 from scripts.entities.effects.slow_down import Slow_Down
+from scripts.entities.effects.vampiric import Vampiric
 
 class Status_Effect_Handler:
     def __init__(self, entity):
@@ -44,22 +45,26 @@ class Status_Effect_Handler:
         self.healing = Healing(self.entity)
         
         self.slow_down = Slow_Down(self.entity)
+        
+        self.vampiric = Vampiric(self.entity)
+        
 
         self.effects = {
-            "fire": self.fire,
-            "poison": self.poison,
-            "frozen": self.frozen,
-            "wet": self.wet,
-            "regen": self.regen,
-            "speed": self.speed,
-            "strength": self.strength,
-            "invisibility": self.invisibility,
-            "fire_resistance": self.fire_resistance,
-            "poison_resistance": self.poison_resistance,
-            "frozen_resistance": self.Frozen_Resistance,
-            "snare": self.snare,
-            "healing": self.healing,
-            "slow_down": self.slow_down,
+            self.fire.effect_type: self.fire,
+            self.poison.effect_type: self.poison,
+            self.frozen.effect_type: self.frozen,
+            self.wet.effect_type: self.wet,
+            self.regen.effect_type: self.regen,
+            self.speed.effect_type: self.speed,
+            self.strength.effect_type: self.strength,
+            self.invisibility.effect_type: self.invisibility,
+            self.fire_resistance.effect_type: self.fire_resistance,
+            self.poison_resistance.effect_type: self.poison_resistance,
+            self.Frozen_Resistance.effect_type: self.Frozen_Resistance,
+            self.snare.effect_type: self.snare,
+            self.healing.effect_type: self.healing,
+            self.slow_down.effect_type: self.slow_down,
+            self.vampiric.effect_type: self.vampiric,
         }
         
         self.is_on_ice = 0

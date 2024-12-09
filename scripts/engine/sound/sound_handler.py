@@ -4,7 +4,7 @@ class Sound_Handler():
 
     def Play_Sound(self, sound_name, volume):
         # Disable all sounds if the player is silenced
-        if self.game.player.effects.silence:
+        if self.game.player.effects.silence.effect:
             return
         try:
             self.game.sfx[sound_name].set_volume(volume)

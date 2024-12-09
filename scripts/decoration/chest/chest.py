@@ -26,10 +26,10 @@ class Chest(Decoration):
 
 
         self.weapons = [
-            # 'sword',
+            'sword',
             # 'spear',
-            'bow',
-            'arrow',
+            # 'bow',
+            # 'arrow',
             # 'shield',
             # 'torch',
             # 'halberd',
