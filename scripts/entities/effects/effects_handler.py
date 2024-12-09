@@ -47,6 +47,8 @@ class Status_Effect_Handler:
         self.slow_down = Slow_Down(self.entity)
         
         self.vampiric = Vampiric(self.entity)
+
+
         
 
         self.effects = {

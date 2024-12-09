@@ -11,7 +11,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
     Each prisoner increases rent cost in Inn
     Prisoners become companions or merchants/trainers/teachers
     Prisoners if companions can go with you to the dungeon, but will get perma killed if they die
-    Can find weapons, armor and magic tombes to learn spells
+    Can find weapons, armor and magic tombes to learn runes
     There are layers to the dungeon, each layer have one exit and different staircases down to a new random dungeon. You cannot go up through the original entrance again
     Clank card system to trigger dungeon events, it's an artifical dungeon
     Loot has weight which will slow you down, also lowers your initiative in combat
@@ -81,9 +81,9 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # Hatchet, small axe, faster than axe
     # Mace/Hammer, can break certain walls and enviorement, special ground pound to stun nearby enemies
     # Halberd, swing and stab attack, charge attack
-    Crossbow, Same as bow, but takes longer to load, but can be preloaded
+    # Crossbow, Same as bow, but takes longer to load, but can be preloaded
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
-    magic Staff, improved spells but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
+    magic Staff, improved runes but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
 
 # Items
     Rare objects found in loot rooms
@@ -113,21 +113,23 @@ Save it in a seperate class that accepts an increment from dungeon generator
     luck
     vampire, heals based on damage dealt
 
-# Spells
-    You can have 3 spells equipped at a time
-    Can buy new spells or upgrade existing ones in shrines 
+# Runes
+    You can have 3 runes equipped at a time
+    Can buy new runes or upgrade existing ones in shrines 
 
     Costs souls each time it's cast
-    Two types of spells, passive spells and activated spells
-    Passive spells don't cost souls, but they are less powerful
-    Active Spells:
+    Two types of runes, passive runes and activated runes
+    Passive runes don't cost souls, but they are less powerful
+    Active runes:
         # Dash,
         # Healing
-        Speed
+        # Speed
         Immunity
-        Invisibility
-        Silence
+        # Invisibility
+        # Silence
         # Door unlock
+        # Speed
+        # Strength
         Directed Fire blast 
         Circle Fire blast
         Directed Ice blast 
@@ -137,15 +139,15 @@ Save it in a seperate class that accepts an increment from dungeon generator
         Random Teleport, to get out of bad situations
         Scream, make enemies run away from you
         Shield charm, have 4 shield around you that grant immunity but breaks when damage taken
-        Vampiric touch, regen from damaging enemies
+        # Vampiric, regen from damaging enemies
     
-    Passive Spells:
+    Passive Runes:
         # Regen
         # Light
         Resistance
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
-        Arcane conduit, increase power level of your other spells
+        Arcane conduit, increase power level of your other runes
         Auto pickup of items
 
 

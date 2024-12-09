@@ -271,7 +271,7 @@ class Weapon(Item):
             self.entity.Set_Effect("healing", damage // 2)
             return
         
-        if self.entity.effect.vampiric.effect:
+        if self.entity.effects.vampiric.effect:
             self.entity.Set_Effect("healing", damage // 2)
 
 

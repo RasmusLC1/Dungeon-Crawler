@@ -23,7 +23,7 @@ class Dash_Rune(Rune):
         if self.game.mouse.left_click:
             if not self.game.player.movement_handler.Dash(self.game.render_scroll):
                 return
-            self.game.player.Decrease_Souls(self.current_soul_cost)
+            self.Compute_Souls_Cost()
             self.clicked = False
         
         if self.game.mouse.right_click:

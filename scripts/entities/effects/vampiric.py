@@ -8,10 +8,12 @@ class Vampiric(Effect):
 
     
     def Set_Effect(self, effect_time):
-        self.effect = max(self.effect, max(10, effect_time))
+        if self.effect >= self.effect_max:
+            return False
+        self.effect = min(self.effect_max, effect_time + self.effect)
         return True
     
-    
+
     def Update_Effect(self):
         if not self.effect:
             return False

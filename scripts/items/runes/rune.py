@@ -54,11 +54,17 @@ class Rune(Item):
         if self.game.player.souls < self.current_soul_cost:
             return False
         if self.game.player.Set_Effect(self.effect, self.current_power):
-            self.game.player.Decrease_Souls(self.current_soul_cost)
+            self.Compute_Souls_Cost()
             self.Set_Animation_Time()
             self.Reset_Animation_Size()
         return True
     
+    def Compute_Souls_Cost(self):
+        if self.game.player.effects.arcane_conduit.effect:
+            self.game.player.Decrease_Souls(max(1, self.current_soul_cost - self.game.rune_handler.arcane_conduit_rune.current_power))
+        else:
+            self.game.player.Decrease_Souls(self.current_soul_cost)
+
     def Set_Menu_Pos(self, pos):
         self.menu_pos = pos
 

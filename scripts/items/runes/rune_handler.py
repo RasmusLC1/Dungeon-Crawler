@@ -36,7 +36,8 @@ class Rune_Handler():
         self.runes = []
         self.active_runes = []
         self.saved_data = {}
-        self.rune_types = ['healing_rune',
+        self.rune_types = [
+                    'healing_rune',
                     'dash_rune',
                     'fire_resistance_rune',
                     'key_rune',
@@ -59,6 +60,11 @@ class Rune_Handler():
                     'shield_rune'
                     ]              
 
+    
+    def Add_Runes_To_Inventory_TEST(self):
+        self.Add_Rune_To_Rune_Inventory('arcane_conduit_rune')
+        self.Add_Rune_To_Rune_Inventory('dash_rune')
+        self.Add_Rune_To_Rune_Inventory('vampiric_rune')
 
     def Clear_Runes(self):
         self.runes.clear()
@@ -154,6 +160,63 @@ class Rune_Handler():
         
 
 
+    
+    
+
+    def Initiailise_Rune(self, rune):
+        if rune in self.runes:
+            return
+        self.runes.append(rune)
+        self.game.item_handler.Add_Item(rune)
+    
+
+
+    # Add runes to Active Inventory
+    def Add_Rune_To_Rune_Inventory(self, rune_type):
+        for rune in self.runes:
+            if rune_type != rune.type:
+                continue
+            
+            rune.active = True
+            self.active_runes.append(rune)
+            self.game.rune_inventory.Add_Item(rune)
+            self.game.item_handler.Add_Item(rune)
+            return
+
+    # Only one of each rune, so easy filter by rune_type return when found
+    def Remove_Rune_From_Inventory(self, rune_type):
+        for rune in self.runes:
+            if rune_type != rune.type:
+                continue
+            
+            rune.active = False
+            self.active_runes.remove(rune)
+            self.game.rune_inventory.Remove_Item(rune, True)
+            self.game.item_handler.Remove_Item(rune)
+
+            return True
+    
+        return False
+
+    
+    def Find_Nearby_Runes(self, entity_pos, max_distance):
+        entity_pos = (entity_pos[0] - self.game.render_scroll[0], entity_pos[1] - self.game.render_scroll[1])
+        nearby_runes = []
+        for rune in self.active_runes:
+            # Calculate the Euclidean distance
+            distance = math.sqrt((entity_pos[0] - rune.pos[0]) ** 2 + (entity_pos[1] - rune.pos[1]) ** 2)
+            if distance < max_distance:
+                nearby_runes.append(rune)
+
+        return nearby_runes
+
+
+    def Render_Animation(self, surf, offset = (0, 0)):
+        for rune in self.active_runes:
+            rune.Render_Animation(surf, offset)
+
+
+    
     def Init_Healing_Rune(self):
         return Healing_Rune(self.game, (9999, 9999))
     
@@ -218,69 +281,12 @@ class Rune_Handler():
         return Light_Rune(self.game, (9999, 9999))
     
     def Init_Arcane_Conduit_Rune(self):
-        return Arcane_Conduit_Rune(self.game, (9999, 9999))
+        # Create arcane rune for easy reference
+        self.arcane_conduit_rune = Arcane_Conduit_Rune(self.game, (9999, 9999))
+        return self.arcane_conduit_rune
     
     def Init_Resistance_Rune(self):
         return Resistance_Rune(self.game, (9999, 9999))
     
     def Init_Shield_Rune(self):
         return Shield_Rune(self.game, (9999, 9999))
-
-    
-    
-
-    def Initiailise_Rune(self, rune):
-        if rune in self.runes:
-            return
-        self.runes.append(rune)
-        self.game.item_handler.Add_Item(rune)
-    
-
-    def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('speed_rune')
-        self.Add_Rune_To_Rune_Inventory('silence_rune')
-        self.Add_Rune_To_Rune_Inventory('invisibility_rune')
-
-    # Add runes to Active Inventory
-    def Add_Rune_To_Rune_Inventory(self, rune_type):
-        for rune in self.runes:
-            if rune_type != rune.type:
-                continue
-            
-            rune.active = True
-            self.active_runes.append(rune)
-            self.game.rune_inventory.Add_Item(rune)
-            self.game.item_handler.Add_Item(rune)
-            return
-
-    # Only one of each rune, so easy filter by rune_type return when found
-    def Remove_Rune_From_Inventory(self, rune_type):
-        for rune in self.runes:
-            if rune_type != rune.type:
-                continue
-            
-            rune.active = False
-            self.active_runes.remove(rune)
-            self.game.rune_inventory.Remove_Item(rune, True)
-            self.game.item_handler.Remove_Item(rune)
-
-            return True
-    
-        return False
-
-    
-    def Find_Nearby_Runes(self, entity_pos, max_distance):
-        entity_pos = (entity_pos[0] - self.game.render_scroll[0], entity_pos[1] - self.game.render_scroll[1])
-        nearby_runes = []
-        for rune in self.active_runes:
-            # Calculate the Euclidean distance
-            distance = math.sqrt((entity_pos[0] - rune.pos[0]) ** 2 + (entity_pos[1] - rune.pos[1]) ** 2)
-            if distance < max_distance:
-                nearby_runes.append(rune)
-
-        return nearby_runes
-
-
-    def Render_Animation(self, surf, offset = (0, 0)):
-        for rune in self.active_runes:
-            rune.Render_Animation(surf, offset)

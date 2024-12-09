@@ -19,5 +19,5 @@ class Light_Rune(Rune):
     def Activate(self):
         pass
     
-    def Render_Animation(self):
+    def Render_Animation(self, surf, offset):
         pass
