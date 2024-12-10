@@ -73,6 +73,8 @@ class Player(Moving_Entity):
             self.view_direction.normalize_ip()
     
     def Increase_Souls(self, added_soul):
+        if self.effects.hunger.effect:
+            added_soul += self.effects.hunger.effect
         self.souls += added_soul
 
     def Decrease_Souls(self, subtract_soul):

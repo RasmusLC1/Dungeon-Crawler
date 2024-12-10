@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Don't generate sound and clatter
 class Silence(Effect):
     def __init__(self, entity):
         super().__init__(entity, 'silence', 0, 0)

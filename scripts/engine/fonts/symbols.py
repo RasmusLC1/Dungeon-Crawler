@@ -13,7 +13,7 @@ class Symbols():
                                'block', 'fire_resistance',
                                'freeze_resistance', 'poison_resistance',
                                'power', 'gold', 'arrow', 'key',
-                               'arcane_conduit',
+                               'arcane_conduit', 'magnet', 'hunger', 
                                ]
 
 

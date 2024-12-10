@@ -6,7 +6,6 @@ class Fire_Circle_Rune(Rune):
     def __init__(self, game, pos):
         super().__init__(game, 'fire_cirlce_rune', pos, 10, 10)
         self.animation_time_max = 30
-        self.effect = 'fire_cirlce'
         self.animation_size_max = 15
         self.clicked = False
 

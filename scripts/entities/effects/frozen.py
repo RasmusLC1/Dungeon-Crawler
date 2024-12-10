@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Low damage and slowdown of entity
 class Frozen(Effect):
     def __init__(self, entity):
         super().__init__(entity, "frozen", 2, 30)

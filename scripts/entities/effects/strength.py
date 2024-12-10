@@ -2,7 +2,7 @@ from scripts.entities.effects.effect import Effect
 import pygame
 import random
 
-
+# Increase entity's strength
 class Strength(Effect):
     def __init__(self, entity):
         super().__init__(entity, "strength", 0, 0)

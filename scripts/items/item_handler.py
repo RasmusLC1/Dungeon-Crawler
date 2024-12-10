@@ -148,19 +148,33 @@ class Item_Handler():
 
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:
-            if not self.Pick_Up_Items():
+            if not self.Pick_Up_Items(2):
                 return
             else:
                 self.game.keyboard_handler.Set_E_Key(False)
     
-    def Pick_Up_Items(self) -> bool:
-        nearby_items = self.Find_Nearby_Item(self.game.player.pos, 2)
+    def Pick_Up_Items(self, distance) -> bool:
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, distance)
         if not nearby_items:
             return False
         player_pos = self.game.player.pos
         nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         
+        if not self.game.player.rect().colliderect(nearby_items[0].rect()):
+            return False
+
         nearby_items[0].Pick_Up()
+        return True
+    
+    def Pick_Up_All_Nearby_Items(self, distance) -> bool:
+        nearby_items = self.Find_Nearby_Item(self.game.player.pos, distance)
+        if not nearby_items:
+            return False
+
+        for item in nearby_items:
+            if item.type == 'torch':
+                continue
+            item.Pick_Up()
         return True
 
     def Reset_Nearby_Items_Cooldown(self):

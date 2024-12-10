@@ -2,14 +2,14 @@ from scripts.items.runes.rune import Rune
 import math
 import pygame
 
-class Arcane_Conduit_Rune(Rune):
+class Hunger_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'arcane_conduit_rune', pos, 1, 0)
+        super().__init__(game, 'hunger_rune', pos, 1, 0)
         self.animation_time_max = 30
         self.animation_size_max = 15
 
     def Update(self):
-        if not self.game.player.effects.arcane_conduit.effect:
+        if not self.game.player.effects.hunger.effect:
             self.game.player.Set_Effect(self.effect, self.current_power)
         return super().Update()        
 

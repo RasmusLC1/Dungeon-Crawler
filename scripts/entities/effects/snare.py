@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Set entity movement speed to zero
 class Snare(Effect):
     def __init__(self, entity):
         super().__init__(entity, 'snare', 0, 0)

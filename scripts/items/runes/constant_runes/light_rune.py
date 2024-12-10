@@ -5,7 +5,6 @@ import pygame
 class Light_Rune(Rune):
     def __init__(self, game, pos):
         super().__init__(game, 'light_rune', pos, 7, 0)
-        self.effect = 'light'
 
     def Update(self):
         super().Update()

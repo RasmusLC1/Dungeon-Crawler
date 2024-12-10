@@ -2,7 +2,7 @@ from scripts.entities.effects.effect import Effect
 import pygame
 import random
 
-
+# Reduce fire damage
 class Fire_Resistance(Effect):
     def __init__(self, entity):
         super().__init__(entity, "fire_resistance", 0, 0)
@@ -25,6 +25,5 @@ class Fire_Resistance(Effect):
         else:
             self.effect -= 1
             self.cooldown = random.randint(200, 250)
-            return True
         
-        return False
+        return True

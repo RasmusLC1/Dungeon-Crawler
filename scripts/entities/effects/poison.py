@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Long lasting damage and slowdown
 class Poison(Effect):
     def __init__(self, entity):
         super().__init__(entity, "poison", 2, 30)

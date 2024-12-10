@@ -7,5 +7,4 @@ class Strength_Rune(Rune):
         super().__init__(game, 'strength_rune', pos, 3, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
-        self.effect = 'strength'
 

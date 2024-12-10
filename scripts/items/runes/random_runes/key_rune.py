@@ -6,7 +6,6 @@ class Key_Rune(Rune):
     def __init__(self, game, pos):
         super().__init__(game, 'key_rune', pos, 0, 50)
         self.animation_time_max = 5
-        self.effect = 'key'
         self.animation_size_max = 10
 
 

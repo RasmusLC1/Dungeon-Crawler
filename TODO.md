@@ -111,7 +111,8 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # freeze resistance
     physical resistance
     luck
-    vampire, heals based on damage dealt
+    # vampire, heals based on damage dealt
+
 
 # Runes
     You can have 3 runes equipped at a time
@@ -144,10 +145,11 @@ Save it in a seperate class that accepts an increment from dungeon generator
     Passive Runes:
         # Regen
         # Light
+        # Arcane conduit, increase power level of your other runes
+        # Hunger, increase souls generation
         Resistance
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
-        Arcane conduit, increase power level of your other runes
         Auto pickup of items
 
 

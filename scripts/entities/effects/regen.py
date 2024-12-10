@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Regen health over time each time effect is triggered
 class Regen(Effect):
     def __init__(self, entity):
         super().__init__(entity, "regen", 5, 30)

@@ -26,6 +26,8 @@ from scripts.items.runes.constant_runes.light_rune import Light_Rune
 from scripts.items.runes.constant_runes.arcane_conduit_rune import Arcane_Conduit_Rune
 from scripts.items.runes.constant_runes.resistance_rune import Resistance_Rune
 from scripts.items.runes.constant_runes.shield_rune import Shield_Rune
+from scripts.items.runes.constant_runes.hunger_rune import Hunger_Rune
+from scripts.items.runes.constant_runes.manget_rune import Magnet_Rune
 
 import math
 import pygame
@@ -57,14 +59,16 @@ class Rune_Handler():
                     'freeze_spray_rune',
                     'arcane_conduit_rune',
                     'resistance_rune',
-                    'shield_rune'
+                    'shield_rune',
+                    'hunger_rune',
+                    'magnet_rune',
                     ]              
 
     
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('arcane_conduit_rune')
+        self.Add_Rune_To_Rune_Inventory('magnet_rune')
+        self.Add_Rune_To_Rune_Inventory('hunger_rune')
         self.Add_Rune_To_Rune_Inventory('dash_rune')
-        self.Add_Rune_To_Rune_Inventory('vampiric_rune')
 
     def Clear_Runes(self):
         self.runes.clear()
@@ -144,6 +148,10 @@ class Rune_Handler():
             rune = self.Init_Resistance_Rune()
         elif 'shield_rune' in name:
             rune = self.Init_Shield_Rune()        
+        elif 'magnet_rune' in name:
+            rune = self.Init_Magnet_Rune()
+        elif 'hunger_rune' in name:
+            rune = self.Init_Hunger_Rune()
         if not rune:
             return False
         
@@ -290,3 +298,9 @@ class Rune_Handler():
     
     def Init_Shield_Rune(self):
         return Shield_Rune(self.game, (9999, 9999))
+
+    def Init_Hunger_Rune(self):
+        return Hunger_Rune(self.game, (9999, 9999))
+
+    def Init_Magnet_Rune(self):
+        return Magnet_Rune(self.game, (9999, 9999))

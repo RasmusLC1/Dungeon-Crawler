@@ -2,7 +2,7 @@ from scripts.entities.effects.effect import Effect
 import pygame
 import random
 
-
+# Increase entity speed
 class Speed(Effect):
     def __init__(self, entity):
         super().__init__(entity, "speed", 0, 0)

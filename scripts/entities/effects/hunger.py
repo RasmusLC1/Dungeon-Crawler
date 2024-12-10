@@ -1,10 +1,10 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-# Reduce the cost runes
-class Arcane_Conduit(Effect):
+# Increase souls from entity kills
+class Hunger(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'arcane_conduit', 0, 0)
+        super().__init__(entity, 'hunger', 0, 0)
 
     
     #set Fire effect

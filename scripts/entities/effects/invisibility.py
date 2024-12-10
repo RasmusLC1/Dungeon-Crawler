@@ -2,7 +2,7 @@ from scripts.entities.effects.effect import Effect
 import pygame
 import random
 
-
+# Make entity invisible and prevent enemy aggro
 class Invisibility(Effect):
     def __init__(self, entity):
         super().__init__(entity, "invisibility", 0, 0)

@@ -19,7 +19,7 @@ class Rune(Item):
         self.animation_size = 0
         self.animation_size_max = 0
         self.active = False
-        self.effect = ''
+        self.effect = self.type.replace('_rune', '')
         self.render = True
         self.picked_up = True
         self.cost_to_buy = soul_cost // 2 * power // 2

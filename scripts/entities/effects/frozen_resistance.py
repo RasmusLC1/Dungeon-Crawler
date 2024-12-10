@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Resistance to freeze
 class Frozen_Resistance(Effect):
     def __init__(self, entity):
         super().__init__(entity, "frozen_resistance", 0, 0)

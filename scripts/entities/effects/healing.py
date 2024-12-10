@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Heal entity
 class Healing(Effect):
     def __init__(self, entity):
         super().__init__(entity, 'healing', 0, 0)

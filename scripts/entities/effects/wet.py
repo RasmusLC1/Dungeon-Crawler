@@ -1,7 +1,7 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-
+# Increased damage to electricity but immune to fire
 class Wet(Effect):
     def __init__(self, entity):
         super().__init__(entity, "wet", 2, 20)
