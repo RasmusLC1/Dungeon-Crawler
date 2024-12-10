@@ -31,8 +31,6 @@ class Symbols():
         # Get the positions of the characters in font_lookup
         try:
             symbol_position = self.find_symbol_position(text)
-            if text == 'arcane_conduit':
-                print(symbol_position, len(self.symbols))
             # Iterate over the list of positions to render each character
             item_image = self.symbols[symbol_position]
             item_image = pygame.transform.scale(item_image, (16 * scale, 16 * scale))

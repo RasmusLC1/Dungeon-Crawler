@@ -307,51 +307,51 @@ class Graphics_Loader:
     def Asset_Potion_List(self):
 
         potion_assets = {
-            'empty_bottle' : get_tiles_from_sheet('Potions/Redpotions/empty.png', 0, 0, 0, 0, 32, 32,),
+            'empty_bottle' : get_tiles_from_sheet('Potions/Healing_potions/empty.png', 0, 0, 0, 0, 32, 32,),
             
-            'red_full' : get_tiles_from_sheet('Potions/Redpotions/red_full.png', 2, 2, 0, 0, 32, 32,),
-            'red_half' : get_tiles_from_sheet('Potions/Redpotions/red_half.png', 2, 2, 0, 0, 32, 32,),
-            'red_low' : get_tiles_from_sheet('Potions/Redpotions/red_low.png', 2, 2, 0, 0, 32, 32,),
+            'healing_full' : get_tiles_from_sheet('Potions/Healing_potions/healing_full.png', 2, 2, 0, 0, 32, 32,),
+            'healing_half' : get_tiles_from_sheet('Potions/Healing_potions/healing_half.png', 2, 2, 0, 0, 32, 32,),
+            'healing_low' : get_tiles_from_sheet('Potions/Healing_potions/healing_low.png', 2, 2, 0, 0, 32, 32,),
             
-            'blue_full' : get_tiles_from_sheet('Potions/Bluepotions/blue_full.png', 2, 2, 0, 0, 32, 32,),
-            'blue_half' : get_tiles_from_sheet('Potions/Bluepotions/blue_half.png', 2, 2, 0, 0, 32, 32,),
-            'blue_low' : get_tiles_from_sheet('Potions/Bluepotions/blue_low.png', 2, 2, 0, 0, 32, 32,),
+            'soul_full' : get_tiles_from_sheet('Potions/soul_potions/soul_full.png', 2, 2, 0, 0, 32, 32,),
+            'soul_half' : get_tiles_from_sheet('Potions/soul_potions/soul_half.png', 2, 2, 0, 0, 32, 32,),
+            'soul_low' : get_tiles_from_sheet('Potions/soul_potions/soul_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'yellow_full' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_full.png', 2, 2, 0, 0, 32, 32,),
-            'yellow_half' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_half.png', 2, 2, 0, 0, 32, 32,),
-            'yellow_low' : get_tiles_from_sheet('Potions/Yellowpotions/yellow_low.png', 2, 2, 0, 0, 32, 32,),
+            'speed_full' : get_tiles_from_sheet('Potions/speed_potions/speed_full.png', 2, 2, 0, 0, 32, 32,),
+            'speed_half' : get_tiles_from_sheet('Potions/speed_potions/speed_half.png', 2, 2, 0, 0, 32, 32,),
+            'speed_low' : get_tiles_from_sheet('Potions/speed_potions/speed_low.png', 2, 2, 0, 0, 32, 32,),
 
             'green_full' : get_tiles_from_sheet('Potions/Greenpotions/green_full.png', 2, 2, 0, 0, 32, 32,),
             'green_half' : get_tiles_from_sheet('Potions/Greenpotions/green_half.png', 2, 2, 0, 0, 32, 32,),
             'green_low' : get_tiles_from_sheet('Potions/Greenpotions/green_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'dark_green_full' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_full.png', 2, 2, 0, 0, 32, 32,),
-            'dark_green_half' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_half.png', 2, 2, 0, 0, 32, 32,),
-            'dark_green_low' : get_tiles_from_sheet('Potions/Darkgreenpotions/dark_green_low.png', 2, 2, 0, 0, 32, 32,),
+            'strength_full' : get_tiles_from_sheet('Potions/strength_potions/strength_full.png', 2, 2, 0, 0, 32, 32,),
+            'strength_half' : get_tiles_from_sheet('Potions/strength_potions/strength_half.png', 2, 2, 0, 0, 32, 32,),
+            'strength_low' : get_tiles_from_sheet('Potions/strength_potions/strength_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'swamp_green_full' : get_tiles_from_sheet('Potions/SwampGreenpotions/swamp_green_full.png', 2, 2, 0, 0, 32, 32,),
-            'swamp_green_half' : get_tiles_from_sheet('Potions/SwampGreenpotions/swamp_green_half.png', 2, 2, 0, 0, 32, 32,),
-            'swamp_green_low' : get_tiles_from_sheet('Potions/SwampGreenpotions/swamp_green_low.png', 2, 2, 0, 0, 32, 32,),
+            'poison_resistance_full' : get_tiles_from_sheet('Potions/poison_resistance_potions/poison_resistance_full.png', 2, 2, 0, 0, 32, 32,),
+            'poison_resistance_half' : get_tiles_from_sheet('Potions/poison_resistance_potions/poison_resistance_half.png', 2, 2, 0, 0, 32, 32,),
+            'poison_resistance_low' : get_tiles_from_sheet('Potions/poison_resistance_potions/poison_resistance_low.png', 2, 2, 0, 0, 32, 32,),
 
             'purple_full' : get_tiles_from_sheet('Potions/Purplepotions/Purple_full.png', 2, 2, 0, 0, 32, 32,),
             'purple_half' : get_tiles_from_sheet('Potions/Purplepotions/Purple_half.png', 2, 2, 0, 0, 32, 32,),
             'purple_low' : get_tiles_from_sheet('Potions/Purplepotions/Purple_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'light_blue_full' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_full.png', 2, 2, 0, 0, 32, 32,),
-            'light_blue_half' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_half.png', 2, 2, 0, 0, 32, 32,),
-            'light_blue_low' : get_tiles_from_sheet('Potions/LightBluepotions/lightblue_low.png', 2, 2, 0, 0, 32, 32,),
+            'freeze_resistance_full' : get_tiles_from_sheet('Potions/freeze_resistance_potions/freeze_resistance_full.png', 2, 2, 0, 0, 32, 32,),
+            'freeze_resistance_half' : get_tiles_from_sheet('Potions/freeze_resistance_potions/freeze_resistance_half.png', 2, 2, 0, 0, 32, 32,),
+            'freeze_resistance_low' : get_tiles_from_sheet('Potions/freeze_resistance_potions/freeze_resistance_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'light_grey_full' : get_tiles_from_sheet('Potions/LightGreypotions/light_grey_full.png', 2, 2, 0, 0, 32, 32,),
-            'light_grey_half' : get_tiles_from_sheet('Potions/LightGreypotions/light_grey_half.png', 2, 2, 0, 0, 32, 32,),
-            'light_grey_low' : get_tiles_from_sheet('Potions/LightGreypotions/light_grey_low.png', 2, 2, 0, 0, 32, 32,),
+            'silence_full' : get_tiles_from_sheet('Potions/silence_potions/silence_full.png', 2, 2, 0, 0, 32, 32,),
+            'silence_half' : get_tiles_from_sheet('Potions/silence_potions/silence_half.png', 2, 2, 0, 0, 32, 32,),
+            'silence_low' : get_tiles_from_sheet('Potions/silence_potions/silence_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'pink_full' : get_tiles_from_sheet('Potions/Pinkpotions/pink_full.png', 2, 2, 0, 0, 32, 32,),
-            'pink_half' : get_tiles_from_sheet('Potions/Pinkpotions/pink_half.png', 2, 2, 0, 0, 32, 32,),
-            'pink_low' : get_tiles_from_sheet('Potions/Pinkpotions/pink_low.png', 2, 2, 0, 0, 32, 32,),
+            'regen_full' : get_tiles_from_sheet('Potions/regen_potions/regen_full.png', 2, 2, 0, 0, 32, 32,),
+            'regen_half' : get_tiles_from_sheet('Potions/regen_potions/regen_half.png', 2, 2, 0, 0, 32, 32,),
+            'regen_low' : get_tiles_from_sheet('Potions/regen_potions/regen_low.png', 2, 2, 0, 0, 32, 32,),
 
-            'dark_red_full' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_full.png', 2, 2, 0, 0, 32, 32,),
-            'dark_red_half' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_half.png', 2, 2, 0, 0, 32, 32,),
-            'dark_red_low' : get_tiles_from_sheet('Potions/DarkRedpotions/darkred_low.png', 2, 2, 0, 0, 32, 32,),
+            'vampiric_full' : get_tiles_from_sheet('Potions/vampiric_potions/vampiric_full.png', 2, 2, 0, 0, 32, 32,),
+            'vampiric_half' : get_tiles_from_sheet('Potions/vampiric_potions/vampiric_half.png', 2, 2, 0, 0, 32, 32,),
+            'vampiric_low' : get_tiles_from_sheet('Potions/vampiric_potions/vampiric_low.png', 2, 2, 0, 0, 32, 32,),
 
             'fire_resistance_full' : get_tiles_from_sheet('Potions/Firepotions/fire_resistance_potion_full.png', 2, 2, 0, 0, 32, 32,),
             'fire_resistance_half' : get_tiles_from_sheet('Potions/Firepotions/fire_resistance_potion_half.png', 2, 2, 0, 0, 32, 32,),

@@ -21,7 +21,6 @@ class State_Machine():
 
 
     def Game_State(self):
-        # print(self.game_state)
         if self.game_state == 'run_game':
             self.Game_Loop()
         elif self.game_state == 'main_menu':

@@ -2,13 +2,12 @@ from scripts.items.item import Item
 
 
 class Potion(Item):
-    def __init__(self, game, type, pos, amount, strength, color):
+    def __init__(self, game, type, pos, amount, strength):
         super().__init__(game, type, 'potion', pos, (20, 20), amount)
         self.Update()
         self.max_amount = 3
         self.max_animation = 4
         self.strength = strength
-        self.color = color
         self.effect = self.type.replace('_potion', '')
         self.Update_Sub_Type()
 
@@ -22,11 +21,11 @@ class Potion(Item):
     
     def Update_Sub_Type(self):
         if self.amount == 1:
-            self.sub_type = self.color + '_low'
+            self.sub_type = self.effect + '_low'
         elif self.amount == 2:
-            self.sub_type = self.color + '_half'
+            self.sub_type = self.effect + '_half'
         elif self.amount == 3:
-            self.sub_type = self.color + '_full'
+            self.sub_type = self.effect + '_full'
 
     
     def Load_Data(self, data):

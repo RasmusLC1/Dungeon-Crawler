@@ -41,16 +41,17 @@ class Chest(Decoration):
         ]
 
         self.potions = [
-            'health',
-            'regen',
-            'soul',
-            'speed',
-            'strength',
-            'invisibility',
-            'silence',
-            'fire_resistance',
-            'freeze_resistance',
-            'poison_resistance',
+            # 'health',
+            # 'regen',
+            # 'soul',
+            # 'speed',
+            # 'strength',
+            # 'invisibility',
+            # 'silence',
+            # 'fire_resistance',
+            # 'freeze_resistance',
+            # 'poison_resistance',
+            'vampiric'
         ]
 
     
@@ -78,7 +79,8 @@ class Chest(Decoration):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
         # self.loot_type = random.randint(0, 3) # Spawn normal
-        self.loot_type = 3 # Weapon spawning test
+        # self.loot_type = 3 # Weapon spawning test
+        self.loot_type = 1 # potion spawning test
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
                 self.Open()

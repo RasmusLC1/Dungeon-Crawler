@@ -1,4 +1,4 @@
-from scripts.items.potions.health_potion import Health_Potion
+from scripts.items.potions.healing_potion import Healing_Potion
 from scripts.items.potions.soul_potion import Soul_Potion
 from scripts.items.potions.regen_potion import Regen_Potion
 from scripts.items.potions.speed_potion import Speed_Potion
@@ -8,6 +8,7 @@ from scripts.items.potions.silence_potion import Silence_Potion
 from scripts.items.potions.fire_resistance_potion import Fire_Resistance_Potion
 from scripts.items.potions.freeze_resistance import Freeze_Resistance_Potion
 from scripts.items.potions.poison_resistance import Poison_Resistance_Potion
+from scripts.items.potions.vampiric_potion import Vampiric_Potion
 
 
 class Potion_Handler():
@@ -16,8 +17,8 @@ class Potion_Handler():
 
     def Spawn_Potions(self, name, pos_x, pos_y, amount, data = None) -> bool:
         potion = None
-        if 'health' in name:
-            potion = self.Spawn_Health_Potion(pos_x, pos_y, amount)
+        if 'healing' in name:
+            potion = self.Spawn_Healing_Potion(pos_x, pos_y, amount)
 
         elif 'regen' in name:
             potion = self.Spawn_Regen_Potion(pos_x, pos_y, amount)
@@ -46,6 +47,10 @@ class Potion_Handler():
         elif 'poison_resistance' in name:
             potion = self.Spawn_Poison_Resistance_Potion(pos_x, pos_y, amount)
 
+        elif 'vampiric' in name:
+            potion = self.Spawn_Vampiric_Potion(pos_x, pos_y, amount)
+
+
         if not potion:
             return False
         
@@ -56,8 +61,8 @@ class Potion_Handler():
         return True
 
 
-    def Spawn_Health_Potion(self, pos_x, pos_y, amount):
-        return Health_Potion(self.game, (pos_x, pos_y), amount)
+    def Spawn_Healing_Potion(self, pos_x, pos_y, amount):
+        return Healing_Potion(self.game, (pos_x, pos_y), amount)
     
     def Spawn_Regen_Potion(self, pos_x, pos_y, amount):
         return Regen_Potion(self.game, (pos_x, pos_y), amount)
@@ -85,3 +90,6 @@ class Potion_Handler():
     
     def Spawn_Poison_Resistance_Potion(self, pos_x, pos_y, amount):
         return Poison_Resistance_Potion(self.game, (pos_x, pos_y), amount)
+    
+    def Spawn_Vampiric_Potion(self, pos_x, pos_y, amount):
+        return Vampiric_Potion(self.game, (pos_x, pos_y), amount)

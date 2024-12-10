@@ -13,5 +13,4 @@ class Slow_Down(Effect):
         try:
             self.entity.max_speed = max(0.1, self.entity.max_speed / effect)
         except ZeroDivisionError as e:
-            print(self.entity.max_speed, effect)
-            print(f"SLOWDOWN: {e}")
+            print(f"SLOWDOWN: {e}", self.entity.max_speed, effect)
