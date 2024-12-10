@@ -3,6 +3,7 @@ from scripts.entities.effects.silence import Silence
 from scripts.entities.effects.arcane_conduit import Arcane_Conduit
 from scripts.entities.effects.hunger import Hunger
 from scripts.entities.effects.magnet import Magnet
+from scripts.entities.effects.resistance import Resistance
 
 
 class Player_Status_Effect_Handler(Status_Effect_Handler):
@@ -12,11 +13,13 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.arcane_conduit = Arcane_Conduit(entity)
         self.hunger = Hunger(entity)
         self.magnet = Magnet(entity)
+        self.resistance = Resistance(entity)
 
         self.effects[self.silence.effect_type] = self.silence
         self.effects[self.arcane_conduit.effect_type] = self.arcane_conduit
         self.effects[self.hunger.effect_type] = self.hunger
         self.effects[self.magnet.effect_type] = self.magnet
+        self.effects[self.resistance.effect_type] = self.resistance
 
 
 

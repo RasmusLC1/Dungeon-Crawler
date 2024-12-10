@@ -68,7 +68,7 @@ class Rune_Handler():
 
     
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('magnet_rune')
+        self.Add_Rune_To_Rune_Inventory('resistance_rune')
         self.Add_Rune_To_Rune_Inventory('invulnerable_rune')
         self.Add_Rune_To_Rune_Inventory('dash_rune')
 
