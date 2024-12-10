@@ -86,6 +86,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
     magic Staff, improved runes but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
 
 # Items
+    Items are held in inventory, not worth a lot of money, but helps navigate dungeon
     Rare objects found in loot rooms
     Pendant of light, Revive the player one time for 100 gold
     Pendant of Faith, Highlights traps
@@ -95,6 +96,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
     Totem of Luck, gives a chance to cancel negative card
     Compass that points towards boss room
     Blood tomb, increases speed and damage as player takes damage
+    Magnet, autopickup of items
     
 
 
@@ -125,12 +127,12 @@ Save it in a seperate class that accepts an increment from dungeon generator
         # Dash,
         # Healing
         # Speed
-        Immunity
         # Invisibility
         # Silence
         # Door unlock
         # Speed
         # Strength
+        Immunity
         Directed Fire blast 
         Circle Fire blast
         Directed Ice blast 
@@ -147,10 +149,10 @@ Save it in a seperate class that accepts an increment from dungeon generator
         # Light
         # Arcane conduit, increase power level of your other runes
         # Hunger, increase souls generation
+        # Magnet, Auto pickup of items
         Resistance
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
-        Auto pickup of items
 
 
 

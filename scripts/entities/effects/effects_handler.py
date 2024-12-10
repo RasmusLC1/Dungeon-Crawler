@@ -13,6 +13,7 @@ from scripts.entities.effects.snare import Snare
 from scripts.entities.effects.healing import Healing
 from scripts.entities.effects.slow_down import Slow_Down
 from scripts.entities.effects.vampiric import Vampiric
+from scripts.entities.effects.invulnerable import Invulnerable
 
 class Status_Effect_Handler:
     def __init__(self, entity):
@@ -48,6 +49,9 @@ class Status_Effect_Handler:
         
         self.vampiric = Vampiric(self.entity)
 
+        self.invulnerable = Invulnerable(self.entity)
+
+
 
         
 
@@ -67,6 +71,7 @@ class Status_Effect_Handler:
             self.healing.effect_type: self.healing,
             self.slow_down.effect_type: self.slow_down,
             self.vampiric.effect_type: self.vampiric,
+            self.invulnerable.effect_type: self.invulnerable,
         }
         
         self.is_on_ice = 0

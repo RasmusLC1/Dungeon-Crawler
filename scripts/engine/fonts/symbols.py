@@ -7,13 +7,14 @@ class Symbols():
         self.symbols_lookup = ['health', 'strength', 'speed',
                                'soul', 'invisibility',
                                'slash', 'blunt', 'electric',
-                               'hardness', 'regen', 'silence',
+                               'resistance', 'regen', 'silence',
                                'luck', 'vampiric', 'fire',
                                'freeze', 'poison', 'wet',
                                'block', 'fire_resistance',
                                'freeze_resistance', 'poison_resistance',
                                'power', 'gold', 'arrow', 'key',
                                'arcane_conduit', 'magnet', 'hunger', 
+                               'invulnerable', 'snare'
                                ]
 
 

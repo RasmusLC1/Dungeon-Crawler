@@ -4,6 +4,7 @@ from scripts.items.runes.basic_runes.strength_rune import Strength_Rune
 from scripts.items.runes.basic_runes.silence_rune import Silence_Rune
 from scripts.items.runes.basic_runes.speed_rune import Speed_Rune
 from scripts.items.runes.basic_runes.vampiric_rune import Vampiric_Rune
+from scripts.items.runes.basic_runes.invulnerable_rune import Invulnerable_Rune
 
 from scripts.items.runes.random_runes.dash_rune import Dash_Rune
 from scripts.items.runes.random_runes.key_rune import Key_Rune
@@ -62,12 +63,13 @@ class Rune_Handler():
                     'shield_rune',
                     'hunger_rune',
                     'magnet_rune',
+                    'invulnerable_rune'
                     ]              
 
     
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('magnet_rune')
-        self.Add_Rune_To_Rune_Inventory('hunger_rune')
+        self.Add_Rune_To_Rune_Inventory('invulnerable_rune')
         self.Add_Rune_To_Rune_Inventory('dash_rune')
 
     def Clear_Runes(self):
@@ -152,6 +154,8 @@ class Rune_Handler():
             rune = self.Init_Magnet_Rune()
         elif 'hunger_rune' in name:
             rune = self.Init_Hunger_Rune()
+        elif 'invulnerable_rune' in name:
+            rune = self.Invulnerable_Rune()
         if not rune:
             return False
         
@@ -304,3 +308,6 @@ class Rune_Handler():
 
     def Init_Magnet_Rune(self):
         return Magnet_Rune(self.game, (9999, 9999))
+
+    def Invulnerable_Rune(self):
+        return Invulnerable_Rune(self.game, (9999, 9999))

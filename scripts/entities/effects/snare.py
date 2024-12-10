@@ -9,7 +9,7 @@ class Snare(Effect):
     
     #set Fire effect
     def Set_Effect(self, effect_time):
-        self.snared = min(effect_time + self.effect, 10)
+        self.effect = max(0, min(effect_time + self.effect, 10))
         return True
     
     def Update_Effect(self):

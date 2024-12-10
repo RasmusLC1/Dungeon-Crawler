@@ -391,6 +391,7 @@ class Graphics_Loader:
             'vampiric_rune' : get_tiles_from_sheet('runes/vampiric_rune.png', 1, 0, 0, 0, 32, 32),
             'hunger_rune' : get_tiles_from_sheet('runes/hunger_rune.png', 1, 0, 0, 0, 32, 32),
             'magnet_rune' : get_tiles_from_sheet('runes/magnet_rune.png', 1, 0, 0, 0, 32, 32),
+            'invulnerable_rune' : get_tiles_from_sheet('runes/invulnerable_rune.png', 1, 0, 0, 0, 32, 32),
         }
         self.assets.update(rune)
 
