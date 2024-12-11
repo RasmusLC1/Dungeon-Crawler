@@ -1,10 +1,11 @@
 from scripts.entities.effects.effect import Effect
 import random
 
-# Increase souls from entity kills
-class Hunger(Effect):
+# Don't generate sound and clatter
+class Thorns(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'hunger', 0, 0)
+        super().__init__(entity, 'thorns', 0, 0)
+        self.type = 'slash'
 
     
     #set Fire effect
@@ -14,4 +15,5 @@ class Hunger(Effect):
         self.effect = min(effect_time + self.effect, self.effect_max)
         return True
     
-    
+    def Set_Type(self, type):
+        self.type = type

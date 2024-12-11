@@ -77,8 +77,8 @@ class Graphics_Loader:
     
     def Asset_Particles_List(self):
         particle_assets = {
-        'fire_particle': get_tiles_from_sheet('particles/fire_particle/fire_particle.png', 3, 0, 0, 0, 4, 4),
-        'ice_particle': get_tiles_from_sheet('particles/ice_particle/ice_particle.png', 3, 0, 0, 0, 4, 4),
+        'fire_particle': get_tiles_from_sheet('weapons/magic_attacks/fire_particle/fire_particle.png', 3, 0, 0, 0, 4, 4),
+        'ice_particle': get_tiles_from_sheet('weapons/magic_attacks/ice_particle/ice_particle.png', 3, 0, 0, 0, 4, 4),
         }
         self.assets.update(particle_assets)
 

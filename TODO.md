@@ -68,6 +68,44 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # Player can hold weapons
     # Attack
     # Defend
+    X chance to get a shop each floor, spawns similar to boss room
+    In shop you can buy/trash cards, upgrade weapons, buy items, heal, etc
+    Each floor you add a new curse to your card deck, trashing curses cost 3X as much gold 
+    Get points upon death based on level depth, gold and relics
+
+# Shop
+Buy and sell items to help complete levels
+Upgrade weapons
+Buy and trash cards, when buying a card it is added to discard pile
+
+# Cards
+Curses
+    Spawn enemies
+    Generate clank
+    Spawn traps
+    Create trapped chests
+    Remove torches
+    Buff enemies
+    Upgrade enemies
+    Apply negative effect to player
+    Steal X% of player saved souls
+
+Shop cards
+    Remove enemies
+    Reveal traps
+    Spawn chests
+    Spawn torches
+    Nerf enemies
+    Downgrade enemies
+    Apply positive effect to player
+    Give the player saved souls, more souls the less they have
+    Spawn gold
+
+Starting Deck
+    spawn gold
+    give player speed
+    spawn chest
+    spawn enemies
 
 
 # Weapons:
@@ -97,6 +135,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
     Compass that points towards boss room
     Blood tomb, increases speed and damage as player takes damage
     Magnet, autopickup of items
+    lockpick, has a 7/10 chance to open the door and persist, but if it breaks door does not open and generates clank
     
 
 
@@ -111,7 +150,6 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # poison resistance
     # fire resistance
     # freeze resistance
-    physical resistance
     luck
     # vampire, heals based on damage dealt
 
@@ -132,7 +170,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
         # Door unlock
         # Speed
         # Strength
-        Immunity
+        # Immunity
         Directed Fire blast 
         Circle Fire blast
         Directed Ice blast 
@@ -150,7 +188,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
         # Arcane conduit, increase power level of your other runes
         # Hunger, increase souls generation
         # Magnet, Auto pickup of items
-        Resistance
+        # Resistance
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
 

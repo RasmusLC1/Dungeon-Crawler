@@ -14,6 +14,7 @@ from scripts.entities.effects.healing import Healing
 from scripts.entities.effects.slow_down import Slow_Down
 from scripts.entities.effects.vampiric import Vampiric
 from scripts.entities.effects.invulnerable import Invulnerable
+from scripts.entities.effects.thorns import Thorns
 
 class Status_Effect_Handler:
     def __init__(self, entity):
@@ -51,9 +52,7 @@ class Status_Effect_Handler:
 
         self.invulnerable = Invulnerable(self.entity)
 
-
-
-        
+        self.thorns = Thorns(self.entity)
 
         self.effects = {
             self.fire.effect_type: self.fire,
@@ -72,6 +71,7 @@ class Status_Effect_Handler:
             self.slow_down.effect_type: self.slow_down,
             self.vampiric.effect_type: self.vampiric,
             self.invulnerable.effect_type: self.invulnerable,
+            self.thorns.effect_type: self.thorns,
         }
         
         self.is_on_ice = 0

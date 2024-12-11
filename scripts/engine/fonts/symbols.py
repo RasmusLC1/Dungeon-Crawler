@@ -14,7 +14,7 @@ class Symbols():
                                'freeze_resistance', 'poison_resistance',
                                'power', 'gold', 'arrow', 'key',
                                'arcane_conduit', 'magnet', 'hunger', 
-                               'invulnerable', 'snare'
+                               'invulnerable', 'snare', 'thorns'
                                ]
 
 

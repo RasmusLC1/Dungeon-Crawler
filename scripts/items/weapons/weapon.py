@@ -266,6 +266,9 @@ class Weapon(Item):
         entity.Damage_Taken(damage, self.entity.attack_direction)
         self.enemy_hit = True
 
+        if entity.effects.thorns.effect:
+            self.entity.Damage_Taken(entity.effects.thorns.effect, self.entity.attack_direction)
+
         # Check if weapon is vampiric first, to avoid double healing
         if self.effect == "vampiric":
             self.entity.Set_Effect("healing", damage // 2)
