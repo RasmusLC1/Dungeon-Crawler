@@ -7,7 +7,7 @@ from scripts.items.utility.textbox import Text_Box
 
 
 class Item(PhysicsEntity):
-    def __init__(self, game, type, sub_category, pos, size, amount, add_to_tile = True):
+    def __init__(self, game, type, sub_category, pos, size, amount = 1, add_to_tile = True):
         super().__init__(game, type, 'item', pos, size)
         self.game = game
         self.sub_type = type
@@ -19,7 +19,7 @@ class Item(PhysicsEntity):
         self.inventory_index = None
         self.activate_cooldown = 0
         self.animation_cooldown = 0
-        self.animation_speed = 50
+        self.animation_cooldown_max = 50
         self.amount = amount
         self.max_amount = 0
         self.damaged = False
@@ -121,12 +121,12 @@ class Item(PhysicsEntity):
         if self.animation_cooldown:
             self.animation_cooldown -= 1
         else:
-            self.animation_cooldown = self.animation_speed
+            self.animation_cooldown = self.animation_cooldown_max
             self.animation = random.randint(0,self.max_animation)
 
 
-    def Distance(self, player_pos, mouse_pos):
-        return math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2)
+    def Distance(self, start_pos, target_pos):
+        return math.sqrt((start_pos[0] - target_pos[0]) ** 2 + (start_pos[1] - target_pos[1]) ** 2)
     
     def Set_Amount(self, amount):
         self.amount = min(self.max_amount, amount)

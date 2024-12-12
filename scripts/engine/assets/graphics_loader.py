@@ -7,7 +7,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Crypt_Tile_List(self)
         Graphics_Loader.Asset_Trap_List(self)
         Graphics_Loader.Asset_Effect_List(self)
-        Graphics_Loader.Asset_Particles_List(self)
+        Graphics_Loader.Asset_Magic_Attack_List(self)
         Graphics_Loader.Asset_Dusty_Bones_List(self)
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
@@ -75,10 +75,19 @@ class Graphics_Loader:
         }
         self.assets.update(effect_assets)
     
-    def Asset_Particles_List(self):
+    def Asset_Magic_Attack_List(self):
         particle_assets = {
-        'fire_particle': get_tiles_from_sheet('weapons/magic_attacks/fire_particle/fire_particle.png', 3, 0, 0, 0, 4, 4),
-        'ice_particle': get_tiles_from_sheet('weapons/magic_attacks/ice_particle/ice_particle.png', 3, 0, 0, 0, 4, 4),
+        'fire_particle': get_tiles_from_sheet('weapons/magic_attacks/fire/fire_particle.png', 3, 0, 0, 0, 4, 4),
+        'fire_ball': get_tiles_from_sheet('weapons/magic_attacks/fire/fire_ball.png', 0, 0, 0, 0, 16, 16),
+        'fire_explosion': get_tiles_from_sheet('weapons/magic_attacks/fire/fire_explosion.png', 7, 0, 0, 0, 32, 32),
+
+        'ice_particle': get_tiles_from_sheet('weapons/magic_attacks/ice/ice_particle.png', 3, 0, 0, 0, 4, 4),
+        'ice_ball': get_tiles_from_sheet('weapons/magic_attacks/ice/ice_ball.png', 0, 0, 0, 0, 16, 16),
+        'ice_explosion': get_tiles_from_sheet('weapons/magic_attacks/ice/ice_explosion.png', 5, 0, 0, 0, 32, 32),
+
+        'poison_particle': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_particle.png', 3, 0, 0, 0, 4, 4),
+        'poison_ball': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_ball.png', 0, 0, 0, 0, 16, 16),
+        'poison_explosion': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_explosion.png', 5, 0, 0, 0, 32, 32),
         }
         self.assets.update(particle_assets)
 

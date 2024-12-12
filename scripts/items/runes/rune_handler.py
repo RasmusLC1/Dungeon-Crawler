@@ -11,7 +11,7 @@ from scripts.items.runes.random_runes.key_rune import Key_Rune
 
 from scripts.items.runes.fire_runes.fire_resistance_rune import Fire_Resistance_Rune
 from scripts.items.runes.fire_runes.fire_circle_rune import Fire_Circle_Rune
-from scripts.items.runes.fire_runes.fire_shield_rune import Fire_shield_Rune
+from scripts.items.runes.fire_runes.fire_ball_rune import Fire_Ball_Rune
 from scripts.items.runes.fire_runes.fire_spray_rune import Fire_Spray_Rune
 
 from scripts.items.runes.freeze_runes.freeze_resistance_rune import Freeze_Resistance_Rune
@@ -56,7 +56,7 @@ class Rune_Handler():
                     'speed_rune',
                     'vampiric_rune',
                     'fire_circle_rune',
-                    'fire_shield_rune',
+                    'fire_ball_rune',
                     'fire_spray_rune',
                     'freeze_circle_rune',
                     'freeze_shield_rune',
@@ -138,8 +138,8 @@ class Rune_Handler():
             rune = self.Init_Vampiric_Rune()
         elif 'fire_circle_rune' == name:
             rune = self.Init_Fire_Circle_Rune()
-        elif 'fire_shield_rune' == name:
-            rune = self.Init_Fire_shield_Rune()
+        elif 'fire_ball_rune' == name:
+            rune = self.Init_Fire_Ball_Rune()
         elif 'fire_spray_rune' == name:
             rune = self.Init_Fire_Spray_Rune()
         elif 'freeze_circle_rune' == name:
@@ -280,8 +280,8 @@ class Rune_Handler():
     def Init_(self):
         return Light_Rune(self.game, (9999, 9999))
     
-    def Init_Fire_shield_Rune(self):
-        return Fire_shield_Rune(self.game, (9999, 9999))
+    def Init_Fire_Ball_Rune(self):
+        return Fire_Ball_Rune(self.game, (9999, 9999))
     
     def Init_Fire_Spray_Rune(self):
         return Fire_Spray_Rune(self.game, (9999, 9999))

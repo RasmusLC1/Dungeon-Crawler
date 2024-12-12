@@ -5,7 +5,7 @@ import math
 import random
 
 # UPDATE for throwable weapons
-throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web', 'hatchet', 'hammer']
+throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web', 'hatchet', 'hammer', 'fire_ball']
 
 class Item_Handler():
     def __init__(self, game):
@@ -131,20 +131,25 @@ class Item_Handler():
                 self.items.remove(item)
                 continue
 
-            # Shoot projectile
-            if item.type in throwable_weapons:
-                if not item.special_attack:
-                    if not item.entity:
-                        continue
-                    if item.shoot_speed and item.entity.category == 'enemy' and not item.delete_countdown:
-                        item.Set_Delete_Countdown(10)
-                    continue
-                try:
-                    if not item in self.items:
-                        continue
-                    item.Shoot()
-                except Exception as e:
-                    print(f"Item is not throwable {e}", item.type, item.entity)
+            self.Throw_Projectile(item)
+
+    
+    def Throw_Projectile(self, item):
+        # Shoot projectile
+        if item.type not in throwable_weapons:
+            return
+        if not item.special_attack:
+            if not item.entity:
+                return
+            if item.shoot_speed and item.entity.category == 'enemy' and not item.delete_countdown:
+                item.Set_Delete_Countdown(10)
+            return
+        try:
+            if not item in self.items:
+                return
+            item.Shoot()
+        except Exception as e:
+            print(f"Item is not throwable {e}", item.type, item.entity)
 
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:
