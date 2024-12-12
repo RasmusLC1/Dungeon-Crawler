@@ -1,8 +1,8 @@
 import pygame
-
+import random
 
 class Effect():
-    def __init__(self, entity, effect_type, animation_max, animation_cooldown_max):
+    def __init__(self, entity, effect_type, animation_max, animation_cooldown_max, range):
         self.entity = entity
         self.effect_type = effect_type
         self.effect_max = 10
@@ -12,6 +12,7 @@ class Effect():
         self.animation_max = animation_max
         self.animation_cooldown = 0
         self.animation_cooldown_max = animation_cooldown_max
+        self.range = range
         self.saved_data = {}
 
     def Save_Data(self):
@@ -29,9 +30,12 @@ class Effect():
         self.animation_cooldown = data['animation_cooldown']
 
 
-    #set Fire effect
+    #set effect
     def Set_Effect(self, effect_time):
-        pass
+        if self.effect >= self.effect_max:
+            return False
+        self.effect = min(effect_time + self.effect, self.effect_max)
+        return True
     
     def Update_Effect(self):
         pass
@@ -44,6 +48,15 @@ class Effect():
 
     def Decrease_Effect(self):
         self.effect = max(self.effect - 1, 0)
+
+    def Update_Cooldown(self) -> bool: 
+        if self.cooldown:
+            self.cooldown -= 1
+            return False
+        
+        self.effect -= 1
+        self.cooldown = random.randint(self.range[0], self.range[1])
+        return True
 
     def Effect_Animation_Cooldown(self):
         if self.animation_cooldown:

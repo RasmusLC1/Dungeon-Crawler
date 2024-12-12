@@ -4,10 +4,9 @@ import random
 # Low damage and slowdown of entity
 class Frozen(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "frozen", 2, 30)
+        super().__init__(entity, "frozen", 2, 30, (160, 200))
 
     
-    #set Fire effect
     def Set_Effect(self, effect_time):
         if self.entity.effects.fire.effect or self.entity.effects.freeze_resistance.effect:
             return False
@@ -15,8 +14,8 @@ class Frozen(Effect):
         if self.entity.effects.wet.effect:
             effect_time *= 2
             self.wet = 0
-        self.effect = max(3, effect_time)
-        return True
+
+        return super().Set_Effect(effect_time)
     
     def Update_Effect(self):
         if not self.effect:
@@ -27,12 +26,7 @@ class Frozen(Effect):
             self.cooldown = 0
             return False
         
-        if self.cooldown:
-            self.cooldown -= 1
-
-        else:
-            self.cooldown = random.randint(160, 200)
-            self.effect -= 1
+        self.Update_Cooldown()
         
         self.entity.effects.Set_Effect("slow_down", self.effect)
 

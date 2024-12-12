@@ -4,7 +4,7 @@ import random
 # Reduce the cost runes
 class Arcane_Conduit(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'arcane_conduit', 0, 0)
+        super().__init__(entity, 'arcane_conduit', 0, 0, (200, 250))
 
     
     #set Fire effect

@@ -5,7 +5,7 @@ import random
 # Reduce fire damage
 class Fire_Resistance(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "fire_resistance", 0, 0)
+        super().__init__(entity, "fire_resistance", 0, 0, (200, 250))
 
     
     #set Fire effect
@@ -14,16 +14,13 @@ class Fire_Resistance(Effect):
             return False
         
         self.fire = 0
-        self.effect = min(effect_time + self.effect, 10)
-        return True
+        return super().Set_Effect(effect_time)
+
     
     def Update_Effect(self):
         if not self.effect:
             return False
-        if self.cooldown:
-            self.cooldown -= 1
-        else:
-            self.effect -= 1
-            self.cooldown = random.randint(200, 250)
+        
+        self.Update_Cooldown()
         
         return True

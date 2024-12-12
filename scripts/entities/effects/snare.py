@@ -4,12 +4,15 @@ import random
 # Set entity movement speed to zero
 class Snare(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'snare', 0, 0)
+        super().__init__(entity, 'snare', 0, 0, (50, 70))
 
     
     #set Fire effect
     def Set_Effect(self, effect_time):
+        print("SNARE")
+
         self.effect = max(0, min(effect_time + self.effect, 10))
+        print(self.effect)
         return True
     
     def Update_Effect(self):

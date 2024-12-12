@@ -4,7 +4,7 @@ import random
 # Reduce the entity speed
 class Slow_Down(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'slow_down', 0, 0)
+        super().__init__(entity, 'slow_down', 0, 0, (0,0))
 
     
     def Set_Effect(self, effect):

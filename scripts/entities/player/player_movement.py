@@ -49,7 +49,7 @@ class Player_Movement():
         if not self.back_step:
             return
         
-        self.player.invincible = True
+        self.player.effects.Set_Effect("player_movement_invunerable", 1)
         self.back_step = max(0, self.back_step - 1)
         if self.back_step < 15:
             return
@@ -75,7 +75,7 @@ class Player_Movement():
         if not self.roll_forward:
             return
         
-        self.player.invincible = True
+        self.player.effects.Set_Effect("player_movement_invunerable", 1)
         self.roll_forward = max(0, self.roll_forward - 1)
         if self.roll_forward < 20:
             return
@@ -92,10 +92,10 @@ class Player_Movement():
 
     def Dashing_Update(self, offset=(0, 0)):
         if not self.dashing:
-            self.player.invincible = False
             return
             
-        self.player.invincible = True
+        self.player.effects.Set_Effect("player_movement_invunerable", 1)
+
 
         if abs(self.dashing) in {60, 50}:
             for i in range(20):

@@ -372,14 +372,19 @@ class Graphics_Loader:
             'regen_rune' : get_tiles_from_sheet('runes/regen_rune.png', 1, 0, 0, 0, 32, 32),
             'dash_rune' : get_tiles_from_sheet('runes/dash_rune.png', 1, 0, 0, 0, 32, 32),
             'arcane_conduit_rune' : get_tiles_from_sheet('runes/arcane_conduit_rune.png', 1, 0, 0, 0, 32, 32),
-            'fire_cirlce_rune' : get_tiles_from_sheet('runes/fire_rune_cirlce.png', 1, 0, 0, 0, 32, 32),
-            'fire_resistance_rune' : get_tiles_from_sheet('runes/fire_rune_resistance.png', 1, 0, 0, 0, 32, 32),
-            'fire_shield_rune' : get_tiles_from_sheet('runes/fire_rune_shield.png', 1, 0, 0, 0, 32, 32),
-            'fire_spray_rune' : get_tiles_from_sheet('runes/fire_rune_spray.png', 1, 0, 0, 0, 32, 32),
-            'freeze_circle_rune' : get_tiles_from_sheet('runes/frost_rune_circle.png', 1, 0, 0, 0, 32, 32),
-            'freeze_resistance_rune' : get_tiles_from_sheet('runes/frost_rune_resistance.png', 1, 0, 0, 0, 32, 32),
-            'freeze_shield_rune' : get_tiles_from_sheet('runes/frost_rune_shield.png', 1, 0, 0, 0, 32, 32),
-            'freeze_spray_rune' : get_tiles_from_sheet('runes/frost_rune_spray.png', 1, 0, 0, 0, 32, 32),
+
+            'fire_cirlce_rune' : get_tiles_from_sheet('runes/fire_cirlce_rune.png', 1, 0, 0, 0, 32, 32),
+            'fire_resistance_rune' : get_tiles_from_sheet('runes/fire_resistance_rune.png', 1, 0, 0, 0, 32, 32),
+            'fire_shield_rune' : get_tiles_from_sheet('runes/fire_shield_rune.png', 1, 0, 0, 0, 32, 32),
+            'fire_spray_rune' : get_tiles_from_sheet('runes/fire_spray_rune.png', 1, 0, 0, 0, 32, 32),
+
+            'freeze_circle_rune' : get_tiles_from_sheet('runes/frost_circle_rune.png', 1, 0, 0, 0, 32, 32),
+            'freeze_resistance_rune' : get_tiles_from_sheet('runes/frost_resistance_rune.png', 1, 0, 0, 0, 32, 32),
+            'freeze_shield_rune' : get_tiles_from_sheet('runes/frost_shield_rune.png', 1, 0, 0, 0, 32, 32),
+            'freeze_spray_rune' : get_tiles_from_sheet('runes/frost_spray_rune.png', 1, 0, 0, 0, 32, 32),
+
+            'poison_resistance_rune' : get_tiles_from_sheet('runes/poison_resistance_rune.png', 1, 0, 0, 0, 32, 32),
+
             'invisibility_rune' : get_tiles_from_sheet('runes/invisibility_rune.png', 1, 0, 0, 0, 32, 32),
             'key_rune' : get_tiles_from_sheet('runes/key_rune.png', 1, 0, 0, 0, 32, 32),
             'light_rune' : get_tiles_from_sheet('runes/light_rune.png', 1, 0, 0, 0, 32, 32),

@@ -4,7 +4,7 @@ import random
 # Reduce the cost runes
 class Magnet(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'magnet', 0, 0)
+        super().__init__(entity, 'magnet', 0, 0, (200, 250))
         self.effect_max = 4
 
 

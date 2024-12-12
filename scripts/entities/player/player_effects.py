@@ -4,6 +4,7 @@ from scripts.entities.effects.arcane_conduit import Arcane_Conduit
 from scripts.entities.effects.hunger import Hunger
 from scripts.entities.effects.magnet import Magnet
 from scripts.entities.effects.resistance import Resistance
+from scripts.entities.effects.player_movement_invunerable import Player_Movement_Invunerable
 
 
 class Player_Status_Effect_Handler(Status_Effect_Handler):
@@ -14,12 +15,14 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.hunger = Hunger(entity)
         self.magnet = Magnet(entity)
         self.resistance = Resistance(entity)
+        self.player_movement_invunerable = Player_Movement_Invunerable(entity)
 
         self.effects[self.silence.effect_type] = self.silence
         self.effects[self.arcane_conduit.effect_type] = self.arcane_conduit
         self.effects[self.hunger.effect_type] = self.hunger
         self.effects[self.magnet.effect_type] = self.magnet
         self.effects[self.resistance.effect_type] = self.resistance
+        self.effects['player_movement_invunerable'] = self.player_movement_invunerable
 
 
 

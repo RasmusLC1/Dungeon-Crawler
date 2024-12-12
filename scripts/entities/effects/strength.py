@@ -5,31 +5,22 @@ import random
 # Increase entity's strength
 class Strength(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "strength", 0, 0)
+        super().__init__(entity, "strength", 0, 0, (130, 160))
 
     
     #set Fire effect
     def Set_Effect(self, effect_time):
-        if self.entity.effects_poisoned.effect:
+        if self.entity.effects.poison.effect:
             return False
-        if self.effect >= self.effect_max:
-            return False
-        self.effect = min(effect_time + self.effect, 10)
-        return True
-    
-    def Update_Effect(self):
-        if self.cooldown:
-            self.cooldown -= 1
+        return super().Set_Effect(effect_time)
 
-        if not self.effect or self.entity.effects_poisoned.effect:
+
+    def Update_Effect(self):
+
+        if not self.effect or self.entity.effects.poison.effect:
             return False
         
         self.entity.strength = min(20, self.entity.strength * 2)
 
-        if not self.cooldown:
-            self.effect -= 1
-            self.cooldown = random.randint(130, 160)
-            return True
-        
-        return False
+        return self.Update_Cooldown()
     

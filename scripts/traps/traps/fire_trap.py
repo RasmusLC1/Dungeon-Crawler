@@ -17,7 +17,7 @@ class Fire_Trap(Trap):
             return
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 7 and self.animation < 11:
-            if entity.invincible:
+            if entity.effects.invulnerable.effect:
                 return
                 
             entity.Set_Effect('fire', 3)

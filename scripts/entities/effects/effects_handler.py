@@ -17,6 +17,8 @@ from scripts.entities.effects.invulnerable import Invulnerable
 from scripts.entities.effects.thorns import Thorns
 
 class Status_Effect_Handler:
+    
+
     def __init__(self, entity):
         self.entity = entity
 
@@ -73,6 +75,8 @@ class Status_Effect_Handler:
             self.invulnerable.effect_type: self.invulnerable,
             self.thorns.effect_type: self.thorns,
         }
+
+        self.active_effects = []
         
         self.is_on_ice = 0
         self.saved_data = {}
@@ -99,7 +103,7 @@ class Status_Effect_Handler:
                 print(f"Wrong loaded data{e}", effect_data, ID)
 
     def Set_Effect(self, effect, duration):
-        if self.entity.invincible:
+        if self.entity.effects.invulnerable.effect:
             return False
         
         try:

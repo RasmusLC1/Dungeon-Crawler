@@ -19,13 +19,16 @@ from scripts.items.runes.freeze_runes.freeze_circle_rune import Freeze_Circle_Ru
 from scripts.items.runes.freeze_runes.freeze_shield_rune import Freeze_Shield_Rune
 from scripts.items.runes.freeze_runes.freeze_spray_rune import Freeze_Spray_Rune
 
+from scripts.items.runes.poison_runes.poison_resistance_rune import Poison_Resistance_Rune
+
+
 
 from scripts.items.runes.passive_runes.regen_rune import Regen_Rune
 
 
 from scripts.items.runes.constant_runes.light_rune import Light_Rune
 from scripts.items.runes.constant_runes.arcane_conduit_rune import Arcane_Conduit_Rune
-from scripts.items.runes.constant_runes.resistance_rune import Resistance_Rune
+from scripts.items.runes.basic_runes.resistance_rune import Resistance_Rune
 from scripts.items.runes.constant_runes.shield_rune import Shield_Rune
 from scripts.items.runes.constant_runes.hunger_rune import Hunger_Rune
 from scripts.items.runes.constant_runes.manget_rune import Magnet_Rune
@@ -63,14 +66,15 @@ class Rune_Handler():
                     'shield_rune',
                     'hunger_rune',
                     'magnet_rune',
-                    'invulnerable_rune'
+                    'invulnerable_rune',
+                    'poison_resistance_rune',
                     ]              
 
     
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('resistance_rune')
+        self.Add_Rune_To_Rune_Inventory('poison_resistance_rune')
         self.Add_Rune_To_Rune_Inventory('invulnerable_rune')
-        self.Add_Rune_To_Rune_Inventory('dash_rune')
+        self.Add_Rune_To_Rune_Inventory('invisibility_rune')
 
     def Clear_Runes(self):
         self.runes.clear()
@@ -108,54 +112,56 @@ class Rune_Handler():
 
     def Rune_Spawner(self, name, data = None):
         rune = None
-        if 'healing' in name:
+        if 'healing' == name:
             rune = self.Init_Healing_Rune()
-        elif 'dash' in name:
+        elif 'dash' == name:
             rune = self.Init_Dash_Rune()
-        elif 'fire_resistance' in name:
+        elif 'fire_resistance' == name:
             rune = self.Init_Fire_Resistance_Rune()
-        elif 'freeze_resistance' in name:
+        elif 'freeze_resistance' == name:
             rune = self.Init_Freeze_Resistance_Rune()
-        elif 'key' in name:
+        elif 'key' == name:
             rune = self.Init_Key_Rune()
-        elif 'regen' in name:
+        elif 'regen' == name:
             rune = self.Init_Regen_Rune()
-        elif 'light_rune' in name:
+        elif 'light_rune' == name:
             rune = self.Init_Light_Rune()
-        elif 'invisibility_rune' in name:
+        elif 'invisibility_rune' == name:
             rune = self.Init_Inivisibility_Rune()
-        elif 'strength_rune' in name:
+        elif 'strength_rune' == name:
             rune = self.Init_Strength_Rune()
-        elif 'silence_rune' in name:
+        elif 'silence_rune' == name:
             rune = self.Init_Silence_Rune()
-        elif 'speed_rune' in name:
+        elif 'speed_rune' == name:
             rune = self.Init_Speed_Rune()
-        elif 'vampiric_rune' in name:
+        elif 'vampiric_rune' == name:
             rune = self.Init_Vampiric_Rune()
-        elif 'fire_circle_rune' in name:
+        elif 'fire_circle_rune' == name:
             rune = self.Init_Fire_Circle_Rune()
-        elif 'fire_shield_rune' in name:
+        elif 'fire_shield_rune' == name:
             rune = self.Init_Fire_shield_Rune()
-        elif 'fire_spray_rune' in name:
+        elif 'fire_spray_rune' == name:
             rune = self.Init_Fire_Spray_Rune()
-        elif 'freeze_circle_rune' in name:
+        elif 'freeze_circle_rune' == name:
             rune = self.Init_Freeze_Circle_Rune()
-        elif 'freeze_shield_rune' in name:
+        elif 'freeze_shield_rune' == name:
             rune = self.Init_Freeze_Shield_Rune()
-        elif 'freeze_spray_rune' in name:
+        elif 'freeze_spray_rune' == name:
             rune = self.Init_Freeze_Spray_Rune()
-        elif 'arcane_conduit_rune' in name:
+        elif 'arcane_conduit_rune' == name:
             rune = self.Init_Arcane_Conduit_Rune()
-        elif 'resistance_rune' in name:
+        elif 'resistance_rune' == name:
             rune = self.Init_Resistance_Rune()
-        elif 'shield_rune' in name:
+        elif 'shield_rune' == name:
             rune = self.Init_Shield_Rune()        
-        elif 'magnet_rune' in name:
+        elif 'magnet_rune' == name:
             rune = self.Init_Magnet_Rune()
-        elif 'hunger_rune' in name:
+        elif 'hunger_rune' == name:
             rune = self.Init_Hunger_Rune()
-        elif 'invulnerable_rune' in name:
+        elif 'invulnerable_rune' == name:
             rune = self.Invulnerable_Rune()
+        elif 'poison_resistance_rune' == name:
+            rune = self.Poison_Resistance_Rune()
         if not rune:
             return False
         
@@ -311,3 +317,7 @@ class Rune_Handler():
 
     def Invulnerable_Rune(self):
         return Invulnerable_Rune(self.game, (9999, 9999))
+
+    def Poison_Resistance_Rune(self):
+        print("TESTETSTETST")
+        return Poison_Resistance_Rune(self.game, (9999, 9999))

@@ -13,7 +13,7 @@ class Spike_Poisoned(Trap):
             return
         
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 8 and self.animation < 12:
-            if entity.invincible:
+            if entity.effects.invulnerable.effect:
                 return
             entity.Damage_Taken(2)
             entity.Set_Effect('poison', random.randint(3,5))

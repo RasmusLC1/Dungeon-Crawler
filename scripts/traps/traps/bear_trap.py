@@ -14,7 +14,7 @@ class Bear_Trap(Trap):
             self.Cooldown -= 1
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0:
-            if entity.invincible:
+            if entity.effects.invulnerable.effect:
                 return
                 
             entity.Damage_Taken(2)

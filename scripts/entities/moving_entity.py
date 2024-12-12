@@ -82,7 +82,6 @@ class Moving_Entity(PhysicsEntity):
 
         # Handle Blocking
         self.block_direction = (0,0)
-        self.invincible = False
 
          # Jumping attack
         self.jumping_animation_num = 0
@@ -105,7 +104,6 @@ class Moving_Entity(PhysicsEntity):
         self.saved_data['intelligence'] = self.intelligence
         self.saved_data['stamina'] = self.stamina
         self.saved_data['target'] = self.target
-        self.saved_data['invincible'] = self.invincible
         self.saved_data.update(self.effects.Save_Data())
 
 
@@ -119,7 +117,6 @@ class Moving_Entity(PhysicsEntity):
         self.intelligence = data['intelligence']
         self.stamina = data['stamina']
         self.target = data['target']
-        self.invincible = data['invincible']
         self.effects.Load_Data(data)
     
     # Set new action for animation
@@ -384,7 +381,7 @@ class Moving_Entity(PhysicsEntity):
         if self.damage_cooldown:
             return False
         
-        if self.invincible:
+        if self.effects.invulnerable.effect:
             self.damage_cooldown = 20
             return False
         

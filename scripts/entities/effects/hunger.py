@@ -4,14 +4,5 @@ import random
 # Increase souls from entity kills
 class Hunger(Effect):
     def __init__(self, entity):
-        super().__init__(entity, 'hunger', 0, 0)
+        super().__init__(entity, 'hunger', 0, 0, (200, 250))
 
-    
-    #set Fire effect
-    def Set_Effect(self, effect_time):
-        if self.effect >= self.effect_max:
-            return False
-        self.effect = min(effect_time + self.effect, self.effect_max)
-        return True
-    
-    
