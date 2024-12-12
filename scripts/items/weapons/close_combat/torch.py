@@ -19,10 +19,7 @@ class Torch(Weapon):
     def Pick_Up(self):
         if not super().Pick_Up():
             return
-        # self.light_source.picked_up = True
-        # self.game.player.Set_Light_State(False)
         self.game.light_handler.Remove_Light(self.light_source)
-        self.game.light_handler.Restore_Light(self.light_source)
 
 
 

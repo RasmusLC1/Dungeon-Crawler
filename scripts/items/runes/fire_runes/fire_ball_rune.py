@@ -5,10 +5,11 @@ import pygame
 
 class Fire_Ball_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'fire_ball_rune', pos, 10, 10)
+        super().__init__(game, 'fire_ball_rune', pos, 4, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False
+        self.effect = None
 
 
     def Activate(self):
@@ -21,14 +22,18 @@ class Fire_Ball_Rune(Rune):
         if not self.clicked:
             return
         if self.game.mouse.left_click:
-            self.player.Attack_Direction_Handler(self.game.render_scroll)
-            fire_ball = Fire_Ball(self.game, self.pos, self.game.player, self.effect, 2, 100, self.game.player.attack_direction)
-            self.game.item_handler.Add_Item(fire_ball)
+            self.game.player.Attack_Direction_Handler(self.game.render_scroll)
+            self.Generate_Fire_Ball()
             self.Compute_Souls_Cost()
             self.clicked = False
         
         if self.game.mouse.right_click:
             self.clicked = False
+
+    def Generate_Fire_Ball(self):
+        fire_ball = Fire_Ball(self.game, self.game.player.pos, self.game.player, self.current_power, 2, 100, self.game.player.attack_direction)
+        self.game.item_handler.Add_Item(fire_ball)
+        return
 
     def Render_Animation(self, surf, offset=(0, 0)):
         if not self.clicked:
@@ -49,3 +54,5 @@ class Fire_Ball_Rune(Rune):
         pygame.draw.line(temp_surf, light_grey, player_pos, mouse_pos, 2) 
 
         surf.blit(temp_surf, (0, 0))
+
+    

@@ -92,6 +92,7 @@ class Item_Handler():
         
         self.items.remove(item)
         self.game.entities_render.Remove_Entity(item)
+        self.game.tilemap.Remove_Entity_From_Tile(item.tile, item.ID)
         if delete_item:
             del item
 

@@ -103,6 +103,8 @@ class Status_Effect_Handler:
                 print(f"Wrong loaded data{e}", effect_data, ID)
 
     def Set_Effect(self, effect, duration):
+        if not effect:
+            return False
         if self.entity.effects.invulnerable.effect:
             return False
         

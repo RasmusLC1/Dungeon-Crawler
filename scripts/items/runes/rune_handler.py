@@ -73,7 +73,7 @@ class Rune_Handler():
     
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('poison_resistance_rune')
-        self.Add_Rune_To_Rune_Inventory('invulnerable_rune')
+        self.Add_Rune_To_Rune_Inventory('fire_ball_rune')
         self.Add_Rune_To_Rune_Inventory('invisibility_rune')
 
     def Clear_Runes(self):
@@ -319,5 +319,4 @@ class Rune_Handler():
         return Invulnerable_Rune(self.game, (9999, 9999))
 
     def Poison_Resistance_Rune(self):
-        print("TESTETSTETST")
         return Poison_Resistance_Rune(self.game, (9999, 9999))

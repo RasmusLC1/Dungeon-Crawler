@@ -89,7 +89,9 @@ class Text_Box():
             self.Render_Rune(surf, text_box_pos)
 
         else:
-            print(self.item.sub_category)
+            # print("TEXTBOX", self.item.sub_category)
+            return
+        
 
     def Render_Rune(self, surf, text_box_pos):
         # Render Soul Cost

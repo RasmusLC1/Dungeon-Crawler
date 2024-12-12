@@ -8,6 +8,7 @@ class Dash_Rune(Rune):
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False
+        self.effect = None
 
 
     def Activate(self):

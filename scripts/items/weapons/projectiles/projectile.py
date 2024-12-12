@@ -56,7 +56,8 @@ class Projectile(Weapon):
 
     # Continously updated shooting effect
     def Shoot(self):
-        if self.Reset_Shot():
+        if not self.Update_Shoot_Distance():
+            self.Reset_Shot()
             return
        
 
@@ -64,11 +65,8 @@ class Projectile(Weapon):
         dir_y = self.pos[1] + self.attack_direction[1] * self.shoot_speed
 
         self.Update_Tile(self.pos)
-        
         if not self.Check_Tile((dir_x, dir_y)):
-            self.special_attack = 0
-            self.shoot_distance = 0
-            self.shoot_speed = 0
+            self.Reset_Shot()
             return None
         self.Move((dir_x, dir_y))
         entity_hit = None
@@ -76,16 +74,12 @@ class Projectile(Weapon):
         entity_hit = self.Attack_Collision_Check_Projectile()
 
         if entity_hit:
-            self.special_attack = 0
-            self.shoot_distance = 0
-            self.shoot_speed = 0
+            self.Reset_Shot()
             return entity_hit
         return None
     
     # Reset the weapon after the maximum distance has been rached
     def Reset_Shot(self):
-        if self.Update_Shoot_Distance():
-            return False
         self.shoot_speed = 0
         self.special_attack = 0
         self.shoot_speed = 0
