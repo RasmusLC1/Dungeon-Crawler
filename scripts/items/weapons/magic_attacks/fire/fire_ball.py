@@ -1,27 +1,15 @@
-from scripts.items.weapons.projectiles.projectile import Projectile
-from scripts.items.weapons.projectiles.magic_attacks.fire_explosion import Fire_Explosion
-import math
+from scripts.items.weapons.magic_attacks.base_attacks.elemental_ball import Elemental_Ball
+from scripts.items.weapons.magic_attacks.fire.fire_explosion import Fire_Explosion
 import pygame
-import inspect
 
-class Fire_Ball(Projectile):
+class Fire_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, 'fire_ball', damage, speed, 2, 'magic_projectile', 'fire', 200, 'cut', (16, 16), False)
-        self.special_attack = special_attack
+        super().__init__(game, pos, entity, 'fire_ball', damage, speed, 2, 'fire', 200, special_attack, direction)
         
-        self.entity = entity
-        self.attack_direction = direction  # Store the direction vector
-        self.target_hit = 0
-        self.delete_countdown = 100
-        self.pickup_allowed = False
         self.light_source = self.game.light_handler.Add_Light(self.pos, 5, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.update_light_cooldown = 0
 
-        
-    
-    def Update_Text_Box(self, hitbox_1, hitbox_2):
-        pass
 
     def Update_Light(self):
         if self.update_light_cooldown >= 30:
@@ -33,29 +21,19 @@ class Fire_Ball(Projectile):
 
 
     def Shoot(self):
-        if not self.shoot_speed:
-            self.Initialise_Shooting(self.speed)
-
-        self.Update_Light()
-       
-        if self.target_hit:
-            self.target_hit -= 1
-            if not self.target_hit:
-                self.Set_Special_Attack(0)
-            return
-
-        self.rotate += 5
         super().Shoot()
+        self.Update_Light()
 
     def Reset_Shot(self):
         fire_explosion = Fire_Explosion(self.game, self.pos, self.damage)
         self.game.item_handler.Add_Item(fire_explosion)
-        self.delete_countdown = 1
         self.game.light_handler.Remove_Light(self.light_source)
         return super().Reset_Shot()
 
     # Own render function since we don't need to compute light
     def Render(self, surf, offset=(0, 0)):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
+
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

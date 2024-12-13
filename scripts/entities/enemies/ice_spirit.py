@@ -1,5 +1,5 @@
 from scripts.entities.enemies.enemy import Enemy
-from scripts.items.weapons.projectiles.magic_attacks.ice_particle import Ice_Particle
+from scripts.items.weapons.magic_attacks.ice.ice_particle import Ice_Particle
 
 
 import math

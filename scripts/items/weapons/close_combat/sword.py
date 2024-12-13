@@ -1,8 +1,5 @@
-from scripts.decoration.decoration import Decoration
-from scripts.items.item import Item
 from scripts.items.weapons.weapon import Weapon
 import random
-import math
 
 class Sword(Weapon):
     def __init__(self, game, pos, effect = 'vampiric'):

@@ -1,8 +1,5 @@
-from scripts.decoration.decoration import Decoration
-from scripts.items.item import Item
 from scripts.items.weapons.weapon import Weapon
 import random
-import math
 
 class Halberd(Weapon):
     def __init__(self, game, pos, damage_type = 'slash'):

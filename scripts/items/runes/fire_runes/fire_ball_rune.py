@@ -1,5 +1,5 @@
 from scripts.items.runes.rune import Rune
-from scripts.items.weapons.projectiles.magic_attacks.fire_ball import Fire_Ball
+from scripts.items.weapons.magic_attacks.fire.fire_ball import Fire_Ball
 import math
 import pygame
 
