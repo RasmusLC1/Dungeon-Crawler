@@ -27,10 +27,7 @@ class Fire_Ball(Elemental_Ball):
     def Reset_Shot(self):
         fire_explosion = Fire_Explosion(self.game, self.pos, self.damage)
         self.game.item_handler.Add_Item(fire_explosion)
-        if self.light_source:
-            self.game.light_handler.Remove_Light(self.light_source)
-            del(self.light_source)
-            self.light_source = None
+        self.game.light_handler.Remove_Light(self.light_source)
         return super().Reset_Shot()
 
     # Own render function since we don't need to compute light

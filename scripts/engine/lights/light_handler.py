@@ -50,19 +50,18 @@ class Light_Handler():
         for light in nearby_lights:
             light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources
 
-        
+
 
     def Remove_Light(self, light_source):
-        # light_source.Delete_Light()
-        # Update all nearby lights after moving
-        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
-        for light in nearby_lights:
-            light.Delete_Light()  # Recalculate the light for the nearby light sources
-        
+        # Remove the specified light only
         if light_source in self.lights:
             self.lights.remove(light_source)
+        light_source.Delete_Light() # Clear its tiles
 
-        
+        # If you need to update nearby lights:
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
+        for light in nearby_lights:
+            light.Setup_Tile_Light()
 
     def Restore_Light(self, light_source):
         nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)

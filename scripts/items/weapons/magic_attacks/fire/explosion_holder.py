@@ -2,15 +2,19 @@ from scripts.items.item import Item
 import pygame
 import math
 
-class Elemental_Explosion(Item):
-    def __init__(self, game, type, pos, effect, entity = None):
-        print(game, type, pos, effect)
-        super().__init__(game, type, 'magic_attack', pos, (game.tilemap.tile_size, game.tilemap.tile_size))
+class Fire_Explosion(Item):
+    def __init__(self, game, pos, effect, entity = None):
+        super().__init__(game, 'fire_explosion', 'magic_attack', pos, (32, 32))
+        self.max_animation = 7
         self.animation = 0
+        self.animation_cooldown = 0
+        self.animation_cooldown_max = 5
         self.entity = entity
         self.delete_countdown = self.max_animation * self.animation_cooldown_max
         self.effect = effect
         self.size =( self.effect * self.size[0], self.effect * self.size[1])
+        # self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
+        # self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.Initialise_Explosion()
 
     def Initialise_Explosion(self):
@@ -23,12 +27,12 @@ class Elemental_Explosion(Item):
             if not self.Ray_Cast_Towards_Entity(entity):
                 continue
             distance = self.Distance(self.pos, entity.pos)
-            damage = round(max(5, min(50, self.effect * self.game.tilemap.tile_size - distance)))
+            damage = round(max(5, min(50, self.effect * 32 - distance)))
             entity.Damage_Taken(damage, (0,0))
 
     def Check_Player_Distance(self):
         distance = self.Distance(self.pos, self.game.player.pos)
-        if distance <= self.effect * self.game.tilemap.tile_size:
+        if distance <= self.effect * 32:
             self.nearby_entities.append(self.game.player)
         
 
@@ -44,6 +48,7 @@ class Elemental_Explosion(Item):
 
         dx = end_pos[0] - start_pos[0]
         dy = end_pos[1] - start_pos[1]
+        distance = math.sqrt(dx * dx + dy * dy)
         angle = math.atan2(dy, dx)
 
         step_size = self.game.tilemap.tile_size  # Adjust as needed
@@ -73,12 +78,17 @@ class Elemental_Explosion(Item):
             
         return True
 
-    def Update_Animation(self):           
+    def Update_Animation(self):
+        # if self.delete_countdown <= 1:
+        #     self.game.light_handler.Remove_Light(self.light_source)
+            
+        
         if self.animation_cooldown >= self.animation_cooldown_max:
             self.animation_cooldown = 0
             self.animation = min(self.animation + 1, self.max_animation)
             return
         self.animation_cooldown += 1
+
     # Own render function since we don't need to compute light
     def Render(self, surf, offset=(0, 0)):
         self.Update_Animation()

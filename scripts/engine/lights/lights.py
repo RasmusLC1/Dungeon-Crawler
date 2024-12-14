@@ -96,9 +96,6 @@ class Light():
             self.Setup_Under_entity_Light()
 
     def Delete_Light(self):
-        # If the light has no tiles to update, we don't need to delete
-        if not self.tiles: 
-            return False
         for tile in self.tiles:
             tile.light_level = 0
             tile.active = 0
