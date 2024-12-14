@@ -34,23 +34,25 @@ class Light_Handler():
                 nearby_lights.append(light)
         return nearby_lights
 
-    
+
     def Move_Light(self, pos, light_source, tile):
+        # First, remove the light's old contributions
+        light_source.Delete_Light()
 
         # Move the light to the new position
         light_source.pos_holder = light_source.pos
         light_source.tile = tile
         light_source.pos = pos
 
-        # Recalculate the light at the new position
+        # Now recalculate the light at the new position
         light_source.Setup_Tile_Light()
 
-        # Update all nearby lights after moving
+        # If you must update nearby lights (optional), do so after the reposition
         nearby_lights = self.Find_Nearby_Lights(light_source.pos, 100)
         for light in nearby_lights:
-            light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources
-
-
+            # Recalculate the light for these sources too
+            light.Delete_Light()  # Clear old state
+            light.Setup_Tile_Light()
 
     def Remove_Light(self, light_source):
         # Remove the specified light only

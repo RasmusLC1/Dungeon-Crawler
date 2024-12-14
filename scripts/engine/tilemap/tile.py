@@ -15,6 +15,11 @@ class Tile():
         self.physics = physics
         self.next_to_Wall = False
         self.entities = []
+        # Dictionary to hold each light's contribution
+        # Key: light_id, Value: contributed_light_level
+        self.light_contributions = {}
+
+
 
 
     def Set_Type(self, new_type):
@@ -31,6 +36,9 @@ class Tile():
 
     def Set_Next_To_Wall(self, state):
         self.next_to_Wall = state
+
+    def Set_Light_ID(self, light_id):
+        self.light_ID = light_id
 
     def Render_All(self):
         self.Set_Light_Level(200)
@@ -65,6 +73,24 @@ class Tile():
                 return
             
         return
+    
+    # Add ID to the dictionary and  recalculate light level
+    def Add_Light_Contribution(self, light_id, contribution):
+        self.light_contributions[light_id] = contribution
+        self.Recalculate_Light_Level()
+
+    # Remove ID and recalculate
+    def Remove_Light_Contribution(self, light_id):
+        if light_id in self.light_contributions:
+            del self.light_contributions[light_id]
+            self.Recalculate_Light_Level()
+
+    # Lightlevel is the sum of all contributions
+    def Recalculate_Light_Level(self):
+        if self.light_contributions:
+            self.light_level = max(self.light_contributions.values())
+        else:
+            self.light_level = 0
     
     def Render(self, surf, offset = (0,0)):
         # Get the tile surface from the assets
