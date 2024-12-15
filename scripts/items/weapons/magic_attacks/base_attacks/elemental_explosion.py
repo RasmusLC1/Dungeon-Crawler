@@ -3,18 +3,22 @@ import pygame
 import math
 
 class Elemental_Explosion(Item):
-    def __init__(self, game, type, pos, effect, entity = None):
-        print(game, type, pos, effect)
+    def __init__(self, game, type, effect, pos, power, max_animation, animation_cooldown_max, entity = None):
         super().__init__(game, type, 'magic_attack', pos, (game.tilemap.tile_size, game.tilemap.tile_size))
         self.animation = 0
+        self.animation_cooldown = 0
+        self.max_animation = max_animation
+        self.animation_cooldown_max = animation_cooldown_max
         self.entity = entity
         self.delete_countdown = self.max_animation * self.animation_cooldown_max
+        self.power = power
         self.effect = effect
-        self.size =( self.effect * self.size[0], self.effect * self.size[1])
+        self.size =( self.power * self.size[0], self.power * self.size[1])
+        self.nearby_entities = []
         self.Initialise_Explosion()
 
     def Initialise_Explosion(self):
-        self.Find_Nearby_Entities(self.effect)
+        self.Find_Nearby_Entities(self.power)
         self.Check_Player_Distance()
         entity_ID = self.Get_Entity_ID()
         for entity in self.nearby_entities:
@@ -22,22 +26,27 @@ class Elemental_Explosion(Item):
                 continue
             if not self.Ray_Cast_Towards_Entity(entity):
                 continue
-            distance = self.Distance(self.pos, entity.pos)
-            damage = round(max(5, min(50, self.effect * self.game.tilemap.tile_size - distance)))
-            entity.Damage_Taken(damage, (0,0))
+    
+    def Compute_Damage(self, entity):
+        distance = self.Distance(self.pos, entity.pos)
+        damage = round(max(5, min(50, self.power * 32 - distance)))
+        entity.Damage_Taken(damage, (0,0))
+        if self.effect:
+            entity.Set_Effect(self.effect, 3)
 
     def Check_Player_Distance(self):
         distance = self.Distance(self.pos, self.game.player.pos)
-        if distance <= self.effect * self.game.tilemap.tile_size:
+        if distance <= self.power * self.game.tilemap.tile_size:
             self.nearby_entities.append(self.game.player)
         
-
+    # Get ID of caster for potential immunity
     def Get_Entity_ID(self):
         if not self.entity:
             return 0
         
         return self.entity.ID
 
+    # Raycaster to check for line of sight
     def Ray_Cast_Towards_Entity(self, entity):
         start_pos = self.pos
         end_pos = entity.pos
@@ -47,13 +56,12 @@ class Elemental_Explosion(Item):
         angle = math.atan2(dy, dx)
 
         step_size = self.game.tilemap.tile_size  # Adjust as needed
-        steps = self.effect
+        steps = self.power
 
         for i in range(steps):
             pos_x = start_pos[0] + math.cos(angle) * step_size * i
             pos_y = start_pos[1] + math.sin(angle) * step_size * i
             tile_key = str(int(pos_x) // self.game.tilemap.tile_size) + ';' + str(int(pos_y) // self.game.tilemap.tile_size)
-
 
             # If Check_Tile returns False, it means a tile blocked the ray
             if not self.Check_Tile(tile_key):
@@ -73,12 +81,13 @@ class Elemental_Explosion(Item):
             
         return True
 
-    def Update_Animation(self):           
+    def Update_Animation(self):
         if self.animation_cooldown >= self.animation_cooldown_max:
             self.animation_cooldown = 0
             self.animation = min(self.animation + 1, self.max_animation)
             return
         self.animation_cooldown += 1
+
     # Own render function since we don't need to compute light
     def Render(self, surf, offset=(0, 0)):
         self.Update_Animation()

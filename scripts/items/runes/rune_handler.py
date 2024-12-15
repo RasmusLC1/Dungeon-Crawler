@@ -18,6 +18,7 @@ from scripts.items.runes.freeze_runes.freeze_resistance_rune import Freeze_Resis
 from scripts.items.runes.freeze_runes.freeze_circle_rune import Freeze_Circle_Rune
 from scripts.items.runes.freeze_runes.freeze_shield_rune import Freeze_Shield_Rune
 from scripts.items.runes.freeze_runes.freeze_spray_rune import Freeze_Spray_Rune
+from scripts.items.runes.freeze_runes.freeze_ball_rune import Freeze_Ball_Rune
 
 from scripts.items.runes.poison_runes.poison_resistance_rune import Poison_Resistance_Rune
 
@@ -61,6 +62,7 @@ class Rune_Handler():
                     'freeze_circle_rune',
                     'freeze_shield_rune',
                     'freeze_spray_rune',
+                    'freeze_ball_rune',
                     'arcane_conduit_rune',
                     'resistance_rune',
                     'shield_rune',
@@ -72,7 +74,7 @@ class Rune_Handler():
 
     
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('poison_resistance_rune')
+        self.Add_Rune_To_Rune_Inventory('freeze_ball_rune')
         self.Add_Rune_To_Rune_Inventory('fire_ball_rune')
         self.Add_Rune_To_Rune_Inventory('invisibility_rune')
 
@@ -148,6 +150,8 @@ class Rune_Handler():
             rune = self.Init_Freeze_Shield_Rune()
         elif 'freeze_spray_rune' == name:
             rune = self.Init_Freeze_Spray_Rune()
+        elif 'freeze_ball_rune' == name:
+            rune = self.Init_Freeze_Ball_Rune()
         elif 'arcane_conduit_rune' == name:
             rune = self.Init_Arcane_Conduit_Rune()
         elif 'resistance_rune' == name:
@@ -294,6 +298,9 @@ class Rune_Handler():
     
     def Init_Freeze_Spray_Rune(self):
         return Freeze_Spray_Rune(self.game, (9999, 9999))
+    
+    def Init_Freeze_Ball_Rune(self):
+        return Freeze_Ball_Rune(self.game, (9999, 9999))
     
     def Init_(self):
         return Light_Rune(self.game, (9999, 9999))

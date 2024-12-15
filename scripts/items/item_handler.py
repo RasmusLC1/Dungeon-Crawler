@@ -5,7 +5,7 @@ import math
 import random
 
 # UPDATE for throwable weapons
-throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web', 'hatchet', 'hammer', 'fire_ball']
+throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web', 'hatchet', 'hammer', 'fire_ball', 'ice_ball']
 
 class Item_Handler():
     def __init__(self, game):

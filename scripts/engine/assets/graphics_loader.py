@@ -392,6 +392,8 @@ class Graphics_Loader:
             'freeze_resistance_rune' : get_tiles_from_sheet('runes/frost/frost_resistance_rune.png', 1, 0, 0, 0, 32, 32),
             'freeze_shield_rune' : get_tiles_from_sheet('runes/frost/frost_shield_rune.png', 1, 0, 0, 0, 32, 32),
             'freeze_spray_rune' : get_tiles_from_sheet('runes/frost/frost_spray_rune.png', 1, 0, 0, 0, 32, 32),
+            'freeze_ball_rune' : get_tiles_from_sheet('runes/frost/frost_ball_rune.png', 1, 0, 0, 0, 32, 32),
+            
 
             'poison_resistance_rune' : get_tiles_from_sheet('runes/poison_resistance_rune.png', 1, 0, 0, 0, 32, 32),
 
