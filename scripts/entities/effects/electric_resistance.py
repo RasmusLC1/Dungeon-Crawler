@@ -3,9 +3,9 @@ import pygame
 import random
 
 # Reduce fire damage
-class Fire_Resistance(Effect):
+class Electric_Resistance(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "fire_resistance", 0, 0, (200, 250))
+        super().__init__(entity, "electrioc_resistance", 0, 0, (200, 250))
 
     
     #set Fire effect

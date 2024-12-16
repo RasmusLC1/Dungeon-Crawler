@@ -15,6 +15,9 @@ from scripts.entities.effects.slow_down import Slow_Down
 from scripts.entities.effects.vampiric import Vampiric
 from scripts.entities.effects.invulnerable import Invulnerable
 from scripts.entities.effects.thorns import Thorns
+from scripts.entities.effects.eletric import Electric
+from scripts.entities.effects.electric_resistance import Electric_Resistance
+
 
 class Status_Effect_Handler:
     
@@ -56,6 +59,10 @@ class Status_Effect_Handler:
 
         self.thorns = Thorns(self.entity)
 
+        self.electric = Electric(self.entity)
+
+        self.electric_resistance = Electric_Resistance(self.entity)
+
         self.effects = {
             self.fire.effect_type: self.fire,
             self.poison.effect_type: self.poison,
@@ -74,6 +81,8 @@ class Status_Effect_Handler:
             self.vampiric.effect_type: self.vampiric,
             self.invulnerable.effect_type: self.invulnerable,
             self.thorns.effect_type: self.thorns,
+            self.electric.effect_type: self.electric,
+            self.electric_resistance.effect_type: self.electric_resistance,
         }
 
         self.active_effects = []

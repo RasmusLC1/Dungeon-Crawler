@@ -11,5 +11,6 @@ class Frozen_Resistance(Effect):
         if not self.effect:
             return False
         
+        
         return self.Update_Cooldown()
     

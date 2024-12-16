@@ -29,6 +29,7 @@ class Item(PhysicsEntity):
         self.delete_countdown = 0
         self.value = 100 # Placeholder gold value
         self.text_box = Text_Box(self.game, self)
+        self.is_projectile = False
         if add_to_tile:
             self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
 

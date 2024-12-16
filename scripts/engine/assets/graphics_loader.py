@@ -72,6 +72,8 @@ class Graphics_Loader:
             'frozen': get_tiles_from_sheet('particles/effects/frozen.png', 2, 0, 0, 0, 32, 32, white),
             'wet': get_tiles_from_sheet('particles/effects/wet.png', 2, 0, 0, 0, 32, 32),
             'regen': get_tiles_from_sheet('particles/effects/regen.png', 2, 1, 0, 0, 32, 32),
+            'electric': get_tiles_from_sheet('particles/effects/electric.png', 5, 0, 0, 0, 32, 32),
+            'invincible': get_tiles_from_sheet('particles/effects/invincible.png', 6, 0, 0, 0, 32, 32),
         }
         self.assets.update(effect_assets)
     
@@ -88,6 +90,10 @@ class Graphics_Loader:
         'poison_particle': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_particle.png', 3, 0, 0, 0, 4, 4),
         'poison_ball': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_ball.png', 0, 0, 0, 0, 16, 16),
         'poison_explosion': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_explosion.png', 5, 0, 0, 0, 32, 32),
+
+
+        'electric_ball': get_tiles_from_sheet('weapons/magic_attacks/electric/electric_ball.png', 0, 0, 0, 0, 16, 16),
+        'electric_explosion': get_tiles_from_sheet('weapons/magic_attacks/electric/electric_explosion.png', 5, 0, 0, 0, 32, 32),
         }
         self.assets.update(particle_assets)
 
@@ -395,7 +401,11 @@ class Graphics_Loader:
             'freeze_ball_rune' : get_tiles_from_sheet('runes/frost/frost_ball_rune.png', 1, 0, 0, 0, 32, 32),
             
 
-            'poison_resistance_rune' : get_tiles_from_sheet('runes/poison_resistance_rune.png', 1, 0, 0, 0, 32, 32),
+            'poison_resistance_rune' : get_tiles_from_sheet('runes/poison/poison_resistance_rune.png', 1, 0, 0, 0, 32, 32),
+            'poison_ball_rune' : get_tiles_from_sheet('runes/poison/poison_ball_rune.png', 1, 0, 0, 0, 32, 32),
+
+            'electric_resistance_rune' : get_tiles_from_sheet('runes/electric/electric_resistance_rune.png', 1, 0, 0, 0, 32, 32),
+            'electric_ball_rune' : get_tiles_from_sheet('runes/electric/electric_ball_rune.png', 1, 0, 0, 0, 32, 32),
 
             'invisibility_rune' : get_tiles_from_sheet('runes/invisibility_rune.png', 1, 0, 0, 0, 32, 32),
             'key_rune' : get_tiles_from_sheet('runes/key_rune.png', 1, 0, 0, 0, 32, 32),
@@ -416,7 +426,7 @@ class Graphics_Loader:
         font = {
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 16, 16),
             'player_damage_font' : get_tiles_from_sheet('font/player_damage_font.png', 7, 5, 0, 0, 16, 16),
-            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 3, 0, 0, 16, 16),
+            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 4, 0, 0, 16, 16),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 32, 32),
         }
         self.assets.update(font)

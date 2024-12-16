@@ -4,8 +4,6 @@ from scripts.items.loot.loot_handler import Loot_Handler
 import math
 import random
 
-# UPDATE for throwable weapons
-throwable_weapons = ['spear', 'fire_particle', 'ice_particle', 'arrow', 'spider_web', 'hatchet', 'hammer', 'fire_ball', 'ice_ball']
 
 class Item_Handler():
     def __init__(self, game):
@@ -135,9 +133,9 @@ class Item_Handler():
             self.Throw_Projectile(item)
 
     
+    # Shoot projectiles
     def Throw_Projectile(self, item):
-        # Shoot projectile
-        if item.type not in throwable_weapons:
+        if not item.is_projectile:
             return
         if not item.special_attack:
             if not item.entity:

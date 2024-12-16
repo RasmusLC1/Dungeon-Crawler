@@ -3,7 +3,7 @@ import pygame
 import math
 
 class Elemental_Explosion(Item):
-    def __init__(self, game, type, effect, pos, power, max_animation, animation_cooldown_max, entity = None):
+    def __init__(self, game, type, effect, pos, power, effect_strength, max_animation, animation_cooldown_max, entity = None):
         super().__init__(game, type, 'magic_attack', pos, (game.tilemap.tile_size, game.tilemap.tile_size))
         self.animation = 0
         self.animation_cooldown = 0
@@ -12,6 +12,7 @@ class Elemental_Explosion(Item):
         self.entity = entity
         self.delete_countdown = self.max_animation * self.animation_cooldown_max
         self.power = power
+        self.effect_strength = effect_strength
         self.effect = effect
         self.size =( self.power * self.size[0], self.power * self.size[1])
         self.nearby_entities = []
@@ -33,7 +34,7 @@ class Elemental_Explosion(Item):
         damage = round(max(5, min(50, self.power * 32 - distance)))
         entity.Damage_Taken(damage, (0,0))
         if self.effect:
-            entity.Set_Effect(self.effect, 3)
+            entity.Set_Effect(self.effect, self.effect_strength)
 
     def Check_Player_Distance(self):
         distance = self.Distance(self.pos, self.game.player.pos)

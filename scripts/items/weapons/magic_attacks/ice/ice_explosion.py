@@ -4,7 +4,7 @@ import math
 
 class Ice_Explosion(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
-        super().__init__(game, 'ice_explosion', 'frozen', pos, power, 7, 5, entity)
+        super().__init__(game, 'ice_explosion', 'frozen', pos, power, 5, 7, 5, entity)
 
     def Slow_Down_Entities(self):
         for entity in self.nearby_entities:

@@ -2,7 +2,7 @@ from scripts.items.weapons.magic_attacks.base_attacks.elemental_explosion import
 
 class Poison_Explosion(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
-        super().__init__(game, 'poison_explosion', 'poison', pos, power, 7, 5, entity)
+        super().__init__(game, 'poison_explosion', 'poison', pos, power, 6, 7, 5, entity)
         self.poison_cooldown = 0
         self.poison_cooldown_max = 10
 

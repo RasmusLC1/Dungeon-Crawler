@@ -66,10 +66,16 @@ class Shrine(Decoration):
         
 
     def Select_Available_Rune(self):
-        random_rune = random.randint(0, len(self.game.rune_handler.runes) - 1)
+        # Convert the dictionary keys into a list
+        rune_keys = list(self.game.rune_handler.runes.keys())
 
-        rune = self.game.rune_handler.runes[random_rune]
+        # Pick a random key from the dictionary
+        random_key = random.choice(rune_keys)
 
+        # Get the rune object using the random key
+        rune = self.game.rune_handler.runes[random_key]
+
+        # Check if the rune is already active
         if rune in self.game.rune_handler.active_runes:
             self.Select_Available_Rune()
             return

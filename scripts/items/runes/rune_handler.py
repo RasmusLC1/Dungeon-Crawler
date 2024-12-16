@@ -23,6 +23,7 @@ from scripts.items.runes.freeze_runes.freeze_ball_rune import Freeze_Ball_Rune
 from scripts.items.runes.poison_runes.poison_resistance_rune import Poison_Resistance_Rune
 from scripts.items.runes.poison_runes.poison_ball_rune import Poison_Ball_Rune
 
+from scripts.items.runes.electric_runes.electric_ball_rune import Electric_Ball_Rune
 
 
 from scripts.items.runes.passive_runes.regen_rune import Regen_Rune
@@ -113,15 +114,16 @@ class Rune_Handler():
         'hunger_rune': Hunger_Rune(self.game, (9999, 9999)),
         'magnet_rune': Magnet_Rune(self.game, (9999, 9999)),
         'invulnerable_rune': Invulnerable_Rune(self.game, (9999, 9999)),
-        'poison_resistance': Poison_Resistance_Rune(self.game, (9999, 9999)),
-        'poison_ball_run': Poison_Ball_Rune(self.game, (9999, 9999)),
+        'poison_resistance_rune': Poison_Resistance_Rune(self.game, (9999, 9999)),
+        'poison_ball_rune': Poison_Ball_Rune(self.game, (9999, 9999)),
+        'electric_ball_rune': Electric_Ball_Rune(self.game, (9999, 9999)),
         }
 
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('freeze_ball_rune')
-        self.Add_Rune_To_Rune_Inventory('fire_ball_rune')
-        self.Add_Rune_To_Rune_Inventory('invisibility_rune')
+        self.Add_Rune_To_Rune_Inventory('poison_resistance_rune')
+        self.Add_Rune_To_Rune_Inventory('electric_ball_rune')
 
     def Clear_Runes(self):
         self.runes.clear()
@@ -140,18 +142,15 @@ class Rune_Handler():
 
     # Only one of each rune, so easy filter by rune_type return when found
     def Remove_Rune_From_Inventory(self, rune_type):
-        for rune in self.runes:
-            if rune_type != rune.type:
-                continue
-            
-            rune.active = False
-            self.active_runes.remove(rune)
-            self.game.rune_inventory.Remove_Item(rune, True)
-            self.game.item_handler.Remove_Item(rune)
+        rune = self.runes[rune_type]
+        
+        rune.active = False
+        self.active_runes.remove(rune)
+        self.game.rune_inventory.Remove_Item(rune, True)
+        self.game.item_handler.Remove_Item(rune)
 
-            return True
+        return True
     
-        return False
 
     
     def Find_Nearby_Runes(self, entity_pos, max_distance):

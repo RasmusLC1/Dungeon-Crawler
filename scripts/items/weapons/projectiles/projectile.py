@@ -12,6 +12,7 @@ class Projectile(Weapon):
         self.shoot_distance_holder = shoot_distance
         self.entity_strength = 0
         self.attack_direction = (0, 0)
+        self.is_projectile = True
 
 
     def Save_Data(self):
