@@ -15,8 +15,8 @@ class Electric(Effect):
         if self.entity.effects.wet.effect:
             effect_time *= 2
 
-        damage = random.randint(effect_time, round(effect_time * 1.7))
-        self.entity.Damage_Taken(damage)
+        self.entity.Damage_Taken(effect_time)
+        print(effect_time, self.entity)
             
         return super().Set_Effect(effect_time)
     
@@ -31,10 +31,13 @@ class Electric(Effect):
         
         if self.Update_Cooldown():
             for enemy in self.entity.nearby_enemies:
-                print(enemy)
-                enemy.Set_Effect(self.effect_type, self.effect - 2)
+                if enemy.Set_Effect(self.effect_type, self.effect - 1):
+                    self.entity.Set_Effect('electric_resistance', 1)
+                    break
+                
 
 
+        self.entity.frame_movement = (0, 0)
         self.Effect_Animation_Cooldown()
         return True
    

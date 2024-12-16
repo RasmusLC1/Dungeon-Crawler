@@ -135,7 +135,7 @@ class Moving_Entity(PhysicsEntity):
 
 
         self.Update_Traps()
-        self.Nearby_Enemies(3)
+        self.Nearby_Enemies(2)
         self.Update_Damage_Cooldown()
         self.Charge_Update()
 

@@ -24,7 +24,7 @@ class Spike_Pit(Trap):
             self.Cooldown = 100
             if not self.animation:
                 self.animation = 1
-                entity.Set_Effect('snare', 3)
+                entity.Set_Effect('snare', 2)
             else:
                 entity.Set_Effect('slow_down', 4)
 

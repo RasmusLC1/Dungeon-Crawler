@@ -93,7 +93,11 @@ class Elemental_Explosion(Item):
     # Own render function since we don't need to compute light
     def Render(self, surf, offset=(0, 0)):
         self.Update_Animation()
-        weapon_image = self.game.assets[self.type][self.animation].convert_alpha()
+        try:
+            weapon_image = self.game.assets[self.type][self.animation].convert_alpha()
+        except Exception as e:
+            print("Explosion renderer", e, self.type, self.animation)
+
         weapon_image = pygame.transform.scale(weapon_image, self.size)
         width, height = self.size
 

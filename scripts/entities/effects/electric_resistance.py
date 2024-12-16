@@ -5,7 +5,7 @@ import random
 # Reduce fire damage
 class Electric_Resistance(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "electrioc_resistance", 0, 0, (200, 250))
+        super().__init__(entity, "electric_resistance", 0, 0, (200, 250))
 
     
     #set Fire effect
