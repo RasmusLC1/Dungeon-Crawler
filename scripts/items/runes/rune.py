@@ -34,6 +34,7 @@ class Rune(Item):
         self.saved_data['current_soul_cost'] = self.current_soul_cost
         self.saved_data['active'] = self.active
         self.saved_data['menu_pos'] = self.menu_pos
+        return self.saved_data
     
     def Load_Data(self, data):
         super().Load_Data(data)

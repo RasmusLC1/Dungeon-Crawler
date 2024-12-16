@@ -3,7 +3,7 @@ import pygame
 import random
 
 # Increase entity's strength
-class Strength(Effect):
+class Increase_Strength(Effect):
     def __init__(self, entity):
         super().__init__(entity, "strength", 0, 0, (130, 160))
 

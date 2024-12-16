@@ -26,6 +26,7 @@ class Elemental_Explosion(Item):
                 continue
             if not self.Ray_Cast_Towards_Entity(entity):
                 continue
+            self.Compute_Damage(entity)
     
     def Compute_Damage(self, entity):
         distance = self.Distance(self.pos, entity.pos)

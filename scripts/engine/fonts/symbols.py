@@ -9,9 +9,9 @@ class Symbols():
                                'slash', 'blunt', 'electric',
                                'resistance', 'regen', 'silence',
                                'luck', 'vampiric', 'fire',
-                               'freeze', 'poison', 'wet',
+                               'frozen', 'poison', 'wet',
                                'block', 'fire_resistance',
-                               'freeze_resistance', 'poison_resistance',
+                               'frozen_resistance', 'poison_resistance',
                                'power', 'gold', 'arrow', 'key',
                                'arcane_conduit', 'magnet', 'hunger', 
                                'invulnerable', 'snare', 'thorns'
@@ -37,4 +37,4 @@ class Symbols():
             item_image = pygame.transform.scale(item_image, (16 * scale, 16 * scale))
             surf.blit(item_image, pos)
         except Exception as e:
-            print(f'WRONG Symbol INPUT {e}', text, pos)
+            print(f'WRONG Symbol INPUT {e}', text, pos, symbol_position)

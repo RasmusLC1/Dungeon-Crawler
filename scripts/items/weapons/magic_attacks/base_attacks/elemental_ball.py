@@ -1,6 +1,5 @@
 from scripts.items.weapons.projectiles.projectile import Projectile
-from scripts.items.weapons.magic_attacks.fire.fire_explosion import Fire_Explosion
-
+import pygame
 
 class Elemental_Ball(Projectile):
     def __init__(self, game, pos, entity, type, damage, speed, range, damage_type, shoot_distance, special_attack, direction):
@@ -28,3 +27,12 @@ class Elemental_Ball(Projectile):
     def Reset_Shot(self):
         self.delete_countdown = 1
         return super().Reset_Shot()
+
+
+        # Own render function since we don't need to compute light
+    def Render(self, surf, offset=(0, 0)):
+        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
+
+
+        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

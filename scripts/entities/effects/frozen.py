@@ -8,7 +8,7 @@ class Frozen(Effect):
 
     
     def Set_Effect(self, effect_time):
-        if self.entity.effects.fire.effect or self.entity.effects.freeze_resistance.effect:
+        if self.entity.effects.fire.effect or self.entity.effects.frozen_resistance.effect:
             return False
         
         if self.entity.effects.wet.effect:
@@ -21,7 +21,7 @@ class Frozen(Effect):
         if not self.effect:
             return False
         
-        if self.entity.effects.freeze_resistance.effect:
+        if self.entity.effects.frozen_resistance.effect:
             self.effect = 0
             self.cooldown = 0
             return False

@@ -49,7 +49,7 @@ class Chest(Decoration):
             # 'invisibility',
             # 'silence',
             # 'fire_resistance',
-            # 'freeze_resistance',
+            # 'frozen_resistance',
             # 'poison_resistance',
             'vampiric'
         ]

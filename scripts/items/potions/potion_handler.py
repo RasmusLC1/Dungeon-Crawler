@@ -6,7 +6,7 @@ from scripts.items.potions.strength_potion import Strength_Potion
 from scripts.items.potions.invisibility_potion import Invisibility_Potion
 from scripts.items.potions.silence_potion import Silence_Potion
 from scripts.items.potions.fire_resistance_potion import Fire_Resistance_Potion
-from scripts.items.potions.freeze_resistance import Freeze_Resistance_Potion
+from scripts.items.potions.frozen_resistance import Frozen_Resistance_Potion
 from scripts.items.potions.poison_resistance import Poison_Resistance_Potion
 from scripts.items.potions.vampiric_potion import Vampiric_Potion
 
@@ -41,8 +41,8 @@ class Potion_Handler():
         elif 'fire_resistance' in name:
             potion = self.Spawn_Fire_Resistance_Potion(pos_x, pos_y, amount)
 
-        elif 'freeze_resistance' in name:
-            potion = self.Spawn_Freeze_Resistance_Potion(pos_x, pos_y, amount)
+        elif 'frozen_resistance' in name:
+            potion = self.Spawn_Frozen_Resistance_Potion(pos_x, pos_y, amount)
 
         elif 'poison_resistance' in name:
             potion = self.Spawn_Poison_Resistance_Potion(pos_x, pos_y, amount)
@@ -85,8 +85,8 @@ class Potion_Handler():
     def Spawn_Fire_Resistance_Potion(self, pos_x, pos_y, amount):
         return Fire_Resistance_Potion(self.game, (pos_x, pos_y), amount)
     
-    def Spawn_Freeze_Resistance_Potion(self, pos_x, pos_y, amount):
-        return Freeze_Resistance_Potion(self.game, (pos_x, pos_y), amount)
+    def Spawn_Frozen_Resistance_Potion(self, pos_x, pos_y, amount):
+        return Frozen_Resistance_Potion(self.game, (pos_x, pos_y), amount)
     
     def Spawn_Poison_Resistance_Potion(self, pos_x, pos_y, amount):
         return Poison_Resistance_Potion(self.game, (pos_x, pos_y), amount)

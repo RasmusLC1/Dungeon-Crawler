@@ -42,7 +42,7 @@ class Item_Handler():
             elif item_data['sub_category'] == 'loot':
                 self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'rune':
-                self.game.rune_handler.Rune_Spawner(type, item_data)
+                self.game.rune_handler.Load_Data(item_data)
             else:
                 return False
             

@@ -315,7 +315,11 @@ class Moving_Entity(PhysicsEntity):
                 
         return None
 
+    # TODO: FIX effect also called strength
     def Apply_Repulsion(self, other_entity, tilemap) -> None:
+        return
+        if not other_entity:
+            return
         # Check if entity is stronger than the other, if no then simply return as it cannot push it
         if self.strength < other_entity.strength:
             return

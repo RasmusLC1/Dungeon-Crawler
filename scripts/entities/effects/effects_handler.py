@@ -4,7 +4,7 @@ from scripts.entities.effects.frozen import Frozen
 from scripts.entities.effects.wet import Wet
 from scripts.entities.effects.regen import Regen
 from scripts.entities.effects.speed import Speed
-from scripts.entities.effects.strength import Strength
+from scripts.entities.effects.Increase_Strength import Increase_Strength
 from scripts.entities.effects.invisibility import Invisibility
 from scripts.entities.effects.fire_resistance import Fire_Resistance
 from scripts.entities.effects.frozen_resistance import Frozen_Resistance
@@ -34,7 +34,7 @@ class Status_Effect_Handler:
         
         self.speed = Speed(self.entity)
 
-        self.strength = Strength(self.entity)
+        self.increase_strength = Increase_Strength(self.entity)
 
         self.invisibility = Invisibility(self.entity)
         
@@ -42,7 +42,7 @@ class Status_Effect_Handler:
 
         self.poison_resistance = Poison_Resistance(self.entity)
         
-        self.Frozen_Resistance = Frozen_Resistance(self.entity)
+        self.frozen_resistance = Frozen_Resistance(self.entity)
 
         self.snare = Snare(self.entity)
 
@@ -63,11 +63,11 @@ class Status_Effect_Handler:
             self.wet.effect_type: self.wet,
             self.regen.effect_type: self.regen,
             self.speed.effect_type: self.speed,
-            self.strength.effect_type: self.strength,
+            self.increase_strength.effect_type: self.increase_strength,
             self.invisibility.effect_type: self.invisibility,
             self.fire_resistance.effect_type: self.fire_resistance,
             self.poison_resistance.effect_type: self.poison_resistance,
-            self.Frozen_Resistance.effect_type: self.Frozen_Resistance,
+            self.frozen_resistance.effect_type: self.frozen_resistance,
             self.snare.effect_type: self.snare,
             self.healing.effect_type: self.healing,
             self.slow_down.effect_type: self.slow_down,
