@@ -28,6 +28,9 @@ class Rune_Inventory(Inventory):
         y_pos = self.game.screen_height / self.game.render_scale - 40
         return (x_pos, y_pos)
 
+    def Reset_Rune(self, rune):
+        if rune:
+            rune.Set_Clicked(False)
 
 
     def Key_Board_Input(self):
@@ -35,10 +38,19 @@ class Rune_Inventory(Inventory):
 
         if keyboard.z_pressed:
             self.Activate_Inventory_Slot(0)
+            self.Reset_Rune(self.inventory[1].item)
+            self.Reset_Rune(self.inventory[2].item)
+
+                
         elif keyboard.x_pressed:
             self.Activate_Inventory_Slot(1)
+            self.Reset_Rune(self.inventory[0].item)
+            self.Reset_Rune(self.inventory[2].item)
+
         elif keyboard.c_pressed:
             self.Activate_Inventory_Slot(2)
+            self.Reset_Rune(self.inventory[0].item)
+            self.Reset_Rune(self.inventory[1].item)
         
     def Find_Inventory_Slot(self, searched_inventory_slot):
         for inventory_slot in self.inventory:

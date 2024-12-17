@@ -1,5 +1,5 @@
 from scripts.items.weapons.weapon import Weapon
-from scripts.items.weapons.ranged_weapons.flame_thrower import Flame_Thrower
+from scripts.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
 import math
 
 

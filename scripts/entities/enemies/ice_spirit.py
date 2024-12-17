@@ -1,5 +1,6 @@
 from scripts.entities.enemies.enemy import Enemy
 from scripts.items.weapons.magic_attacks.ice.ice_particle import Ice_Particle
+from scripts.items.weapons.magic_attacks.ice.ice_shooter import Ice_Shooter
 
 
 import math
@@ -17,15 +18,20 @@ class Ice_Spirit(Enemy):
         self.ice_cooldown = 0
         self.shooting_ice = False
         self.attack_animation_num_cooldown_max = 30
+        self.ice_shooter = Ice_Shooter(self.game)
 
     def Update(self, tilemap, movement = (0, 0)):
         super().Update(tilemap, movement)
 
+        if self.effects.frozen.effect:
+            self.Set_Effect('healing', self.effects.frozen.effect)
+            self.Set_Effect('frozen_resistance', 2)
+        
 
-        if self.distance_to_player <= 100:
+        if self.distance_to_player <= 200:
             self.Attack()
 
-        if self.distance_to_player > 110 and self.charge:
+        if self.distance_to_player > 250 and self.charge:
             self.charge = 0
 
         
@@ -42,58 +48,19 @@ class Ice_Spirit(Enemy):
             self.shooting_ice = True
 
         if self.shooting_ice:
-            self.Ice_Particle_Creation()
+            self.Shoot_Ice_Particle()
 
         if self.charge <= 0:
             self.shooting_ice = False
     
     
-    def Ice_Particle_Creation(self):
+    def Shoot_Ice_Particle(self):
         self.Set_Target(self.game.player.pos)
         self.Set_Attack_Direction()
-        # Handle cooldown for spacing between fire particles
-        if self.ice_cooldown:
-            self.ice_cooldown -= 1
-            return
-        else:
-            self.ice_cooldown = 3
-            self.charge = max(0, self.charge - 20)
-
-        damage = 1
-        speed = 1
-        max_range = 140
-       
-
-        # Calculate the base angle using atan2(y, x)
-        base_angle = math.atan2(self.attack_direction[1], self.attack_direction[0])
-
-        pos_x = math.cos(base_angle) * speed
-        pos_y = math.sin(base_angle) * speed
-        direction = (pos_x, pos_y)
-        ice_particle = Ice_Particle(
-                self.game,
-                self.rect(),
-                damage,
-                speed,
-                max_range,
-                self.charge,
-                direction,  # Pass the direction here
-                self
-            )
-        
-        self.game.item_handler.Add_Item(ice_particle)
-
-    
+        self.charge = self.ice_shooter.Ice_Particle_Creation(self.charge, self)
 
     def Set_Idle(self):
         pass
 
     def Set_Action(self, movement):
         pass
-
-    def Set_Frozen(self, freeze_time):
-        if self.wet:
-            freeze_time *= 2
-            self.wet = 0
-        self.Set_Effect('healing', freeze_time)
-        return False

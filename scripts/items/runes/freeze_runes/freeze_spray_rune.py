@@ -1,33 +1,21 @@
-from scripts.items.runes.rune import Rune
-import math
-import pygame
+from scripts.items.runes.projectile_rune import Projectile_Rune
+from scripts.items.weapons.magic_attacks.ice.ice_shooter import Ice_Shooter
 
-class Freeze_Spray_Rune(Rune):
+class Freeze_Spray_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'freeze_spray_rune', pos, 10, 10)
+        super().__init__(game, 'freeze_ball_rune', pos, 1, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
-        self.clicked = False
+        self.ice_shooter = Ice_Shooter(self.game)
 
+    def Set_Charge(self):
+        self.charge = self.current_power * 100
 
-    def Activate(self):
-        if not super().Activate():
-            return    
-        self.clicked = True
-    
-    def Update(self):
-        super().Update()
-        if not self.clicked:
-            return
-        if self.game.mouse.left_click:
-            if not self.game.player.movement_handler.Dash(self.game.render_scroll):
-                return
-            self.game.player.Decrease_Souls(self.current_soul_cost)
-            self.clicked = False
-        
-        if self.game.mouse.right_click:
-            self.clicked = False
-
-    
-    def Render_Animation(self, surf, offset=(0, 0)):
-        pass
+    def Generate_Projectile(self):
+        print(self.charge)
+        self.charge = self.ice_shooter.Ice_Particle_Creation(self.charge ,self.game.player)
+        if self.charge <= 0:
+            self.Set_Shoot_Cooldown()
+        else:
+            self.Set_Shoot_Cooldown(0)
+        return

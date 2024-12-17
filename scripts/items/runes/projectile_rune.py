@@ -6,32 +6,56 @@ import pygame
 class Projectile_Rune(Rune):
     def __init__(self, game, type, pos, power, soul_cost):
         super().__init__(game, type, pos, power, soul_cost)
-        self.clicked = False
         self.effect = None
+        self.charge = 0
+        self.shoot_cooldown = 0
 
-
+    
     def Activate(self):
         if not super().Activate():
             return    
         self.clicked = True
     
+    def Update_Shoot_Cooldown(self):
+        if self.shoot_cooldown:
+            self.shoot_cooldown -= 1
+
+    def Set_Shoot_Cooldown(self, value = 60):
+        self.shoot_cooldown = value
+
     def Update(self):
         super().Update()
+
+        self.Update_Shoot_Cooldown()
+
         if not self.clicked:
-            return
+            return 
         
         self.Handle_Shooting()
         if self.game.mouse.right_click:
             self.clicked = False
+        
+        return
 
     def Handle_Shooting(self):
-        if not self.game.mouse.left_click:
+        if not self.game.mouse.left_click or self.shoot_cooldown:
             return
         
-        self.game.player.Attack_Direction_Handler(self.game.render_scroll)
-        self.Generate_Projectile()
-        self.Compute_Souls_Cost()
-        self.clicked = False
+        # Handle intial setup
+        if not self.charge:
+            self.Set_Charge()
+            self.Set_Shoot_Cooldown()
+            self.Compute_Souls_Cost()
+        
+        # Handle shooting
+        if self.charge:
+            self.game.player.Attack_Direction_Handler(self.game.render_scroll)
+            self.Generate_Projectile()
+            return
+        
+
+    def Set_Charge(self):
+        self.charge = 1
 
     def Generate_Projectile(self):
         pass

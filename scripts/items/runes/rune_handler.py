@@ -121,8 +121,8 @@ class Rune_Handler():
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('freeze_ball_rune')
-        self.Add_Rune_To_Rune_Inventory('poison_resistance_rune')
+        self.Add_Rune_To_Rune_Inventory('poison_ball_rune')
+        self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
         self.Add_Rune_To_Rune_Inventory('electric_ball_rune')
 
     def Clear_Runes(self):

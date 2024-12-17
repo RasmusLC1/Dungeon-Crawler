@@ -27,7 +27,7 @@ class Flame_Thrower():
 
         damage = 2
         speed = 1  
-        max_range = 50
+        max_range = 100
 
         # Generate fire particles
         for j in range(num_lines):
@@ -49,5 +49,4 @@ class Flame_Thrower():
             )
             self.game.item_handler.Add_Item(fire_particle)
 
-        print("SPECIAL ATTACk", special_attack)
         return special_attack

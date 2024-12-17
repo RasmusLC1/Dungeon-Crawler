@@ -5,7 +5,7 @@ import random
 # Increase entity's strength
 class Increase_Strength(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "strength", 0, 0, (130, 160))
+        super().__init__(entity, "increase_strength", 0, 0, (130, 160))
 
     
     #set Fire effect

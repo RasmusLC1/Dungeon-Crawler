@@ -1,6 +1,6 @@
 from scripts.entities.enemies.enemy import Enemy
 from scripts.items.weapons.magic_attacks.fire.fire_particle import Fire_Particle
-from scripts.items.weapons.ranged_weapons.flame_thrower import Flame_Thrower
+from scripts.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
 
 
 import math
@@ -57,52 +57,8 @@ class Fire_Spirit(Enemy):
         self.Set_Attack_Direction()
         self.charge = self.flame_thrower.Fire_Particle_Creation(self, self.charge)
 
-    def Fire_Particle_Creation(self):
-        self.Set_Target(self.game.player.pos)
-        self.Set_Attack_Direction()
-        # Handle cooldown for spacing between fire particles
-        if self.fire_cooldown:
-            self.fire_cooldown -= 1
-            return
-        else:
-            self.fire_cooldown = 3
-            self.charge = max(0, self.charge - 20)
 
-        # Basic raycasting attributes
-        num_lines = 8  # Define the number of lines and the spread angle (in degrees)
-        spread_angle = 50  # Total spread of the fan (in degrees)
-        angle_increment = spread_angle / (num_lines - 1)  # Calculate the angle increment between each line
-
-        # Calculate the base angle using atan2(y, x)
-        base_angle = math.atan2(self.attack_direction[1], self.attack_direction[0])
-        start_angle = base_angle - math.radians(spread_angle / 2)
-
-        damage = 1
-        speed = 1
-        max_range = 50
-
-        # Generate fire particles
-        for j in range(num_lines):
-            angle = start_angle + j * math.radians(angle_increment)
-            pos_x = math.cos(angle) * speed
-            pos_y = math.sin(angle) * speed
-            direction = (pos_x, pos_y)
-
-            # Create the fire particle with the direction
-            fire_particle = Fire_Particle(
-                self.game,
-                self.rect(),
-                damage,
-                speed,
-                max_range,
-                self.charge,
-                direction, 
-                self
-            )
-
-            self.game.item_handler.Add_Item(fire_particle)
-
-    # TODO: IMPLEMENT 
+    # TODO: IMPLEMENT
     def Look_For_Health(self):
         if self.look_for_health_cooldown:
             self.look_for_health_cooldown = max(0, self.look_for_health_cooldown - 1)

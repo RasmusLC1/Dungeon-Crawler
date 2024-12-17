@@ -23,6 +23,8 @@ class Rune(Item):
         self.render = True
         self.picked_up = True
         self.cost_to_buy = soul_cost // 2 * power // 2
+        self.clicked = False # Used for projectiles
+
 
     def Save_Data(self):
         super().Save_Data()
@@ -119,6 +121,9 @@ class Rune(Item):
     def Render_Menu(self, surf, scale = 1.5):
         item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], (self.size[0] * scale, self.size[1] * scale))  
         surf.blit(item_image, (self.menu_pos[0], self.menu_pos[1]))
+
+    def Set_Clicked(self, state):
+        self.clicked = state
     
     def Render_Animation(self, surf, offset=(0, 0)):
         if not self.animation_time:
