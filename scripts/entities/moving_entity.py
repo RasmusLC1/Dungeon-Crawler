@@ -104,6 +104,7 @@ class Moving_Entity(PhysicsEntity):
         self.saved_data['intelligence'] = self.intelligence
         self.saved_data['stamina'] = self.stamina
         self.saved_data['target'] = self.target
+        self.saved_data['animation'] = self.animation
         self.saved_data.update(self.effects.Save_Data())
 
 
@@ -117,6 +118,7 @@ class Moving_Entity(PhysicsEntity):
         self.intelligence = data['intelligence']
         self.stamina = data['stamina']
         self.target = data['target']
+        self.animation = data['animation']
         self.effects.Load_Data(data)
     
     # Set new action for animation

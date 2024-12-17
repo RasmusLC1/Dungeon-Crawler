@@ -1,5 +1,6 @@
 from scripts.entities.enemies.enemy import Enemy
 from scripts.items.weapons.magic_attacks.fire.fire_particle import Fire_Particle
+from scripts.items.weapons.ranged_weapons.flame_thrower import Flame_Thrower
 
 
 import math
@@ -20,6 +21,7 @@ class Fire_Spirit(Enemy):
         self.attack_animation_num_max = 3
         self.attack_animation_num_cooldown_max = 100
         self.animation_num_cooldown_max = 100
+        self.flame_thrower = Flame_Thrower(self.game)
 
     def Update(self, tilemap, movement = (0, 0)):
         
@@ -27,10 +29,10 @@ class Fire_Spirit(Enemy):
 
         self.Look_For_Health()
 
-        if self.distance_to_player < 60:
+        if self.distance_to_player < 120:
             self.Attack()
 
-        if self.distance_to_player > 70 and self.charge:
+        if self.distance_to_player > 150 and self.charge:
             self.charge = 0
 
 
@@ -40,16 +42,21 @@ class Fire_Spirit(Enemy):
         if not super().Attack():
             return
         self.charge += 1
-
+        print(self.charge)
         if self.charge >= 100:
             self.spewing_fire = True
 
         if self.spewing_fire:
-            self.Fire_Particle_Creation()
+            self.Shoot_Fire()
 
         if self.charge <= 0:
             self.spewing_fire = False
     
+    def Shoot_Fire(self):
+        self.Set_Target(self.game.player.pos)
+        self.Set_Attack_Direction()
+        self.charge = self.flame_thrower.Fire_Particle_Creation(self, self.charge)
+
     def Fire_Particle_Creation(self):
         self.Set_Target(self.game.player.pos)
         self.Set_Attack_Direction()
