@@ -23,6 +23,8 @@ class Rune(Item):
         self.render = True
         self.picked_up = True
         self.cost_to_buy = soul_cost // 2 * power // 2
+        self.activate_cooldown = 0
+        self.activate_cooldown_max = 200
         self.clicked = False # Used for projectiles
 
 
@@ -48,19 +50,28 @@ class Rune(Item):
         self.current_soul_cost = data['current_soul_cost'] 
         self.active = data['active'] 
         self.menu_pos = data['menu_pos']
-        
+    
+    def Update(self):
+        self.Update_Activate_Cooldown()
+        return super().Update()
     
     
     def Activate(self):
+        if self.activate_cooldown:
+            return False
         if not super().Activate():
             return False
         if self.game.player.souls < self.current_soul_cost:
             return False
         if self.game.player.Set_Effect(self.effect, self.current_power):
-            self.Compute_Souls_Cost()
-            self.Set_Animation_Time()
-            self.Reset_Animation_Size()
+            self.Trigger_Rune()
         return True
+    
+    def Trigger_Rune(self):
+        self.Compute_Souls_Cost()
+        self.Set_Animation_Time()
+        self.Reset_Animation_Size()
+        self.Set_Activate_Cooldown(self.activate_cooldown_max)
     
     def Compute_Souls_Cost(self):
         if self.game.player.effects.arcane_conduit.effect:
@@ -91,7 +102,14 @@ class Rune(Item):
             return False
         self.current_power += change
         return True
+    
+    def Update_Activate_Cooldown(self):
+        if self.activate_cooldown:
+            self.activate_cooldown -= 1
 
+    
+    def Set_Activate_Cooldown(self, value):
+        self.activate_cooldown = value
 
     def Set_Animation_Time(self):
         self.animation_time = self.animation_time_max

@@ -9,6 +9,7 @@ class Fire_Ball_Rune(Projectile_Rune):
         self.animation_time_max = 30
         self.animation_size_max = 15
 
+
     def Generate_Projectile(self):
         fire_ball = Fire_Ball(self.game, self.game.player.pos, self.game.player, self.current_power, 2, 100, self.game.player.attack_direction)
         self.game.item_handler.Add_Item(fire_ball)

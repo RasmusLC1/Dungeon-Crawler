@@ -8,7 +8,6 @@ class Projectile_Rune(Rune):
         super().__init__(game, type, pos, power, soul_cost)
         self.effect = None
         self.charge = 0
-        self.shoot_cooldown = 0
 
     
     def Activate(self):
@@ -16,17 +15,11 @@ class Projectile_Rune(Rune):
             return    
         self.clicked = True
     
-    def Update_Shoot_Cooldown(self):
-        if self.shoot_cooldown:
-            self.shoot_cooldown -= 1
+   
 
-    def Set_Shoot_Cooldown(self, value = 60):
-        self.shoot_cooldown = value
 
     def Update(self):
         super().Update()
-
-        self.Update_Shoot_Cooldown()
 
         if not self.clicked:
             return 
@@ -38,13 +31,13 @@ class Projectile_Rune(Rune):
         return
 
     def Handle_Shooting(self):
-        if not self.game.mouse.left_click or self.shoot_cooldown:
+        if not self.game.mouse.left_click or self.activate_cooldown:
             return
         
         # Handle intial setup
         if not self.charge:
             self.Set_Charge()
-            self.Set_Shoot_Cooldown()
+            self.Set_Activate_Cooldown(self.activate_cooldown_max )
             self.Compute_Souls_Cost()
         
         # Handle shooting

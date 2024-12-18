@@ -1,33 +1,22 @@
-from scripts.items.runes.rune import Rune
-import math
-import pygame
+from scripts.items.runes.projectile_rune import Projectile_Rune
+from scripts.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
 
-class Fire_Spray_Rune(Rune):
+class Fire_Spray_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'fire_spray_rune', pos, 10, 10)
+        super().__init__(game, 'fire_spray_rune', pos, 1, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
-        self.clicked = False
+        self.fire_shooter = Flame_Thrower(self.game)
+        self.activate_cooldown_max = 100
 
 
-    def Activate(self):
-        if not super().Activate():
-            return    
-        self.clicked = True
-    
-    def Update(self):
-        super().Update()
-        if not self.clicked:
-            return
-        if self.game.mouse.left_click:
-            if not self.game.player.movement_handler.Dash(self.game.render_scroll):
-                return
-            self.game.player.Decrease_Souls(self.current_soul_cost)
-            self.clicked = False
-        
-        if self.game.mouse.right_click:
-            self.clicked = False
+    def Set_Charge(self):
+        self.charge = self.current_power * 100
 
-    
-    def Render_Animation(self, surf, offset=(0, 0)):
-        pass
+    def Generate_Projectile(self):
+        self.charge = self.fire_shooter.Fire_Particle_Creation(self.game.player, self.charge)
+        if self.charge <= 0:
+            self.Set_Activate_Cooldown(self.activate_cooldown_max )
+        else:
+            self.Set_Activate_Cooldown(0)
+        return

@@ -92,6 +92,7 @@ class Graphics_Loader:
         'poison_explosion': get_tiles_from_sheet('weapons/magic_attacks/poison/poison_explosion.png', 5, 0, 0, 0, 32, 32),
 
 
+        'electric_particle': get_tiles_from_sheet('weapons/magic_attacks/electric/electric_particle.png', 0, 0, 0, 0, 16, 16),
         'electric_ball': get_tiles_from_sheet('weapons/magic_attacks/electric/electric_ball.png', 0, 0, 0, 0, 16, 16),
         'electric_explosion': get_tiles_from_sheet('weapons/magic_attacks/electric/electric_explosion.png', 5, 0, 0, 0, 32, 32),
         }
@@ -414,7 +415,7 @@ class Graphics_Loader:
             'shield_rune' : get_tiles_from_sheet('runes/shield_rune.png', 1, 0, 0, 0, 32, 32),
             'silence_rune' : get_tiles_from_sheet('runes/silence_rune.png', 1, 0, 0, 0, 32, 32),
             'speed_rune' : get_tiles_from_sheet('runes/speed_rune.png', 1, 0, 0, 0, 32, 32),
-            'strength_rune' : get_tiles_from_sheet('runes/strength_rune.png', 1, 0, 0, 0, 32, 32),
+            'increase_strength_rune' : get_tiles_from_sheet('runes/strength_rune.png', 1, 0, 0, 0, 32, 32),
             'vampiric_rune' : get_tiles_from_sheet('runes/vampiric_rune.png', 1, 0, 0, 0, 32, 32),
             'hunger_rune' : get_tiles_from_sheet('runes/hunger_rune.png', 1, 0, 0, 0, 32, 32),
             'magnet_rune' : get_tiles_from_sheet('runes/magnet_rune.png', 1, 0, 0, 0, 32, 32),

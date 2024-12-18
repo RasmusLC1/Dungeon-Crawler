@@ -97,7 +97,7 @@ class Rune_Handler():
         'regen_rune': Regen_Rune(self.game, (9999, 9999)),
         'light_rune': Light_Rune(self.game, (9999, 9999)),
         'invisibility_rune': Inivisibility_Rune(self.game, (9999, 9999)),
-        'srength_rune': Strength_Rune(self.game, (9999, 9999)),
+        'increase_strength_rune': Strength_Rune(self.game, (9999, 9999)),
         'silence_rune': Silence_Rune(self.game, (9999, 9999)),
         'speed_rune': Speed_Rune(self.game, (9999, 9999)),
         'vampiric_rune': Vampiric_Rune(self.game, (9999, 9999)),
@@ -121,9 +121,9 @@ class Rune_Handler():
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('poison_ball_rune')
+        self.Add_Rune_To_Rune_Inventory('increase_strength_rune')
         self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
-        self.Add_Rune_To_Rune_Inventory('electric_ball_rune')
+        self.Add_Rune_To_Rune_Inventory('fire_spray_rune')
 
     def Clear_Runes(self):
         self.runes.clear()

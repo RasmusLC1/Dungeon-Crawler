@@ -4,7 +4,7 @@ class Symbols():
     def __init__(self, game):
         self.game = game
         self.symbols = self.game.assets['symbols']
-        self.symbols_lookup = ['health', 'strength', 'speed',
+        self.symbols_lookup = ['health', 'increase_strength', 'speed',
                                'soul', 'invisibility',
                                'slash', 'blunt', 'electric',
                                'resistance', 'regen', 'silence',

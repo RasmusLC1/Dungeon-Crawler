@@ -14,6 +14,8 @@ class Ice_Shooter():
         else:
             self.ice_cooldown = 3
             special_attack = max(0, special_attack - 20)
+            if not special_attack:
+                return 0
 
         damage = 1
         speed = 1.2
