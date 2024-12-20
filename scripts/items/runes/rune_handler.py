@@ -24,6 +24,7 @@ from scripts.items.runes.poison_runes.poison_resistance_rune import Poison_Resis
 from scripts.items.runes.poison_runes.poison_ball_rune import Poison_Ball_Rune
 
 from scripts.items.runes.electric_runes.electric_ball_rune import Electric_Ball_Rune
+from scripts.items.runes.electric_runes.electric_spray_rune import Electric_Spray_Rune
 
 
 from scripts.items.runes.passive_runes.regen_rune import Regen_Rune
@@ -117,11 +118,12 @@ class Rune_Handler():
         'poison_resistance_rune': Poison_Resistance_Rune(self.game, (9999, 9999)),
         'poison_ball_rune': Poison_Ball_Rune(self.game, (9999, 9999)),
         'electric_ball_rune': Electric_Ball_Rune(self.game, (9999, 9999)),
+        'electric_spray_rune': Electric_Spray_Rune(self.game, (9999, 9999)),
         }
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('increase_strength_rune')
+        self.Add_Rune_To_Rune_Inventory('electric_spray_rune')
         self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
         self.Add_Rune_To_Rune_Inventory('fire_spray_rune')
 

@@ -32,6 +32,8 @@ class Projectile_Rune(Rune):
 
     def Handle_Shooting(self):
         if not self.game.mouse.left_click or self.activate_cooldown:
+            self.Reset_Charge()
+
             return
         
         # Handle intial setup
@@ -49,6 +51,9 @@ class Projectile_Rune(Rune):
 
     def Set_Charge(self):
         self.charge = 1
+
+    def Reset_Charge(self):
+        self.charge = 0
 
     def Generate_Projectile(self):
         pass

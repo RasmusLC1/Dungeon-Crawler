@@ -47,7 +47,7 @@ class Projectile(Weapon):
             self.shoot_distance = self.shoot_distance_holder
             self.active = 255
             self.shoot_speed = speed * 2
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * 10)
+            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * 3)
             if self.entity.category == "enemy":
                 self.nearby_enemies.append(self.game.player)
 
