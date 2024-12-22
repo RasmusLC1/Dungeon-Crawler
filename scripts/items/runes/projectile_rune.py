@@ -14,9 +14,7 @@ class Projectile_Rune(Rune):
         if not super().Activate():
             return    
         self.clicked = True
-    
    
-
 
     def Update(self):
         super().Update()

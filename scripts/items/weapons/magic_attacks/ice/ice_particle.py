@@ -29,9 +29,6 @@ class Ice_Particle(Projectile):
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         pass
 
-        
-        
-
     
     # Own render function since we don't need to compute light
     def Render(self, surf, offset=(0, 0)):

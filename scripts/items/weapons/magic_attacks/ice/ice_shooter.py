@@ -34,7 +34,7 @@ class Ice_Shooter():
                 damage,
                 speed,
                 max_range,
-                special_attack,
+                100,
                 direction,  # Pass the direction here
                 entity
             )

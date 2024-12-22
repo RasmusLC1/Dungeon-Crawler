@@ -63,10 +63,13 @@ class Rune(Item):
             return False
         if self.game.player.souls < self.current_soul_cost:
             return False
-        if self.game.player.Set_Effect(self.effect, self.current_power):
-            self.Trigger_Rune()
+        self.Trigger_Effect()
         return True
     
+    def Trigger_Effect(self):
+        if self.game.player.Set_Effect(self.effect, self.current_power):
+            self.Trigger_Rune()
+
     def Trigger_Rune(self):
         self.Compute_Souls_Cost()
         self.Set_Animation_Time()

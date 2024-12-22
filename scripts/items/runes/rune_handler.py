@@ -16,7 +16,7 @@ from scripts.items.runes.fire_runes.fire_spray_rune import Fire_Spray_Rune
 
 from scripts.items.runes.freeze_runes.frozen_resistance_rune import Frozen_Resistance_Rune
 from scripts.items.runes.freeze_runes.freeze_circle_rune import Freeze_Circle_Rune
-from scripts.items.runes.freeze_runes.freeze_shield_rune import Freeze_Shield_Rune
+from scripts.items.runes.freeze_runes.freeze_storm_rune import Freeze_Storm_Rune
 from scripts.items.runes.freeze_runes.freeze_spray_rune import Freeze_Spray_Rune
 from scripts.items.runes.freeze_runes.freeze_ball_rune import Freeze_Ball_Rune
 
@@ -106,7 +106,7 @@ class Rune_Handler():
         'fire_ball_rune': Fire_Ball_Rune(self.game, (9999, 9999)),
         'fire_spray_rune': Fire_Spray_Rune(self.game, (9999, 9999)),
         'freeze_circle_rune': Freeze_Circle_Rune(self.game, (9999, 9999)),
-        'freeze_shield_rune': Freeze_Shield_Rune(self.game, (9999, 9999)),
+        'freeze_storm_rune': Freeze_Storm_Rune(self.game, (9999, 9999)),
         'freeze_spray_rune': Freeze_Spray_Rune(self.game, (9999, 9999)),
         'freeze_ball_rune': Freeze_Ball_Rune(self.game, (9999, 9999)),
         'arcane_conduit_run': Arcane_Conduit_Rune(self.game, (9999, 9999)),
@@ -124,8 +124,8 @@ class Rune_Handler():
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('electric_spray_rune')
-        self.Add_Rune_To_Rune_Inventory('fire_ball_rune')
-        self.Add_Rune_To_Rune_Inventory('fire_spray_rune')
+        self.Add_Rune_To_Rune_Inventory('freeze_storm_rune')
+        self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
 
     def Clear_Runes(self):
         self.runes.clear()

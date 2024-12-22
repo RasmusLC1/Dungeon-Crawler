@@ -15,7 +15,6 @@ class PhysicsEntity:
         self.size = size
         self.active = 0
         self.light_level = 0
-        # self.game.entities_render.Add_Entity(self)
         self.render = True
         self.Set_Tile()
         self.saved_data = {}
@@ -32,8 +31,8 @@ class PhysicsEntity:
 
     
     def Load_Data(self, data):
-        self.saved_data['category'] = self.category
-        self.saved_data['type'] = self.type
+        self.category = data['category']
+        self.type = data['type']
         self.pos = data['pos']
         self.size = data['size']
         self.active = data['active']
@@ -69,13 +68,6 @@ class PhysicsEntity:
             return
         tile.Add_Entity(self)
 
-    def Reset_Effects(self):
-        # Status Effects
-        self.is_on_fire = 0
-        self.poisoned = 0
-        self.is_on_ice = 0
-        self.frozen = 0 
-        self.wet = 0 
 
     def Set_Active(self, value):
         self.active = value

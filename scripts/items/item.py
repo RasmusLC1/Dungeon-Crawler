@@ -199,7 +199,7 @@ class Item(PhysicsEntity):
         item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         item_image =  pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
         
-        # Set alpha value to make chest fade out
+        # Set alpha value to make item fade out
         alpha_value = max(0, min(255, self.active))
 
         if not alpha_value:
@@ -211,10 +211,10 @@ class Item(PhysicsEntity):
         dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
         dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
 
-        # Blit the chest layer on top the dark layer
+        # Blit the item layer on top the dark layer
         item_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         
-        # Render the chest
+        # Render the item
         surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
         
