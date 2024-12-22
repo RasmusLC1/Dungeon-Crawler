@@ -38,6 +38,8 @@ class Projectile_Rune(Rune):
         
         # Handle intial setup
         if not self.charge:
+            if self.game.player.souls < self.current_soul_cost:
+                return
             self.Set_Charge()
             self.Set_Activate_Cooldown(self.activate_cooldown_max )
             self.Compute_Souls_Cost()

@@ -14,8 +14,9 @@ class Electric_Particle(Projectile):
     
     def Initialise_Shooting(self, speed):
         return_value = super().Initialise_Shooting(speed)
-        entity = random.choice(self.nearby_enemies)
-        self.direction = pygame.math.Vector2(entity.pos[0] - self.pos[0], entity.pos[1] - self.pos[1])
+        if self.nearby_enemies:
+            entity = random.choice(self.nearby_enemies)
+            self.direction = pygame.math.Vector2(entity.pos[0] - self.pos[0], entity.pos[1] - self.pos[1]).normalize()
         return return_value
 
     def Shoot(self):

@@ -19,6 +19,8 @@ class Elemental_Explosion(Item):
         self.Initialise_Explosion()
 
     def Initialise_Explosion(self):
+        self.game.clatter.Generate_Clatter(self.pos, self.effect_strength * 100) # Generate clatter to alert nearby enemies
+
         self.Find_Nearby_Entities(self.power)
         self.Check_Player_Distance()
         entity_ID = self.Get_Entity_ID()

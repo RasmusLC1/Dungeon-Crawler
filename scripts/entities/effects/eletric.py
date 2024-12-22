@@ -16,7 +16,6 @@ class Electric(Effect):
             effect_time *= 2
 
         self.entity.Damage_Taken(effect_time)
-        print(effect_time, self.entity)
             
         return super().Set_Effect(effect_time)
     
