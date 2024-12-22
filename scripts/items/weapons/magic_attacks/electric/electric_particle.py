@@ -12,6 +12,9 @@ class Electric_Particle(Projectile):
         self.delete_countdown = 100
         self.attack_animation_time = shoot_distance // self.attack_animation_max
     
+    def Save_Data(self):
+        pass
+
     def Initialise_Shooting(self, speed):
         return_value = super().Initialise_Shooting(speed)
         if self.nearby_enemies:
@@ -32,6 +35,8 @@ class Electric_Particle(Projectile):
         entity = super().Shoot()
         if entity:
             self.Set_Special_Attack(0)
+        
+        return entity
             
 
 

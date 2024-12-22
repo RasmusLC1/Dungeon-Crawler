@@ -17,7 +17,12 @@ class Ice_Shooter():
             if not special_attack:
                 return 0
 
-        damage = 1
+       
+        self.Spawn_Ice_Particle(entity)
+        return special_attack
+    
+    def Spawn_Ice_Particle(self, entity):
+        damage = 2 # Multiplied with entity strength for damage calc
         speed = 1.2
         max_range = 240
        
@@ -40,5 +45,3 @@ class Ice_Shooter():
             )
         
         self.game.item_handler.Add_Item(ice_particle)
-        
-        return special_attack

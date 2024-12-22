@@ -93,7 +93,7 @@ class Status_Effect_Handler:
 
 
     def Save_Data(self):
-        for effect in self.effects.values():
+        for effect in self.active_effects:
             self.saved_data[effect.effect_type] = effect.Save_Data()
 
         return self.saved_data
@@ -108,6 +108,7 @@ class Status_Effect_Handler:
                 continue
             try:
                 self.effects[ID].Load_Data(effect_data)
+                self.active_effects.append(self.effects[ID])
             except Exception as e:
                 print(f"Wrong loaded data{e}", effect_data, ID)
 
@@ -118,23 +119,39 @@ class Status_Effect_Handler:
             return False
         
         try:
-            return self.effects[effect].Set_Effect(duration)
+            effect = self.effects[effect]
+            effect_set_success = effect.Set_Effect(duration)
+            if effect_set_success:
+                if effect not in self.active_effects:
+                    self.active_effects.append(effect)
+            return effect_set_success
         except Exception as e:
             print(f"Wrong effect input{e}", effect, duration)
 
-        
+    def Reset_Effects(self):
+        for effect in self.active_effects:
+            effect.Remove_Effect()
+            self.active_effects.remove(effect)
+
+
     def Update_Status_Effects(self):
-        for effect in self.effects.values():
+        for effect in self.active_effects:
             effect.Update_Effect()
+            if not effect.effect and effect in self.active_effects:
+                self.active_effects.remove(effect)
         
 
     def Remove_Effect(self, effect):
         try:
-            return self.effects[effect].Remove_Effect()
+            remove_effect_succes = self.effects[effect].Remove_Effect()
+            if remove_effect_succes:
+                self.active_effects.remove(self.effects[effect])
+            return remove_effect_succes 
+        
         except Exception as e:
                 print(f"Wrong effect input{e}", effect)
 
 
     def Render_Effects(self, surf, offset=(0, 0)):
-        for effect in self.effects.values():
+        for effect in self.active_effects:
             effect.Render_Effect(surf, offset)

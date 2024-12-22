@@ -10,6 +10,8 @@ class Fire_Particle(Projectile):
         self.direction = direction  # Store the direction vector
         self.attack_animation_max = 3
 
+    def Save_Data(self):
+        pass
 
     def Shoot(self):
         if not self.shoot_speed:

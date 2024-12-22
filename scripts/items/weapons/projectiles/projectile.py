@@ -73,7 +73,6 @@ class Projectile(Weapon):
         entity_hit = None
         # Check for collision with enemy
         entity_hit = self.Attack_Collision_Check_Projectile()
-
         if entity_hit:
             self.Reset_Shot()
             return entity_hit

@@ -29,7 +29,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
     def Render_Effects_Symbols(self, surf):
         x_pos = 20
         y_pos = 60
-        for effect in self.effects.values():
+        for effect in self.active_effects:
             if not effect.effect:
                 continue
             self.entity.game.symbols.Render_Symbol(surf, effect.effect_type, (x_pos, y_pos))

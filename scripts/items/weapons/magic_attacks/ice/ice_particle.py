@@ -10,6 +10,8 @@ class Ice_Particle(Projectile):
         self.delete_countdown = 100
         self.attack_animation_time = shoot_distance // self.attack_animation_max
    
+    def Save_Data(self):
+        pass
 
     def Shoot(self):
         if not self.shoot_speed:

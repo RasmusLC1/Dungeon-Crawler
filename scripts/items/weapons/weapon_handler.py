@@ -10,6 +10,9 @@ from scripts.items.weapons.ranged_weapons.bow import Bow
 from scripts.items.weapons.ranged_weapons.crossbow import Crossbow
 from scripts.items.weapons.projectiles.arrow import Arrow
 from scripts.items.weapons.shields.shield import Shield
+from scripts.items.weapons.magic_attacks.ice.ice_particle import Ice_Particle
+from scripts.items.weapons.magic_attacks.fire.fire_particle import Fire_Particle
+from scripts.items.weapons.magic_attacks.electric.electric_particle import Electric_Particle
 
 
 class Weapon_Handler():
@@ -53,6 +56,10 @@ class Weapon_Handler():
 
         elif 'arrow' in name:
             weapon = self.Spawn_Arrow(pos_x, pos_y, amount)
+
+        # TODO: Figure out how to spawn particles correctly
+        elif 'particle' in name:
+            return True
 
         if not weapon:
             return False
@@ -105,4 +112,3 @@ class Weapon_Handler():
 
     def Spawn_Arrow(self, pos_x, pos_y, amount):
         return Arrow(self.game, (pos_x, pos_y), amount)
-

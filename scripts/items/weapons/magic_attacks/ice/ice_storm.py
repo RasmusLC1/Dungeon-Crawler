@@ -32,7 +32,7 @@ class Ice_Storm(PhysicsEntity):
             return False
         
         self.duration -= 1
-        self.ice_cooldown = random.randint(10, 20)
+        self.ice_cooldown = random.randint(20, 30)
         self.Update_Animation()
         return True
 
@@ -50,7 +50,7 @@ class Ice_Storm(PhysicsEntity):
 
     def Ice_Particle_Creation(self):
 
-        damage = 1
+        damage = 2
         speed = 1.2
         max_range = 240
        

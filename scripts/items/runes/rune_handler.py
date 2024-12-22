@@ -25,6 +25,7 @@ from scripts.items.runes.poison_runes.poison_ball_rune import Poison_Ball_Rune
 
 from scripts.items.runes.electric_runes.electric_ball_rune import Electric_Ball_Rune
 from scripts.items.runes.electric_runes.electric_spray_rune import Electric_Spray_Rune
+from scripts.items.runes.electric_runes.chain_lightning_rune import Chain_Lightning_Rune
 
 
 from scripts.items.runes.passive_runes.regen_rune import Regen_Rune
@@ -119,12 +120,13 @@ class Rune_Handler():
         'poison_ball_rune': Poison_Ball_Rune(self.game, (9999, 9999)),
         'electric_ball_rune': Electric_Ball_Rune(self.game, (9999, 9999)),
         'electric_spray_rune': Electric_Spray_Rune(self.game, (9999, 9999)),
+        'chain_lightning_rune': Chain_Lightning_Rune(self.game, (9999, 9999)),
         }
 
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('electric_spray_rune')
-        self.Add_Rune_To_Rune_Inventory('freeze_storm_rune')
+        self.Add_Rune_To_Rune_Inventory('chain_lightning_rune')
         self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
 
     def Clear_Runes(self):

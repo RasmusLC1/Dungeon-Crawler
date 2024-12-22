@@ -260,9 +260,13 @@ class Weapon(Item):
         elif 'bow' in self.inventory_type:
             self.is_charging = self.game.mouse.hold_down_left
 
+    def Calculate_Damage(self):
+        return self.entity.strength * self.damage
+
+
     # Damage Entity
     def Entity_Hit(self, entity):
-        damage = self.entity.strength * self.damage
+        damage = self.Calculate_Damage()
         entity.Damage_Taken(damage, self.entity.attack_direction)
         self.enemy_hit = True
 
