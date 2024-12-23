@@ -6,10 +6,9 @@ import inspect
 
 # Parent class for ranged weapons
 class Ranged_Weapon(Weapon):
-    def __init__(self, game, pos, type, damage, speed, range):
-        super().__init__(game, pos, type, damage, speed, range, 'ranged')
+    def __init__(self, game, pos, type, damage, speed, range, max_charge_time):
+        super().__init__(game, pos, type, damage, speed, range, max_charge_time, 'ranged')
         self.is_charging = 0
-        self.max_special_attack = 40
         self.ready_to_shoot = False
         self.arrow = None
 

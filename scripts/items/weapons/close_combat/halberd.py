@@ -3,8 +3,7 @@ import random
 
 class Halberd(Weapon):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'halberd', 3, 2, 8, 'two_handed_melee', damage_type)
-        self.max_charge_time = 50
+        super().__init__(game, pos, 'halberd', 3, 2, 8, 50, 'two_handed_melee', damage_type)
         self.max_animation = 3
         self.attack_animation_max = 3 
 

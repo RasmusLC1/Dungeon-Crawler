@@ -4,13 +4,12 @@ import math
 
 class Battle_Axe(Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, 'battle_axe', 1, 2, 3, 'two_handed_melee')
+        super().__init__(game, pos, 'battle_axe', 1, 2, 3, 70, 'two_handed_melee')
         self.max_animation = 4
         self.attack_animation_max = 14
         self.special_attack_effect_animation_max = 8
         self.spin_index = 0
         self.spin_countdown = 0
-        self.max_special_attack = 32
         self.spin_attack_directions = [[1, 0], [0, 1], [-1, 0], [0, -1]] # Attack direction for the entity
 
 

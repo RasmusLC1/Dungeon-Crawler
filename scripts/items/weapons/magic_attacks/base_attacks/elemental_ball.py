@@ -3,7 +3,7 @@ import pygame
 
 class Elemental_Ball(Projectile):
     def __init__(self, game, pos, entity, type, damage, speed, range, damage_type, shoot_distance, special_attack, direction):
-        super().__init__(game, pos, type, damage, speed, range, 'magic_projectile', damage_type, shoot_distance, 'cut', (16, 16), False)
+        super().__init__(game, pos, type, damage, speed, range, 100, 'magic_projectile', damage_type, shoot_distance, 'cut', (16, 16), False)
         self.special_attack = special_attack
         
         self.entity = entity

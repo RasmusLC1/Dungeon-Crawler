@@ -8,11 +8,10 @@ import inspect
 
 class Bow(Ranged_Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, 'bow', 4, 8, 10)
+        super().__init__(game, pos, 'bow', 4, 8, 10, 40)
         self.max_animation = 0
         self.attack_animation_max = 2
         self.attack_animation_counter = 0
-        self.max_special_attack = 40
 
 
 
@@ -40,7 +39,7 @@ class Bow(Ranged_Weapon):
         if not self.is_charging:
             return
 
-        if self.is_charging < self.max_special_attack:
+        if self.is_charging < self.max_charge_time:
             self.Update_Attack_Animation()
 
             return

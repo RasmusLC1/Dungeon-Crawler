@@ -6,7 +6,7 @@ import pygame
 import math
 
 class Weapon(Item):
-    def __init__(self, game, pos, type, damage, speed, range, weapon_class, effect = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, speed, range, max_charge_time, weapon_class, effect = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = 10 - speed # Speed of the weapon
@@ -39,17 +39,16 @@ class Weapon(Item):
         # Can be expanded to damaged or dirty versions of weapons later
         self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
         self.charge_time = 0  # Tracks how long the button is held
-        self.max_charge_time = 100  # Maximum time to fully charge
+        self.max_charge_time = max_charge_time  # Maximum time to fully charge
         self.is_charging = False  # Tracks if the player is charging
         self.special_attack = 0 # special attack counter
-        self.max_special_attack = 20 # Limit for special attack
         self.special_attack_active = False # Check if weapon is special attacking
 
         self.charge_effect = self.effect + '_charge_effect'
         self.charge_effect_animation = 0
         self.charge_effect_animation_max = 5
         self.charge_effect_cooldown = 0
-        self.charge_effect_cooldown_max = (self.max_charge_time // self.charge_effect_animation_max) - (self.max_charge_time // 15)
+        self.charge_effect_cooldown_max = (self.max_charge_time // self.charge_effect_animation_max) - (self.max_charge_time // 20)
 
 
         self.weapon_cooldown = 0
@@ -156,19 +155,19 @@ class Weapon(Item):
 
     def Determine_Attack_Type(self, offset):
         # If the button is released quickly
-        if self.charge_time > 0 and self.charge_time <= 15:
+        if self.charge_time > 0 and self.charge_time <= 20:
             self.Set_Attack()  # Trigger the attack
             self.Reset_Weapon_Charge()
             return
         
         # Trigger special attack if mouse if held for > 20 frames
-        elif self.charge_time >= self.max_special_attack:
+        elif self.charge_time >= self.max_charge_time:
             self.Set_Special_Attack(offset)
             self.Reset_Weapon_Charge()
             return
         
         # Resetting weapon if no special attack
-        elif self.charge_time >= 15:
+        elif self.charge_time >= 20:
             self.Reset_Weapon_Charge()
     
 
@@ -247,7 +246,7 @@ class Weapon(Item):
             return
         self.entity.Attack_Direction_Handler(offset)
         self.Set_Block_Direction()
-        self.special_attack = min(self.charge_time, self.max_special_attack)
+        self.special_attack = min(self.charge_time, self.max_charge_time)
         self.Set_Rotation()
         self.special_attack_active = True
 
@@ -522,7 +521,7 @@ class Weapon(Item):
 
     # Handle the charging effect when using special attacks
     def Render_Charge_Effect(self, surf, offset):
-        if self.charge_time <= 15 and self.entity:
+        if self.charge_time <= 20 and self.entity:
             self.Reset_Charge_Effect()
 
             return

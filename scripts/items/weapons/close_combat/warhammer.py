@@ -4,11 +4,10 @@ from scripts.items.weapons.weapon import Weapon
 
 class Warhammer(Weapon):
     def __init__(self, game, pos, damage_type = 'blunt'):
-        super().__init__(game, pos, 'warhammer', 9, 2, 6, 'two_handed_melee', damage_type)
+        super().__init__(game, pos, 'warhammer', 9, 2, 6, 80, 'two_handed_melee', damage_type)
         self.max_animation = 5
         self.attack_animation_max = 5
         self.special_attack_effect_animation_max = 5
-        self.max_special_attack = 32
 
 
 
@@ -26,14 +25,14 @@ class Warhammer(Weapon):
 
         
     def Smash_Attack(self):
-        if self.special_attack != self.max_special_attack // 2:
+        if self.special_attack != self.max_charge_time // 2:
             return
         damage_holder = self.damage
         self.damage = 1 # quarter damage on stun
         # Stun nearby enemies
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3)
         for enemy in self.nearby_enemies:
-            enemy.Set_Effect('snare', self.max_special_attack * 2)
+            enemy.Set_Effect('snare', self.max_charge_time * 2)
             self.Entity_Hit(enemy)
 
         self.damage = damage_holder # Reset Damage

@@ -3,8 +3,7 @@ import random
 
 class Sword(Weapon):
     def __init__(self, game, pos, effect = 'slash'):
-        super().__init__(game, pos, 'sword', 3, 6, 5, 'one_handed_melee', effect)
-        self.max_charge_time = 50
+        super().__init__(game, pos, 'sword', 3, 6, 5, 50, 'one_handed_melee', effect)
         self.max_animation = 3
         self.attack_animation_max = 3 
 
