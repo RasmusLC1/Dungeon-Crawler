@@ -45,6 +45,12 @@ class Weapon(Item):
         self.max_special_attack = 20 # Limit for special attack
         self.special_attack_active = False # Check if weapon is special attacking
 
+        self.charge_effect = self.effect + '_charge_effect'
+        self.charge_effect_animation = 0
+        self.charge_effect_animation_max = 5
+        self.charge_effect_cooldown = 0
+        self.charge_effect_cooldown_max = (self.max_charge_time // self.charge_effect_animation_max) - (self.max_charge_time // 15)
+
 
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
@@ -150,16 +156,21 @@ class Weapon(Item):
 
     def Determine_Attack_Type(self, offset):
         # If the button is released quickly
-        if self.charge_time > 0 and self.charge_time <= 20:
+        if self.charge_time > 0 and self.charge_time <= 15:
             self.Set_Attack()  # Trigger the attack
             self.Reset_Weapon_Charge()
             return
         
         # Trigger special attack if mouse if held for > 20 frames
-        elif self.charge_time > self.max_special_attack:
+        elif self.charge_time >= self.max_special_attack:
             self.Set_Special_Attack(offset)
             self.Reset_Weapon_Charge()
             return
+        
+        # Resetting weapon if no special attack
+        elif self.charge_time >= 15:
+            self.Reset_Weapon_Charge()
+    
 
     def Reset_Weapon_Charge(self):
         self.charge_time = 0  # Reset the charge time
@@ -482,7 +493,7 @@ class Weapon(Item):
         surf.blit( pygame.transform.flip(attack_effect, self.flip_x, False), (pos[0], pos[1]))
 
 
-    # Render the weapon in entity's hand and rotate towards target
+    # Render the weapon in player's hand and rotate towards target
     def Render_Equipped(self, surf, offset=(0, 0)):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         if self.rotate:
@@ -491,8 +502,40 @@ class Weapon(Item):
         surf.blit( pygame.transform.flip(weapon_image, self.flip_x, False),
                     (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
-        self.Render_Attack_Effect(surf, offset)    
+        self.Render_Attack_Effect(surf, offset)
+        self.Render_Charge_Effect(surf, offset)
+    
+    def Reset_Charge_Effect(self):
+        if not self.charge_effect_animation:
+            return
+        self.charge_effect_cooldown = 0
+        self.charge_effect_animation = 0
+
+
+    def Charge_Effect_Update(self):
+        if self.charge_effect_cooldown < self.charge_effect_cooldown_max:
+            self.charge_effect_cooldown += 1
+            return
         
+        self.charge_effect_cooldown = 0
+        self.charge_effect_animation = min(self.charge_effect_animation_max, self.charge_effect_animation + 1)
+
+    # Handle the charging effect when using special attacks
+    def Render_Charge_Effect(self, surf, offset):
+        if self.charge_time <= 15 and self.entity:
+            self.Reset_Charge_Effect()
+
+            return
+        if not self.entity.type == "player":
+            return
+        self.Charge_Effect_Update()
+        charge_effect_animation = self.game.assets[self.charge_effect][self.charge_effect_animation].convert_alpha()
+
+        charge_effect_animation.set_alpha(self.charge_effect_animation * 50)
+        surf.blit(charge_effect_animation, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+
+            
         
 
     # Render basic function on the map

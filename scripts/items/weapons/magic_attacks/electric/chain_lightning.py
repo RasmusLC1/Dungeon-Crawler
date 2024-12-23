@@ -4,7 +4,7 @@ import math
 class Chain_Lightning(Electric_Particle):
     def __init__(self, game, pos, entity, damage, speed, shoot_distance, special_attack, direction, effect):
         super().__init__(game, pos, damage, speed, shoot_distance, special_attack, direction, entity)
-        self.shots_left = effect * 3
+        self.shots_left = min (20, effect * 3)
         self.reset_shot = False
 
     def Initialise_Shooting(self, speed):
