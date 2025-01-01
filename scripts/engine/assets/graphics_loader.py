@@ -9,6 +9,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Effect_List(self)
         Graphics_Loader.Asset_Magic_Attack_List(self)
         Graphics_Loader.Asset_Dusty_Bones_List(self)
+        Graphics_Loader.Asset_Skeleton_Warrior_List(self)
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
         Graphics_Loader.Wight_King_Spirit_List(self)
@@ -127,6 +128,20 @@ class Graphics_Loader:
             'decrepit_bones': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 32, 32),
 
             'decrepit_bones_attack': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 32, 32),
+
+        }
+        self.assets.update(entities_assets)
+
+    def Asset_Skeleton_Warrior_List(self):
+        entities_assets = {
+            'skeleton_warrior_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_warrior/skeleton_warrior_1.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_warrior_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_warrior/skeleton_warrior_1_attack.png', 6, 0, 0, 0, 32, 32),
+
+            'skeleton_warrior_2': get_tiles_from_sheet('entities/enemies/undead/skeleton_warrior/skeleton_warrior_2.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_warrior_2_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_warrior/skeleton_warrior_2_attack.png', 6, 0, 0, 0, 32, 32),
+
+            'skeleton_warrior_3': get_tiles_from_sheet('entities/enemies/undead/skeleton_warrior/skeleton_warrior_3.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_warrior_3_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_warrior/skeleton_warrior_3_attack.png', 6, 0, 0, 0, 32, 32),
 
         }
         self.assets.update(entities_assets)

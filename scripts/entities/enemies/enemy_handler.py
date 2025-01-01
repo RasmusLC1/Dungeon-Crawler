@@ -1,5 +1,5 @@
 from scripts.entities.enemies.enemy import Enemy
-from scripts.entities.enemies.decrepit_bones_melee import Decrepit_Bones_Melee
+from scripts.entities.enemies.skeleton_warrior import Skeleton_Warrior
 from scripts.entities.enemies.decrepit_bones_ranged import Decrepit_Bones_Ranged
 from scripts.entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.enemies.ice_spirit import Ice_Spirit
@@ -21,6 +21,7 @@ class Enemy_Handler():
         for enemy in self.enemies:
             enemy.Save_Data()
             self.saved_data[enemy.ID] = enemy.saved_data
+            print(enemy.type)
 
     def Load_Data(self, data):
         for ID, item_data in data.items():
@@ -30,6 +31,7 @@ class Enemy_Handler():
                 type = item_data['sub_type']
                 pos = item_data['pos']
                 if item_data['category'] == 'enemy':
+
                     self.Enemy_Spawner(type, pos, item_data)
                     continue
             except Exception as e:
@@ -48,12 +50,12 @@ class Enemy_Handler():
         for i in range(20):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(3, 3)
+            enemy_variant = random.randint(1, 1)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
-                random_value = random.randint(8, 10)
+                random_value = random.randint(1, 5)
                 if random_value < 7:
-                    type = 'decrepit_bones_melee'
+                    type = 'Skeleton_Warrior'
                 else:
                     type = 'decrepit_bones_ranged'
 
@@ -71,8 +73,8 @@ class Enemy_Handler():
 
     def Enemy_Spawner(self, type, pos, data = None):
         enemy = None
-        if type == 'decrepit_bones_melee':
-            enemy = self.Spawn_Melee_Decrepit_Bones(pos)
+        if 'skeleton_warrior' in type:
+            enemy = self.Spawn_Skeleton_Warrior(pos)
         elif type == 'decrepit_bones_ranged':
                 enemy = self.Spawn_Ranged_Decrepit_Bones(pos)
         elif type == 'fire_spirit':
@@ -90,14 +92,14 @@ class Enemy_Handler():
             self.enemies.append(enemy)
         return enemy
 
-    def Spawn_Melee_Decrepit_Bones(self, pos):
+    def Spawn_Skeleton_Warrior(self, pos):
         health = 30
         strength = 2
         speed = 2
         agility = 2 
         intelligence = 2
         stamina = 2
-        return Decrepit_Bones_Melee(
+        return Skeleton_Warrior(
             self.game,
             pos, 
             health,

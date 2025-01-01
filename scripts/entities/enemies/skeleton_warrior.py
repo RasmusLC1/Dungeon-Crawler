@@ -6,12 +6,13 @@ from scripts.items.weapons.projectiles.spear import Spear
 import random
 
 
-class Decrepit_Bones_Melee(Enemy):
+class Skeleton_Warrior(Enemy):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, 'decrepit_bones', health, strength, max_speed, agility, intelligence, stamina)
-        self.animation_num_max = 3
-        self.sub_type = 'decrepit_bones_melee'
-        self.animation = 'decrepit_bones'
+        type = str(random.randint(1, 3))
+        super().__init__(game, pos, 'skeleton_warrior_' + type, health, strength, max_speed, agility, intelligence, stamina)
+        self.animation_num_max = 6
+        self.attack_animation_num_cooldown_max = 6
+        self.sub_type = 'skeleton_warrior_'  + type
         self.Equip_Weapon()
         self.max_charge = 70
 
