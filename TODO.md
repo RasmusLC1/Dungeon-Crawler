@@ -236,6 +236,7 @@ Starting Deck
     Enemies start out basic but can upgrade to elite as dungeon effects trigger
     Spawn enemies using dungeon director when effects trigger
     Enemies have a difficulty attribute to make the spawning dynamic
+    Enemies seperated into tribes with different strengths and weaknesses
     - pack swarms the player
     - Solo, goes after the player alone
     - Scout, looks for and calls allies to attack the player
@@ -245,19 +246,30 @@ Starting Deck
     - Ranged, shoots the player from range 
     - Melee, attacks the player up close
 
+## Undead Tribe
+    Skeleton Warrior, basic warrior uses standard weapons
+    Skeleton scout, alerts other enemies of player location (increased clank range), uses ranged weapons
+    Skeleton Cleric, heals undead in the area but does no damage
+    Skeleton warlock, uses magic poison attacks
+    Necromancer, boss, can resurrect undead and summon 3 skeletons
+    Wight Lord, boss, armoured skeleton with shield and sword, can dash to close range
+    Vampire, boss, life steal, flying bat form when travelling, close combat
+
+## Dungeon Dwellers
+    Crypt Ghoul, bone club, fast -> Upgrades to Crypt Horror
+    Crypt Horror, boss, high damage and strength, fast
+    Kobold, different variaties can steal different items from player, soul, loot, potions etc
+
+
+
 ## Ancient Tomb Enemies
     # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
     Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
     # Skeletons take more damage from blunt weapons, make more noise from rattle  -> Upgrades to Wight Lord
-    Wight Lord, elite armoured skeleton with shield and sword, can dash to close range
     Ghost, can go through walls, low health high damage, need special effect to damage -> Upgrades to Reaper
     Reaper, elite melee enemy with scythe sweep attack
-    Vampire, life steal, flying bat form when travelling, close combat
-    Crypt Ghoul, bone club, fast -> Upgrades to Crypt Horror
-    Crypt Horror, Elite high damage and strength, fast
     Wolves, fast and high damage  -> Upgrades to WereWolf
     WereWolf, Elite enemy high mass fast, high damage
-    Necromancer, elite mob, spawns skeletons, raises killed skeletons, atacks with poision orb shots  
     Gargoyle, sentry that waits for players and blends into the envoirement
     Eyes of Evil, floating eyes that shoot at range, Snare
 

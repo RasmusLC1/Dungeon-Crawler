@@ -152,9 +152,9 @@ class Graphics_Loader:
 
     def Wight_King_Spirit_List(self):
         entities_assets = {
-            'wight_king': get_tiles_from_sheet('entities/enemies/wight_king/wight_king.png', 4, 0, 0, 0, 40, 40),
+            'wight_king': get_tiles_from_sheet('entities/enemies/undead/wight_king/wight_king.png', 4, 0, 0, 0, 40, 40),
 
-            'wight_king_attack': get_tiles_from_sheet('entities/enemies/wight_king/wight_king_attack.png', 6, 0, 0, 0, 40, 40),
+            'wight_king_attack': get_tiles_from_sheet('entities/enemies/undead/wight_king/wight_king_attack.png', 6, 0, 0, 0, 40, 40),
         }
         self.assets.update(entities_assets)
 
