@@ -1,13 +1,9 @@
-from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entity import Moving_Entity
-from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.entities.enemies.path_finding import Path_Finding
 from scripts.entities.enemies.attack_strategies import Attack_Stategies
+from scripts.entities.textbox.enemy_textbox import Enemy_Textbox
 
-
-import random
 import pygame
-import math
 
 
 
@@ -32,6 +28,8 @@ class Enemy(Moving_Entity):
         self.locked_on_target = 0 # If the enemy is locked onto a target, then it will not switch based on clatter
 
         self.attack_symbol_offset = 20
+
+        self.text_box = Enemy_Textbox(self)
     
     def Save_Data(self):
         super().Save_Data()
