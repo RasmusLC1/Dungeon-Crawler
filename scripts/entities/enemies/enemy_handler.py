@@ -27,7 +27,7 @@ class Enemy_Handler():
             if not item_data:
                 continue
             try:
-                type = item_data['sub_type']
+                type = item_data['type']
                 pos = item_data['pos']
                 if item_data['category'] == 'enemy':
 
@@ -46,7 +46,7 @@ class Enemy_Handler():
     def Initialise(self):
         spawners = self.game.tilemap.extract([('spawners', 1)])
         spawners_length = len(spawners)
-        for i in range(80):
+        for i in range(40):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
             enemy_variant = random.randint(1, 1)
@@ -74,7 +74,7 @@ class Enemy_Handler():
         enemy = None
         if 'skeleton_warrior' in type:
             enemy = self.Spawn_Skeleton_Warrior(pos)
-        elif type == 'skeleton_ranger':
+        elif 'skeleton_ranger' in type:
             enemy = self.Spawn_Skeleton_Ranger(pos)
         elif type == 'fire_spirit':
             enemy = self.Spawn_Fire_Spirit(pos)

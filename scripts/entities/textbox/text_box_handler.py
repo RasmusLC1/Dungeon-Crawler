@@ -9,13 +9,13 @@ class Text_Box_handler():
 
     def Update(self):
         self.current_item = None
-        self.Update_Nearby_Items()
+        # self.Update_Nearby_Items()
         self.Check_Items()
         self.Check_Inventory_Slots()
 
     def Check_Items(self):
-        for item in self.nearby_items:
-            self.current_item = item.Update_Text_Box(item.rect(), self.game.mouse.rect_pos())
+        for entity in self.game.entities_render.entities:
+            self.current_item = entity.Update_Text_Box(entity.rect(), self.game.mouse.rect_pos())
             if self.current_item:
                 return
 
@@ -36,20 +36,20 @@ class Text_Box_handler():
             if self.current_item:
                 return
 
-    def Update_Nearby_Items(self):
-        if self.nearby_item_cooldown:
-            self.nearby_item_cooldown = max(0, self.nearby_item_cooldown - 1)
-            return False
+    # def Update_Nearby_Items(self):
+    #     if self.nearby_item_cooldown:
+    #         self.nearby_item_cooldown = max(0, self.nearby_item_cooldown - 1)
+    #         return False
 
-        self.nearby_item_cooldown = 30
-        self.nearby_items.clear()
+    #     self.nearby_item_cooldown = 30
+    #     self.nearby_items.clear()
 
-        self.nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.mouse.player_mouse, 100)
-        # nearby_runes = self.game.rune_handler.Find_Nearby_Runes(self.game.mouse.player_mouse, 100)
-        # if not nearby_runes:
-        #     return True
-        # self.nearby_items.extend(nearby_runes)
-        return True
+    #     self.nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.mouse.player_mouse, 100)
+    #     # nearby_runes = self.game.rune_handler.Find_Nearby_Runes(self.game.mouse.player_mouse, 100)
+    #     # if not nearby_runes:
+    #     #     return True
+    #     # self.nearby_items.extend(nearby_runes)
+    #     return True
     
 
     def Render(self, surf, offset=(0, 0)):

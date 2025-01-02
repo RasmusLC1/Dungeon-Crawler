@@ -10,6 +10,6 @@ class Invisibility_Potion(Potion):
         self.sub_type = 'empty_bottle'
 
 
-    def Update_Sub_Type():
+    def Update_Sub_Type(self):
         pass
 

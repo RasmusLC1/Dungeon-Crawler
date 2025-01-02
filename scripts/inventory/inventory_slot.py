@@ -121,17 +121,15 @@ class Inventory_Slot():
         
         self.Render_Item_Amount(surf)
 
-
+    # Render the amount of an item
     def Render_Item_Amount(self, surf):
-        x_offset = 9
+        x_offset = 18
         if self.item.amount > 10:
             x_offset = 5
         self.game.default_font.Render_Word(surf, str(self.item.amount), (self.pos[0] + x_offset, self.pos[1] + self.item.size[1]))
 
+    # Render the keyboard shortcut
     def Render_Key(self, surf):
         if not self.key:
             return
-        # x_offset = 9
-        # if self.item.amount > 10:
-        #     x_offset = 5
         self.game.default_font.Render_Word(surf, str(self.key), (self.pos[0], self.pos[1]))

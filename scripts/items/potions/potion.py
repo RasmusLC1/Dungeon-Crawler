@@ -1,4 +1,5 @@
 from scripts.items.item import Item
+from scripts.entities.textbox.potion_textbox import Potion_Textbox
 
 
 class Potion(Item):
@@ -9,6 +10,7 @@ class Potion(Item):
         self.max_animation = 4
         self.strength = strength
         self.effect = self.type.replace('_potion', '')
+        self.text_box = Potion_Textbox(self)
         self.Update_Sub_Type()
 
     def Save_Data(self):

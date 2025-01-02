@@ -117,7 +117,8 @@ class Status_Effect_Handler:
             return False
         if self.entity.effects.invulnerable.effect:
             return False
-        
+        if effect == 'slash' or effect == 'blunt':
+            return False
         try:
             effect = self.effects[effect]
             effect_set_success = effect.Set_Effect(duration)
@@ -142,6 +143,7 @@ class Status_Effect_Handler:
         
 
     def Remove_Effect(self, effect):
+        
         try:
             remove_effect_succes = self.effects[effect].Remove_Effect()
             if remove_effect_succes:
@@ -149,7 +151,7 @@ class Status_Effect_Handler:
             return remove_effect_succes 
         
         except Exception as e:
-                print(f"Wrong effect input{e}", effect)
+                print(f"Wrong effect input{e} EFFECT NAME", effect)
 
 
     def Render_Effects(self, surf, offset=(0, 0)):

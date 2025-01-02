@@ -2,11 +2,11 @@ import math
 import random
 import pygame
 
-from scripts.engine.particles.particle import Particle
+
 
 
 class PhysicsEntity:
-    def __init__(self, game, type, category, pos, size):
+    def __init__(self, game, type, category, pos, size, sub_category = None):
         self.game = game
         self.ID = random.randint(1, 10000000)
         self.category = category # Category = Potion, enemy, player, etc
@@ -18,6 +18,8 @@ class PhysicsEntity:
         self.render = True
         self.Set_Tile()
         self.saved_data = {}
+        self.sub_category = sub_category
+        self.text_box = None
 
 
     def Save_Data(self):
@@ -97,6 +99,14 @@ class PhysicsEntity:
             return False
         else:
             return True
+
+    def Update_Text_Box(self, hitbox_1, hitbox_2):
+        if not self.text_box:
+            return None
+        if self.text_box.Update(hitbox_1, hitbox_2):
+            return self
+        else:
+            return None
 
     def Render(self, surf, offset=(0, 0)):
         pass

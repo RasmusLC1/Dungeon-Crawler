@@ -1,13 +1,10 @@
-from scripts.items.item import Item
+from scripts.items.loot.loot import Loot
 import random
 
-class Key(Item):
+class Key(Loot):
     def __init__(self, game, pos):
         super().__init__(game, 'key', 'loot', pos, (20, 20), 1)
-        self.value = 1
 
-    def Update_Animation(self):
-        pass
 
     def Unlock_Door(self):
         pass

@@ -8,9 +8,10 @@ from scripts.entities.effects.effects_handler import Status_Effect_Handler
 from scripts.entities.entities import PhysicsEntity
 
 
+
 class Moving_Entity(PhysicsEntity):
-    def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, type, category, pos, size)
+    def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category):
+        super().__init__(game, type, category, pos, size, sub_category)
         self.velocity = [0, 0] # Velocity of the player
         
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False} # Check for wall collision in each direction
@@ -94,6 +95,8 @@ class Moving_Entity(PhysicsEntity):
         self.effects = Status_Effect_Handler(self)
         
         self.damage_text = ''
+
+
 
     def Save_Data(self):
         super().Save_Data()

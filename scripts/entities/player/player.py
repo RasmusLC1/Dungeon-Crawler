@@ -13,7 +13,7 @@ import pygame
 
 class Player(Moving_Entity):
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, 'player', 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina)
+        super().__init__(game, 'player', 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina, 'player')
         
         self.animation_num_max = 3
         

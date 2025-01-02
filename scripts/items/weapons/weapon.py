@@ -1,7 +1,5 @@
-from scripts.decoration.decoration import Decoration
 from scripts.items.item import Item
-from scripts.engine.clatter import Clatter
-import random
+from scripts.entities.textbox.weapon_textbox import Weapon_Textbox
 import pygame
 import math
 
@@ -56,7 +54,7 @@ class Weapon(Item):
 
         self.attack_hitbox_size = (5, 5)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
-        
+        self.text_box = Weapon_Textbox(self)
 
     def Save_Data(self):
         if self.entity:

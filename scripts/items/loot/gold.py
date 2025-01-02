@@ -1,12 +1,8 @@
-from scripts.items.item import Item
+from scripts.items.loot.loot import Loot
 import random
 
-class Gold(Item):
+class Gold(Loot):
     def __init__(self, game, pos, amount):
-        super().__init__(game, 'gold', 'loot', pos, (20, 20), amount)
+        super().__init__(game, 'gold', 'loot', pos, (20, 20), amount, 1)
         self.max_amount = 99
-        self.value = 1
         self.animation = random.randint(1, 3)
-
-    def Update_Animation(self):
-        pass

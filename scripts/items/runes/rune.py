@@ -1,6 +1,8 @@
 from scripts.items.item import Item
 import pygame
 import math
+from scripts.entities.textbox.rune_textbox import Rune_Textbox
+
 
 
 class Rune(Item):
@@ -26,6 +28,7 @@ class Rune(Item):
         self.activate_cooldown = 0
         self.activate_cooldown_max = 200
         self.clicked = False # Used for projectiles
+        self.text_box = Rune_Textbox(self)
 
 
     def Save_Data(self):

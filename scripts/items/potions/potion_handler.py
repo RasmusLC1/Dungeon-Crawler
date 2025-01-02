@@ -65,6 +65,7 @@ class Potion_Handler():
         return Healing_Potion(self.game, (pos_x, pos_y), amount)
     
     def Spawn_Regen_Potion(self, pos_x, pos_y, amount):
+        print((pos_x, pos_y), amount)
         return Regen_Potion(self.game, (pos_x, pos_y), amount)
     
     def Spawn_Soul_Potion(self, pos_x, pos_y, amount):

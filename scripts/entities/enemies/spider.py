@@ -7,7 +7,7 @@ import pygame
 
 class Spider(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina)
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'dweller')
 
         self.animation = 'spider'
 

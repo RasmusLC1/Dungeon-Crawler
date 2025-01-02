@@ -12,10 +12,9 @@ import math
 
 
 class Enemy(Moving_Entity):
-    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (32, 32)):
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, sub_category, size = (32, 32)):
 
-        super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina)
-        self.sub_type = type
+        super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category)
         self.random_movement_cooldown = 0
         self.alert_cooldown = 0
         self.active_weapon = None
@@ -45,7 +44,6 @@ class Enemy(Moving_Entity):
         self.saved_data['locked_on_target'] = self.locked_on_target
         self.saved_data['target'] = self.target
         self.saved_data['ID'] = self.ID
-        self.saved_data['sub_type'] = self.sub_type
 
 
     def Load_Data(self, data):
@@ -58,7 +56,6 @@ class Enemy(Moving_Entity):
         self.path_finding_strategy = data['path_finding_strategy']
         self.locked_on_target = data['locked_on_target']
         self.ID = data['ID']
-        self.sub_type = data['sub_type']
         self.target = data['target']
 
 

@@ -8,7 +8,7 @@ import math
 
 class Fire_Spirit(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina)
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'elemental')
         
         self.animation = 'fire_spirit'
         self.path_finding_strategy = 'ignore_lava'

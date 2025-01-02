@@ -2,16 +2,14 @@ import random
 import math
 import pygame
 from scripts.entities.entities import PhysicsEntity
-from scripts.items.utility.textbox import Text_Box
 
 
 
 class Item(PhysicsEntity):
-    def __init__(self, game, type, sub_category, pos, size, amount = 1, add_to_tile = True):
-        super().__init__(game, type, 'item', pos, size)
+    def __init__(self, game, type, sub_category, pos, size, amount = 1, add_to_tile = True, value = 100):
+        super().__init__(game, type, 'item', pos, size, sub_category)
         self.game = game
         self.sub_type = type
-        self.sub_category = sub_category
         self.used = False
         self.picked_up = False
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
@@ -27,8 +25,7 @@ class Item(PhysicsEntity):
         self.animation = random.randint(0, self.max_animation)
         self.nearby_entities = []
         self.delete_countdown = 0
-        self.value = 100 # Placeholder gold value
-        self.text_box = Text_Box(self.game, self)
+        self.value = value # Placeholder gold value
         self.is_projectile = False
         if add_to_tile:
             self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
@@ -62,11 +59,6 @@ class Item(PhysicsEntity):
     def Update(self):
         self.Update_Activate_Cooldown()
 
-    def Update_Text_Box(self, hitbox_1, hitbox_2):
-        if self.text_box.Update(hitbox_1, hitbox_2):
-            return self
-        else:
-            return None
     
     def Activate(self):
         if self.activate_cooldown:
