@@ -1,13 +1,13 @@
 import pygame
 import random
 from scripts.decoration.decoration import Decoration
-from scripts.items.loot.gold import Gold
-from scripts.items.loot.key import Key
+from scripts.entities.items.loot.gold import Gold
+from scripts.entities.items.loot.key import Key
 from scripts.entities.entities import PhysicsEntity
 
 
-from scripts.items.weapons.weapon_handler import Weapon_Handler
-from scripts.items.potions.potion_handler import Potion_Handler
+from scripts.entities.items.weapons.weapon_handler import Weapon_Handler
+from scripts.entities.items.potions.potion_handler import Potion_Handler
 
 
 

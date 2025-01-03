@@ -1,18 +1,18 @@
 
-from scripts.entities.player.player import Player
+from scripts.entities.moving_entities.player.player import Player
 from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.traps.trap_handler import Trap_Handler
-from scripts.items.item_handler import Item_Handler
+from scripts.entities.items.item_handler import Item_Handler
 
 from scripts.decoration.decoration_handler import Decoration_Handler
-from scripts.entities.enemies.enemy_handler import Enemy_Handler
+from scripts.entities.moving_entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.item_inventory import Item_Inventory
 from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
 from scripts.inventory.rune_inventory import Rune_Inventory
 
 
-from scripts.items.runes.rune_handler import Rune_Handler
+from scripts.entities.items.runes.rune_handler import Rune_Handler
 
 
 import pygame

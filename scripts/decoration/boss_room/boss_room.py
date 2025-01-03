@@ -1,7 +1,7 @@
 import math
 import pygame
 import random
-from scripts.items.weapons.weapon_handler import Weapon_Handler
+from scripts.entities.items.weapons.weapon_handler import Weapon_Handler
 
 
 class Boss_Room():

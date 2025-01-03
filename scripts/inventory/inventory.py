@@ -1,6 +1,3 @@
-import pygame
-from scripts.items.item import Item
-from scripts.inventory.inventory_slot import Inventory_Slot
 from copy import copy
 
 class Inventory:
