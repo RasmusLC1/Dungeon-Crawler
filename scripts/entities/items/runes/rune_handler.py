@@ -23,6 +23,7 @@ from scripts.entities.items.runes.freeze_runes.freeze_ball_rune import Freeze_Ba
 from scripts.entities.items.runes.poison_runes.poison_resistance_rune import Poison_Resistance_Rune
 from scripts.entities.items.runes.poison_runes.poison_ball_rune import Poison_Ball_Rune
 from scripts.entities.items.runes.poison_runes.poison_cloud_rune import Poison_Cloud_Rune
+from scripts.entities.items.runes.poison_runes.poison_plume_rune import Poison_Plume_Rune
 
 from scripts.entities.items.runes.electric_runes.electric_ball_rune import Electric_Ball_Rune
 from scripts.entities.items.runes.electric_runes.electric_spray_rune import Electric_Spray_Rune
@@ -121,6 +122,7 @@ class Rune_Handler():
         'poison_resistance_rune': Poison_Resistance_Rune(self.game, (9999, 9999)),
         'poison_ball_rune': Poison_Ball_Rune(self.game, (9999, 9999)),
         'poison_cloud_rune': Poison_Cloud_Rune(self.game, (9999, 9999)),
+        'poison_plume_rune': Poison_Plume_Rune(self.game, (9999, 9999)),
 
 
         'electric_ball_rune': Electric_Ball_Rune(self.game, (9999, 9999)),
@@ -131,7 +133,7 @@ class Rune_Handler():
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('poison_cloud_rune')
-        self.Add_Rune_To_Rune_Inventory('chain_lightning_rune')
+        self.Add_Rune_To_Rune_Inventory('poison_plume_rune')
         self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
 
     def Clear_Runes(self):

@@ -256,11 +256,21 @@ class Tilemap:
 
     
     # Check for collision with solid tiles
+    # Returns tile if there is collision
     def solid_check(self, pos):
         tile_loc = str(int(pos[0] // self.tile_size)) + ';' + str(int(pos[1] // self.tile_size))
-        if tile_loc in self.tilemap:
-            if self.tilemap[tile_loc].physics:
-                return self.tilemap[tile_loc]
+        if not tile_loc in self.tilemap:
+            return None
+        print(self.tilemap[tile_loc].type)
+        if self.tilemap[tile_loc].physics:
+            return self.tilemap[tile_loc]
+    
+    # Check for collision with solid tiles
+    def Solid_Check_Tile(self, tile):
+        if not tile in self.tilemap:
+            return
+        if self.tilemap[tile].physics:
+            return self.tilemap[tile]
     
     # Check for physics tiles
     def physics_rects_around(self, pos):

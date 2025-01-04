@@ -6,22 +6,22 @@ class Poison_Cloud(Elemental_Explosion):
         self.poison_cooldown = 0
         self.poison_cooldown_max = 10
         self.delete_countdown = self.max_animation * self.animation_cooldown_max * max(self.power // 2, 1)
-        print(self.animation_cooldown_max )
 
 
     def Poison_Entities(self):
         if self.poison_cooldown < self.poison_cooldown_max:
             self.poison_cooldown += 1
             return
-        
         self.poison_cooldown = 0
         for entity in self.nearby_entities:
             entity.effects.Set_Effect("poison", 1)
 
 
 
-    def Update(self):
-        self.pos = self.entity.rect().center
+    def Update(self, update_pos = True):
+        if update_pos:
+            self.pos = self.entity.rect().center
+        print(self.delete_countdown)
         return super().Update()
 
     def Update_Animation(self):
