@@ -8,9 +8,6 @@ from scripts.game.logic_update import Logic_Update
 from scripts.game.state_machine import State_Machine
 from scripts.game.save_load_manager import Save_Load_Manager
 
-import pygame
-
-
 class Game:
     def __init__(self):
         self.save_load_manager = Save_Load_Manager(self, ".data", "save_data")

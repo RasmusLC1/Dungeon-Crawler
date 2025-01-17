@@ -77,6 +77,8 @@ Save it in a seperate class that accepts an increment from dungeon generator
 Buy and sell items to help complete levels
 Upgrade weapons
 Buy and trash cards, when buying a card it is added to discard pile
+Cards can be upgraded
+Create color coded backgrounds based on level, render image and text on top
 
 # Cards
 Curses
@@ -100,6 +102,14 @@ Shop cards
     Apply positive effect to player
     Give the player saved souls, more souls the less they have
     Spawn gold
+
+Cards that affect deck
+    cancel curse
+    double next card effect good or bad
+    Trash next card
+    quick draw
+    
+
 
 Starting Deck
     spawn gold
