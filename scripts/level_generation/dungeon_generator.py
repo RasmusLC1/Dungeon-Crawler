@@ -172,7 +172,7 @@ class Dungeon_Generator():
             start_y = random.randint(radius * 2, self.cellular_automata.size_y - radius * 2)
             
             path = []
-            self.a_star.a_star_search(path, [start_x, start_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
+            path = self.a_star.a_star_search([start_x, start_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
             if  path:
                 break
 
@@ -257,7 +257,7 @@ class Dungeon_Generator():
 
         for i in range(4):
             if door_array[i] == 1: # Left wall
-                self.a_star.a_star_search(path, [start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                path = self.a_star.a_star_search([start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
                 
@@ -265,21 +265,21 @@ class Dungeon_Generator():
                 return True
 
             elif door_array[i] == 2: # Right wall
-                self.a_star.a_star_search(path, [start_x + size_x, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                path = self.a_star.a_star_search([start_x + size_x, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
                 self.cellular_automata.map[start_x + size_x - 1][y_mid] = door
                 return True
 
             elif door_array[i] == door: # Top
-                self.a_star.a_star_search(path, [x_mid, start_y - 1], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                path = self.a_star.a_star_search([x_mid, start_y - 1], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
                 self.cellular_automata.map[x_mid][start_y] = door
                 return True
 
             elif door_array[i] == 4: # Bottom
-                self.a_star.a_star_search(path, [x_mid, start_y + size_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
+                path = self.a_star.a_star_search([x_mid, start_y + size_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
                 self.cellular_automata.map[x_mid][start_y + size_y - 1] = door
@@ -405,10 +405,6 @@ class Dungeon_Generator():
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_right', 'variant': random_variant, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
 
-
-
-
-            
         return False
         
     def Corner_Handling(self, i, j, random_variant) -> bool:
@@ -456,7 +452,7 @@ class Dungeon_Generator():
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
             if self.cellular_automata.map[spawner_x][spawner_y] == wall:
                 continue
-            self.a_star.a_star_search(path, [spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
+            path = self.a_star.a_star_search([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
             
             if path:
                 self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 1, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})
@@ -470,7 +466,7 @@ class Dungeon_Generator():
         return True
 
     def Spawn_Chest(self, level):
-        loot_amount = random.randint(10 + level, 20 + level)
+        loot_amount = random.randint(10 + level * 2, 20 + level * 2)
         loot = 0 
         path = []
         while loot < loot_amount:
@@ -478,7 +474,7 @@ class Dungeon_Generator():
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
             if self.cellular_automata.map[spawner_x][spawner_y] != floor:
                 continue
-            self.a_star.a_star_search(path, [spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'test')
+            path = self.a_star.a_star_search([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
             
             if path:
                 self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})

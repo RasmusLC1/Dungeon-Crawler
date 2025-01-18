@@ -47,16 +47,16 @@ class Poison_Plume():
     
     def Generate_Cloud(self):
         fail = 0
+        print("TEST")
+        self.entity.game.clatter.Generate_Clatter(self.entity.pos, 50000)
         tile_size = self.entity.game.tilemap.tile_size
         while fail <= 5: 
             cloud_pos = (self.entity.pos[0] + random.randint(-5 * tile_size, 5 * tile_size), self.entity.pos[1] + random.randint(-5 * tile_size, 5 * tile_size))
             if self.entity.game.tilemap.solid_check(cloud_pos):
-                print("fail", cloud_pos)
                 fail += 1
                 continue
             poison_cloud = Poison_Cloud(self.entity.game, cloud_pos, 1, self.entity)
             self.entity.game.entities_render.Add_Entity(poison_cloud)
             self.poison_clouds.append(poison_cloud)
-            print("Succes", poison_cloud.pos)
             return
 

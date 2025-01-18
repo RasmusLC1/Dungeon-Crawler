@@ -5,6 +5,7 @@ from scripts.game.logic_update import Logic_Update
 from scripts.game.renderer import Renderer
 from scripts.game.game_initialiser import Game_Initialiser
 from scripts.game.level_loader import Level_Loader
+from scripts.Test.pathfinding_test import Pathfinding_Test
 import pygame
 import sys
 
@@ -18,6 +19,7 @@ class State_Machine():
         self.game.level_loader = Level_Loader(self.game)
         self.game.camera_update = Camera_Update(self.game)
         self.game.logic_update = Logic_Update(self.game)
+        self.pathfinding_test = Pathfinding_Test(self.game)
 
 
     def Game_State(self):
@@ -41,6 +43,8 @@ class State_Machine():
             self.New_Game()
         elif self.game_state == 'init':
             self.Initialise_Game()
+        elif self.game_state == 'pathfind_test':
+            self.Pathfinding_Test()
 
     def Initialise_Game(self):
         self.game_state = 'main_menu'
@@ -56,6 +60,7 @@ class State_Machine():
 
         self.Set_State('run_game')
 
+    
     
     def New_Game(self):
         self.game.menu_handler.Loading_Menu_Reset()
@@ -86,6 +91,9 @@ class State_Machine():
         if self.game_state != 'shrine_menu':
             self.game.menu_handler.shrine_menu.Reset_Rune_Bought()
 
+    def Pathfinding_Test(self):
+        self.pathfinding_test.Update()
+        return
 
 
     def Exit_Game(self, save_game):

@@ -9,6 +9,9 @@ class Camera_Update():
         self.game.scroll[1] += (self.game.player.rect().centery - self.game.display.get_height() / 2 - self.game.scroll[1]) / 25
         self.game.render_scroll = (int(self.game.scroll[0]), int(self.game.scroll[1]))
 
+    def Set_Camera_Position(self, pos):
+        self.game.render_scroll = pos
+
     def Enable_Full_Screen(self, event):
         self.game.render_scale = max(event.w, event.h) / 1000
 

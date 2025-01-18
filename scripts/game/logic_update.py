@@ -1,7 +1,3 @@
-import pygame
-import sys
-
-
 class Logic_Update():
     def __init__(self, game) -> None:
         self.game = game

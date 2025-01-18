@@ -21,7 +21,6 @@ class Poison_Cloud(Elemental_Explosion):
     def Update(self, update_pos = True):
         if update_pos:
             self.pos = self.entity.rect().center
-        print(self.delete_countdown)
         return super().Update()
 
     def Update_Animation(self):

@@ -68,7 +68,7 @@ class Level_Loader():
         self.game.item_inventory.Clear_Inventory()
         self.game.weapon_inventory.Clear_Inventory()
         self.game.rune_inventory.Clear_Inventory()
-        self.game.a_star.Clear_Map()
+        self.game.a_star.Clear_Maps()
         
         self.game.tilemap.Clear_Tilemap()
 
@@ -84,7 +84,7 @@ class Level_Loader():
             self.Spawn_Player()
 
 
-        self.game.a_star.Setup_Map(self.game)
+        self.game.a_star.Setup_Map_From_Game(self.game)
 
 
     def Initial_Setup(self):

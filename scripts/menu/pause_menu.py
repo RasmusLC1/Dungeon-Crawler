@@ -11,7 +11,8 @@ class Pause_Menu(Menu):
         # Resume Button
         self.Generate_Button((width - self.button_size_x // 2, self.button_size_y * 2.5), (self.button_size_x, self.button_size_y), 'resume', 'run_game')
         self.Generate_Button((width - self.button_size_x // 2, self.button_size_y * 4.5), (self.button_size_x, self.button_size_y), 'Main Menu', 'return_main_menu', True)
-        self.Generate_Button((width - self.button_size_x // 2, self.button_size_y * 6.5), (self.button_size_x, self.button_size_y), 'exit game', 'exit_game_save')
+        self.Generate_Button((width - self.button_size_x // 2, self.button_size_y * 6.5), (self.button_size_x, self.button_size_y), 'Pathfinding Test', 'pathfind_test')
+        self.Generate_Button((width - self.button_size_x // 2, self.button_size_y * 8.5), (self.button_size_x, self.button_size_y), 'exit game', 'exit_game_save')
 
 
     def Check_Keyboard_Input(self):

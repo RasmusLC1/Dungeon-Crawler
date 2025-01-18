@@ -1,10 +1,12 @@
-import pygame
 
+import pygame
 from scripts.game.input_update import Input_Update
 from scripts.game.state_machine import State_Machine
 from scripts.game.save_load_manager import Save_Load_Manager
 
-class Game:
+RENDER_SCALE = 256
+
+class Editor:
     def __init__(self):
         self.save_load_manager = Save_Load_Manager(self, ".data", "save_data")
         
@@ -13,14 +15,12 @@ class Game:
         self.input_update = Input_Update(self)
         self.clock = pygame.time.Clock()
 
-
-        
     def Update_Display(self):
         self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0))
         pygame.display.update()
-        
 
-    def run(self):  
+        
+    def run(self):
         while True:
             fps = int(self.clock.get_fps())
             pygame.display.set_caption('Dungeon Crawler             FPS: ' + str(fps))
@@ -33,7 +33,4 @@ class Game:
             self.Update_Display()
             self.clock.tick(60)
 
-
-
-Game().run()
-
+Editor().run()

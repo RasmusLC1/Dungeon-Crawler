@@ -173,6 +173,13 @@ class Tilemap:
             positions.append(tile.pos)
         return positions
     
+    # Get the position of tiles in the tilemap
+    def Set_Global_Brightness(self, light_level):
+        for tile in self.tilemap.values():
+            tile.Set_Light_Level(light_level)
+            tile.Set_Active(10000)
+        return
+    
     # Get the tile size
     def Get_Tile_Size(self):
         return self.tile_size
@@ -261,7 +268,6 @@ class Tilemap:
         tile_loc = str(int(pos[0] // self.tile_size)) + ';' + str(int(pos[1] // self.tile_size))
         if not tile_loc in self.tilemap:
             return None
-        print(self.tilemap[tile_loc].type)
         if self.tilemap[tile_loc].physics:
             return self.tilemap[tile_loc]
     
@@ -313,16 +319,12 @@ class Tilemap:
     # Render function that shows the entire screen
     # Not really used
     def Render(self, surf, offset=(0, 0)):
-        for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
-            for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):
-                
-
-                loc = str(x) + ';' + str(y)
-                if loc in self.tilemap:
-                    tile = self.tilemap[loc]
-                    surf.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0] * self.tile_size - offset[0], tile.pos[1] * self.tile_size - offset[1]))
+        for tile in self.tilemap.values():
+            surf.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0] * self.tile_size - offset[0], tile.pos[1] * self.tile_size - offset[1]))
 
         for tile in self.offgrid_tiles:
+            if 'Room' in tile.type:
+                continue
             surf.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0] - offset[0], tile.pos[1] - offset[1]))
 
     # Render function that only renders the tiles in the tiles array
