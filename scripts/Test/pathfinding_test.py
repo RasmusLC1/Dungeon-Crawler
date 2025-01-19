@@ -4,6 +4,7 @@ class Pathfinding_Test():
     def __init__(self, game) -> None:
         self.game = game
         self.initialised = False
+        self.tiles = []
 
     def Initialise(self):
         if self.initialised:
@@ -30,6 +31,16 @@ class Pathfinding_Test():
         self.Check_Keyboard_Input()
         self.Render()
 
+
+    def Update_Path(self):
+        # Reset tiles
+        if self.tiles:
+            for tile in self.tiles:
+                tile.Set_Type('floor')
+            self.tiles.clear()
+
+        # self.game.
+        
 
     def Render(self):
         self.game.display.blit(self.back_ground_image, (0, 0))

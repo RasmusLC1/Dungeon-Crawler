@@ -30,6 +30,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Rune(self)
         Graphics_Loader.Asset_Menu(self)
 
+        Graphics_Loader.Asset_TEST(self)
         
     def Asset_Background_List(self):
         background_assets = {'background': load_image('background.png'),}
@@ -483,3 +484,13 @@ class Graphics_Loader:
             'loading_bar' : get_tiles_from_sheet('menu/loading_screen.png', 6, 0, 0, 0, 96, 96),
         }
         self.assets.update(menu)
+
+
+    def Asset_TEST(self):
+        test = {
+            'test' : get_tiles_from_sheet('test/test.png', 1, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(test)
+
+
+    
