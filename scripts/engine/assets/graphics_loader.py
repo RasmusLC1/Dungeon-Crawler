@@ -274,6 +274,12 @@ class Graphics_Loader:
 
             'crossbow': get_tiles_from_sheet('weapons/crossbow/crossbow.png', 8, 0, 0, 0, 32, 32),
             'crossbow_attack': get_tiles_from_sheet('weapons/crossbow/crossbow_attack.png', 2, 0, 0, 0, 32, 32),
+
+            'bell': get_tiles_from_sheet('weapons/bell/bell.png', 7, 0, 0, 0, 32, 32),
+            'bell_attack_cut': get_tiles_from_sheet('weapons/bell/bell_attack_cut.png', 9, 0, 0, 0, 32, 32),
+
+            'sceptre': get_tiles_from_sheet('weapons/sceptre/sceptre.png', 7, 0, 0, 0, 32, 32),
+            'sceptre_attack_cut': get_tiles_from_sheet('weapons/sceptre/sceptre_cut_attack.png', 9, 0, 0, 0, 32, 32),
         }
         self.assets.update(Weapons_assets)
 

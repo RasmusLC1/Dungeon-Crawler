@@ -3,16 +3,19 @@ from scripts.entities.items.weapons.close_combat.halberd import Halberd
 from scripts.entities.items.weapons.close_combat.torch import Torch
 from scripts.entities.items.weapons.close_combat.warhammer import Warhammer
 from scripts.entities.items.weapons.close_combat.battle_axe import Battle_Axe
+from scripts.entities.items.weapons.close_combat.sceptre import Sceptre
+from scripts.entities.items.weapons.close_combat.bell import Bell
+
 from scripts.entities.items.weapons.projectiles.spear import Spear
 from scripts.entities.items.weapons.projectiles.hatchet import Hatchet
 from scripts.entities.items.weapons.projectiles.hammer import Hammer
-from scripts.entities.items.weapons.ranged_weapons.bow import Bow
-from scripts.entities.items.weapons.ranged_weapons.crossbow import Crossbow
 from scripts.entities.items.weapons.projectiles.arrow import Arrow
+
+from scripts.entities.items.weapons.ranged_weapons.bow import Bow
+
+from scripts.entities.items.weapons.ranged_weapons.crossbow import Crossbow
 from scripts.entities.items.weapons.shields.shield import Shield
-from scripts.entities.items.weapons.magic_attacks.ice.ice_particle import Ice_Particle
-from scripts.entities.items.weapons.magic_attacks.fire.fire_particle import Fire_Particle
-from scripts.entities.items.weapons.magic_attacks.electric.electric_particle import Electric_Particle
+
 
 
 class Weapon_Handler():
@@ -47,6 +50,12 @@ class Weapon_Handler():
 
         elif 'torch' == name:
             weapon = self.Spawn_Torch(pos_x, pos_y)
+        
+        elif 'sceptre' == name:
+            weapon = self.Spawn_Sceptre(pos_x, pos_y)
+        
+        elif 'bell' == name:
+            weapon = self.Spawn_Bell(pos_x, pos_y)
 
         elif 'bow' == name:
             weapon = self.Spawn_Bow(pos_x, pos_y)
@@ -102,6 +111,13 @@ class Weapon_Handler():
 
     def Spawn_Torch(self, pos_x, pos_y):
         return Torch(self.game, (pos_x, pos_y))
+    
+    def Spawn_Bell(self, pos_x, pos_y):
+        return Bell(self.game, (pos_x, pos_y))
+
+    def Spawn_Sceptre(self, pos_x, pos_y):
+        return Sceptre(self.game, (pos_x, pos_y))
+
 
 
     def Spawn_Bow(self, pos_x, pos_y):

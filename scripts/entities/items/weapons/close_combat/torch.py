@@ -22,12 +22,6 @@ class Torch(Weapon):
 
 
 
-    def Update_Attack(self):
-        if not super().Update_Attack():
-            return False
-        
-        
-
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:
