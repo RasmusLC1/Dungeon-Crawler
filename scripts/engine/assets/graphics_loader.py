@@ -164,6 +164,23 @@ class Graphics_Loader:
         }
         self.assets.update(entities_assets)
 
+    def Asset_Skeleton_Cleric_List(self):
+        entities_assets = {
+            'skeleton_cleric_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_cleric/skeleton_cleric_1.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_cleric_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_cleric/skeleton_cleric_1_attack.png', 6, 0, 0, 0, 32, 32),
+
+        }
+        self.assets.update(entities_assets)
+
+    def Asset_Skeleton_Cleric_List(self):
+        entities_assets = {
+            'skeleton_bell_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_1.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_bell_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_1_attack.png', 6, 0, 0, 0, 32, 32),
+
+        }
+        self.assets.update(entities_assets)
+
+
     def Asset_Fire_Spirit_List(self):
         entities_assets = {
             'fire_spirit_standing_still': get_tiles_from_sheet('entities/enemies/fire_spirit/fire_spirit_idle.png', 3, 0, 0, 0, 32, 32),
