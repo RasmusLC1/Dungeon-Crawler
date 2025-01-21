@@ -110,6 +110,8 @@ class Weapon(Item):
         self.Update_Attack_Effect_Animation()
         self.Attack_Collision_Check()
         self.Attack_Align_Weapon()
+        if not self.entity:
+            return
         self.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
         return True
 
@@ -123,6 +125,7 @@ class Weapon(Item):
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
         self.charge_time = 0  # Reset charge time
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
+
         self.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
         self.rotate += 90
@@ -274,6 +277,8 @@ class Weapon(Item):
 
     # Damage Entity
     def Entity_Hit(self, entity):
+        if not self.entity:
+            return
         damage = self.Calculate_Damage()
         entity.Damage_Taken(damage, self.entity.attack_direction)
         self.enemy_hit = True
@@ -281,13 +286,18 @@ class Weapon(Item):
         if entity.effects.thorns.effect:
             self.entity.Damage_Taken(entity.effects.thorns.effect, self.entity.attack_direction)
 
+        if not self.entity:
+            return
+
         # Check if weapon is vampiric first, to avoid double healing
         if self.effect == "vampiric":
             self.entity.Set_Effect("healing", damage // 2)
             return
         
-        if self.entity.effects.vampiric.effect:
-            self.entity.Set_Effect("healing", damage // 2)
+
+        if self.entity.effects.vampiric:
+            if self.entity.effects.vampiric.effect:
+                self.entity.Set_Effect("healing", damage // 2)
 
 
         # Set special status effect of weapon if weapon has one
@@ -442,7 +452,7 @@ class Weapon(Item):
     def Update_Attack_Effect_Animation(self):
         if self.attack_effect_animation_counter >= self.attack_effect_animation_time:
             self.attack_effect_animation_counter = 0
-            self.attack_effect_animation = min(self.attack_effect_animation + 1, self.attack_animation_max)
+            self.attack_effect_animation = min(self.attack_effect_animation + 1, self.attack_effect_animation_max)
             return
         self.attack_effect_animation_counter += 1
 

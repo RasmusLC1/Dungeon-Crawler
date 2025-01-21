@@ -13,6 +13,8 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Skeleton_Ranger_List(self)
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
+        Graphics_Loader.Asset_Skeleton_Bell_Toller_List(self)
+        Graphics_Loader.Asset_Skeleton_Cleric_List(self)
         Graphics_Loader.Wight_King_Spirit_List(self)
         Graphics_Loader.Asset_Spider_List(self)
         Graphics_Loader.Asset_Enemy_Symbols_List(self)
@@ -167,15 +169,15 @@ class Graphics_Loader:
     def Asset_Skeleton_Cleric_List(self):
         entities_assets = {
             'skeleton_cleric_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_cleric/skeleton_cleric_1.png', 6, 0, 0, 0, 32, 32),
-            'skeleton_cleric_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_cleric/skeleton_cleric_1_attack.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_cleric_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_cleric/skeleton_cleric_attack_1.png', 6, 0, 0, 0, 32, 32),
 
         }
         self.assets.update(entities_assets)
 
-    def Asset_Skeleton_Cleric_List(self):
+    def Asset_Skeleton_Bell_Toller_List(self):
         entities_assets = {
-            'skeleton_bell_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_1.png', 6, 0, 0, 0, 32, 32),
-            'skeleton_bell_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_1_attack.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_bell_toller_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_1.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_bell_toller_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_attack_1.png', 6, 0, 0, 0, 32, 32),
 
         }
         self.assets.update(entities_assets)

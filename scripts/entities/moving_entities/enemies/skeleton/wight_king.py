@@ -6,20 +6,23 @@ from scripts.entities.items.weapons.projectiles.spear import Spear
 import random
 
 
-class Skeleton_Warrior(Enemy):
+class Wight_King(Enemy):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
-        type = str(random.randint(1, 3))
-        super().__init__(game, pos, 'skeleton_warrior_' + type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
-        self.animation_num_max = 6
-        self.attack_animation_num_cooldown_max = 6
+        super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, 'undead', (40, 40))
+        self.animation_num_max = 4
+        self.attack_animation_num_max = 4
+        self.attack_animation_num_cooldown_max = 8
+        self.animation = 'wight_king'
+        self.attack_strategy = 'medium_range'
         self.Equip_Weapon()
-        self.max_charge = 70
+        self.max_charge = 40
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
         self.Update_Active_Weapon()
         self.Weapon_Cooldown()
-        if self.distance_to_player < 20:
+        self.Update_Animation()
+        if self.distance_to_player < 30:
             self.Attack()
 
         if self.distance_to_player > 30 and self.charge:
@@ -44,23 +47,20 @@ class Skeleton_Warrior(Enemy):
             return
         
         self.Set_Target(self.game.player.pos)
-        self.active_weapon.Set_Attack_Ready(True)
         self.active_weapon.Set_Attack()
         self.Reset_Charge()
 
     def Equip_Weapon(self):
         weapon = None
 
-        random_weapon = random.randint(0, 2)
+        random_weapon = random.randint(0, 1)
 
         if random_weapon == 0:
             weapon = Sword(self.game, self.pos)
 
         elif random_weapon == 1:
             weapon = Spear(self.game, self.pos)
-
-        elif random_weapon == 2:
-            weapon = Torch(self.game, self.pos)
+        
 
         if not weapon:
             return False
@@ -75,7 +75,6 @@ class Skeleton_Warrior(Enemy):
         self.active_weapon.render = False
         del(weapon)
         return True
-    
     
     def Update_Active_Weapon(self, offset=(0, 0)):
         if not self.active_weapon:
@@ -94,3 +93,6 @@ class Skeleton_Warrior(Enemy):
 
 
         return
+    
+
+    

@@ -38,7 +38,7 @@ class Torch(Weapon):
         super().Set_Equip(state)
 
         if state:
-            self.game.player.Update_Light_Source(8)
+            self.game.player.Update_Light_Source(12)
         else:
             self.game.player.Update_Light_Source(4)
             

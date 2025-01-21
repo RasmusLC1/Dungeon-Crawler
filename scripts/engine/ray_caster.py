@@ -14,8 +14,8 @@ class Ray_Caster():
         self.disable_distance_debugger = False
 
         # Basic raycasting attributes
-        self.num_lines = 20 # Define the number of lines and the spread angle (in degrees)
-        self.spread_angle = 140  # Total spread of the fan (in degrees)
+        self.num_lines = 80 # Define the number of lines and the spread angle (in degrees)
+        self.spread_angle = 360  # Total spread of the fan (in degrees)
         self.angle_increment = self.spread_angle / (self.num_lines - 1) # Calculate the angle increment between each line
         self.angles = []
 

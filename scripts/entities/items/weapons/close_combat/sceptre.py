@@ -16,7 +16,7 @@ class Sceptre(Weapon):
         if not self.entity:
             return
         
-        if self.special_attack <= 0 or not self.equipped:
+        if self.special_attack <= 0 or not self.equipped or self.heal_cooldown:
             # self.Reset_Special_Attack()
             return
         self.Heal_Entity()
@@ -31,3 +31,4 @@ class Sceptre(Weapon):
     def Heal_Entity(self):
         self.entity.effects.Set_Effect('healing', 5)
         self.heal_cooldown = 2000
+        self.special_attack = 0

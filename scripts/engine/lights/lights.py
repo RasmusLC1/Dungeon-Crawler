@@ -11,7 +11,7 @@ class Light():
         self.tile = tile # Tile key where the light is located
         self.tiles = [] # Tiles illuminated by this light
         self.active = True
-        self.number_rays = 60
+        self.number_rays = 80
         self.field_of_view = 360
 
         self.id = Light._id_counter

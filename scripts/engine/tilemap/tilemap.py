@@ -120,7 +120,7 @@ class Tilemap:
                     break
 
 
-    def Search_Nearby_Tiles(self, max_distance, pos, category):
+    def Search_Nearby_Tiles(self, max_distance, pos, category, ID = 0):
         pos = (pos[0] // self.tile_size, pos[1] // self.tile_size)
         
         
@@ -141,7 +141,7 @@ class Tilemap:
                 if not tile.entities:
                     continue
 
-                new_entities = tile.Search_Entities(category)
+                new_entities = tile.Search_Entities(category, ID)
                 if not new_entities:
                     continue
                         

@@ -45,12 +45,13 @@ class Tile():
         self.Set_Active(200000)
 
 
-    def Search_Entities(self, category):
+    def Search_Entities(self, category, ID = 0):
         entities = []
         for entity in self.entities:
             if not entity.category == category:
                 continue
-
+            if entity.ID == ID:
+                continue
             entities.append(entity)
 
         return entities

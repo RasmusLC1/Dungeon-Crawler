@@ -30,3 +30,4 @@ class Bell(Weapon):
     # Initialise the charge logic
     def Ring_Bell(self):
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+        self.special_attack = 0
