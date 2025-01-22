@@ -13,6 +13,8 @@ class Skeleton_Cleric(Enemy):
         self.Equip_Weapon()
         self.max_charge = 70
         self.healing_cooldown = 0
+        self.attack_strategy = 'long_range'
+
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)

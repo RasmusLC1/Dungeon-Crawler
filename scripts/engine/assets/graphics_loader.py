@@ -282,6 +282,9 @@ class Graphics_Loader:
 
             'sceptre': get_tiles_from_sheet('weapons/sceptre/sceptre.png', 7, 0, 0, 0, 32, 32),
             'sceptre_attack_cut': get_tiles_from_sheet('weapons/sceptre/sceptre_cut_attack.png', 9, 0, 0, 0, 32, 32),
+
+            'scythe': get_tiles_from_sheet('weapons/scythe/scythe.png', 7, 0, 0, 0, 32, 32),
+            'scythe_attack_cut': get_tiles_from_sheet('weapons/scythe/scythe_attack.png', 9, 0, 0, 0, 32, 32),
         }
         self.assets.update(Weapons_assets)
 

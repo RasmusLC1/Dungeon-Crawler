@@ -4,7 +4,7 @@ class Sceptre(Weapon):
     def __init__(self, game, pos, damage_type = 'blunt'):
         super().__init__(game, pos, 'sceptre', 3, 2, 3, 100, 'one_handed_melee', damage_type)
         self.max_animation = 6
-        self.attack_animation_max = 7
+        self.attack_animation_max = 8
         self.heal_cooldown = 0
 
     def Update(self, offset=...):

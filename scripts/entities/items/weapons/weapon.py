@@ -330,6 +330,7 @@ class Weapon(Item):
         self.sub_type = self.type
         self.attacking = 0
         self.attack_animation = 0
+        self.animation = 0
         self.rotate = 0
         self.entity.Reset_Max_Speed()
         self.Reset_Attack_Effect_Animation()
@@ -585,8 +586,6 @@ class Weapon(Item):
         
         weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][0], self.size)  
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-
-
 
 
     # Render the weapon in entity's hand

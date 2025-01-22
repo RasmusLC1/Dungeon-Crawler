@@ -51,8 +51,8 @@ class Enemy_Handler():
         for i in range(40):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            # enemy_variant = random.randint(0, 7)
-            enemy_variant = 7
+            enemy_variant = random.randint(6, 7)
+            # enemy_variant = 7
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(10, 20)
@@ -83,17 +83,17 @@ class Enemy_Handler():
             enemy = self.Spawn_Skeleton_Warrior(pos)
         elif 'skeleton_ranger' in type:
             enemy = self.Spawn_Skeleton_Ranger(pos)
-        elif type == 'fire_spirit':
+        elif 'fire_spirit' in type:
             enemy = self.Spawn_Fire_Spirit(pos)
-        elif type == 'ice_spirit':
+        elif 'ice_spirit' in type:
             enemy = self.Spawn_Ice_Spirit(pos)
-        elif type == 'spider':
+        elif 'spider' in type:
             enemy = self.Spawn_Spider(pos)
-        elif type == 'wight_king':
+        elif 'wight_king' in type:
             enemy = self.Spawn_Wight_King(pos)
-        elif type == 'skeleton_bell_toller':
+        elif 'skeleton_bell_toller' in type:
             enemy = self.Spawn_Skeleton_Bell_Toller(pos)
-        elif type == 'skeleton_cleric':
+        elif 'skeleton_cleric' in type:
             enemy = self.Spawn_Skeleton_Cleric(pos)
         if enemy:
             if data:
