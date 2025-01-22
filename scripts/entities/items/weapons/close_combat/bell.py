@@ -22,11 +22,6 @@ class Bell(Weapon):
         self.Ring_Bell()
         
 
-    def Update_Heal_Cooldown(self):
-        if not self.heal_cooldown:
-            return
-        self.heal_cooldown = max(0, self.heal_cooldown - 1)
-    
     # Initialise the charge logic
     def Ring_Bell(self):
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies

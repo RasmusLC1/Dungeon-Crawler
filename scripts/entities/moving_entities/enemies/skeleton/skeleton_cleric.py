@@ -1,41 +1,47 @@
 from scripts.entities.moving_entities.enemies.enemy import Enemy
-from scripts.entities.items.weapons.close_combat.bell import Bell
+from scripts.entities.items.weapons.close_combat.sceptre import Sceptre
 
 import random
 
 
-class Skeleton_Bell_Toller(Enemy):
+class Skeleton_Cleric(Enemy):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 1))
-        super().__init__(game, pos, 'skeleton_bell_toller_' + type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
+        super().__init__(game, pos, 'skeleton_cleric_' + type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
         self.animation_num_max = 6
         self.attack_animation_num_cooldown_max = 6
         self.Equip_Weapon()
         self.max_charge = 70
-        self.bell_ringing_cooldown = 0
+        self.healing_cooldown = 0
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
         self.Update_Active_Weapon()
         self.Weapon_Cooldown()
-        self.Update_Bell_Ringing_Cooldown()
+        self.Update_Healing_Cooldown()
+        self.Heal_Nearby_Enemies()
         if self.distance_to_player < 40:
             self.Attack()
 
         if self.distance_to_player > 60 and self.charge:
             self.charge = 0
 
-    def Update_Bell_Ringing_Cooldown(self):
-        if not self.bell_ringing_cooldown:
+    def Update_Healing_Cooldown(self):
+        if not self.healing_cooldown:
             return
         
-        self.bell_ringing_cooldown = max(0, self.bell_ringing_cooldown - 1)
+        self.healing_cooldown = max(0, self.healing_cooldown - 1)
 
-    def Ring_Bell(self):
-        if self.bell_ringing_cooldown:
+    def Heal_Nearby_Enemies(self):
+        if self.healing_cooldown:
             return
-        self.game.clatter.Generate_Clatter(self.pos, 2000) # Generate clatter to alert nearby enemies
-        self.bell_ringing_cooldown = 3000
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, 5)
+        if not self.nearby_enemies:
+            self.healing_cooldown = 500
+            return
+        for enemy in self.nearby_enemies:
+            enemy.effects.Set_Effect('healing', 15)
+        self.healing_cooldown = 1000
 
 
     def Set_Idle(self):
@@ -58,10 +64,9 @@ class Skeleton_Bell_Toller(Enemy):
         self.Set_Target(self.game.player.pos)
         self.active_weapon.Set_Attack()
         self.Reset_Charge()
-        self.Ring_Bell()
 
     def Equip_Weapon(self):
-        weapon = Bell(self.game, self.pos)
+        weapon = Sceptre(self.game, self.pos)
 
         if not weapon:
             return False

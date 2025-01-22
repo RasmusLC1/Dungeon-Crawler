@@ -125,7 +125,8 @@ class Weapon(Item):
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
         self.charge_time = 0  # Reset charge time
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
-
+        if self.entity.category == "enemy":
+            self.nearby_enemies.append(self.game.player)
         self.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
         self.rotate += 90
@@ -590,8 +591,12 @@ class Weapon(Item):
 
     # Render the weapon in entity's hand
     def Render_Equipped_Enemy(self, surf, offset=(0, 0)):
-        
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        try:
+            weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        except Exception as e:
+            print(f"Error rendering enemy weapon {e}", self.sub_type, self.animation, self.attack_type)
+            return
+
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
         
@@ -881,7 +886,6 @@ class Weapon(Item):
     def Check_For_Two_Handed_In_Weapon_Inventory(self, inventory_slot, sending_inventory, receiving_inventory):
         # Check for weapon inventory
         
-
         if not inventory_slot.inventory_type:
             return True
         

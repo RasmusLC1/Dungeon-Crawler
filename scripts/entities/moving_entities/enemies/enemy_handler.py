@@ -2,6 +2,7 @@ from scripts.entities.moving_entities.enemies.enemy import Enemy
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_warrior import Skeleton_Warrior
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_ranger import Skeleton_Ranger
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_bell_toller import Skeleton_Bell_Toller
+from scripts.entities.moving_entities.enemies.skeleton.skeleton_cleric import Skeleton_Cleric
 from scripts.entities.moving_entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.moving_entities.enemies.ice_spirit import Ice_Spirit
 from scripts.entities.moving_entities.enemies.spider import Spider
@@ -50,7 +51,8 @@ class Enemy_Handler():
         for i in range(40):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(6, 6)
+            # enemy_variant = random.randint(0, 7)
+            enemy_variant = 7
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(10, 20)
@@ -69,6 +71,8 @@ class Enemy_Handler():
                 type = 'wight_king'
             elif enemy_variant == 6: # bell toller
                 type = 'skeleton_bell_toller'
+            elif enemy_variant == 7:
+                type = 'skeleton_cleric'
             if type:
                 pos = spawner.pos
                 self.Enemy_Spawner(type, pos)
@@ -89,6 +93,8 @@ class Enemy_Handler():
             enemy = self.Spawn_Wight_King(pos)
         elif type == 'skeleton_bell_toller':
             enemy = self.Spawn_Skeleton_Bell_Toller(pos)
+        elif type == 'skeleton_cleric':
+            enemy = self.Spawn_Skeleton_Cleric(pos)
         if enemy:
             if data:
                 enemy.Load_Data(data)
@@ -145,6 +151,24 @@ class Enemy_Handler():
             agility,
             intelligence,
             stamina)
+    
+    def Spawn_Skeleton_Cleric(self, pos):
+        health = 30
+        strength = 1
+        speed = 2
+        agility = 2 
+        intelligence = 2
+        stamina = 2
+        return Skeleton_Cleric(
+            self.game,
+            pos, 
+            health,
+            strength,
+            speed,
+            agility,
+            intelligence,
+            stamina)
+        
         
     def Spawn_Fire_Spirit(self, pos):
         health = 60
