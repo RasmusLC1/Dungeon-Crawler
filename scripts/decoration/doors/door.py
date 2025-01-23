@@ -29,5 +29,5 @@ class Door(Decoration):
             self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
 
 
-    
-
+    def Render(self, surf, offset=...):
+        pass

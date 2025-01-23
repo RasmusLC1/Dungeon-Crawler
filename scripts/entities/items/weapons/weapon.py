@@ -52,6 +52,8 @@ class Weapon(Item):
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
 
+        self.delete_timer = 0
+
         self.attack_hitbox_size = (5, 5)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
         self.text_box = Weapon_Textbox(self)
@@ -94,6 +96,7 @@ class Weapon(Item):
         super().Update()
         self.Update_Animation()
         self.Special_Attack()
+        self.Update_Delete_Countdown()
         if not self.entity:
             return False
         
@@ -400,7 +403,18 @@ class Weapon(Item):
         
         return True
     
-    
+    # Handle deletion of items when enemies drop weapons, don't want them to linger forever
+    def Update_Delete_Countdown(self):
+        if not self.delete_countdown:
+            return
+        self.delete_countdown = max(0, self.delete_countdown - 1)
+        if not self.delete_countdown:
+            self.game.item_handler.Remove_Item(self, True)
+
+
+    def Set_Delete_Countdown(self):
+        self.delete_countdown = 2000
+
     # Reset the attack charge
     def Reset_Charge(self):
         self.is_charging = 0

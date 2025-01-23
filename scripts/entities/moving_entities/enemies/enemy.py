@@ -2,6 +2,7 @@ from scripts.entities.moving_entities.moving_entity import Moving_Entity
 from scripts.entities.moving_entities.enemies.path_finding import Path_Finding
 from scripts.entities.moving_entities.enemies.attack_strategies import Attack_Stategies
 from scripts.entities.textbox.enemy_textbox import Enemy_Textbox
+from scripts.decoration.bones.bones import Bones 
 
 import pygame
 
@@ -167,7 +168,7 @@ class Enemy(Moving_Entity):
         if not super().Damage_Taken(damage, direction):
             return
         if self.health <= 0:
-            
+            self.Spawn_Bones()
             self.Drop_Weapon()
 
             self.game.enemy_handler.Delete_Enemy(self)
@@ -177,6 +178,12 @@ class Enemy(Moving_Entity):
 
 
         self.direction = pygame.math.Vector2(self.direction_x, self.direction_y)
+
+    def Spawn_Bones(self):
+        bones = Bones(self.game, self.pos, self.type)
+        self.game.decoration_handler.Add_Decoration(bones)
+        print(vars(bones))
+        return
 
     def Drop_Weapon(self):
         if not self.active_weapon:
@@ -195,6 +202,7 @@ class Enemy(Moving_Entity):
         self.active_weapon.Place_Down()
         self.game.item_handler.Add_Item(self.active_weapon)
         self.active_weapon.Set_Tile()
+        self.active_weapon.Set_Delete_Countdown()
         self.active_weapon = None
 
     def Trap_Collision_Handler(self):

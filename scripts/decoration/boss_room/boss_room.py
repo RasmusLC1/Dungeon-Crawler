@@ -147,3 +147,4 @@ class Boss_Room():
     # rect function for compatability
     def rect(self):
         return pygame.Rect(999999, 999999, 1, 1)
+    

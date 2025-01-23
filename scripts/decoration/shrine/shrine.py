@@ -82,20 +82,3 @@ class Shrine(Decoration):
         
         self.available_rune = rune
         self.is_open = True
-
-    def Render(self, surf, offset = (0,0)):
-        if not self.Update_Light_Level():
-            return
-        # Set image
-        shrine_image = self.game.assets['shrine'][self.animation].convert_alpha()
-
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
-        if not alpha_value:
-            return
-        
-        shrine_image.set_alpha(alpha_value)
-
-        
-        # Render the chest
-        surf.blit(shrine_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

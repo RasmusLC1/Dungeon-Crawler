@@ -107,7 +107,9 @@ class Chest(Decoration):
             self.Open()
             return
         
-        self.empty = True
+        # self.empty = True
+        self.game.decoration_handler.Remove_Decoration(self)
+
         self.text_cooldown = 30
         self.game.item_handler.Reset_Nearby_Items_Cooldown()
         self.game.sound_handler.Play_Sound('chest_open', 0.15)
@@ -140,9 +142,9 @@ class Chest(Decoration):
         if self.empty:
             return
         
-        if self.text_cooldown:
-            self.Render_text(surf, offset)
-            return
+        # if self.text_cooldown:
+        #     self.Render_text(surf, offset)
+        #     return
         
 
         if not self.Update_Light_Level():
