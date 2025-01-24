@@ -129,6 +129,7 @@ Starting Deck
     # Hatchet, small axe, faster than axe
     # Mace/Hammer, can break certain walls and enviorement, special ground pound to stun nearby enemies
     # Halberd, swing and stab attack, charge attack
+    Scythe, swing attack, soul reap magic attack
     # Crossbow, Same as bow, but takes longer to load, but can be preloaded
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
     magic Staff, improved runes but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
@@ -202,6 +203,30 @@ Starting Deck
         Thorns, enemies take damage when they hit you
         Frost Shield, enemies freeze when damaging you
 
+    Fire runes:
+        # Fireball, ball of fire that leads to fire explosion
+        # Fire spew, flamethrower attack
+        Fire wall, wall of fire that damage anything that tries to cross it
+    
+    Frost runes:
+        # Iceball, ball that causes a freeze explosion that slows everything in it
+        # Ice projectiles, fast ice projectiles shot like a bullet
+        ice storm, Creates a tornado on entity that shoots ice projectiles at random 
+
+    Electric runes:
+        # Chain ligtning, Lightning projectile that bounces between entities
+        # Electric ball, electric ball that generates electric explosion
+        # Electric homing particle, electric projectiles that target nearest entity
+
+    Poison runes:
+        # Poison ball, Poison ball that turns into a poison cloud
+        # Posion cloud, creates a big poison cloud around entity, area of effect
+        # Poison plumes, creates  poison clouds around entity at random positions
+
+    Vampiric runes:
+        Life drain, slowly drain health from all nearby entities
+        Soul reap, broad projectile that sucks health from everything it hits
+        Soul pit that pulls entities in and sucks health from them
 
 
 

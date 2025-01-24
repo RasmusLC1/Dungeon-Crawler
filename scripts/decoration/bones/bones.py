@@ -6,6 +6,15 @@ class Bones(Decoration):
         super().__init__(game, "bones", pos, (32, 32))
         self.entity_type = entity_type
 
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['entity_type'] = self.entity_type
+
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.entity_type = data['entity_type']
+
     def Revive(self):
         self.game.enemy_handler.Enemy_Spawner(self.entity_type, self.pos)
         self.game.decoration_handler.Remove_Decoration(self)

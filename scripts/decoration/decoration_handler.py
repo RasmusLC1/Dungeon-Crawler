@@ -1,5 +1,4 @@
-import pygame
-from scripts.entities.entities import PhysicsEntity
+from scripts.decoration.bones.bones import Bones
 from scripts.decoration.chest.chest import Chest
 from scripts.decoration.doors.door import Door
 from scripts.decoration.shrine.shrine import Shrine
@@ -12,6 +11,7 @@ class Decoration_Handler():
     def __init__(self, game) -> None:
         self.game = game       
         self.decorations = []
+        self.bones = []
         self.nearby_decoration_cooldown = 0
         self.saved_data = {}
 
@@ -33,6 +33,9 @@ class Decoration_Handler():
 
         for shrine in self.game.tilemap.extract([('Shrine', 0)]):
             self.Spawn_Shrine(shrine.pos)
+
+        for bones in self.game.tilemap.extract([('Bones', 0)]):
+            self.Spawn_Bones(bones.pos)
 
         for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
             temp_level = 3
@@ -71,6 +74,8 @@ class Decoration_Handler():
                     decoration = self.Spawn_Chest(pos, version)
                 elif type == 'shrine':
                     decoration = self.Spawn_Shrine(pos)
+                elif type == 'bones':
+                    decoration = self.Spawn_Bones(pos)
                 elif type == 'boss_room':
                     radius = item_data['radius']
                     level = item_data['level']
@@ -104,6 +109,12 @@ class Decoration_Handler():
         shrine = Shrine(self.game, pos)  
         self.decorations.append(shrine)
         return shrine
+    
+    def Spawn_Bones(self, pos):
+        bones = Bones(self.game, pos, None)  
+        self.decorations.append(bones)
+        self.bones.append(bones)
+        return bones
     
     def Spawn_Boss_Room(self, pos, radius, level):
         boss_room = Boss_Room(self.game, pos, radius, level)  
@@ -244,3 +255,6 @@ class Decoration_Handler():
             self.decorations.remove(decoration)
             self.game.tilemap.Remove_Entity_From_Tile(decoration.tile, decoration.ID)
 
+    def Remove_Bones(self, bones):
+        self.bones.remove(bones)
+        return
