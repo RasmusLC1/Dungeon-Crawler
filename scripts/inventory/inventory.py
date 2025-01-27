@@ -162,7 +162,6 @@ class Inventory:
         # If it is then it might be dragged
         if not self.game.mouse.hold_down_left < 5 and not self.game.mouse.hold_down_left > 0:
             return False
-        
         # Activate item if it passes the previous checks
         self.clicked_inventory_slot.item.Activate()
         self.clicked_inventory_slot.Update()

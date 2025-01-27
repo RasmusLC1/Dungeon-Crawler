@@ -104,7 +104,7 @@ class Mouse_Handler:
         self.menu_mouse = (mouse_pos[0] / self.game.render_scale, mouse_pos[1] / self.game.render_scale)
 
     def Reset_Click_Pos(self):
-        self.click_pos = (0, 0)
+        self.click_pos = (-9999, -9999)
 
     # Reduce inventory clicked time
     def Decrement_Inventory_Clicked(self):

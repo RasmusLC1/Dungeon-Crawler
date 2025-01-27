@@ -466,7 +466,7 @@ class Dungeon_Generator():
         return True
 
     def Spawn_Chest(self, level):
-        loot_amount = random.randint(10 + level * 2, 20 + level * 2)
+        loot_amount = random.randint(100 + level * 2, 200 + level * 2)
         loot = 0 
         path = []
         while loot < loot_amount:
