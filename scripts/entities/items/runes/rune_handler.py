@@ -30,6 +30,11 @@ from scripts.entities.items.runes.electric_runes.electric_spray_rune import Elec
 from scripts.entities.items.runes.electric_runes.chain_lightning_rune import Chain_Lightning_Rune
 
 
+from scripts.entities.items.runes.vampiric_runes.soul_reap_rune import Soul_Reap_Rune
+from scripts.entities.items.runes.vampiric_runes.soul_pit_rune import Soul_Pit_Rune
+
+
+
 from scripts.entities.items.runes.passive_runes.regen_rune import Regen_Rune
 
 
@@ -128,13 +133,17 @@ class Rune_Handler():
         'electric_ball_rune': Electric_Ball_Rune(self.game, (9999, 9999)),
         'electric_spray_rune': Electric_Spray_Rune(self.game, (9999, 9999)),
         'chain_lightning_rune': Chain_Lightning_Rune(self.game, (9999, 9999)),
+
+        'soul_reap_rune': Soul_Reap_Rune(self.game, (9999, 9999)),
+        'soul_pit_rune': Soul_Pit_Rune(self.game, (9999, 9999)),
+
         }
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('poison_cloud_rune')
-        self.Add_Rune_To_Rune_Inventory('poison_plume_rune')
-        self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
+        self.Add_Rune_To_Rune_Inventory('soul_reap_rune')
+        self.Add_Rune_To_Rune_Inventory('soul_pit_rune')
+        self.Add_Rune_To_Rune_Inventory('key_rune')
 
     def Clear_Runes(self):
         self.runes.clear()

@@ -1,27 +1,17 @@
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
-import pygame
-import random
 
-class Soul_Reaper(Projectile):
+class Soul_Reap(Projectile):
     def __init__(self, game, pos, damage, speed, shoot_distance, special_attack, direction, entity):
-        super().__init__(game, pos, 'soul_reaper', damage, speed, 1, 100, 'particle', 'vampiric', shoot_distance, 'cut', (64, 32), False)
+        super().__init__(game, pos, 'soul_reap', damage, speed, 1, 100, 'particle', 'vampiric', shoot_distance, 'cut', (32, 32), False)
         self.special_attack = special_attack
         self.entity = entity
         self.direction = direction  # Store the direction vector
-        self.attack_animation_max = 3
-        self.delete_countdown = 100
-        self.attack_animation_time = shoot_distance // self.attack_animation_max
-        # self.attack_image = pygame.transform.scale(item_image, (16 * scale, 16 * scale))
-    
+        self.attack_animation_max = 0
+        self.delete_countdown = 50
+        self.attack_animation_time = 1000
+   
     def Save_Data(self):
         pass
-
-    def Initialise_Shooting(self, speed):
-        return_value = super().Initialise_Shooting(speed)
-        if self.nearby_enemies:
-            entity = random.choice(self.nearby_enemies)
-            self.direction = pygame.math.Vector2(entity.pos[0] - self.pos[0], entity.pos[1] - self.pos[1]).normalize()
-        return return_value
 
     def Shoot(self):
         if not self.shoot_speed:
@@ -36,16 +26,11 @@ class Soul_Reaper(Projectile):
         entity = super().Shoot()
         if entity:
             self.Set_Special_Attack(0)
-        
-        return entity
-            
+            self.delete_countdown = 1
 
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         pass
-
-        
-        
 
     
     # Own render function since we don't need to compute light
