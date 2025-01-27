@@ -26,6 +26,8 @@ class Ice_Particle(Projectile):
         entity = super().Shoot()
         if entity:
             self.Set_Special_Attack(0)
+            self.delete_countdown = 1
+
 
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):

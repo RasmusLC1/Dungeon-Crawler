@@ -17,7 +17,6 @@ class Bell(Weapon):
             return
         
         if self.special_attack <= 0 or not self.equipped:
-            # self.Reset_Special_Attack()
             return
         self.Ring_Bell()
         
