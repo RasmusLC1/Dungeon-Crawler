@@ -77,6 +77,8 @@ class Item(PhysicsEntity):
     
     def Find_Nearby_Entities(self, distance):
         self.nearby_entities = self.game.enemy_handler.Find_Nearby_Enemies(self, distance)
+        for entity in self.nearby_entities:
+            print(entity.type)
 
 
     def Pick_Up(self):

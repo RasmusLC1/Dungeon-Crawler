@@ -393,7 +393,7 @@ class Moving_Entity(PhysicsEntity):
             return False
         
         if self.effects.invulnerable.effect:
-            self.damage_cooldown = 20
+            self.damage_cooldown = 40
             return False
         
         if self.Check_Blocking_Direction(direction):
@@ -401,7 +401,7 @@ class Moving_Entity(PhysicsEntity):
 
         self.damage_text = str(damage)
 
-        self.damage_cooldown = 20
+        self.damage_cooldown = 40
         self.health -= damage
 
         if self.health <= 0: # Entity dead

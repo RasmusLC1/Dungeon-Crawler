@@ -12,6 +12,7 @@ class Elemental_Explosion(Item):
         self.entity = entity
         self.delete_countdown = self.max_animation * self.animation_cooldown_max
         self.power = power
+        self.damage = power
         self.effect_strength = effect_strength
         self.effect = effect
         self.size = ( self.power * self.size[0], self.power * self.size[1])
@@ -33,7 +34,7 @@ class Elemental_Explosion(Item):
     
     def Compute_Damage(self, entity):
         distance = self.Distance(self.pos, entity.pos)
-        damage = round(max(5, min(50, self.power * 32 - distance)))
+        damage = round(max(5, min(50, self.damage * 32 - distance)))
         entity.Damage_Taken(damage, (0,0))
         if self.effect:
             entity.Set_Effect(self.effect, self.effect_strength)
