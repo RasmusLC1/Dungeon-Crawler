@@ -253,7 +253,9 @@ class Decoration_Handler():
     def Remove_Decoration(self, decoration):
         if decoration in self.decorations:
             self.decorations.remove(decoration)
+            self.game.item_handler.Remove_Item(decoration)
             self.game.tilemap.Remove_Entity_From_Tile(decoration.tile, decoration.ID)
+
 
     def Remove_Bones(self, bones):
         self.bones.remove(bones)

@@ -3,6 +3,7 @@ from scripts.entities.moving_entities.enemies.skeleton.skeleton_warrior import S
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_ranger import Skeleton_Ranger
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_bell_toller import Skeleton_Bell_Toller
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_cleric import Skeleton_Cleric
+from scripts.entities.moving_entities.enemies.skeleton.skeleton_undertaker import Skeleton_Undertaker 
 from scripts.entities.moving_entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.moving_entities.enemies.ice_spirit import Ice_Spirit
 from scripts.entities.moving_entities.enemies.spider import Spider
@@ -51,8 +52,7 @@ class Enemy_Handler():
         for i in range(40):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(6, 7)
-            # enemy_variant = 7
+            enemy_variant = random.randint(6, 8)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(10, 20)
@@ -73,6 +73,8 @@ class Enemy_Handler():
                 type = 'skeleton_bell_toller'
             elif enemy_variant == 7:
                 type = 'skeleton_cleric'
+            elif enemy_variant == 8:
+                type = 'skeleton_undertaker'
             if type:
                 pos = spawner.pos
                 self.Enemy_Spawner(type, pos)
@@ -95,6 +97,8 @@ class Enemy_Handler():
             enemy = self.Spawn_Skeleton_Bell_Toller(pos)
         elif 'skeleton_cleric' in type:
             enemy = self.Spawn_Skeleton_Cleric(pos)
+        elif 'skeleton_undertaker' in type:
+            enemy = self.Spawn_Skeleton_Undertaker(pos)
         if enemy:
             if data:
                 enemy.Load_Data(data)
@@ -160,6 +164,23 @@ class Enemy_Handler():
         intelligence = 2
         stamina = 2
         return Skeleton_Cleric(
+            self.game,
+            pos, 
+            health,
+            strength,
+            speed,
+            agility,
+            intelligence,
+            stamina)
+    
+    def Spawn_Skeleton_Undertaker(self, pos):
+        health = 70
+        strength = 5
+        speed = 2
+        agility = 2 
+        intelligence = 2
+        stamina = 2
+        return Skeleton_Undertaker(
             self.game,
             pos, 
             health,

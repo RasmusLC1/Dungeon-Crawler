@@ -8,13 +8,13 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Trap_List(self)
         Graphics_Loader.Asset_Effect_List(self)
         Graphics_Loader.Asset_Magic_Attack_List(self)
-        Graphics_Loader.Asset_Dusty_Bones_List(self)
         Graphics_Loader.Asset_Skeleton_Warrior_List(self)
         Graphics_Loader.Asset_Skeleton_Ranger_List(self)
         Graphics_Loader.Asset_Fire_Spirit_List(self)
         Graphics_Loader.Asset_Ice_Spirit_List(self)
         Graphics_Loader.Asset_Skeleton_Bell_Toller_List(self)
         Graphics_Loader.Asset_Skeleton_Cleric_List(self)
+        Graphics_Loader.Asset_Skeleton_Undertaker_List(self)
         Graphics_Loader.Wight_King_Spirit_List(self)
         Graphics_Loader.Asset_Spider_List(self)
         Graphics_Loader.Asset_Enemy_Symbols_List(self)
@@ -133,14 +133,6 @@ class Graphics_Loader:
         
         self.assets.update(entities_assets)
 
-    def Asset_Dusty_Bones_List(self):
-        entities_assets = {
-            'decrepit_bones': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones.png', 3, 0, 0, 0, 32, 32),
-
-            'decrepit_bones_attack': get_tiles_from_sheet('entities/enemies/BasicUndeadAnimations/DecrepitBones/DecrepitBones_attack.png', 3, 0, 0, 0, 32, 32),
-
-        }
-        self.assets.update(entities_assets)
 
     def Asset_Skeleton_Warrior_List(self):
         entities_assets = {
@@ -183,6 +175,14 @@ class Graphics_Loader:
         entities_assets = {
             'skeleton_bell_toller_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_1.png', 6, 0, 0, 0, 32, 32),
             'skeleton_bell_toller_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_bell/skeleton_bell_attack_1.png', 6, 0, 0, 0, 32, 32),
+
+        }
+        self.assets.update(entities_assets)
+
+    def Asset_Skeleton_Undertaker_List(self):
+        entities_assets = {
+            'skeleton_undertaker_1': get_tiles_from_sheet('entities/enemies/undead/skeleton_undertaker/skeleton_undertaker_1.png', 6, 0, 0, 0, 32, 32),
+            'skeleton_undertaker_1_attack': get_tiles_from_sheet('entities/enemies/undead/skeleton_undertaker/skeleton_undertaker_attack_1.png', 6, 0, 0, 0, 32, 32),
 
         }
         self.assets.update(entities_assets)
