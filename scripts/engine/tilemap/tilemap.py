@@ -80,8 +80,6 @@ class Tilemap:
         matches = []
         for tile in self.offgrid_tiles:
             if (tile.type, tile.variant) in id_pairs:
-                if tile.type == 'Boss_Room':
-                    print(vars(tile))
                 matches.append(copy.copy(tile))
                 if not keep:
                     self.offgrid_tiles.remove(tile)

@@ -1,29 +1,20 @@
-from scripts.entities.moving_entities.enemies.enemy import Enemy
+from scripts.entities.moving_entities.enemies.skeleton.skeleton import Skeleton
 from scripts.entities.items.weapons.close_combat.bell import Bell
 
 import random
 
 
-class Skeleton_Bell_Toller(Enemy):
+class Skeleton_Bell_Toller(Skeleton):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 1))
-        super().__init__(game, pos, 'skeleton_bell_toller_' + type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
-        self.animation_num_max = 6
-        self.attack_animation_num_cooldown_max = 6
-        self.Equip_Weapon()
-        self.max_charge = 70
+        super().__init__(game, pos, 'skeleton_bell_toller_' + type, health, strength, max_speed, agility, intelligence, stamina)
+        self.Equip_Weapon(Bell(self.game, self.pos))
+        self.max_weapon_charge = 70
         self.bell_ringing_cooldown = 0
 
     def Update(self, tilemap, movement=(0, 0)):
-        super().Update(tilemap, movement)
-        self.Update_Active_Weapon()
-        self.Weapon_Cooldown()
         self.Update_Bell_Ringing_Cooldown()
-        if self.distance_to_player < 40:
-            self.Attack()
-
-        if self.distance_to_player > 60 and self.charge:
-            self.charge = 0
+        super().Update(tilemap, movement)
 
     def Update_Bell_Ringing_Cooldown(self):
         if not self.bell_ringing_cooldown:
@@ -38,60 +29,8 @@ class Skeleton_Bell_Toller(Enemy):
         self.bell_ringing_cooldown = 3000
 
 
-    def Set_Idle(self):
-        pass
-
-    def Set_Action(self,  movement):
-        pass
-
     def Attack(self):
         if not super().Attack():
-            return
-        
-        self.charge = min(self.max_charge, self.charge + 1)
-        if not self.active_weapon:
-            return
-
-        if self.charge < self.max_charge:
-            return
-        
-        self.Set_Target(self.game.player.pos)
-        self.active_weapon.Set_Attack()
-        self.Reset_Charge()
+            return False
         self.Ring_Bell()
 
-    def Equip_Weapon(self):
-        weapon = Bell(self.game, self.pos)
-
-        if not weapon:
-            return False
-
-        if not weapon.Check_Inventory_Type('left_hand'):
-            return False
-        weapon.Pickup_Reset_Weapon(self)
-        weapon.Set_Equip(True)
-        self.Set_Active_Weapon(weapon)
-        
-
-        self.active_weapon.render = False
-        del(weapon)
-        return True
-    
-    
-    def Update_Active_Weapon(self, offset=(0, 0)):
-        if not self.active_weapon:
-            return
-
-        # Set the active and light to match the enemy itself
-        self.active_weapon.Set_Active(self.active)
-        self.active_weapon.Set_Light_Level(self.light_level)
-
-        self.active_weapon.Set_Equipped_Position(self.direction_y_holder)
-        # self.active_weapon.Update(offset)
-        if not self.active_weapon:
-            return
-        
-        self.active_weapon.Update_Attack()
-
-
-        return

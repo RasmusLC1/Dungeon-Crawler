@@ -1,30 +1,23 @@
 from scripts.entities.moving_entities.enemies.enemy import Enemy
-from scripts.entities.items.weapons.close_combat.sword import Sword
-from scripts.entities.items.weapons.projectiles.spear import Spear
-
-import random
 
 
-class Wight_King(Enemy):
-    def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, 'undead', (40, 40))
-        self.animation_num_max = 4
-        self.attack_animation_num_max = 4
-        self.attack_animation_num_cooldown_max = 8
-        self.animation = 'wight_king'
-        self.attack_strategy = 'medium_range'
-        self.Equip_Weapon()
-        self.max_charge = 40
+class Skeleton(Enemy):
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
+        self.animation_num_max = 6
+        self.attack_animation_num_cooldown_max = 6
+        self.max_weapon_charge = 60
+        self.attack_distance  = 60
+        self.disengage_distance = 100
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
         self.Update_Active_Weapon()
         self.Weapon_Cooldown()
-        self.Update_Animation()
-        if self.distance_to_player < 30:
+        if self.distance_to_player < self.attack_distance:
             self.Attack()
 
-        if self.distance_to_player > 30 and self.charge:
+        if self.distance_to_player > self.disengage_distance and self.charge:
             self.charge = 0
 
 
@@ -34,33 +27,28 @@ class Wight_King(Enemy):
     def Set_Action(self,  movement):
         pass
 
+    # Returns true on succesful attack
     def Attack(self):
         if not super().Attack():
-            return
+            return False
         
-        self.charge = min(self.max_charge, self.charge + 1)
         if not self.active_weapon:
-            return
+            return False
 
-        if self.charge < self.max_charge:
-            return
+        
+        self.charge = min(self.max_weapon_charge, self.charge + 1)
+        if not self.active_weapon:
+            return False
+
+        if self.charge < self.max_weapon_charge:
+            return False
         
         self.Set_Target(self.game.player.pos)
         self.active_weapon.Set_Attack()
         self.Reset_Charge()
+        return True
 
-    def Equip_Weapon(self):
-        weapon = None
-
-        random_weapon = random.randint(0, 1)
-
-        if random_weapon == 0:
-            weapon = Sword(self.game, self.pos)
-
-        elif random_weapon == 1:
-            weapon = Spear(self.game, self.pos)
-        
-
+    def Equip_Weapon(self, weapon):
         if not weapon:
             return False
 
@@ -74,6 +62,7 @@ class Wight_King(Enemy):
         self.active_weapon.render = False
         del(weapon)
         return True
+    
     
     def Update_Active_Weapon(self, offset=(0, 0)):
         if not self.active_weapon:
@@ -92,6 +81,3 @@ class Wight_King(Enemy):
 
 
         return
-    
-
-    

@@ -52,7 +52,7 @@ class Enemy_Handler():
         for i in range(40):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(6, 8)
+            enemy_variant = random.randint(1, 1)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(10, 20)

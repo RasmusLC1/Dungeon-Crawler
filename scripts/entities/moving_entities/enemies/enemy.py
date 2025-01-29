@@ -182,7 +182,6 @@ class Enemy(Moving_Entity):
     def Spawn_Bones(self):
         bones = Bones(self.game, self.pos, self.type)
         self.game.decoration_handler.Add_Decoration(bones)
-        print(vars(bones))
         return
 
     def Drop_Weapon(self):

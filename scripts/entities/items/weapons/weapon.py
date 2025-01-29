@@ -412,8 +412,8 @@ class Weapon(Item):
             self.game.item_handler.Remove_Item(self, True)
 
 
-    def Set_Delete_Countdown(self):
-        self.delete_countdown = 2000
+    def Set_Delete_Countdown(self, delete_countdown = 2000):
+        self.delete_countdown = delete_countdown
 
     # Reset the attack charge
     def Reset_Charge(self):
