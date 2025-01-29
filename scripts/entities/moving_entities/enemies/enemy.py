@@ -19,6 +19,7 @@ class Enemy(Moving_Entity):
         self.target = self.game.player.pos # Default target is set to player
 
         self.path_finding = Path_Finding(game, self) # Pathfinding logic for enemy
+        self.destination = (0,0)
         self.attack_strategies = Attack_Stategies(game, self) # Pathfinding logic for enemy
         self.distance_to_player = 9999 # Distance to player
         self.charge = 0 # Determines when the enemy attacks
@@ -29,6 +30,7 @@ class Enemy(Moving_Entity):
         self.locked_on_target = 0 # If the enemy is locked onto a target, then it will not switch based on clatter
 
         self.attack_symbol_offset = 20
+        
 
         self.text_box = Enemy_Textbox(self)
     
@@ -141,11 +143,12 @@ class Enemy(Moving_Entity):
     def Set_Alert_Cooldown(self, amount):
         self.alert_cooldown = amount
 
-    def Find_New_Path(self, destination):
-        # If enemy has a target it prioritises, then it will not look for new path
-        if self.locked_on_target:
-            return
-        self.Set_Target(destination)
+    def Set_Destination(self, destination):
+        self.destination = destination
+
+    def Find_New_Path(self):
+        
+        self.Set_Target(self.destination)
         self.path_finding.Find_Shortest_Path()
 
     def Weapon_Cooldown(self):

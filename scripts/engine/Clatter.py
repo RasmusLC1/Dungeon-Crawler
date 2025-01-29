@@ -15,8 +15,7 @@ class Clatter():
             # Check if enemy already has a target
             if enemy.locked_on_target:
                 continue
-
-            enemy.Find_New_Path(center)
+            self.game.enemy_handler.Add_To_Pathfinding_Queue(enemy, center)
 
 
 

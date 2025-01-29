@@ -16,6 +16,8 @@ class Enemy_Handler():
     def __init__(self, game):
         self.game = game
         self.enemies = []
+        self.pathfinding_queue = []
+        self.pathfinding_queue_cooldown = 0
         self.nearby_enemies = []
         self.saved_data = {}
 
@@ -49,10 +51,10 @@ class Enemy_Handler():
     def Initialise(self):
         spawners = self.game.tilemap.extract([('spawners', 1)])
         spawners_length = len(spawners)
-        for i in range(40):
+        for i in range(80):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(1, 1)
+            enemy_variant = random.randint(6, 6)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(10, 20)
@@ -266,6 +268,7 @@ class Enemy_Handler():
         self.game.entities_render.Remove_Entity(enemy)
 
     def Update(self):
+        self.Update_Pathfinding_Queue()
         for enemy in self.enemies:
             enemy.Update(self.game.tilemap)      
                 
@@ -285,7 +288,28 @@ class Enemy_Handler():
                 nearby_enemies.append(enemy)
         return nearby_enemies
     
+    def Add_To_Pathfinding_Queue(self, enemy, destination):
+        if enemy in self.pathfinding_queue:
+            return
+        self.pathfinding_queue.append(enemy)
+        enemy.Set_Destination(destination)
+        enemy.Set_Locked_On_Target(2000)
 
+
+    def Update_Pathfinding_Queue(self):
+        if not self.pathfinding_queue:
+            return
+        
+        if self.pathfinding_queue_cooldown:
+            self.pathfinding_queue_cooldown = max(0, self.pathfinding_queue_cooldown - 1)
+            return
+        
+        self.pathfinding_queue_cooldown = 5
+        self.pathfinding_queue[0].Find_New_Path()
+        self.pathfinding_queue.pop(0)
+
+        
+        
 
 
     def Find_Enemy(self, ID):

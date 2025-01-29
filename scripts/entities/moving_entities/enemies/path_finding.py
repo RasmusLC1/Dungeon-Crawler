@@ -105,9 +105,7 @@ class Path_Finding():
 
     def Find_Shortest_Path(self) -> None:
         # Check if the entity has recently received a new target
-        if self.entity.locked_on_target:
-            return
-            
+   
         self.path.clear()
         self.Calculate_Position()
         self.Calculate_Destination_Position(self.entity.target)
@@ -117,7 +115,7 @@ class Path_Finding():
         
         self.path = [(x + self.game.a_star.min_x, y + self.game.a_star.min_y) for (x, y) in self.path]
 
-        self.entity.Set_Locked_On_Target(500)
+        
         return
     
 
