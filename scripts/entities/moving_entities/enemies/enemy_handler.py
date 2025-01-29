@@ -16,8 +16,22 @@ class Enemy_Handler():
     def __init__(self, game):
         self.game = game
         self.enemies = []
+        self.pathfinding_queue = []
+        self.pathfinding_queue_cooldown = 0
         self.nearby_enemies = []
         self.saved_data = {}
+
+        self.spawn_methods = {
+            'skeleton_warrior': self.Spawn_Skeleton_Warrior,
+            'skeleton_ranger': self.Spawn_Skeleton_Ranger,
+            'fire_spirit': self.Spawn_Fire_Spirit,
+            'ice_spirit': self.Spawn_Ice_Spirit,
+            'spider': self.Spawn_Spider,
+            'wight_king': self.Spawn_Wight_King,
+            'skeleton_bell_toller': self.Spawn_Skeleton_Bell_Toller,
+            'skeleton_cleric': self.Spawn_Skeleton_Cleric,
+            'skeleton_undertaker': self.Spawn_Skeleton_Undertaker
+        }
 
 
     def Save_Enemy_Data(self):
@@ -43,16 +57,17 @@ class Enemy_Handler():
         self.enemies.clear()
         self.nearby_enemies.clear()
         self.saved_data.clear()
+        self.pathfinding_queue.clear()  # Ensure pathfinding queue is reset
 
 
     
     def Initialise(self):
         spawners = self.game.tilemap.extract([('spawners', 1)])
         spawners_length = len(spawners)
-        for i in range(40):
+        for i in range(80):
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
-            enemy_variant = random.randint(1, 1)
+            enemy_variant = random.randint(6, 6)
             type = None
             if enemy_variant < 2: # Melee Decrepit Bones
                 random_value = random.randint(10, 20)
@@ -79,31 +94,24 @@ class Enemy_Handler():
                 pos = spawner.pos
                 self.Enemy_Spawner(type, pos)
 
-    def Enemy_Spawner(self, type, pos, data = None):
-        enemy = None
-        if 'skeleton_warrior' in type:
-            enemy = self.Spawn_Skeleton_Warrior(pos)
-        elif 'skeleton_ranger' in type:
-            enemy = self.Spawn_Skeleton_Ranger(pos)
-        elif 'fire_spirit' in type:
-            enemy = self.Spawn_Fire_Spirit(pos)
-        elif 'ice_spirit' in type:
-            enemy = self.Spawn_Ice_Spirit(pos)
-        elif 'spider' in type:
-            enemy = self.Spawn_Spider(pos)
-        elif 'wight_king' in type:
-            enemy = self.Spawn_Wight_King(pos)
-        elif 'skeleton_bell_toller' in type:
-            enemy = self.Spawn_Skeleton_Bell_Toller(pos)
-        elif 'skeleton_cleric' in type:
-            enemy = self.Spawn_Skeleton_Cleric(pos)
-        elif 'skeleton_undertaker' in type:
-            enemy = self.Spawn_Skeleton_Undertaker(pos)
+    def Enemy_Spawner(self, type, pos, data=None):
+        # Get the spawn function from the dictionary, default to None if not found
+        spawn_function = self.spawn_methods.get(type)
+
+        # If the function does not exists print warning
+        if not spawn_function:
+            print(f"Warning: Enemy type '{type}' not recognized. Enemyhandler Enemy_Spawner")
+            return None
+
+
+        enemy = spawn_function(pos)
         if enemy:
             if data:
-                enemy.Load_Data(data)
+                enemy.Load_Data(data)  # Load saved enemy data if available
             self.enemies.append(enemy)
         return enemy
+        
+        # If enemy type is not found
 
     def Spawn_Skeleton_Warrior(self, pos):
         health = 50
@@ -260,12 +268,16 @@ class Enemy_Handler():
                     intelligence,
                     stamina)
 
+
     def Delete_Enemy(self, enemy):
         if enemy in self.enemies:
             self.enemies.remove(enemy)
+        if enemy in self.pathfinding_queue:
+            self.pathfinding_queue.remove(enemy) 
         self.game.entities_render.Remove_Entity(enemy)
 
     def Update(self):
+        self.Update_Pathfinding_Queue()
         for enemy in self.enemies:
             enemy.Update(self.game.tilemap)      
                 
@@ -280,12 +292,42 @@ class Enemy_Handler():
     def Find_Nearby_Enemies_Long_Distance(self, entity, max_distance):
         nearby_enemies = []
         for enemy in self.enemies:
-            distance = math.sqrt((entity.pos[0] - enemy.pos[0]) ** 2 + (entity.pos[1] - enemy.pos[1]) ** 2)
-            if distance < max_distance and not enemy.ID == entity.ID:
+            dx = entity.pos[0] - enemy.pos[0]
+            dy = entity.pos[1] - enemy.pos[1]
+            if dx * dx + dy * dy < max_distance * max_distance and enemy.ID != entity.ID:
                 nearby_enemies.append(enemy)
         return nearby_enemies
     
+    # Add enemies to a pathfinding queue for performance and lock them in and set their destination
+    def Add_To_Pathfinding_Queue(self, enemy, destination):
+        if enemy in self.pathfinding_queue:
+            return
+        self.pathfinding_queue.append(enemy)
+        enemy.Set_Destination(destination)
+        enemy.Set_Locked_On_Target(2000)
 
+    # Gradually let enemies pathfind towards the target destination
+    def Update_Pathfinding_Queue(self):
+        if not self.pathfinding_queue:
+            return
+        
+        if self.pathfinding_queue_cooldown:
+            self.pathfinding_queue_cooldown = max(0, self.pathfinding_queue_cooldown - 1)
+            return
+        
+        self.Sort_Pathfinding_Queue()
+        
+        self.pathfinding_queue_cooldown = 10
+        self.pathfinding_queue[0].Find_New_Path()
+        self.pathfinding_queue.pop(0)
+
+    # Sort the pathfinding queue to simulate sound spreading
+    def Sort_Pathfinding_Queue(self):
+        self.pathfinding_queue.sort(
+            key=lambda entity: (entity.pos[0] - self.game.player.pos[0]) ** 2 +
+                            (entity.pos[1] - self.game.player.pos[1]) ** 2
+        )
+        
 
 
     def Find_Enemy(self, ID):
