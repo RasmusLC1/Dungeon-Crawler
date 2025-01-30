@@ -47,7 +47,6 @@ class Poison_Plume():
     
     def Generate_Cloud(self):
         fail = 0
-        self.entity.game.clatter.Generate_Clatter(self.entity.pos, 50000)
         tile_size = self.entity.game.tilemap.tile_size
         while fail <= 5: 
             cloud_pos = (self.entity.pos[0] + random.randint(-5 * tile_size, 5 * tile_size), self.entity.pos[1] + random.randint(-5 * tile_size, 5 * tile_size))

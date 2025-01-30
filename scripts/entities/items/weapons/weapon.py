@@ -114,7 +114,7 @@ class Weapon(Item):
         self.Attack_Collision_Check()
         self.Attack_Align_Weapon()
         if not self.entity:
-            return
+            return False
         self.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
         return True
 
@@ -135,6 +135,22 @@ class Weapon(Item):
         self.rotate += 90
 
 
+    def Set_Enemy_Attack(self):
+        if not self.Check_Entity_Cooldown():
+            return
+        self.attacking = max(int((self.speed * 30) // self.entity.agility), self.attack_animation_max) 
+        self.attack_animation_time = int(self.attacking / self.attack_animation_max)
+        self.charge_time = 0  # Reset charge time
+        self.enemy_hit = True # Set enemy hit to true to prevent collision detection
+        self.Set_Attack_Effect_Animation_Time()
+        self.Set_Rotation()
+        self.rotate += 90
+        
+        
+        distance = math.sqrt((self.game.player.pos[0] - self.entity.pos[0]) ** 2 + (self.game.player.pos[1] - self.entity.pos[1]) ** 2)
+        if distance > 2 * self.game.tilemap.tile_size:
+            return
+        self.Entity_Hit(self.game.player)
         
 
     def Set_Rotation(self):

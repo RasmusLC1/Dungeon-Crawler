@@ -36,7 +36,7 @@ class Spider_Web_Projectile(Projectile):
         entity = self.Attack_Collision_Check()
 
         if entity:
-            entity.Set_Effect('snare', 100)
+            entity.Set_Effect('snare', 3)
             self.animation = self.attack_animation_max
             self.pos = entity.pos
             self.target_hit = 100

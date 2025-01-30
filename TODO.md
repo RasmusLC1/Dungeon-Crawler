@@ -182,12 +182,6 @@ Starting Deck
         # Speed
         # Strength
         # Immunity
-        Directed Fire blast 
-        Circle Fire blast
-        Directed Ice blast 
-        Circle Ice blast
-        Poision Cloud
-        Lightning bolt
         Random Teleport, to get out of bad situations
         Scream, make enemies run away from you
         Shield charm, have 4 shield around you that grant immunity but breaks when damage taken
@@ -225,8 +219,8 @@ Starting Deck
 
     Vampiric runes:
         Life drain, slowly drain health from all nearby entities
-        Soul reap, broad projectile that sucks health from everything it hits
-        Soul pit that pulls entities in and sucks health from them
+        # Soul reap, broad projectile that sucks health from everything it hits
+        # Soul pit that pulls entities in and sucks health from them
 
 
 
@@ -237,11 +231,6 @@ Starting Deck
     Ice arrow, ice effect, if it touches water it freezes the water
     Poison arrow, poison effect, if it touches water it poisons it
     Electric arrow, electric effect, triggers traps and electrifies water
-
-# Armour:
-    Lighter armour less noise but less protection
-    Heavy armour movement penalty
-    Different types of armour to protect against different elements
 
 # Movements:
     # Dash, Move rapidly without hit detection to a location
@@ -282,23 +271,31 @@ Starting Deck
     - Melee, attacks the player up close
 
 ## Undead Tribe
-    Skeleton Warrior, basic warrior uses standard weapons
-    Skeleton scout, alerts other enemies of player location (increased clank range), uses ranged weapons
-    Skeleton Cleric, heals undead in the area but does no damage
+    # Skeleton Warrior, basic warrior uses standard weapons
+    # Skeleton scout, uses ranged weapons
+    # Skeleton Cleric, heals undead in the area but does no damage
+    # Skeleton Bell Toller, alerts nearby enemies if it sees the player
+    # Skeleton Undertaker, revieves dead enemies
+    Skeleton Guard, slow, high health and medium damage
     Skeleton warlock, uses magic poison attacks
     Necromancer, boss, can resurrect undead and summon 3 skeletons
     Wight Lord, boss, armoured skeleton with shield and sword, can dash to close range
     Vampire, boss, life steal, flying bat form when travelling, close combat
+    Crypt Ghoul, bone club, fast and high damage, but glass cannon
+    Crypt Horror, boss, high damage and health, slow
+    Ghost, pathfinds directly to the target, phasing through walls, high damage, medium speed and low health
+    Wraith, pathfinds directly to the target, phasing through walls, low damage but steals soul, medium speed and low health
+    Lich, casts doom on player, debuffing him and slowly drains health until Acolyte is killed
+
 
 ## Dungeon Dwellers
-    Crypt Ghoul, bone club, fast -> Upgrades to Crypt Horror
-    Crypt Horror, boss, high damage and strength, fast
+    Undead tribe
     Kobold, different variaties can steal different items from player, soul, loot, potions etc
-
+    # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
+    Mimic chest that spawns skeleton when opened
 
 
 ## Ancient Tomb Enemies
-    # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
     Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
     # Skeletons take more damage from blunt weapons, make more noise from rattle  -> Upgrades to Wight Lord
     Ghost, can go through walls, low health high damage, need special effect to damage -> Upgrades to Reaper

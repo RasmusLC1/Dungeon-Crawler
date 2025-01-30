@@ -447,7 +447,7 @@ class Dungeon_Generator():
         spawners = 0
         fails = 0
         path = []
-        while spawners < 40:
+        while spawners < 80:
             spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
             if self.cellular_automata.map[spawner_x][spawner_y] == wall:

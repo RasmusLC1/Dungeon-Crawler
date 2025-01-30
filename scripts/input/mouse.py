@@ -29,13 +29,12 @@ class Mouse_Handler:
 
     # Mouse inputs that only need to be updated when there is an input
     def Mouse_Input(self, key_press, offset=(0, 0)):
-
         self.Mpos_Update(offset)
         if key_press.type == pygame.MOUSEBUTTONDOWN:
 
             if key_press.button == 1:  # Check for left click (button 1)
                 self.left_click = True
-                self.click_pos = (key_press.pos[0] / self.game.render_scale, key_press.pos[1] / self.game.render_scale)
+                self.Set_Click_Pos((key_press.pos[0] / self.game.render_scale, key_press.pos[1] / self.game.render_scale))
                 if self.time_since_last_click:
                     self.double_click = 20
                 self.time_since_last_click = 20
@@ -45,6 +44,7 @@ class Mouse_Handler:
                 self.hold_down_right += 1
 
         if key_press.type == pygame.MOUSEBUTTONUP:
+            self.Set_Click_Pos((-999, -999))
             if key_press.button == 1:  # Check for left click (button 1)
                 self.left_click = False
                 if not self.single_click_delay:
@@ -103,8 +103,9 @@ class Mouse_Handler:
         mouse_pos = pygame.mouse.get_pos()
         self.menu_mouse = (mouse_pos[0] / self.game.render_scale, mouse_pos[1] / self.game.render_scale)
 
-    def Reset_Click_Pos(self):
-        self.click_pos = (-9999, -9999)
+
+    def Set_Click_Pos(self, pos):
+        self.click_pos = pos
 
     # Reduce inventory clicked time
     def Decrement_Inventory_Clicked(self):

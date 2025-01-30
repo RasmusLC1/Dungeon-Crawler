@@ -44,7 +44,7 @@ class Skeleton(Enemy):
             return False
         
         self.Set_Target(self.game.player.pos)
-        self.active_weapon.Set_Attack()
+        self.active_weapon.Set_Enemy_Attack()
         self.Reset_Charge()
         return True
 

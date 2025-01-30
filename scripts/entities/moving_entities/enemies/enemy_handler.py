@@ -307,9 +307,7 @@ class Enemy_Handler():
             self.pathfinding_queue_cooldown = max(0, self.pathfinding_queue_cooldown - 1)
             return
         
-        self.Sort_Pathfinding_Queue()
-        
-        self.pathfinding_queue_cooldown = 10
+        self.pathfinding_queue_cooldown = 20
         self.pathfinding_queue[0].Find_New_Path()
         self.pathfinding_queue.pop(0)
 

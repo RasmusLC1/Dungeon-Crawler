@@ -28,7 +28,7 @@ class Button():
             self.rect_surface.fill(self.background_color)
 
             if self.rect().colliderect(self.game.mouse.rect_click()):
-                self.game.mouse.Reset_Click_Pos()
+                self.game.mouse.Set_Click_Pos((-999, -999))
                 self.Activate()
                 return True
             return False
