@@ -42,7 +42,6 @@ class Fire_Spirit(Enemy):
         if not super().Attack():
             return
         self.charge += 1
-        print(self.charge)
         if self.charge >= 100:
             self.spewing_fire = True
 
@@ -74,7 +73,8 @@ class Fire_Spirit(Enemy):
             for trap in nearby_traps:
 
                 if trap.type == 'Lava_env':
-                    self.Find_New_Path(trap.pos)
+                    self.Set_Destination(trap.pos)
+                    self.Find_New_Path()
                     self.locked_on_target = True
                     break
 

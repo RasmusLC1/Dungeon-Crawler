@@ -1,7 +1,7 @@
 from scripts.entities.moving_entities.effects.effect import Effect
 import random
 
-# Don't generate sound and clatter
+# Return damage dealth to entity
 class Thorns(Effect):
     def __init__(self, entity):
         super().__init__(entity, 'thorns', 0, 0, (150, 200))

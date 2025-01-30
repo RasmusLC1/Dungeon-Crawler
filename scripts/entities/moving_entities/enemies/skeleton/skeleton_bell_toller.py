@@ -25,7 +25,7 @@ class Skeleton_Bell_Toller(Skeleton):
     def Ring_Bell(self):
         if self.bell_ringing_cooldown:
             return
-        self.game.clatter.Generate_Clatter(self.pos, 2000) # Generate clatter to alert nearby enemies
+        self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
         self.bell_ringing_cooldown = 3000
 
 

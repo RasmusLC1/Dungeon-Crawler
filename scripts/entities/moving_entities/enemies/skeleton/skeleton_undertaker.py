@@ -56,7 +56,8 @@ class Skeleton_Undertaker(Skeleton):
         if not nearby_bones:
             return
         self.locked_on_target = False
-        self.Find_New_Path(nearby_bones[0].pos)
+        self.Set_Destination(nearby_bones[0].pos)
+        self.Find_New_Path()
         self.target_bones = nearby_bones[0]
 
 

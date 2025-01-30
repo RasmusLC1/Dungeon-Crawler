@@ -62,7 +62,7 @@ class Shrine(Decoration):
             self.game.menu_handler.shrine_menu.Initialise_Runes(self)
             
         self.game.state_machine.Set_State('shrine_menu')
-        self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+        self.game.clatter.Generate_Clatter(self.pos, 400) # Generate clatter to alert nearby enemies
         
 
     def Select_Available_Rune(self):
