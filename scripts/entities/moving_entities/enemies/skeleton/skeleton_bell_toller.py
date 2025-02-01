@@ -11,6 +11,8 @@ class Skeleton_Bell_Toller(Skeleton):
         self.Equip_Weapon(Bell(self.game, self.pos))
         self.max_weapon_charge = 70
         self.bell_ringing_cooldown = 0
+        self.intent_manager.Set_Intent(['direct', 'attack', 'attack', 'medium_range'])
+
 
     def Update(self, tilemap, movement=(0, 0)):
         self.Update_Bell_Ringing_Cooldown()

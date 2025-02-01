@@ -3,10 +3,6 @@ from scripts.entities.items.weapons.magic_attacks.ice.ice_particle import Ice_Pa
 from scripts.entities.items.weapons.magic_attacks.ice.ice_shooter import Ice_Shooter
 
 
-import math
-import random
-
-
 class Ice_Spirit(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'elemental')
@@ -14,6 +10,7 @@ class Ice_Spirit(Enemy):
         self.animation_num_max = 3
         self.path_finding_strategy = 'standard'
         self.attack_strategy = 'long_range'
+        self.intent_manager.Set_Intent(['attack'])
         self.look_for_health_cooldown = 0
         self.ice_cooldown = 0
         self.shooting_ice = False

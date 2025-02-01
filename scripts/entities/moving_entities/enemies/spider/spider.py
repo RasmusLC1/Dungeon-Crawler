@@ -1,0 +1,94 @@
+from scripts.entities.moving_entities.enemies.enemy import Enemy
+from scripts.entities.moving_entities.enemies.attacks.Shoot_Spiderweb import Shoot_Spiderweb
+from scripts.entities.moving_entities.enemies.spider.spider_intent import Spider_Intent_Manager
+
+# TODO: Implement intent with spider and make attacks into objects
+class Spider(Enemy):
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'dweller')
+
+        self.animation = 'spider'
+
+        self.path_finding_strategy = 'standard'
+        self.attack_strategy = 'medium_range'
+        self.intent_manager = Spider_Intent_Manager(game, self)
+        self.intent_manager.Set_Intent(['medium_range', 'keep_position', 'shoot_spiderweb', 'direct', 'jump_attack', 'long_range'])
+        # self.intent_manager.Set_Intent(['keep_position', 'shoot_spiderweb'])
+
+        self.animation_num_max = 3 # running and idle animation
+        self.animation_num_cooldown_max = 100
+
+        self.attack_animation_num_max = 3 # Standard attack and shoot spider web
+        self.attack_animation_num_cooldown_max = 200
+
+        self.jumping_animation_num_max = 8 # Jumping attack
+        self.jumping_animation_num = 0
+        self.jumping_animation_num_cooldown_max = 5
+
+        self.on_back_animation_num_max = 8 # To make spider friendly again
+        self.on_back_animation_num_cooldown_max = 50
+
+        self.attack_cooldown = 0
+
+
+        self.attack_symbol_offset = 10
+        
+
+    # Set new action for animation
+    def Set_Action(self, movement):
+        if self.intent_manager.jump_attack.attack_length:
+            self.Set_Animation('jumping')
+            return
+
+        if self.charge and self.distance_to_player <= 50:
+            self.Set_Animation('attack')
+            return
+
+        # Check for movement
+        if not movement[0] and not movement[1]:
+            self.Set_Animation('idle')
+            return
+        if movement[1] or movement[0]:
+            self.Set_Animation('running')
+
+
+
+    def Update(self, tilemap, movement = (0, 0)):
+        super().Update(tilemap, movement)
+        self.Update_Attack_Cooldown()
+
+    
+    # Bite the player when the player is close
+    def Attack(self):
+        if not super().Attack():
+            return
+
+        if self.Future_Rect(self.attack_direction).colliderect(self.game.player.rect()):
+            self.game.player.Damage_Taken(self.strength)
+            self.game.player.Set_Effect('poison', 4)
+            self.Set_Attack_Cooldown(60)
+            return True
+        
+
+
+    def Update_Attack_Cooldown(self):
+        if self.attack_cooldown:
+            self.attack_cooldown = max(0, self.attack_cooldown - 1)
+        return
+
+    
+
+    
+    def Update_Jumping_Animation(self) -> None:
+        if not self.jumping_animation_num_cooldown:
+            self.jumping_animation_num += 1
+            if self.jumping_animation_num > self.jumping_animation_num_max:
+                self.jumping_animation_num = 0
+            self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
+        else:
+            self.jumping_animation_num_cooldown = max(0, self.jumping_animation_num_cooldown - 1)
+
+
+    def Set_Attack_Cooldown(self, amount):
+        self.attack_cooldown = amount
+        return

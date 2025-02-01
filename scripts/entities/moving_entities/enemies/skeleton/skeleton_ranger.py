@@ -17,6 +17,8 @@ class Skeleton_Ranger(Skeleton):
         self.attack_distance  = 200
         self.disengage_distance = 250
         self.attack_strategy = 'long_range'
+        self.intent_manager.Set_Intent([ 'attack'])
+
         
         self.shooting_distance = False
         self.Equip_Weapon(Bow(self.game, self.pos))

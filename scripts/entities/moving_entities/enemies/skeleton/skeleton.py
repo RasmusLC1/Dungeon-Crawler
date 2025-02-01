@@ -2,8 +2,8 @@ from scripts.entities.moving_entities.enemies.enemy import Enemy
 
 
 class Skeleton(Enemy):
-    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (32, 32)):
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'undead', size)
         self.animation_num_max = 6
         self.attack_animation_num_cooldown_max = 6
 
@@ -11,12 +11,6 @@ class Skeleton(Enemy):
         super().Update(tilemap, movement)
         self.Update_Active_Weapon()
         self.Weapon_Cooldown()
-        if self.distance_to_player < self.attack_distance:
-            self.Attack()
-
-        if self.distance_to_player > self.disengage_distance and self.charge:
-            self.charge = 0
-
 
     def Set_Idle(self):
         pass
@@ -32,10 +26,7 @@ class Skeleton(Enemy):
         if not self.active_weapon:
             return False
 
-        
         self.charge = min(self.max_weapon_charge, self.charge + 1)
-        if not self.active_weapon:
-            return False
 
         if self.charge < self.max_weapon_charge:
             return False

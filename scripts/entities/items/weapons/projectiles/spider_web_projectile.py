@@ -28,18 +28,22 @@ class Spider_Web_Projectile(Projectile):
                 self.Set_Special_Attack(0)
             return
 
-        super().Shoot()
+        entity = super().Shoot()
+        self.Entity_Collision_Detection(entity)
 
-        self.Entity_Collision_Detection()
-
-    def Entity_Collision_Detection(self):
-        entity = self.Attack_Collision_Check()
-
+    def Entity_Collision_Detection(self, entity):
+        # entity = self.Attack_Collision_Check_Projectile()
         if entity:
             entity.Set_Effect('snare', 3)
             self.animation = self.attack_animation_max
             self.pos = entity.pos
-            self.target_hit = 100
             return True
         
         return False
+
+
+    def Reset_Shot(self):
+        self.target_hit = 100
+        self.delete_countdown = 100
+        print("TESTTEST")
+        

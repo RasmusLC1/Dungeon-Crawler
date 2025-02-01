@@ -1,33 +1,77 @@
-from scripts.entities.moving_entities.enemies.behavior.Dash import Dash
 import random
 
 class Intent_Manager():
-    def __init__(self, game, entity, intent_cooldown_max, intent) -> None:
+    def __init__(self, game, entity) -> None:
         self.game = game
         self.entity = entity
 
-        self.intent = intent # Enemy's attack pattern and intent
+        self.intent = [] # Enemy's attack pattern and intent
         self.intent_index = 0
-        self.intent_length = len(self.intent)
+        self.intent_length = 0
         self.intent_cooldown = 0
-        self.intent_cooldown_max = intent_cooldown_max
-        self.dash = Dash(game, entity)
+        self.intent_cooldown_max = 200 # Lower value means faster response rate
         self.base_cooldown = {
             "direct": 0,
-            "charge": 0,
             "attack": 0,
             'long_range': self.intent_cooldown_max * 2,
             "medium_range": self.intent_cooldown_max * 1.5,
             "short_range": self.intent_cooldown_max,
             "keep_position": self.intent_cooldown_max * 0.5,
         }
+        # Lambda stores the function to be called later
+        self.actions = {
+            "direct":       lambda: self.Set_Attack_Strategy("direct"),
+            "long_range":   lambda: self.Set_Attack_Strategy("long_range"),
+            "medium_range": lambda: self.Set_Attack_Strategy("medium_range"),
+            "short_range":  lambda: self.Set_Attack_Strategy("short_range"),
+            "keep_position":lambda: self.Set_Attack_Strategy("keep_position"),
+            "attack": self.Handle_Attack,
+        }
 
+
+    def Save_Data(self):
+        self.entity.saved_data['intent_cooldown'] = self.intent_cooldown
+        self.entity.saved_data['intent_index'] = self.intent_index
+
+
+    def Load_Data(self, data):
+        self.intent_cooldown = data['intent_cooldown']
+        self.intent_index = data['intent_index']
+
+    
+
+    def Update_Behavior(self):
+        if self.entity.distance_to_player > 200:  # skip if out of range
+            return
+
+        if not self.Update_Intent_Cooldown():
+            return
+
+        current_intent = self.intent[self.intent_index]
+        action_function = self.actions.get(current_intent)
+        if action_function:
+            action_function()
+        else:
+            print(f"Intent '{current_intent}' missing or unrecognized.")
+        return
+    
+    def Set_Attack_Strategy(self, strategy):
+        self.entity.Set_Attack_Strategy(strategy)
+        self.Set_Intent_Cooldown()
+        self.Increment_Intent()
+
+    def Set_Intent(self, intent):
+        self.intent = intent
+        self.intent_length = len(self.intent)
 
     def Increment_Intent(self):
         self.intent_index += 1
         # Cycle back to the beginning if index exceeds length
         if self.intent_index >= self.intent_length:
             self.intent_index = 0
+
+    def Set_Intent_Cooldown_Max(self, value):
+        self.intent_cooldown_max = value
 
 
     def Set_Intent_Cooldown(self):
@@ -49,38 +93,8 @@ class Intent_Manager():
             return
         self.intent_index = index
 
-    def Update_Behavior(self):
-        # print(self.intent[self.intent_index])
-        if not self.Update_Intent_Cooldown():
-            return
-        
-        match self.intent[self.intent_index]:
-            # Handle movement logic
-            case "direct" | "long_range" | "medium_range" | "short_range" | "keep_position":
-                self.entity.Set_Attack_Strategy(self.intent[self.intent_index])
-                self.Set_Intent_Cooldown()
-                self.Increment_Intent()
-            case "charge":
-                self.Handle_Charge()
-            case "attack":
-                self.Handle_Attack()
-            case _:
-                print("intent missing:\t", self.intent[self.intent_index])
-        
-        return
-
-    def Handle_Charge(self):
-        if not self.dash.dashing:
-            self.dash.Dash()
-
-        self.dash.Dashing_Update()
-
-        if self.dash.dashing == 1:
-            self.Increment_Intent()
-        return
 
     def Handle_Attack(self):
-        # print(self.entity.attack_strategy)
         if self.entity.distance_to_player < self.entity.attack_distance:
             # increment the intent when enemy attacks
             if self.entity.Attack():

@@ -3,6 +3,8 @@ from scripts.entities.moving_entities.enemies.behavior.path_finding import Path_
 from scripts.entities.moving_entities.enemies.behavior.attack_strategies import Attack_Stategies
 from scripts.entities.textbox.enemy_textbox import Enemy_Textbox
 from scripts.decoration.bones.bones import Bones 
+from scripts.entities.moving_entities.enemies.behavior.intent_manager import Intent_Manager
+
 
 import pygame
 
@@ -21,9 +23,10 @@ class Enemy(Moving_Entity):
         self.path_finding = Path_Finding(game, self) # Pathfinding logic for enemy
         self.destination = (0,0)
         self.attack_strategies = Attack_Stategies(game, self) # Pathfinding logic for enemy
+        self.intent_manager = Intent_Manager(game, self)
+
         self.distance_to_player = 9999 # Distance to player
         self.charge = 0 # Determines when the enemy attacks
-        self.max_charge = 50 # Determines when the enemy is ready to attack
         self.attack_strategy = 'direct' # Attack strategy that the enemy utalises
         self.path_finding_strategy = 'standard' # Maptype that is used for navigation
 
@@ -41,6 +44,7 @@ class Enemy(Moving_Entity):
     
     def Save_Data(self):
         super().Save_Data()
+        self.intent_manager.Save_Data()
         self.saved_data['alert_cooldown'] = self.alert_cooldown
         self.saved_data['random_movement_cooldown'] = self.random_movement_cooldown
         self.saved_data['distance_to_player'] = self.distance_to_player
@@ -52,8 +56,10 @@ class Enemy(Moving_Entity):
         self.saved_data['ID'] = self.ID
 
 
+
     def Load_Data(self, data):
         super().Load_Data(data)
+        self.intent_manager.Load_Data(data)
         self.alert_cooldown = data['alert_cooldown']
         self.random_movement_cooldown = data['random_movement_cooldown']
         self.distance_to_player = data['distance_to_player']
@@ -67,6 +73,7 @@ class Enemy(Moving_Entity):
 
 
     def Update(self, tilemap, movement=(0, 0)):
+        self.intent_manager.Update_Behavior()
         self.path_finding.Path_Finding()
         movement = self.direction
         
@@ -76,6 +83,7 @@ class Enemy(Moving_Entity):
 
         self.Update_Alert_Cooldown()
         self.Update_Locked_On_Target()
+
 
         
     def Set_Attack_Strategy(self, strategy):
@@ -89,7 +97,8 @@ class Enemy(Moving_Entity):
     def Reset_Charge(self):
         self.charge = 0
 
-    
+    def Set_Charge_To_Max(self):
+        self.charge = self.max_weapon_charge
     
     def Entity_Collision_Detection(self, tilemap):
         colliding_entity = super().Entity_Collision_Detection(tilemap)

@@ -338,13 +338,14 @@ class Moving_Entity(PhysicsEntity):
         if direction_vector.length() < 0:
             return
         if direction_vector:
-            direction_vector.normalize()
+            direction_vector.normalize_ip()
 
         direction_vector *= repulsion_strength
 
-        self.Move_Entity(other_entity, direction_vector, tilemap)
-
         # Push the other entity backwards
+        self.Move_Entity(other_entity, direction_vector, tilemap)
+    
+
         
     # Function to move the entity with pushback
     def Move_Entity(self, other_entity, direction, tilemap):
