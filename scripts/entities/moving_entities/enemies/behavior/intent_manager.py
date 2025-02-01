@@ -19,7 +19,7 @@ class Intent_Manager():
             'long_range': self.intent_cooldown_max * 2,
             "medium_range": self.intent_cooldown_max * 1.5,
             "short_range": self.intent_cooldown_max,
-            "keep_position": self.intent_cooldown_max * 2,
+            "keep_position": self.intent_cooldown_max * 0.5,
         }
 
 
@@ -29,8 +29,6 @@ class Intent_Manager():
         if self.intent_index >= self.intent_length:
             self.intent_index = 0
 
-    # def Set_Intent_Cooldown(self):
-    #     self.intent_cooldown = random.randint(self.intent_cooldown_max, round(self.intent_cooldown_max * 1.3))
 
     def Set_Intent_Cooldown(self):
         max_cooldown = self.base_cooldown.get(self.intent[self.intent_index], self.intent_cooldown_max)
@@ -58,12 +56,9 @@ class Intent_Manager():
         
         match self.intent[self.intent_index]:
             # Handle movement logic
-            case "long_range" | "medium_range" | "short_range" | "keep_position":
+            case "direct" | "long_range" | "medium_range" | "short_range" | "keep_position":
                 self.entity.Set_Attack_Strategy(self.intent[self.intent_index])
                 self.Set_Intent_Cooldown()
-                self.Increment_Intent()
-            case "direct":
-                self.entity.Set_Attack_Strategy(self.intent[self.intent_index])
                 self.Increment_Intent()
             case "charge":
                 self.Handle_Charge()

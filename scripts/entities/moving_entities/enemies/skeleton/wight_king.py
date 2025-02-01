@@ -16,7 +16,7 @@ class Wight_King(Enemy):
         self.attack_strategy = 'medium_range'
         self.Equip_Weapon()
         self.max_charge = 40
-        self.intent_manager = Intent_Manager(game, self, 400, ['direct', 'charge', 'attack', 'attack', 'medium_range',])
+        self.intent_manager = Intent_Manager(game, self, 200, ['keep_position', 'direct', 'charge', 'attack', 'attack', 'medium_range',])
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
