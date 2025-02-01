@@ -18,11 +18,11 @@ class Attack_Stategies():
     def Attack_Strategy(self) -> bool:
         if self.game.player.effects.invisibility.effect:
             return False
-        if self.entity.attack_strategy == 'direct':
+        if self.entity.attack_strategy == 'direct': # charge the player
             return self.Direct_Pathing()
-        elif self.entity.attack_strategy == 'long_range':
+        elif self.entity.attack_strategy == 'long_range': # keep long distance
             return self.Keep_Distance(200, 160)
-        elif self.entity.attack_strategy == 'medium_range':
+        elif self.entity.attack_strategy == 'medium_range': # keep medium distance
             return self.Keep_Distance(120, 80)
         elif self.entity.attack_strategy == 'short_range':
             return self.Keep_Distance(80, 40)
@@ -85,18 +85,56 @@ class Attack_Stategies():
 
     # Check for line of sight with the player
     def Line_Of_Sight(self, distance, dx, dy):
-        # Calculate the angle in radians
-        angle_radians = math.atan2(dy, dx)
+        tile_size = self.game.tilemap.tile_size
 
-        for i in range(1, int(distance/16)):
-            angle = i * math.radians(angle_radians)
-            pos_x = self.entity.pos[0] + math.cos(angle) * 16 * i
-            pos_y = self.entity.pos[1] + math.sin(angle) * 16 * i
-            tile_key = str(int(pos_x) // self.game.tilemap.tile_size) + ';' + str(int(pos_y) // self.game.tilemap.tile_size)
+        # Convert enemy’s pixel position to tile coordinates
+        ex = int(self.entity.pos[0] // tile_size)
+        ey = int(self.entity.pos[1] // tile_size)
+        # Convert player’s pixel position to tile coordinates
+        px = int(self.game.player.pos[0] // tile_size)
+        py = int(self.game.player.pos[1] // tile_size)
 
+        # Generate the list of tiles along the line
+        line_tiles = self.bresenham_line((ex, ey), (px, py))
+
+        # Check each tile. If any tile is not see-through, return False
+        for (tx, ty) in line_tiles:
+            tile_key = f"{tx};{ty}"
+            # If your ray_caster.Check_Tile(tile_key) means "can see through" is True
+            # or "walkable" is True, adapt accordingly.
             if not self.game.ray_caster.Check_Tile(tile_key):
-                    return False
+                return False
+
         return True
+
+    # Returns all the tile coordinates on a line between `start` and `end`.
+    # start/end should be (x, y) tuples in tile coordinates (integer grid positions).    
+    def bresenham_line(self, start, end):
+
+        x1, y1 = start
+        x2, y2 = end
+
+        points = []
+        dx = abs(x2 - x1)
+        dy = abs(y2 - y1)
+        sx = 1 if x1 < x2 else -1
+        sy = 1 if y1 < y2 else -1
+        err = dx - dy
+
+        while True:
+            points.append((x1, y1))
+            if x1 == x2 and y1 == y2:
+                break
+
+            e2 = err * 2
+            if e2 > -dy:
+                err -= dy
+                x1 += sx
+            if e2 < dx:
+                err += dx
+                y1 += sy
+
+        return points
 
     def Charge_player(self, distance):
         if self.entity.distance_to_player < distance:

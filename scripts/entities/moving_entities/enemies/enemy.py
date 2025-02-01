@@ -1,6 +1,6 @@
 from scripts.entities.moving_entities.moving_entity import Moving_Entity
-from scripts.entities.moving_entities.enemies.path_finding import Path_Finding
-from scripts.entities.moving_entities.enemies.attack_strategies import Attack_Stategies
+from scripts.entities.moving_entities.enemies.behavior.path_finding import Path_Finding
+from scripts.entities.moving_entities.enemies.behavior.attack_strategies import Attack_Stategies
 from scripts.entities.textbox.enemy_textbox import Enemy_Textbox
 from scripts.decoration.bones.bones import Bones 
 
@@ -26,6 +26,11 @@ class Enemy(Moving_Entity):
         self.max_charge = 50 # Determines when the enemy is ready to attack
         self.attack_strategy = 'direct' # Attack strategy that the enemy utalises
         self.path_finding_strategy = 'standard' # Maptype that is used for navigation
+
+        self.attack_distance  = 60
+        self.disengage_distance = 100
+        self.max_weapon_charge = 60
+
 
         self.locked_on_target = 0 # If the enemy is locked onto a target, then it will not switch based on clatter
 
@@ -73,7 +78,8 @@ class Enemy(Moving_Entity):
         self.Update_Locked_On_Target()
 
         
-
+    def Set_Attack_Strategy(self, strategy):
+        self.attack_strategy = strategy
     
     def Set_Direction_Holder(self):
         if self.direction_x or self.direction_y:
