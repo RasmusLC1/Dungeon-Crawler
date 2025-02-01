@@ -18,11 +18,11 @@ class Attack_Stategies():
     def Attack_Strategy(self) -> bool:
         if self.game.player.effects.invisibility.effect:
             return False
-        if self.entity.attack_strategy == 'direct':
+        if self.entity.attack_strategy == 'direct': # charge the player
             return self.Direct_Pathing()
-        elif self.entity.attack_strategy == 'long_range':
+        elif self.entity.attack_strategy == 'long_range': # keep long distance
             return self.Keep_Distance(200, 160)
-        elif self.entity.attack_strategy == 'medium_range':
+        elif self.entity.attack_strategy == 'medium_range': # keep medium distance
             return self.Keep_Distance(120, 80)
         elif self.entity.attack_strategy == 'short_range':
             return self.Keep_Distance(80, 40)

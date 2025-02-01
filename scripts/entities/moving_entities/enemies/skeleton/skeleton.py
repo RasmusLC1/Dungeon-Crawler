@@ -6,9 +6,6 @@ class Skeleton(Enemy):
         super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'undead')
         self.animation_num_max = 6
         self.attack_animation_num_cooldown_max = 6
-        self.max_weapon_charge = 60
-        self.attack_distance  = 60
-        self.disengage_distance = 100
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)

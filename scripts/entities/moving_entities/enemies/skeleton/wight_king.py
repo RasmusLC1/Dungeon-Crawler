@@ -1,6 +1,7 @@
 from scripts.entities.moving_entities.enemies.enemy import Enemy
 from scripts.entities.items.weapons.close_combat.sword import Sword
 from scripts.entities.items.weapons.projectiles.spear import Spear
+from scripts.entities.moving_entities.enemies.behavior.intent_manager import Intent_Manager
 
 import random
 
@@ -15,17 +16,14 @@ class Wight_King(Enemy):
         self.attack_strategy = 'medium_range'
         self.Equip_Weapon()
         self.max_charge = 40
+        self.intent_manager = Intent_Manager(game, self, 400, ['direct', 'charge', 'attack', 'attack', 'medium_range',])
 
     def Update(self, tilemap, movement=(0, 0)):
         super().Update(tilemap, movement)
         self.Update_Active_Weapon()
         self.Weapon_Cooldown()
         self.Update_Animation()
-        if self.distance_to_player < 30:
-            self.Attack()
-
-        if self.distance_to_player > 30 and self.charge:
-            self.charge = 0
+        self.intent_manager.Update_Behavior()
 
 
     def Set_Idle(self):
@@ -36,18 +34,23 @@ class Wight_King(Enemy):
 
     def Attack(self):
         if not super().Attack():
-            return
+            return False
         
-        self.charge = min(self.max_charge, self.charge + 1)
         if not self.active_weapon:
-            return
+            return False
 
-        if self.charge < self.max_charge:
-            return
+        
+        self.charge = min(self.max_weapon_charge, self.charge + 1)
+        if not self.active_weapon:
+            return False
+
+        if self.charge < self.max_weapon_charge:
+            return False
         
         self.Set_Target(self.game.player.pos)
-        self.active_weapon.Set_Attack()
+        self.active_weapon.Set_Enemy_Attack()
         self.Reset_Charge()
+        return True
 
     def Equip_Weapon(self):
         weapon = None
