@@ -10,10 +10,8 @@ class Spider(Enemy):
         self.animation = 'spider'
 
         self.path_finding_strategy = 'standard'
-        self.attack_strategy = 'medium_range'
         self.intent_manager = Spider_Intent_Manager(game, self)
         self.intent_manager.Set_Intent(['medium_range', 'keep_position', 'shoot_spiderweb', 'direct', 'jump_attack', 'long_range'])
-        # self.intent_manager.Set_Intent(['keep_position', 'shoot_spiderweb'])
 
         self.animation_num_max = 3 # running and idle animation
         self.animation_num_cooldown_max = 100
@@ -62,8 +60,8 @@ class Spider(Enemy):
     def Attack(self):
         if not super().Attack():
             return
-
-        if self.Future_Rect(self.attack_direction).colliderect(self.game.player.rect()):
+        print(self.distance_to_player)
+        if self.distance_to_player < 40:
             self.game.player.Damage_Taken(self.strength)
             self.game.player.Set_Effect('poison', 4)
             self.Set_Attack_Cooldown(60)
