@@ -13,6 +13,8 @@ class Fire_Spirit(Enemy):
         self.animation = 'fire_spirit'
         self.path_finding_strategy = 'ignore_lava'
         self.attack_strategy = 'medium_range'
+        self.intent_manager.Set_Intent(['attack'])
+
         self.look_for_health_cooldown = 0
         self.fire_cooldown = 0
         self.spewing_fire = False

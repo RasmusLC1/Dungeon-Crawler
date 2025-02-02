@@ -7,9 +7,10 @@ class Snare(Effect):
         super().__init__(entity, 'snare', 0, 0, (50, 70))
 
     
-    #set Fire effect
+    # Set effect so that it picks the highest effect time, but does not stack them
+    # to prevent permanent being stuck
     def Set_Effect(self, effect_time):
-        self.effect = max(0, min(effect_time + self.effect, 10))
+        self.effect = max(self.effect, min(effect_time, 10))
         return True
     
     def Update_Effect(self):

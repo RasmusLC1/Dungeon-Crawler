@@ -12,6 +12,8 @@ class Skeleton_Cleric(Skeleton):
         self.max_weapon_charge = 70
         self.healing_cooldown = 0
         self.attack_strategy = 'medium_range'
+        self.intent_manager.Set_Intent(['attack'])
+
 
 
     def Update(self, tilemap, movement=(0, 0)):

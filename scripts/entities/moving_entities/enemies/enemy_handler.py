@@ -6,8 +6,8 @@ from scripts.entities.moving_entities.enemies.skeleton.skeleton_cleric import Sk
 from scripts.entities.moving_entities.enemies.skeleton.skeleton_undertaker import Skeleton_Undertaker 
 from scripts.entities.moving_entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.moving_entities.enemies.ice_spirit import Ice_Spirit
-from scripts.entities.moving_entities.enemies.spider import Spider
-from scripts.entities.moving_entities.enemies.skeleton.wight_king import Wight_King
+from scripts.entities.moving_entities.enemies.spider.spider import Spider
+from scripts.entities.moving_entities.enemies.skeleton.wight_king.wight_king import Wight_King
 
 import random
 import math
@@ -77,7 +77,8 @@ class Enemy_Handler():
                 # 'skeleton_bell_toller': 0.1,
                 # 'skeleton_cleric': 0.05,
                 # 'skeleton_undertaker': 0.05,
-                'wight_king': 1.00,
+                # 'wight_king': 0.01,
+                'spider': 1
             }
 
             type = random.choices(list(enemy_types.keys()), weights=enemy_types.values())[0]
@@ -86,15 +87,19 @@ class Enemy_Handler():
                 pos = spawner.pos
                 self.Enemy_Spawner(type, pos)
 
+    
     def Enemy_Spawner(self, type, pos, data=None):
-        # Get the spawn function from the dictionary, default to None if not found
-        spawn_function = self.spawn_methods.get(type)
+        # Strip off trailing "_number" if present
+        base_type = type
+        parts = type.split('_')
+        if parts[-1].isdigit():
+            # Rebuild everything except the last part
+            base_type = '_'.join(parts[:-1])
 
-        # If the function does not exists print warning
+        spawn_function = self.spawn_methods.get(base_type)
         if not spawn_function:
             print(f"Warning: Enemy type '{type}' not recognized. Enemyhandler Enemy_Spawner")
             return None
-
 
         enemy = spawn_function(pos)
         if enemy:
@@ -102,8 +107,8 @@ class Enemy_Handler():
                 enemy.Load_Data(data)  # Load saved enemy data if available
             self.enemies.append(enemy)
         return enemy
-        
-        # If enemy type is not found
+
+    
 
     def Spawn_Skeleton_Warrior(self, pos):
         health = 50

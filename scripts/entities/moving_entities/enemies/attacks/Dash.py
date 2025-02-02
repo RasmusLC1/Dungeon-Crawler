@@ -9,6 +9,8 @@ class Dash():
         self.entity = entity
         self.dashing = 0
         self.dash_direction = (0,0)
+        self.dash_start = 60
+        self.dash_mid = 50
 
     def Dashing_Update(self):
         if not self.dashing:
@@ -16,7 +18,7 @@ class Dash():
             
 
 
-        if abs(self.dashing) in {60, 50}:
+        if abs(self.dashing) in {self.dash_start, self.dash_mid}:
             for i in range(20):
                 angle = random.random() * math.pi * 2
                 speed = random.random() * 0.5 + 0.5
@@ -27,7 +29,7 @@ class Dash():
             self.dashing = max(0, self.dashing - 1)
 
 
-        if self.dashing > 50:
+        if self.dashing > self.dash_mid:
             
             # Temporarily set friction to zero to avoid deceleration during dash
             self.entity.friction = 0
@@ -38,7 +40,7 @@ class Dash():
             self.entity.velocity[0] = self.dash_direction[0] * self.dashing 
             self.entity.velocity[1] = self.dash_direction[1] * self.dashing 
 
-            if abs(self.dashing) == 51:
+            if abs(self.dashing) == self.dash_mid+1:
                 self.entity.velocity[0] *= 0.1
                 self.entity.velocity[1] *= 0.1
 

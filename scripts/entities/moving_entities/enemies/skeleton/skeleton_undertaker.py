@@ -12,8 +12,7 @@ class Skeleton_Undertaker(Skeleton):
         self.bones_search_cooldown = 0
         self.target_bones_collision_cooldown = 0
         self.target_bones = None
-        self.attack_strategy = 'long_range'
-
+        self.intent_manager.Set_Intent(['direct', 'attack', 'attack', 'medium_range', 'medium_range', 'medium_range',])
 
     def Update(self, tilemap, movement=(0, 0)):
         self.Update_Bones_Search_Cooldown()
