@@ -14,7 +14,7 @@ class Intent_Manager():
             "direct": 0,
             "attack": 0,
             'long_range': self.intent_cooldown_max * 2,
-            "medium_range": self.intent_cooldown_max * 1.5,
+            "medium_range": self.intent_cooldown_max,
             "short_range": self.intent_cooldown_max,
             "keep_position": self.intent_cooldown_max * 0.5,
         }
@@ -95,10 +95,13 @@ class Intent_Manager():
 
 
     def Handle_Attack(self):
+        # increment the intent when enemy attacks
+        if self.entity.charge >= self.entity.max_weapon_charge:
+            self.Increment_Intent()
+
         if self.entity.distance_to_player < self.entity.attack_distance:
-            # increment the intent when enemy attacks
-            if self.entity.Attack():
-                self.Increment_Intent()
+            self.entity.Attack()
+            
             return
 
         if self.entity.distance_to_player > self.entity.disengage_distance and self.entity.charge:
