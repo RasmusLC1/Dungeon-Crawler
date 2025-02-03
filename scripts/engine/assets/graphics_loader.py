@@ -361,7 +361,7 @@ class Graphics_Loader:
         Objects_assets = {
             'Chest' : get_tiles_from_sheet('decoration/chest.png', 8, 0, 0, 0, 32, 32, white),
             'Door_Basic' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 32, 32),
-            'shrine' : get_tiles_from_sheet('decoration/shrine.png', 3, 0, 0, 0, 64, 64),
+            'rune_shrine' : get_tiles_from_sheet('decoration/shrine/rune_shrine.png', 3, 0, 0, 0, 64, 64),
             'bones' : get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(Objects_assets)

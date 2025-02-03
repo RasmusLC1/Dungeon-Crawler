@@ -45,5 +45,4 @@ class Spider_Web_Projectile(Projectile):
     def Reset_Shot(self):
         self.target_hit = 100
         self.delete_countdown = 100
-        print("TESTTEST")
         
