@@ -11,7 +11,7 @@ import pygame
 
 
 class Enemy(Moving_Entity):
-    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, sub_category, size = (32, 32)):
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, max_weapon_charge, sub_category, size = (32, 32)):
 
         super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category)
         self.random_movement_cooldown = 0
@@ -23,7 +23,6 @@ class Enemy(Moving_Entity):
         self.path_finding = Path_Finding(game, self) # Pathfinding logic for enemy
         self.destination = (0,0)
         self.attack_strategies = Attack_Stategies(game, self) # Pathfinding logic for enemy
-        self.intent_manager = Intent_Manager(game, self)
 
         self.distance_to_player = 9999 # Distance to player
         self.charge = 0 # Determines when the enemy attacks
@@ -32,7 +31,7 @@ class Enemy(Moving_Entity):
 
         self.attack_distance  = 60
         self.disengage_distance = 100
-        self.max_weapon_charge = 60
+        self.max_weapon_charge = max_weapon_charge
 
 
         self.locked_on_target = 0 # If the enemy is locked onto a target, then it will not switch based on clatter
@@ -40,6 +39,7 @@ class Enemy(Moving_Entity):
         self.attack_symbol_offset = 20
         
 
+        self.intent_manager = Intent_Manager(game, self)
         self.text_box = Enemy_Textbox(self)
     
     def Save_Data(self):

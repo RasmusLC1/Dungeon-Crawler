@@ -5,7 +5,7 @@ from scripts.entities.moving_entities.enemies.spider.spider_intent import Spider
 # TODO: Implement intent with spider and make attacks into objects
 class Spider(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'dweller')
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 60, 'dweller')
 
         self.animation = 'spider'
 

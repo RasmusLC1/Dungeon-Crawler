@@ -5,7 +5,7 @@ from scripts.entities.items.weapons.magic_attacks.ice.ice_shooter import Ice_Sho
 
 class Ice_Spirit(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'elemental')
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 100, 'elemental')
         self.animation = 'ice_spirit'
         self.animation_num_max = 3
         self.path_finding_strategy = 'standard'
@@ -41,7 +41,7 @@ class Ice_Spirit(Enemy):
         
         self.charge += 1
 
-        if self.charge >= 100:
+        if self.charge >= self.max_weapon_charge:
             self.shooting_ice = True
 
         if self.shooting_ice:
