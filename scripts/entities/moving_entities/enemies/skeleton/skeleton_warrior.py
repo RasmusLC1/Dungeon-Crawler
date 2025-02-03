@@ -10,10 +10,9 @@ import random
 class Skeleton_Warrior(Skeleton):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 3))
-        super().__init__(game, pos, 'skeleton_warrior_' + type, health, strength, max_speed, agility, intelligence, stamina)
+        super().__init__(game, pos, 'skeleton_warrior_' + type, health, strength, max_speed, agility, intelligence, stamina, 60)
         self.Select_Weapon()
         self.intent_manager.Set_Intent(['direct', 'attack', 'attack', 'attack', 'medium_range'])
-        self.max_weapon_charge = 60
 
 
     def Select_Weapon(self):

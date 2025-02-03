@@ -2,8 +2,8 @@ from scripts.entities.moving_entities.enemies.enemy import Enemy
 
 
 class Skeleton(Enemy):
-    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, size = (32, 32)):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'undead', size)
+    def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, max_weapon_charge, size = (32, 32)):
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, max_weapon_charge, 'undead', size)
         self.animation_num_max = 6
         self.attack_animation_num_cooldown_max = 6
 

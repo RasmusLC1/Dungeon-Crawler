@@ -8,7 +8,7 @@ import math
 
 class Fire_Spirit(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
-        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 'elemental')
+        super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 100, 'elemental')
         
         self.animation = 'fire_spirit'
         self.path_finding_strategy = 'ignore_lava'
@@ -44,7 +44,7 @@ class Fire_Spirit(Enemy):
         if not super().Attack():
             return
         self.charge += 1
-        if self.charge >= 100:
+        if self.charge >= self.max_weapon_charge:
             self.spewing_fire = True
 
         if self.spewing_fire:

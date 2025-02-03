@@ -9,7 +9,7 @@ import random
 class Skeleton_Ranger(Skeleton):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 3))
-        super().__init__(game, pos, 'skeleton_ranger_' + type, health, strength, max_speed, agility, intelligence, stamina)
+        super().__init__(game, pos, 'skeleton_ranger_' + type, health, strength, max_speed, agility, intelligence, stamina, 60)
         self.animation_num_max = 3
         self.attack_animation_num_max = 3
         self.attack_animation_num_cooldown_max = 100

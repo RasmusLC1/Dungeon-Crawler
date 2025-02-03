@@ -10,6 +10,8 @@ class Intent_Manager():
         self.intent_length = 0
         self.intent_cooldown = 0
         self.intent_cooldown_max = 200 # Lower value means faster response rate
+        self.attack_cooldown = 0
+        self.attack_cooldown_max = round(self.entity.max_weapon_charge * 1.2)
         self.base_cooldown = {
             "direct": 0,
             "attack": 0,
@@ -44,6 +46,7 @@ class Intent_Manager():
         if self.entity.distance_to_player > 200:  # skip if out of range
             return
 
+
         if not self.Update_Intent_Cooldown():
             return
 
@@ -54,7 +57,8 @@ class Intent_Manager():
         else:
             print(f"Intent '{current_intent}' missing or unrecognized.")
         return
-    
+
+
     def Set_Attack_Strategy(self, strategy):
         self.entity.Set_Attack_Strategy(strategy)
         self.Set_Intent_Cooldown()
@@ -94,11 +98,10 @@ class Intent_Manager():
         self.intent_index = index
 
 
+    # Handle the enemy attack logic
     def Handle_Attack(self):
+        self.Update_Attack_Cooldown()
         # increment the intent when enemy attacks
-        if self.entity.charge >= self.entity.max_weapon_charge:
-            self.Increment_Intent()
-
         if self.entity.distance_to_player < self.entity.attack_distance:
             self.entity.Attack()
             
@@ -106,5 +109,15 @@ class Intent_Manager():
 
         if self.entity.distance_to_player > self.entity.disengage_distance and self.entity.charge:
             self.entity.charge = 0
+            self.attack_cooldown = 0
 
         return
+
+    # Updates the attack intent independent of the enemy's success with attacking to prevent it getting stuck
+    def Update_Attack_Cooldown(self):
+        if self.attack_cooldown >= self.attack_cooldown_max:
+            self.Increment_Intent()
+            self.attack_cooldown = 0
+            return
+        
+        self.attack_cooldown += 1
