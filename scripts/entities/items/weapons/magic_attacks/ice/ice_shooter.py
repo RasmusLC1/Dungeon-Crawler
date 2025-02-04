@@ -19,24 +19,26 @@ class Ice_Shooter(Particle_Shooter):
             if not special_attack:
                 return 0
             
-        self.Shoot_Particles(entity, special_attack)
+        self.Shoot_Particles(entity)
         return special_attack
     
-    def Shoot_Particles(self, entity, special_attack):
+    def Shoot_Particles(self, entity, direction = None):
         
         ice_particle = self.Find_Particle()
 
         if not ice_particle:
             ice_particle = self.Create_Extra_Particle()
         
-        speed = 1.2       
+        speed = 1.2
+        
+        if not direction:
+            # Calculate the base angle using atan2(y, x)
+            base_angle = math.atan2(entity.attack_direction[1], entity.attack_direction[0])
 
-        # Calculate the base angle using atan2(y, x)
-        base_angle = math.atan2(entity.attack_direction[1], entity.attack_direction[0])
+            pos_x = math.cos(base_angle) * speed
+            pos_y = math.sin(base_angle) * speed
+            direction = (pos_x, pos_y)
 
-        pos_x = math.cos(base_angle) * speed
-        pos_y = math.sin(base_angle) * speed
-        direction = (pos_x, pos_y)
         ice_particle.Set_Enabled(entity.rect(), speed, 100, direction, entity, 100)
         
     

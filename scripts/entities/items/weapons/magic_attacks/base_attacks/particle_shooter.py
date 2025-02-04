@@ -3,7 +3,6 @@ import math
 class Particle_Shooter():
     def __init__(self, game):
         self.game = game
-        self.fire_cooldown = 0
         self.index = 0
         self.particle_pool = []
 
