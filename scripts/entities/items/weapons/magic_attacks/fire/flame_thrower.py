@@ -2,9 +2,12 @@ from scripts.entities.items.weapons.magic_attacks.fire.fire_particle import Fire
 import math
 
 class Flame_Thrower():
-    def __init__(self, game):
+    def __init__(self, game, pool_size):
         self.game = game
         self.fire_cooldown = 0
+        self.last_used_index = 0
+        self.fire_particle_pool = []
+        self.Create_Fire_Particle_Pool(pool_size)
 
     def Fire_Particle_Creation(self, entity, special_attack):
         # Handle cooldown for spacing between fire particles
@@ -14,7 +17,7 @@ class Flame_Thrower():
         else:
             self.fire_cooldown = 3
             special_attack = max(0, special_attack - 20)
-            if not special_attack:
+            if special_attack <= 0:
                 return 0
             
 
@@ -27,28 +30,44 @@ class Flame_Thrower():
         base_angle = math.atan2(entity.attack_direction[1], entity.attack_direction[0])
         start_angle = base_angle - math.radians(spread_angle / 2)
 
-        damage = 2
         speed = 1  
-        max_range = 100
 
         # Generate fire particles
         for j in range(num_lines):
+            fire_particle = self.Find_Fire_Particle()
+
+            if not fire_particle:
+                print(len(self.fire_particle_pool))
+                print("Not enough fireparticles in pool")
+                return 0 
+            
             angle = start_angle + j * math.radians(angle_increment)
             pos_x = math.cos(angle) * speed
             pos_y = math.sin(angle) * speed
             direction = (pos_x, pos_y)
-
-            # Create the fire particle with the direction
-            fire_particle = Fire_Particle(
-                self.game,
-                entity.rect(),
-                damage,
-                speed,
-                max_range,
-                special_attack,
-                direction,  # Pass the direction here
-                entity
-            )
-            self.game.item_handler.Add_Item(fire_particle)
+            
+            fire_particle.Set_Enabled(entity.rect(), speed, special_attack, direction, entity)
 
         return special_attack
+    
+    # Look for a fire particle that does not have a delete countdown
+    def Find_Fire_Particle(self):
+        fire_particle = None
+        for particle in self.fire_particle_pool:
+            if particle.delete_countdown:
+                continue
+            fire_particle = particle
+            break
+        return fire_particle
+
+
+    def Create_Fire_Particle_Pool(self, amount):
+        for _ in range(amount):
+            fire_particle = Fire_Particle(
+                self.game,
+                (-999, -999),
+                100
+            )
+            self.fire_particle_pool.append(fire_particle)
+
+

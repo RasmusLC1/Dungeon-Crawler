@@ -110,19 +110,21 @@ class Rune_Handler():
         'silence_rune': Silence_Rune(self.game, (9999, 9999)),
         'speed_rune': Speed_Rune(self.game, (9999, 9999)),
         'vampiric_rune': Vampiric_Rune(self.game, (9999, 9999)),
-        'fire_circle_rune': Fire_Circle_Rune(self.game, (9999, 9999)),
-        'fire_ball_rune': Fire_Ball_Rune(self.game, (9999, 9999)),
-        'fire_spray_rune': Fire_Spray_Rune(self.game, (9999, 9999)),
-        'freeze_circle_rune': Freeze_Circle_Rune(self.game, (9999, 9999)),
-        'freeze_storm_rune': Freeze_Storm_Rune(self.game, (9999, 9999)),
-        'freeze_spray_rune': Freeze_Spray_Rune(self.game, (9999, 9999)),
-        'freeze_ball_rune': Freeze_Ball_Rune(self.game, (9999, 9999)),
         'arcane_conduit_run': Arcane_Conduit_Rune(self.game, (9999, 9999)),
         'resistance_rune': Resistance_Rune(self.game, (9999, 9999)),
         'shield_rune': Shield_Rune(self.game, (9999, 9999)),
         'hunger_rune': Hunger_Rune(self.game, (9999, 9999)),
         'magnet_rune': Magnet_Rune(self.game, (9999, 9999)),
         'invulnerable_rune': Invulnerable_Rune(self.game, (9999, 9999)),
+        
+        'fire_circle_rune': Fire_Circle_Rune(self.game, (9999, 9999)),
+        'fire_ball_rune': Fire_Ball_Rune(self.game, (9999, 9999)),
+        'fire_spray_rune': Fire_Spray_Rune(self.game, (9999, 9999)),
+        
+        'freeze_circle_rune': Freeze_Circle_Rune(self.game, (9999, 9999)),
+        'freeze_storm_rune': Freeze_Storm_Rune(self.game, (9999, 9999)),
+        'freeze_spray_rune': Freeze_Spray_Rune(self.game, (9999, 9999)),
+        'freeze_ball_rune': Freeze_Ball_Rune(self.game, (9999, 9999)),
         
         'poison_resistance_rune': Poison_Resistance_Rune(self.game, (9999, 9999)),
         'poison_ball_rune': Poison_Ball_Rune(self.game, (9999, 9999)),
@@ -142,7 +144,7 @@ class Rune_Handler():
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory('soul_reap_rune')
-        self.Add_Rune_To_Rune_Inventory('soul_pit_rune')
+        self.Add_Rune_To_Rune_Inventory('fire_spray_rune')
         self.Add_Rune_To_Rune_Inventory('key_rune')
 
     def Clear_Runes(self):

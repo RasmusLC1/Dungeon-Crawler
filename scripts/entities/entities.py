@@ -20,6 +20,7 @@ class PhysicsEntity:
         self.saved_data = {}
         self.sub_category = sub_category
         self.text_box = None
+        self.moving_entity = False
 
 
     def Save_Data(self):
@@ -69,6 +70,15 @@ class PhysicsEntity:
         if not tile:
             return
         tile.Add_Entity(self)
+
+    def Remove_Tile(self):
+        if not self.tile:
+            return
+        self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+        self.tile = None
+
+    def Set_Position(self, position):
+        self.pos = position
 
 
     def Set_Active(self, value):
