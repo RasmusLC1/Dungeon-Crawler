@@ -91,16 +91,16 @@ class Projectile(Weapon):
 
     # Check for collision on attack
     def Attack_Collision_Check_Projectile(self):
-        for enemy in self.nearby_enemies:
+        for entity in self.nearby_enemies:
             # Check if the enemy is on damage cooldown
-            if enemy.damage_cooldown:
+            if entity.damage_cooldown:
                 continue
 
             # Check for collision with enemy
-            if self.rect().colliderect(enemy.rect()):
-                self.Entity_Hit(enemy)
+            if self.rect().colliderect(entity.rect()):
+                self.Entity_Hit(entity)
                 # Return enemy in case further effects need to be added such as knockback
-                return enemy
+                return entity
             
         return None
 

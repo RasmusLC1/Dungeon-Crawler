@@ -1,3 +1,5 @@
+import math
+
 class Particle_Shooter():
     def __init__(self, game):
         self.game = game
@@ -26,7 +28,7 @@ class Particle_Shooter():
             self.index = 0
         
         # Overflow prevent
-        if self.index >= len(self.particle_pool):
+        if self.index >= len(self.particle_pool) - 1:
             return None
 
         # Set the fire particle to be the next available index

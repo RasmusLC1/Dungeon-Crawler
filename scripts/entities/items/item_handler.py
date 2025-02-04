@@ -121,10 +121,7 @@ class Item_Handler():
             self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 4)
         
         for item in self.items:
-            if item.Update_Delete_Cooldown():
-                if not item.delete_countdown:
-                    self.Remove_Item(item, True)
-                    continue
+            item.Update_Delete_Cooldown()
 
             if item.picked_up:
                 self.items.remove(item)

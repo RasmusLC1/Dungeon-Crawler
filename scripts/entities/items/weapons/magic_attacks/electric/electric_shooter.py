@@ -1,12 +1,14 @@
 from scripts.entities.items.weapons.magic_attacks.electric.electric_particle import Electric_Particle
+from scripts.entities.items.weapons.magic_attacks.base_attacks.particle_shooter import Particle_Shooter
+
 import math
 
-class Electric_Shooter():
+class Electric_Shooter(Particle_Shooter):
     def __init__(self, game):
-        self.game = game
+        super().__init__(game)
         self.electric_cooldown = 0
 
-    def Electric_Particle_Creation(self, entity, special_attack):
+    def Particle_Creation(self, entity, special_attack):
         # Handle cooldown for spacing between fire particles
         if self.electric_cooldown:
             self.electric_cooldown -= 1
@@ -17,11 +19,17 @@ class Electric_Shooter():
             if not special_attack:
                 return 0
             
-
-        damage = 2
+        self.Shoot_Particles(entity, special_attack)
+        return special_attack
+            
+    def Shoot_Particles(self, entity, special_attack):
         speed = 2
-        max_range = 240
-       
+
+        electric_particle = self.Find_Particle()
+
+        if not electric_particle:
+            electric_particle = self.Create_Extra_Particle()
+
 
         # Calculate the base angle using atan2(y, x)
         base_angle = math.atan2(entity.attack_direction[1], entity.attack_direction[0])
@@ -29,17 +37,19 @@ class Electric_Shooter():
         pos_x = math.cos(base_angle) * speed
         pos_y = math.sin(base_angle) * speed
         direction = (pos_x, pos_y)
+        electric_particle.Set_Enabled(entity.rect(), speed, special_attack, direction, entity, 100)
+        
+        
+        
+    # Append extra fire particle to the pool in case it runs out
+    def Create_Extra_Particle(self):
         electric_particle = Electric_Particle(
                 self.game,
-                entity.rect(),
-                damage,
-                speed,
-                max_range,
-                special_attack,
-                direction,  # Pass the direction here
-                entity
+                (-999, -999),
+                100
             )
+        self.particle_pool.append(electric_particle)
+        return electric_particle
+
+
         
-        self.game.item_handler.Add_Item(electric_particle)
-        
-        return special_attack

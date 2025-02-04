@@ -5,7 +5,7 @@ from scripts.engine.ray_caster import Ray_Caster
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
 from scripts.engine.fonts.symbols import Symbols
-from scripts.engine.clatter import Clatter
+from scripts.engine.Clatter import Clatter
 from scripts.entities.textbox.text_box_handler import Text_Box_handler
 from scripts.engine.sound.sound_handler import Sound_Handler
 from scripts.level_generation.dungeon_generator import Dungeon_Generator

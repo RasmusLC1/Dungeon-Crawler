@@ -162,10 +162,17 @@ class Item(PhysicsEntity):
         if not self.delete_countdown:
             return False
         self.delete_countdown = max(0, self.delete_countdown - 1)
+
+        if self.delete_countdown <= 0:
+            self.Delete_Item()
         return True
 
     def Set_Delete_Countdown(self, time):
         self.delete_countdown = time
+    
+    def Delete_Item(self):
+        self.game.item_handler.Remove_Item(self, True)
+        
 
     def Damage_Taken(self, damage):
         self.damaged = damage

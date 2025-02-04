@@ -1,4 +1,5 @@
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
+import pygame
 
 class Particle(Projectile):
     def __init__(self, game, pos, type, damage, speed, range, max_charge_time, damage_type, shoot_distance):
@@ -43,7 +44,7 @@ class Particle(Projectile):
 
     def Set_Speed(self, speed):
         self.speed = speed
-        # self.shoot_speed = speed
+        self.shoot_speed - speed
 
     def Set_Disabled(self):
         self.disabled = True
