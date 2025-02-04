@@ -28,7 +28,7 @@ class Torch(Weapon):
             self.light_source.Update_Light_Level(8)
             self.Reset_Special_Attack()
             return
-        self.special_attack = self.flame_thrower.Fire_Particle_Creation(self.entity, self.special_attack)
+        self.special_attack = self.flame_thrower.Particle_Creation(self.entity, self.special_attack)
 
 
     def Set_Special_Attack(self, offset = (0,0)):
