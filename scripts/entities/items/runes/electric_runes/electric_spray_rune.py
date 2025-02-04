@@ -13,7 +13,7 @@ class Electric_Spray_Rune(Projectile_Rune):
         self.charge = self.current_power * 100
 
     def Generate_Projectile(self):
-        self.charge = self.electric_shooter.Electric_Particle_Creation(self.game.player, self.charge)
+        self.charge = self.electric_shooter.Particle_Creation(self.game.player, self.charge)
         if self.charge <= 0:
             self.Set_Activate_Cooldown(self.activate_cooldown_max)
         else:

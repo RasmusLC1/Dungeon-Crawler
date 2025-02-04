@@ -27,6 +27,8 @@ class Particle(Projectile):
         if entity:
             self.Set_Disabled()
 
+        return entity
+
     def Reset_Shot(self):
         self.Set_Disabled()
         super().Reset_Shot()
