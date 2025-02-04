@@ -8,7 +8,6 @@ class Ice_Particle(Particle):
         # self.attack_animation_time = shoot_distance // self.attack_animation_max
    
 
-
-
-
-
+    def Set_Enabled(self, pos, speed, special_attack, direction, entity, delete_countdown):
+        self.shoot_distance = 100
+        return super().Set_Enabled(pos, speed, special_attack, direction, entity, delete_countdown)

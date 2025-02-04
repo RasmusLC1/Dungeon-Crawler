@@ -1,31 +1,35 @@
 from scripts.entities.items.weapons.magic_attacks.ice.ice_particle import Ice_Particle
+from scripts.entities.items.weapons.magic_attacks.base_attacks.particle_shooter import Particle_Shooter
 import math
 
-class Ice_Shooter():
+class Ice_Shooter(Particle_Shooter):
     def __init__(self, game):
-        self.game = game
+        super().__init__(game)
         self.ice_cooldown = 0
 
-    def Ice_Particle_Creation(self, special_attack, entity):
+    def Particle_Creation(self, special_attack, entity):
         # Handle cooldown for spacing between fire particles
         if self.ice_cooldown:
             self.ice_cooldown -= 1
             return special_attack
         else:
+            # Increment the special attack and set cooldown to create distance between shots
             self.ice_cooldown = 3
             special_attack = max(0, special_attack - 20)
             if not special_attack:
                 return 0
-
-       
-        self.Spawn_Ice_Particle(entity)
+            
+        self.Shoot_Particles(entity, special_attack)
         return special_attack
     
-    def Spawn_Ice_Particle(self, entity):
-        damage = 2 # Multiplied with entity strength for damage calc
-        speed = 1.2
-        max_range = 240
-       
+    def Shoot_Particles(self, entity, special_attack):
+        
+        ice_particle = self.Find_Particle()
+
+        if not ice_particle:
+            ice_particle = self.Create_Extra_Particle()
+        
+        speed = 1.2       
 
         # Calculate the base angle using atan2(y, x)
         base_angle = math.atan2(entity.attack_direction[1], entity.attack_direction[0])
@@ -33,15 +37,15 @@ class Ice_Shooter():
         pos_x = math.cos(base_angle) * speed
         pos_y = math.sin(base_angle) * speed
         direction = (pos_x, pos_y)
+        ice_particle.Set_Enabled(entity.rect(), speed, 100, direction, entity, 100)
+        
+    
+    # Append extra fire particle to the pool in case it runs out
+    def Create_Extra_Particle(self):
         ice_particle = Ice_Particle(
                 self.game,
-                entity.rect(),
-                damage,
-                speed,
-                max_range,
-                100,
-                direction,  # Pass the direction here
-                entity
+                (-999, -999),
+                100
             )
-        
-        self.game.item_handler.Add_Item(ice_particle)
+        self.particle_pool.append(ice_particle)
+        return ice_particle

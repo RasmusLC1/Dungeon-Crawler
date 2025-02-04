@@ -42,12 +42,16 @@ class Particle(Projectile):
 
     def Set_Speed(self, speed):
         self.speed = speed
+        self.shoot_speed - speed
 
     def Set_Disabled(self):
         self.disabled = True
         self.delete_countdown = 0
         self.Set_Position((-999, -999))
         self.Set_Special_Attack(0)
+        self.Set_Direction((0,0))
+        self.Set_Entity(None)
+        self.Set_Speed(0)
         self.game.item_handler.Remove_Item(self)
 
 

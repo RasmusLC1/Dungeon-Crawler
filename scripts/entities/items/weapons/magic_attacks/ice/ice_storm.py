@@ -78,8 +78,6 @@ class Ice_Storm(PhysicsEntity):
 
     
     def Render(self, surf, offset=(0, 0)):
-        # if not self.duration:
-        #     return
         item_image = self.game.assets[self.type][self.animation].convert_alpha()
         item_image.set_alpha(200)
 

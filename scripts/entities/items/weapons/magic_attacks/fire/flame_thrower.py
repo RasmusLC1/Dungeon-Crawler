@@ -7,8 +7,6 @@ class Flame_Thrower(Particle_Shooter):
         super().__init__(game)
         self.fire_cooldown = 0
 
-
-
     def Particle_Creation(self, entity, special_attack):
         if self.fire_cooldown:
             self.fire_cooldown -= 1

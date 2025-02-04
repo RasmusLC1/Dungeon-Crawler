@@ -143,7 +143,7 @@ class Rune_Handler():
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('soul_reap_rune')
+        self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
         self.Add_Rune_To_Rune_Inventory('fire_spray_rune')
         self.Add_Rune_To_Rune_Inventory('key_rune')
 
