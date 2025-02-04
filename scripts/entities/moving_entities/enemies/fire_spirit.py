@@ -23,7 +23,7 @@ class Fire_Spirit(Enemy):
         self.attack_animation_num_max = 3
         self.attack_animation_num_cooldown_max = 100
         self.animation_num_cooldown_max = 100
-        self.flame_thrower = Flame_Thrower(self.game, 60)
+        self.flame_thrower = Flame_Thrower(self.game)
 
     def Update(self, tilemap, movement = (0, 0)):
         

@@ -11,7 +11,7 @@ class Torch(Weapon):
         self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.effect = 'fire'
-        self.flame_thrower = Flame_Thrower(self.game, 60)
+        self.flame_thrower = Flame_Thrower(self.game)
 
 
     # Pick up the torch and update the general light in the area

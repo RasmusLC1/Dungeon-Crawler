@@ -2,12 +2,12 @@ from scripts.entities.items.weapons.magic_attacks.fire.fire_particle import Fire
 import math
 
 class Flame_Thrower():
-    def __init__(self, game, pool_size):
+    def __init__(self, game):
         self.game = game
         self.fire_cooldown = 0
         self.last_used_index = 0
+        self.index = 0
         self.fire_particle_pool = []
-        self.Create_Fire_Particle_Pool(pool_size)
 
     def Fire_Particle_Creation(self, entity, special_attack):
         # Handle cooldown for spacing between fire particles
@@ -37,9 +37,7 @@ class Flame_Thrower():
             fire_particle = self.Find_Fire_Particle()
 
             if not fire_particle:
-                print(len(self.fire_particle_pool))
-                print("Not enough fireparticles in pool")
-                return 0 
+                fire_particle = self.Create_Extra_Fire_Particle()
             
             angle = start_angle + j * math.radians(angle_increment)
             pos_x = math.cos(angle) * speed
@@ -50,24 +48,37 @@ class Flame_Thrower():
 
         return special_attack
     
-    # Look for a fire particle that does not have a delete countdown
-    def Find_Fire_Particle(self):
-        fire_particle = None
-        for particle in self.fire_particle_pool:
-            if particle.delete_countdown:
-                continue
-            fire_particle = particle
-            break
-        return fire_particle
-
-
-    def Create_Fire_Particle_Pool(self, amount):
-        for _ in range(amount):
-            fire_particle = Fire_Particle(
+    # Append extra fire particle to the pool in case it runs out
+    def Create_Extra_Fire_Particle(self):
+        fire_particle = Fire_Particle(
                 self.game,
                 (-999, -999),
                 100
             )
-            self.fire_particle_pool.append(fire_particle)
+        self.fire_particle_pool.append(fire_particle)
+        return fire_particle
 
 
+    # Search for particles with an index
+    def Find_Fire_Particle(self):
+        # If there are no particles in the pool return None to spawn particle
+        if not self.fire_particle_pool:
+            return None
+        
+        # Check if the initial index is available, in which case loop the index back to 0
+        if not self.fire_particle_pool[0].delete_countdown:
+            self.index = 0
+        
+        # Overflow prevent
+        if self.index >= len(self.fire_particle_pool) - 1:
+            return None
+
+        # Set the fire particle to be the next available index
+        fire_particle = self.fire_particle_pool[self.index]
+        self.index += 1
+
+        # If there are no free fire particle return None to spawn a new one
+        if fire_particle.delete_countdown:
+            return None
+        
+        return fire_particle

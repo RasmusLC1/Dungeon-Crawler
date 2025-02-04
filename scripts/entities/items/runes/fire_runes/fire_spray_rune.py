@@ -6,7 +6,7 @@ class Fire_Spray_Rune(Projectile_Rune):
         super().__init__(game, 'fire_spray_rune', pos, 1, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
-        self.fire_shooter = Flame_Thrower(self.game, 200)
+        self.fire_shooter = Flame_Thrower(self.game)
         self.activate_cooldown_max = 100
 
 
