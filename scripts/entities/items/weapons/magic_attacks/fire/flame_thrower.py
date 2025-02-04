@@ -1,23 +1,27 @@
 from scripts.entities.items.weapons.magic_attacks.fire.fire_particle import Fire_Particle
+from scripts.entities.items.weapons.magic_attacks.base_attacks.particle_shooter import Particle_Shooter
 import math
 
-class Flame_Thrower():
+class Flame_Thrower(Particle_Shooter):
     def __init__(self, game):
-        self.game = game
+        super().__init__(game)
         self.fire_cooldown = 0
 
-    def Fire_Particle_Creation(self, entity, special_attack):
-        # Handle cooldown for spacing between fire particles
+    def Particle_Creation(self, entity, special_attack):
         if self.fire_cooldown:
             self.fire_cooldown -= 1
             return special_attack
         else:
             self.fire_cooldown = 3
             special_attack = max(0, special_attack - 20)
-            if not special_attack:
+            if special_attack <= 0:
                 return 0
             
+        self.Shoot_Particles(entity, special_attack)
+        return special_attack
 
+
+    def Shoot_Particles(self, entity, special_attack):
         # Basic raycasting attributes
         num_lines = 8  # Define the number of lines and the spread angle (in degrees)
         spread_angle = 50  # Total spread of the fan (in degrees)
@@ -27,28 +31,31 @@ class Flame_Thrower():
         base_angle = math.atan2(entity.attack_direction[1], entity.attack_direction[0])
         start_angle = base_angle - math.radians(spread_angle / 2)
 
-        damage = 2
         speed = 1  
-        max_range = 100
 
         # Generate fire particles
         for j in range(num_lines):
+            fire_particle = self.Find_Particle()
+
+            if not fire_particle:
+                fire_particle = self.Create_Extra_Particle()
+            
             angle = start_angle + j * math.radians(angle_increment)
             pos_x = math.cos(angle) * speed
             pos_y = math.sin(angle) * speed
             direction = (pos_x, pos_y)
+            
+            fire_particle.Set_Enabled(entity.rect(), speed, special_attack, direction, entity, 50)
 
-            # Create the fire particle with the direction
-            fire_particle = Fire_Particle(
+    
+    # Append extra fire particle to the pool in case it runs out
+    def Create_Extra_Particle(self):
+        fire_particle = Fire_Particle(
                 self.game,
-                entity.rect(),
-                damage,
-                speed,
-                max_range,
-                special_attack,
-                direction,  # Pass the direction here
-                entity
+                (-999, -999),
+                100
             )
-            self.game.item_handler.Add_Item(fire_particle)
+        self.particle_pool.append(fire_particle)
+        return fire_particle
 
-        return special_attack
+
