@@ -35,6 +35,7 @@ class Chain_Lightning(Electric_Particle):
             self.reset_shot = True
 
         return tile_hit
+<<<<<<< Updated upstream
 
     def Shoot_Enemy(self):
         if not self.nearby_enemies:
@@ -47,3 +48,11 @@ class Chain_Lightning(Electric_Particle):
         
         entity = self.nearby_enemies[0]
         self.direction = pygame.math.Vector2(entity.pos[0] - self.pos[0], entity.pos[1] - self.pos[1]).normalize()
+=======
+    
+    # Find nearby enemies and electrocute them
+    def Electrocute_Nearby_Enemies(self):
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, 5)
+        for enemy in self.nearby_enemies:
+            enemy.Set_Effect("electric", 3)
+>>>>>>> Stashed changes

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
 import pygame
 
@@ -36,3 +37,10 @@ class Fire_Particle(Projectile):
         weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+=======
+from scripts.entities.items.weapons.magic_attacks.base_attacks.particle import Particle
+
+class Fire_Particle(Particle):
+    def __init__(self, game, pos, shoot_distance):
+        super().__init__(game, pos, 'fire_particle', 2, 1, 2, 100, 'fire', shoot_distance)
+>>>>>>> Stashed changes

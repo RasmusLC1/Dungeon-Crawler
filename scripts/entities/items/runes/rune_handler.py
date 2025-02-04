@@ -33,8 +33,6 @@ from scripts.entities.items.runes.electric_runes.chain_lightning_rune import Cha
 from scripts.entities.items.runes.vampiric_runes.soul_reap_rune import Soul_Reap_Rune
 from scripts.entities.items.runes.vampiric_runes.soul_pit_rune import Soul_Pit_Rune
 
-
-
 from scripts.entities.items.runes.passive_runes.regen_rune import Regen_Rune
 
 
