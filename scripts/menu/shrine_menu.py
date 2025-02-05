@@ -87,7 +87,6 @@ class Shrine_Menu(Menu):
         # Check interaction with runes
         for rune in self.runes:
             if rune.Menu_Rect().colliderect(self.game.mouse.rect_click()):
-                self.game.mouse.Reset_Click_Pos()
                 if self.Replace_Rune(rune):
                     return
                 self.active_rune = rune
@@ -98,7 +97,6 @@ class Shrine_Menu(Menu):
             return
 
         if self.available_rune.Menu_Rect().colliderect(self.game.mouse.rect_click()):
-            self.game.mouse.Reset_Click_Pos()
 
             self.active_rune = self.available_rune
 

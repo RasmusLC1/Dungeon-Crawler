@@ -60,7 +60,6 @@ class Spider(Enemy):
     def Attack(self):
         if not super().Attack():
             return
-        print(self.distance_to_player)
         if self.distance_to_player < 40:
             self.game.player.Damage_Taken(self.strength)
             self.game.player.Set_Effect('poison', 4)

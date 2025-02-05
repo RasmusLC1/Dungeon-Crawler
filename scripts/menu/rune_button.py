@@ -28,7 +28,6 @@ class Rune_Button(Button):
             self.rect_surface.fill(self.background_color)
 
             if self.rect().colliderect(self.game.mouse.rect_click()):
-                self.game.mouse.Reset_Click_Pos()
                 return self.Activate(rune)
             return False
         

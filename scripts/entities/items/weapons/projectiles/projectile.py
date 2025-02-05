@@ -127,7 +127,7 @@ class Projectile(Weapon):
         self.picked_up = False
 
     def Pick_Up(self):
-        if self.delete_countdown:
+        if self.delete_countdown and not self.pickup_allowed:
             return
         return super().Pick_Up()
     

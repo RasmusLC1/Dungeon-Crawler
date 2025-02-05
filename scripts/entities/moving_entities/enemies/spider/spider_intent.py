@@ -33,3 +33,22 @@ class Spider_Intent_Manager(Intent_Manager):
         if self.entity.max_speed != self.entity.max_speed_holder:
                 self.entity.max_speed = self.entity.max_speed_holder
         self.Set_Attack_Strategy("long_range")
+
+
+    def Handle_Attack(self):
+        pass
+
+    def Update_Attack_Cooldown(self):
+        if not super().Update_Attack_Cooldown():
+            return False
+
+        if self.entity.distance_to_player < self.entity.attack_distance:
+            self.entity.Attack()
+            
+            return False
+
+        if self.entity.distance_to_player > self.entity.disengage_distance and self.entity.charge:
+            self.entity.charge = 0
+            self.attack_cooldown = 0
+
+        return True

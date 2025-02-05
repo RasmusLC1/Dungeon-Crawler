@@ -77,7 +77,7 @@ class Decoration_Handler():
                     version = item_data['version']
                     decoration = self.Spawn_Chest(pos, version)
                 elif type == 'shrine':
-                    decoration = self.Spawn_Shrine(pos)
+                    decoration = self.Spawn_Rune_Shrine(pos)
                 elif type == 'bones':
                     decoration = self.Spawn_Bones(pos)
                 elif type == 'boss_room':
@@ -133,10 +133,6 @@ class Decoration_Handler():
 
 
     def Check_Decorations(self):
-        # Check Shrine First since it's bigger
-        if self.Nearby_Shrine():
-            return True
-        
         nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 2)
         if not nearby_decorations:
             return False
@@ -153,7 +149,6 @@ class Decoration_Handler():
             
         else:
             nearby_decorations = self.Find_Nearby_Decorations_Long_Distance(player_pos, max_distance)
-        
         
         return nearby_decorations
     
@@ -180,9 +175,8 @@ class Decoration_Handler():
         if self.Nearby_Door(decoration):
             return True
 
-        if self.Nearby_Shrine():
+        if self.Nearby_Shrine(decoration):
             return True
-        
         
         return False
     
@@ -207,14 +201,10 @@ class Decoration_Handler():
         
         return False
 
-    def Nearby_Shrine(self):
-        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 4)
-        for decoration in nearby_decorations:
-            if decoration.type == 'shrine':
-                if not decoration.rect().colliderect(self.game.player.rect()):
-                    continue
-                decoration.Open()
-                return True
+    def Nearby_Shrine(self, decoration):
+        if  'shrine' in decoration.type:
+            decoration.Open()
+            return True
             
         return False
     

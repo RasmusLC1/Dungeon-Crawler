@@ -106,13 +106,13 @@ class Intent_Manager():
         if self.entity.distance_to_player < self.entity.attack_distance:
             self.entity.Attack()
             
-            return
+            return False
 
         if self.entity.distance_to_player > self.entity.disengage_distance and self.entity.charge:
             self.entity.charge = 0
             self.attack_cooldown = 0
 
-        return
+        return True
 
     # Updates the attack intent independent of the enemy's success with attacking to prevent it getting stuck
     def Update_Attack_Cooldown(self):
