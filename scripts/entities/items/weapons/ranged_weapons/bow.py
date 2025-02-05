@@ -1,9 +1,4 @@
-from scripts.entities.items.weapons.weapon import Weapon
-from scripts.entities.items.weapons.projectiles.arrow import Arrow
 from scripts.entities.items.weapons.ranged_weapons.ranged_weapon import Ranged_Weapon
-import math
-import pygame
-import inspect
 
 
 class Bow(Ranged_Weapon):

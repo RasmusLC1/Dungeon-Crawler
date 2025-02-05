@@ -44,7 +44,6 @@ class Particle(Projectile):
 
     def Set_Speed(self, speed):
         self.speed = speed
-        self.shoot_speed - speed
 
     def Set_Disabled(self):
         self.disabled = True

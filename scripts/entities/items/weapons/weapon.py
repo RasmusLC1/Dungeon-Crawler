@@ -25,11 +25,9 @@ class Weapon(Item):
         self.attack_animation_counter = 0 # Animation countdown that ticks up to time
         
         self.attack_effect_animation = 0 # current effect animation frame
-        self.attack_effect_animation_max = 7 # Amount of effect animation frames
+        self.attack_effect_animation_max = 6 # Amount of effect animation frames
         self.attack_effect_animation_time = 0 # Time it takes to change between frames
         self.attack_effect_animation_counter = 0 # Animation countdown that ticks up to time
-
-
 
         self.enemy_hit = False # Prevent double damage on attacks
         self.rotate = 0 # Rotation value of weapon
@@ -47,7 +45,6 @@ class Weapon(Item):
         self.charge_effect_animation_max = 5
         self.charge_effect_cooldown = 0
         self.charge_effect_cooldown_max = (self.max_charge_time // self.charge_effect_animation_max) - (self.max_charge_time // 20)
-
 
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack

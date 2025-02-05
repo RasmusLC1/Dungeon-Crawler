@@ -10,6 +10,7 @@ class PhysicsEntity:
         self.game = game
         self.ID = random.randint(1, 10000000)
         self.category = category # Category = Potion, enemy, player, etc
+        self.sub_category = sub_category # Subcategory = variant of the category item -> weapon item 
         self.type = type # Type = Specific type of entity
         self.pos = list(pos)
         self.size = size
@@ -18,9 +19,7 @@ class PhysicsEntity:
         self.render = True
         self.Set_Tile()
         self.saved_data = {}
-        self.sub_category = sub_category
         self.text_box = None
-        self.moving_entity = False
 
 
     def Save_Data(self):

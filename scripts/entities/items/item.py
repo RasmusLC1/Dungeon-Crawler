@@ -20,7 +20,6 @@ class Item(PhysicsEntity):
         self.animation_cooldown_max = 50
         self.amount = amount
         self.max_amount = 0
-        self.damaged = False
         self.max_animation = 0
         self.animation = random.randint(0, self.max_animation)
         self.nearby_entities = []
@@ -40,7 +39,6 @@ class Item(PhysicsEntity):
         self.saved_data['picked_up'] = self.picked_up
         self.saved_data['inventory_type'] = self.inventory_type
         self.saved_data['amount'] = self.amount
-        self.saved_data['damaged'] = self.damaged
         self.saved_data['inventory_index'] = self.inventory_index
 
     
@@ -53,7 +51,6 @@ class Item(PhysicsEntity):
         self.picked_up = data['picked_up']
         self.inventory_type = data['inventory_type']
         self.amount = data['amount']
-        self.damaged = data['damaged']
         self.inventory_index = data['inventory_index']
 
     def Update(self):
@@ -101,12 +98,11 @@ class Item(PhysicsEntity):
                 
         return None
 
+    # TODO: Might crash, need to update traps or remove damage
     def Place_Down(self):
         nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 3)
         for trap in nearby_traps:
             trap.Update(self)
-            if self.damaged:
-                return False
         self.Set_Tile()
         return True
 
@@ -173,9 +169,9 @@ class Item(PhysicsEntity):
     def Delete_Item(self):
         self.game.item_handler.Remove_Item(self, True)
         
-
+    # Destroy item when damaged
     def Damage_Taken(self, damage):
-        self.damaged = damage
+        self.game.item_handler.Remove_Item(self, True)
     
     def Render(self, surf, offset=(0, 0)):
         if self.picked_up:

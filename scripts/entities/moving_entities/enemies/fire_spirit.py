@@ -42,7 +42,12 @@ class Fire_Spirit(Enemy):
     
     def Attack(self):
         if not super().Attack():
-            return
+            return False
+        
+        # If Player is to close, then archer cannot shoot
+        if self.distance_to_player < 30:
+            return False
+
         self.charge += 1
         if self.charge >= self.max_weapon_charge:
             self.spewing_fire = True

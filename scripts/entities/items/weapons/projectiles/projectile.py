@@ -103,6 +103,9 @@ class Projectile(Weapon):
                 return entity
             
         return None
+    
+    def Calculate_Damage(self):
+        return self.damage
 
     def Update_Shoot_Distance(self):
         if not self.shoot_distance:

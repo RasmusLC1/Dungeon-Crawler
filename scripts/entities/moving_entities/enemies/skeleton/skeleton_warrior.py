@@ -1,6 +1,10 @@
 from scripts.entities.items.weapons.close_combat.sword import Sword
-from scripts.entities.items.weapons.close_combat.torch import Torch
 from scripts.entities.items.weapons.projectiles.spear import Spear
+from scripts.entities.items.weapons.close_combat.battle_axe import Battle_Axe
+from scripts.entities.items.weapons.close_combat.halberd import Halberd
+from scripts.entities.items.weapons.close_combat.warhammer import Warhammer
+from scripts.entities.items.weapons.projectiles.hatchet import Hatchet
+from scripts.entities.items.weapons.projectiles.hammer import Hammer
 
 from scripts.entities.moving_entities.enemies.skeleton.skeleton import Skeleton
 
@@ -11,25 +15,26 @@ class Skeleton_Warrior(Skeleton):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 3))
         super().__init__(game, pos, 'skeleton_warrior_' + type, health, strength, max_speed, agility, intelligence, stamina, 60)
-        self.Select_Weapon()
         self.intent_manager.Set_Intent(['direct', 'attack', 'attack', 'attack', 'medium_range'])
-
+        self.Select_Weapon()
 
     def Select_Weapon(self):
-        weapon = None
+        # List of weapon classes
+        weapon_classes = [
+            Sword,
+            Spear,
+            Battle_Axe,
+            Halberd,
+            Warhammer,
+            Hatchet,
+            Hammer
+        ]
 
-        random_weapon = random.randint(0, 2)
+        # Randomly select a weapon class
+        selected_weapon_class = random.choice(weapon_classes)
 
-        if random_weapon == 0:
-            weapon = Sword(self.game, self.pos)
+        # Instantiate the selected weapon
+        weapon = selected_weapon_class(self.game, self.pos)
 
-        elif random_weapon == 1:
-            weapon = Spear(self.game, self.pos)
-
-        elif random_weapon == 2:
-            weapon = Torch(self.game, self.pos)
-
-        if not weapon:
-            return False
-        
+        # Equip the weapon
         self.Equip_Weapon(weapon)

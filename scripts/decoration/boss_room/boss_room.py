@@ -36,9 +36,6 @@ class Boss_Room():
         self.saved_data['boss_ID'] = 0
         if self.boss:
             self.saved_data['boss_ID'] = self.boss.ID
-
-        
-
     
     def Load_Data(self, data):
         self.category = data['category']
@@ -87,7 +84,7 @@ class Boss_Room():
         # Spawn Temp decrepit bones
         # TODO: REPLACE WITH BOSS MOB
         self.boss = self.game.enemy_handler.Enemy_Spawner(
-            'decrepit_bones_melee',
+            'wight_king',
             self.pos,
         )
         self.Close_Room()

@@ -13,23 +13,10 @@ class Chain_Lightning(Electric_Particle):
         entity = super().Shoot()
         if entity:
             self.Electrocute_Nearby_Enemies()
+            self.Reset_Shot()
 
-    def Reset_Shot(self):
-        if not self.reset_shot:
-            return
-        self.delete_countdown = 1
-        super().Reset_Shot()
-    
-    def Check_Tile(self, new_pos):
-        tile_hit = super().Check_Tile(new_pos)
-
-        # Wall has been hit
-        if not tile_hit:
-            self.reset_shot = True
-
-        return tile_hit
     
     def Electrocute_Nearby_Enemies(self):
-        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, 3)
+        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, 4)
         for enemy in self.nearby_enemies:
             enemy.Set_Effect("electric", 3)

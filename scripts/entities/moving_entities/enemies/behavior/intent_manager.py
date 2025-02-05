@@ -27,7 +27,7 @@ class Intent_Manager():
             "medium_range": lambda: self.Set_Attack_Strategy("medium_range"),
             "short_range":  lambda: self.Set_Attack_Strategy("short_range"),
             "keep_position":lambda: self.Set_Attack_Strategy("keep_position"),
-            "attack": self.Handle_Attack,
+            "attack": self.Update_Attack_Cooldown,
         }
 
 
@@ -43,9 +43,10 @@ class Intent_Manager():
     
 
     def Update_Behavior(self):
-        if self.entity.distance_to_player > 200:  # skip if out of range
+        if self.entity.distance_to_player > 300:  # skip if out of range
             return
 
+        self.Handle_Attack()
 
         if not self.Update_Intent_Cooldown():
             return
@@ -100,7 +101,7 @@ class Intent_Manager():
 
     # Handle the enemy attack logic
     def Handle_Attack(self):
-        self.Update_Attack_Cooldown()
+        # self.Update_Attack_Cooldown()
         # increment the intent when enemy attacks
         if self.entity.distance_to_player < self.entity.attack_distance:
             self.entity.Attack()

@@ -35,6 +35,10 @@ class Skeleton_Ranger(Skeleton):
         if self.weapon_cooldown:
             return False
         
+        # If Player is to close, then archer cannot shoot
+        if self.distance_to_player < 50:
+            return False
+
         self.Set_Target(self.game.player.pos)
         if self.active_weapon.type == 'bow':
             self.charge += 1

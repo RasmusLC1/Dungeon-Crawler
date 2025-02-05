@@ -39,6 +39,10 @@ class Ice_Spirit(Enemy):
         if not super().Attack():
             return
         
+        # If Player is to close, then ice spirit cannot shoot
+        if self.distance_to_player < 50:
+            return False
+        
         self.charge += 1
 
         if self.charge >= self.max_weapon_charge:

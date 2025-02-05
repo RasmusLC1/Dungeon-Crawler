@@ -1,7 +1,7 @@
 from scripts.decoration.bones.bones import Bones
 from scripts.decoration.chest.chest import Chest
 from scripts.decoration.doors.door import Door
-from scripts.decoration.shrine.shrine import Shrine
+from scripts.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.decoration.boss_room.boss_room import Boss_Room
 import random
 import math
@@ -32,7 +32,7 @@ class Decoration_Handler():
             self.Spawn_Chest(chest.pos, version)
 
         for shrine in self.game.tilemap.extract([('Shrine', 0)]):
-            self.Spawn_Shrine(shrine.pos)
+            self.Spawn_Rune_Shrine(shrine.pos)
 
         for bones in self.game.tilemap.extract([('Bones', 0)]):
             self.Spawn_Bones(bones.pos)
@@ -105,8 +105,8 @@ class Decoration_Handler():
         return chest
 
     
-    def Spawn_Shrine(self, pos):
-        shrine = Shrine(self.game, pos)  
+    def Spawn_Rune_Shrine(self, pos):
+        shrine = Rune_Shrine(self.game, pos)  
         self.decorations.append(shrine)
         return shrine
     

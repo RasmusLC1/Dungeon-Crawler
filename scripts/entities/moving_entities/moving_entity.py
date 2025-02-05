@@ -12,7 +12,6 @@ from scripts.entities.entities import PhysicsEntity
 class Moving_Entity(PhysicsEntity):
     def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category):
         super().__init__(game, type, category, pos, size, sub_category)
-        self.moving_entity = True
         self.velocity = [0, 0] # Velocity of the player
         
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False} # Check for wall collision in each direction
