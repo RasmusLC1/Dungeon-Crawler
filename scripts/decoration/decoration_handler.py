@@ -31,7 +31,7 @@ class Decoration_Handler():
             version = self.Set_Chest_Version(depth)
             self.Spawn_Chest(chest.pos, version)
 
-        for shrine in self.game.tilemap.extract([('Shrine', 0)]):
+        for shrine in self.game.tilemap.extract([('rune_shrine', 0)]):
             self.Spawn_Rune_Shrine(shrine.pos)
 
         for bones in self.game.tilemap.extract([('Bones', 0)]):
@@ -41,6 +41,10 @@ class Decoration_Handler():
             temp_level = 3
             radius = random.randint(5, 7)
             self.Spawn_Boss_Room(boss_room.pos, radius, temp_level)
+
+        for weapon in self.game.tilemap.extract([('Weapon', 0)]):
+            self.game.item_handler.weapon_handler.Spawn_Random_Weapon(weapon.pos)
+
 
     def Set_Chest_Version(self, depth):
         i = 0
@@ -176,6 +180,8 @@ class Decoration_Handler():
         if self.Nearby_Door(decoration):
             return True
 
+        if self.Nearby_Shrine():
+            return True
         
         
         return False

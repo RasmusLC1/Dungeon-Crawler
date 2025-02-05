@@ -72,6 +72,8 @@ class Dungeon_Generator():
         
         self.Spawn_Chest(2)
 
+        self.Spawn_Weapons(2)
+
         self.Level_Structure()
     
 
@@ -464,9 +466,22 @@ class Dungeon_Generator():
                 return False
         
         return True
+    
+    def Spawn_Weapons(self, level):
+        loot_amount = random.randint(10 + level * 2, 20 + level * 2)
+        loot = 0 
+        while loot < loot_amount:
+            spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
+            spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
+            if self.cellular_automata.map[spawner_x][spawner_y] != floor:
+                continue
+            
+            self.tilemap.offgrid_tiles.append({'type': 'Weapon', 'variant': 0, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})
+            loot += 1
+
 
     def Spawn_Chest(self, level):
-        loot_amount = random.randint(20 + level * 2, 40 + level * 2)
+        loot_amount = random.randint(10 + level * 3, 20 + level * 3)
         loot = 0 
         path = []
         while loot < loot_amount:

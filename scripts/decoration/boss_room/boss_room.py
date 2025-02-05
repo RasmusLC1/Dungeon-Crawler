@@ -76,7 +76,7 @@ class Boss_Room():
             self.Open_Room()
             self.boss_defeated = True
             self.activated = False
-            self.game.decoration_handler.Spawn_Shrine(self.pos)
+            self.game.decoration_handler.Spawn_Rune_Shrine(self.pos)
     
     # Spawn boss
     # Close Doors and replace with walls

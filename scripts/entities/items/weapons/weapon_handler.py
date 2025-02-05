@@ -16,6 +16,8 @@ from scripts.entities.items.weapons.ranged_weapons.bow import Bow
 from scripts.entities.items.weapons.ranged_weapons.crossbow import Crossbow
 from scripts.entities.items.weapons.shields.shield import Shield
 
+import random
+
 class Weapon_Handler():
     def __init__(self, game):
         self.game = game
@@ -38,6 +40,23 @@ class Weapon_Handler():
             'crossbow': Crossbow,
         }
 
+        self.randon_weapon_map = {
+            0 : Sword,
+            1 : Halberd,
+            2 : Hatchet,
+            3 : Hammer,
+            4 : Warhammer,
+            5 : Battle_Axe,
+            6 : Spear,
+            7 : Sceptre,
+            8 : Bell,
+            9 : Scythe,
+            10 : Bow,
+            11 : Crossbow,
+            range(12, 17) : Arrow,
+        }
+
+
     def Weapon_Spawner(self, name, pos_x, pos_y, amount=0, data=None):
         # Handle special cases first
         if 'particle' in name:
@@ -59,6 +78,21 @@ class Weapon_Handler():
                 weapon.entity = self.game.player
                 weapon.Equip()
 
+        # Finally, add to the item handler
+        self.game.item_handler.Add_Item(weapon)
+        return True
+
+    def Spawn_Random_Weapon(self, pos):
+        random_weapon_index = random.randint(0, 17)
+
+        selected_weapon = self.randon_weapon_map.get(random_weapon_index)
+
+        # If the random weapon is an arrow
+        if random_weapon_index >= 12:
+            weapon = Arrow(self.game, pos, random.randint(0, 8))
+        else:
+            weapon = selected_weapon(self.game, pos)
+        print(weapon.type, pos)
         # Finally, add to the item handler
         self.game.item_handler.Add_Item(weapon)
         return True
