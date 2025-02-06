@@ -28,6 +28,8 @@ class Decoration_Handler():
             'rune_shrine': self.Open_Shrine,
         }
 
+        
+
     def Clear_Decorations(self):
         self.decorations.clear()
         self.saved_data.clear()
