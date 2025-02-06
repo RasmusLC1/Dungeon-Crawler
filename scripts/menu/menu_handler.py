@@ -1,6 +1,7 @@
 from scripts.menu.pause_menu import Pause_Menu
 from scripts.menu.main_menu import Main_Menu
 from scripts.menu.rune_shrine_menu import Rune_Shrine_Menu
+from scripts.menu.portal_shrine_menu import Portal_Shrine_Menu
 from scripts.menu.loading_menu import Loading_Menu
 
 
@@ -10,19 +11,22 @@ class Menu_Handler():
         self.pause_menu = Pause_Menu(self.game)
         self.main_menu = Main_Menu(self.game)
         self.rune_shrine_menu = Rune_Shrine_Menu(self.game)
+        self.portal_shrine_menu = Portal_Shrine_Menu(self.game)
         self.loading_menu = Loading_Menu(self.game)
+
+        self.menus = {
+            'pause_menu' : self.pause_menu,
+            'main_menu' : self.main_menu,
+            'rune_shrine_menu': self.rune_shrine_menu,
+            'portal_shrine_menu': self.portal_shrine_menu,
+            'loading_menu': self.loading_menu,
+        }
 
 
     
     def Select_Menu(self, menu):
-        if menu == 'pause_menu':
-            self.Menu_Updater(self.pause_menu)
-        elif menu == 'main_menu':
-            self.Menu_Updater(self.main_menu)
-        elif menu == 'rune_shrine_menu':
-            self.Menu_Updater(self.rune_shrine_menu)
-        elif menu == 'loading_menu':
-            self.Menu_Updater(self.loading_menu)
+        menu = self.menus.get(menu)
+        self.Menu_Updater(menu)
 
     def Menu_Updater(self, menu):
         menu.Update()
