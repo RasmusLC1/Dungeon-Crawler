@@ -29,8 +29,7 @@ class Enemy(Moving_Entity):
         self.attack_strategy = 'direct' # Attack strategy that the enemy utalises
         self.path_finding_strategy = 'standard' # Maptype that is used for navigation
         
-        self.attack_distance  = 60
-        self.disengage_distance = 100
+        self.attack_distance  = 90
         self.max_weapon_charge = max_weapon_charge
 
 

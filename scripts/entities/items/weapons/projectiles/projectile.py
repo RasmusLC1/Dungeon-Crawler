@@ -3,10 +3,11 @@ import math
 import pygame
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, speed, range, max_charge_time, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+    def __init__(self, game, pos, type, damage, ranged_damage, speed, range, max_charge_time, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
         super().__init__(game, pos, type, damage, speed, range, max_charge_time, weapon_class,  damage_type, attack_type, size, add_to_tile)
         self.speed = speed
         self.shoot_speed = 0
+        self.ranged_damage = ranged_damage
         self.shoot_distance = shoot_distance
         self.pickup_allowed = True
         self.shoot_distance_holder = shoot_distance
@@ -98,14 +99,30 @@ class Projectile(Weapon):
 
             # Check for collision with enemy
             if self.rect().colliderect(entity.rect()):
-                self.Entity_Hit(entity)
+                self.Entity_Hit_Ranged(entity)
                 # Return enemy in case further effects need to be added such as knockback
                 return entity
             
         return None
     
-    def Calculate_Damage(self):
-        return self.damage
+    # Damage Entity
+    def Entity_Hit_Ranged(self, entity):
+        if not self.entity:
+            return
+        damage = self.Calculate_Ranged_Damage()
+        entity.Damage_Taken(damage, self.entity.attack_direction)
+        self.enemy_hit = True
+
+        if entity.effects.thorns.effect:
+            self.entity.Damage_Taken(entity.effects.thorns.effect, self.entity.attack_direction)
+
+        if not self.entity:
+            return
+        
+        self.Check_Effects(damage, entity)
+
+    def Calculate_Ranged_Damage(self):
+        return self.ranged_damage * 5
 
     def Update_Shoot_Distance(self):
         if not self.shoot_distance:
@@ -130,43 +147,3 @@ class Projectile(Weapon):
         if self.delete_countdown and not self.pickup_allowed:
             return
         return super().Pick_Up()
-    
-
-    # For some reason calling the parent function does not work for render
-    def Render(self, surf, offset=(0, 0)):
-        
-        # Check if item is in inventory. If yes we don't need offset, except if
-        # the weapon has been picked up
-        if self.in_inventory:
-
-            if self.picked_up:
-                self.Render_In_Inventory(surf)
-        
-        if not self.Update_Light_Level():
-            return
-        
-        weapon_image = self.game.assets[self.type][self.animation].convert_alpha()
-
-        if self.special_attack:
-            weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
-
-        
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))
-
-
-        if not alpha_value:
-            return
-        
-        weapon_image.set_alpha(alpha_value)
-
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        # Blit the chest layer on top the dark layer
-        weapon_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        
-        # Render the chest
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        

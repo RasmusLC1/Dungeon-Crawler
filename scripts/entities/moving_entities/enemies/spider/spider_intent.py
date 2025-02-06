@@ -47,7 +47,7 @@ class Spider_Intent_Manager(Intent_Manager):
             
             return False
 
-        if self.entity.distance_to_player > self.entity.disengage_distance and self.entity.charge:
+        if self.entity.charge:
             self.entity.charge = 0
             self.attack_cooldown = 0
 

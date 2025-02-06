@@ -144,8 +144,8 @@ class Weapon(Item):
         self.rotate += 90
         
         
-        distance = math.sqrt((self.game.player.pos[0] - self.entity.pos[0]) ** 2 + (self.game.player.pos[1] - self.entity.pos[1]) ** 2)
-        if distance > 2 * self.game.tilemap.tile_size:
+        
+        if self.entity.distance_to_player > self.game.tilemap.tile_size:
             return
         self.Entity_Hit(self.game.player)
         
@@ -305,7 +305,10 @@ class Weapon(Item):
 
         if not self.entity:
             return
+        
+        self.Check_Effects(damage, entity)
 
+    def Check_Effects(self, damage, entity):
         # Check if weapon is vampiric first, to avoid double healing
         if self.effect == "vampiric":
             self.entity.Set_Effect("healing", damage // 2)

@@ -15,7 +15,6 @@ class Skeleton_Ranger(Skeleton):
         self.attack_animation_num_cooldown_max = 100
         self.animation_num_cooldown_max = 150
         self.attack_distance  = 200
-        self.disengage_distance = 250
         self.attack_strategy = 'long_range'
         self.intent_manager.Set_Intent([ 'attack'])
 

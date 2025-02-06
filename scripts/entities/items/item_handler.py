@@ -156,6 +156,10 @@ class Item_Handler():
     
     def Pick_Up_Items(self, distance) -> bool:
         nearby_items = self.Find_Nearby_Item(self.game.player.pos, distance)
+        # Remove items that have been picked up already
+        for item in nearby_items:
+            if item.picked_up:
+                nearby_items.remove(item)
         if not nearby_items:
             return False
         player_pos = self.game.player.pos

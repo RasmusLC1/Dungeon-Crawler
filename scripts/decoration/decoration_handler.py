@@ -76,7 +76,7 @@ class Decoration_Handler():
                 elif type == 'chest':
                     version = item_data['version']
                     decoration = self.Spawn_Chest(pos, version)
-                elif type == 'shrine':
+                elif type == 'rune_shrine':
                     decoration = self.Spawn_Rune_Shrine(pos)
                 elif type == 'bones':
                     decoration = self.Spawn_Bones(pos)
@@ -133,10 +133,9 @@ class Decoration_Handler():
 
 
     def Check_Decorations(self):
-        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 2)
+        nearby_decorations = self.Find_Nearby_Decorations(self.game.player.pos, 1)
         if not nearby_decorations:
             return False
-        
         self.Open_Decoration(nearby_decorations)
         return True
 
@@ -162,13 +161,14 @@ class Decoration_Handler():
         return nearby_decorations
 
     def Open_Decoration(self, decorations):      
+        for decoration in decorations:
+            if decoration.type == 'bones':
+                decorations.remove(decoration)
         if not decorations:
             return False
-        
         player_pos = self.game.player.pos
         decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         decoration = decorations[0]
-        
         if self.Nearby_Chest(decoration):
             return True
         

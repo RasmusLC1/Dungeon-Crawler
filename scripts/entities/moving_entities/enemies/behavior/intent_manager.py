@@ -29,6 +29,7 @@ class Intent_Manager():
             "keep_position":lambda: self.Set_Attack_Strategy("keep_position"),
             "attack": self.Update_Attack_Cooldown,
         }
+        # self.Set_Attack_Strategy(entity.attack_strategy)
 
 
     def Save_Data(self):
@@ -41,7 +42,7 @@ class Intent_Manager():
         self.intent_index = data['intent_index']
 
     
-
+    # Update the entity's behavior
     def Update_Behavior(self):
         if self.entity.distance_to_player > 300:  # skip if out of range
             return
@@ -59,7 +60,7 @@ class Intent_Manager():
             print(f"Intent '{current_intent}' missing or unrecognized.")
         return
 
-
+    # setting the player's attack strategy
     def Set_Attack_Strategy(self, strategy):
         self.entity.Set_Attack_Strategy(strategy)
         self.Set_Intent_Cooldown()
@@ -108,7 +109,7 @@ class Intent_Manager():
             
             return False
 
-        if self.entity.distance_to_player > self.entity.disengage_distance and self.entity.charge:
+        if  self.entity.charge:
             self.entity.charge = 0
             self.attack_cooldown = 0
 

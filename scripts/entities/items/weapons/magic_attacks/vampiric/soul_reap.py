@@ -2,7 +2,7 @@ from scripts.entities.items.weapons.projectiles.projectile import Projectile
 
 class Soul_Reap(Projectile):
     def __init__(self, game, pos, damage, speed, shoot_distance, special_attack, direction, entity):
-        super().__init__(game, pos, 'soul_reap', damage, speed, 1, 100, 'particle', 'vampiric', shoot_distance, 'cut', (32, 32), False)
+        super().__init__(game, pos, 'soul_reap', 0, damage, speed, 1, 100, 'particle', 'vampiric', shoot_distance, 'cut', (32, 32), False)
         self.special_attack = special_attack
         self.entity = entity
         self.direction = direction  # Store the direction vector

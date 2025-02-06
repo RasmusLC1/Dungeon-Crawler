@@ -52,7 +52,6 @@ class Rune_Shrine(Decoration):
         self.available_rune = None
 
     def Open(self):
-        print(vars(self))
         if not self.is_open:
             self.Select_Available_Rune()
         
