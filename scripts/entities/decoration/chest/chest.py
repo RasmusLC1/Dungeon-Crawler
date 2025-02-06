@@ -1,6 +1,6 @@
 import pygame
 import random
-from scripts.decoration.decoration import Decoration
+from scripts.entities.decoration.decoration import Decoration
 from scripts.entities.items.loot.gold import Gold
 from scripts.entities.items.loot.key import Key
 from scripts.entities.entities import PhysicsEntity

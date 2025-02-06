@@ -1,11 +1,9 @@
 import pygame
 import math
-import random
-from scripts.menu.button import Button
 from scripts.menu.rune_button import Rune_Button
 from scripts.menu.menu import Menu
 
-class Shrine_Menu(Menu):
+class Rune_Shrine_Menu(Menu):
     def __init__(self, game) -> None:
         super().__init__(game)
         self.runes = []

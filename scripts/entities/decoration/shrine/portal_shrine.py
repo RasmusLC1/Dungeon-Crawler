@@ -1,0 +1,51 @@
+from scripts.entities.decoration.decoration import Decoration
+import random
+
+class Portal_Shrine(Decoration):
+    def __init__(self, game, pos) -> None:
+        super().__init__(game, 'portal_shrine', pos, (64, 64))
+        self.is_open = False
+        self.animation = 0
+        self.animation_cooldown = 0
+        self.max_animation = 3
+        
+        self.available_rune = None
+        
+
+
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['is_open'] = self.is_open
+
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.is_open = data['is_open']
+
+    def Update(self):
+        self.Update_Animation()
+        return super().Update()
+
+    def Update_Animation(self):
+        if self.animation_cooldown:
+            self.animation_cooldown -= 1
+        else:
+            self.animation_cooldown = 20
+            self.animation = random.randint(0,self.max_animation)
+
+    def Remove_Available_Rune(self):
+        self.available_rune = None
+
+    def Open(self):
+        if not self.is_open:
+            self.Activate()
+            
+        self.game.state_machine.Set_State('portal_shrine_menu')
+        self.game.clatter.Generate_Clatter(self.pos, 400) # Generate clatter to alert nearby enemies
+        
+
+    def Activate(self):
+        self.light_level = 5
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level, self.tile)
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
+        self.is_open = True

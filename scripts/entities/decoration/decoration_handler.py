@@ -1,8 +1,8 @@
-from scripts.decoration.bones.bones import Bones
-from scripts.decoration.chest.chest import Chest
-from scripts.decoration.doors.door import Door
-from scripts.decoration.shrine.rune_shrine import Rune_Shrine
-from scripts.decoration.boss_room.boss_room import Boss_Room
+from scripts.entities.decoration.bones.bones import Bones
+from scripts.entities.decoration.chest.chest import Chest
+from scripts.entities.decoration.doors.door import Door
+from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
+from scripts.entities.decoration.boss_room.boss_room import Boss_Room
 import random
 import math
 
@@ -28,7 +28,6 @@ class Decoration_Handler():
             'rune_shrine': self.Open_Shrine,
         }
 
-        
 
     def Clear_Decorations(self):
         self.decorations.clear()
@@ -97,19 +96,21 @@ class Decoration_Handler():
         if decoration:
             if data:
                 decoration.Load_Data(data)
-            self.decorations.append(decoration)
         return decoration
 
     def Spawn_Door(self, pos, size, version=None, radius=None, level=None):
         door = Door(self.game, 'door', pos, size)
+        self.decorations.append(door)
         return door
 
     def Spawn_Chest(self, pos, size=None, version=None, radius=None, level=None):
         chest = Chest(self.game, pos, version)  
+        self.decorations.append(chest)
         return chest
 
     def Spawn_Rune_Shrine(self, pos, size=None, version=None, radius=None, level=None):
-        shrine = Rune_Shrine(self.game, pos)  
+        shrine = Rune_Shrine(self.game, pos)
+        self.decorations.append(shrine)
         return shrine
 
     def Spawn_Bones(self, pos, size=None, version=None, radius=None, level=None):

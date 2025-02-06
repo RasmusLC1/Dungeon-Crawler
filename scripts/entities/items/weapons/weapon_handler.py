@@ -92,7 +92,6 @@ class Weapon_Handler():
             weapon = Arrow(self.game, pos, random.randint(0, 8))
         else:
             weapon = selected_weapon(self.game, pos)
-        print(weapon.type, pos)
         # Finally, add to the item handler
         self.game.item_handler.Add_Item(weapon)
         return True

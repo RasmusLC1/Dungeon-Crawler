@@ -1,4 +1,4 @@
-from scripts.decoration.decoration import Decoration
+from scripts.entities.decoration.decoration import Decoration
 import random
 
 class Door(Decoration):

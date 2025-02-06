@@ -14,8 +14,6 @@ class Entity_Renderer():
         self.Find_Nearby_Entities()
         self.entities.sort(key=lambda entity: entity.pos[1])
 
-    
-
     def Find_Nearby_Entities(self):
         self.entities.clear()
         for tile in self.game.ray_caster.tiles:
@@ -45,14 +43,17 @@ class Entity_Renderer():
 
             entity.Render(surf, offset)
 
-            self.Render_Tool_Tip(surf, offset, nearest_interactable_object_found, entity)
+            if nearest_interactable_object_found:
+                continue
+
+            nearest_interactable_object_found = self.Render_Tool_Tip(surf, offset, nearest_interactable_object_found, entity)
 
     
     def Render_Tool_Tip(self, surf, offset, nearest_interactable_object_found, entity):
-        if nearest_interactable_object_found:
-            return
         if entity.category == "item" and not entity.picked_up or entity.category == "decoration" and entity.type in self.game.decoration_handler.opening_methods:
-            nearest_interactable_object_found = True
             distance = math.sqrt((entity.pos[0] - self.game.player.pos[0]) ** 2 + (entity.pos[1] - self.game.player.pos[1]) ** 2)
             if distance < 40:
                 self.game.interactable_object.Render(surf, offset, entity)
+                return True
+        
+        return False

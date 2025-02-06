@@ -1,4 +1,4 @@
-from scripts.decoration.decoration import Decoration
+from scripts.entities.decoration.decoration import Decoration
 import random
 
 class Rune_Shrine(Decoration):
@@ -54,13 +54,12 @@ class Rune_Shrine(Decoration):
     def Open(self):
         if not self.is_open:
             self.Select_Available_Rune()
-        
         if self.available_rune:
-            self.game.menu_handler.shrine_menu.Initialise_Runes(self, self.available_rune)
+            self.game.menu_handler.rune_shrine_menu.Initialise_Runes(self, self.available_rune)
         else:
-            self.game.menu_handler.shrine_menu.Initialise_Runes(self)
+            self.game.menu_handler.rune_shrine_menu.Initialise_Runes(self)
             
-        self.game.state_machine.Set_State('shrine_menu')
+        self.game.state_machine.Set_State('rune_shrine_menu')
         self.game.clatter.Generate_Clatter(self.pos, 400) # Generate clatter to alert nearby enemies
         
 

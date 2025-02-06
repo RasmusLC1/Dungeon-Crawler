@@ -28,8 +28,8 @@ class State_Machine():
             self.Main_Menu(True)
         elif self.game_state == 'pause_menu':
             self.Pause_Menu()
-        elif self.game_state == 'shrine_menu':
-            self.Shrine_Menu()
+        elif self.game_state == 'rune_shrine_menu':
+            self.rune_shrine_menu()
         elif self.game_state == 'exit_game':
             self.Exit_Game(False)
         elif self.game_state == 'exit_game_save':
@@ -79,12 +79,12 @@ class State_Machine():
     def Pause_Menu(self):
         self.game.menu_handler.Select_Menu('pause_menu')
 
-    def Shrine_Menu(self):
-        self.game.menu_handler.Select_Menu('shrine_menu')
+    def rune_shrine_menu(self):
+        self.game.menu_handler.Select_Menu('rune_shrine_menu')
 
         # Reset the buy menu if exited
-        if self.game_state != 'shrine_menu':
-            self.game.menu_handler.shrine_menu.Reset_Rune_Bought()
+        if self.game_state != 'rune_shrine_menu':
+            self.game.menu_handler.rune_shrine_menu.Reset_Rune_Bought()
 
   
 

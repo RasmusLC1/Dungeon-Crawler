@@ -1,6 +1,6 @@
 from scripts.menu.pause_menu import Pause_Menu
 from scripts.menu.main_menu import Main_Menu
-from scripts.menu.shrine_menu import Shrine_Menu
+from scripts.menu.rune_shrine_menu import Rune_Shrine_Menu
 from scripts.menu.loading_menu import Loading_Menu
 
 
@@ -9,7 +9,7 @@ class Menu_Handler():
         self.game = game
         self.pause_menu = Pause_Menu(self.game)
         self.main_menu = Main_Menu(self.game)
-        self.shrine_menu = Shrine_Menu(self.game)
+        self.rune_shrine_menu = Rune_Shrine_Menu(self.game)
         self.loading_menu = Loading_Menu(self.game)
 
 
@@ -19,8 +19,8 @@ class Menu_Handler():
             self.Menu_Updater(self.pause_menu)
         elif menu == 'main_menu':
             self.Menu_Updater(self.main_menu)
-        elif menu == 'shrine_menu':
-            self.Menu_Updater(self.shrine_menu)
+        elif menu == 'rune_shrine_menu':
+            self.Menu_Updater(self.rune_shrine_menu)
         elif menu == 'loading_menu':
             self.Menu_Updater(self.loading_menu)
 
@@ -39,5 +39,5 @@ class Menu_Handler():
     def Resize_Menus(self):
         self.pause_menu.Set_Screen_Size(True) 
         self.main_menu.Set_Screen_Size(True)
-        self.shrine_menu.Set_Screen_Size(True)
+        self.rune_shrine_menu.Set_Screen_Size(True)
         self.loading_menu.Set_Screen_Size(True)

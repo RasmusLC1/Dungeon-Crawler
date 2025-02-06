@@ -4,7 +4,7 @@ from scripts.engine.particles.particle_handler import Particle_Handler
 from scripts.traps.trap_handler import Trap_Handler
 from scripts.entities.items.item_handler import Item_Handler
 
-from scripts.decoration.decoration_handler import Decoration_Handler
+from scripts.entities.decoration.decoration_handler import Decoration_Handler
 from scripts.entities.moving_entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.lights.light_handler import Light_Handler
 from scripts.inventory.item_inventory import Item_Inventory

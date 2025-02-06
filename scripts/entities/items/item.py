@@ -3,8 +3,6 @@ import math
 import pygame
 from scripts.entities.entities import PhysicsEntity
 
-
-
 class Item(PhysicsEntity):
     def __init__(self, game, type, sub_category, pos, size, amount = 1, add_to_tile = True, value = 100):
         super().__init__(game, type, 'item', pos, size, sub_category)
