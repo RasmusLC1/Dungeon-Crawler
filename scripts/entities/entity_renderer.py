@@ -36,11 +36,23 @@ class Entity_Renderer():
         tile.Clear_Entity(entity.ID)
         self.entities.remove(entity)
 
-            
-        
 
     def Render(self, surf, offset = (0,0)):
+        nearest_interactable_object_found = False
         for entity in self.entities:
             if not entity.render:
                 continue
+
             entity.Render(surf, offset)
+
+            self.Render_Tool_Tip(surf, offset, nearest_interactable_object_found, entity)
+
+    
+    def Render_Tool_Tip(self, surf, offset, nearest_interactable_object_found, entity):
+        if nearest_interactable_object_found:
+            return
+        if entity.category == "item" and not entity.picked_up or entity.category == "decoration" and entity.type in self.game.decoration_handler.opening_methods:
+            nearest_interactable_object_found = True
+            distance = math.sqrt((entity.pos[0] - self.game.player.pos[0]) ** 2 + (entity.pos[1] - self.game.player.pos[1]) ** 2)
+            if distance < 40:
+                self.game.interactable_object.Render(surf, offset, entity)

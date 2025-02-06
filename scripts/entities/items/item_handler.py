@@ -118,7 +118,7 @@ class Item_Handler():
         self.Check_Keyboard_Input()
         if self.Update_Nearby_Items_Cooldown():
             self.nearby_items.clear()
-            self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 4)
+            self.nearby_items = self.Find_Nearby_Item(self.game.player.pos, 3)
         
         for item in self.items:
             item.Update_Delete_Cooldown()
@@ -164,8 +164,8 @@ class Item_Handler():
             return False
         player_pos = self.game.player.pos
         nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
-        
-        if not self.game.player.rect().colliderect(nearby_items[0].rect()):
+        nearby_item = nearby_items[0]
+        if not self.game.player.rect().colliderect(nearby_item.rect()):
             return False
 
         nearby_items[0].Pick_Up()

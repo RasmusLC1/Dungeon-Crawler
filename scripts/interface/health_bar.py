@@ -4,13 +4,6 @@ class Health_Bar:
     def __init__(self, game):
         self.game = game
         self.scaled_heart = pygame.transform.scale(self.game.assets['heart'], (10, 12))
-        # Ensure the font is loaded correctly
-        try:
-            self.game.font = pygame.font.Font('freesansbold.ttf', 10)
-        except Exception as e:
-            print(f"Font load error: {e}")
-            self.game.font = pygame.font.SysFont('freesans', 10)  # Fallback font
-
 
     
     def normalize_health(self, current_health, max_health, bar_length):

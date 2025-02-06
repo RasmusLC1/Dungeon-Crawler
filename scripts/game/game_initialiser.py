@@ -1,9 +1,7 @@
-from scripts.inventory.item_inventory import Item_Inventory
-from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
-from scripts.inventory.rune_inventory import Rune_Inventory
 from scripts.engine.ray_caster import Ray_Caster 
 from scripts.entities.entity_renderer import Entity_Renderer
 from scripts.engine.fonts.font import Font
+from scripts.engine.fonts.interactable_object import Interactable_Object
 from scripts.engine.fonts.symbols import Symbols
 from scripts.engine.Clatter import Clatter
 from scripts.entities.textbox.text_box_handler import Text_Box_handler
@@ -59,6 +57,7 @@ class Game_Initialiser():
         self.game.a_star = A_Star()
         self.game.entities_render = Entity_Renderer(self.game)
         self.game.default_font = Font(self.game)
+        self.game.interactable_object = Interactable_Object(self.game)
         self.game.symbols = Symbols(self.game)
         self.game.clatter = Clatter(self.game)
         self.game.text_box_handler = Text_Box_handler(self.game)

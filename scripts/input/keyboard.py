@@ -119,31 +119,3 @@ class Keyboard_Handler:
 
     def Set_Escape_Key(self, state):
         self.escape_pressed = state
-
-    # # Debugging and adjustment function, modify depending on animation needing to be done
-    # def Animation_Adjustment_Helper(self, key_press):
-        
-    #     if key_press.key == pygame.K_p:
-    #         if self.player.active_weapon_left:
-    #             try:
-    #                 self.player.active_weapon_left.Modify_Offset(1)
-    #             except Exception as e:
-    #                 print(f"Font load error: {e}")
-    #         if self.player.active_weapon_right:
-    #             try:
-    #                 self.player.active_weapon_right.Modify_Offset(1)
-    #             except Exception as e:
-    #                 print(f"Font load error: {e}")
-    #     if key_press.key == pygame.K_MINUS:
-    #         if self.player.active_weapon_left:
-    #             try:
-    #                 self.player.active_weapon_left.Modify_Offset(-1)
-    #             except Exception as e:
-    #                 print(f"Font load error: {e}")
-    #         if self.player.active_weapon_right:
-    #             try:
-    #                 self.player.active_weapon_right.Modify_Offset(-1)
-    #             except Exception as e:
-    #                 print(f"Font load error: {e}")
-
-    
