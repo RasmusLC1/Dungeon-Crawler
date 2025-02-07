@@ -39,7 +39,7 @@ class Level_Loader():
 
     def Load_Level_New_Map(self, map_id, clear_inventory = True):
         self.game.game_initialiser.initialise_Engine()
-        self.game.dungeon_generator.Generate_Map()
+        self.game.dungeon_generator.Generate_Map(map_id)
         self.load_level(map_id, clear_inventory)
         self.Initialise_Level()
 
@@ -68,7 +68,7 @@ class Level_Loader():
     def load_level(self, map_id, clear_inventory = True):
         self.Clear_Level(clear_inventory)
 
-        # self.game.tilemap.Load('data/maps/' + str(map_id) + '.json')
+        self.game.tilemap.Load('data/maps/' + str(map_id) + '.json')
         if not self.initialised:
             self.Initial_Setup()
         else:

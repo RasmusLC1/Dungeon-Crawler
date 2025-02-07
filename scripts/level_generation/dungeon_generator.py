@@ -33,7 +33,7 @@ class Dungeon_Generator():
 
 
     # Customise the internal map structure
-    def Generate_Map(self):
+    def Generate_Map(self, map_id):
         self.Update_Load_Menu(1)
 
         self.tilemap.Clear_Tilemap()
@@ -54,7 +54,7 @@ class Dungeon_Generator():
         # TODO: PROPER LEVEL SYSTEM
         temp_level = 5
         if not self.Spawn_Loot_Room(temp_level):
-            self.Generate_Map()
+            self.Generate_Map(map_id)
             return        
         self.Update_Load_Menu(4)
 
@@ -66,7 +66,7 @@ class Dungeon_Generator():
 
         # Call itself recursively and generate a new map if it fails to spawn enemies
         if not self.Enemy_Spawner():
-            self.Generate_Map()
+            self.Generate_Map(map_id)
             return
         self.Update_Load_Menu(5)
         
@@ -78,7 +78,7 @@ class Dungeon_Generator():
     
 
         self.Update_Load_Menu(6)
-        self.tilemap.save('data/maps/0.json')
+        self.tilemap.save(f'data/maps/{map_id}.json')
 
     def Update_Load_Menu(self, value):
         self.game.menu_handler.Loading_Menu_Update(value)
