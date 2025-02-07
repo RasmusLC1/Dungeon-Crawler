@@ -30,6 +30,7 @@ class State_Machine():
             'load_game' : self.Game_Load,
             'new_game' : self.New_Game,
             'init' : self.Initialise_Game,
+            'new_level' : self.New_Level,
         }
 
 
@@ -56,6 +57,19 @@ class State_Machine():
     def New_Game(self):
         self.game.menu_handler.Loading_Menu_Reset()
         self.game.level_loader.Load_Level_New_Map(self.game.level)
+
+        self.Set_State('run_game')
+
+    def New_Level(self):
+        self.game.menu_handler.Loading_Menu_Reset()
+        self.game.menu_handler.portal_shrine_menu.Reset()
+        player_health = self.game.player.health
+        player_souls = self.game.player.souls
+        self.game.level += 1
+        self.game.level_loader.Load_Level_New_Map(self.game.level, False)
+        # Reset player health and souls
+        self.game.player.Set_Souls(player_souls)
+        self.game.player.Set_Health(player_health)
 
         self.Set_State('run_game')
 
@@ -89,6 +103,8 @@ class State_Machine():
         # if self.game_state != 'rune_shrine_menu':
         #     self.game.menu_handler.rune_shrine_menu.Reset_Rune_Bought()
   
+  
+
 
     def Exit_Game(self, save_game):
         if save_game:

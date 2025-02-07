@@ -97,6 +97,11 @@ class Player(Moving_Entity):
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         super().Set_Charge(charge_speed, offset)
         
+    def Set_Souls(self, souls):
+        self.souls = souls
+
+    def Set_Health(self, health):
+        self.health = health
 
     def Attacking(self, weapon, offset=(0, 0)):
         if weapon.attacking and not self.attacking:

@@ -14,8 +14,6 @@ from scripts.inventory.rune_inventory import Rune_Inventory
 
 from scripts.entities.items.runes.rune_handler import Rune_Handler
 
-
-import pygame
 import os
 
 
@@ -39,22 +37,15 @@ class Level_Loader():
         self.game.decoration_handler.Initialise(3)
         self.game.trap_handler.Initialise()
 
-    def Load_Level_New_Map(self, map_id):
+    def Load_Level_New_Map(self, map_id, clear_inventory = True):
         self.game.game_initialiser.initialise_Engine()
-
-        file_path = f'data/maps/{map_id}.json'
-        try:
-            os.remove(file_path)
-        except FileNotFoundError:
-            print("File not found")
         self.game.dungeon_generator.Generate_Map()
-        self.load_level(map_id)
+        self.load_level(map_id, clear_inventory)
         self.Initialise_Level()
 
+
         
-
-
-    def Clear_Level(self):
+    def Clear_Level(self, clear_inventory = True):
         if not self.initialised:
             return
         self.game.entities_render.Clear_Entities()
@@ -65,19 +56,19 @@ class Level_Loader():
         self.game.trap_handler.Clear_Traps()
         self.game.light_handler.Clear_Lights()
         self.game.decoration_handler.Clear_Decorations()
-        self.game.item_inventory.Clear_Inventory()
-        self.game.weapon_inventory.Clear_Inventory()
-        self.game.rune_inventory.Clear_Inventory()
+        if clear_inventory:
+            self.game.item_inventory.Clear_Inventory()
+            self.game.weapon_inventory.Clear_Inventory()
+            self.game.rune_inventory.Clear_Inventory()
         self.game.a_star.Clear_Maps()
         
         self.game.tilemap.Clear_Tilemap()
 
 
-    def load_level(self, map_id):
-        self.Clear_Level()
+    def load_level(self, map_id, clear_inventory = True):
+        self.Clear_Level(clear_inventory)
 
-        self.game.tilemap.Load('data/maps/' + str(map_id) + '.json')
-
+        # self.game.tilemap.Load('data/maps/' + str(map_id) + '.json')
         if not self.initialised:
             self.Initial_Setup()
         else:
