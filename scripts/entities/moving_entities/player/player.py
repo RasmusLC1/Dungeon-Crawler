@@ -24,8 +24,9 @@ class Player(Moving_Entity):
         self.view_direction = (0,0)
 
         self.light_cooldown = 0
-        self.light_source = self.game.light_handler.Add_Light(self.pos, 2, self.tile)
-        self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
+        self.default_light_level = 6
+        self.light_source = self.game.light_handler.Add_Light(self.pos, self.default_light_level, self.tile)
+        self.game.light_handler.Initialise_Light_Level(self.tile)
 
         self.weapons = []
         self.effects = Player_Status_Effect_Handler(self)
@@ -43,7 +44,6 @@ class Player(Moving_Entity):
         self.saved_data['max_speed'] = self.max_speed
 
 
-        # self.saved_data['weapon_handler'] = self.weapon_handler
 
 
     def Load_Data(self, data):
@@ -97,6 +97,11 @@ class Player(Moving_Entity):
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         super().Set_Charge(charge_speed, offset)
         
+    def Set_Souls(self, souls):
+        self.souls = souls
+
+    def Set_Health(self, health):
+        self.health = health
 
     def Attacking(self, weapon, offset=(0, 0)):
         if weapon.attacking and not self.attacking:

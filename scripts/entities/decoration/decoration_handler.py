@@ -2,6 +2,7 @@ from scripts.entities.decoration.bones.bones import Bones
 from scripts.entities.decoration.chest.chest import Chest
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
+from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
 import random
 import math
@@ -18,6 +19,7 @@ class Decoration_Handler():
             'door': self.Spawn_Door,
             'chest': self.Spawn_Chest,
             'rune_shrine': self.Spawn_Rune_Shrine,
+            'portal_shrine': self.Spawn_Portal_Shrine,
             'bones': self.Spawn_Bones,
             'boss_room': self.Spawn_Boss_Room
         }
@@ -26,7 +28,10 @@ class Decoration_Handler():
             'chest': self.Open_Chest,
             'door': self.Open_Door,
             'rune_shrine': self.Open_Shrine,
+            'portal_shrine': self.Open_Shrine,
         }
+
+        self.Spawn_Portal_Shrine(self.game.player.pos)
 
 
     def Clear_Decorations(self):
@@ -45,6 +50,9 @@ class Decoration_Handler():
 
         for shrine in self.game.tilemap.extract([('rune_shrine', 0)]):
             self.Decoration_Spawner('rune_shrine', shrine.pos)
+
+        for shrine in self.game.tilemap.extract([('portal_shrine', 0)]):
+            self.Decoration_Spawner('portal_shrine', shrine.pos)
 
         for bones in self.game.tilemap.extract([('Bones', 0)]):
             self.Decoration_Spawner('bones', bones.pos)
@@ -110,6 +118,11 @@ class Decoration_Handler():
 
     def Spawn_Rune_Shrine(self, pos, size=None, version=None, radius=None, level=None):
         shrine = Rune_Shrine(self.game, pos)
+        self.decorations.append(shrine)
+        return shrine
+    
+    def Spawn_Portal_Shrine(self, pos, size=None, version=None, radius=None, level=None):
+        shrine = Portal_Shrine(self.game, pos)
         self.decorations.append(shrine)
         return shrine
 

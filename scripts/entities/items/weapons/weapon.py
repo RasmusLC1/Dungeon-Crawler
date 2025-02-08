@@ -802,6 +802,7 @@ class Weapon(Item):
     # Equip the weapon
     def Equip(self):
         self.Set_Equip(True)
+        self.Set_Entity(self.game.player)
         self.game.player.Set_Active_Weapon(self, self.inventory_type)
 
     def Set_Equip(self, state):

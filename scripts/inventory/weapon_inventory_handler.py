@@ -50,6 +50,11 @@ class Weapon_Inventory_Handler():
         self.inventories.append(Weapon_Inventory(self.game, 'left_right', 0))
         self.inventories.append(Weapon_Inventory(self.game, 'bow_arrow', 1))
 
+    # Used for loading new level
+    def Equip_All_Weapons(self):
+        for inventory in self.inventories:
+            inventory.Equip_Weapons()
+
 
     def Update(self, offset=(0, 0)):
         self.inventories[self.active_inventory].Update(offset)

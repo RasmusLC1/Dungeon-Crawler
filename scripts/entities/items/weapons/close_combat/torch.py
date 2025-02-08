@@ -40,7 +40,7 @@ class Torch(Weapon):
         if state:
             self.game.player.Update_Light_Source(12)
         else:
-            self.game.player.Update_Light_Source(4)
+            self.game.player.Update_Light_Source(self.game.player.default_light_level)
             
 
     def Place_Down(self):

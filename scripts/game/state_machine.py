@@ -18,28 +18,25 @@ class State_Machine():
         self.game.camera_update = Camera_Update(self.game)
         self.game.logic_update = Logic_Update(self.game)
 
+        self.game_states = {
+            'run_game' : self.Game_Loop,
+            'main_menu' : lambda: self.Main_Menu(False),
+            'return_main_menu' : lambda: self.Main_Menu(True),
+            'pause_menu' : self.Pause_Menu,
+            'rune_shrine_menu' : self.Rune_Shrine_Menu,
+            'portal_shrine_menu' : self.Portal_Shrine_Menu,
+            'exit_game' : lambda: self.Exit_Game(False),
+            'exit_game_save' : lambda: self.Exit_Game(True),
+            'load_game' : self.Game_Load,
+            'new_game' : self.New_Game,
+            'init' : self.Initialise_Game,
+            'new_level' : self.New_Level,
+        }
+
 
     def Game_State(self):
-        if self.game_state == 'run_game':
-            self.Game_Loop()
-        elif self.game_state == 'main_menu':
-            self.Main_Menu(False)
-        elif self.game_state == 'return_main_menu':
-            self.Main_Menu(True)
-        elif self.game_state == 'pause_menu':
-            self.Pause_Menu()
-        elif self.game_state == 'rune_shrine_menu':
-            self.rune_shrine_menu()
-        elif self.game_state == 'exit_game':
-            self.Exit_Game(False)
-        elif self.game_state == 'exit_game_save':
-            self.Exit_Game(True)
-        elif self.game_state == 'load_game':
-            self.Game_Load()
-        elif self.game_state == 'new_game':
-            self.New_Game()
-        elif self.game_state == 'init':
-            self.Initialise_Game()
+        game_state = self.game_states.get(self.game_state)
+        game_state()
 
     def Initialise_Game(self):
         self.game_state = 'main_menu'
@@ -63,6 +60,20 @@ class State_Machine():
 
         self.Set_State('run_game')
 
+    def New_Level(self):
+        self.game.menu_handler.Loading_Menu_Reset()
+        self.game.menu_handler.portal_shrine_menu.Reset()
+        player_health = self.game.player.health
+        player_souls = self.game.player.souls
+        self.game.level += 1
+        self.game.level_loader.Load_Level_New_Map(self.game.level, False)
+        # Reset player health and souls
+        self.game.player.Set_Souls(player_souls)
+        self.game.player.Set_Health(player_health)
+        self.game.weapon_inventory.Equip_All_Weapons()
+
+        self.Set_State('run_game')
+
     def Game_Loop(self):
         self.game.camera_update.Camera_Scroll()
         self.game.renderer.Render()
@@ -79,14 +90,22 @@ class State_Machine():
     def Pause_Menu(self):
         self.game.menu_handler.Select_Menu('pause_menu')
 
-    def rune_shrine_menu(self):
+    def Rune_Shrine_Menu(self):
         self.game.menu_handler.Select_Menu('rune_shrine_menu')
 
         # Reset the buy menu if exited
         if self.game_state != 'rune_shrine_menu':
             self.game.menu_handler.rune_shrine_menu.Reset_Rune_Bought()
 
+    def Portal_Shrine_Menu(self):
+        self.game.menu_handler.Select_Menu('portal_shrine_menu')
+
+        # # Reset the buy menu if exited
+        # if self.game_state != 'rune_shrine_menu':
+        #     self.game.menu_handler.rune_shrine_menu.Reset_Rune_Bought()
   
+  
+
 
     def Exit_Game(self, save_game):
         if save_game:
