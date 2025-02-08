@@ -57,6 +57,13 @@ class Weapon_Inventory(Inventory):
             return
         self.clicked_inventory_slot.item.Handle_Double_Click(self, self.game.item_inventory)
 
+    def Equip_Weapons(self):
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                continue
+
+            inventory_slot.item.Equip()
+
     
     # Custom render function for equipped slots to render the weapon in hand and inventory
     def Render_Weapon(self, surf):

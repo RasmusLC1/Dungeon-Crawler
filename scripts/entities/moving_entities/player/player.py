@@ -44,7 +44,6 @@ class Player(Moving_Entity):
         self.saved_data['max_speed'] = self.max_speed
 
 
-        # self.saved_data['weapon_handler'] = self.weapon_handler
 
 
     def Load_Data(self, data):
