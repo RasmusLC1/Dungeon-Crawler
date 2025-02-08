@@ -48,7 +48,7 @@ class Game_Initialiser():
         
         
 
-        self.game.level = 0
+        self.game.level = 1
         self.game.scroll = [0, 0]
 
     def initialise_Engine(self):

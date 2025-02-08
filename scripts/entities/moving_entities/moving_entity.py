@@ -541,11 +541,11 @@ class Moving_Entity(PhysicsEntity):
     def Render(self, surf, offset=(0, 0)):
         # Check if entity is in view distance first, if no there's no point computing the rest
         if not self.alpha_value:
-            return
+            return False
         # Don't Render the enemy if their light level is very low
         # Simulates low visibility
         if not self.Update_Light_Level():
-            return
+            return False
         
         animation_num = self.animation_num
 
@@ -582,3 +582,5 @@ class Moving_Entity(PhysicsEntity):
         if self.damage_cooldown:
             scroll_up_effect = 20 - self.damage_cooldown
             self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
+
+        return True

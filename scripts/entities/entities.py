@@ -93,7 +93,7 @@ class PhysicsEntity:
             return True
         if tile.light_level == self.light_level:
             return True
-        
+
         new_light_level = min(255, tile.light_level * 30)
         if self.light_level < new_light_level:
             self.Set_Light_Level(self.light_level + 5)
@@ -101,10 +101,10 @@ class PhysicsEntity:
             self.Set_Light_Level(self.light_level - 5)
         self.light_level = abs(self.light_level - 255)
         # 75 is the darkest level we want
-        self.light_level = max(75, 255 - self.light_level)
+        self.light_level = max(40, 255 - self.light_level)
         
 
-        if self.light_level <= 75:
+        if self.light_level <= 40:
             return False
         else:
             return True

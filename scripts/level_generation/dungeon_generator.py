@@ -52,8 +52,7 @@ class Dungeon_Generator():
 
         # Spawn more loot rooms in lower levels of dungeon
         # TODO: PROPER LEVEL SYSTEM
-        temp_level = 5
-        if not self.Spawn_Loot_Room(temp_level):
+        if not self.Spawn_Loot_Room(map_id):
             self.Generate_Map(map_id)
             return        
         self.Update_Load_Menu(4)

@@ -188,6 +188,7 @@ class Item(PhysicsEntity):
         
         if not self.Update_Light_Level():
             return
+        
         # Set image
         item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         item_image =  pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  

@@ -65,6 +65,7 @@ class Light():
                     tile.Add_Light_Contribution(self.id, new_light_level)
                     self.tiles.append(tile)
 
+    
     def Delete_Light(self):
         # Remove this light's contribution from all tiles it affected
         for tile in self.tiles:

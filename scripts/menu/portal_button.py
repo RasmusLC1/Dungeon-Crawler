@@ -5,7 +5,7 @@ class Portal_Button(Button):
     def __init__(self, game, pos, size, effect, text, color = (0, 0, 0)) -> None:
         self.effect = effect
         if effect == 'unlock':
-            self.unlock_cost = 50 + game.level * 30
+            self.unlock_cost = 50 + (game.level - 1) * 30
             text = text + ': ' + str(self.unlock_cost)
         super().__init__(game, pos, size, text, 'None', False, color)
 
