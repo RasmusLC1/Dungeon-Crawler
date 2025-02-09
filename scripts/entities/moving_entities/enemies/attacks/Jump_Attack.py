@@ -44,5 +44,8 @@ class Jump_Attack():
 
     def Set_Attack_Direction(self, entity):
             attack_direction = pygame.math.Vector2(entity.target[0] - entity.pos[0], entity.target[1] - entity.pos[1])
+            if not attack_direction:
+                return (0, 0)
             attack_direction.normalize_ip()
+
             return attack_direction

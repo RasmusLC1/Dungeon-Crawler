@@ -1,6 +1,8 @@
 from scripts.entities.decoration.decoration import Decoration
 import random
 
+import math
+
 class Portal_Shrine(Decoration):
     def __init__(self, game, pos) -> None:
         super().__init__(game, 'portal_shrine', pos, (64, 64))
@@ -28,6 +30,8 @@ class Portal_Shrine(Decoration):
         return super().Update()
 
     def Update_Animation(self):
+        if not self.is_open:
+            return
         if self.animation_cooldown:
             self.animation_cooldown -= 1
         else:

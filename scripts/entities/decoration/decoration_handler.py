@@ -31,7 +31,6 @@ class Decoration_Handler():
             'portal_shrine': self.Open_Shrine,
         }
 
-        self.Spawn_Portal_Shrine(self.game.player.pos)
 
 
     def Clear_Decorations(self):
@@ -132,7 +131,8 @@ class Decoration_Handler():
         return bones
 
     def Spawn_Boss_Room(self, pos, size=None, version=None, radius=None, level=None):
-        boss_room = Boss_Room(self.game, pos, radius, level)  
+        boss_room = Boss_Room(self.game, pos, radius, level)
+        self.decorations.append(boss_room)
         return boss_room
 
     def Update(self):

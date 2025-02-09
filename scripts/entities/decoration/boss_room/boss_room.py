@@ -23,6 +23,7 @@ class Boss_Room():
         self.boss_defeated = False
 
 
+
     def Save_Data(self):
         self.saved_data['category'] = self.category
         self.saved_data['type'] = self.type
@@ -59,6 +60,7 @@ class Boss_Room():
 
 
     def Update(self):
+
         if self.boss_defeated:
             return
         if self.Calculate_Distance():
