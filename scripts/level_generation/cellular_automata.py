@@ -9,12 +9,10 @@ class Cellular_Automata():
         
     def Create_Map(self):
         self.map = self.Create_Level()
-        # self.Save_Map_To_File('test_map_1.txt', self.map)
         floor = 0
         wall = 1
         self.Refine_Level(floor, wall, self.size_x, self.size_y, 5, self.map)
         self.Close_Borders(0, 0, self.size_x, self.size_y)
-        self.Save_Map_To_File('test_map.txt', self.map)
 
 
     def Create_Level(self) -> None:

@@ -31,7 +31,6 @@ class Decoration_Handler():
             'portal_shrine': self.Open_Shrine,
         }
 
-        self.Spawn_Portal_Shrine(self.game.player.pos)
 
 
     def Clear_Decorations(self):

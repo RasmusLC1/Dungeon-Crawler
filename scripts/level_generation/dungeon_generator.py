@@ -74,6 +74,8 @@ class Dungeon_Generator():
         self.Spawn_Weapons(2)
 
         self.Level_Structure()
+
+        self.Spawn_Portal_Shrine()
     
 
         self.Update_Load_Menu(6)
@@ -441,6 +443,16 @@ class Dungeon_Generator():
 
         # self.tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [self.player_spawn[0] * self.tile_size - 50, self.player_spawn[1] * self.tile_size]})
         self.tilemap.offgrid_tiles.append({"type": "Chest", "variant": 0, "pos": [self.player_spawn[0] * self.tile_size, self.player_spawn[1] * self.tile_size]})
+
+    def Spawn_Portal_Shrine(self):
+        spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
+        spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
+        path = self.a_star.a_star_search([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+
+        if not path:
+            self.Spawn_Portal_Shrine()
+            return
+        self.tilemap.offgrid_tiles.append({"type": "portal_shrine", "variant": 0, "pos": [spawner_x, spawner_y]})
 
 
 
