@@ -23,6 +23,7 @@ class Boss_Room():
         self.boss_defeated = False
 
 
+
     def Save_Data(self):
         self.saved_data['category'] = self.category
         self.saved_data['type'] = self.type
@@ -59,6 +60,7 @@ class Boss_Room():
 
 
     def Update(self):
+
         if self.boss_defeated:
             return
         if self.Calculate_Distance():
@@ -134,7 +136,7 @@ class Boss_Room():
             return False
         # Calculate distance and set the cooldown to the distance to avoid computation
         distance = math.sqrt((self.game.player.pos[0] - self.pos[0]) ** 2 + (self.game.player.pos[1] - self.pos[1]) ** 2)        
-        # print(distance)
+        print(distance)
         self.distance_cooldown = distance // 10
         if distance < self.radius * 12:
             return True

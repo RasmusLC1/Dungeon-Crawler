@@ -29,16 +29,47 @@ class A_Star:
         self.ignore_lava_map.clear()
         self.custom_map.clear()
 
+    # def Setup_Custom_Map(self, custom_map, size_x, size_y):
+    #     """
+    #     custom_map is a 2D array in the form custom_map[x][y].
+    #     size_x, size_y are its dimensions (width, height).
+    #     We'll store it exactly the same way: self.custom_map[x][y].
+    #     """
+    #     map_conversion = {
+    #         0: 0,
+    #         1: 1,
+    #         2: 0,
+    #         3: 0,
+    #         4: 0,
+    #         5: 0,
+    #     }
+    #     # Copy it so we don't mutate the original
+    #     self.custom_map = [col[:] for col in custom_map]
+    #     self.width = size_x
+    #     self.height = size_y
+
     def Setup_Custom_Map(self, custom_map, size_x, size_y):
         """
         custom_map is a 2D array in the form custom_map[x][y].
         size_x, size_y are its dimensions (width, height).
-        We'll store it exactly the same way: self.custom_map[x][y].
+        We'll store converted values through map_conversion: self.custom_map[x][y].
         """
-        # Copy it so we don't mutate the original
-        self.custom_map = [col[:] for col in custom_map]
+        map_conversion = {
+            0: 0,
+            1: 1,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+        }
+        # Convert and copy the map using the conversion dictionary
+        self.custom_map = [[map_conversion[val] for val in col] for col in custom_map]
         self.width = size_x
         self.height = size_y
+
+    # def Update_Level_Configuration_Map(self, game):
+
+
 
     def Set_Map(self, which_map):
         """Select which map array (standard, ignore_lava, custom) to use for pathfinding."""
@@ -223,4 +254,72 @@ class A_Star:
                             heapq.heappush(open_list, (f_new, nx, ny))
 
         # No path found
+        return []
+
+
+    def a_star_search_no_diagonals(self, start, goal, which_map='standard'):
+        """
+        A* search with only 4-directional movement (up, down, left, right).
+        start, goal are (x, y) in map coordinates.
+        which_map is 'standard', 'ignore_lava', or 'custom'.
+        Returns the path as a list of (x, y), or empty list if no path.
+        """
+        self.Set_Map(which_map)
+
+        sx, sy = start
+        gx, gy = goal
+
+        # Basic checks remain the same
+        if not self.is_valid(sx, sy) or not self.is_valid(gx, gy):
+            return []
+        if not self.is_unblocked(sx, sy) or not self.is_unblocked(gx, gy):
+            return []
+        if self.is_destination(sx, sy, goal):
+            return [start]
+
+        closed_list = [[False]*self.height for _ in range(self.width)]
+        cell_details = [[A_Star() for _ in range(self.height)] for _ in range(self.width)]
+
+        # Initialize start cell (same as before)
+        cell_details[sx][sy].f = 0.0
+        cell_details[sx][sy].g = 0.0
+        cell_details[sx][sy].h = 0.0
+        cell_details[sx][sy].parent_x = sx
+        cell_details[sx][sy].parent_y = sy
+
+        open_list = []
+        heapq.heappush(open_list, (0.0, sx, sy))
+
+        # Modified directions: Only 4 neighbors (no diagonals)
+        neighbors = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+        while open_list:
+            f_current, cx, cy = heapq.heappop(open_list)
+            closed_list[cx][cy] = True
+
+            for dx, dy in neighbors:
+                nx, ny = cx + dx, cy + dy
+
+                if self.is_valid(nx, ny) and not closed_list[nx][ny]:
+                    if self.is_unblocked(nx, ny):
+                        if self.is_destination(nx, ny, goal):
+                            cell_details[nx][ny].parent_x = cx
+                            cell_details[nx][ny].parent_y = cy
+                            return self.trace_path(cell_details, goal)
+
+                        # All moves now cost 1 (no diagonals)
+                        move_cost = 1.0
+                        g_new = cell_details[cx][cy].g + move_cost
+                        h_new = self.calculate_h_value(nx, ny, goal)
+                        f_new = g_new + h_new
+
+                        if cell_details[nx][ny].f > f_new:
+                            cell_details[nx][ny].f = f_new
+                            cell_details[nx][ny].g = g_new
+                            cell_details[nx][ny].h = h_new
+                            cell_details[nx][ny].parent_x = cx
+                            cell_details[nx][ny].parent_y = cy
+
+                            heapq.heappush(open_list, (f_new, nx, ny))
+
         return []

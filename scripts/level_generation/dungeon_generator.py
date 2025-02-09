@@ -9,12 +9,12 @@ import math
 # TODO:  shrines, entrance and exit, keys 
 
 # ENUMS for different tile types
-floor = 0
-wall = 1
-lava = 2
-door = 3
-trap = 4
-boss_room = 5
+FLOOR = 0
+WALL = 1
+LAVA = 2
+DOOR = 3
+TRAP = 4
+BOSS_ROOM = 5
 
 class Dungeon_Generator():
     def __init__(self, game) -> None:
@@ -40,10 +40,10 @@ class Dungeon_Generator():
         self.cellular_automata.Create_Map()
         self.Update_Load_Menu(2)
 
-        self.Spawn_Lakes(7, floor, lava)
+        self.Spawn_Lakes(7, FLOOR, LAVA)
 
         
-        self.a_star.Setup_Custom_Map(self.cellular_automata.map, self.cellular_automata.size_x, self.cellular_automata.size_y)
+        self.Update_A_Star_Map()
 
         self.Player_Spawn()
         self.a_star.Set_Map('custom')
@@ -54,14 +54,15 @@ class Dungeon_Generator():
         # TODO: PROPER LEVEL SYSTEM
         if not self.Spawn_Loot_Room(map_id):
             self.Generate_Map(map_id)
-            return        
+            return
+        
+        self.Update_A_Star_Map()
+
         self.Update_Load_Menu(4)
 
         self.Spawn_Boss_Room()
 
-        self.a_star.Setup_Custom_Map(self.cellular_automata.map, self.cellular_automata.size_x, self.cellular_automata.size_y)
-
-        self.a_star.Set_Map('custom')
+        self.Update_A_Star_Map()
 
         # Call itself recursively and generate a new map if it fails to spawn enemies
         if not self.Enemy_Spawner():
@@ -71,11 +72,15 @@ class Dungeon_Generator():
         
         self.Spawn_Chest(2)
 
+        self.Spawn_Portal_Shrine()
+
+        self.Update_A_Star_Map()
+
+
         self.Spawn_Weapons(2)
 
         self.Level_Structure()
 
-        self.Spawn_Portal_Shrine()
     
 
         self.Update_Load_Menu(6)
@@ -84,17 +89,19 @@ class Dungeon_Generator():
     def Update_Load_Menu(self, value):
         self.game.menu_handler.Loading_Menu_Update(value)
 
+    def Update_A_Star_Map(self):
+        self.a_star.Setup_Custom_Map(self.cellular_automata.map, self.cellular_automata.size_x, self.cellular_automata.size_y)
 
 
     # Spawn trap if density is greater than spawn trap, goes from 0 to 100
     def Spawn_Traps(self, density):
         for y in range(1, self.cellular_automata.size_y - 1):
             for x in range(1, self.cellular_automata.size_x - 1):
-                if self.cellular_automata.map[x][y] != floor:
+                if self.cellular_automata.map[x][y] != FLOOR:
                     continue
                 spawn_trap = random.randint(0, 100)
                 if spawn_trap < density:
-                    self.cellular_automata.map[x][y] = trap
+                    self.cellular_automata.map[x][y] = TRAP
 
     
     def Spawn_Lakes(self, iterations, value_1, value_2):
@@ -118,7 +125,7 @@ class Dungeon_Generator():
                         break
 
                     self.cellular_automata.map[x][y] = lake_map[i][j]
-                    if self.cellular_automata.map[x][y] == floor:
+                    if self.cellular_automata.map[x][y] == FLOOR:
                         spawn_loot = random.randint(0, 3)
                         if spawn_loot == 1:
                             self.tilemap.offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * self.tile_size, y * self.tile_size]})
@@ -129,18 +136,18 @@ class Dungeon_Generator():
     def Level_Structure(self):
         for j in range(self.cellular_automata.size_y):
             for i in range(self.cellular_automata.size_x):
-                if self.cellular_automata.map[i][j] == wall: 
+                if self.cellular_automata.map[i][j] == WALL: 
                     if not self.Wall_Checker(i, j):
                         self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
 
 
-                elif self.cellular_automata.map[i][j] == floor: # Floor
+                elif self.cellular_automata.map[i][j] == FLOOR: # Floor
                     self.Floor_Checker(i, j)
-                elif self.cellular_automata.map[i][j] == lava:
+                elif self.cellular_automata.map[i][j] == LAVA:
                     self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-                elif self.cellular_automata.map[i][j] == door:
+                elif self.cellular_automata.map[i][j] == DOOR:
                     self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Door_Basic', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
-                elif self.cellular_automata.map[i][j] == trap:
+                elif self.cellular_automata.map[i][j] == TRAP:
                     trap_type = random.randint(0, 2)
                     self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': self.traps[trap_type], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                     
@@ -164,6 +171,7 @@ class Dungeon_Generator():
 
 
     def Spawn_Boss_Room(self):
+        map_copy = self.cellular_automata.map.copy()
         fail = 0
         start_x = 0
         start_y = 0
@@ -175,17 +183,30 @@ class Dungeon_Generator():
             start_y = random.randint(radius * 2, self.cellular_automata.size_y - radius * 2)
             
             path = []
-            path = self.a_star.a_star_search([start_x, start_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
-            if  path:
+            path = self.a_star.a_star_search_no_diagonals([start_x, start_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+            if path:
                 break
 
             fail += 1
 
+        # Create backup of map
 
         self.Room_Structure_Circle(start_x, start_y, radius)
+
+        # Ensure there's a valid path to get into the boss room
+        path = self.a_star.a_star_search_no_diagonals([start_x, start_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+        if not path:
+            self.cellular_automata.map = map_copy
+            self.Spawn_Boss_Room()
+            
+            return
+
         # self.tilemap.offgrid_tiles.append({"type": 'Shrine', "variant": 0, "pos": [start_x * self.tile_size, start_y * self.tile_size]})
         self.tilemap.offgrid_tiles.append({"type": 'Boss_Room', "variant": 0, "pos": [start_x * self.tile_size, start_y * self.tile_size], "radius": radius})
+        self.Spawn_Traps_In_Boss_Room(start_x, start_y, radius)
+        
 
+    def Spawn_Traps_In_Boss_Room(self, start_x, start_y, radius):
         trap_number = random.randint(1, 5)
         i = 0
         while i < trap_number:
@@ -195,7 +216,7 @@ class Dungeon_Generator():
             distance_from_center = math.sqrt((pos_x - start_x) ** 2 + (pos_y - start_y) ** 2)
             if distance_from_center <= 2:
                 continue
-            self.cellular_automata.map[pos_x][pos_y] = trap
+            self.cellular_automata.map[pos_x][pos_y] = TRAP
             i += 1
 
 
@@ -239,7 +260,7 @@ class Dungeon_Generator():
         while loot <= amount:
             pos_x = random.randint(2, self.cellular_automata.size_x - 3)
             pos_y = random.randint(2, self.cellular_automata.size_y - 3)
-            if not self.cellular_automata.map[pos_x][pos_y] == floor:
+            if not self.cellular_automata.map[pos_x][pos_y] == FLOOR:
                 continue
             self.tilemap.offgrid_tiles.append({"type": item, "variant": 0, "pos": [pos_x * self.tile_size, pos_y * self.tile_size]})
             loot += 1
@@ -260,32 +281,32 @@ class Dungeon_Generator():
 
         for i in range(4):
             if door_array[i] == 1: # Left wall
-                path = self.a_star.a_star_search([start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+                path = self.a_star.a_star_search_no_diagonals([start_x - 1, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
                 
-                self.cellular_automata.map[start_x][y_mid] = door
+                self.cellular_automata.map[start_x][y_mid] = DOOR
                 return True
 
             elif door_array[i] == 2: # Right wall
-                path = self.a_star.a_star_search([start_x + size_x, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+                path = self.a_star.a_star_search_no_diagonals([start_x + size_x, y_mid], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
-                self.cellular_automata.map[start_x + size_x - 1][y_mid] = door
+                self.cellular_automata.map[start_x + size_x - 1][y_mid] = DOOR
                 return True
 
-            elif door_array[i] == door: # Top
-                path = self.a_star.a_star_search([x_mid, start_y - 1], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+            elif door_array[i] == DOOR: # Top
+                path = self.a_star.a_star_search_no_diagonals([x_mid, start_y - 1], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
-                self.cellular_automata.map[x_mid][start_y] = door
+                self.cellular_automata.map[x_mid][start_y] = DOOR
                 return True
 
             elif door_array[i] == 4: # Bottom
-                path = self.a_star.a_star_search([x_mid, start_y + size_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+                path = self.a_star.a_star_search_no_diagonals([x_mid, start_y + size_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
                 if not path:
                     continue
-                self.cellular_automata.map[x_mid][start_y + size_y - 1] = door
+                self.cellular_automata.map[x_mid][start_y + size_y - 1] = DOOR
                 return True
 
         return False
@@ -298,19 +319,20 @@ class Dungeon_Generator():
         for y in range(start_y, start_y + size_y):
             for x in range(start_x, start_x + size_x):
                 if y == start_y:
-                    self.cellular_automata.map[x][y] = wall
+                    self.cellular_automata.map[x][y] = WALL
                 elif y == start_y + size_y - 1:
-                    self.cellular_automata.map[x][y] = wall
+                    self.cellular_automata.map[x][y] = WALL
                 elif x == start_x:
-                    self.cellular_automata.map[x][y] = wall
+                    self.cellular_automata.map[x][y] = WALL
                 elif x == start_x + size_x - 1:
-                    self.cellular_automata.map[x][y] = wall
+                    self.cellular_automata.map[x][y] = WALL
                 else:
-                    self.cellular_automata.map[x][y] = floor
+                    self.cellular_automata.map[x][y] = FLOOR
 
 
 
     def Room_Structure_Circle(self, center_x, center_y, radius):
+
         door_array = [1, 2, 3, 4]
         # Randomize the array
         random.shuffle(door_array)
@@ -325,10 +347,13 @@ class Dungeon_Generator():
 
                 elif distance <= radius:
                     # Floor inside the circle
-                    self.cellular_automata.map[x][y] = floor
+                    self.cellular_automata.map[x][y] = FLOOR
                 elif distance <= radius + 1:
                     # Walls around the circular floor
-                    self.cellular_automata.map[x][y] = wall
+                    self.cellular_automata.map[x][y] = WALL
+
+
+        
         
 
 
@@ -337,11 +362,11 @@ class Dungeon_Generator():
         # Check if door is being spawned on x or y axis
         
         if y == center_y: # x axis
-            self.cellular_automata.map[x][y] = door
+            self.cellular_automata.map[x][y] = DOOR
             
         elif x == center_x: # y axis
-            self.cellular_automata.map[x][y] = door
-            self.cellular_automata.map[x][y] = wall
+            self.cellular_automata.map[x][y] = DOOR
+            self.cellular_automata.map[x][y] = WALL
 
         return
 
@@ -385,7 +410,7 @@ class Dungeon_Generator():
         
 
 
-        if self.cellular_automata.map[i][j + 1] != wall:
+        if self.cellular_automata.map[i][j + 1] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_top', 'variant': random_variant, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
 
@@ -395,35 +420,35 @@ class Dungeon_Generator():
             return True
         
 
-        if self.cellular_automata.map[i + 1][j] != wall and self.cellular_automata.map[i - 1][j] != wall:
+        if self.cellular_automata.map[i + 1][j] != WALL and self.cellular_automata.map[i - 1][j] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_middle', 'variant': random_variant, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
 
-        if self.cellular_automata.map[i + 1][j] != wall:
+        if self.cellular_automata.map[i + 1][j] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_left', 'variant': random_variant, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
 
 
-        if self.cellular_automata.map[i - 1][j] != wall:
+        if self.cellular_automata.map[i - 1][j] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_right', 'variant': random_variant, 'pos': (i, j), 'active': 0, 'light': 0}
             return True
 
         return False
         
     def Corner_Handling(self, i, j, random_variant) -> bool:
-        if not self.cellular_automata.map[i][j - 1] != wall:
+        if not self.cellular_automata.map[i][j - 1] != WALL:
             return False
         
         left_side = 0
         right_side = 1
         both_sides = 2
-        if self.cellular_automata.map[i + 1][j] != wall and self.cellular_automata.map[i - 1][j] != wall:
+        if self.cellular_automata.map[i + 1][j] != WALL and self.cellular_automata.map[i - 1][j] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom_corner', 'variant': both_sides, 'pos': (i, j), 'active': 0, 'light': 0}
 
-        elif self.cellular_automata.map[i + 1][j] != wall:
+        elif self.cellular_automata.map[i + 1][j] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom_corner', 'variant': right_side, 'pos': (i, j), 'active': 0, 'light': 0}
 
-        elif self.cellular_automata.map[i - 1][j] != wall:
+        elif self.cellular_automata.map[i - 1][j] != WALL:
             self.tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'wall_bottom_corner', 'variant': left_side, 'pos': (i, j), 'active': 0, 'light': 0}
 
         else:
@@ -447,7 +472,7 @@ class Dungeon_Generator():
     def Spawn_Portal_Shrine(self):
         spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
         spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
-        path = self.a_star.a_star_search([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+        path = self.a_star.a_star_search_no_diagonals([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
 
         if not path:
             self.Spawn_Portal_Shrine()
@@ -463,9 +488,9 @@ class Dungeon_Generator():
         while spawners < 80:
             spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
-            if self.cellular_automata.map[spawner_x][spawner_y] == wall:
+            if self.cellular_automata.map[spawner_x][spawner_y] == WALL:
                 continue
-            path = self.a_star.a_star_search([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+            path = self.a_star.a_star_search_no_diagonals([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
             
             if path:
                 self.tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 1, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})
@@ -484,7 +509,7 @@ class Dungeon_Generator():
         while loot < loot_amount:
             spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
-            if self.cellular_automata.map[spawner_x][spawner_y] != floor:
+            if self.cellular_automata.map[spawner_x][spawner_y] != FLOOR:
                 continue
             
             self.tilemap.offgrid_tiles.append({'type': 'Weapon', 'variant': 0, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})
@@ -498,9 +523,9 @@ class Dungeon_Generator():
         while loot < loot_amount:
             spawner_x = random.randint(1, self.cellular_automata.size_x - 2)
             spawner_y = random.randint(1, self.cellular_automata.size_y - 2)
-            if self.cellular_automata.map[spawner_x][spawner_y] != floor:
+            if self.cellular_automata.map[spawner_x][spawner_y] != FLOOR:
                 continue
-            path = self.a_star.a_star_search([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
+            path = self.a_star.a_star_search_no_diagonals([spawner_x, spawner_y], [self.player_spawn[0], self.player_spawn[1]], 'custom')
             
             if path:
                 self.tilemap.offgrid_tiles.append({'type': 'Chest', 'variant': 0, 'pos': (spawner_x * self.tile_size, spawner_y * self.tile_size)})

@@ -131,7 +131,8 @@ class Decoration_Handler():
         return bones
 
     def Spawn_Boss_Room(self, pos, size=None, version=None, radius=None, level=None):
-        boss_room = Boss_Room(self.game, pos, radius, level)  
+        boss_room = Boss_Room(self.game, pos, radius, level)
+        self.decorations.append(boss_room)
         return boss_room
 
     def Update(self):
