@@ -6,7 +6,7 @@ from scripts.level_generation.decoration_spawner.torch_spawner import Torch_Spaw
 class Level_Structure():
 
     @staticmethod
-    def Level_Structure(map, size_x, size_y, tilemap):
+    def Level_Structure(map, tile_size, size_x, size_y, tilemap):
         traps = ['spike_trap', 'spike_poison_trap', 'Pit_trap']
 
         torches = []
@@ -18,7 +18,7 @@ class Level_Structure():
 
 
                 elif map[i][j] == FLOOR: # Floor
-                    Level_Structure.Floor_Checker(i, j, tilemap, torches)
+                    Level_Structure.Floor_Checker(i, j, tile_size, tilemap, torches)
                 elif map[i][j] == LAVA:
                     tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                 elif map[i][j] == DOOR:
@@ -27,10 +27,10 @@ class Level_Structure():
                     trap_type = random.randint(0, 2)
                     tilemap.tilemap[str(i) + ';' + str(j)] = {'type': traps[trap_type], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
     
-    def Floor_Checker(i, j, tilemap, torches):
+    def Floor_Checker(i, j, tile_size, tilemap, torches):
         random_variant = random.randint(0, 10)
         tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'floor', 'variant': random_variant, 'pos': (i, j), 'active': 0, 'light': 0}
-        Torch_Spawner.Torch_Spawner(i, j, 20, torches, tilemap.offgrid_tiles)
+        Torch_Spawner.Torch_Spawner(i, j, tile_size, 20, torches, tilemap.offgrid_tiles)
 
 
     def Wall_Checker(map, i, j, size_x, size_y, tilemap):
