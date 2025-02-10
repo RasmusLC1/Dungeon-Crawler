@@ -23,7 +23,7 @@ class Dash():
                 angle = random.random() * math.pi * 2
                 speed = random.random() * 0.5 + 0.5
                 pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
-                self.game.particles.append(Particle(self.game, 'particle', self.entity.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
+                self.game.particle_handler.Activate_Particles(1, 'particle', self.entity.rect().center, velocity=pvelocity, frame=random.randint(5, 30))
 
         if self.dashing > 0:
             self.dashing = max(0, self.dashing - 1)
@@ -45,7 +45,7 @@ class Dash():
                 self.entity.velocity[1] *= 0.1
 
             pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
-            self.game.particles.append(Particle(self.game, 'particle', self.entity.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))
+            self.game.particle_handler.Activate_Particles(1, 'particle', self.entity.rect().center, velocity=pvelocity, frame=random.randint(5, 30))
 
     def Dash(self):
         if self.dashing:

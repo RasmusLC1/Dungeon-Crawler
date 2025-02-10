@@ -149,7 +149,7 @@ class Rune_Shrine_Menu(Menu):
     def Set_Active_Runes_Menu_Pos(self):
         self.runes = self.game.rune_handler.active_runes
         pos_x = 40
-        pos_y = 100
+        pos_y = 130
         for rune in self.runes:
             rune.Set_Menu_Pos((pos_x, pos_y))
             pos_y += 60
@@ -183,12 +183,13 @@ class Rune_Shrine_Menu(Menu):
         super().Render(surf)
         if self.active_rune:
             surf.blit(self.rune_highlight, (self.active_rune.menu_pos[0] - 6, self.active_rune.menu_pos[1] - 6))
-            self.game.default_font.Render_Word(surf, "Souls Cost:   " + str(self.active_rune.current_soul_cost), (20, 20))        
-            self.game.default_font.Render_Word(surf, "Power:        " + str(self.active_rune.current_power), (20, 44))        
-            self.game.default_font.Render_Word(surf, "Upgrade Cost: " + str(self.active_rune.upgrade_cost), (20, 68))
+            self.game.default_font.Render_Word(surf, "Name:   " + self.active_rune.type, (20, 20))        
+            self.game.default_font.Render_Word(surf, "Souls Cost:   " + str(self.active_rune.current_soul_cost), (20, 44))        
+            self.game.default_font.Render_Word(surf, "Power:        " + str(self.active_rune.current_power), (20, 68))        
+            self.game.default_font.Render_Word(surf, "Upgrade Cost: " + str(self.active_rune.upgrade_cost), (20, 92))
             soul_symbol_x_pos_offset = 240 + 10 * len(str(self.active_rune.upgrade_cost))
-            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 66), 1.5)
-            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 18), 1.5)
+            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 90), 1.5)
+            self.game.symbols.Render_Symbol(surf, 'soul',  (soul_symbol_x_pos_offset, 42), 1.5)
 
 
         self.game.souls_interface.Render(self.game.display)

@@ -7,6 +7,7 @@ class Spawn_Boss_Room():
 
     @staticmethod
     def Spawn_Boss_Room(map, tile_size, size_x, size_y, player_pos, A_Star_Search, offgrid_tiles):
+        # Create backup of map
         map_copy = map.copy()
         fail = 0
         start_x = 0
@@ -28,7 +29,6 @@ class Spawn_Boss_Room():
 
             fail += 1
 
-        # Create backup of map
 
         Circle_Room.Room_Structure_Circle(map, start_x, start_y, radius)
 
@@ -36,7 +36,7 @@ class Spawn_Boss_Room():
         path = A_Star_Search(start_x, start_y)
         if not path:
             map = map_copy
-            Spawn_Boss_Room.Spawn_Boss_Room(map, size_x, size_y, A_Star_Search, offgrid_tiles)
+            Spawn_Boss_Room.Spawn_Boss_Room(map, tile_size, size_x, size_y, player_pos, A_Star_Search, offgrid_tiles)
             
             return
 
