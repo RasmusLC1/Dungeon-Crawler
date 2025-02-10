@@ -6,7 +6,7 @@ import math
 class Spawn_Boss_Room():
 
     @staticmethod
-    def Spawn_Boss_Room(map, tile_size, size_x, size_y, A_Star_Search, offgrid_tiles):
+    def Spawn_Boss_Room(map, tile_size, size_x, size_y, player_pos, A_Star_Search, offgrid_tiles):
         map_copy = map.copy()
         fail = 0
         start_x = 0
@@ -18,6 +18,9 @@ class Spawn_Boss_Room():
             start_x = random.randint(radius * 2, size_x - radius * 2)
             start_y = random.randint(radius * 2, size_y - radius * 2)
             
+            distance_to_player = math.sqrt((player_pos[0] - start_x) ** 2 + (player_pos[1] - start_y) ** 2)
+            if distance_to_player < 50:
+                continue
             path = []
             path = A_Star_Search(start_x, start_y)
             if path:

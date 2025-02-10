@@ -63,7 +63,7 @@ class Dungeon_Generator():
 
         self.Update_Load_Menu(4)
 
-        Spawn_Boss_Room.Spawn_Boss_Room(self.cellular_automata.map, self.tile_size, size_x, size_y, self.A_Star_Search, self.tilemap.offgrid_tiles)
+        Spawn_Boss_Room.Spawn_Boss_Room(self.cellular_automata.map, self.tile_size, size_x, size_y, self.player_spawn, self.A_Star_Search, self.tilemap.offgrid_tiles)
 
         self.Update_A_Star_Map()
 
