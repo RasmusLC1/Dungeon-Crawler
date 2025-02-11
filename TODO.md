@@ -296,3 +296,6 @@ Create color coded backgrounds based on level, render image and text on top
 
     Water caves, need to traverse lots of water, Deep water contains enemies, look for shallow water. More Treasure chests
 
+{'category': 'boss_room', 'type': 'boss_room', 'ID': 67766, 'pos': (640, 2784), 'radius': 6, 'level': 3, 'activated': False, 'boss_defeated': True, 'size': (0, 0), 'boss_ID': 0}
+{'category': 'decoration', 'type': 'portal_shrine', 'pos': [51, 13], 'size': (64, 64), 'active': 0, 'light_level': 0, 'render': True, 'is_open': False}
+{'category': 'decoration', 'type': 'rune_shrine', 'pos': [640, 2784], 'size': (64, 64), 'active': 699, 'light_level': 255, 'render': True, 'is_open': True, 'rune_type': 'invisibility_rune'}
