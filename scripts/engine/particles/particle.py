@@ -1,3 +1,4 @@
+import random
 import pygame
 
 class Particle:
@@ -9,10 +10,12 @@ class Particle:
         self.image = None
         self.active = False
         self.frame_count = 0
+        self.animation = 0
 
     def Set_Image(self, type):
         self.type = type
-        self.image = self.game.assets['particle/' + self.type].copy()
+        self.animation = random.randint(0, 5)
+        self.image = self.game.assets[self.type + '_particle'][self.animation]
 
     def Set_Frame(self, frame):
         self.frame_count = frame
@@ -41,7 +44,6 @@ class Particle:
         if not self.active:
             return True
         
-        # print(vars(self))
         self.pos = (self.pos[0] + self.velocity[0], self.pos[1] + self.velocity[1])
 
         self.Update_Frame_Count()
@@ -51,17 +53,13 @@ class Particle:
     def Update_Frame_Count(self):
         self.frame_count = self.frame_count - 1
         if self.frame_count <= 0:
-            # print("TESTETSTTEST")
             self.Disable()
             return True
         return False 
 
-    
-    
+
     def Render(self, surf, offset=(0, 0)):
         if not self.active:
             return
-        image = self.image.img()
-        image = pygame.transform.scale(image, (3,3))
-        surf.blit(image, (self.pos[0] - offset[0] - image.get_width() // 2, self.pos[1] - offset[1] - image.get_height() // 2))
+        surf.blit(self.image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
     

@@ -99,10 +99,8 @@ class Player_Movement():
 
         if abs(self.dashing) in {60, 50}:
             for i in range(30):
-                angle = random.random() * math.pi * 2
-                speed = random.random() * 0.5 + 0.5
-                pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
-                self.game.particle_handler.Activate_Particles(1, 'particle', self.player.rect().center, velocity=pvelocity, frame=random.randint(5, 30))
+                
+                self.game.particle_handler.Activate_Particles(1, 'dash', self.player.rect().center, frame=random.randint(5, 30))
 
         if self.dashing > 0:
             self.dashing = max(0, self.dashing - 1)
@@ -124,8 +122,7 @@ class Player_Movement():
                     self.player.velocity[0] *= 0.1
                     self.player.velocity[1] *= 0.1
 
-                pvelocity = [abs(self.dashing) / self.dashing * random.random() * 3, 0]
-                self.game.particle_handler.Activate_Particles(1, 'particle', self.player.rect().center, velocity=pvelocity, frame=random.randint(5, 30))
+                self.game.particle_handler.Activate_Particles(1, 'dash', self.player.rect().center, frame=random.randint(5, 30))
 
 
     def Dash(self, offset=(0, 0)):

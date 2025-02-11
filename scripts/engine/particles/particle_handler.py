@@ -10,6 +10,10 @@ class Particle_Handler:
          self.active_particles = []
          self.index = 0
          self.Spawn_Particles(4000)
+
+         self.particle_movement_patterns = {
+             'dash' : self.Dash_Particle
+         }
          
 
     def particle_update(self, offset = (0,0)):
@@ -21,7 +25,7 @@ class Particle_Handler:
                     self.active_particles.remove(particle)
 
 
-    def Activate_Particles(self, amount, type, pos, velocity, frame):
+    def Activate_Particles(self, amount, type, pos, frame):
         for _ in range(amount):
             # Look for particle
             particle = self.Find_Particle()
@@ -29,7 +33,8 @@ class Particle_Handler:
             # If none are found, spawn 100 new ones and attach one
             if not particle:
                 particle = self.Spawn_Extra_Particle()
-
+            velocity_function = self.particle_movement_patterns.get(type)
+            velocity = velocity_function()
             particle.Set_Active(type, pos, velocity, frame)
             self.active_particles.append(particle)
 
@@ -66,3 +71,11 @@ class Particle_Handler:
     def Spawn_Particles(self, amount):
         for _ in range(amount):
              self.particle_pool.append(Particle(self.game))
+
+
+    def Dash_Particle(self):
+        angle = random.random() * math.pi * 2
+        speed = random.random() * 0.5 + 0.5
+        pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
+        return pvelocity
+    
