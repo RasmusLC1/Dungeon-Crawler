@@ -7,11 +7,12 @@ class Particle_Handler:
          self.particle_pool = []
          self.active_particles = []
          self.index = 0
-         self.Spawn_Particles(4000)
+         self.Spawn_Particles(2000)
 
          self.particle_movement_patterns = {
              'dash' : Particle_Patterns.Dash_Particle,
              'fire' : Particle_Patterns.Fire_Particle,
+             'spark' : Particle_Patterns.Spark_Particle,
          }
          
 
@@ -32,6 +33,7 @@ class Particle_Handler:
             # If none are found, spawn 100 new ones and attach one
             if not particle:
                 particle = self.Spawn_Extra_Particle()
+                
             velocity_function = self.particle_movement_patterns.get(type)
             velocity = velocity_function()
             particle.Set_Active(type, pos, velocity, frame)

@@ -10,7 +10,7 @@ class Particle:
         self.image = None
         self.active = False
         self.frame_count = 0
-        self.animation = 0
+        self.animation = 0 # Sparks always have 6 variations
 
     def Set_Image(self, type):
         self.type = type
