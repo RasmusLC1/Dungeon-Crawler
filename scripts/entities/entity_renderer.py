@@ -41,6 +41,9 @@ class Entity_Renderer():
             if not entity.render:
                 continue
 
+            if entity.category == 'item':
+                entity.Update_Animation()
+            
             entity.Render(surf, offset)
 
             if nearest_interactable_object_found:

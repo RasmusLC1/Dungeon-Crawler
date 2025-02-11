@@ -1,7 +1,5 @@
-import pygame
-import math
-import random
 from scripts.engine.particles.particle import Particle
+from scripts.engine.particles.particle_patterns import Particle_Patterns
 
 class Particle_Handler:
     def __init__(self, game) -> None:
@@ -12,7 +10,8 @@ class Particle_Handler:
          self.Spawn_Particles(4000)
 
          self.particle_movement_patterns = {
-             'dash' : self.Dash_Particle
+             'dash' : Particle_Patterns.Dash_Particle,
+             'fire' : Particle_Patterns.Fire_Particle,
          }
          
 
@@ -73,9 +72,4 @@ class Particle_Handler:
              self.particle_pool.append(Particle(self.game))
 
 
-    def Dash_Particle(self):
-        angle = random.random() * math.pi * 2
-        speed = random.random() * 0.5 + 0.5
-        pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
-        return pvelocity
     

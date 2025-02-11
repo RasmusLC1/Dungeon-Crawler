@@ -1,6 +1,6 @@
 from scripts.entities.items.weapons.weapon import Weapon
 from scripts.entities.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
-import math
+import random
 
 
 class Torch(Weapon):
@@ -8,9 +8,11 @@ class Torch(Weapon):
         super().__init__(game, pos, 'torch', 1, 2, 3, 100, 'one_handed_melee', 'fire')
         self.max_animation = 5
         self.attack_animation_max = 5
+        self.animation_cooldown_max = 20
         self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.effect = 'fire'
+        self.fire_particle_cooldown = 0
         self.flame_thrower = Flame_Thrower(self.game)
 
 
@@ -21,7 +23,19 @@ class Torch(Weapon):
         self.game.light_handler.Remove_Light(self.light_source)
 
 
+    def Spawn_Fire_Particle(self):
+        if not self.fire_particle_cooldown:
+            self.fire_particle_cooldown = random.randint(30, 100)
+            self.game.particle_handler.Activate_Particles(random.randint(1, 2), 'fire', self.rect().center, frame=random.randint(90, 100))
 
+            return
+        
+        self.fire_particle_cooldown -= 1
+        return
+    
+    def Update_Animation(self):
+        self.Spawn_Fire_Particle()
+        return super().Update_Animation()
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:

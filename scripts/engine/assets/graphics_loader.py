@@ -70,6 +70,7 @@ class Graphics_Loader:
     def Asset_Particles_List(self):
         effect_assets = {
             'dash_particle': get_tiles_from_sheet('particles/general/dash.png', 5, 0, 0, 0, 5, 5),
+            'fire_particle': get_tiles_from_sheet('particles/general/fire.png', 5, 0, 0, 0, 3, 3),
         }
         self.assets.update(effect_assets)
 
