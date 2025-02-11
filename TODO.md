@@ -25,16 +25,10 @@ Save it in a seperate class that accepts an increment from dungeon generator
     Noice attracts enemies
 
 # Gameplay Loop
-    Start with a deck / Runes, mixture of positive and negative cards, but all low risk
-    Collect gold and artifcats in dungeon to buy new cards
+    Collect gold and artifcats in dungeon to buy items, upgrades, heaaling etc
     Lower levels have better rewards
-    To get to lower levels you need to collect a key on each floor
-    Each time you complete a run you get a curse card that is calculated based on performance to force playstyle adjustments
-        If you kill lots of enemies, it might make enemies tougher
-        If you don't get detected or sneak a lot, maybe enemies have their detection radius increased
-    You can then buy new cards and other upgrades with the gold you brought up
-        Example could be buying keys to get to lower levels quicker
-        Permanent upgrades for character like more health
+    To get to lower levels you need to pay a soul cost on each floor
+    Each time you complete a floor the next one becomes more difficult
     There are shrines in the dungeon where you can pay with souls of slain enemies to buy upgrades
         Shrines are found in boss rooms, risk damage to upgrade
         Different Shrines do different things:
@@ -61,7 +55,6 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # Dungeon generator
     # Chunk system to prevent slowdown with larger maps
     # Save Load System
-    Cards / Runes
     Minimap, adjust rendering scale for minimap and only display tiles that has been in raycaster
 
 # Gameplay
@@ -80,43 +73,6 @@ Buy and trash cards, when buying a card it is added to discard pile
 Cards can be upgraded
 Create color coded backgrounds based on level, render image and text on top
 
-# Cards
-Curses
-    Spawn enemies
-    Generate clank
-    Spawn traps
-    Create trapped chests
-    Remove torches
-    Buff enemies
-    Upgrade enemies
-    Apply negative effect to player
-    Steal X% of player saved souls
-
-Shop cards
-    Remove enemies
-    Reveal traps
-    Spawn chests
-    Spawn torches
-    Nerf enemies
-    Downgrade enemies
-    Apply positive effect to player
-    Give the player saved souls, more souls the less they have
-    Spawn gold
-
-Cards that affect deck
-    cancel curse
-    double next card effect good or bad
-    Trash next card
-    quick draw
-    
-
-
-Starting Deck
-    spawn gold
-    give player speed
-    spawn chest
-    spawn enemies
-
 
 # Weapons:
     # Implement better animations, bright arcs for where the damage area is
@@ -129,7 +85,7 @@ Starting Deck
     # Hatchet, small axe, faster than axe
     # Mace/Hammer, can break certain walls and enviorement, special ground pound to stun nearby enemies
     # Halberd, swing and stab attack, charge attack
-    Scythe, swing attack, soul reap magic attack
+    # Scythe, swing attack, soul reap magic attack
     # Crossbow, Same as bow, but takes longer to load, but can be preloaded
     Bomb, one time use, splash damage, can break enviorement, knockback from blast
     magic Staff, improved runes but poor melee damage, different staffs for different lores of magic, costs souls per cast. Special attack for each lores
@@ -222,8 +178,6 @@ Starting Deck
         # Soul reap, broad projectile that sucks health from everything it hits
         # Soul pit that pulls entities in and sucks health from them
 
-
-
 # Arrows:
     # Basic Arrow, Higher base damage
     Rope arrow, allows you to cross traps
@@ -293,6 +247,7 @@ Starting Deck
     Kobold, different variaties can steal different items from player, soul, loot, potions etc
     # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
     Mimic chest that spawns skeleton when opened
+    Medusa, laser eyes and can freeze the player
 
 
 ## Ancient Tomb Enemies
@@ -341,5 +296,6 @@ Starting Deck
 
     Water caves, need to traverse lots of water, Deep water contains enemies, look for shallow water. More Treasure chests
 
-
-{'game': <__main__.Game object at 0x0000011B67B0BF10>, 'ID': 5204060, 'category': 'item', 'sub_category': 'weapon', 'type': 'torch', 'pos': [640, 640], 'size': (32, 32), 'active': True, 'light_level': 120, 'render': False, 'tile': '25;24', 'saved_data': {}, 'text_box': <scripts.entities.textbox.weapon_textbox.Weapon_Textbox object at 0x0000011B082E1360>, 'sub_type': 'torch_attack_cut', 'used': False, 'picked_up': True, 'move_inventory_slot': False, 'inventory_type': 'left_hand', 'inventory_index': 0, 'activate_cooldown': 13, 'animation_cooldown': 35, 'animation_cooldown_max': 50, 'amount': 1, 'max_amount': 0, 'max_animation': 5, 'animation': 1, 'nearby_entities': [], 'delete_countdown': 0, 'value': 100, 'is_projectile': False, 'damage': 1, 'speed': 8, 'range': 3, 'entity': <scripts.entities.moving_entities.player.player.Player object at 0x0000011B67B0BD60>, 'effect': 'fire', 'attack_type': 'cut', 'in_inventory': True, 'equipped': True, 'attacking': 36, 'flip_x': False, 'attack_animation': 1, 'attack_animation_max': 5, 'special_attack_effect_animation_max': 1, 'attack_animation_time': 9, 'attack_animation_counter': 3, 'attack_effect_animation': 1, 'attack_effect_animation_max': 6, 'attack_effect_animation_time': 8.0, 'attack_effect_animation_counter': 3, 'enemy_hit': False, 'rotate': 255.42578380196127, 'nearby_enemies': [<scripts.entities.moving_entities.enemies.skeleton.skeleton_warrior.Skeleton_Warrior object at 0x0000011B08D212D0>, <scripts.entities.moving_entities.enemies.skeleton.skeleton_warrior.Skeleton_Warrior object at 0x0000011B08CDB190>], 'weapon_class': 'one_handed_melee', 'charge_time': 0, 'max_charge_time': 100, 'is_charging': 0, 'special_attack': 0, 'special_attack_active': False, 'charge_effect': 'fire_charge_effect', 'charge_effect_animation': 0, 'charge_effect_animation_max': 5, 'charge_effect_cooldown': 0, 'charge_effect_cooldown_max': 15, 'weapon_cooldown': 39, 'weapon_cooldown_max': 50, 'delete_timer': 0, 'attack_hitbox_size': (5, 5), 'attack_hitbox': <rect(711, 616, 15, 15)>, 'light_source': <scripts.engine.lights.lights.Light object at 0x0000011B082E13C0>, 'flame_thrower': <scripts.entities.items.weapons.magic_attacks.fire.flame_thrower.Flame_Thrower object at 0x0000011B082E13F0>}
+{'category': 'boss_room', 'type': 'boss_room', 'ID': 67766, 'pos': (640, 2784), 'radius': 6, 'level': 3, 'activated': False, 'boss_defeated': True, 'size': (0, 0), 'boss_ID': 0}
+{'category': 'decoration', 'type': 'portal_shrine', 'pos': [51, 13], 'size': (64, 64), 'active': 0, 'light_level': 0, 'render': True, 'is_open': False}
+{'category': 'decoration', 'type': 'rune_shrine', 'pos': [640, 2784], 'size': (64, 64), 'active': 699, 'light_level': 255, 'render': True, 'is_open': True, 'rune_type': 'invisibility_rune'}

@@ -83,7 +83,6 @@ class Level_Loader():
         self.game.light_handler = Light_Handler(self.game)
         
         
-        self.game.particles = []
         self.game.sparks = []
         self.game.scroll = [0, 0]
         # Spawn Player

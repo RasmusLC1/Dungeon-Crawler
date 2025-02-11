@@ -31,6 +31,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Loot(self)
         Graphics_Loader.Asset_Rune(self)
         Graphics_Loader.Asset_Menu(self)
+        Graphics_Loader.Asset_Particles_List(self)
 
         Graphics_Loader.Asset_TEST(self)
         
@@ -66,11 +67,17 @@ class Graphics_Loader:
 
         self.assets.update(trap_assets)
 
+    def Asset_Particles_List(self):
+        effect_assets = {
+            'dash_particle': get_tiles_from_sheet('particles/general/dash.png', 5, 0, 0, 0, 5, 5),
+            'fire_particle': get_tiles_from_sheet('particles/general/fire.png', 5, 0, 0, 0, 3, 3),
+            'spark_particle': get_tiles_from_sheet('particles/general/spark.png', 5, 0, 0, 0, 3, 3),
+        }
+        self.assets.update(effect_assets)
+
     def Asset_Effect_List(self):
         white = (255,255,255)
         effect_assets = {
-            'particle/leaf': Animation(load_images('particles/leaf'), img_dur=20, loop=False),
-            'particle/particle': Animation(load_images('particles/particle'), img_dur=6, loop=False),
             'heart': load_image('heart.png'),
             'coin': get_tiles_from_sheet('coin_.png', 3, 0, 0, 0, 13, 13, white),
             'fire': get_tiles_from_sheet('particles/effects/fire/orange/loops/burning_loop_1.png', 7, 0, 0, 0, 32, 32, white),

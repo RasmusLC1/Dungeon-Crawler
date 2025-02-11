@@ -19,7 +19,7 @@ class Rune_Shrine(Decoration):
         super().Save_Data()
         self.saved_data['is_open'] = self.is_open
         if not self.available_rune:
-            self.saved_data['rune_type'] = ''
+            self.saved_data['rune_type'] = None
             return
         
         self.saved_data['rune_type'] = self.available_rune.type
@@ -31,10 +31,8 @@ class Rune_Shrine(Decoration):
         rune_type = data['rune_type']
         if not rune_type:
             return
-        for rune in self.game.rune_handler.runes:
-            if rune.type == rune_type:
-                self.available_rune = rune
-                break
+        self.available_rune = self.game.rune_handler.Get_Rune(rune_type)
+
 
 
     def Update(self):

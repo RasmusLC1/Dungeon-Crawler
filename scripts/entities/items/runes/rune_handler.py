@@ -99,7 +99,7 @@ class Rune_Handler():
     def Rune_Spawner(self):
         self.runes = {
         'healing_run': Healing_Rune(self.game, (9999, 9999)),
-        'dash_run': Dash_Rune(self.game, (9999, 9999)),
+        'dash_rune': Dash_Rune(self.game, (9999, 9999)),
         'fire_resistance_run': Fire_Resistance_Rune(self.game, (9999, 9999)),
         'frozen_resistance_rune': Frozen_Resistance_Rune(self.game, (9999, 9999)),
         'key_rune': Key_Rune(self.game, (9999, 9999)),
@@ -143,8 +143,8 @@ class Rune_Handler():
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
         self.Add_Rune_To_Rune_Inventory('key_rune')
+        self.Add_Rune_To_Rune_Inventory('dash_rune')
         self.Add_Rune_To_Rune_Inventory('electric_spray_rune')
 
     def Clear_Runes(self):
@@ -173,7 +173,8 @@ class Rune_Handler():
 
         return True
     
-
+    def Get_Rune(self, type):
+        return self.runes[type]
     
     def Find_Nearby_Runes(self, entity_pos, max_distance):
         entity_pos = (entity_pos[0] - self.game.render_scroll[0], entity_pos[1] - self.game.render_scroll[1])
