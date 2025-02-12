@@ -93,8 +93,6 @@ class Player_Movement():
     def Dashing_Update(self, offset=(0, 0)):
         if not self.dashing:
             return
-        # Lock the weapon attack if player is dashing
-        self.game.player.weapon_handler.Set_Attack_Lock(True)
 
         self.player.effects.Set_Effect("player_movement_invunerable", 1)
 

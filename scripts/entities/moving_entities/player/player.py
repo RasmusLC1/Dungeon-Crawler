@@ -34,10 +34,16 @@ class Player(Moving_Entity):
         self.movement_handler = Player_Movement(self.game, self)
 
 
+
+
+
+
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['souls'] = self.souls
         self.saved_data['max_speed'] = self.max_speed
+
+
 
 
     def Load_Data(self, data):
@@ -45,6 +51,9 @@ class Player(Moving_Entity):
         super().Load_Data(data)
         self.souls = data['souls']
         self.max_speed = data['max_speed']
+
+        
+
 
 
     def Update(self, tilemap, movement=(0, 0), offset=(0, 0)):
@@ -82,6 +91,9 @@ class Player(Moving_Entity):
     def Remove_Active_Weapon(self, hand):
         self.weapon_handler.Remove_Active_Weapon(hand)
 
+    def Attack_Direction_Handler(self, offset = (0,0)):
+        super().Attack_Direction_Handler(offset)
+
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         super().Set_Charge(charge_speed, offset)
         
@@ -91,12 +103,33 @@ class Player(Moving_Entity):
     def Set_Health(self, health):
         self.health = health
 
+    def Attacking(self, weapon, offset=(0, 0)):
+        if weapon.attacking and not self.attacking:
+            self.Attack_Direction_Handler(offset)
 
+
+            direction_x = 5 * self.attack_direction[0]
+            direction_y = 5 * self.attack_direction[1]
+            self.Set_Frame_movement((direction_x, direction_y))
+            self.Tile_Map_Collision_Detection(self.game.tilemap)
+            self.attacking = weapon.attacking
+
+
+        if self.attacking == 1:
+            direction_x = - 5 * self.attack_direction[0]
+            direction_y = - 5 * self.attack_direction[1]
+            self.Set_Frame_movement((direction_x, direction_y))
+            self.Tile_Map_Collision_Detection(self.game.tilemap)
+
+        if self.attacking:
+            self.attacking -= 1
+
+
+    
     def Set_Inventory_Interaction(self, state):
         self.weapon_handler.Set_Inventory_Interaction(state)
 
     def Set_Active_Weapon(self, weapon, hand):  
-
         self.weapon_handler.Set_Active_Weapon(weapon, hand)
     
     def Set_Light_State(self, state):

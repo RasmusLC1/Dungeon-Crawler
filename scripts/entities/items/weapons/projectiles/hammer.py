@@ -18,6 +18,3 @@ class Hammer(Projectile):
         if not self.special_attack or not self.equipped:
             return
         self.Drop_Weapon_After_Shot()
-
-    def Update_Attack_Animation(self):
-        super().Update_Attack_Animation()

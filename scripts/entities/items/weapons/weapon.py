@@ -90,7 +90,7 @@ class Weapon(Item):
         self.special_attack = data['special_attack']
 
    
-    # General Update function
+    # General Update function, handles setting the attack and general logic
     def Update(self, offset = (0,0)):
         super().Update()
         self.Update_Animation()

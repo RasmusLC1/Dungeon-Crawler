@@ -29,8 +29,11 @@ class Electric(Effect):
             return False
         
         if self.Update_Cooldown():
+            effect = max(self.effect - 1, 0)
+            if not effect:
+                return
             for enemy in self.entity.nearby_enemies:
-                if enemy.Set_Effect(self.effect_type, self.effect - 1):
+                if enemy.Set_Effect(self.effect_type, effect):
                     self.entity.Set_Effect('electric_resistance', 1)
                     break
                 

@@ -24,8 +24,8 @@ class Particle_Patterns():
         # Fire tends to have faster initial speeds that taper off
         speed = - (random.random() * 0.4 + 0.1)
         velocity = [
-            math.cos(angle) * speed,  # Reduce horizontal movement
-            math.sin(angle) * speed     # Ensure upward movement remains positive
+            math.cos(angle) * speed,  
+            math.sin(angle) * speed   
         ]
         return velocity
     
@@ -36,4 +36,20 @@ class Particle_Patterns():
         direction_x = random.randrange(-1, 1)
         direction_y = random.randrange(-1, 1)
         velocity = [direction_x, direction_y]
+        return velocity
+    
+    
+    @staticmethod
+    def Vampire_Particle():
+        # Constrain most of the motion to upward directions with slight spread
+        base_angle = math.pi  # Straight up (180 degrees)
+        angle_variation = math.pi/4  # 45 degrees spread in each direction
+        angle = base_angle + random.uniform(-angle_variation, angle_variation)
+        
+        # Fire tends to have faster initial speeds that taper off
+        speed = - (random.random() * 0.4 + 0.1)
+        velocity = [
+            math.cos(angle) * speed,
+            math.sin(angle) * speed  
+        ]
         return velocity

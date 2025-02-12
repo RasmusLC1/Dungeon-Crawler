@@ -72,6 +72,14 @@ class Graphics_Loader:
             'dash_particle': get_tiles_from_sheet('particles/general/dash.png', 5, 0, 0, 0, 5, 5),
             'fire_particle': get_tiles_from_sheet('particles/general/fire.png', 5, 0, 0, 0, 3, 3),
             'spark_particle': get_tiles_from_sheet('particles/general/spark.png', 5, 0, 0, 0, 3, 3),
+            'blood_particle': get_tiles_from_sheet('particles/general/blood.png', 5, 0, 0, 0, 3, 3),
+            'bone_particle': get_tiles_from_sheet('particles/general/bone.png', 5, 0, 0, 0, 3, 3),
+            'electric_particle': get_tiles_from_sheet('particles/general/electric.png', 5, 0, 0, 0, 3, 3),
+            'frost_particle': get_tiles_from_sheet('particles/general/frost.png', 5, 0, 0, 0, 3, 3),
+            'gold_particle': get_tiles_from_sheet('particles/general/gold.png', 5, 0, 0, 0, 3, 3),
+            'poison_particle': get_tiles_from_sheet('particles/general/poison.png', 5, 0, 0, 0, 3, 3),
+            'vampire_particle': get_tiles_from_sheet('particles/general/vampire.png', 5, 0, 0, 0, 3, 3),
+            'soul_particle': get_tiles_from_sheet('particles/general/soul.png', 5, 0, 0, 0, 3, 3),
         }
         self.assets.update(effect_assets)
 
