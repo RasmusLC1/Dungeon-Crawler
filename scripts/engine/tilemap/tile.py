@@ -56,6 +56,17 @@ class Tile():
 
         return entities
     
+    def Search_Type(self, type, ID = 0):
+        entities = []
+        for entity in self.entities:
+            if not entity.type == type:
+                continue
+            if entity.ID == ID:
+                continue
+            entities.append(entity)
+
+        return entities
+    
     def Set_Entity_Active(self):
         for entity in self.entities:
             entity.Set_Active(self.active)

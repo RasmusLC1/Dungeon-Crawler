@@ -1,5 +1,5 @@
 from scripts.entities.moving_entities.enemies.enemy import Enemy
-
+import random
 
 class Skeleton(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, max_weapon_charge, size = (32, 32)):
@@ -51,6 +51,9 @@ class Skeleton(Enemy):
         del(weapon)
         return True
     
+    def Spawn_Damaged_Particles(self):
+        self.game.particle_handler.Activate_Particles(10, 'bone', self.rect().center, frame=random.randint(10, 30))
+
     
     def Update_Active_Weapon(self, offset=(0, 0)):
         if not self.active_weapon:

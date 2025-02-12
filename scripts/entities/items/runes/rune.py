@@ -62,11 +62,13 @@ class Rune(Item):
     def Activate(self):
         if self.activate_cooldown:
             return False
+        
         if not super().Activate():
             return False
         if self.game.player.souls < self.current_soul_cost:
             return False
         self.Trigger_Effect()
+
         return True
     
     def Trigger_Effect(self):
@@ -78,6 +80,9 @@ class Rune(Item):
         self.Set_Animation_Time()
         self.Reset_Animation_Size()
         self.Set_Activate_Cooldown(self.activate_cooldown_max)
+        self.game.player.weapon_handler.Set_Attack_Lock(True)
+        self.clicked = False
+
     
     def Compute_Souls_Cost(self):
         if self.game.player.effects.arcane_conduit.effect:
@@ -112,6 +117,13 @@ class Rune(Item):
     def Update_Activate_Cooldown(self):
         if self.activate_cooldown:
             self.activate_cooldown -= 1
+            if self.activate_cooldown > 0:
+                self.game.player.weapon_handler.Set_Attack_Lock(True)
+            else:
+                self.game.player.weapon_handler.Set_Attack_Lock(False)
+
+            return
+        
 
     
     def Set_Activate_Cooldown(self, value):

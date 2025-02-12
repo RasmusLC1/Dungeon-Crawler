@@ -20,6 +20,7 @@ class Player(Moving_Entity):
         self.bow_cooldown = 0
         self.Set_Animation('idle_down')
         self.souls = 500
+        self.souls_to_remove = 0
         self.nearby_chests = []
         self.view_direction = (0,0)
 
@@ -69,19 +70,33 @@ class Player(Moving_Entity):
 
         self.weapon_handler.Update(offset)
 
+        self.Update_Souls_To_Remove()
+
         
     def View_Direction(self, offset):
         self.view_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
         if self.view_direction.length() > 0:
             self.view_direction.normalize_ip()
-    
+
+    def Set_Souls(self, souls):
+        self.souls = souls
+
     def Increase_Souls(self, added_soul):
         if self.effects.hunger.effect:
             added_soul += self.effects.hunger.effect
         self.souls += added_soul
 
     def Decrease_Souls(self, subtract_soul):
-        self.souls -= subtract_soul
+        self.souls_to_remove = subtract_soul
+
+    def Update_Souls_To_Remove(self):
+        if not self.souls_to_remove:
+            return
+        
+        self.souls_to_remove = max(0, self.souls_to_remove - 1)
+        self.souls = max(0, self.souls - 1)
+        self.game.particle_handler.Activate_Particles(1, 'soul', self.rect().center, frame=random.randint(20, 30))
+
 
     def Entity_Collision_Detection(self, tilemap):
         if self.movement_handler.dashing > 40:
@@ -97,8 +112,7 @@ class Player(Moving_Entity):
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         super().Set_Charge(charge_speed, offset)
         
-    def Set_Souls(self, souls):
-        self.souls = souls
+    
 
     def Set_Health(self, health):
         self.health = health
@@ -130,7 +144,6 @@ class Player(Moving_Entity):
         self.weapon_handler.Set_Inventory_Interaction(state)
 
     def Set_Active_Weapon(self, weapon, hand):  
-
         self.weapon_handler.Set_Active_Weapon(weapon, hand)
     
     def Set_Light_State(self, state):

@@ -7,7 +7,7 @@ from scripts.entities.moving_entities.enemies.behavior.intent_manager import Int
 
 
 import pygame
-
+import random
 
 
 class Enemy(Moving_Entity):
@@ -184,6 +184,9 @@ class Enemy(Moving_Entity):
         # No damage done simply return
         if not super().Damage_Taken(damage, direction):
             return
+        
+        self.Spawn_Damaged_Particles()
+
         if self.health <= 0:
             self.Spawn_Bones()
             self.Drop_Weapon()
@@ -195,6 +198,10 @@ class Enemy(Moving_Entity):
 
 
         self.direction = pygame.math.Vector2(self.direction_x, self.direction_y)
+
+    def Spawn_Damaged_Particles(self):
+        self.game.particle_handler.Activate_Particles(10, 'blood', self.rect().center, frame=random.randint(10, 30))
+
 
     def Spawn_Bones(self):
         bones = Bones(self.game, self.pos, self.type)

@@ -147,7 +147,36 @@ class Tilemap:
 
         
         return entities
-    
+
+    def Search_Nearby_Tiles_For_Type(self, max_distance, pos, type, ID = 0):
+        pos = (pos[0] // self.tile_size, pos[1] // self.tile_size)
+        
+        
+        entities = []
+        for x in range(math.floor(pos[0] - max_distance), math.floor(pos[0] + max_distance)):
+            for y in range(math.floor(pos[1] - max_distance), math.floor(pos[1] + max_distance)):
+                if x <= self.min_x or y <= self.min_y:
+                    continue
+
+                if x >= self.max_x or y >= self.max_y:
+                    continue
+
+                tile_key = str(x) + ';' + str(y)
+                tile = self.tilemap[tile_key]
+                if not tile:
+                    continue
+
+                if not tile.entities:
+                    continue
+
+                new_entities = tile.Search_Type(type, ID)
+                if not new_entities:
+                    continue
+                        
+                entities.extend(new_entities)
+
+        
+        return entities
 
 
     # return the entities on a tile           

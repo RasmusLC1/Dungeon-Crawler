@@ -93,7 +93,7 @@ class Player_Movement():
     def Dashing_Update(self, offset=(0, 0)):
         if not self.dashing:
             return
-            
+
         self.player.effects.Set_Effect("player_movement_invunerable", 1)
 
 

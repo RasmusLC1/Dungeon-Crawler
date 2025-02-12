@@ -13,11 +13,11 @@ class Player_Weapon_Handler():
         self.active_bow = None
         self.bow_cooldown = 0
         self.inventory_interaction = 0
+        self.attack_lock = False
 
 
 
     def Update(self, offset = (0, 0)):
-        
         if self.game.weapon_inventory.active_inventory == 0:
             self.Update_Left_Weapon(offset)
             self.Update_Right_Weapon(offset)
@@ -43,6 +43,8 @@ class Player_Weapon_Handler():
             equipped_weapon.Move(self.player.pos)
             self.active_bow = equipped_weapon
 
+    def Set_Attack_Lock(self, state):
+        self.attack_lock = state
     
 
     # Function to update the player's weapons
@@ -58,6 +60,9 @@ class Player_Weapon_Handler():
             return
         
         self.active_weapon_left.Set_Equipped_Position(self.player.direction_y_holder)
+        # Set the attack lock above the update to prevent attacks
+        if self.attack_lock:
+            return
 
         self.active_weapon_left.Update(offset)
         if not self.active_weapon_left:
@@ -84,7 +89,6 @@ class Player_Weapon_Handler():
         if not self.active_weapon_right:
             return
         # Update the weapon position and logic
-
         if self.inventory_interaction:
             self.Set_Inventory_Interaction(self.inventory_interaction - 1)
             self.active_weapon_right.Reset_Charge()
@@ -92,6 +96,8 @@ class Player_Weapon_Handler():
 
         self.active_weapon_right.Set_Equipped_Position(self.player.direction_y_holder)
         
+        if self.attack_lock:
+            return
         self.active_weapon_right.Update(offset)
         if not self.active_weapon_right:
             return
@@ -124,7 +130,9 @@ class Player_Weapon_Handler():
             return
 
         self.active_bow.Set_Equipped_Position(self.player.direction_y_holder)
-        
+
+        if self.attack_lock:
+            return
         self.active_bow.Update(offset)
         if not self.active_bow:
             return
@@ -151,7 +159,6 @@ class Player_Weapon_Handler():
         # Return if inventory has not been clicked
         if self.game.mouse.inventory_clicked:
             return 0
-        # weapon.Set_Attack()
         if weapon.attacking:
             cooldown = max(5 + weapon.attacking, 100/self.player.agility + weapon.attacking)
             return cooldown

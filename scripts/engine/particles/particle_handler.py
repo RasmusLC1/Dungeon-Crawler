@@ -13,6 +13,11 @@ class Particle_Handler:
              'dash' : Particle_Patterns.Dash_Particle,
              'fire' : Particle_Patterns.Fire_Particle,
              'spark' : Particle_Patterns.Spark_Particle,
+             'blood' : Particle_Patterns.Spark_Particle,
+             'gold' : Particle_Patterns.Spark_Particle,
+             'bone' : Particle_Patterns.Spark_Particle,
+             'soul' : Particle_Patterns.Soul_Particle,
+             'vampire' : Particle_Patterns.Vampire_Particle,
          }
          
 
@@ -33,7 +38,7 @@ class Particle_Handler:
             # If none are found, spawn 100 new ones and attach one
             if not particle:
                 particle = self.Spawn_Extra_Particle()
-                
+
             velocity_function = self.particle_movement_patterns.get(type)
             velocity = velocity_function()
             particle.Set_Active(type, pos, velocity, frame)
