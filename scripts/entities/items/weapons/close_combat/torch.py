@@ -35,7 +35,11 @@ class Torch(Weapon):
     
     def Update_Animation(self):
         self.Spawn_Fire_Particle()
-        return super().Update_Animation()
+        if self.animation_cooldown:
+            self.animation_cooldown -= 1
+        else:
+            self.animation_cooldown = self.animation_cooldown_max
+            self.animation = random.randint(0,self.max_animation)
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:

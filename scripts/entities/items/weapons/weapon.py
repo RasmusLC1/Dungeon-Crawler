@@ -158,6 +158,14 @@ class Weapon(Item):
         else:
             self.Point_Towards_Mouse_Player() 
 
+    def Update_Animation(self):
+        if not self.equipped:
+            return
+        if self.animation_cooldown:
+            self.animation_cooldown -= 1
+        else:
+            self.animation_cooldown = self.animation_cooldown_max
+            self.animation = random.randint(0,self.max_animation)
 
     # Handle weapon charging
     def Set_Weapon_Charge(self, offset = (0, 0)):
@@ -241,8 +249,7 @@ class Weapon(Item):
         
         self.Set_Attack_Hitbox()
 
-        if not self.wall_hit:
-            self.wall_hit = not self.Check_Tile(self.attack_hitbox.center)
+        self.Check_Tile(self.attack_hitbox.center)
 
         # Handle enemy attack collision check for player
         player_collision_result = self.Player_Collision(self.attack_hitbox)
@@ -296,6 +303,7 @@ class Weapon(Item):
     def Calculate_Damage(self):
         return self.entity.strength * self.damage
 
+    
 
     # Damage Entity
     def Entity_Hit(self, entity):
@@ -414,6 +422,10 @@ class Weapon(Item):
     #TODO: Make a formula for better computing clatter distance
     # Return False on collision
     def Check_Tile(self, new_pos):
+        # Check if wall has already been hit
+        if self.wall_hit:
+            return True
+        
         tile_key = str(int(new_pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(new_pos[1] // self.game.tilemap.tile_size))
         tile = self.game.tilemap.Current_Tile(tile_key)
         if not tile:
@@ -422,13 +434,13 @@ class Weapon(Item):
             target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
             self.game.clatter.Generate_Clatter(target_position, 400)
             self.Spawn_Spark()
-            print("TESTTESTETST")
+            self.wall_hit = True
             return False
         
         return True
     
     def Spawn_Spark(self):
-        self.game.particle_handler.Activate_Particles(random.randint(5, 10), 'spark', self.rect().center, random.randint(20, 30))
+        self.game.particle_handler.Activate_Particles(random.randint(2, 5), 'spark', self.rect().center, random.randint(20, 30))
 
     # Handle deletion of items when enemies drop weapons, don't want them to linger forever
     def Update_Delete_Countdown(self):

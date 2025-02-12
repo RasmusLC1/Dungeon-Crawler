@@ -13,11 +13,11 @@ class Player_Weapon_Handler():
         self.active_bow = None
         self.bow_cooldown = 0
         self.inventory_interaction = 0
+        self.attack_lock = False
 
 
 
     def Update(self, offset = (0, 0)):
-        
         if self.game.weapon_inventory.active_inventory == 0:
             self.Update_Left_Weapon(offset)
             self.Update_Right_Weapon(offset)
@@ -62,8 +62,9 @@ class Player_Weapon_Handler():
         self.active_weapon_left.Update(offset)
         if not self.active_weapon_left:
             return
+
         self.active_weapon_left.Update_Attack()
-        self.player.Attacking(self.active_weapon_left, offset)
+        self.Attacking(self.active_weapon_left, offset)
 
         
         if self.left_weapon_cooldown:
@@ -95,8 +96,9 @@ class Player_Weapon_Handler():
         self.active_weapon_right.Update(offset)
         if not self.active_weapon_right:
             return
+
         self.active_weapon_right.Update_Attack()
-        self.player.Attacking(self.active_weapon_right, offset)
+        self.Attacking(self.active_weapon_right, offset)
         
         # Handle weapon cooldown
         if self.right_weapon_cooldown:
@@ -130,7 +132,7 @@ class Player_Weapon_Handler():
             return
         
         self.active_bow.Update_Attack()
-        self.player.Attacking(self.active_bow, offset)
+        self.Attacking(self.active_bow, offset)
         
         # Handle weapon cooldown
         if self.bow_cooldown:
@@ -148,6 +150,8 @@ class Player_Weapon_Handler():
     
     # Activate weapon attack, return cooldown time
     def Weapon_Attack(self, weapon):
+        if self.attack_lock:
+            return 0
         # Return if inventory has not been clicked
         if self.game.mouse.inventory_clicked:
             return 0
@@ -157,6 +161,29 @@ class Player_Weapon_Handler():
             return cooldown
         return 0
     
+    def Attacking(self, weapon, offset=(0, 0)):
+        if self.attack_lock:
+            return
+        if weapon.attacking and not self.player.attacking:
+            self.player.Attack_Direction_Handler(offset)
+
+
+            direction_x = 5 * self.player.attack_direction[0]
+            direction_y = 5 * self.player.attack_direction[1]
+            self.player.Set_Frame_movement((direction_x, direction_y))
+            self.player.Tile_Map_Collision_Detection(self.game.tilemap)
+            self.player.attacking = weapon.attacking
+
+
+        if self.player.attacking == 1:
+            direction_x = - 5 * self.player.attack_direction[0]
+            direction_y = - 5 * self.player.attack_direction[1]
+            self.player.Set_Frame_movement((direction_x, direction_y))
+            self.player.Tile_Map_Collision_Detection(self.game.tilemap)
+
+        if self.player.attacking:
+            self.player.attacking -= 1
+    
     def Set_Inventory_Interaction(self, state):
         self.inventory_interaction = state
 
@@ -164,12 +191,15 @@ class Player_Weapon_Handler():
         if hand == 'left_hand' and self.active_weapon_left:
             self.active_weapon_left = None
             self.left_weapon_cooldown = 0
-            self.player.attacking = 0
+            self.Attacking = 0
 
         if hand == 'right_hand' and self.active_weapon_right:
             self.active_weapon_right = None
             self.right_weapon_cooldown = 0
-            self.player.attacking = 0
+            self.Attacking = 0
+
+    def Set_Attack_Lock(self, state):
+        self.attack_lock = state
 
 
     def Render_Weapons(self, surf, offset):
