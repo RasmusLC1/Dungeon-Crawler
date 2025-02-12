@@ -1,5 +1,6 @@
 import random
 import math
+import numpy as np
 
 class Particle_Patterns():
 
@@ -33,12 +34,22 @@ class Particle_Patterns():
     # Shoot the particles straight
     @staticmethod
     def Spark_Particle():
-        direction_x = random.randrange(-1, 1)
-        direction_y = random.randrange(-1, 1)
-        velocity = [direction_x, direction_y]
-        return velocity
+        velocity = np.array([random.uniform(-1, 1), random.uniform(-1, 1)])
+        norm = np.linalg.norm(velocity)
+        if norm == 0:  # Avoid division by zero
+            return (0,0)
+        
+        return (velocity / norm).tolist()  # Normalize and convert to a list
     
-    
+    @staticmethod
+    def Soul_Particle():
+        velocity = np.array([random.uniform(-1, 1), random.uniform(-1, 1)])
+        norm = np.linalg.norm(velocity)
+        if norm == 0:  # Avoid division by zero
+            return (0,0)
+        
+        return ((velocity / norm) * 0.5).tolist()  # Normalize and convert to a list
+
     @staticmethod
     def Vampire_Particle():
         # Constrain most of the motion to upward directions with slight spread

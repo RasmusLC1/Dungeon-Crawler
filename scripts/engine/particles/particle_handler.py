@@ -16,6 +16,7 @@ class Particle_Handler:
              'blood' : Particle_Patterns.Spark_Particle,
              'gold' : Particle_Patterns.Spark_Particle,
              'bone' : Particle_Patterns.Spark_Particle,
+             'soul' : Particle_Patterns.Soul_Particle,
              'vampire' : Particle_Patterns.Vampire_Particle,
          }
          
