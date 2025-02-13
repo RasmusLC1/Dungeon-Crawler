@@ -22,13 +22,15 @@ class Particle_Handler:
          }
          
 
+    # Update the particles and 
     def particle_update(self, offset = (0,0)):
         for particle in self.active_particles:
                 particle.Update()
                 particle.Render(self.game.display, offset)
 
-                if not particle.active:
-                    self.active_particles.remove(particle)
+
+    def Disable_Particle(self, particle):
+        self.active_particles.remove(particle)
 
 
     def Activate_Particles(self, amount, type, pos, frame):
@@ -46,6 +48,7 @@ class Particle_Handler:
 
             # Activate particle and add to active particles
             particle.Set_Active(type, pos, velocity, frame)
+            particle.Set_Image(self.game.assets[type + '_particle'][particle.animation])
             self.active_particles.append(particle)
 
 
@@ -56,7 +59,7 @@ class Particle_Handler:
             return None
         
         # Check if the initial index is available, in which case loop the index back to 0
-        if not self.particle_pool[0].active:
+        if not self.particle_pool[0].frame_count:
             self.index = 0
         
         # Overflow prevent
@@ -68,19 +71,21 @@ class Particle_Handler:
         self.index += 1
 
         # If there are no free fire particle return None to spawn a new one
-        if particle.active:
+        if particle.frame_count:
             return None
         
         return particle
 
+    # Spawn single particle on demand
     def Spawn_Extra_Particle(self):
-        particle = Particle(self.game)
+        particle = Particle(self)
         self.particle_pool.append(particle)
         return particle
 
+    # Spawn bulk particles when initialised
     def Spawn_Particles(self, amount):
         for _ in range(amount):
-             self.particle_pool.append(Particle(self.game))
+             self.particle_pool.append(Particle(self))
 
 
     

@@ -55,6 +55,8 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # Dungeon generator
     # Chunk system to prevent slowdown with larger maps
     # Save Load System
+    # Particle Engine
+    Sound engine
     Minimap, adjust rendering scale for minimap and only display tiles that has been in raycaster
 
 # Gameplay
