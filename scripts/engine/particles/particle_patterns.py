@@ -48,7 +48,7 @@ class Particle_Patterns():
         if norm == 0:  # Avoid division by zero
             return (0,0)
         
-        return ((velocity / norm) * 0.5).tolist()  # Normalize and convert to a list
+        return ((velocity / norm) * 0.5).tolist()  # Normalize and convert to a list half speed of normal sparks
 
     @staticmethod
     def Vampire_Particle():
@@ -62,5 +62,20 @@ class Particle_Patterns():
         velocity = [
             math.cos(angle) * speed,
             math.sin(angle) * speed  
+        ]
+        return velocity
+    
+    @staticmethod
+    def Player_Particle():
+        # Constrain most of the motion to upward directions with slight spread
+        base_angle = math.pi/2  # Straight up (90 degrees)
+        angle_variation = math.pi/4  # 45 degrees spread in each direction
+        angle = base_angle + random.uniform(-angle_variation, angle_variation)
+        
+        # Fire tends to have faster initial speeds that taper off
+        speed = - (random.random() * 0.4 + 0.1)
+        velocity = [
+            math.cos(angle) * speed,  
+            math.sin(angle) * speed   
         ]
         return velocity

@@ -28,6 +28,7 @@ class Player(Moving_Entity):
         self.default_light_level = 6
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.default_light_level, self.tile)
         self.game.light_handler.Initialise_Light_Level(self.tile)
+        self.player_particle_cooldown = 0
 
         self.weapons = []
         self.effects = Player_Status_Effect_Handler(self)
@@ -71,6 +72,8 @@ class Player(Moving_Entity):
         self.weapon_handler.Update(offset)
 
         self.Update_Souls_To_Remove()
+
+        self.Spawn_Particles()
 
         
     def View_Direction(self, offset):
@@ -174,6 +177,16 @@ class Player(Moving_Entity):
         self.nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.pos, range)
 
 
+    # Spawn player particles at random intervals
+    def Spawn_Particles(self):
+        if not self.player_particle_cooldown:
+            self.player_particle_cooldown = random.randint(20, 30)
+            self.game.particle_handler.Activate_Particles(random.randint(1, 3), 'player', self.rect().center, frame=random.randint(50, 70))
+
+            return
+        
+        self.player_particle_cooldown -= 1
+        return
 
     # Render player
     def Render(self, surf, offset=(0, 0)):

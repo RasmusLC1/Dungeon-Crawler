@@ -18,6 +18,7 @@ class Particle_Handler:
              'bone' : Particle_Patterns.Spark_Particle,
              'soul' : Particle_Patterns.Soul_Particle,
              'vampire' : Particle_Patterns.Vampire_Particle,
+             'player' : Particle_Patterns.Player_Particle,
          }
          
 
@@ -39,8 +40,11 @@ class Particle_Handler:
             if not particle:
                 particle = self.Spawn_Extra_Particle()
 
+            # Get particle movement pattern
             velocity_function = self.particle_movement_patterns.get(type)
             velocity = velocity_function()
+
+            # Activate particle and add to active particles
             particle.Set_Active(type, pos, velocity, frame)
             self.active_particles.append(particle)
 

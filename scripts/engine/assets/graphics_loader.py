@@ -80,6 +80,7 @@ class Graphics_Loader:
             'poison_particle': get_tiles_from_sheet('particles/general/poison.png', 5, 0, 0, 0, 3, 3),
             'vampire_particle': get_tiles_from_sheet('particles/general/vampire.png', 5, 0, 0, 0, 3, 3),
             'soul_particle': get_tiles_from_sheet('particles/general/soul.png', 5, 0, 0, 0, 3, 3),
+            'player_particle': get_tiles_from_sheet('particles/general/player.png', 5, 0, 0, 0, 3, 3),
         }
         self.assets.update(effect_assets)
 
