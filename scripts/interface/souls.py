@@ -34,7 +34,6 @@ class Souls:
 
         new_x = self.move_text_based_on_soul(self.game.player.souls, self.pos_x)
 
-
         # Render the text
         self.game.default_font.Render_Word(surf, str(self.game.player.souls), (new_x, self.pos_y))
 

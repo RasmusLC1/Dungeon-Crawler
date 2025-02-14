@@ -31,7 +31,7 @@ class Portal_Button(Button):
         return False
     
     def Handle_Unlock(self):
-        if self.game.player.souls >= self.unlock_cost:
+        if self.game.player.Get_Total_Available_Souls() >= self.unlock_cost:
             self.game.player.Decrease_Souls(self.unlock_cost)
             self.game.state_machine.Set_State('run_game')
             return True
