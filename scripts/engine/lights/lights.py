@@ -1,6 +1,6 @@
 import math
 
-# Managed by scripts/engine/lights/light_handler
+# Managed by scripts/engine/lights/light_handler, should not be called outside there
 class Light():
     _id_counter = 0  # Class variable to generate unique IDs
 
@@ -20,11 +20,13 @@ class Light():
         self.Compute_Angles()
         self.Setup_Tile_Light()
 
-    # Light spread in a circle, meaning we can precompute the angles of the raycaster
-    # to save performance
+    # Light spread in a circle using cos and sin, meaning we can precompute the
+    # angles of the raycaster to save performance instead of calculcating on each update
     def Compute_Angles(self):
-        self.angle_cosines = [math.cos(math.radians(i * (self.field_of_view / self.number_rays)))for i in range(self.number_rays * self.light_level + 2)]
-        self.angle_sines = [math.sin(math.radians(i * (self.field_of_view / self.number_rays))) for i in range(self.number_rays * self.light_level + 2)]
+        step = self.field_of_view / self.number_rays
+        angles = [math.radians(i * step) for i in range(self.number_rays)]
+        self.angle_cosines = [math.cos(angle) for angle in angles]
+        self.angle_sines = [math.sin(angle) for angle in angles]
 
     # Check if a tile is valid
     def Check_Base_Tile(self, tile):
@@ -47,8 +49,6 @@ class Light():
 
         self.Ray_Caster()
     
-
-
     def Handle_Base_Tile(self):
         # Setup the main tile under the light
         base_tile = self.game.tilemap.Current_Tile(self.tile)
@@ -72,23 +72,23 @@ class Light():
             cos_angle = self.angle_cosines[j]
             sin_angle = self.angle_sines[j]
 
-            # Calculate the ray positions in 1/32 scale 
             for i in range(1, self.light_level + 1):
 
-                # Get the ray position
+                # Calculate the ray positions in 1/32 scale 
                 pos_x = scaled_pos_x + cos_angle * i
                 pos_y = scaled_pos_y + sin_angle * i
                 
-
                 # Update the tile the ray is touching
                 tile_key = str(int(pos_x)) + ';' + str(int(pos_y))
                 tile = self.game.tilemap.Current_Tile(tile_key)
                 if not self.Check_Base_Tile(tile):
                     break
 
+                # Light diminishes linearly with distance, to simulate light dimming
+                new_light_level = max(0, self.light_level - i)
+
                 # Add or update contribution if it's brighter than what’s currently recorded
                 # Recalculate_Light_Level on the tile will determine if it needs updating
-                new_light_level = max(0, self.light_level - i)
                 if new_light_level > tile.light_level:
                     tile.Add_Light_Contribution(self.id, new_light_level)
                     self.tiles.append(tile)
