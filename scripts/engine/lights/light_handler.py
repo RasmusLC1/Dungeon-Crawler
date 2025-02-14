@@ -40,9 +40,7 @@ class Light_Handler():
         light_source.Delete_Light()
 
         # Move the light to the new position
-        light_source.pos_holder = light_source.pos
-        light_source.tile = tile
-        light_source.pos = pos
+        light_source.Move(pos, tile)
 
         # Now recalculate the light at the new position
         light_source.Setup_Tile_Light()
@@ -61,12 +59,12 @@ class Light_Handler():
         light_source.Delete_Light() # Clear its tiles
 
         # If you need to update nearby lights:
-        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos, 200)
         for light in nearby_lights:
             light.Setup_Tile_Light()
 
     def Restore_Light(self, light_source):
-        nearby_lights = self.Find_Nearby_Lights(light_source.pos_holder, 200)
+        nearby_lights = self.Find_Nearby_Lights(light_source.pos, 200)
 
         for light in nearby_lights:
             light.Setup_Tile_Light()  # Recalculate the light for the nearby light sources

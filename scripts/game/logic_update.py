@@ -6,7 +6,7 @@ class Logic_Update():
             
             self.Check_Keyboard_Input()
             
-            self.game.particle_handler.particle_update(self.game.render_scroll)
+            self.game.particle_handler.Particle_Update()
             self.game.trap_handler.Update()
             self.game.item_handler.Update(self.game.render_scroll)
             self.game.decoration_handler.Update()

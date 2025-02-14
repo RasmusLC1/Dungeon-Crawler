@@ -22,12 +22,14 @@ class Particle_Handler:
          }
          
 
-    # Update the particles and 
-    def particle_update(self, offset = (0,0)):
+    # Update the particles
+    def Particle_Update(self):
         for particle in self.active_particles:
                 particle.Update()
-                particle.Render(self.game.display, offset)
 
+    def Particle_Render(self, surf, offset = (0,0)):
+        for particle in self.active_particles:
+                particle.Render(surf, offset)
 
     def Disable_Particle(self, particle):
         self.active_particles.remove(particle)

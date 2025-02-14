@@ -225,14 +225,6 @@ class Tilemap:
                 tiles.append(self.tilemap[check_loc])
         return tiles
     
-    # Check what tile type is in a given position
-    # def Current_Tile_Type(self, tile_key):
-    #     # tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
-    #     # check_loc = str(tile_loc[0]) + ';' + str(tile_loc[1])
-    #     if tile_key in self.tilemap:
-    #         return self.tilemap[tile_key].type
-    #     else:
-    #         return None
         
     # Check what tile type is in a given position
     def Current_Tile_Type_Without_Offset(self, pos):

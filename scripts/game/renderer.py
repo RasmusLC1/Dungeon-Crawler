@@ -9,23 +9,27 @@ class Renderer():
         self.back_ground_image = pygame.transform.scale(self.game.assets['background'], (self.game.screen_width/self.game.render_scale, self.game.screen_height/self.game.render_scale))
 
     def Render(self):
-        self.game.display.blit(self.back_ground_image, (0, 0))
+
+        render_scroll = self.game.render_scroll
+        surf = self.game.display
+        surf.blit(self.back_ground_image, (0, 0))
         
         self.game.ray_caster.Ray_Caster()
-        self.game.tilemap.Render_Tiles(self.game.ray_caster.tiles, self.game.display, offset=self.game.render_scroll)
+        self.game.tilemap.Render_Tiles(self.game.ray_caster.tiles, surf, offset=render_scroll)
 
 
-        self.game.souls_interface.Render(self.game.display)
-        self.game.entities_render.Render(self.game.display, self.game.render_scroll)
-        self.game.rune_handler.Render_Animation(self.game.display, self.game.render_scroll)
+        self.game.particle_handler.Particle_Render(surf, render_scroll)
+        self.game.entities_render.Render(surf, render_scroll)
+        self.game.rune_handler.Render_Animation(surf, render_scroll)
         
 
-        self.game.item_inventory.Render(self.game.display)
-        self.game.weapon_inventory.Render(self.game.display)
-        self.game.rune_inventory.Render(self.game.display)
+        self.game.item_inventory.Render(surf)
+        self.game.weapon_inventory.Render(surf)
+        self.game.rune_inventory.Render(surf)
 
-        self.game.text_box_handler.Render(self.game.display, self.game.render_scroll)
-        self.game.player.effects.Render_Effects_Symbols(self.game.display)
+        self.game.text_box_handler.Render(surf, render_scroll)
+        self.game.player.effects.Render_Effects_Symbols(surf)
+        self.game.souls_interface.Render(surf)
         self.game.health_bar.Health_Bar()
 
 
