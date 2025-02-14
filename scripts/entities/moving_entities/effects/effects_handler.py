@@ -1,22 +1,22 @@
-from scripts.entities.moving_entities.effects.fire import Fire
-from scripts.entities.moving_entities.effects.poison import Poison
-from scripts.entities.moving_entities.effects.frozen import Frozen
-from scripts.entities.moving_entities.effects.wet import Wet
-from scripts.entities.moving_entities.effects.regen import Regen
-from scripts.entities.moving_entities.effects.speed import Speed
-from scripts.entities.moving_entities.effects.Increase_Strength import Increase_Strength
-from scripts.entities.moving_entities.effects.invisibility import Invisibility
-from scripts.entities.moving_entities.effects.fire_resistance import Fire_Resistance
-from scripts.entities.moving_entities.effects.frozen_resistance import Frozen_Resistance
-from scripts.entities.moving_entities.effects.poison_resistance import Poison_Resistance
-from scripts.entities.moving_entities.effects.snare import Snare
-from scripts.entities.moving_entities.effects.healing import Healing
-from scripts.entities.moving_entities.effects.slow_down import Slow_Down
-from scripts.entities.moving_entities.effects.vampiric import Vampiric
-from scripts.entities.moving_entities.effects.invulnerable import Invulnerable
-from scripts.entities.moving_entities.effects.thorns import Thorns
-from scripts.entities.moving_entities.effects.eletric import Electric
-from scripts.entities.moving_entities.effects.electric_resistance import Electric_Resistance
+from scripts.entities.moving_entities.effects.poison.poison import Poison
+from scripts.entities.moving_entities.effects.frozen.frozen import Frozen
+from scripts.entities.moving_entities.effects.water.wet import Wet
+from scripts.entities.moving_entities.effects.healing.regen import Regen
+from scripts.entities.moving_entities.effects.movement.speed import Speed
+from scripts.entities.moving_entities.effects.general.Increase_Strength import Increase_Strength
+from scripts.entities.moving_entities.effects.general.invisibility import Invisibility
+from scripts.entities.moving_entities.effects.fire.fire_resistance import Fire_Resistance
+from scripts.entities.moving_entities.effects.fire.fire import Fire
+from scripts.entities.moving_entities.effects.frozen.frozen_resistance import Frozen_Resistance
+from scripts.entities.moving_entities.effects.poison.poison_resistance import Poison_Resistance
+from scripts.entities.moving_entities.effects.movement.snare import Snare
+from scripts.entities.moving_entities.effects.healing.healing import Healing
+from scripts.entities.moving_entities.effects.movement.slow_down import Slow_Down
+from scripts.entities.moving_entities.effects.healing.vampiric import Vampiric
+from scripts.entities.moving_entities.effects.damage.invulnerable import Invulnerable
+from scripts.entities.moving_entities.effects.damage.thorns import Thorns
+from scripts.entities.moving_entities.effects.electric.eletric import Electric
+from scripts.entities.moving_entities.effects.electric.electric_resistance import Electric_Resistance
 
 
 class Status_Effect_Handler:
@@ -83,6 +83,8 @@ class Status_Effect_Handler:
             self.thorns.effect_type: self.thorns,
             self.electric.effect_type: self.electric,
             self.electric_resistance.effect_type: self.electric_resistance,
+            'slash': None,
+            'blunt': None,
         }
 
         self.active_effects = []
@@ -113,14 +115,12 @@ class Status_Effect_Handler:
                 print(f"Wrong loaded data{e}", effect_data, ID)
 
     def Set_Effect(self, effect, duration):
-        if not effect:
-            return False
         if self.entity.effects.invulnerable.effect:
-            return False
-        if effect == 'slash' or effect == 'blunt':
             return False
         try:
             effect = self.effects[effect]
+            if not effect:
+                return False
             effect_set_success = effect.Set_Effect(duration)
             if effect_set_success:
                 if effect not in self.active_effects:
@@ -134,13 +134,18 @@ class Status_Effect_Handler:
             effect.Remove_Effect()
             self.active_effects.remove(effect)
 
-
     def Update_Status_Effects(self):
         for effect in self.active_effects:
             effect.Update_Effect()
             if not effect.effect and effect in self.active_effects:
                 self.active_effects.remove(effect)
+    
+    def Get_Effect_Description(self, effect):
+        effect = self.effects[effect]
+        if not effect:
+            return None
         
+        return effect.description
 
     def Remove_Effect(self, effect):
         

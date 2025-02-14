@@ -36,22 +36,6 @@ class Text_Box_handler():
             if self.current_item:
                 return
 
-    # def Update_Nearby_Items(self):
-    #     if self.nearby_item_cooldown:
-    #         self.nearby_item_cooldown = max(0, self.nearby_item_cooldown - 1)
-    #         return False
-
-    #     self.nearby_item_cooldown = 30
-    #     self.nearby_items.clear()
-
-    #     self.nearby_items = self.game.item_handler.Find_Nearby_Item(self.game.mouse.player_mouse, 100)
-    #     # nearby_runes = self.game.rune_handler.Find_Nearby_Runes(self.game.mouse.player_mouse, 100)
-    #     # if not nearby_runes:
-    #     #     return True
-    #     # self.nearby_items.extend(nearby_runes)
-    #     return True
-    
-
     def Render(self, surf, offset=(0, 0)):
         if not self.current_item:
             return
