@@ -64,7 +64,7 @@ class State_Machine():
         self.game.menu_handler.Loading_Menu_Reset()
         self.game.menu_handler.portal_shrine_menu.Reset()
         player_health = self.game.player.health
-        player_souls = self.game.player.souls
+        player_souls = self.game.player.Get_Total_Available_Souls()
         self.game.level += 1
         self.game.level_loader.Load_Level_New_Map(self.game.level, False)
         # Reset player health and souls

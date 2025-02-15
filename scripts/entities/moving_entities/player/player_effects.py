@@ -1,10 +1,10 @@
 from scripts.entities.moving_entities.effects.effects_handler import Status_Effect_Handler
-from scripts.entities.moving_entities.effects.silence import Silence
-from scripts.entities.moving_entities.effects.arcane_conduit import Arcane_Conduit
-from scripts.entities.moving_entities.effects.hunger import Hunger
-from scripts.entities.moving_entities.effects.magnet import Magnet
-from scripts.entities.moving_entities.effects.resistance import Resistance
-from scripts.entities.moving_entities.effects.player_movement_invunerable import Player_Movement_Invunerable
+from scripts.entities.moving_entities.effects.player.silence import Silence
+from scripts.entities.moving_entities.effects.souls.arcane_conduit import Arcane_Conduit
+from scripts.entities.moving_entities.effects.souls.hunger import Hunger
+from scripts.entities.moving_entities.effects.player.magnet import Magnet
+from scripts.entities.moving_entities.effects.general.resistance import Resistance
+from scripts.entities.moving_entities.effects.player.player_movement_invunerable import Player_Movement_Invunerable
 
 
 class Player_Status_Effect_Handler(Status_Effect_Handler):

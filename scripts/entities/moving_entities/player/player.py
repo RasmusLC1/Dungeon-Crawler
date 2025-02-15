@@ -90,7 +90,11 @@ class Player(Moving_Entity):
         self.souls += added_soul
 
     def Decrease_Souls(self, subtract_soul):
-        self.souls_to_remove = subtract_soul
+        self.souls_to_remove += subtract_soul
+
+    # Subtract the souls that are to be removed from total souls to get a correct souls count
+    def Get_Total_Available_Souls(self):
+        return self.souls - self.souls_to_remove
 
     def Update_Souls_To_Remove(self):
         if not self.souls_to_remove:

@@ -2,7 +2,7 @@ import pygame
 import random
 
 class Effect():
-    def __init__(self, entity, effect_type, animation_max, animation_cooldown_max, cooldown_range):
+    def __init__(self, entity, effect_type, animation_max, animation_cooldown_max, cooldown_range, description):
         self.entity = entity
         self.effect_type = effect_type
         self.effect_max = 10
@@ -13,6 +13,7 @@ class Effect():
         self.animation_cooldown = 0
         self.animation_cooldown_max = animation_cooldown_max
         self.cooldown_range = cooldown_range
+        self.description = description
         self.saved_data = {}
 
     def Save_Data(self):

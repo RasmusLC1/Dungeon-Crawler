@@ -12,7 +12,7 @@ class Projectile_Rune(Rune):
     
     def Activate(self):
         if not super().Activate():
-            return    
+            return
         self.clicked = True
    
 
@@ -35,7 +35,7 @@ class Projectile_Rune(Rune):
         
         # Handle intial setup
         if not self.charge:
-            if self.game.player.souls < self.current_soul_cost:
+            if self.game.player.Get_Total_Available_Souls() < self.current_soul_cost:
                 return
             self.Set_Charge()
             self.Set_Activate_Cooldown(self.activate_cooldown_max )
