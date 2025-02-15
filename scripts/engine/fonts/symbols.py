@@ -15,9 +15,12 @@ class Symbols():
                                'power', 'gold', 'arrow', 'key',
                                'arcane_conduit', 'magnet', 'hunger', 
                                'invulnerable', 'snare', 'thorns',
-                               'electric_resistance', 'electric'
+                               'electric_resistance', 'electric',
+                               'enemy',
                                ]
 
+    def Check_If_Symbol_Exist(self, symbol):
+        return symbol in self.symbols_lookup
 
 
     def find_symbol_position(self, input_string):
