@@ -4,20 +4,24 @@ class Symbols():
     def __init__(self, game):
         self.game = game
         self.symbols = self.game.assets['symbols']
-        self.symbols_lookup = ['health', 'increase_strength', 'speed',
-                               'soul', 'invisibility',
-                               'slash', 'blunt', 'electric',
-                               'resistance', 'regen', 'silence',
-                               'luck', 'vampiric', 'fire',
-                               'frozen', 'poison', 'wet',
-                               'block', 'fire_resistance',
-                               'frozen_resistance', 'poison_resistance',
-                               'power', 'gold', 'arrow', 'key',
-                               'arcane_conduit', 'magnet', 'hunger', 
-                               'invulnerable', 'snare', 'thorns',
-                               'electric_resistance', 'electric',
-                               'enemy',
-                               ]
+        # Use dictionary for O(1) lookup time, using enumerate to number them
+        self.symbols_lookup = {
+            symbol: index for index, symbol in enumerate([
+                'health', 'increase_strength', 'speed',
+                'soul', 'invisibility',
+                'slash', 'blunt', 'electric',
+                'resistance', 'regen', 'silence',
+                'luck', 'vampiric', 'fire',
+                'frozen', 'poison', 'wet',
+                'block', 'fire_resistance',
+                'frozen_resistance', 'poison_resistance',
+                'power', 'gold', 'range', 'key',
+                'arcane_conduit', 'magnet', 'hunger', 
+                'invulnerable', 'snare', 'thorns',
+                'electric_resistance', 'electric',
+                'enemy',
+            ])
+        }
 
     def Check_If_Symbol_Exist(self, symbol):
         return symbol in self.symbols_lookup
@@ -27,7 +31,7 @@ class Symbols():
         effect = input_string
         
         if effect.lower() in self.symbols_lookup:
-            position = self.symbols_lookup.index(effect)
+            position = self.symbols_lookup.get(effect)
             return position
 
         return None

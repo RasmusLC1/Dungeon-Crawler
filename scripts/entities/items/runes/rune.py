@@ -28,6 +28,10 @@ class Rune(Item):
         self.activate_cooldown = 0
         self.activate_cooldown_max = 200
         self.clicked = False # Used for projectiles
+        self.description = (
+                            f"soul {self.current_soul_cost}\n"
+                            f"power {self.current_power}\n"
+                        )
         self.text_box = Rune_Textbox(self)
 
 
@@ -141,7 +145,7 @@ class Rune(Item):
     # Always return False as runes cannot be placed down
     def Move_Legal(self, mouse_pos, player_pos, tilemap, offset=...):
         return False
-    
+
 
     def Update_Animation(self):
         if self.animation_time:

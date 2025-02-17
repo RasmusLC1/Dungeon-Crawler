@@ -12,6 +12,12 @@ class Potion(Item):
         self.effect = self.type.replace('_potion', '')
         self.text_box = Potion_Textbox(self)
         self.Update_Sub_Type()
+        
+        text_box_effect = self.effect.replace('_resistance', '')
+        self.description = (
+                            f"{self.effect} {self.amount}\n"
+                            f"gold {self.value}\n"
+                        )
 
     def Save_Data(self):
         super().Save_Data()
