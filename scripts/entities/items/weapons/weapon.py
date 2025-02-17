@@ -56,6 +56,12 @@ class Weapon(Item):
         self.attack_hitbox_size = (5, 5)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
         self.text_box = Weapon_Textbox(self)
+        self.description = (
+                            f"{self.effect} {self.damage}\n"
+                            f"speed {self.speed}\n"
+                            f"range {self.range}\n"
+                            f"gold {self.value}\n"
+                        )
 
     def Save_Data(self):
         if self.entity:

@@ -67,5 +67,6 @@ class Text_Box():
         self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
 
         # self.entity.game.mixed_symbols.Render_Mixed_Text(surf, 'fire Damage over time Stopped by water', text_box_pos)
+        self.entity.game.mixed_symbols.Render_Mixed_Text(surf, self.entity.description, (text_box_pos[0], text_box_pos[1] + 20))
 
-        return text_box_pos
+        return 

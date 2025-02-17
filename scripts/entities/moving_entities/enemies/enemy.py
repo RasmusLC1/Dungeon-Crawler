@@ -40,6 +40,13 @@ class Enemy(Moving_Entity):
 
         self.intent_manager = Intent_Manager(game, self)
         self.text_box = Enemy_Textbox(self)
+
+
+        self.description = (
+                            f"health {self.health}\n"
+                            f"increase_strength {self.strength}\n"
+                            f"speed {self.agility}\n"
+                        )
     
     def Save_Data(self):
         super().Save_Data()

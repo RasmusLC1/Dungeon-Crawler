@@ -20,6 +20,7 @@ class PhysicsEntity:
         self.Set_Tile()
         self.saved_data = {}
         self.text_box = None
+        self.description = ''
 
 
     def Save_Data(self):
@@ -108,6 +109,7 @@ class PhysicsEntity:
             return False
         else:
             return True
+        
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if not self.text_box:
