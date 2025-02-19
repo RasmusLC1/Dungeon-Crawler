@@ -30,7 +30,7 @@ class Renderer():
         self.game.text_box_handler.Render(surf, render_scroll)
         self.game.player.effects.Render_Effects_Symbols(surf)
         self.game.souls_interface.Render(surf)
-        self.game.health_bar.Health_Bar()
+        self.game.health_bar.Health_Bar(surf)
 
 
 

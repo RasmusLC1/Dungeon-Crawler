@@ -9,7 +9,7 @@ class Font():
             **{char: index for index, char in enumerate(
                 [*map(chr, range(97, 123)),  # a-z
                 *map(str, range(10)),       # 0-9
-                '-', '+', ':', '!', '_', ' ', '\n']
+                '-', '+', ':', '!', '_', '/', ' ', '\n']
             )}
         }
 

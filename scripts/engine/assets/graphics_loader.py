@@ -31,6 +31,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Loot(self)
         Graphics_Loader.Asset_Rune(self)
         Graphics_Loader.Asset_Menu(self)
+        Graphics_Loader.Asset_Health_Bar(self)
         Graphics_Loader.Asset_Particles_List(self)
 
         Graphics_Loader.Asset_TEST(self)
@@ -527,6 +528,21 @@ class Graphics_Loader:
             'floating_e' : get_tiles_from_sheet('font/floating_e.png', 1, 0, 0, 0, 16, 16),
             'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 4, 0, 0, 16, 16),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(font)
+
+    def Asset_Health_Bar(self):
+        font = {
+            'healthbar_1' : get_tiles_from_sheet('ui/healthbar_1.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_2' : get_tiles_from_sheet('ui/healthbar_2.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_3' : get_tiles_from_sheet('ui/healthbar_3.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_4' : get_tiles_from_sheet('ui/healthbar_4.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_5' : get_tiles_from_sheet('ui/healthbar_5.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_6' : get_tiles_from_sheet('ui/healthbar_6.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_7' : get_tiles_from_sheet('ui/healthbar_7.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_8' : get_tiles_from_sheet('ui/healthbar_8.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_9' : get_tiles_from_sheet('ui/healthbar_9.png', 5, 0, 0, 0, 64, 64),
+            'healthbar_10' : get_tiles_from_sheet('ui/healthbar_10.png', 5, 0, 0, 0, 64, 64),
         }
         self.assets.update(font)
 

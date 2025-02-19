@@ -73,12 +73,14 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
     def Disable_Effect_Icon(self, effect_icon):
         self.active_effect_symbols.remove(effect_icon)
 
-        for other_effect_icon in self.active_effect_symbols:
-            if other_effect_icon.pos[1] > effect_icon.pos[1]:
-                other_effect_icon.Update_Y_Position(self.y_pos_increment)   
+        self.Shift_Icons_Up(effect_icon)
 
         effect_icon.Disable()
 
+    def Shift_Icons_Up(self, effect_icon):
+        for other_effect_icon in self.active_effect_symbols:
+            if other_effect_icon.pos[1] > effect_icon.pos[1]:
+                other_effect_icon.Update_Y_Position(self.y_pos_increment)   
 
     def Find_Available_Effect_Icon(self, effect):
         while self.effect_icon_index < self.pool_length:

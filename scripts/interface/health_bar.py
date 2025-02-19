@@ -4,34 +4,63 @@ class Health_Bar:
     def __init__(self, game):
         self.game = game
         self.scaled_heart = pygame.transform.scale(self.game.assets['heart'], (10, 12))
+        self.pos_x = 20
+        self.pos_y = self.game.screen_height / self.game.render_scale - 70
+        self.animation = 0
+        self.animation_max = 4
+        self.animation_cooldown_max = 40
+        self.animation_cooldown = 0
+
+        self.health_bars = {
+            1: self.game.assets['healthbar_1'],
+            2: self.game.assets['healthbar_2'],
+            3: self.game.assets['healthbar_3'],
+            4: self.game.assets['healthbar_4'],
+            5: self.game.assets['healthbar_5'],
+            6: self.game.assets['healthbar_6'],
+            7: self.game.assets['healthbar_7'],
+            8: self.game.assets['healthbar_8'],
+            9: self.game.assets['healthbar_9'],
+            10: self.game.assets['healthbar_10'],
+        }
+
+        self.current_health = 0
+        self.normalised_health = 1
+        self.current_health_bar = self.health_bars[1]
+        self.player_health = ''
 
     
-    def normalize_health(self, current_health, max_health, bar_length):
-        # Calculate the normalization factor
-        normalization_factor = bar_length / max_health
+    def Update_Health(self):
+        self.Update_Animation()
+        if self.current_health == self.game.player.health:
+            return
         
-        # Calculate the normalized health
-        normalized_health = current_health * normalization_factor
-        return normalized_health
+        self.current_health = self.game.player.health
+        self.Normalise_Health()
+        self.current_health_bar = self.health_bars[self.normalised_health]
+
+    def Update_Animation(self):
+        if self.animation_cooldown < self.animation_cooldown_max:
+            self.animation_cooldown += 1
+            return
+        self.animation_cooldown = 0
+        self.animation += 1
+        if self.animation >= self.animation_max:
+            self.animation = 0
+        return
+
+    def Normalise_Health(self):
+        min_health, max_health = 1, self.game.player.max_health
+        current_health = max(self.game.player.health, min_health)
+
+        # Invert scaling: 10 (worst) → 1 (best)
+        self.normalised_health = max(1, min(10, round(10 * (1 - (current_health - min_health) / (max_health - min_health)))))
+
+        self.player_health = f"{self.current_health}/{self.game.player.max_health}"
+
     
-    def Health_Bar(self):
-        bar_length=80
-        rect_x = 20
-        rect_y = self.game.screen_height / self.game.render_scale - 20
-        normalised_health = self.normalize_health(self.game.player.health, self.game.player.max_health, bar_length)
-        rect_height = 5
+    def Health_Bar(self, surf):
+        surf.blit(self.current_health_bar[self.animation], (self.pos_x, self.pos_y))
+        self.game.default_font.Render_Word(surf, self.player_health, (self.pos_x - len(self.player_health) * 2, self.pos_y - 20))
         
 
-        # text = self.font.render(, True, (255, 255, 255))
-        
-        # Use self.display consistently if it's the initialized display surface
-        
-        text = str(self.game.player.health)
-        self.game.default_font.Render_Word(self.game.display, text, (rect_x, rect_y - 10))
-        # self.display.blit(text, (rect_x, rect_y - 10))
-        # Draw healthy
-        pygame.draw.rect(self.game.display, (0, 255, 0), (rect_x - 10, rect_y, normalised_health, rect_height))
-        # Draw damage
-        pygame.draw.rect(self.game.display, (255, 0, 0), (rect_x - 10 + normalised_health, rect_y, bar_length-normalised_health, rect_height))
-        # Draw Heart
-        self.game.display.blit(self.scaled_heart, (rect_x + 40, rect_y - 12))
