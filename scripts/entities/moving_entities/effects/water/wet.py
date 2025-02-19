@@ -4,7 +4,7 @@ import random
 # Increased damage to electricity but immune to fire
 class Wet(Effect):
     def __init__(self, entity):
-        description = 'Increases electric and prevents fire'
+        description = 'Increases electric\nand prevents fire'
         super().__init__(entity, "wet", 2, 20, (200, 250), description)
 
     

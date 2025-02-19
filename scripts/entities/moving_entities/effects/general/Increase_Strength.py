@@ -5,7 +5,7 @@ import random
 # Increase entity's strength
 class Increase_Strength(Effect):
     def __init__(self, entity):
-        description = 'Increases melee damage'
+        description = 'Increases\nmelee damage'
 
         super().__init__(entity, "increase_strength", 0, 0, (130, 160), description)
 

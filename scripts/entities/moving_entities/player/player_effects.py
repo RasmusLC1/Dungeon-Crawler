@@ -6,16 +6,38 @@ from scripts.entities.moving_entities.effects.player.magnet import Magnet
 from scripts.entities.moving_entities.effects.general.resistance import Resistance
 from scripts.entities.moving_entities.effects.player.player_movement_invunerable import Player_Movement_Invunerable
 
+from scripts.entities.moving_entities.player.effect_icon import Effect_Icon
+
 
 class Player_Status_Effect_Handler(Status_Effect_Handler):
     def __init__(self, entity):
         super().__init__(entity)
-        self.silence =  Silence(entity)
-        self.arcane_conduit = Arcane_Conduit(entity)
-        self.hunger = Hunger(entity)
-        self.magnet = Magnet(entity)
-        self.resistance = Resistance(entity)
-        self.player_movement_invunerable = Player_Movement_Invunerable(entity)
+
+        self.active_effect_symbols = []
+
+        self.x_pos = 20
+        self.y_pos = 60
+        self.y_pos_increment = 20
+        
+        self.effect_icon_index = 0
+        self.Initalise_Effect_Icons()
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+
+        # Load in the effect icons by iterating over all active effects
+        for effect in self.active_effects:
+            self.Find_Available_Effect_Icon(effect.effect_type)
+        
+    def Initialise_Effects(self):
+        super().Initialise_Effects()
+
+        self.silence =  Silence(self.entity)
+        self.arcane_conduit = Arcane_Conduit(self.entity)
+        self.hunger = Hunger(self.entity)
+        self.magnet = Magnet(self.entity)
+        self.resistance = Resistance(self.entity)
+        self.player_movement_invunerable = Player_Movement_Invunerable(self.entity)
 
         self.effects[self.silence.effect_type] = self.silence
         self.effects[self.arcane_conduit.effect_type] = self.arcane_conduit
@@ -24,15 +46,71 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.effects[self.resistance.effect_type] = self.resistance
         self.effects['player_movement_invunerable'] = self.player_movement_invunerable
 
+    def Update_Status_Effects(self):
+        super().Update_Status_Effects()
+        for effect_icon in self.active_effect_symbols:
+            if effect_icon.Update():
+                self.Disable_Effect_Icon(effect_icon)
 
+
+    def Set_Effect(self, effect, duration):
+        if not effect in self.effects:
+            return False
+        
+        # Check if the effect is already in the active effects before setting it
+        # Prevents effect icon duplication
+        check_effect = self.Get_Effect(effect)
+        already_in_effects =  check_effect in self.active_effects
+        
+        if not super().Set_Effect(effect, duration):
+            return False
+        if already_in_effects:
+            return False
+        
+        self.Find_Available_Effect_Icon(effect)
+    
+    # Disable a given effect_icon and remove it and shift all icons below it up
+    def Disable_Effect_Icon(self, effect_icon):
+        self.active_effect_symbols.remove(effect_icon)
+
+        self.Shift_Icons_Up(effect_icon)
+
+        effect_icon.Disable()
+
+    def Shift_Icons_Up(self, effect_icon):
+        for other_effect_icon in self.active_effect_symbols:
+            if other_effect_icon.pos[1] > effect_icon.pos[1]:
+                other_effect_icon.Update_Y_Position(self.y_pos_increment)   
+
+    def Find_Available_Effect_Icon(self, effect):
+        while self.effect_icon_index < self.pool_length:
+            effect_icon = self.effect_icons_pool[self.effect_icon_index]
+            self.effect_icon_index += 1
+
+            if not effect_icon.effect:
+                self.Activate_Effect_Icon(effect_icon, effect)
+                return
+        self.Spawn_Extra_Pool_Icon()
+ 
+    
+    
+    def Activate_Effect_Icon(self, effect_icon, effect):
+        new_y_pos = self.y_pos + self.y_pos_increment * (len(self.active_effect_symbols) + 1)
+        effect_icon.Set_Active((self.x_pos, new_y_pos), self.Get_Effect(effect))
+        self.active_effect_symbols.append(effect_icon)
+
+    # Fallback in case the icon pool needs to be increased
+    def Spawn_Extra_Pool_Icon(self):
+        self.effect_icons_pool.append(Effect_Icon(self.entity.game))
+        self.pool_length += 1
+
+    # Setup of icon pool for performance
+    def Initalise_Effect_Icons(self):
+        self.pool_length = 10
+        self.effect_icons_pool = []
+        for _ in range(self.pool_length):
+            self.effect_icons_pool.append(Effect_Icon(self.entity.game))
 
     def Render_Effects_Symbols(self, surf):
-        x_pos = 20
-        y_pos = 60
-        for effect in self.active_effects:
-            if not effect.effect:
-                continue
-            self.entity.game.symbols.Render_Symbol(surf, effect.effect_type, (x_pos, y_pos))
-            self.entity.game.default_font.Render_Word(surf, str(effect.effect), (x_pos + 20, y_pos))
-
-            y_pos += 20
+        for effect_icon in self.active_effect_symbols:
+            effect_icon.Render(surf)

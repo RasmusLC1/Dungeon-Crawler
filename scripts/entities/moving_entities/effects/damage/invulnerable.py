@@ -4,7 +4,7 @@ import random
 # Immune to damage but cannot move
 class Invulnerable(Effect):
     def __init__(self, entity):
-        description = 'Prevents all damage but snare'
+        description = 'Prevents all damage\nbut snare'
         super().__init__(entity, "invulnerable", 0, 0, (30, 50), description)
         self.entity_health_holder = entity.health
 

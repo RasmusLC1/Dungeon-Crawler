@@ -9,7 +9,7 @@ class Font():
             **{char: index for index, char in enumerate(
                 [*map(chr, range(97, 123)),  # a-z
                 *map(str, range(10)),       # 0-9
-                '-', '+', ':', '!', '_', ' ', '\n']
+                '-', '+', ':', '!', '_', '/', ' ', '\n']
             )}
         }
 
@@ -22,9 +22,6 @@ class Font():
             self.font_lookup_table[char] if char in self.font_lookup_table else None
             for char in input_string
         ]
-        
-        if None in char_positions:
-            print("Char position not found for some characters.")
         
         return char_positions
 
