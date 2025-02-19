@@ -4,7 +4,7 @@ import random
 # Heal entity
 class Healing(Effect):
     def __init__(self, entity):
-        description = 'One time healing. Blocked by poison'
+        description = 'One time healing.\nBlocked by poison'
         super().__init__(entity, 'healing', 0, 0, (0,0), description)
 
     

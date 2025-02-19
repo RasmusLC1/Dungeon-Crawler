@@ -5,7 +5,7 @@ import random
 # Make entity invisible and prevent enemy aggro
 class Invisibility(Effect):
     def __init__(self, entity):
-        description = 'Invisible to other entities'
+        description = 'Invisible to\nother entities'
         super().__init__(entity, "invisibility", 0, 0, (130, 160), description)
 
     

@@ -4,7 +4,7 @@ import random
 # Low damage and slowdown of entity
 class Frozen(Effect):
     def __init__(self, entity):
-        description = 'Slows and damages over time'
+        description = 'Slows and damages\nover time'
         super().__init__(entity, "frozen", 2, 30, (160, 200), description)
 
     

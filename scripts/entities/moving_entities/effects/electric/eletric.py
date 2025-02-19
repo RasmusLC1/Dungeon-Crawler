@@ -4,7 +4,7 @@ import random
 # 
 class Electric(Effect):
     def __init__(self, entity):
-        description = 'Damage and snare, spreads to nearby enemy, increased by wet'
+        description = 'Damage and snare,\nspreads to nearby\nenemy, increased\nby wet'
         super().__init__(entity, 'electric', 5, 10, (10, 15), description)
 
     

@@ -4,7 +4,7 @@ import random
 # Regen health over time each time effect is triggered
 class Regen(Effect):
     def __init__(self, entity):
-        description = 'Heals over time. Blocked by poison'
+        description = 'Heals over time.\nBlocked by poison'
         super().__init__(entity, "regen", 5, 30, (80, 100), description)
 
     

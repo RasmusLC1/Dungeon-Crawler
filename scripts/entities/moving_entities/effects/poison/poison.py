@@ -4,7 +4,7 @@ import random
 # Long lasting damage and weakens the entity
 class Poison(Effect):
     def __init__(self, entity):
-        description = 'Damage over time, reduces strength'
+        description = 'poison Damage over time,\nreduces increase_strength'
         super().__init__(entity, "poison", 2, 30, (50, 70), description)
         self.strength_holder = self.entity.strength
 

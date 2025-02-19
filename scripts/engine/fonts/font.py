@@ -23,9 +23,6 @@ class Font():
             for char in input_string
         ]
         
-        if None in char_positions:
-            print("Char position not found for some characters.")
-        
         return char_positions
 
 

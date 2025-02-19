@@ -119,7 +119,6 @@ class Player(Moving_Entity):
     def Set_Charge(self, charge_speed, offset=(0, 0)):
         super().Set_Charge(charge_speed, offset)
         
-    
 
     def Set_Health(self, health):
         self.health = health

@@ -4,7 +4,7 @@ import random
 # Take fire damage
 class Fire(Effect):
     def __init__(self, entity):
-        description = 'fire Damage over time. Stopped by water'
+        description = 'fire Damage over time.\nStopped by water'
         super().__init__(entity, 'fire', 7, 20, (30, 50), description)
 
     

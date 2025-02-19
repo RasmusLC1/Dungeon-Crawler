@@ -4,7 +4,7 @@ import random
 # Return damage dealth to entity
 class Thorns(Effect):
     def __init__(self, entity):
-        description = 'Reflects damage back to attackers'
+        description = 'Reflects damage\nback to\nattackers'
         super().__init__(entity, 'thorns', 0, 0, (150, 200), description)
         self.type = 'slash'
 

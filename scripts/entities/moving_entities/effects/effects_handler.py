@@ -20,11 +20,42 @@ from scripts.entities.moving_entities.effects.electric.electric_resistance impor
 
 
 class Status_Effect_Handler:
-    
 
     def __init__(self, entity):
         self.entity = entity
 
+        self.Initialise_Effects()       
+
+        self.active_effects = []
+        
+        self.is_on_ice = 0
+        self.saved_data = {}
+
+    def Save_Data(self):
+        for effect in self.active_effects:
+            self.saved_data[effect.effect_type] = effect.Save_Data()
+
+        return self.saved_data
+
+
+    def Load_Data(self, data):
+        for ID, effect_data in data.items():
+            if not effect_data:
+                continue
+            
+            if not ID in self.effects:
+                continue
+            try:
+                self.effects[ID].Load_Data(effect_data)
+                self.active_effects.append(self.effects[ID])
+            except Exception as e:
+                print(f"Wrong loaded data{e}", effect_data, ID)
+
+    
+    # Used to initialise effects so different entities can have different effects
+    # Keep unique self.fire etc for easy callback since they are widely used,
+    # Improves performance as it removes search and easier to build with
+    def Initialise_Effects(self):
         self.fire = Fire(self.entity)
 
         self.poison = Poison(self.entity)
@@ -87,33 +118,6 @@ class Status_Effect_Handler:
             'blunt': None,
         }
 
-        self.active_effects = []
-        
-        self.is_on_ice = 0
-        self.saved_data = {}
-
-
-
-    def Save_Data(self):
-        for effect in self.active_effects:
-            self.saved_data[effect.effect_type] = effect.Save_Data()
-
-        return self.saved_data
-
-
-    def Load_Data(self, data):
-        for ID, effect_data in data.items():
-            if not effect_data:
-                continue
-            
-            if not ID in self.effects:
-                continue
-            try:
-                self.effects[ID].Load_Data(effect_data)
-                self.active_effects.append(self.effects[ID])
-            except Exception as e:
-                print(f"Wrong loaded data{e}", effect_data, ID)
-
     def Set_Effect(self, effect, duration):
         if self.entity.effects.invulnerable.effect:
             return False
@@ -134,18 +138,20 @@ class Status_Effect_Handler:
             effect.Remove_Effect()
             self.active_effects.remove(effect)
 
+    # Use list comprehension for performance, remove effect if effect has run out
     def Update_Status_Effects(self):
-        for effect in self.active_effects:
-            effect.Update_Effect()
-            if not effect.effect and effect in self.active_effects:
-                self.active_effects.remove(effect)
-    
+        self.active_effects = [effect for effect in self.active_effects if effect.Update_Effect()]
+
+
     def Get_Effect_Description(self, effect):
         effect = self.effects[effect]
         if not effect:
             return None
         
         return effect.description
+    
+    def Get_Effect(self, effect):
+        return self.effects[effect]
 
     def Remove_Effect(self, effect):
         

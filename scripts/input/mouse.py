@@ -120,11 +120,11 @@ class Mouse_Handler:
     def rect_click(self):
         return pygame.Rect(self.click_pos[0], self.click_pos[1], 1, 1)    
     
-    # Mouse movement collision, add offset to remove it
+    # Mouse movement collision, add offset to adjust
     def rect_pos(self, offset = (0, 0)):
         return pygame.Rect(self.mpos[0] - offset[0], self.mpos[1]  - offset[1], 1, 1)  
     
-    # Mouse movement collision, add offset to remove it
+    # Mouse movement collision, add offset to adjust
     def rect_pos_menu(self, offset = (0, 0)):
         return pygame.Rect(self.menu_mouse[0], self.menu_mouse[1], 1, 1)  
     

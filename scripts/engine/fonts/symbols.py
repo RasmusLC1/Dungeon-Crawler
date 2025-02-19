@@ -19,7 +19,7 @@ class Symbols():
                 'arcane_conduit', 'magnet', 'hunger', 
                 'invulnerable', 'snare', 'thorns',
                 'electric_resistance', 'electric',
-                'enemy',
+                'chain', 'enemy', 'water'
             ])
         }
 
