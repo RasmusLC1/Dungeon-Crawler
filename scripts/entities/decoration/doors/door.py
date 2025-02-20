@@ -17,6 +17,11 @@ class Door(Decoration):
         if self.is_open:
             self.Open(False)
 
+    def Set_Sprite(self):
+        pass
+
+    def Set_Entity_Image(self):
+        pass
 
     # TODO: IMPLEMENT walls that can be walked through, I.E walls without physics in tilemap
     def Open(self, generate_clatter = True):

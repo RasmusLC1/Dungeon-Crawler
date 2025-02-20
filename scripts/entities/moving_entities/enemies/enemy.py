@@ -42,9 +42,9 @@ class Enemy(Moving_Entity):
         self.attack_symbol_offset = 20
         
 
-        self.intent_manager = self.intent_manager_class(game, self)
         self.text_box = Enemy_Textbox(self)
 
+        self.intent_manager = self.intent_manager_class(game, self)
         self.Set_Sprite()
 
 
@@ -276,6 +276,8 @@ class Enemy(Moving_Entity):
         self.Render_Weapons(surf, offset)
         self.Render_Health_Bar(surf, offset)
         self.Render_Attacking_Symbol(surf, offset)
+
+    
 
     def Render_Health_Bar(self, surf, offset = (0,0)):
         health_fraction = self.health / self.max_health

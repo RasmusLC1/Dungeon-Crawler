@@ -224,7 +224,7 @@ class Moving_Entity(PhysicsEntity):
             self.tile = new_tile
 
     def Set_Sprite(self):
-        self.Set_Action((0,0))
+        self.Set_Action([0,0])
         self.sprite = self.game.assets[self.animation]
 
     # Setting the item image and scaling it
@@ -579,6 +579,9 @@ class Moving_Entity(PhysicsEntity):
         # Simulates low visibility
         if not self.Update_Light_Level():
             return False
+        
+        if not self.entity_image:
+            return False
 
         
         entity_image = self.entity_image.copy()
@@ -593,15 +596,28 @@ class Moving_Entity(PhysicsEntity):
         # Apply darkening effect using BLEND_RGBA_MULT
         entity_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
-        surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), 
-                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
         # Render status effects
         #Fire
         self.effects.Render_Effects(surf, offset)
 
         if self.damage_cooldown:
+            self.Render_Damage_Lightup()
             scroll_up_effect = 20 - self.damage_cooldown
             self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
 
+        surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), 
+                (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         return True
+    
+        
+
+    def Render_Damage_Lightup(self):
+        if not self.entity_image:
+            return
+        # Blit the dark layer
+        light_up_surface = pygame.Surface(self.entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        light_up_surface.fill((255, 0, 0, 255))
+
+        # Blit the chest layer on top the dark layer
+        self.entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)

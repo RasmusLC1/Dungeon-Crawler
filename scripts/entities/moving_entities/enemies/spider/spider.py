@@ -10,7 +10,7 @@ class Spider(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 60, 'dweller')
 
-        self.animation = 'spider'
+        self.animation = 'spider_idle'
 
         self.path_finding_strategy = 'standard'
         self.intent_manager.Set_Intent(['medium_range', 'keep_position', 'shoot_spiderweb', 'direct', 'jump_attack', 'long_range'])
@@ -44,12 +44,12 @@ class Spider(Enemy):
             self.Set_Animation('attack')
             return
 
-        # Check for movement
-        if not movement[0] and not movement[1]:
-            self.Set_Animation('idle')
-            return
+        
         if movement[1] or movement[0]:
             self.Set_Animation('running')
+            return
+        self.Set_Animation('idle')
+
 
 
 

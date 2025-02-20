@@ -10,7 +10,7 @@ class Fire_Spirit(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 100, 'elemental')
         
-        self.animation = 'fire_spirit'
+        self.animation = 'fire_spirit_idle'
         self.path_finding_strategy = 'ignore_lava'
         self.attack_strategy = 'medium_range'
         self.intent_manager.Set_Intent(['attack'])
@@ -93,15 +93,11 @@ class Fire_Spirit(Enemy):
         pass
 
     def Set_Action(self, movement):
-        # Check for movement
-        if not movement[0] and not movement[1]:
-            self.Set_Animation('standing_still')
-            return
-        
-
         if movement[1] or movement[0]:
             self.Set_Animation('running')
             return
+        
+        self.Set_Animation('idle')
 
     def Set_On_Fire(self, fire_time):
         self.effects.Set_Effect('healing', fire_time)
