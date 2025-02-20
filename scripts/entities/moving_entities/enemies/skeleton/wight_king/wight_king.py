@@ -7,13 +7,16 @@ import random
 
 
 class Wight_King(Skeleton):
+
+    intent_manager_class = Wight_King_Intent_Manager
+
+
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, 'wight_king', health, strength, max_speed, agility, intelligence, stamina, 40, (40, 40))
         self.animation_num_max = 4
         self.attack_animation_num_max = 4
         self.attack_animation_num_cooldown_max = 8
         self.Select_Weapon()
-        self.intent_manager = Wight_King_Intent_Manager(game, self)
         self.intent_manager.Set_Intent(['keep_position', 'direct', 'dash', 'attack', 'attack', 'medium_range',])
         self.intent_manager.Set_Intent_Cooldown_Max(120)
 

@@ -75,7 +75,10 @@ class Player(Moving_Entity):
 
         self.Spawn_Particles()
 
-        
+    
+    def Set_Sprite(self):
+        return
+
     def View_Direction(self, offset):
         self.view_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
         if self.view_direction.length() > 0:

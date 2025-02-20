@@ -70,6 +70,9 @@ class Moving_Entity(PhysicsEntity):
 
         # Handle regular animation
         self.animation = type
+        self.animation_value = 0
+
+
         self.animation_num = 0
         self.animation_num_max = 0
         self.animation_num_cooldown = 0
@@ -91,10 +94,12 @@ class Moving_Entity(PhysicsEntity):
         self.jumping_animation_num_cooldown = 0
         self.jumping_animation_num_cooldown_max = 50
 
+
         # Status Effects
         self.effects = Status_Effect_Handler(self)
         
         self.damage_text = ''
+
 
 
 
@@ -132,6 +137,10 @@ class Moving_Entity(PhysicsEntity):
         if action != self.action:
             self.action = action
             self.animation = self.type + '_' + self.action
+            self.animation_num = 0
+            self.attack_animation_num = 0
+            self.jumping_animation_num = 0
+
 
     # Update the entity 
     def Update(self, tilemap, movement=(0, 0)):
@@ -192,7 +201,7 @@ class Moving_Entity(PhysicsEntity):
         if self.idle_count > 60:
             self.Set_Idle()
         else:
-            self.idle_count += 0
+            self.idle_count += 1
 
         if 'attack' in self.animation:
             self.Update_Attack_Animation()
@@ -214,37 +223,66 @@ class Moving_Entity(PhysicsEntity):
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
 
+    def Set_Sprite(self):
+        self.Set_Action((0,0))
+        self.sprite = self.game.assets[self.animation]
 
+    # Setting the item image and scaling it
+    def Set_Entity_Image(self):
+        if not self.sprite:
+            return
+        self.Set_Sprite()
+        entity_image = self.sprite[self.animation_value]
+        self.entity_image = pygame.transform.scale(entity_image, self.size)
 
     def Update_Animation(self) -> None:
-        if not self.animation_num_cooldown:
-            self.animation_num += 1
-            if self.animation_num > self.animation_num_max:
-                self.animation_num = 0
-            self.animation_num_cooldown = self.animation_num_cooldown_max
-        else:
+        if self.animation_num_cooldown:
             self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
+            return
+        
+        self.animation_num_cooldown = self.animation_num_cooldown_max
+        self.animation_num += 1
+        self.Set_Entity_Image()
+        if self.animation_num > self.animation_num_max:
+            self.animation_num = 0
+
+        self.animation_value = self.animation_num
 
     def Update_Attack_Animation(self) -> None:
-        
-        if not self.attack_animation_num_cooldown:
-            self.attack_animation_num += 1
-            if self.attack_animation_num > self.attack_animation_num_max:
-                self.attack_animation_num = 0
-            self.attack_animation_num_cooldown = self.attack_animation_num_cooldown_max
-        else:
+        if self.attack_animation_num_cooldown:
             self.attack_animation_num_cooldown = max(0, self.attack_animation_num_cooldown - 1)
+            return
+
+        self.attack_animation_num_cooldown = self.attack_animation_num_cooldown_max
+        self.attack_animation_num += 1
+        self.Set_Entity_Image()
+
+        if self.attack_animation_num > self.attack_animation_num_max:
+            self.attack_animation_num = 0
+            self.attacking = 0  # Reset attack state
+
+        self.animation_value = self.attack_animation_num
+
+
+
 
     def Update_Jumping_Animation(self) -> None:
-        
-        if not self.jumping_animation_num_cooldown:
-            self.jumping_animation_num += 1
-            if self.jumping_animation_num > self.animation_num_max:
-                self.jumping_animation_num = self.jumping_animation_num_max
-            self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
-        else:
+        if self.jumping_animation_num_cooldown:
             self.jumping_animation_num_cooldown = max(0, self.jumping_animation_num_cooldown - 1)
+            return
 
+        self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
+        self.jumping_animation_num += 1
+        self.Set_Entity_Image()
+
+        if self.jumping_animation_num > self.jumping_animation_num_max:
+            self.jumping_animation_num = 0  # Reset animation
+            self.attacking = 0  # Reset attack if it's a jump attack
+
+        self.animation_value = self.jumping_animation_num
+
+
+       
 
     # Set the idle state every 60 ticks to either up or down depending on last input
     def Set_Idle(self):
@@ -255,31 +293,26 @@ class Moving_Entity(PhysicsEntity):
             self.Set_Animation('idle_down')
 
     def Set_Action(self, movement):
-        # Check for movement
         if not movement[0] and not movement[1]:
             if self.direction_y_holder < 0:
                 self.Set_Animation('standing_still_up')
             else:
                 self.Set_Animation('standing_still_down')
             return
+
         self.idle_count = 0
-        
+
+        # Determine animation and flip based on movement
+        if movement[0] > 0:
+            self.flip[0] = False
+        elif movement[0] < 0:
+            self.flip[0] = True
 
         if movement[1] < 0:
             self.Set_Animation('running_up')
-            return
-        if movement[0] > 0:
-            self.flip[0] = False
+        else:
             self.Set_Animation('running_down')
-            return
-        if movement[0] < 0:
-            self.flip[0] = True
-            self.Set_Animation('running_down')
-            return
 
-        if movement[1] > 0:
-            self.Set_Animation('running_down')
-            return
 
         
 
@@ -546,21 +579,9 @@ class Moving_Entity(PhysicsEntity):
         # Simulates low visibility
         if not self.Update_Light_Level():
             return False
-        
-        animation_num = self.animation_num
-
-        if 'attack' in self.animation:
-            animation_num = self.attack_animation_num
-
-        if 'jumping' in self.animation:
-            animation_num = self.jumping_animation_num
-
-        # Load and scale the entity images, split to allow better animation
-        entity_image = self.game.assets[self.animation][animation_num]
-        entity_image = pygame.transform.scale(entity_image, self.size)
 
         
-        
+        entity_image = self.entity_image.copy()
         
         entity_image.set_alpha(self.alpha_value)
 

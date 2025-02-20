@@ -4,13 +4,15 @@ from scripts.entities.moving_entities.enemies.spider.spider_intent import Spider
 
 # TODO: Implement intent with spider and make attacks into objects
 class Spider(Enemy):
+
+    intent_manager_class = Spider_Intent_Manager
+
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 60, 'dweller')
 
         self.animation = 'spider'
 
         self.path_finding_strategy = 'standard'
-        self.intent_manager = Spider_Intent_Manager(game, self)
         self.intent_manager.Set_Intent(['medium_range', 'keep_position', 'shoot_spiderweb', 'direct', 'jump_attack', 'long_range'])
 
         self.animation_num_max = 3 # running and idle animation

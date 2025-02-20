@@ -11,6 +11,8 @@ class PhysicsEntity:
         self.category = category # Category = Potion, enemy, player, etc
         self.sub_category = sub_category # Subcategory = variant of the category item -> weapon item 
         self.type = type # Type = Specific type of entity
+        self.sprite = None
+        self.entity_image = None
         self.pos = list(pos)
         self.size = size
         self.active = 0
@@ -95,6 +97,9 @@ class PhysicsEntity:
     def Set_Position(self, position):
         self.pos = position
 
+    def Set_Sprite(self):
+        pass
+        # self.sprite = self.game.assets[self.type]
 
     def Set_Active(self, value):
         self.active = value

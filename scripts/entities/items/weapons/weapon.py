@@ -563,7 +563,7 @@ class Weapon(Item):
 
     # Render the weapon in player's hand and rotate towards target
     def Render_Equipped(self, surf, offset=(0, 0)):
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        weapon_image = self.entity_image.copy()
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate - 180)
 
@@ -643,18 +643,12 @@ class Weapon(Item):
      # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
         
-        weapon_image = pygame.transform.scale(self.game.assets[self.sub_type][0], self.size)  
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        surf.blit(self.entity_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
     # Render the weapon in entity's hand
     def Render_Equipped_Enemy(self, surf, offset=(0, 0)):
-        try:
-            weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-        except Exception as e:
-            print(f"Error rendering enemy weapon {e}", self.sub_type, self.animation, self.attack_type)
-            return
-
+        weapon_image = self.entity_image.copy()
         if self.rotate:
             weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
         

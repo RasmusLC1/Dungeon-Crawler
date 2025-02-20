@@ -11,6 +11,10 @@ import random
 
 
 class Enemy(Moving_Entity):
+
+    # Factory method
+    intent_manager_class = Intent_Manager  # Default intent manager
+
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, max_weapon_charge, sub_category, size = (32, 32)):
 
         super().__init__(game, type, 'enemy', pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category)
@@ -38,8 +42,11 @@ class Enemy(Moving_Entity):
         self.attack_symbol_offset = 20
         
 
-        self.intent_manager = Intent_Manager(game, self)
+        self.intent_manager = self.intent_manager_class(game, self)
         self.text_box = Enemy_Textbox(self)
+
+        self.Set_Sprite()
+
 
 
         self.description = (

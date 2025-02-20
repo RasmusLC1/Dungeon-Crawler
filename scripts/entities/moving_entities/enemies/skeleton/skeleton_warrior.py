@@ -18,6 +18,8 @@ class Skeleton_Warrior(Skeleton):
         self.intent_manager.Set_Intent(['direct', 'attack', 'attack', 'attack', 'medium_range'])
         self.Select_Weapon()
 
+
+
     def Select_Weapon(self):
         # List of weapon classes
         weapon_classes = [

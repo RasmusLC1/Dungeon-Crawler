@@ -24,6 +24,7 @@ class Item(PhysicsEntity):
         self.delete_countdown = 0
         self.value = value # Placeholder gold value
         self.is_projectile = False
+        self.Set_Sprite()
         if add_to_tile:
             self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
 
@@ -110,6 +111,7 @@ class Item(PhysicsEntity):
         else:
             self.animation_cooldown = self.animation_cooldown_max
             self.animation = random.randint(0,self.max_animation)
+            self.Set_Entity_Image()
 
 
     def Distance(self, start_pos, target_pos):
@@ -117,6 +119,16 @@ class Item(PhysicsEntity):
     
     def Set_Amount(self, amount):
         self.amount = min(self.max_amount, amount)
+
+    # Setting the initial sprite type from assets, only called during initial setup
+    def Set_Sprite(self):
+        self.sprite = self.game.assets[self.sub_type]
+        self.Set_Entity_Image()
+
+    # Setting the item image and scaling it
+    def Set_Entity_Image(self):
+        item_image = self.sprite[self.animation].convert_alpha()
+        self.entity_image = pygame.transform.scale(item_image, self.size)
     
     def Increase_Amount(self, amount):
         self.amount = min(self.max_amount, self.amount + amount)
@@ -172,6 +184,7 @@ class Item(PhysicsEntity):
         self.game.item_handler.Remove_Item(self, True)
     
     def Render(self, surf, offset=(0, 0)):
+        
         if self.picked_up:
             self.Render_Inventory(surf, offset)
         else:
@@ -180,8 +193,7 @@ class Item(PhysicsEntity):
 
     # Render legal position
     def Render_Inventory(self, surf, offset=(0, 0)):
-        item_image = pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
-        surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        surf.blit(self.entity_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
 
     def Render_Floor(self, surf, offset=(0, 0)):
@@ -189,27 +201,25 @@ class Item(PhysicsEntity):
         if not self.Update_Light_Level():
             return
         
-        # Set image
-        item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-        item_image =  pygame.transform.scale(self.game.assets[self.sub_type][self.animation], self.size)  
-        
         # Set alpha value to make item fade out
         alpha_value = max(0, min(255, self.active))
 
         if not alpha_value:
             return
         
-        item_image.set_alpha(alpha_value)
+        entity_image = self.entity_image.copy()
+        
+        entity_image.set_alpha(alpha_value)
 
         # Blit the dark layer
         dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
         dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
 
         # Blit the item layer on top the dark layer
-        item_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        entity_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         
         # Render the item
-        surf.blit(item_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        surf.blit(entity_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
         
 
@@ -217,19 +227,15 @@ class Item(PhysicsEntity):
     def Render_Out_Of_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
         # Calculate distance between player and mouse
         distance = max(20, 100 - self.Distance(player_pos, mouse_pos))
-        item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-        item_image.set_alpha(distance)
-        item_image = pygame.transform.scale(item_image, self.size)
+        entity_image = self.entity_image.copy()
+        entity_image.set_alpha(distance)
 
         # Render on Mouse position as the item position is not being updated
-        surf.blit(item_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+        surf.blit(entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
 
     
     # Render item with fadeout if it's in an illegal position
     def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
-        item_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
-
-        item_image = pygame.transform.scale(item_image, self.size)
 
         # Render on Mouse position as the item position is not being updated
-        surf.blit(item_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+        surf.blit(self.entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
