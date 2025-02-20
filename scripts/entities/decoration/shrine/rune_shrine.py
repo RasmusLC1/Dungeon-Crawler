@@ -45,6 +45,8 @@ class Rune_Shrine(Decoration):
         else:
             self.animation_cooldown = 20
             self.animation = random.randint(0,self.max_animation)
+            self.Set_Entity_Image()
+
 
     def Remove_Available_Rune(self):
         self.available_rune = None

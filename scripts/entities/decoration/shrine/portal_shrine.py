@@ -30,6 +30,7 @@ class Portal_Shrine(Decoration):
         return super().Update()
 
     def Update_Animation(self):
+        # Don't animate unless open
         if not self.is_open:
             return
         if self.animation_cooldown:
@@ -37,6 +38,7 @@ class Portal_Shrine(Decoration):
         else:
             self.animation_cooldown = 20
             self.animation = random.randint(self.min_animation,self.max_animation)
+            self.Set_Entity_Image()
 
     def Remove_Available_Rune(self):
         self.available_rune = None

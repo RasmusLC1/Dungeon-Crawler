@@ -9,6 +9,7 @@ class Decoration(PhysicsEntity):
         super().__init__(game, type, 'decoration', pos, size)
         self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
         self.animation = 0
+        self.Set_Sprite()
 
 
     def Update_Animation(self):
@@ -16,6 +17,16 @@ class Decoration(PhysicsEntity):
 
     def Open(self, generate_clatter = False):
         pass
+    
+    # Setting the initial sprite type from assets, only called during initial setup
+    def Set_Sprite(self):
+        self.sprite = self.game.assets[self.type]
+        self.Set_Entity_Image()
+
+    # Setting the item image and scaling it
+    def Set_Entity_Image(self):
+        entity_image = self.sprite[self.animation].convert_alpha()
+        self.entity_image = pygame.transform.scale(entity_image, self.size)
 
 
     def Render(self, surf, offset = (0,0)):
@@ -23,7 +34,7 @@ class Decoration(PhysicsEntity):
         if not self.Update_Light_Level():
             return
         # Set image
-        decoration_image = self.game.assets[self.type][self.animation].convert_alpha()
+        decoration_image = self.entity_image.copy()
 
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed

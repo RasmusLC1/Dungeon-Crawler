@@ -126,7 +126,7 @@ class Chest(Decoration):
         if not self.Update_Light_Level():
             return
         # Set image
-        chest_image = self.game.assets['Chest'][self.version].convert_alpha()
+        chest_image = self.game.assets[self.type][self.version].convert_alpha()
 
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
