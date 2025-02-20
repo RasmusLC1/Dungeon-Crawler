@@ -11,6 +11,7 @@ class Health_Bar:
         self.animation_cooldown_max = 40
         self.animation_cooldown = 0
 
+        # Use dictionary for easy lookup
         self.health_bars = {
             1: self.game.assets['healthbar_1'],
             2: self.game.assets['healthbar_2'],
@@ -24,10 +25,10 @@ class Health_Bar:
             10: self.game.assets['healthbar_10'],
         }
 
-        self.current_health = 0
+        self.current_health = -999 # Set the player's initial health to -999 to trigger an update 
         self.normalised_health = 1
-        self.current_health_bar = self.health_bars[1]
-        self.player_health = ''
+        self.current_health_bar = self.health_bars[self.normalised_health] # Healthbar sprite
+        self.player_health = '' # Text displayed above healthbar
 
     
     def Update_Health(self):

@@ -1,14 +1,13 @@
-import math
-import random
 import pygame
-
-
-
+from collections import deque
 
 class PhysicsEntity:
+    _id_counter = 0  # Class variable to generate unique IDs
+    _available_IDs = deque() # List of ID's made available on deletion, deque for performance
+
     def __init__(self, game, type, category, pos, size, sub_category = None):
         self.game = game
-        self.ID = random.randint(1, 10000000)
+        self.Set_ID()
         self.category = category # Category = Potion, enemy, player, etc
         self.sub_category = sub_category # Subcategory = variant of the category item -> weapon item 
         self.type = type # Type = Specific type of entity
@@ -43,7 +42,23 @@ class PhysicsEntity:
         self.render = data['render']
         self.Set_Tile()
 
+    # Should only be called during initalisation
+    def Set_ID(self):
+        if PhysicsEntity._available_IDs:
+            self.ID = PhysicsEntity._available_IDs.popleft()  # O(1) removal
+            return
+        
+        self.ID = PhysicsEntity._id_counter
+        PhysicsEntity._id_counter += 1
 
+    # Called when entity is deleted by garbage collection
+    def __del__(self):
+        PhysicsEntity._available_IDs.append(self.ID)
+
+    # Called when entity is deleted
+    # Manually deletes the entity and returns the ID to the pool
+    def Delete(self):
+        PhysicsEntity._available_IDs.append(self.ID)
 
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])

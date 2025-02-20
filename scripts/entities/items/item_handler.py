@@ -92,7 +92,7 @@ class Item_Handler():
         self.game.entities_render.Remove_Entity(item)
         self.game.tilemap.Remove_Entity_From_Tile(item.tile, item.ID)
         if delete_item:
-            del item
+            item.Delete()
 
 
     def Find_Nearby_Item(self, entity_pos, max_distance):
