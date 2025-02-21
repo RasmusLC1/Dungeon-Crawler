@@ -38,18 +38,18 @@ class Spider(Enemy):
     # Set new action for animation
     def Set_Action(self, movement):
         if self.intent_manager.jump_attack.attack_length:
-            self.Set_Animation('jumping')
+            self.animation_handler.Set_Animation('jumping')
             return
 
         if self.charge and self.distance_to_player <= 50:
-            self.Set_Animation('attack')
+            self.animation_handler.Set_Animation('attack')
             return
 
         
         if movement[1] or movement[0]:
-            self.Set_Animation('running')
+            self.animation_handler.Set_Animation('running')
             return
-        self.Set_Animation('idle')
+        self.animation_handler.Set_Animation('idle')
 
 
 

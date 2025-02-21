@@ -1,14 +1,16 @@
 import math
 import pygame
-
-from scripts.engine.particles.particle import Particle
-from scripts.engine.utility.helper_functions import Helper_Functions 
 from scripts.entities.moving_entities.effects.effects_handler import Status_Effect_Handler
+from scripts.entities.moving_entities.animation.animation_handler import Animation_Handler
 from scripts.entities.entities import PhysicsEntity
 
 
 
+
 class Moving_Entity(PhysicsEntity):
+
+    _animation_handler = Animation_Handler
+
     
     def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category):
         super().__init__(game, type, category, pos, size, sub_category)
@@ -32,6 +34,7 @@ class Moving_Entity(PhysicsEntity):
         self.target = (0,0)
         
         self.damage_cooldown = 0
+        self.damage_cooldown_max = 40
         
         self.nearby_traps = []
         self.nearby_traps_cooldown = 0
@@ -41,7 +44,6 @@ class Moving_Entity(PhysicsEntity):
         self.action = ''
         self.anim_offset = (0, 0)
         self.flip = [False, False]
-        self.Set_Animation('')
         self.frame_movement = (0.0)
         self.last_frame_movement = (0.0)
 
@@ -62,41 +64,22 @@ class Moving_Entity(PhysicsEntity):
         self.max_speed = max_speed * self.game.render_scale + agility / 10 # Max speed of the entity
         self.max_speed_holder = self.max_speed # Max speed holder to reset it
 
-        self.alpha_value = 255
 
         # Determined by the entities agility
         self.left_weapon_cooldown = 0 
         self.right_weapon_cooldown = 0
 
-        # Handle regular animation
-        self.animation = type
-        self.animation_value = 0
-
-
-        self.animation_num = 0
-        self.animation_num_max = 0
-        self.animation_num_cooldown = 0
-        self.animation_num_cooldown_max = 50
 
         # Handle attack animations
         self.attacking = 0
-        self.attack_animation_num = 0
-        self.attack_animation_num_max = 0
-        self.attack_animation_num_cooldown = 0
-        self.attack_animation_num_cooldown_max = 10
+
 
         # Handle Blocking
         self.block_direction = (0,0)
 
-         # Jumping attack
-        self.jumping_animation_num = 0
-        self.jumping_animation_num_max = 0
-        self.jumping_animation_num_cooldown = 0
-        self.jumping_animation_num_cooldown_max = 50
-
-
         # Status Effects
         self.effects = Status_Effect_Handler(self)
+        self.animation_handler = self._animation_handler(self)
         
         self.damage_text = ''
 
@@ -114,7 +97,7 @@ class Moving_Entity(PhysicsEntity):
         self.saved_data['intelligence'] = self.intelligence
         self.saved_data['stamina'] = self.stamina
         self.saved_data['target'] = self.target
-        self.saved_data['animation'] = self.animation
+        self.saved_data['animation'] = self.animation_handler.animation
         self.saved_data.update(self.effects.Save_Data())
 
 
@@ -129,17 +112,9 @@ class Moving_Entity(PhysicsEntity):
         self.intelligence = data['intelligence']
         self.stamina = data['stamina']
         self.target = data['target']
-        self.animation = data['animation']
+        self.animation_handler.animation = data['animation']
         self.effects.Load_Data(data)
     
-    # Set new action for animation
-    def Set_Animation(self, action):
-        if action != self.action:
-            self.action = action
-            self.animation = self.type + '_' + self.action
-            self.animation_num = 0
-            self.attack_animation_num = 0
-            self.jumping_animation_num = 0
 
 
     # Update the entity 
@@ -147,7 +122,6 @@ class Moving_Entity(PhysicsEntity):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
 
         self.Update_Movement(movement)
-        self.Update_Alpha_Value()
         self.Update_Status_Effects()
 
 
@@ -199,16 +173,16 @@ class Moving_Entity(PhysicsEntity):
         self.Set_Action(movement)
 
         if self.idle_count > 60:
-            self.Set_Idle()
+            self.animation_handler.Set_Idle()
         else:
             self.idle_count += 1
 
-        if 'attack' in self.animation:
-            self.Update_Attack_Animation()
-        elif 'jumping' in self.animation:
-            self.Update_Jumping_Animation()
+        if 'attack' in self.animation_handler.animation:
+            self.animation_handler.Update_Attack_Animation()
+        elif 'jumping' in self.animation_handler.animation:
+            self.animation_handler.Update_Jumping_Animation()
         else:
-            self.Update_Animation()
+            self.animation_handler.Update_Animation()
 
         self.last_frame_movement = self.frame_movement
     
@@ -223,96 +197,7 @@ class Moving_Entity(PhysicsEntity):
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
 
-    def Set_Sprite(self):
-        self.sprite = self.game.assets[self.animation]
-
-    # Setting the item image and scaling it
-    def Set_Entity_Image(self):
-        self.Set_Sprite()
-
-        if not self.sprite:
-            print(self.animation, self.type)
-            return
-        
-        entity_image = self.sprite[self.animation_value]
-        self.entity_image = pygame.transform.scale(entity_image, self.size)
-
-    def Update_Animation(self) -> None:
-        if self.animation_num_cooldown:
-            self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
-            return
-        self.animation_num_cooldown = self.animation_num_cooldown_max
-        self.animation_num += 1
-        self.Set_Entity_Image()
-        if self.animation_num > self.animation_num_max:
-            self.animation_num = 0
-
-        self.animation_value = self.animation_num
-
-    def Update_Attack_Animation(self) -> None:
-        if self.attack_animation_num_cooldown:
-            self.attack_animation_num_cooldown = max(0, self.attack_animation_num_cooldown - 1)
-            return
-
-        self.attack_animation_num_cooldown = self.attack_animation_num_cooldown_max
-        self.attack_animation_num += 1
-        self.Set_Entity_Image()
-
-        if self.attack_animation_num > self.attack_animation_num_max:
-            self.attack_animation_num = 0
-            self.attacking = 0  # Reset attack state
-
-        self.animation_value = self.attack_animation_num
-
-
-
-
-    def Update_Jumping_Animation(self) -> None:
-        if self.jumping_animation_num_cooldown:
-            self.jumping_animation_num_cooldown = max(0, self.jumping_animation_num_cooldown - 1)
-            return
-
-        self.jumping_animation_num_cooldown = self.jumping_animation_num_cooldown_max
-        self.jumping_animation_num += 1
-        self.Set_Entity_Image()
-
-        if self.jumping_animation_num > self.jumping_animation_num_max:
-            self.jumping_animation_num = 0  # Reset animation
-            self.attacking = 0  # Reset attack if it's a jump attack
-
-        self.animation_value = self.jumping_animation_num
-
-
-       
-
-    # Set the idle state every 60 ticks to either up or down depending on last input
-    def Set_Idle(self):
-        
-        if self.direction_y_holder < 0:
-            self.Set_Animation('idle_up')
-        else:
-            self.Set_Animation('idle_down')
-
-    def Set_Action(self, movement):
-        if not movement[0] and not movement[1]:
-            if self.direction_y_holder < 0:
-                self.Set_Animation('standing_still_up')
-            else:
-                self.Set_Animation('standing_still_down')
-            return
-
-        self.idle_count = 0
-
-        # Determine animation and flip based on movement
-        if movement[0] > 0:
-            self.flip[0] = False
-        elif movement[0] < 0:
-            self.flip[0] = True
-
-        if movement[1] < 0:
-            self.Set_Animation('running_up')
-        else:
-            self.Set_Animation('running_down')
+    
 
 
         
@@ -428,7 +313,7 @@ class Moving_Entity(PhysicsEntity):
             return False
         
         if self.effects.invulnerable.effect:
-            self.damage_cooldown = 40
+            self.damage_cooldown = self.damage_cooldown_max
             return False
         
         if self.Check_Blocking_Direction(direction):
@@ -436,7 +321,7 @@ class Moving_Entity(PhysicsEntity):
 
         self.damage_text = str(damage)
 
-        self.damage_cooldown = 40
+        self.damage_cooldown = self.damage_cooldown_max
         self.health -= damage
 
         if self.health <= 0: # Entity dead
@@ -486,16 +371,16 @@ class Moving_Entity(PhysicsEntity):
         
         if self.attack_direction[0] < 0:
             self.flip[0] = True
-            self.Set_Animation('attack')
+            self.animation_handler.Set_Animation('attack')
 
         else:
             self.flip[0] = False
-            self.Set_Animation('attack')
+            self.animation_handler.Set_Animation('attack')
 
         
         if self.attack_direction[1] < -0.5:
             # TODO: UPDATE to attack up when that has been animated
-            self.Set_Animation('attack')
+            self.animation_handler.Set_Animation('attack')
 
     def Set_Attack_Direction(self, attack_direction = None):
         if not attack_direction:
@@ -563,31 +448,45 @@ class Moving_Entity(PhysicsEntity):
     def Set_Block_Direction(self, direction):
         self.block_direction = direction
 
-    # Set the alpha value to make the entity fade out, the lower the more invisible
-    def Update_Alpha_Value(self):
-        self.alpha_value = max(0, min(255, self.active)) 
+    def Set_Action(self, movement):
+        if not movement[0] and not movement[1]:
+            if self.direction_y_holder < 0:
+                self.animation_handler.Set_Animation('standing_still_up')
+            else:
+                self.animation_handler.Set_Animation('standing_still_down')
+            return
 
-    # Set the alpha value to a custom value for invisibility
-    def Set_Alpha_Value(self, value):
-        self.alpha_value = value
+        self.idle_count = 0
+
+        # Determine animation and flip based on movement
+        if movement[0] > 0:
+            self.flip[0] = False
+        elif movement[0] < 0:
+            self.flip[0] = True
+
+        if movement[1] < 0:
+            self.animation_handler.Set_Animation('running_up')
+        else:
+            self.animation_handler.Set_Animation('running_down')
+
 
     # Render entity
     def Render(self, surf, offset=(0, 0)):
         # Check if entity is in view distance first, if no there's no point computing the rest
-        if not self.alpha_value:
+        if not self.active:
             return False
         # Don't Render the enemy if their light level is very low
         # Simulates low visibility
         if not self.Update_Light_Level():
             return False
         
-        if not self.entity_image:
+        if not self.animation_handler.entity_image:
             return False
 
         
-        entity_image = self.entity_image.copy()
+        entity_image = self.animation_handler.entity_image.copy()
         
-        entity_image.set_alpha(self.alpha_value)
+        entity_image.set_alpha(min(255, self.active))
 
          # Create a darkening surface that is affected by darkness
         dark_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
@@ -614,9 +513,12 @@ class Moving_Entity(PhysicsEntity):
         
 
     def Render_Damage_Lightup(self, entity_image):
+        if self.damage_cooldown < self.damage_cooldown_max - 10:
+            return
         # Blit the dark layer
-        light_up_surface = pygame.Surface(self.entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        light_up_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
         light_up_surface.fill((255, 0, 0, 255))
 
         # Blit the chest layer on top the dark layer
         entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+

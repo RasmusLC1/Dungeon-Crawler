@@ -60,8 +60,6 @@ class Ice_Spirit(Enemy):
         self.Set_Attack_Direction()
         self.charge = self.ice_shooter.Particle_Creation(self.charge, self)
 
-    def Set_Idle(self):
-        pass
 
     def Set_Action(self, movement):
         pass

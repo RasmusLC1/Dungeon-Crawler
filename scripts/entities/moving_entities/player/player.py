@@ -4,6 +4,7 @@ from scripts.engine.particles.particle import Particle
 from scripts.entities.moving_entities.player.player_effects import Player_Status_Effect_Handler
 from scripts.entities.moving_entities.player.player_weapon import Player_Weapon_Handler
 from scripts.entities.moving_entities.player.player_movement import Player_Movement
+from scripts.entities.moving_entities.player.player_animation_handler import Player_Animation_Handler
 
 
 import random
@@ -12,13 +13,16 @@ import pygame
 
 
 class Player(Moving_Entity):
+
+    _animation_handler = Player_Animation_Handler
+
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, 'player', 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina, 'player')
         
         self.animation_num_max = 3
         
         self.bow_cooldown = 0
-        self.Set_Animation('idle_down')
+        self.animation_handler.Set_Animation('idle_down')
         self.souls = 500
         self.souls_to_remove = 0
         self.nearby_chests = []
@@ -105,13 +109,6 @@ class Player(Moving_Entity):
         self.souls_to_remove = max(0, self.souls_to_remove - 1)
         self.souls = max(0, self.souls - 1)
         self.game.particle_handler.Activate_Particles(1, 'soul', self.rect().center, frame=random.randint(20, 30))
-
-    def Set_Entity_Image(self):
-        self.Set_Sprite()
-        if not self.sprite:
-            return
-        self.entity_image = self.sprite[self.animation_value]
-
 
 
     def Entity_Collision_Detection(self, tilemap):
@@ -205,24 +202,24 @@ class Player(Moving_Entity):
         if abs(self.movement_handler.dashing) >= 50:
             return
         
-        self.Set_Entity_Image()
+        self.animation_handler.Set_Entity_Image()
         
-        entity_image = self.entity_image.copy()
+        entity_image = self.animation_handler.entity_image.copy()
 
-        entity_image.set_alpha(self.alpha_value)
+        entity_image.set_alpha(min(255, self.active))
 
         if self.damage_cooldown:
             self.Render_Damage_Lightup(entity_image)
             scroll_up_effect = 20 - self.damage_cooldown
             self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]),  'player_damage')
-        if not "up" in self.animation:
+        if not "up" in self.animation_handler.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
 
         self.weapon_handler.Render_Weapons(surf, offset)
         
 
-        if  "up" in self.animation:
+        if  "up" in self.animation_handler.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
         # Render status effects

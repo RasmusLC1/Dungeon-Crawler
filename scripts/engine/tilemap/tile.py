@@ -80,16 +80,25 @@ class Tile():
         # Update max cached light level
         self.light_level = max(self.light_level, contribution)  # O(1)
 
-    def Remove_Light_Contribution(self, light_id):
-        if light_id not in self.light_contributions:
-            return
+    # Use caching TODO: FIX THIS METHOD as it runs faster
+    # def Remove_Light_Contribution(self, light_id):
+    #     if light_id not in self.light_contributions:
+    #         return
         
-        was_max = self.light_contributions[light_id] == self.max_light  # Check if it was the max
-        del self.light_contributions[light_id]
+    #     was_max = self.light_contributions[light_id] == self.max_light  # Check if it was the max
+    #     del self.light_contributions[light_id]
 
-        if was_max:
-            # Recalculate only if we removed the max value
-            self.max_light = max(self.light_contributions.values(), default=0)  # O(n) but rare
+    #     if was_max:
+    #         # Recalculate only if we removed the max value
+    #         self.max_light = max(self.light_contributions.values(), default=0)  # O(n) but rare
+
+    def Remove_Light_Contribution(self, light_id):
+        if light_id in self.light_contributions:
+            del self.light_contributions[light_id]
+
+            # Only recalculate max if the removed light was the max one
+            if self.light_level not in self.light_contributions.values():
+                self.light_level = max(self.light_contributions.values(), default=0)
 
     
     # Only render active tiles from raycaster
