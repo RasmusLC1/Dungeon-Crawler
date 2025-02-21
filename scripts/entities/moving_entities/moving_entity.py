@@ -1,5 +1,4 @@
 import math
-import random
 import pygame
 
 from scripts.engine.particles.particle import Particle
@@ -10,6 +9,7 @@ from scripts.entities.entities import PhysicsEntity
 
 
 class Moving_Entity(PhysicsEntity):
+    
     def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category):
         super().__init__(game, type, category, pos, size, sub_category)
         self.velocity = [0, 0] # Velocity of the player
@@ -224,14 +224,16 @@ class Moving_Entity(PhysicsEntity):
             self.tile = new_tile
 
     def Set_Sprite(self):
-        self.Set_Action([0,0])
         self.sprite = self.game.assets[self.animation]
 
     # Setting the item image and scaling it
     def Set_Entity_Image(self):
-        if not self.sprite:
-            return
         self.Set_Sprite()
+
+        if not self.sprite:
+            print(self.animation, self.type)
+            return
+        
         entity_image = self.sprite[self.animation_value]
         self.entity_image = pygame.transform.scale(entity_image, self.size)
 
@@ -239,7 +241,6 @@ class Moving_Entity(PhysicsEntity):
         if self.animation_num_cooldown:
             self.animation_num_cooldown = max(0, self.animation_num_cooldown - 1)
             return
-        
         self.animation_num_cooldown = self.animation_num_cooldown_max
         self.animation_num += 1
         self.Set_Entity_Image()
@@ -602,7 +603,7 @@ class Moving_Entity(PhysicsEntity):
         self.effects.Render_Effects(surf, offset)
 
         if self.damage_cooldown:
-            self.Render_Damage_Lightup()
+            self.Render_Damage_Lightup(entity_image)
             scroll_up_effect = 20 - self.damage_cooldown
             self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
 
@@ -612,12 +613,10 @@ class Moving_Entity(PhysicsEntity):
     
         
 
-    def Render_Damage_Lightup(self):
-        if not self.entity_image:
-            return
+    def Render_Damage_Lightup(self, entity_image):
         # Blit the dark layer
         light_up_surface = pygame.Surface(self.entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
         light_up_surface.fill((255, 0, 0, 255))
 
         # Blit the chest layer on top the dark layer
-        self.entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)

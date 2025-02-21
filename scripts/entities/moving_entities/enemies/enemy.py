@@ -45,7 +45,6 @@ class Enemy(Moving_Entity):
         self.text_box = Enemy_Textbox(self)
 
         self.intent_manager = self.intent_manager_class(game, self)
-        self.Set_Sprite()
 
 
 

@@ -32,7 +32,8 @@ class Spider(Enemy):
 
 
         self.attack_symbol_offset = 10
-        
+    
+
 
     # Set new action for animation
     def Set_Action(self, movement):
