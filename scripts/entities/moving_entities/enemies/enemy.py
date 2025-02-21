@@ -45,7 +45,6 @@ class Enemy(Moving_Entity):
         self.text_box = Enemy_Textbox(self)
 
         self.intent_manager = self.intent_manager_class(game, self)
-        self.Set_Sprite()
 
 
 
@@ -183,8 +182,6 @@ class Enemy(Moving_Entity):
         if self.weapon_cooldown:
             self.weapon_cooldown = max(0, self.weapon_cooldown - 1)
 
-    def Set_Idle(self):
-        pass
 
     def Update_Locked_On_Target(self):
         if not self.locked_on_target:

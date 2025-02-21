@@ -89,15 +89,13 @@ class Fire_Spirit(Enemy):
         
         return
 
-    def Set_Idle(self):
-        pass
 
     def Set_Action(self, movement):
         if movement[1] or movement[0]:
-            self.Set_Animation('running')
+            self.animation_handler.Set_Animation('running')
             return
         
-        self.Set_Animation('idle')
+        self.animation_handler.Set_Animation('idle')
 
     def Set_On_Fire(self, fire_time):
         self.effects.Set_Effect('healing', fire_time)

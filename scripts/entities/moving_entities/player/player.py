@@ -4,6 +4,7 @@ from scripts.engine.particles.particle import Particle
 from scripts.entities.moving_entities.player.player_effects import Player_Status_Effect_Handler
 from scripts.entities.moving_entities.player.player_weapon import Player_Weapon_Handler
 from scripts.entities.moving_entities.player.player_movement import Player_Movement
+from scripts.entities.moving_entities.player.player_animation_handler import Player_Animation_Handler
 
 
 import random
@@ -12,13 +13,16 @@ import pygame
 
 
 class Player(Moving_Entity):
+
+    _animation_handler = Player_Animation_Handler
+
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, 'player', 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina, 'player')
         
         self.animation_num_max = 3
         
         self.bow_cooldown = 0
-        self.Set_Animation('idle_down')
+        self.animation_handler.Set_Animation('idle_down')
         self.souls = 500
         self.souls_to_remove = 0
         self.nearby_chests = []
@@ -34,6 +38,7 @@ class Player(Moving_Entity):
         self.effects = Player_Status_Effect_Handler(self)
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
         self.movement_handler = Player_Movement(self.game, self)
+
 
 
 
@@ -75,9 +80,7 @@ class Player(Moving_Entity):
 
         self.Spawn_Particles()
 
-    
-    def Set_Sprite(self):
-        return
+
 
     def View_Direction(self, offset):
         self.view_direction = pygame.math.Vector2(self.target[0] - self.pos[0], self.target[1] - self.pos[1])
@@ -199,26 +202,25 @@ class Player(Moving_Entity):
         if abs(self.movement_handler.dashing) >= 50:
             return
         
-        # Load and scale the entity images, split to allow better animation
-        entity_image= self.game.assets[self.animation][self.animation_num]
-
+        self.animation_handler.Set_Entity_Image()
         
-        entity_image.set_alpha(self.alpha_value)
+        entity_image = self.animation_handler.entity_image.copy()
 
-        if not "up" in self.animation:
+        entity_image.set_alpha(min(255, self.active))
+
+        if self.damage_cooldown:
+            self.Render_Damage_Lightup(entity_image)
+            scroll_up_effect = 20 - self.damage_cooldown
+            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]),  'player_damage')
+        if not "up" in self.animation_handler.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
 
         self.weapon_handler.Render_Weapons(surf, offset)
         
 
-        if  "up" in self.animation:
+        if  "up" in self.animation_handler.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
         # Render status effects
         self.effects.Render_Effects(surf, offset)
-
-        if self.damage_cooldown:
-            self.Render_Damage_Lightup()
-            scroll_up_effect = 20 - self.damage_cooldown
-            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]),  'player_damage')
