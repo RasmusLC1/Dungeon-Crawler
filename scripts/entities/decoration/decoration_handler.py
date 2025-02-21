@@ -43,7 +43,7 @@ class Decoration_Handler():
             size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
             self.Decoration_Spawner('door', door.pos, size=size)
 
-        for chest in self.game.tilemap.extract([('Chest', 0)]):
+        for chest in self.game.tilemap.extract([('chest', 0)]):
             version = self.Set_Chest_Version(depth)
             self.Decoration_Spawner('chest', chest.pos, version=version)
 

@@ -17,7 +17,7 @@ class Entity_Renderer():
     def Find_Nearby_Entities(self):
         self.entities.clear()
         for tile in self.game.ray_caster.tiles:
-            self.entities.extend(tile.entities)
+            self.entities.extend(tile.entities.values())
 
     def Add_Entity(self, entity):
         if entity in self.entities:
