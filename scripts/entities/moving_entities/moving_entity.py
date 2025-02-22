@@ -526,4 +526,3 @@ class Moving_Entity(PhysicsEntity):
         # Apply darkening effect using BLEND_RGBA_MULT
         self.rendered_surface.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         self.render_needs_update = False
-        return self.rendered_surface
