@@ -214,20 +214,6 @@ class Item(PhysicsEntity):
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
-    def Update_Dark_Surface(self, alpha_value):
-        self.rendered_image = self.entity_image.copy()
-        
-        self.rendered_image.set_alpha(alpha_value)
-
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        # Blit the item layer on top the dark layer
-        self.rendered_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        self.render_needs_update = False
-        
-
     # Render item with fadeout if it's in an illegal position
     def Render_Out_Of_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
         # Calculate distance between player and mouse

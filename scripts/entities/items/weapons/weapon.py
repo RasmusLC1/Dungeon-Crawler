@@ -616,11 +616,10 @@ class Weapon(Item):
             if self.equipped:
                 return
             self.Render_In_Inventory(surf)
+            return
         
         if not self.Update_Light_Level():
             return
-        # Set image
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
         
         # Set alpha value to make chest fade out
         alpha_value = max(0, min(255, self.active))
@@ -628,44 +627,42 @@ class Weapon(Item):
         if not alpha_value:
             return
         
-        weapon_image.set_alpha(alpha_value)
-
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        # Blit the chest layer on top the dark layer
-        weapon_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        
+        if self.render_needs_update:
+            self.Update_Dark_Surface(alpha_value)
         # Render the chest
-        surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
      # Render the weapon inside inventory
     def Render_In_Inventory(self, surf, offset=(0, 0)):
-        
+        # self.rendered_image = self.entity_image.copy()
         surf.blit(self.entity_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 
     # Render the weapon in entity's hand
     def Render_Equipped_Enemy(self, surf, offset=(0, 0)):
-        weapon_image = self.entity_image.copy()
-        if self.rotate:
-            weapon_image = pygame.transform.rotate(weapon_image, self.rotate)
-        
+       
         alpha_value = max(0, min(255, self.active)) 
-        weapon_image.set_alpha(alpha_value)
+
+        if not alpha_value:
+            return
+
+        if self.render_needs_update:
+            self.Update_Dark_Surface_Enemy(alpha_value)
+        
+        surf.blit(
+            pygame.transform.flip(self.rendered_image, False, False),
+                                  (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        
+    def Update_Dark_Surface_Enemy(self, alpha_value):
+        self.rendered_image = self.entity_image.copy()
+        self.rendered_image.set_alpha(alpha_value)
 
 
          # Create a darkening surface that is affected by darkness
-        dark_surface = pygame.Surface(weapon_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface = pygame.Surface(self.rendered_image.get_size(), pygame.SRCALPHA).convert_alpha()
         dark_surface.fill((self.light_level, self.light_level, self.light_level, 255))  
 
-        weapon_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-
-        surf.blit(
-            pygame.transform.flip(weapon_image, False, False),
-                                  (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-        
+        self.rendered_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
 
     # Inventory Logic below
