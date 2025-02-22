@@ -15,6 +15,8 @@ class Tile():
         self.physics = physics
         self.next_to_Wall = False
         self.entities = {}
+        self.needs_redraw = True  # ✅ Add flag to track if we need to redraw
+        self.rendered_surface = None  # ✅ Cached surface
         # Dictionary to hold each light's contribution
         # Key: light_id, Value: contributed_light_level
         self.light_contributions = {}
@@ -38,7 +40,10 @@ class Tile():
         self.light_level = new_light_level
 
     def Set_Active(self, new_active_level):
-        self.active = max(new_active_level, self.active)
+        new_active = max(new_active_level, self.active)
+        if new_active != self.active:
+            self.active = new_active
+            self.needs_redraw = True
 
     def Set_Next_To_Wall(self, state):
         self.next_to_Wall = state
@@ -76,35 +81,30 @@ class Tile():
     def Add_Light_Contribution(self, light_id, contribution):
         # Add/update light contribution
         self.light_contributions[light_id] = contribution
+        if contribution > self.max_light:
+            self.max_light = contribution
 
         # Update max cached light level
         self.light_level = max(self.light_level, contribution)  # O(1)
 
     # Use caching TODO: FIX THIS METHOD as it runs faster
-    # def Remove_Light_Contribution(self, light_id):
-    #     if light_id not in self.light_contributions:
-    #         return
-        
-    #     was_max = self.light_contributions[light_id] == self.max_light  # Check if it was the max
-    #     del self.light_contributions[light_id]
-
-    #     if was_max:
-    #         # Recalculate only if we removed the max value
-    #         self.max_light = max(self.light_contributions.values(), default=0)  # O(n) but rare
-
     def Remove_Light_Contribution(self, light_id):
-        if light_id in self.light_contributions:
-            del self.light_contributions[light_id]
+        if light_id not in self.light_contributions:
+            return
+        
+        was_max = self.light_contributions[light_id] == self.max_light
+        del self.light_contributions[light_id]
 
-            # Only recalculate max if the removed light was the max one
-            if self.light_level not in self.light_contributions.values():
-                self.light_level = max(self.light_contributions.values(), default=0)
+        if was_max:
+            self.max_light = max(self.light_contributions.values(), default=0)
+        
+        # Ensure light level is also updated
+        self.light_level = self.max_light
 
-    
-    # Only render active tiles from raycaster
-    def Render(self, surf, offset = (0,0)):
+    # Recalculates the tile's visual state and caches it 
+    def Update_Tile_Surface(self):
         # Get the tile surface from the assets
-        tile_surface = self.sprite.copy()
+        self.rendered_surface = self.sprite.copy()
         # Adjust the tile activeness calculation
         tile_activeness = max(0, min(255, 700 - self.active))
         
@@ -118,11 +118,17 @@ class Tile():
         tile_darken_factor = max(0, min(220, tile_darken_factor - light_level))
 
         # Create a darkening surface with an alpha channel
-        darkening_surface = pygame.Surface(tile_surface.get_size(), flags=pygame.SRCALPHA)
+        darkening_surface = pygame.Surface(self.rendered_surface.get_size(), flags=pygame.SRCALPHA)
         darkening_surface.fill((0, 0, 0, int(tile_darken_factor)))
         
         # Blit the darkening surface onto the tile surface
-        tile_surface.blit(darkening_surface, (0, 0))
-        
+        self.rendered_surface.blit(darkening_surface, (0, 0))
+
+        self.needs_redraw = False  # ✅ Reset flag
+    
+    # Only render active tiles from raycaster
+    def Render(self, surf, offset = (0,0)):
+        if self.needs_redraw:
+            self.Update_Tile_Surface() 
         # Blit the darkened tile surface onto the main surface
-        surf.blit(tile_surface, (self.pos[0] * self.size - offset[0], self.pos[1] * self.size - offset[1]))
+        surf.blit(self.rendered_surface, (self.pos[0] * self.size - offset[0], self.pos[1] * self.size - offset[1]))
