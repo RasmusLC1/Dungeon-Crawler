@@ -40,9 +40,8 @@ class Tile():
         self.light_level = new_light_level
 
     def Set_Active(self, new_active_level):
-        new_active = max(new_active_level, self.active)
-        if new_active != self.active:
-            self.active = new_active
+        if new_active_level != self.active:
+            self.active = new_active_level
             self.needs_redraw = True
 
     def Set_Next_To_Wall(self, state):
@@ -72,6 +71,7 @@ class Tile():
 
     def Add_Entity(self, entity):
         self.entities[entity.ID] = entity
+        entity.Set_Active(self.active)
 
     def Clear_Entity(self, entity_ID):
         if entity_ID in self.entities:
@@ -124,7 +124,7 @@ class Tile():
         # Blit the darkening surface onto the tile surface
         self.rendered_surface.blit(darkening_surface, (0, 0))
 
-        self.needs_redraw = False  # ✅ Reset flag
+        self.needs_redraw = False  # Reset flag
     
     # Only render active tiles from raycaster
     def Render(self, surf, offset = (0,0)):

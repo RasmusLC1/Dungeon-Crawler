@@ -11,8 +11,10 @@ class PhysicsEntity:
         self.category = category # Category = Potion, enemy, player, etc
         self.sub_category = sub_category # Subcategory = variant of the category item -> weapon item 
         self.type = type # Type = Specific type of entity
-        self.sprite = None
-        self.entity_image = None
+        self.sprite = None # The type of animation used
+        self.entity_image = None # the full animation with animation frame
+        self.rendered_image = None # the actual image being rendered to screen
+        self.render_needs_update = True
         self.pos = list(pos)
         self.size = size
         self.active = 0
@@ -66,7 +68,10 @@ class PhysicsEntity:
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
     def Set_Active(self, duration):
-        self.active = duration
+        if duration != self.active:
+            self.active = duration
+            self.render_needs_update = True
+            
 
     def Reduce_Active(self):
         self.active -= 1
@@ -101,8 +106,7 @@ class PhysicsEntity:
         pass
         # self.sprite = self.game.assets[self.type]
 
-    def Set_Active(self, value):
-        self.active = value
+
 
     def Set_Light_Level(self, value):
         self.light_level = value

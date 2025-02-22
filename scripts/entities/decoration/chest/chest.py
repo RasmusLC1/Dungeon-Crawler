@@ -108,9 +108,7 @@ class Chest(Decoration):
         loot_amount = min(20, max(self.loot_amount // 5, 3))
         return self.weapon_handler.Weapon_Spawner(self.weapons[weapon_index], rand_pos_x, rand_pos_y, loot_amount)
 
-    def Set_Active(self, duration):
-        self.active = duration
-    
+
     def Reduce_Active(self):
         self.active -= 1
 
