@@ -35,10 +35,6 @@ class Animation_Handler():
         self.jumping_animation_num_cooldown = 0
         self.jumping_animation_num_cooldown_max = 50
 
-    def Update(self):
-        pass
-
-    
 
     def Set_Sprite(self):
         self.sprite = self.entity.game.assets[self.animation]
@@ -47,32 +43,13 @@ class Animation_Handler():
     def Set_Entity_Image(self):
         self.Set_Sprite()
 
-        if not self.sprite:
-            print(self.animation, self.type)
-            return
-        
-        entity_image = self.sprite[self.animation_value]
-        self.entity_image = pygame.transform.scale(entity_image, self.entity.size)
-
-    def Set_Sprite(self):
-        self.sprite = self.entity.game.assets[self.animation]
-
-    # Setting the item image and scaling it
-    def Set_Entity_Image(self):
-        self.Set_Sprite()
-
-        if not self.sprite:
-            print(self.animation, self.entity.type)
-            return
         try:
             entity_image = self.sprite[self.animation_value]
-            print(self.entity.type, self.animation_value)
             self.entity_image = pygame.transform.scale(entity_image, self.entity.size)
         except Exception as e:
             print(f'ANIMATION WENT WRONG {e}', self.sprite, self.animation_value, self.animation)
         
 
- 
     # Set the idle state every 60 ticks to either up or down depending on last input
     def Set_Idle(self):
         return
