@@ -75,6 +75,6 @@ class Particle(Projectile):
         if self.disabled:
             return
         
-        weapon_image = self.game.assets[self.sub_type][self.animation].convert_alpha()
+        weapon_image = self.entity_image.convert_alpha()
 
         surf.blit(weapon_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
