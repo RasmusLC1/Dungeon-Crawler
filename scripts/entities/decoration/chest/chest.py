@@ -64,7 +64,7 @@ class Chest(Decoration):
         
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(0, 3) # Spawn normal
+        self.loot_type = random.randint(5, 6) # Spawn normal
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
                 self.Open()
@@ -73,8 +73,8 @@ class Chest(Decoration):
         elif self.loot_type in range(4, 6):
             rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
             rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-            # gold = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(5,50))
-            loot = Key(self.game, (rand_pos_x, rand_pos_y))
+            loot = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(60,60))
+            # loot = Key(self.game, (rand_pos_x, rand_pos_y))
 
             self.game.item_handler.Add_Item(loot)
 
@@ -115,11 +115,6 @@ class Chest(Decoration):
     def Render(self, surf, offset = (0,0)):
         if self.empty:
             return
-        
-        # if self.text_cooldown:
-        #     self.Render_text(surf, offset)
-        #     return
-        
 
         if not self.Update_Light_Level():
             return

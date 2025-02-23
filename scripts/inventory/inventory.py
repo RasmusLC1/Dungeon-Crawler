@@ -1,5 +1,11 @@
 from copy import copy
 
+
+# Use dictionary to sort the inventories, so have it be a key, say melee fetches that inventory
+# item inventory 1...9, ranged and rune inventory 1...3
+# Everything in one big dictionary so the items can be transferred around, use whitelist to avoid
+# mixing items and preserve the existing functionality
+
 class Inventory:
     def __init__(self, game, x_size, y_size):
         self.x_size = x_size
