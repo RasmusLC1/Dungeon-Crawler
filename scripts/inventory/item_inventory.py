@@ -2,9 +2,8 @@ from scripts.inventory.inventory import Inventory
 from scripts.inventory.inventory_slot import Inventory_Slot
 from copy import copy
 
-class Item_Inventory(Inventory):
+class Item_Inventory():
     def __init__(self, game):
-        super().__init__(game, 9, 1)
         self.x_size = 9
         self.y_size = 1
         self.game = game
@@ -22,25 +21,22 @@ class Item_Inventory(Inventory):
     # Saves inventory data to both self.saved_data and self.inventory_dic
     def Save_Inventory_Data(self):
         self.saved_data.clear()
-        self.inventory_dic.clear()
-
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 continue
-            
             inventory_slot.item.Save_Data()
             self.saved_data[inventory_slot.index] = inventory_slot.item.saved_data
             self.inventory_dic[inventory_slot.index] = inventory_slot.item.ID  # Store item ID for quick lookup
+        
+        self.inventory_dic.clear()
 
     # Loads inventory data and updates inventory_dic
     def Load_Data(self, data):
         self.saved_data = data  # Store loaded data
         self.inventory_dic.clear()
-
         for inventory_index, item_data in data.items():
             if not item_data:
                 continue
-
             # Find correct slot
             inventory_slot = next((slot for slot in self.inventory if slot.index == item_data["inventory_index"]), None)
             if not inventory_slot:
@@ -71,18 +67,83 @@ class Item_Inventory(Inventory):
             
             self.inventory_dic[inventory_slot.item.type].append(inventory_slot)
 
+    # General Update function
+    def Update(self, offset=(0, 0)):
+        self.Active_Item(offset)
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                continue
+            inventory_slot.Update_Item()
+            if not self.Update_Inventory_Slot_Item_Animation(inventory_slot):
+                continue
+            # Check if the mouse has been clicked, if no we skip that inventory
+            # slot if no continue to next inventory slot
+            if not self.game.mouse.left_click:
+                continue
+            if not self.Inventory_Slot_Collision_Click(inventory_slot):
+                continue
+            if self.Pickup_Item_To_Move(inventory_slot):
+                return
+            
+            
+        self.Item_Click()
+        self.Key_Board_Input()
+        return
+
+    def Update_Inventory_Slot_Pos(self):
+        for index, inventory_slot in enumerate(self.inventory):
+            pos = self.Set_Item_Inventory_Slot_Pos(index)
+            inventory_slot.Update_Pos(pos)
+
+    def Clear_Inventory(self):
+        for inventory_slot in self.inventory:
+            inventory_slot.Remove_Item()
+
+    
+
 
     # Configure the inventory when Initialiased
     def Setup(self):
-        index = 0
+        self.Setup_Item_Inventory()
+        self.Setup_Weapon_Inventory()
+        self.Setup_Rune_Inventory()
+        
+    def Setup_Item_Inventory(self):
         for i in range(self.x_size):
-            (x, y) = self.Set_Inventory_Slot_Pos(i)
-            inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, index, str(i + 1))
+            (x, y) = self.Set_Item_Inventory_Slot_Pos(i)
+            inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, i, str(i + 1))
             inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
             self.inventory.append(inventory_slot)
-            index += 1
 
-    def Set_Inventory_Slot_Pos(self, index):
+    def Setup_Weapon_Inventory(self):
+        y =  self.game.screen_height / self.game.render_scale - 40
+        x = self.game.screen_width / 2 / self.game.render_scale - 220
+        inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, 9, str(10))
+        inventory_slot.Set_White_List(['weapon'])
+        self.inventory.append(inventory_slot)
+
+    # Configure the inventory when initialized
+    def Setup_Rune_Inventory(self):
+        symbols = ['z', 'x', 'c']
+        for i in range(3):
+            
+            (x_pos, y_pos) = self.Set_Rune_Inventory_Slot_Pos(i)
+            index = i + 9
+            inventory_slot = Inventory_Slot(self.game, (x_pos, y_pos), self.size, None, index, symbols[i])
+            background = self.game.assets['rune_background'][0]
+            inventory_slot.Add_Background(background)
+            # inventory_slot.inventory_type = 'rune'
+            inventory_slot.Set_White_List(['rune'])
+            self.inventory.append(inventory_slot)  # Add to instance's inventory
+
+
+    def Set_Rune_Inventory_Slot_Pos(self, index):
+        x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 160
+        y_pos = self.game.screen_height / self.game.render_scale - 40
+        return (x_pos, y_pos)
+        
+
+    def Set_Item_Inventory_Slot_Pos(self, index):
         x = index * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
         y = self.game.screen_height / self.game.render_scale - 40
         return (x, y)
@@ -90,25 +151,77 @@ class Item_Inventory(Inventory):
     def Key_Board_Input(self):
         keyboard = self.game.keyboard_handler
 
-        if keyboard._1_pressed:
-            self.Activate_Inventory_Slot(0)
-        elif keyboard._2_pressed:
-            self.Activate_Inventory_Slot(1)
-        elif keyboard._3_pressed:
-            self.Activate_Inventory_Slot(2)
-        elif keyboard._4_pressed:
-            self.Activate_Inventory_Slot(3)
-        elif keyboard._5_pressed:
-            self.Activate_Inventory_Slot(4)
-        elif keyboard._6_pressed:
-            self.Activate_Inventory_Slot(5)
-        elif keyboard._7_pressed:
-            self.Activate_Inventory_Slot(6)
-        elif keyboard._8_pressed:
-            self.Activate_Inventory_Slot(7)
-        elif keyboard._9_pressed:
-            self.Activate_Inventory_Slot(8)
+        key_map = {
+            keyboard._1_pressed: 0, keyboard._2_pressed: 1, keyboard._3_pressed: 2,
+            keyboard._4_pressed: 3, keyboard._5_pressed: 4, keyboard._6_pressed: 5,
+            keyboard._7_pressed: 6, keyboard._8_pressed: 7, keyboard._9_pressed: 8
+        }
+        for key, index in key_map.items():
+            if key:
+                self.Activate_Inventory_Slot(index)
+                break
     
+
+    def Activate_Inventory_Slot(self, index):
+        inventory_slot = self.inventory[index]
+        if inventory_slot.item:
+            inventory_slot.item.Activate()
+            inventory_slot.Update()
+
+    # Activates when mouse has been held down for 10 ticks and
+    # the inventory slot is not active anymore 
+    def Pickup_Item_To_Move(self, inventory_slot):
+        if self.game.mouse.hold_down_left > 10 and not inventory_slot.active:
+            # Move the item
+            self.active_item = inventory_slot.item
+            self.active_item.picked_up = False
+            inventory_slot.item = None
+            inventory_slot.Set_Active(True)
+            return True
+        return False
+
+    # Check for collision with inventory slot, if no collision return False
+    def Inventory_Slot_Collision_Click(self, inventory_slot):
+        if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
+            self.clicked_inventory_slot = inventory_slot
+            self.item_clicked += 1
+            return True
+        
+        return False
+
+    # Update the animation of the item, return False if no item
+    def Update_Inventory_Slot_Item_Animation(self, inventory_slot):
+        if inventory_slot.item:
+            inventory_slot.item.Update_Animation()
+            return True
+        return False
+
+     # Handle clicking items
+    def Item_Click(self):
+        if not self.game.mouse.left_click:
+            if self.clicked_inventory_slot:
+                if self.Item_Double_Click():
+                    return
+                if self.Item_Single_Click():
+                    return
+        return
+    
+    # Handle double clicking behaviour, return True if valid double click
+    def Item_Double_Click(self):
+        if self.game.mouse.double_click and self.clicked_inventory_slot.item:
+            if self.clicked_inventory_slot.item.sub_category == 'weapon':
+                self.clicked_inventory_slot.Set_Active(True)
+                self.game.mouse.Reset_Double_Click()
+                return True
+            
+        return False
+
+    # Finds the first empty inventory slot
+    def Find_Available_Inventory_Slot(self):
+        for i, inventory_slot in enumerate(self.inventory):
+            if inventory_slot is None:
+                return i # return index
+        return None  # No available slots
 
     def Item_Double_Click(self):
         if not super().Item_Double_Click():
@@ -162,18 +275,22 @@ class Item_Inventory(Inventory):
 
     # Places an item in an empty slot if merging is not possible
     def Add_Item_To_Inventory_Slot(self, item):
-        for inventory_slot in self.inventory:
-            if not inventory_slot.item:
-                if inventory_slot.Add_Item(item):
-                    self.game.item_handler.Remove_Item(item)
-                    
-                    # Update inventory dictionary
-                    if item.type not in self.inventory_dic:
-                        self.inventory_dic[item.type] = []
-                    self.inventory_dic[item.type].append(inventory_slot)
 
-                    inventory_slot.item.Update()
-                    return True
+        for inventory_slot in self.inventory:
+            if inventory_slot.item:
+                continue
+            if not inventory_slot.Add_Item(item):
+                continue
+            
+            self.game.item_handler.Remove_Item(item)
+            
+            # Update inventory dictionary
+            if item.type not in self.inventory_dic:
+                self.inventory_dic[item.type] = []
+            self.inventory_dic[item.type].append(inventory_slot)
+
+            inventory_slot.item.Update()
+            return True
         return False  # No available slots
     
     # Finds an item in the inventory using inventory_dic for faster lookup
@@ -241,6 +358,15 @@ class Item_Inventory(Inventory):
             self.clicked_inventory_slot.item = None
             self.clicked_inventory_slot = None
 
+    # Handle double clicking behaviour, return True if valid double click
+    def Item_Double_Click(self):
+        if self.game.mouse.double_click and self.clicked_inventory_slot.item:
+            if self.clicked_inventory_slot.item.sub_category == 'weapon':
+                self.clicked_inventory_slot.Set_Active(True)
+                self.game.mouse.Reset_Double_Click()
+                return True
+            
+        return False
 
     def Move_Item_To_New_Slot(self, offset):
         # Check if the item is being moved to another inventory
@@ -303,13 +429,13 @@ class Item_Inventory(Inventory):
     def Remove_Item(self, item, move_item):
         if not move_item:
             return False
-
-        for inventory_slot in self.inventory:
-            if inventory_slot.item and inventory_slot.item.ID == item.ID:
-                inventory_slot.Set_Active(False)  # Deactivate the slot
-                inventory_slot.item = None  # Remove the item
-                return True
-
+        for inventory_slot in self.inventory_dic[item.type]:
+            if not inventory_slot.item.ID == item.ID:
+                continue
+            inventory_slot.Set_Active(False)  # Deactivate the slot
+            inventory_slot.item = None  # Remove the item
+            return True
+        
         return False
 
     def Active_Item(self, offset=(0, 0)):

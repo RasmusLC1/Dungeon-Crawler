@@ -1,5 +1,4 @@
 import math
-from scripts.engine.utility.helper_functions import Helper_Functions
 
 class Entity_Renderer():
     def __init__(self, game):
@@ -12,7 +11,7 @@ class Entity_Renderer():
     def Update(self):
         
         self.Find_Nearby_Entities()
-        self.entities.sort(key=lambda entity: entity.pos[1])
+        self.entities.sort(key=lambda entity: (entity.category != 'trap', entity.pos[1]))
 
     def Find_Nearby_Entities(self):
         self.entities.clear()

@@ -9,9 +9,8 @@ class Potion(Item):
         self.max_amount = 3
         self.max_animation = 4
         self.strength = strength
-        self.effect = self.type.replace('_potion', '')
+        
         self.text_box = Potion_Textbox(self)
-        self.Update_Sub_Type()
         
         text_box_effect = self.effect.replace('_resistance', '')
         self.description = (
@@ -24,8 +23,19 @@ class Potion(Item):
         self.saved_data['effect'] = self.effect
         self.saved_data['strength'] = self.strength
 
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.effect = data['effect']
+        self.strength = data['strength']
+
     def Update(self):
         super().Update()
+
+    def Set_Sprite(self):
+        self.effect = self.type.replace('_potion', '')
+        self.Update_Sub_Type()
+        super().Set_Sprite()
+
     
     def Update_Sub_Type(self):
         if self.amount == 1:
@@ -36,10 +46,7 @@ class Potion(Item):
             self.sub_type = self.effect + '_full'
 
     
-    def Load_Data(self, data):
-        super().Load_Data(data)
-        self.effect = data['effect']
-        self.strength = data['strength']
+    
 
     def Activate(self):
         if not super().Activate():

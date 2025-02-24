@@ -61,7 +61,9 @@ class Rune_Inventory(Inventory):
             
         return False
     
-    
+    def Render(self, surf):
+        return
+        return super().Render(surf)    
 
     def Item_Double_Click(self):
         if not super().Item_Double_Click():

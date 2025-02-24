@@ -7,9 +7,8 @@ class Invisibility_Potion(Potion):
         super().__init__(game, 'invisibility_potion', pos, amount, 5)
         self.max_amount = 3
         self.max_animation = 0
-        self.sub_type = 'empty_bottle'
 
 
     def Update_Sub_Type(self):
-        pass
+        self.sub_type = 'empty_bottle'
 
