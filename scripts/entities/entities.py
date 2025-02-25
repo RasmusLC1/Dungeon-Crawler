@@ -46,14 +46,15 @@ class PhysicsEntity:
         self.render = data['render']
         self.Set_Tile()
 
+
     # Should only be called during initalisation
     def Set_ID(self):
         if PhysicsEntity._available_IDs:
-            self.ID = PhysicsEntity._available_IDs.popleft()  # O(1) removal
-            return
-        
-        self.ID = PhysicsEntity._id_counter
-        PhysicsEntity._id_counter += 1
+            self.ID = PhysicsEntity._available_IDs.popleft()  # Take the oldest available ID
+        else:
+            self.ID = PhysicsEntity._id_counter
+            PhysicsEntity._id_counter += 1
+
 
     # Called when entity is deleted by garbage collection
     def __del__(self):

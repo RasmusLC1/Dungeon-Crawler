@@ -29,7 +29,7 @@ class Weapon_Inventory(Inventory):
         index = 0
         for i in range(self.x_size):
             (x, y) = self.Set_Inventory_Slot_Pos(i)
-            inventory_slot = Inventory_Slot(self.game, (x, y), self.size, None, index)
+            inventory_slot = Inventory_Slot(self.game, (x, y), 'weapon', self.size, None, index)
             background = self.game.assets[type][i]
             inventory_slot.Add_Background(background)
             inventory_slot.inventory_type = weapon_class[i]

@@ -15,7 +15,7 @@ class Rune_Inventory(Inventory):
         symbols = ['z', 'x', 'c']
         for i in range(self.x_size):
             (x_pos, y_pos) = self.Set_Inventory_Slot_Pos(index)
-            inventory_slot = Inventory_Slot(self.game, (x_pos, y_pos), self.size, None, index, symbols[i])
+            inventory_slot = Inventory_Slot(self.game, (x_pos, y_pos), 'rune', self.size, None, index, symbols[i])
             background = self.game.assets['rune_background'][0]
             inventory_slot.Add_Background(background)
             # inventory_slot.inventory_type = 'rune'

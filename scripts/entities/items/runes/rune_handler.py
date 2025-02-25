@@ -158,7 +158,8 @@ class Rune_Handler():
         rune = self.runes[rune_type]
         rune.active = True
         self.active_runes.append(rune)
-        self.game.rune_inventory.Add_Item(rune)
+        print("TESTTEST")
+        self.game.item_inventory.Add_Rune(rune)
         self.game.item_handler.Add_Item(rune)
         return
 

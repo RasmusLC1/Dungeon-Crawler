@@ -43,6 +43,7 @@ class Item(PhysicsEntity):
     
     def Load_Data(self, data):
         super().Load_Data(data)
+        self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
         self.ID = data['ID']
         self.sub_type = data['sub_type']
         self.sub_category = data['sub_category']
@@ -51,7 +52,8 @@ class Item(PhysicsEntity):
         self.inventory_type = data['inventory_type']
         self.amount = data['amount']
         self.inventory_index = data['inventory_index']
-
+        self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
+        
     def Update(self):
         self.Update_Activate_Cooldown()
 
@@ -80,7 +82,7 @@ class Item(PhysicsEntity):
         if self.game.item_inventory.Add_Item(self):
             self.picked_up = True
             self.game.entities_render.Remove_Entity(self)
-            self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+            # self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
 
             return self.game.player
         
@@ -113,6 +115,7 @@ class Item(PhysicsEntity):
             self.animation = random.randint(0,self.max_animation)
             self.Set_Entity_Image()
 
+    
 
     def Distance(self, start_pos, target_pos):
         return math.sqrt((start_pos[0] - target_pos[0]) ** 2 + (start_pos[1] - target_pos[1]) ** 2)

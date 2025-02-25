@@ -1,5 +1,6 @@
 import math
 import pygame
+import traceback
 
 # Use dictionary keyed to pos in tilemap
 class Tile():
@@ -74,6 +75,9 @@ class Tile():
         entity.Set_Active(self.active)
 
     def Clear_Entity(self, entity_ID):
+        # print("TESTTESTTEST")
+        # traceback.print_stack(limit=4)
+        # print(self.entities, entity_ID)
         if entity_ID in self.entities:
             del self.entities[entity_ID]
 
@@ -87,7 +91,6 @@ class Tile():
         # Update max cached light level
         self.light_level = max(self.light_level, contribution)  # O(1)
 
-    # Use caching TODO: FIX THIS METHOD as it runs faster
     def Remove_Light_Contribution(self, light_id):
         if light_id not in self.light_contributions:
             return
