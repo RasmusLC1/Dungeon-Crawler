@@ -253,7 +253,9 @@ class Inventory():
         return
     
     # Handle double clicking behaviour, return True if valid double click
+    # TODO: fix with UPDATE
     def Item_Double_Click(self):
+        return
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
             if self.clicked_inventory_slot.item.sub_category == 'weapon':
                 self.clicked_inventory_slot.Set_Active(True)
@@ -268,14 +270,6 @@ class Inventory():
             if inventory_slot is None:
                 return i # return index
         return None  # No available slots
-
-    def Item_Double_Click(self):
-        if not super().Item_Double_Click():
-            return
-        active_inventory = self.game.weapon_inventory.active_inventory
-        weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-        self.clicked_inventory_slot.item.Handle_Double_Click(self, weapon_inventory)
-        
 
     # Add item to the inventory
     def Add_Item(self, item):
@@ -426,22 +420,15 @@ class Inventory():
 
         if self.clicked_inventory_slot.type == 'weapon':
             self.game.player.Remove_Active_Weapon()
-            
+
         if self.clicked_inventory_slot.item:
             self.Reset_Inventory_Dic_Slot(self.clicked_inventory_slot)
             
         self.clicked_inventory_slot.item = None
         self.clicked_inventory_slot = None
 
-    # Handle double clicking behaviour, return True if valid double click
-    def Item_Double_Click(self):
-        if self.game.mouse.double_click and self.clicked_inventory_slot.item:
-            if self.clicked_inventory_slot.item.sub_category == 'weapon':
-                self.clicked_inventory_slot.Set_Active(True)
-                self.game.mouse.Reset_Double_Click()
-                return True
-            
-        return False
+ 
+ 
 
     def Move_Item_To_New_Slot(self, offset):
         # Check if the item is being moved to another inventory

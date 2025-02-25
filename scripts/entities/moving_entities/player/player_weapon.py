@@ -50,7 +50,6 @@ class Player_Weapon_Handler():
         self.active_weapon_left.Update(offset)
         if not self.active_weapon_left:
             return
-        # print(self.active_weapon_left.attack)
         
         self.active_weapon_left.Update_Attack()
         self.player.Attacking(self.active_weapon_left, offset)
@@ -62,7 +61,6 @@ class Player_Weapon_Handler():
 
         if not self.game.mouse.left_click:
             return
-        
         cooldown = self.Weapon_Attack(self.active_weapon_left)
         
         self.left_weapon_cooldown = max(self.left_weapon_cooldown, cooldown)

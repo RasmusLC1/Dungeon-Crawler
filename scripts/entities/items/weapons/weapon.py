@@ -127,6 +127,7 @@ class Weapon(Item):
     def Set_Attack(self):
         if not self.Check_Entity_Cooldown():
             return
+        print("TESTTESTTSET")
         # Compute attack each time to account for changing entity agility level
         self.attacking = max(int((self.speed * 30) // self.entity.agility), self.attack_animation_max) 
         self.enemy_hit = False  # Reset at the start of a new attack
@@ -228,8 +229,6 @@ class Weapon(Item):
                 self.Set_Charging_Enemy()
             
             elif 'player' == self.entity.type:
-                if not self.inventory_type:
-                    return
                 self.Set_Charging_Player()
         except TypeError as e:
             print(f"Entity neither enemy nor player: {e}")
@@ -237,14 +236,8 @@ class Weapon(Item):
     
     # Return False if entity weapon cooldown is not off
     def Check_Entity_Cooldown(self):
-        if not self.inventory_type:
+        if self.entity.left_weapon_cooldown:
             return False
-        elif 'left' in self.inventory_type:
-                if self.entity.left_weapon_cooldown:
-                    return False
-        elif 'right' in self.inventory_type:
-            if self.entity.right_weapon_cooldown:
-                return False
         return True
         
     # Check for collision on attack
@@ -299,13 +292,7 @@ class Weapon(Item):
     # Initialise the charging of the weapon
     def Set_Charging_Player(self):
         # Detect if the player is holding down the button
-        if 'left' in self.inventory_type:
-            self.is_charging = self.game.mouse.hold_down_left
-        elif 'right' in self.inventory_type:
-            self.is_charging = self.game.mouse.hold_down_right
-        elif 'bow' in self.inventory_type:
-            self.is_charging = self.game.mouse.hold_down_left
-
+        self.is_charging = self.game.mouse.hold_down_left
     def Calculate_Damage(self):
         return self.entity.strength * self.damage
 
