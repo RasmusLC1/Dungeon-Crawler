@@ -18,30 +18,14 @@ class Player_Weapon_Handler():
 
 
     def Update(self, offset = (0, 0)):
-        if self.game.weapon_inventory.active_inventory == 0:
-            self.Update_Left_Weapon(offset)
-            self.Update_Right_Weapon(offset)
-        elif self.game.weapon_inventory.active_inventory == 1:
-            self.Update_Bow(offset)
-        else:
-            print("INVENTORY MISSING")
+        self.Update_Left_Weapon(offset)
 
-    def Set_Active_Weapon(self, weapon, hand):  
-        
-        if not weapon or not hand:
-            return False    
+    def Set_Active_Weapon(self, weapon):  
+          
         equipped_weapon = weapon
-        if hand == 'left_hand':
-            equipped_weapon.Move(self.player.pos)
-            self.active_weapon_left = equipped_weapon
-            return
-        if hand == 'right_hand':
-            equipped_weapon.Move(self.player.pos)
-            self.active_weapon_right = equipped_weapon
-            return
-        if 'bow' in hand:
-            equipped_weapon.Move(self.player.pos)
-            self.active_bow = equipped_weapon
+        equipped_weapon.Move(self.player.pos)
+        self.active_weapon_left = equipped_weapon
+        return
 
     def Set_Attack_Lock(self, state):
         self.attack_lock = state
@@ -181,13 +165,5 @@ class Player_Weapon_Handler():
 
     def Render_Weapons(self, surf, offset):
 
-        if self.game.weapon_inventory.active_inventory == 0:
-            if self.active_weapon_left:
-                self.active_weapon_left.Render_Equipped(surf, offset)
-            if self.active_weapon_right:
-                self.active_weapon_right.Render_Equipped(surf, offset)
-        elif self.game.weapon_inventory.active_inventory == 1:
-            if self.active_bow:
-                self.active_bow.Render_Equipped(surf, offset)
-        else:
-            print("INVENTORY MISSING")
+        if self.active_weapon_left:
+            self.active_weapon_left.Render_Equipped(surf, offset)

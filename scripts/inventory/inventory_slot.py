@@ -106,7 +106,8 @@ class Inventory_Slot():
             background_image = pygame.transform.scale(self.background, self.size)
             surf.blit(background_image, self.pos)
 
-
+        if not self.item:
+            return
 
         if self.item and not self.active:
             self.item.Render(surf)

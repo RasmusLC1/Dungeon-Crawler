@@ -7,9 +7,7 @@ from scripts.entities.items.item_handler import Item_Handler
 from scripts.entities.decoration.decoration_handler import Decoration_Handler
 from scripts.entities.moving_entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.lights.light_handler import Light_Handler
-from scripts.inventory.item_inventory import Item_Inventory
-from scripts.inventory.weapon_inventory_handler import Weapon_Inventory_Handler
-from scripts.inventory.rune_inventory import Rune_Inventory
+from scripts.inventory.inventory import Inventory
 
 
 from scripts.entities.items.runes.rune_handler import Rune_Handler
@@ -57,9 +55,7 @@ class Level_Loader():
         self.game.light_handler.Clear_Lights()
         self.game.decoration_handler.Clear_Decorations()
         if clear_inventory:
-            self.game.item_inventory.Clear_Inventory()
-            self.game.weapon_inventory.Clear_Inventory()
-            self.game.rune_inventory.Clear_Inventory()
+            self.game.inventory.Clear_Inventory()
         self.game.a_star.Clear_Maps()
         
         self.game.tilemap.Clear_Tilemap()
@@ -89,9 +85,7 @@ class Level_Loader():
         self.Spawn_Player()
  
  
-        self.game.item_inventory = Item_Inventory(self.game)
-        self.game.weapon_inventory = Weapon_Inventory_Handler(self.game, 'warrior')
-        self.game.rune_inventory = Rune_Inventory(self.game)
+        self.game.inventory = Inventory(self.game)
         self.game.enemy_handler = Enemy_Handler(self.game)
         self.game.item_handler = Item_Handler(self.game)
         self.game.particle_handler = Particle_Handler(self.game)

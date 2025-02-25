@@ -204,7 +204,7 @@ class Decoration_Handler():
 
     def Open_Door_With_Key(self, door):
         key_found = False
-        for inventory_slot in self.game.item_inventory.inventory:
+        for inventory_slot in self.game.inventory.inventory:
             if not inventory_slot.item:
                 continue
             if inventory_slot.item.type == 'key':

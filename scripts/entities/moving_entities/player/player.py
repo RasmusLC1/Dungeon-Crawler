@@ -155,8 +155,8 @@ class Player(Moving_Entity):
     def Set_Inventory_Interaction(self, state):
         self.weapon_handler.Set_Inventory_Interaction(state)
 
-    def Set_Active_Weapon(self, weapon, hand):  
-        self.weapon_handler.Set_Active_Weapon(weapon, hand)
+    def Set_Active_Weapon(self, weapon):  
+        self.weapon_handler.Set_Active_Weapon(weapon)
     
     def Set_Light_State(self, state):
         self.light_source.active = state
