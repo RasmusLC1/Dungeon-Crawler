@@ -423,6 +423,10 @@ class Inventory():
             return
         
         self.clicked_inventory_slot.Set_Active(False)
+
+        if self.clicked_inventory_slot.type == 'weapon':
+            self.game.player.Remove_Active_Weapon()
+            
         if self.clicked_inventory_slot.item:
             self.Reset_Inventory_Dic_Slot(self.clicked_inventory_slot)
             

@@ -42,7 +42,6 @@ class Player_Weapon_Handler():
             self.Set_Inventory_Interaction(self.inventory_interaction - 1)
             self.active_weapon_left.Reset_Charge()
             return
-        
         self.active_weapon_left.Set_Equipped_Position(self.player.direction_y_holder)
         # Set the attack lock above the update to prevent attacks
         if self.attack_lock:
@@ -51,6 +50,8 @@ class Player_Weapon_Handler():
         self.active_weapon_left.Update(offset)
         if not self.active_weapon_left:
             return
+        # print(self.active_weapon_left.attack)
+        
         self.active_weapon_left.Update_Attack()
         self.player.Attacking(self.active_weapon_left, offset)
 
@@ -151,15 +152,11 @@ class Player_Weapon_Handler():
     def Set_Inventory_Interaction(self, state):
         self.inventory_interaction = state
 
-    def Remove_Active_Weapon(self, hand):
-        if hand == 'left_hand' and self.active_weapon_left:
+    def Remove_Active_Weapon(self):
+        if self.active_weapon_left:
+            self.active_weapon_left.Unequip()
             self.active_weapon_left = None
             self.left_weapon_cooldown = 0
-            self.player.attacking = 0
-
-        if hand == 'right_hand' and self.active_weapon_right:
-            self.active_weapon_right = None
-            self.right_weapon_cooldown = 0
             self.player.attacking = 0
 
 

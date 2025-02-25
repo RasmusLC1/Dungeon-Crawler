@@ -110,7 +110,7 @@ class Inventory_Slot():
             return
 
         if self.item and not self.active:
-            self.item.Render(surf)
+            surf.blit(self.item.entity_image, self.pos)
         else:
             return
 

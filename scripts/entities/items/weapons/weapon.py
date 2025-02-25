@@ -700,6 +700,15 @@ class Weapon(Item):
             self.Move((self.entity.pos[0] - 5 , self.entity.pos[1]))
         else:
             self.Move((self.entity.pos[0] + 5 , self.entity.pos[1]))
+
+    def Equip(self):
+        self.Set_Equip(True)
+        self.Set_Entity(self.game.player)
+        self.game.player.Set_Active_Weapon(self)
+
+    def Unequip(self):
+        self.Set_Equip(False)
+        self.Set_Entity(None)
         
 
     # # Initialise the double clikc
@@ -821,12 +830,7 @@ class Weapon(Item):
     #     return False
     
     # # Equip the weapon
-    def Equip(self):
-        self.Set_Equip(True)
-        self.Set_Entity(self.game.player)
-        self.game.player.Set_Active_Weapon(self)
-
-
+    
 
 
     # # Check for out of bounds, return true if valid, else false
