@@ -22,19 +22,13 @@ class Text_Box_handler():
     def Check_Inventory_Slots(self):
         if self.current_item:
             return
-        for inventory_slot in self.game.item_inventory.inventory:
+        for inventory_slot in self.game.inventory.inventory:
             if not inventory_slot.item:
                 continue
             self.current_item = inventory_slot.item.Update_Text_Box(inventory_slot.item.rect(), self.game.mouse.rect_pos(self.game.render_scroll))
             if self.current_item:
                 return
-        
-        for inventory_slot in self.game.rune_inventory.inventory:
-            if not inventory_slot.item:
-                continue
-            self.current_item = inventory_slot.item.Update_Text_Box(inventory_slot.item.rect(), self.game.mouse.rect_pos(self.game.render_scroll))
-            if self.current_item:
-                return
+
 
     def Render(self, surf, offset=(0, 0)):
         if not self.current_item:

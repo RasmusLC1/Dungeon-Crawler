@@ -29,6 +29,7 @@ class Potion_Handler:
         }
 
     def Spawn_Potions(self, name, pos_x, pos_y, amount, data=None) -> bool:
+        name = name.replace("_potion", "")
         potion_class = self.potion_map.get(name)
 
         # If none matched, return False

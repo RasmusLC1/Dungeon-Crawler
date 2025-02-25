@@ -158,7 +158,7 @@ class Rune_Handler():
         rune = self.runes[rune_type]
         rune.active = True
         self.active_runes.append(rune)
-        self.game.rune_inventory.Add_Item(rune)
+        self.game.inventory.Add_Rune(rune)
         self.game.item_handler.Add_Item(rune)
         return
 
@@ -168,7 +168,7 @@ class Rune_Handler():
         
         rune.active = False
         self.active_runes.remove(rune)
-        self.game.rune_inventory.Remove_Item(rune, True)
+        self.game.inventory.Remove_Item(rune, True)
         self.game.item_handler.Remove_Item(rune)
 
         return True

@@ -64,7 +64,7 @@ class Chest(Decoration):
         
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(5, 6) # Spawn normal
+        self.loot_type = random.randint(1, 2) # Spawn normal
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
                 self.Open()
@@ -111,30 +111,3 @@ class Chest(Decoration):
 
     def Reduce_Active(self):
         self.active -= 1
-
-    def Render(self, surf, offset = (0,0)):
-        if self.empty:
-            return
-
-        if not self.Update_Light_Level():
-            return
-        # Set image
-        chest_image = self.game.assets[self.type][self.version].convert_alpha()
-
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
-        if not alpha_value:
-            return
-        
-        chest_image.set_alpha(alpha_value)
-
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(chest_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
-
-        # Blit the chest layer on top the dark layer
-        chest_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        
-        # Render the chest
-        surf.blit(chest_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
-

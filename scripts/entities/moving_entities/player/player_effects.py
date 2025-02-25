@@ -68,6 +68,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
             return False
         
         self.Find_Available_Effect_Icon(effect)
+        return True
     
     # Disable a given effect_icon and remove it and shift all icons below it up
     def Disable_Effect_Icon(self, effect_icon):

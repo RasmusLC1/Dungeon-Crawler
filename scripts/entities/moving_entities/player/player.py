@@ -116,8 +116,8 @@ class Player(Moving_Entity):
             return None
         return super().Entity_Collision_Detection(tilemap)
     
-    def Remove_Active_Weapon(self, hand):
-        self.weapon_handler.Remove_Active_Weapon(hand)
+    def Remove_Active_Weapon(self, ):
+        self.weapon_handler.Remove_Active_Weapon()
 
     def Attack_Direction_Handler(self, offset = (0,0)):
         super().Attack_Direction_Handler(offset)
@@ -155,8 +155,8 @@ class Player(Moving_Entity):
     def Set_Inventory_Interaction(self, state):
         self.weapon_handler.Set_Inventory_Interaction(state)
 
-    def Set_Active_Weapon(self, weapon, hand):  
-        self.weapon_handler.Set_Active_Weapon(weapon, hand)
+    def Set_Active_Weapon(self, weapon):  
+        self.weapon_handler.Set_Active_Weapon(weapon)
     
     def Set_Light_State(self, state):
         self.light_source.active = state

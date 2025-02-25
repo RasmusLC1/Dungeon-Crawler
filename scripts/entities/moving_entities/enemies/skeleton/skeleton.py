@@ -38,8 +38,6 @@ class Skeleton(Enemy):
         if not weapon:
             return False
 
-        if not weapon.Check_Inventory_Type('left_hand'):
-            return False
         weapon.Pickup_Reset_Weapon(self)
         weapon.Set_Equip(True)
         self.Set_Active_Weapon(weapon)

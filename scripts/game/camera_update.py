@@ -30,6 +30,4 @@ class Camera_Update():
     def Update_Inventories(self):
         if self.game.state_machine.game_state == 'main_menu':
              return
-        self.game.item_inventory.Update_Inventory_Slot_Pos()
-        self.game.weapon_inventory.Update_Inventory_Slot_Pos()
-        self.game.rune_inventory.Update_Inventory_Slot_Pos()
+        self.game.inventory.Update_Inventory_Slot_Pos()

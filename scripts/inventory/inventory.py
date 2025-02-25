@@ -1,15 +1,10 @@
+from scripts.inventory.inventory_slot import Inventory_Slot
 from copy import copy
 
-
-# Use dictionary to sort the inventories, so have it be a key, say melee fetches that inventory
-# item inventory 1...9, ranged and rune inventory 1...3
-# Everything in one big dictionary so the items can be transferred around, use whitelist to avoid
-# mixing items and preserve the existing functionality
-
-class Inventory:
-    def __init__(self, game, x_size, y_size):
-        self.x_size = x_size
-        self.y_size = y_size
+class Inventory():
+    def __init__(self, game):
+        self.x_size = 9
+        self.y_size = 1
         self.game = game
         self.available_pos = []
         self.size = (34, 34)
@@ -19,49 +14,95 @@ class Inventory:
         self.clicked_inventory_slot = None
         self.inventory = []
         self.saved_data = {}
+        self.item_inventory_dic = {}
+        self.rune_inventory_dic = {}
+        self.weapon_inventory_dic = {}
+        self.Configure_Keyboard()
+        self.lookup_dic = {
+            'item': self.Append_Item_Inventory_Dic,
+            'rune': self.Append_Rune_Inventory_Dic,
+            'weapon': self.Append_Weapon_Inventory_Dic,
+        }
+        self.Setup()
+    
+    
 
     def Save_Inventory_Data(self):
+        self.saved_data.clear()
+        self.inventory_dic = {'item': {}, 'weapon': {}, 'rune': {}}  # Reinitialize after clearing
+
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 continue
             inventory_slot.item.Save_Data()
             self.saved_data[inventory_slot.index] = inventory_slot.item.saved_data
-            
-    def Load_Data(self, data):
 
-        for ID, item_data in data.items():
+
+    # Loads inventory data and updates inventory_dic
+    def Load_Data(self, data):
+                
+        self.saved_data = data  # Store loaded data
+        for inventory_index, item_data in data.items():
             if not item_data:
                 continue
-            for inventory_slot in self.inventory:
+            # Find correct slot
+            inventory_slot = next((slot for slot in self.inventory if slot.index == item_data["inventory_index"]), None)
+            if not inventory_slot:
+                continue
+            self.game.item_handler.Load_Item_From_Data(item_data)
+            item = self.game.item_handler.Find_Item(item_data["ID"])
+            if not item:
+                continue
 
-                if item_data['inventory_index'] != inventory_slot.index:
-                    continue
-                self.game.item_handler.Load_Item_From_Data(item_data)
-                item = self.game.item_handler.Find_Item(item_data['ID'])
-                if not item:
-                    continue
+            inventory_slot.Add_Item(item)
+            self.lookup_dic.get(inventory_slot.type)(inventory_slot)
 
-                if 'weapon' in item.sub_category:
-                    item.Set_Entity(self.game.player)
+        self.Configure_Inventory_Dic()
 
-                inventory_slot.Add_Item(item)
+    def Configure_Inventory_Dic(self):
 
-    def Set_Inventory_Slot_Pos(self, index):
-        pass
-
-    def Update_Inventory_Slot_Pos(self):
-        for index, inventory_slot in enumerate(self.inventory):
-            pos = self.Set_Inventory_Slot_Pos(index)
-            inventory_slot.Update_Pos(pos)
-
-    def Clear_Inventory(self):
+        self.inventory_dic = {'item': {}, 'weapon': {}, 'rune': {}}
         for inventory_slot in self.inventory:
-            inventory_slot.Remove_Item()
+            if not inventory_slot.item:
+                continue
+            # Call the relevant functions
+            self.lookup_dic.get(inventory_slot.type)(inventory_slot)
+        
+
+    
+    def Append_Rune_Inventory_Dic(self, inventory_slot):
+        if not inventory_slot.item:
+            return
+        # Ensure the type exists in the dictionary before appending
+        if inventory_slot.item.type not in self.rune_inventory_dic:
+            self.rune_inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
+        
+        self.rune_inventory_dic[inventory_slot.item.type].append(inventory_slot)
+    
+    def Append_Weapon_Inventory_Dic(self, inventory_slot):
+        if not inventory_slot.item:
+            return
+        # Ensure the type exists in the dictionary before appending
+        if inventory_slot.item.type not in self.weapon_inventory_dic:
+            self.weapon_inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
+        
+        self.weapon_inventory_dic[inventory_slot.item.type].append(inventory_slot)
+    
+    def Append_Item_Inventory_Dic(self, inventory_slot):
+        if not inventory_slot.item:
+            return
+        # Ensure the type exists in the dictionary before appending
+        if inventory_slot.item.type not in self.item_inventory_dic:
+            self.item_inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
+        
+        self.item_inventory_dic[inventory_slot.item.type].append(inventory_slot)
 
     # General Update function
     def Update(self, offset=(0, 0)):
         self.Active_Item(offset)
         for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                continue
             inventory_slot.Update_Item()
             if not self.Update_Inventory_Slot_Item_Animation(inventory_slot):
                 continue
@@ -78,9 +119,94 @@ class Inventory:
         self.Item_Click()
         self.Key_Board_Input()
         return
+    
+    
+
+    def Update_Inventory_Slot_Pos(self):
+        for index, inventory_slot in enumerate(self.inventory):
+            pos = self.Set_Item_Inventory_Slot_Pos(index)
+            inventory_slot.Update_Pos(pos)
+
+    def Clear_Inventory(self):
+        for inventory_slot in self.inventory:
+            inventory_slot.Remove_Item()
+
+    
+
+
+    # Configure the inventory when Initialiased
+    def Setup(self):
+        self.Setup_Inventory_Dic()
+        self.Setup_Item_Inventory()
+        self.Setup_Weapon_Inventory()
+        self.Setup_Rune_Inventory()
+
+    def Setup_Inventory_Dic(self):
+        self.inventory_dic = {
+            'item': {},
+            'weapon': {},
+            'rune': {}
+        }
+        
+    def Setup_Item_Inventory(self):
+        for i in range(self.x_size):
+            (x, y) = self.Set_Item_Inventory_Slot_Pos(i)
+            inventory_slot = Inventory_Slot(self.game, (x, y), 'item', self.size, None, i, str(i + 1))
+            inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
+            self.inventory.append(inventory_slot)
+
+    def Setup_Weapon_Inventory(self):
+        y =  self.game.screen_height / self.game.render_scale - 40
+        x = self.game.screen_width / 2 / self.game.render_scale - 220
+        inventory_slot = Inventory_Slot(self.game, (x, y), 'weapon', self.size, None, 12, str(10))
+        inventory_slot.Set_White_List(['weapon'])
+        self.inventory.append(inventory_slot)
+
+    # Configure the inventory when initialized
+    def Setup_Rune_Inventory(self):
+        symbols = ['z', 'x', 'c']
+        for i in range(3):
+            
+            (x_pos, y_pos) = self.Set_Rune_Inventory_Slot_Pos(i)
+            index = i + 9
+            inventory_slot = Inventory_Slot(self.game, (x_pos, y_pos), 'rune', self.size, None, index, symbols[i])
+            background = self.game.assets['rune_background'][0]
+            inventory_slot.Add_Background(background)
+            # inventory_slot.inventory_type = 'rune'
+            inventory_slot.Set_White_List(['rune'])
+            self.inventory.append(inventory_slot)  # Add to instance's inventory
+            self.rune_inventory_dic[inventory_slot.index] = []
+            self.rune_inventory_dic[inventory_slot.index].append(inventory_slot)
+
+
+    def Set_Rune_Inventory_Slot_Pos(self, index):
+        x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 160
+        y_pos = self.game.screen_height / self.game.render_scale - 40
+        return (x_pos, y_pos)
+        
+
+    def Set_Item_Inventory_Slot_Pos(self, index):
+        x = index * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
+        y = self.game.screen_height / self.game.render_scale - 40
+        return (x, y)
+
+    def Configure_Keyboard(self):
+        return
 
     def Key_Board_Input(self):
-        pass
+        keyboard = self.game.keyboard_handler
+        key_map = {
+            keyboard._1_pressed: 0, keyboard._2_pressed: 1, keyboard._3_pressed: 2,
+            keyboard._4_pressed: 3, keyboard._5_pressed: 4, keyboard._6_pressed: 5,
+            keyboard._7_pressed: 6, keyboard._8_pressed: 7, keyboard._9_pressed: 8,
+            keyboard.z_pressed: 10, keyboard.x_pressed: 11, keyboard.c_pressed: 12,
+        }
+
+        for key, index in key_map.items():
+            if key:
+                self.Activate_Inventory_Slot(index)
+                break
+    
 
     def Activate_Inventory_Slot(self, index):
         inventory_slot = self.inventory[index]
@@ -127,7 +253,9 @@ class Inventory:
         return
     
     # Handle double clicking behaviour, return True if valid double click
+    # TODO: fix with UPDATE
     def Item_Double_Click(self):
+        return
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
             if self.clicked_inventory_slot.item.sub_category == 'weapon':
                 self.clicked_inventory_slot.Set_Active(True)
@@ -136,207 +264,12 @@ class Inventory:
             
         return False
 
-
-    def Find_Available_Inventory_Slot(self, checked_inventory_slot):
-        for inventory_slot in self.inventory:
-            if inventory_slot == checked_inventory_slot:
-                continue
-            if not inventory_slot.item:
-                return inventory_slot
-        else:
-            return None
-        
-    def Find_Item_In_Inventory(self, item):
-        for inventory_slot in self.inventory:
-            if not inventory_slot.item:
-                continue
-            if inventory_slot.item.ID == item.ID:
-                return inventory_slot
-            
-        return None
-    
-    # Handle single clicking behaviour, return True if valid click
-    def Item_Single_Click(self):
-        # Check for empty inventory slot
-        if not self.clicked_inventory_slot.item:
-            return
-        # Check for double click
-        if self.game.mouse.single_click_delay and self.game.mouse.double_click:
-            return False
-        
-        # Check that the left click has been held down between 0 and 5 ticks
-        # If it is then it might be dragged
-        if not self.game.mouse.hold_down_left < 5 and not self.game.mouse.hold_down_left > 0:
-            return False
-        # Activate item if it passes the previous checks
-        self.clicked_inventory_slot.item.Activate()
-        self.clicked_inventory_slot.Update()
-        self.clicked_inventory_slot = None
-        self.game.mouse.Set_Inventory_Clicked(10)
-        return True
-        
-
-
-    # Return the item to its previous Inventory slot and deactivate
-    # the item and inventory slot
-    def Return_Item(self):
-        if self.clicked_inventory_slot:
-            # Ensure the slot is not active when returning the item
-            if not self.clicked_inventory_slot.item:  # Ensure slot is empty before returning item
-                self.Move_Item(self.active_item, self.clicked_inventory_slot)                
-                self.active_item = None
-                self.clicked_inventory_slot = None
-            else:
-                # Handle the case where the slot is occupied (e.g., deny return or swap)
-                print("Error: Slot already occupied when trying to return item.")
-        return
-
-    # Move the item around
-    def Drag_Item(self, offset):
-        # Render legal item position and move it
-        self.active_item.Render(self.game.display, offset)  
-        self.active_item.Move(self.game.mouse.mpos)
-        # Add item back to item list when released in legal position
-        if self.game.mouse.left_click == False:
-
-            self.Place_Down_item()
-            self.Reset_Inventory_Slot()
-            return False
-
-        return True
-
-    def Place_Down_item(self):
-        if self.active_item.Place_Down():
-            self.game.item_handler.Add_Item(self.active_item)
-            self.active_item.picked_up = False
-            self.active_item.Set_Tile()
-        self.active_item = None
-        
-    # Set the inventory to be inactive again
-    def Reset_Inventory_Slot(self):
-        if self.clicked_inventory_slot:
-            self.clicked_inventory_slot.Set_Active(False)
-            self.clicked_inventory_slot.item = None
-            self.clicked_inventory_slot = None
-
-    def Move_Item_To_New_Slot(self, offset):
-        # Check for if the item is being moved to another inventory
-        if self.active_item.move_inventory_slot:
-            self.active_item.move_inventory_slot = False
-            self.active_item = None  # Clear active item
-            return True
-        for inventory_slot in self.inventory:
-            # Collision with other inventory slots
-            if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
-                # Check if the colliding inventory slot is the one that is currently active
-                if inventory_slot.active:
-                    return False
-
-                if self.Swap_Item(self.active_item, inventory_slot):
-                    return True
-
-
-                if self.Move_Item(self.active_item, inventory_slot):
-                    self.clicked_inventory_slot.item = None  # Clear the original slot
-                    self.clicked_inventory_slot.Set_Active(False)  # Deactivate original slot
-                    self.active_item = None  # Clear active item
-                    return True
-        return False
-    
-    # Method to move an item into a slot
-    def Move_Item(self, item, inventory_slot):
-        if item.sub_category == 'weapon':
-            try:
-                if not item.Check_Two_Handed_Left_Hand(inventory_slot):
-                    return False
-            except Exception as e:
-                print(f"Item is not a weapon {e}")
-
-
-        
-        
-        inventory_type_holder = item.inventory_type
-        item.picked_up = True  # Ensure the item is marked as not picked up
-        # Try to place the item in the inventory slot 
-        if not inventory_slot.Add_Item(item):  
-            return False
-        inventory_slot.Set_Active(False)  # Deactivate the slot after placing the item
-        if inventory_type_holder and item:
-            item.Update_Player_Hand(inventory_type_holder)
-
-        return True
-
-    # Swap the active item's inventory slot with the item in the hovered
-    # over inventory slot
-    def Swap_Item(self, item, inventory_slot):
-        if inventory_slot.item:
-            item_holder = inventory_slot.item # Save the item that is to be swapped
-            self.clicked_inventory_slot.Reset_Inventory_Slot()  # Clear the original slot
-            inventory_slot.Reset_Inventory_Slot()
-            
-            self.clicked_inventory_slot.Add_Item(item_holder) # Insert Item into the active inventory slot
-            self.game.player.Set_Active_Weapon(item_holder, self.clicked_inventory_slot.inventory_type) # Update the player's hand
-            self.clicked_inventory_slot = None
-            inventory_slot.Add_Item(self.active_item) # Insert active item into now vacant inventory slot
-            self.game.player.Set_Active_Weapon(self.active_item, inventory_slot.inventory_type) # Update the player's hand
-            self.active_item = None  # Clear active item
-            return True
-        
-        return False
-
-    # Method to remove an item from the inventory
-    def Remove_Item(self, item, move_item):
-        if not move_item:
-            return False
-        for inventory_slot in self.inventory:
-            # Check if the inventory slot has an item
-            if not inventory_slot.item:
-                continue
-            # Compare Item ID's
-            if inventory_slot.item.ID == item.ID:
-                inventory_slot.Set_Active(False)  # Deactivate the slot
-                inventory_slot.item = None  # Remove the item from the slot
-                return True
-
-        return False
-    
-    
-    # Active item is an item being dragged
-    def Active_Item(self, offset=(0, 0)):
-
-        # Check if there is an active item
-        if not self.active_item:
-            return
-        # Check for out of bounds 
-        item_out_of_bounds = self.active_item.Move_Legal(self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset)
-        if not item_out_of_bounds:
-
-            if not self.game.mouse.left_click:
-
-                if self.Move_Item_To_New_Slot(offset):
-                    return   
-                # Check if there is still an active Item
-                if not self.active_item:
-                    return
-                self.Return_Item()
-                return
-            self.active_item.Render_Out_Of_Bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
-
-        else:
-            if not self.Drag_Item(offset):
-                return
-            
-            self.active_item.Render_In_Bounds(self.game.player.pos, self.game.mouse.mpos, self.game.display, offset)  
-            return
-
-    def Overflow(self, item):
-        for inventory_slot in self.inventory:
-            if not inventory_slot.item:
-                if not inventory_slot.Add_Item(item):
-                    continue
-                inventory_slot.item.Update()
-                return True
-        return False
+    # Finds the first empty inventory slot
+    def Find_Available_Inventory_Slot(self):
+        for i, inventory_slot in enumerate(self.inventory):
+            if inventory_slot is None:
+                return i # return index
+        return None  # No available slots
 
     # Add item to the inventory
     def Add_Item(self, item):
@@ -344,69 +277,277 @@ class Inventory:
         if self.Add_Item_To_Inventory_Slot_Merge(item):
             return True
                     
-        
         return self.Add_Item_To_Inventory_Slot(item)
 
-    # Add items and merge items to prevent item loss
+    def Add_Rune(self, rune):
+        for inventory_slot in sum(self.rune_inventory_dic.values(), []):  # Flatten the lists
+            if not inventory_slot.item:
+                inventory_slot.Add_Item(rune)
+                return  # Stop after adding the rune
+    
+    # Merges items into existing slots if possible
     def Add_Item_To_Inventory_Slot_Merge(self, item):
-        if not item.max_amount > 1:
+        if item.max_amount <= 1:
+            return False  # Can't merge single-stack items
+        # Check if this item type is already in the dictionary
+        if not item.type in self.item_inventory_dic:
             return False
+
+        for inventory_slot in self.item_inventory_dic[item.type]:  
+            if not inventory_slot.item or inventory_slot.item.amount >= inventory_slot.item.max_amount:
+                continue
+
+            # Calculate how much can be merged
+            available_space = inventory_slot.item.max_amount - inventory_slot.item.amount
+            amount_to_merge = min(item.amount, available_space)
+
+            # Merge items
+            inventory_slot.item.Increase_Amount(amount_to_merge)
+            item.Set_Amount(item.amount - amount_to_merge)
+
+            # If the entire item was merged, remove it
+            if item.amount == 0:
+                self.game.item_handler.Remove_Item(item)
+                inventory_slot.item.Update()
+                return True
+            
+        # If there is still remaining amount, try placing it in an empty slot
+        if item.amount > 0:
+            return self.Add_Item_To_Inventory_Slot(item)
+
+        return False  # No slot to merge into
+
+
+    # Places an item in an empty slot if merging is not possible
+    def Add_Item_To_Inventory_Slot(self, item):
+
         for inventory_slot in self.inventory:
             if inventory_slot.item:
-                inventory_slot.item.Update()
-                if inventory_slot.item.type == item.type and inventory_slot.item.amount < inventory_slot.item.max_amount:
+                continue
+            if not inventory_slot.Add_Item(item):
+                continue
+            
+            self.game.item_handler.Remove_Item(item)
+            
+            try:
+                # Update inventory dictionary
+                if item.type not in self.item_inventory_dic or not isinstance(self.item_inventory_dic[item.type], list):
+                    self.item_inventory_dic[item.type] = []
 
-                    inventory_slot.item.Increase_Amount(item.amount)
-                    # Handle overflow and send it to the new available position
-                    if inventory_slot.item.amount > inventory_slot.item.max_amount:
-                        new_amount = inventory_slot.item.amount - inventory_slot.item.max_amount
-                        new_item = copy(item)
-                        new_item.Set_Amount(new_amount)
-                        # Add item to item list if there is no room
-                        if not self.Overflow(new_item):
-                            new_item.Update()
-                            self.game.item_handler.Add_Item(new_item)
-                    self.game.item_handler.Remove_Item(item)
-                    inventory_slot.item.Update()
+
+                self.item_inventory_dic[item.type].append(inventory_slot)
+            except Exception as e:
+                print("FAILED TO ADD ITEM", e, item, self.item_inventory_dic)
+            inventory_slot.item.Update()
+            return True
+        return False  # No available slots
+    
+    # Finds an item in the inventory using inventory_dic for faster lookup
+    def Find_Item_In_Inventory(self, item):
+        if item.ID in self.item_inventory_dic:
+            index = self.item_inventory_dic[item.type]
+            return self.inventory[index]
+        return None
+
+    # Handle single clicking behavior, return True if valid click
+    def Item_Single_Click(self):
+        if not self.clicked_inventory_slot or not self.clicked_inventory_slot.item:
+            return False
+
+        if self.game.mouse.single_click_delay and self.game.mouse.double_click:
+            return False
+
+        if not (0 < self.game.mouse.hold_down_left < 5):
+            return False
+
+        self.clicked_inventory_slot.item.Activate()
+        self.clicked_inventory_slot.Update()
+        self.clicked_inventory_slot = None
+        self.game.mouse.Set_Inventory_Clicked(10)
+        return True
+
+    # Return the item to its previous Inventory slot and deactivate the item and slot
+    def Return_Item(self):
+        if self.clicked_inventory_slot:
+            if not self.clicked_inventory_slot.item:  # Ensure slot is empty before returning item
+                self.Move_Item(self.active_item, self.clicked_inventory_slot)
+                self.item_inventory_dic[self.active_item.type] = self.clicked_inventory_slot.index  # Update inventory dictionary
+                self.active_item = None
+                self.clicked_inventory_slot = None
+            else:
+                print("Error: Slot already occupied when trying to return item.")
+        return
+
+    # Move the item around
+    def Drag_Item(self, offset):
+        self.active_item.Render(self.game.display, offset)
+        self.active_item.Move(self.game.mouse.mpos)
+
+        if not self.game.mouse.left_click:
+            self.Place_Down_Item()
+            self.Reset_Inventory_Slot()
+            return False
+        return True
+
+    # Places an item down in the inventory
+    def Place_Down_Item(self):
+        if self.active_item.Place_Down():
+            self.game.item_handler.Add_Item(self.active_item)
+            self.active_item.picked_up = False
+            self.active_item.Set_Tile()
+            self.item_inventory_dic[self.active_item.type] = self.active_item.inventory_index  # Update dictionary
+            # self.item_inventory_dic[self.active_item.type].clear()
+        self.active_item = None
+
+    def Reset_Inventory_Dic_Slot(self, inventory_slot):
+        if not inventory_slot.item:
+            return
+        type = inventory_slot.item.type
+        
+        if type in self.item_inventory_dic:
+            self.item_inventory_dic[type]  # Remove from dictionary
+        elif type in self.rune_inventory_dic:
+            self.item_inventory_dic[type]  # Remove from dictionary
+        elif type in self.weapon_inventory_dic:
+            self.item_inventory_dic[type]  # Remove from dictionary
+
+    # Set the inventory to be inactive again
+    def Reset_Inventory_Slot(self):
+        if not self.clicked_inventory_slot:
+            return
+        
+        self.clicked_inventory_slot.Set_Active(False)
+
+        if self.clicked_inventory_slot.type == 'weapon':
+            self.game.player.Remove_Active_Weapon()
+
+        if self.clicked_inventory_slot.item:
+            self.Reset_Inventory_Dic_Slot(self.clicked_inventory_slot)
+            
+        self.clicked_inventory_slot.item = None
+        self.clicked_inventory_slot = None
+
+ 
+ 
+
+    def Move_Item_To_New_Slot(self, offset):
+        # Check if the item is being moved to another inventory
+        if self.active_item.move_inventory_slot:
+            self.active_item.move_inventory_slot = False
+            self.active_item = None  # Clear active item
+            return True
+
+        for inventory_slot in self.inventory:
+            if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
+                if inventory_slot.active:
+                    return False
+
+                if self.Swap_Item(self.active_item, inventory_slot):
                     return True
 
-    # Add items without checking for slot merging
-    def Add_Item_To_Inventory_Slot(self, item):
-        i = 0
-        j = 0
-        for inventory_slot in self.inventory:
-            if not inventory_slot.item:
+                if self.Move_Item(self.active_item, inventory_slot):
+                    self.Reset_Inventory_Slot()
+                    for inventory_slot in self.inventory:
+                        if not inventory_slot.item:
+                            continue
+                    self.active_item = None  # Clear active item
+                    return True
+        return False
 
-                if not inventory_slot.Add_Item(item):
+    def Move_Item(self, item, inventory_slot):
+        inventory_type_holder = item.inventory_type
+        item.picked_up = True  # Ensure the item is marked as picked up
 
-                    continue
-                self.game.item_handler.Remove_Item(item)
-                try:
-                    inventory_slot.item.Update()
-                except TypeError as e:
-                    print(f"Weapon in inventory: {e}")
-                    
-                return True
-            # 2d array simulation for position
-            i += 1
-            if i >= self.x_size:
-                i = 0
-                j += 1
+        # Try to place the item in the inventory slot
+        if not inventory_slot.Add_Item(item):
+            return False
+
+        inventory_slot.Set_Active(False)  # Deactivate slot after placing item
+
+        if inventory_type_holder:
+            item.Update_Player_Hand(inventory_type_holder)
+
+        self.Set_Player_Weapon(item, inventory_slot)
+        
+        return True
+
+    def Set_Player_Weapon(self, item, inventory_slot):
+        if inventory_slot.type == 'weapon':
+            item.Equip()
+
+    def Swap_Item(self, item, inventory_slot):
+        if inventory_slot.item:
+            item_holder = inventory_slot.item  # Store item to be swapped
+            self.clicked_inventory_slot.Reset_Inventory_Slot()
+            inventory_slot.Reset_Inventory_Slot()
+
+            # Move original item to active inventory slot
+            self.clicked_inventory_slot.Add_Item(item_holder)
+            self.game.player.Set_Active_Weapon(item_holder, self.clicked_inventory_slot.inventory_type)
+
+            self.clicked_inventory_slot = None  # Clear clicked slot
+
+            # Move active item into the new slot
+            inventory_slot.Add_Item(self.active_item)
+            self.game.player.Set_Active_Weapon(self.active_item, inventory_slot.inventory_type)
+
+            self.active_item = None  # Clear active item
+            return True
+
         return False
 
 
-    def Get_Items(self):
-        items = []
+    def Remove_Item(self, item, move_item):
+        if not move_item:
+            return False
+        
         for inventory_slot in self.inventory:
-            if inventory_slot.item:
-                items.append(inventory_slot.item)
+            if not inventory_slot.item.ID == item.ID:
+                continue
+            inventory_slot.Set_Active(False)  # Deactivate the slot
+            inventory_slot.item = None  # Remove the item
+            return True
+        
+        return False
 
-        return items
+    def Active_Item(self, offset=(0, 0)):
+        if not self.active_item:
+            return
 
-    # Implement the __iter__ method to make the class iterable
-    def __iter__(self):
-        return iter(self.inventory)
+        item_out_of_bounds = self.active_item.Move_Legal(
+            self.game.mouse.mpos, self.game.player.pos, self.game.tilemap, offset
+        )
+
+        if not item_out_of_bounds:
+            if not self.game.mouse.left_click:
+                if self.Move_Item_To_New_Slot(offset):
+                    return  
+                if not self.active_item:
+                    return
+                self.Return_Item()
+                return
+            self.active_item.Render_Out_Of_Bounds(
+                self.game.player.pos, self.game.mouse.mpos, self.game.display, offset
+            )
+        else:
+            if not self.Drag_Item(offset):
+                return
+            self.active_item.Render_In_Bounds(
+                self.game.player.pos, self.game.mouse.mpos, self.game.display, offset
+            )
+
+    def Overflow(self, item):
+        empty_slots = {i: slot for i, slot in enumerate(self.inventory) if not slot.item}
+        
+        for slot in empty_slots.values():
+            if slot.Add_Item(item):
+                slot.item.Update()
+                return True
+
+        return False
+
     
+
     def Render(self, surf):
         for inventory_slot in self.inventory:
             inventory_slot.Render(surf)

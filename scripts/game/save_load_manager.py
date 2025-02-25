@@ -69,9 +69,7 @@ class Save_Load_Manager():
     
 
     def Inventory_Save_Data(self):
-        self.game.item_inventory.Save_Inventory_Data()
-        self.game.rune_inventory.Save_Inventory_Data()
-        self.game.weapon_inventory.Save_Inventory_Data()
+        self.game.inventory.Save_Inventory_Data()
 
     def Save_Data_Structure(self):
         self.Save_Data()
@@ -81,9 +79,7 @@ class Save_Load_Manager():
                                 self.game.rune_handler.saved_data,
                                 self.game.enemy_handler.saved_data,
                                 self.game.trap_handler.saved_data,
-                                self.game.item_inventory.saved_data,
-                                self.game.rune_inventory.saved_data,
-                                self.game.weapon_inventory.saved_data,
+                                self.game.inventory.saved_data,
                                 self.game.decoration_handler.saved_data,
                                 ]
         
@@ -92,9 +88,7 @@ class Save_Load_Manager():
                                     'rune_handler',
                                     'enemy_handler',
                                     'trap_handler',
-                                    'item_inventory',
-                                    'rune_inventory',
-                                    'weapon_inventory',
+                                    'inventory',
                                     'decoration_handler',
                                     ]
         
@@ -112,9 +106,7 @@ class Save_Load_Manager():
                                 self.game.rune_handler,
                                 self.game.enemy_handler,
                                 self.game.trap_handler,
-                                self.game.item_inventory,
-                                self.game.rune_inventory,
-                                self.game.weapon_inventory,
+                                self.game.inventory,
                                 self.game.decoration_handler,
                                 ]
         
@@ -123,9 +115,7 @@ class Save_Load_Manager():
                                     'rune_handler',
                                      'enemy_handler',
                                     'trap_handler',
-                                     'item_inventory',
-                                    'rune_inventory',
-                                    'weapon_inventory',
+                                     'inventory',
                                     'decoration_handler',
                                     ]
         self.Load_Game_Data('save_Data')

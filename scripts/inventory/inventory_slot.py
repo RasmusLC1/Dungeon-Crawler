@@ -4,9 +4,10 @@ import pygame.freetype
 import random
 
 class Inventory_Slot():
-    def __init__(self, game, pos, size, item, index, key = None):
+    def __init__(self, game, pos, type, size, item, index, key = None):
         self.game = game
         self.pos = pos
+        self.type = type
         self.index = index
         self.size = size
         self.item = item
@@ -17,10 +18,7 @@ class Inventory_Slot():
         self.active = False
         self.activate_counter = 0
         self.white_list_items = []
-        self.saved_data = {}
-      
-
-
+ 
     def Update_Pos(self, pos):
         self.pos = pos
         if self.item:
@@ -108,10 +106,11 @@ class Inventory_Slot():
             background_image = pygame.transform.scale(self.background, self.size)
             surf.blit(background_image, self.pos)
 
-
+        if not self.item:
+            return
 
         if self.item and not self.active:
-            self.item.Render(surf)
+            surf.blit(self.item.entity_image, self.pos)
         else:
             return
 
