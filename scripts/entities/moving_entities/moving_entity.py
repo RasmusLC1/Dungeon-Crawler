@@ -199,7 +199,8 @@ class Moving_Entity(PhysicsEntity):
 
     
 
-
+    def Set_Description(self):
+        pass
         
 
     def Tile_Map_Collision_Detection(self, tilemap):
@@ -323,6 +324,9 @@ class Moving_Entity(PhysicsEntity):
 
         self.damage_cooldown = self.damage_cooldown_max
         self.health -= damage
+
+        # Update the entitty description
+        self.Set_Description()
 
         if self.health <= 0: # Entity dead
             # self.effects.Reset_Effects()

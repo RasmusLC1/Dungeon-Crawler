@@ -1,4 +1,4 @@
-
+import traceback
 import pygame
 
 class Inventory_Slot():
@@ -93,7 +93,9 @@ class Inventory_Slot():
 
     def Render(self, surf):
         black = (0, 0, 0)
-
+        # if self.item:
+        #     print("TESTETSTTEST")
+        #     traceback.print_stack(limit=3)
         # Render the box surface with scaling
         scaled_box_surface = pygame.transform.scale(self.box_surface, (self.size[0], self.size[1]))
         surf.blit(scaled_box_surface, self.pos)
@@ -112,6 +114,7 @@ class Inventory_Slot():
             
             surf.blit(item_image, self.pos)
         else:
+
             return
 
         self.Render_Key(surf)

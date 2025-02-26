@@ -62,11 +62,10 @@ class Text_Box():
             return
         entity_name = self.Edit_Entity_Name()
 
-        
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
         self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
 
-        # self.entity.game.mixed_symbols.Render_Mixed_Text(surf, 'fire Damage over time Stopped by water', text_box_pos)
+        # Render the description of the entity
         self.entity.game.mixed_symbols.Render_Mixed_Text(surf, self.entity.description, (text_box_pos[0], text_box_pos[1] + 20))
 
         return 
