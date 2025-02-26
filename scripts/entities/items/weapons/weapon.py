@@ -580,6 +580,8 @@ class Weapon(Item):
             self.Reset_Charge_Effect()
 
             return
+        if not self.entity:
+            return
         if not self.entity.type == "player":
             return
         self.Charge_Effect_Update()

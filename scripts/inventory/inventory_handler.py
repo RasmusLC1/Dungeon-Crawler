@@ -1,7 +1,6 @@
 from scripts.inventory.inventory_slot import Inventory_Slot
-from copy import copy
 
-class Inventory():
+class Inventory_Handler():
     def __init__(self, game):
         self.x_size = 9
         self.y_size = 1
@@ -120,6 +119,12 @@ class Inventory():
         return
     
     
+    def Equip_Weapon(self):
+        for inventory_slot in self.weapon_inventory_dic.values():
+            if not inventory_slot.item:
+                continue
+            inventory_slot.item.Equip()
+
 
     def Update_Inventory_Slot_Pos(self):
         for index, inventory_slot in enumerate(self.inventory):
@@ -129,8 +134,6 @@ class Inventory():
     def Clear_Inventory(self):
         for inventory_slot in self.inventory:
             inventory_slot.Remove_Item()
-
-    
 
 
     # Configure the inventory when Initialiased
@@ -155,11 +158,17 @@ class Inventory():
             self.inventory.append(inventory_slot)
 
     def Setup_Weapon_Inventory(self):
-        y =  self.game.screen_height / self.game.render_scale - 40
-        x = self.game.screen_width / 2 / self.game.render_scale - 220
-        inventory_slot = Inventory_Slot(self.game, (x, y), 'weapon', self.size, None, 12, str(10))
-        inventory_slot.Set_White_List(['weapon'])
-        self.inventory.append(inventory_slot)
+        for i in range(2):
+            (x, y) = self.Set_Weapon_Inventory_Slot_Pos(i)
+            inventory_slot = Inventory_Slot(self.game, (x, y), 'weapon', self.size, None, i + 10, str(10))  
+            inventory_slot.Set_White_List(['weapon'])
+            self.inventory.append(inventory_slot)
+
+
+    def Set_Weapon_Inventory_Slot_Pos(self, index):
+        x = index * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 240
+        y = self.game.screen_height / self.game.render_scale - 40
+        return (x, y)
 
     # Configure the inventory when initialized
     def Setup_Rune_Inventory(self):
@@ -176,7 +185,9 @@ class Inventory():
             self.inventory.append(inventory_slot)  # Add to instance's inventory
             self.rune_inventory_dic[inventory_slot.index] = []
             self.rune_inventory_dic[inventory_slot.index].append(inventory_slot)
-
+    
+    def Increment_Weapon_Inventory(self):
+        pass
 
     def Set_Rune_Inventory_Slot_Pos(self, index):
         x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 160
@@ -473,13 +484,18 @@ class Inventory():
 
             # Move original item to active inventory slot
             self.clicked_inventory_slot.Add_Item(item_holder)
-            self.game.player.Set_Active_Weapon(item_holder, self.clicked_inventory_slot.inventory_type)
 
             self.clicked_inventory_slot = None  # Clear clicked slot
 
             # Move active item into the new slot
             inventory_slot.Add_Item(self.active_item)
-            self.game.player.Set_Active_Weapon(self.active_item, inventory_slot.inventory_type)
+
+            for inventory in self.weapon_inventory_dic.values():
+                for inventory_slot in inventory:
+                    if inventory_slot.item:
+                        self.game.player.Set_Active_Weapon(inventory_slot.item)
+                        break
+
 
             self.active_item = None  # Clear active item
             return True

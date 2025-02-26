@@ -59,6 +59,9 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         # Check if the effect is already in the active effects before setting it
         # Prevents effect icon duplication
         check_effect = self.Get_Effect(effect)
+        if not check_effect:
+            return False
+        
         already_in_effects =  self.Check_If_Effect_Symbol_Exists(check_effect.effect_type)
 
         

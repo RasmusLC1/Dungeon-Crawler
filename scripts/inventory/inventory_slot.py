@@ -1,7 +1,5 @@
 
 import pygame
-import pygame.freetype
-import random
 
 class Inventory_Slot():
     def __init__(self, game, pos, type, size, item, index, key = None):

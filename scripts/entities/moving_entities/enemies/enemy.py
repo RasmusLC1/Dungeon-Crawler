@@ -222,6 +222,7 @@ class Enemy(Moving_Entity):
     def Drop_Weapon(self):
         if not self.active_weapon:
             return
+        self.active_weapon.Set_Tile()
         # Remove weapon from Tile
         tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
         if not tile:
