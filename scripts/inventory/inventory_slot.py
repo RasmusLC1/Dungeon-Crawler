@@ -110,7 +110,9 @@ class Inventory_Slot():
             return
 
         if self.item and not self.active:
-            surf.blit(self.item.entity_image, self.pos)
+            item_image = pygame.transform.scale(self.item.entity_image, self.size)
+            
+            surf.blit(item_image, self.pos)
         else:
             return
 

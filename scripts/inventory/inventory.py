@@ -17,7 +17,6 @@ class Inventory():
         self.item_inventory_dic = {}
         self.rune_inventory_dic = {}
         self.weapon_inventory_dic = {}
-        self.Configure_Keyboard()
         self.lookup_dic = {
             'item': self.Append_Item_Inventory_Dic,
             'rune': self.Append_Rune_Inventory_Dic,
@@ -190,8 +189,6 @@ class Inventory():
         y = self.game.screen_height / self.game.render_scale - 40
         return (x, y)
 
-    def Configure_Keyboard(self):
-        return
 
     def Key_Board_Input(self):
         keyboard = self.game.keyboard_handler
@@ -341,13 +338,6 @@ class Inventory():
             inventory_slot.item.Update()
             return True
         return False  # No available slots
-    
-    # Finds an item in the inventory using inventory_dic for faster lookup
-    def Find_Item_In_Inventory(self, item):
-        if item.ID in self.item_inventory_dic:
-            index = self.item_inventory_dic[item.type]
-            return self.inventory[index]
-        return None
 
     # Handle single clicking behavior, return True if valid click
     def Item_Single_Click(self):

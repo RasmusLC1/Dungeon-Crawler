@@ -1,6 +1,4 @@
-from scripts.entities.entities import PhysicsEntity
 from scripts.entities.moving_entities.moving_entity import Moving_Entity
-from scripts.engine.particles.particle import Particle
 from scripts.entities.moving_entities.player.player_effects import Player_Status_Effect_Handler
 from scripts.entities.moving_entities.player.player_weapon import Player_Weapon_Handler
 from scripts.entities.moving_entities.player.player_movement import Player_Movement
