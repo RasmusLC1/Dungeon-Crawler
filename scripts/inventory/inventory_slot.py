@@ -1,7 +1,5 @@
-
+import traceback
 import pygame
-import pygame.freetype
-import random
 
 class Inventory_Slot():
     def __init__(self, game, pos, type, size, item, index, key = None):
@@ -95,7 +93,9 @@ class Inventory_Slot():
 
     def Render(self, surf):
         black = (0, 0, 0)
-
+        # if self.item:
+        #     print("TESTETSTTEST")
+        #     traceback.print_stack(limit=3)
         # Render the box surface with scaling
         scaled_box_surface = pygame.transform.scale(self.box_surface, (self.size[0], self.size[1]))
         surf.blit(scaled_box_surface, self.pos)
@@ -110,8 +110,11 @@ class Inventory_Slot():
             return
 
         if self.item and not self.active:
-            surf.blit(self.item.entity_image, self.pos)
+            item_image = pygame.transform.scale(self.item.entity_image, self.size)
+            
+            surf.blit(item_image, self.pos)
         else:
+
             return
 
         self.Render_Key(surf)

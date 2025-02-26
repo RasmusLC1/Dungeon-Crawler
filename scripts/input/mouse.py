@@ -54,7 +54,7 @@ class Mouse_Handler:
                 self.right_click = False
 
             if key_press.button in {4, 5}:  # Scroll wheel click
-                self.game.weapon_inventory.Increment_inventory()
+                self.game.inventory.Increment_Weapon_Inventory()
 
 
     # Hold down left click timers

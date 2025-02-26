@@ -19,7 +19,6 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.y_pos = 60
         self.y_pos_increment = 20
         
-        self.effect_icon_index = 0
         self.Initalise_Effect_Icons()
 
     def Load_Data(self, data):
@@ -60,16 +59,29 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         # Check if the effect is already in the active effects before setting it
         # Prevents effect icon duplication
         check_effect = self.Get_Effect(effect)
-        already_in_effects =  check_effect in self.active_effects
+        if not check_effect:
+            return False
+        
+        already_in_effects =  self.Check_If_Effect_Symbol_Exists(check_effect.effect_type)
+
+        
+
         
         if not super().Set_Effect(effect, duration):
             return False
         if already_in_effects:
-            return False
+            return True
         
         self.Find_Available_Effect_Icon(effect)
         return True
     
+    def Check_If_Effect_Symbol_Exists(self, check_effect_type):
+        for effect_symbol in self.active_effect_symbols:
+            if effect_symbol.effect.effect_type == check_effect_type:
+                return True
+
+        return False
+
     # Disable a given effect_icon and remove it and shift all icons below it up
     def Disable_Effect_Icon(self, effect_icon):
         self.active_effect_symbols.remove(effect_icon)
@@ -84,16 +96,13 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
                 other_effect_icon.Update_Y_Position(self.y_pos_increment)   
 
     def Find_Available_Effect_Icon(self, effect):
-        while self.effect_icon_index < self.pool_length:
-            effect_icon = self.effect_icons_pool[self.effect_icon_index]
-            self.effect_icon_index += 1
-
-            if not effect_icon.effect:
+        for effect_icon in self.effect_icons_pool:
+            if effect_icon.effect is None:
                 self.Activate_Effect_Icon(effect_icon, effect)
                 return
+        
         self.Spawn_Extra_Pool_Icon()
- 
-    
+        self.Activate_Effect_Icon(self.effect_icons_pool[-1], effect)
     
     def Activate_Effect_Icon(self, effect_icon, effect):
         new_y_pos = self.y_pos + self.y_pos_increment * (len(self.active_effect_symbols) + 1)
@@ -115,3 +124,5 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
     def Render_Effects_Symbols(self, surf):
         for effect_icon in self.active_effect_symbols:
             effect_icon.Render(surf)
+
+

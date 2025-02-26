@@ -148,6 +148,8 @@ class PhysicsEntity:
         pass
 
     def Update_Dark_Surface(self, alpha_value):
+        if not self.entity_image:
+            return
         # Set image
         self.rendered_image = self.entity_image.copy()
 

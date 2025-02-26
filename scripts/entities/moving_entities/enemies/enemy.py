@@ -46,13 +46,11 @@ class Enemy(Moving_Entity):
 
         self.intent_manager = self.intent_manager_class(game, self)
 
+        self.Set_Description()
 
 
-        self.description = (
-                            f"health {self.health}\n"
-                            f"increase_strength {self.strength}\n"
-                            f"speed {self.agility}\n"
-                        )
+
+        
     
     def Save_Data(self):
         super().Save_Data()
@@ -222,6 +220,7 @@ class Enemy(Moving_Entity):
     def Drop_Weapon(self):
         if not self.active_weapon:
             return
+        self.active_weapon.Set_Tile()
         # Remove weapon from Tile
         tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
         if not tile:
@@ -238,6 +237,13 @@ class Enemy(Moving_Entity):
         self.active_weapon.Set_Tile()
         self.active_weapon.Set_Delete_Countdown()
         self.active_weapon = None
+
+    def Set_Description(self):
+        self.description = (
+                            f"health {self.health}\n"
+                            f"increase_strength {self.strength}\n"
+                            f"speed {self.agility}\n"
+                        )
 
     def Trap_Collision_Handler(self):
         for trap in self.nearby_traps:
@@ -291,6 +297,7 @@ class Enemy(Moving_Entity):
         health_Bar.set_alpha(alpha_value)
         surf.blit(health_Bar, (self.rect().left - offset[0], self.rect().bottom - offset[1] - self.size[1] // 2 + 4))
 
+    
 
     def Render_Attacking_Symbol(self, surf, offset = (0,0)):
         if self.charge < 20:

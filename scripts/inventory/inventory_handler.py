@@ -1,35 +1,29 @@
-from scripts.inventory.inventory_slot import Inventory_Slot
-from copy import copy
+from scripts.inventory.keyboard_inventory import Keyboard_Inventory
+from scripts.inventory.weapon_inventory.weapon_inventory import Weapon_Inventory
+from scripts.inventory.rune_inventory.rune_inventory import Rune_Inventory
+from scripts.inventory.item_inventory.item_inventory import Item_Inventory
 
-class Inventory():
+
+
+class Inventory_Handler():
     def __init__(self, game):
-        self.x_size = 9
-        self.y_size = 1
         self.game = game
-        self.available_pos = []
-        self.size = (34, 34)
         self.active_item = None
         self.item_clicked = 0
         self.click_cooldown = 0
         self.clicked_inventory_slot = None
-        self.inventory = []
+        self.inventory = [] # General shared inventory
+
+        self.item_inventory = Item_Inventory(game, self.inventory)
+        self.weapon_inventory = Weapon_Inventory(game, self.inventory)
+        self.rune_inventory = Rune_Inventory(game, self.inventory)
+        self.keyboard_inventory = Keyboard_Inventory(game, self.inventory)
         self.saved_data = {}
-        self.item_inventory_dic = {}
-        self.rune_inventory_dic = {}
-        self.weapon_inventory_dic = {}
-        self.Configure_Keyboard()
-        self.lookup_dic = {
-            'item': self.Append_Item_Inventory_Dic,
-            'rune': self.Append_Rune_Inventory_Dic,
-            'weapon': self.Append_Weapon_Inventory_Dic,
-        }
-        self.Setup()
-    
+        
     
 
     def Save_Inventory_Data(self):
         self.saved_data.clear()
-        self.inventory_dic = {'item': {}, 'weapon': {}, 'rune': {}}  # Reinitialize after clearing
 
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
@@ -42,6 +36,11 @@ class Inventory():
     def Load_Data(self, data):
                 
         self.saved_data = data  # Store loaded data
+        lookup_dic = {
+                'item': self.item_inventory,
+                'rune': self.weapon_inventory,
+                'weapon': self.rune_inventory,
+                }
         for inventory_index, item_data in data.items():
             if not item_data:
                 continue
@@ -55,47 +54,9 @@ class Inventory():
                 continue
 
             inventory_slot.Add_Item(item)
-            self.lookup_dic.get(inventory_slot.type)(inventory_slot)
+            
+            lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
 
-        self.Configure_Inventory_Dic()
-
-    def Configure_Inventory_Dic(self):
-
-        self.inventory_dic = {'item': {}, 'weapon': {}, 'rune': {}}
-        for inventory_slot in self.inventory:
-            if not inventory_slot.item:
-                continue
-            # Call the relevant functions
-            self.lookup_dic.get(inventory_slot.type)(inventory_slot)
-        
-
-    
-    def Append_Rune_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.rune_inventory_dic:
-            self.rune_inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
-        
-        self.rune_inventory_dic[inventory_slot.item.type].append(inventory_slot)
-    
-    def Append_Weapon_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.weapon_inventory_dic:
-            self.weapon_inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
-        
-        self.weapon_inventory_dic[inventory_slot.item.type].append(inventory_slot)
-    
-    def Append_Item_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.item_inventory_dic:
-            self.item_inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
-        
-        self.item_inventory_dic[inventory_slot.item.type].append(inventory_slot)
 
     # General Update function
     def Update(self, offset=(0, 0)):
@@ -117,10 +78,16 @@ class Inventory():
             
             
         self.Item_Click()
-        self.Key_Board_Input()
+        self.keyboard_inventory.Key_Board_Input()
         return
     
     
+    def Equip_Weapon(self):
+        for inventory_slot in self.weapon_inventory_dic.values():
+            if not inventory_slot.item:
+                continue
+            inventory_slot.item.Equip()
+
 
     def Update_Inventory_Slot_Pos(self):
         for index, inventory_slot in enumerate(self.inventory):
@@ -131,88 +98,10 @@ class Inventory():
         for inventory_slot in self.inventory:
             inventory_slot.Remove_Item()
 
-    
 
+    def Increment_Weapon_Inventory(self):
+        pass
 
-    # Configure the inventory when Initialiased
-    def Setup(self):
-        self.Setup_Inventory_Dic()
-        self.Setup_Item_Inventory()
-        self.Setup_Weapon_Inventory()
-        self.Setup_Rune_Inventory()
-
-    def Setup_Inventory_Dic(self):
-        self.inventory_dic = {
-            'item': {},
-            'weapon': {},
-            'rune': {}
-        }
-        
-    def Setup_Item_Inventory(self):
-        for i in range(self.x_size):
-            (x, y) = self.Set_Item_Inventory_Slot_Pos(i)
-            inventory_slot = Inventory_Slot(self.game, (x, y), 'item', self.size, None, i, str(i + 1))
-            inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
-            self.inventory.append(inventory_slot)
-
-    def Setup_Weapon_Inventory(self):
-        y =  self.game.screen_height / self.game.render_scale - 40
-        x = self.game.screen_width / 2 / self.game.render_scale - 220
-        inventory_slot = Inventory_Slot(self.game, (x, y), 'weapon', self.size, None, 12, str(10))
-        inventory_slot.Set_White_List(['weapon'])
-        self.inventory.append(inventory_slot)
-
-    # Configure the inventory when initialized
-    def Setup_Rune_Inventory(self):
-        symbols = ['z', 'x', 'c']
-        for i in range(3):
-            
-            (x_pos, y_pos) = self.Set_Rune_Inventory_Slot_Pos(i)
-            index = i + 9
-            inventory_slot = Inventory_Slot(self.game, (x_pos, y_pos), 'rune', self.size, None, index, symbols[i])
-            background = self.game.assets['rune_background'][0]
-            inventory_slot.Add_Background(background)
-            # inventory_slot.inventory_type = 'rune'
-            inventory_slot.Set_White_List(['rune'])
-            self.inventory.append(inventory_slot)  # Add to instance's inventory
-            self.rune_inventory_dic[inventory_slot.index] = []
-            self.rune_inventory_dic[inventory_slot.index].append(inventory_slot)
-
-
-    def Set_Rune_Inventory_Slot_Pos(self, index):
-        x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 160
-        y_pos = self.game.screen_height / self.game.render_scale - 40
-        return (x_pos, y_pos)
-        
-
-    def Set_Item_Inventory_Slot_Pos(self, index):
-        x = index * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
-        y = self.game.screen_height / self.game.render_scale - 40
-        return (x, y)
-
-    def Configure_Keyboard(self):
-        return
-
-    def Key_Board_Input(self):
-        keyboard = self.game.keyboard_handler
-        key_map = {
-            keyboard._1_pressed: 0, keyboard._2_pressed: 1, keyboard._3_pressed: 2,
-            keyboard._4_pressed: 3, keyboard._5_pressed: 4, keyboard._6_pressed: 5,
-            keyboard._7_pressed: 6, keyboard._8_pressed: 7, keyboard._9_pressed: 8,
-            keyboard.z_pressed: 10, keyboard.x_pressed: 11, keyboard.c_pressed: 12,
-        }
-
-        for key, index in key_map.items():
-            if key:
-                self.Activate_Inventory_Slot(index)
-                break
-    
-
-    def Activate_Inventory_Slot(self, index):
-        inventory_slot = self.inventory[index]
-        if inventory_slot.item:
-            inventory_slot.item.Activate()
-            inventory_slot.Update()
 
     # Activates when mouse has been held down for 10 ticks and
     # the inventory slot is not active anymore 
@@ -273,17 +162,10 @@ class Inventory():
 
     # Add item to the inventory
     def Add_Item(self, item):
-        # Check if an item can have more than one charge, example health potion is 3
-        if self.Add_Item_To_Inventory_Slot_Merge(item):
-            return True
-                    
-        return self.Add_Item_To_Inventory_Slot(item)
+        self.item_inventory.Add_Item(item)
 
     def Add_Rune(self, rune):
-        for inventory_slot in sum(self.rune_inventory_dic.values(), []):  # Flatten the lists
-            if not inventory_slot.item:
-                inventory_slot.Add_Item(rune)
-                return  # Stop after adding the rune
+        self.rune_inventory.Add_Item(rune)
     
     # Merges items into existing slots if possible
     def Add_Item_To_Inventory_Slot_Merge(self, item):
@@ -341,13 +223,6 @@ class Inventory():
             inventory_slot.item.Update()
             return True
         return False  # No available slots
-    
-    # Finds an item in the inventory using inventory_dic for faster lookup
-    def Find_Item_In_Inventory(self, item):
-        if item.ID in self.item_inventory_dic:
-            index = self.item_inventory_dic[item.type]
-            return self.inventory[index]
-        return None
 
     # Handle single clicking behavior, return True if valid click
     def Item_Single_Click(self):
@@ -404,12 +279,12 @@ class Inventory():
             return
         type = inventory_slot.item.type
         
-        if type in self.item_inventory_dic:
-            self.item_inventory_dic[type]  # Remove from dictionary
-        elif type in self.rune_inventory_dic:
-            self.item_inventory_dic[type]  # Remove from dictionary
-        elif type in self.weapon_inventory_dic:
-            self.item_inventory_dic[type]  # Remove from dictionary
+        if self.item_inventory.Clear_Inventory_Dic_Slot(type):
+            return
+        elif self.rune_inventory.Clear_Inventory_Dic_Slot(type):
+            return
+        elif self.weapon_inventory.Clear_Inventory_Dic_Slot(type):
+            return
 
     # Set the inventory to be inactive again
     def Reset_Inventory_Slot(self):
@@ -483,13 +358,14 @@ class Inventory():
 
             # Move original item to active inventory slot
             self.clicked_inventory_slot.Add_Item(item_holder)
-            self.game.player.Set_Active_Weapon(item_holder, self.clicked_inventory_slot.inventory_type)
 
             self.clicked_inventory_slot = None  # Clear clicked slot
 
             # Move active item into the new slot
             inventory_slot.Add_Item(self.active_item)
-            self.game.player.Set_Active_Weapon(self.active_item, inventory_slot.inventory_type)
+
+            self.weapon_inventory.Equip_Weapon()
+
 
             self.active_item = None  # Clear active item
             return True
@@ -545,8 +421,6 @@ class Inventory():
                 return True
 
         return False
-
-    
 
     def Render(self, surf):
         for inventory_slot in self.inventory:

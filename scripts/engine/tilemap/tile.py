@@ -68,6 +68,8 @@ class Tile():
     def Set_Entity_Active(self):
         for entity in self.entities.values():
             entity.Set_Active(self.active)
+            alpha_value = max(0, min(255, entity.active))
+            entity.Update_Dark_Surface(alpha_value)
         
 
     def Add_Entity(self, entity):
