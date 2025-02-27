@@ -2,9 +2,6 @@ from scripts.inventory.base_inventory import Base_Inventory
 from scripts.inventory.inventory_slot import Inventory_Slot
 
 class Rune_Inventory(Base_Inventory):
-    def __init__(self, game, shared_inventory):
-        super().__init__(game, shared_inventory)
-        self.inventory_dic = {}
 
     def Append_Inventory_Dic(self, inventory_slot):
         if not inventory_slot.item:
@@ -27,7 +24,8 @@ class Rune_Inventory(Base_Inventory):
             inventory_slot.Add_Background(background)
             # inventory_slot.inventory_type = 'rune'
             inventory_slot.Set_White_List(['rune'])
-            self.inventory.append(inventory_slot)  # Add to instance's inventory
+            self.Add_Inventory_Slot(inventory_slot)
+
             self.inventory_dic[inventory_slot.index] = []
             self.inventory_dic[inventory_slot.index].append(inventory_slot)
 
@@ -39,8 +37,7 @@ class Rune_Inventory(Base_Inventory):
 
     
     def Add_Item(self, item):
-
-        for inventory_slot in self.inventory:
+        for inventory_slot in self.shared_inventory:
             if inventory_slot.item:
                 continue
             if not inventory_slot.Add_Item(item):
@@ -58,5 +55,6 @@ class Rune_Inventory(Base_Inventory):
             except Exception as e:
                 print("FAILED TO ADD ITEM", e, item, self.inventory_dic)
             inventory_slot.item.Update()
+            item.Remove_Tile()
             return True
         return False  # No available slots

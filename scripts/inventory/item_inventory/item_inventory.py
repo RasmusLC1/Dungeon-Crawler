@@ -2,8 +2,6 @@ from scripts.inventory.base_inventory import Base_Inventory
 from scripts.inventory.inventory_slot import Inventory_Slot
 
 class Item_Inventory(Base_Inventory):
-    def __init__(self, game, shared_inventory):
-        super().__init__(game, shared_inventory)
 
     def Append_Inventory_Dic(self, inventory_slot):
         if not inventory_slot.item:
@@ -20,7 +18,7 @@ class Item_Inventory(Base_Inventory):
             (x, y) = self.Set_Inventory_Slot_Pos(i)
             inventory_slot = Inventory_Slot(self.game, (x, y), 'item', self.size, None, i, str(i + 1))
             inventory_slot.Set_White_List(['weapon', 'potion', 'loot'])
-            self.inventory.append(inventory_slot)
+            self.Add_Inventory_Slot(inventory_slot)
 
     def Set_Inventory_Slot_Pos(self, index):
         x = index * self.size[1] + self.game.screen_width / 2 / self.game.render_scale - 130
@@ -33,6 +31,7 @@ class Item_Inventory(Base_Inventory):
     def Add_Item(self, item):
         # Check if an item can have more than one charge, example health potion is 3
         if self.Add_Item_To_Inventory_Slot_Merge(item):
+            item.Remove_Tile()
             return True
                     
         return self.Add_Item_To_Inventory_Slot(item)
@@ -60,6 +59,7 @@ class Item_Inventory(Base_Inventory):
 
             # If the entire item was merged, remove it
             if item.amount == 0:
+                item.Remove_Tile()
                 self.game.item_handler.Remove_Item(item)
                 inventory_slot.item.Update()
                 return True
@@ -74,7 +74,7 @@ class Item_Inventory(Base_Inventory):
     # Places an item in an empty slot if merging is not possible
     def Add_Item_To_Inventory_Slot(self, item):
 
-        for inventory_slot in self.inventory:
+        for inventory_slot in self.shared_inventory:
             if inventory_slot.item:
                 continue
             if not inventory_slot.Add_Item(item):

@@ -13,11 +13,12 @@ class Inventory_Handler():
         self.click_cooldown = 0
         self.clicked_inventory_slot = None
         self.inventory = [] # General shared inventory
+        self.inventory_dic = {}
 
-        self.item_inventory = Item_Inventory(game, self.inventory)
-        self.weapon_inventory = Weapon_Inventory(game, self.inventory)
-        self.rune_inventory = Rune_Inventory(game, self.inventory)
-        self.keyboard_inventory = Keyboard_Inventory(game, self.inventory)
+        self.item_inventory = Item_Inventory(game, self.inventory, self.inventory_dic)
+        self.weapon_inventory = Weapon_Inventory(game, self.inventory, self.inventory_dic)
+        self.rune_inventory = Rune_Inventory(game, self.inventory, self.inventory_dic)
+        self.keyboard_inventory = Keyboard_Inventory(game, self.inventory, self.inventory_dic)
         self.saved_data = {}
         
     
@@ -30,11 +31,12 @@ class Inventory_Handler():
                 continue
             inventory_slot.item.Save_Data()
             self.saved_data[inventory_slot.index] = inventory_slot.item.saved_data
+            self.saved_data['active_inventory'] = self.weapon_inventory.active_inventory_slot.index
 
 
     # Loads inventory data and updates inventory_dic
     def Load_Data(self, data):
-                
+        active_inventory_slot = None
         self.saved_data = data  # Store loaded data
         lookup_dic = {
                 'item': self.item_inventory,
@@ -44,6 +46,12 @@ class Inventory_Handler():
         for inventory_index, item_data in data.items():
             if not item_data:
                 continue
+            
+            # Get the active_inventory_slot
+            if isinstance(item_data, int):
+                active_inventory_slot = item_data
+                continue
+
             # Find correct slot
             inventory_slot = next((slot for slot in self.inventory if slot.index == item_data["inventory_index"]), None)
             if not inventory_slot:
@@ -52,11 +60,17 @@ class Inventory_Handler():
             item = self.game.item_handler.Find_Item(item_data["ID"])
             if not item:
                 continue
-
-            inventory_slot.Add_Item(item)
             
+
+            item.Remove_Tile()
+            if not inventory_slot.Add_Item(item):
+                print("FAILED TO LOAD ITEM: ", item.type, inventory_slot)
+                # print(inventory_slot.index, item_data['type'])
+            
+            # self.weapon_inventory.Set_Active_Inventory_Slot()
             lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
 
+        self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory_dic[active_inventory_slot])
 
     # General Update function
     def Update(self, offset=(0, 0)):
@@ -80,13 +94,6 @@ class Inventory_Handler():
         self.Item_Click()
         self.keyboard_inventory.Key_Board_Input()
         return
-    
-    
-    def Equip_Weapon(self):
-        for inventory_slot in self.weapon_inventory_dic.values():
-            if not inventory_slot.item:
-                continue
-            inventory_slot.item.Equip()
 
 
     def Update_Inventory_Slot_Pos(self):
@@ -100,7 +107,7 @@ class Inventory_Handler():
 
 
     def Increment_Weapon_Inventory(self):
-        pass
+        self.weapon_inventory.Mouse_Scroll_Update_Active_Inventory()
 
 
     # Activates when mouse has been held down for 10 ticks and
@@ -166,63 +173,6 @@ class Inventory_Handler():
 
     def Add_Rune(self, rune):
         self.rune_inventory.Add_Item(rune)
-    
-    # Merges items into existing slots if possible
-    def Add_Item_To_Inventory_Slot_Merge(self, item):
-        if item.max_amount <= 1:
-            return False  # Can't merge single-stack items
-        # Check if this item type is already in the dictionary
-        if not item.type in self.item_inventory_dic:
-            return False
-
-        for inventory_slot in self.item_inventory_dic[item.type]:  
-            if not inventory_slot.item or inventory_slot.item.amount >= inventory_slot.item.max_amount:
-                continue
-
-            # Calculate how much can be merged
-            available_space = inventory_slot.item.max_amount - inventory_slot.item.amount
-            amount_to_merge = min(item.amount, available_space)
-
-            # Merge items
-            inventory_slot.item.Increase_Amount(amount_to_merge)
-            item.Set_Amount(item.amount - amount_to_merge)
-
-            # If the entire item was merged, remove it
-            if item.amount == 0:
-                self.game.item_handler.Remove_Item(item)
-                inventory_slot.item.Update()
-                return True
-            
-        # If there is still remaining amount, try placing it in an empty slot
-        if item.amount > 0:
-            return self.Add_Item_To_Inventory_Slot(item)
-
-        return False  # No slot to merge into
-
-
-    # Places an item in an empty slot if merging is not possible
-    def Add_Item_To_Inventory_Slot(self, item):
-
-        for inventory_slot in self.inventory:
-            if inventory_slot.item:
-                continue
-            if not inventory_slot.Add_Item(item):
-                continue
-            
-            self.game.item_handler.Remove_Item(item)
-            
-            try:
-                # Update inventory dictionary
-                if item.type not in self.item_inventory_dic or not isinstance(self.item_inventory_dic[item.type], list):
-                    self.item_inventory_dic[item.type] = []
-
-
-                self.item_inventory_dic[item.type].append(inventory_slot)
-            except Exception as e:
-                print("FAILED TO ADD ITEM", e, item, self.item_inventory_dic)
-            inventory_slot.item.Update()
-            return True
-        return False  # No available slots
 
     # Handle single clicking behavior, return True if valid click
     def Item_Single_Click(self):
@@ -302,8 +252,6 @@ class Inventory_Handler():
         self.clicked_inventory_slot.item = None
         self.clicked_inventory_slot = None
 
- 
- 
 
     def Move_Item_To_New_Slot(self, offset):
         # Check if the item is being moved to another inventory
@@ -342,13 +290,10 @@ class Inventory_Handler():
         if inventory_type_holder:
             item.Update_Player_Hand(inventory_type_holder)
 
-        self.Set_Player_Weapon(item, inventory_slot)
+        self.weapon_inventory.Equip_Weapon()
         
         return True
 
-    def Set_Player_Weapon(self, item, inventory_slot):
-        if inventory_slot.type == 'weapon':
-            item.Equip()
 
     def Swap_Item(self, item, inventory_slot):
         if inventory_slot.item:
@@ -421,6 +366,8 @@ class Inventory_Handler():
                 return True
 
         return False
+
+    
 
     def Render(self, surf):
         for inventory_slot in self.inventory:

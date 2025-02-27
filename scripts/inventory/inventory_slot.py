@@ -15,6 +15,7 @@ class Inventory_Slot():
         self.Setup_Inventory_Texture()
         self.active = False
         self.activate_counter = 0
+        self.border_color = (0, 0, 0)
         self.white_list_items = []
  
     def Update_Pos(self, pos):
@@ -92,14 +93,11 @@ class Inventory_Slot():
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
     def Render(self, surf):
-        black = (0, 0, 0)
-        # if self.item:
-        #     print("TESTETSTTEST")
-        #     traceback.print_stack(limit=3)
+
         # Render the box surface with scaling
         scaled_box_surface = pygame.transform.scale(self.box_surface, (self.size[0], self.size[1]))
         surf.blit(scaled_box_surface, self.pos)
-        pygame.draw.rect(surf, black, self.rect(), 1)
+        pygame.draw.rect(surf, self.border_color, self.rect(), 1)
        
 
         if self.background and not self.item:

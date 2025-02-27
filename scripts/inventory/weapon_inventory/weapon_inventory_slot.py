@@ -1,17 +1,32 @@
+import pygame
+
 from scripts.inventory.inventory_slot import Inventory_Slot
 
 class Weapon_Inventory_Slot(Inventory_Slot):
     def __init__(self, game, pos, type, size, item, index, key = None):
         super().__init__(game, pos, type, size, item, index, key)
         self.active_inventory = False
+         
 
-    def Set_Active_Inventory(self, state):
+    # Set state to active
+    def Set_Active_Inventory(self):
         self.active_inventory = True
+        self.border_color = (255,215,0) # Gold
         if self.item:
             self.item.Equip()
 
+    # Remove active state
+    def Remove_Active_Inventory(self):
+        self.active_inventory = False
+        self.border_color = (0, 0, 0) # Black
+        if self.item:
+            self.game.player.Remove_Active_Weapon()
+
     def Render(self, surf):
-        
+        if self.active_inventory:
+            gold = (255,215,0)
+            pygame.draw.rect(surf, gold, self.rect(), 1)
+            
         return super().Render(surf)
 
     # Render the keyboard shortcut

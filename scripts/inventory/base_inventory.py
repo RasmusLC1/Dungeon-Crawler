@@ -2,10 +2,11 @@ from scripts.inventory.inventory_slot import Inventory_Slot
 
 
 class Base_Inventory():
-    def __init__(self, game, shared_inventory):
+    def __init__(self, game, shared_inventory, shared_inventory_dic):
         self.game = game
         self.size = (34, 34)
-        self.inventory = shared_inventory
+        self.shared_inventory = shared_inventory
+        self.shared_inventory_dic = shared_inventory_dic
         self.inventory_dic = {}
 
         self.Setup()
@@ -30,3 +31,7 @@ class Base_Inventory():
 
     def Add_Item(self, item):
         pass
+
+    def Add_Inventory_Slot(self, inventory_slot):
+        self.shared_inventory.append(inventory_slot)
+        self.shared_inventory_dic[inventory_slot.index] = inventory_slot
