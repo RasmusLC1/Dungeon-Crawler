@@ -18,9 +18,9 @@ class Loot_Handler():
         else:
             loot = loot_class(self.game, (pos_x, pos_y))
         if not loot:
-            return False
+            return None
         
         if data:
             loot.Load_Data(data)
         self.game.item_handler.Add_Item(loot)
-        return True
+        return loot

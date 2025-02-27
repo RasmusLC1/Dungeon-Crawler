@@ -21,6 +21,8 @@ class Entity_Renderer():
     def Add_Entity(self, entity):
         if entity in self.entities:
             return
+        if not entity.render:
+            return
         self.entities.append(entity)
 
     
@@ -29,8 +31,8 @@ class Entity_Renderer():
             return
         
         tile = self.game.tilemap.Current_Tile(entity.tile)
-        
-        tile.Clear_Entity(entity.ID)
+        if tile:
+            tile.Clear_Entity(entity.ID)
         self.entities.remove(entity)
 
 

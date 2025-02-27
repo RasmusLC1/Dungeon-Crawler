@@ -1,6 +1,5 @@
 import math
 import pygame
-import traceback
 
 # Use dictionary keyed to pos in tilemap
 class Tile():
@@ -34,8 +33,6 @@ class Tile():
     def Set_Type(self, new_type):
         self.type = new_type
 
-    def Update(self):
-        self.Clear_Entities()
 
     def Set_Light_Level(self, new_light_level):
         self.light_level = new_light_level
@@ -58,7 +55,7 @@ class Tile():
     
     def Search_Entities(self, category, ID=0):
         return [entity for entity in self.entities.values()
-                if entity.category == category and entity.ID != ID]
+            if entity.category == category and entity.ID != ID]
 
     
     def Search_Type(self, type, ID = 0):
@@ -77,11 +74,7 @@ class Tile():
         entity.Set_Active(self.active)
 
     def Clear_Entity(self, entity_ID):
-        # print("TESTTESTTEST")
-        # traceback.print_stack(limit=4)
-        # print(self.entities, entity_ID)
-        if entity_ID in self.entities:
-            del self.entities[entity_ID]
+        self.entities.pop(entity_ID, None)
 
 
     def Add_Light_Contribution(self, light_id, contribution):

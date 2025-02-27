@@ -152,13 +152,27 @@ class Rune_Handler():
         self.active_runes.clear()
         self.saved_data.clear()
     
-        
+    def Replace_Rune_In_Inventory(self, old_rune, new_rune):
+        self.game.inventory.Replace_Rune(old_rune, new_rune)
+        new_rune.active = True
+        self.active_runes.append(new_rune)
+
+        self.game.item_handler.Add_Item(new_rune)
+
+        old_rune.active = False
+        self.active_runes.remove(old_rune)
+        self.game.item_handler.Remove_Item(old_rune)
+
+
+
+
     # Add runes to Active Inventory
     def Add_Rune_To_Rune_Inventory(self, rune_type):
         rune = self.runes[rune_type]
         rune.active = True
         self.active_runes.append(rune)
         self.game.inventory.Add_Rune(rune)
+
         self.game.item_handler.Add_Item(rune)
         return
 
@@ -168,7 +182,7 @@ class Rune_Handler():
         
         rune.active = False
         self.active_runes.remove(rune)
-        self.game.inventory.Remove_Item(rune, True)
+        self.game.inventory.Update_Runes()
         self.game.item_handler.Remove_Item(rune)
 
         return True

@@ -212,8 +212,8 @@ class Tilemap:
     # Get the tile size
     def Get_Tile_Size(self):
         return self.tile_size
-    
-    
+
+        
 
     # Get surrounding tiles
     def tiles_around(self, pos):

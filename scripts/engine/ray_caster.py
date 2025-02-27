@@ -68,6 +68,10 @@ class Ray_Caster():
             
             
         return True
+
+    def Clear_Entity_From_Tiles(self, entity_ID):
+        for tile in self.tiles:
+            tile.Clear_Entity(entity_ID)
     
     def Add_Tile(self, tile):
         self.tiles.append(tile)

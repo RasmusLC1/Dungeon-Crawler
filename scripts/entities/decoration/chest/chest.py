@@ -43,14 +43,12 @@ class Chest(Decoration):
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['version'] = self.version
-        self.saved_data['ID'] = self.ID
         self.saved_data['empty'] = self.empty
         
 
     def Load_Data(self, data):
         super().Load_Data(data)
         self.version = data['version']
-        self.ID = data['ID']
         self.empty = data['empty']
 
 

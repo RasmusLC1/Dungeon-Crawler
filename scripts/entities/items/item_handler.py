@@ -33,18 +33,19 @@ class Item_Handler():
             type = item_data['type']
             pos = item_data['pos']
             amount = item_data['amount']
+            item = None
             if item_data['sub_category'] == 'weapon':
-                self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
+                item = self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'potion':
-                self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
+                item = self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'loot':
-                self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount, item_data)
+                item = self.loot_handler.Loot_Spawner(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'rune':
                 self.game.rune_handler.Load_Data(item_data)
             else:
-                return False
+                return None
             
-            return True
+            return item
         except Exception as e:
             print("DATA WRONG ITEM HANDLER", item_data, e)
 
@@ -194,3 +195,10 @@ class Item_Handler():
         return True
 
 
+    def Find_Items_In_Inventory(self, index):
+        for item in self.items:
+            print(item.type, index)
+            if not item.inventory_index:
+                return
+            if item.inventory_index == index:
+                return item
