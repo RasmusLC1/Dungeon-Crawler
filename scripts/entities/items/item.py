@@ -31,7 +31,6 @@ class Item(PhysicsEntity):
 
     def Save_Data(self):
         super().Save_Data()
-        self.saved_data['ID'] = self.ID
         self.saved_data['sub_type'] = self.sub_type
         self.saved_data['sub_category'] = self.sub_category
         self.saved_data['used'] = self.used
@@ -43,8 +42,6 @@ class Item(PhysicsEntity):
     
     def Load_Data(self, data):
         super().Load_Data(data)
-        self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
-        self.ID = data['ID']
         self.sub_type = data['sub_type']
         self.sub_category = data['sub_category']
         self.used = data['used']
@@ -52,7 +49,6 @@ class Item(PhysicsEntity):
         self.inventory_type = data['inventory_type']
         self.amount = data['amount']
         self.inventory_index = data['inventory_index']
-        self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
         
     def Update(self):
         self.Update_Activate_Cooldown()
@@ -105,6 +101,8 @@ class Item(PhysicsEntity):
         for trap in nearby_traps:
             trap.Update(self)
         self.Set_Tile()
+        self.picked_up = False
+        self.in_inventory = False
         return True
 
     def Update_Animation(self):

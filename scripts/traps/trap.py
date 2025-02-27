@@ -16,7 +16,6 @@ class Trap(PhysicsEntity):
 
     def Save_Data(self):
         super().Save_Data()
-        self.saved_data['ID'] = self.ID
         self.saved_data['Cooldown'] = self.Cooldown
         self.saved_data['animation'] = self.animation
         self.saved_data['animation_cooldown'] = self.animation_cooldown
@@ -25,7 +24,6 @@ class Trap(PhysicsEntity):
     
     def Load_Data(self, data):
         super().Load_Data(data)
-        self.ID = data['ID']
         self.Cooldown = data['Cooldown']
         self.animation = data['animation']
         self.animation_cooldown = data['animation_cooldown']

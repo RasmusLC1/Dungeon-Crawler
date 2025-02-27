@@ -27,7 +27,6 @@ class Boss_Room():
     def Save_Data(self):
         self.saved_data['category'] = self.category
         self.saved_data['type'] = self.type
-        self.saved_data['ID'] = self.ID
         self.saved_data['pos'] = self.pos
         self.saved_data['radius'] = self.radius
         self.saved_data['level'] = self.level
@@ -41,7 +40,6 @@ class Boss_Room():
     def Load_Data(self, data):
         self.category = data['category']
         self.type = data['type']
-        self.ID = data['ID']
         self.pos = data['pos']
         self.radius = data['radius']
         self.level = data['level']

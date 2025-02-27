@@ -5,7 +5,6 @@ from scripts.entities.textbox.enemy_textbox import Enemy_Textbox
 from scripts.entities.decoration.bones.bones import Bones 
 from scripts.entities.moving_entities.enemies.behavior.intent_manager import Intent_Manager
 
-
 import pygame
 import random
 
@@ -63,8 +62,6 @@ class Enemy(Moving_Entity):
         self.saved_data['path_finding_strategy'] = self.path_finding_strategy
         self.saved_data['locked_on_target'] = self.locked_on_target
         self.saved_data['target'] = self.target
-        self.saved_data['ID'] = self.ID
-
 
 
     def Load_Data(self, data):
@@ -77,7 +74,6 @@ class Enemy(Moving_Entity):
         self.attack_strategy = data['attack_strategy']
         self.path_finding_strategy = data['path_finding_strategy']
         self.locked_on_target = data['locked_on_target']
-        self.ID = data['ID']
         self.target = data['target']
 
 
@@ -195,18 +191,25 @@ class Enemy(Moving_Entity):
             return
         
         self.Spawn_Damaged_Particles()
+        self.Delete()
 
-        if self.health <= 0:
-            self.Spawn_Bones()
-            self.Drop_Weapon()
+    
 
-            self.game.enemy_handler.Delete_Enemy(self)
-            if self.distance_to_player < 150:
-                self.game.player.Increase_Souls(5)
+    def Delete(self):
+        if self.health > 0:
+            return
+        
+        self.Spawn_Bones()
+        self.Drop_Weapon()
+        self.game.enemy_handler.Delete_Enemy(self)
+        self.game.entities_render.Remove_Entity(self)
+        if self.distance_to_player < 150:
+            self.game.player.Increase_Souls(5)
+        super().Delete()
 
 
 
-        self.direction = pygame.math.Vector2(self.direction_x, self.direction_y)
+
 
     def Spawn_Damaged_Particles(self):
         self.game.particle_handler.Activate_Particles(10, 'blood', self.rect().center, frame=random.randint(10, 30))
@@ -224,9 +227,7 @@ class Enemy(Moving_Entity):
         # Remove weapon from Tile
         tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
         if not tile:
-            tile = self.game.tilemap.Current_Tile(self.active_weapon.tile)
-            if not tile:
-                return
+            return
 
         tile.Clear_Entity(self.active_weapon.ID)
 

@@ -21,6 +21,8 @@ class Entity_Renderer():
     def Add_Entity(self, entity):
         if entity in self.entities:
             return
+        if not entity.render:
+            return
         self.entities.append(entity)
 
     
