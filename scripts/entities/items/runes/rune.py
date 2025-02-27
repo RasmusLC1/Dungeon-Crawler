@@ -45,7 +45,6 @@ class Rune(Item):
         self.saved_data['current_soul_cost'] = self.current_soul_cost
         self.saved_data['active'] = self.active
         self.saved_data['menu_pos'] = self.menu_pos
-        self.saved_data['ID'] = self.ID
 
         return self.saved_data
     
@@ -59,7 +58,6 @@ class Rune(Item):
         self.current_soul_cost = data['current_soul_cost'] 
         self.active = data['active'] 
         self.menu_pos = data['menu_pos']
-        self.ID = data['ID']
 
     
     def Update(self):

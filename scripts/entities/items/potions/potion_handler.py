@@ -34,7 +34,7 @@ class Potion_Handler:
 
         # If none matched, return False
         if not potion_class:
-            return False
+            return None
 
         # Instantiate the matched potion class
         potion = potion_class(self.game, (pos_x, pos_y), amount)
@@ -45,4 +45,4 @@ class Potion_Handler:
 
         # Finally, add the potion to the game’s item handler
         self.game.item_handler.Add_Item(potion)
-        return True
+        return potion

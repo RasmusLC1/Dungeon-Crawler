@@ -676,6 +676,10 @@ class Weapon(Item):
         else:
             self.Move((self.entity.pos[0] + 5 , self.entity.pos[1]))
 
+    def Place_Down(self):
+        self.entity = None
+        return super().Place_Down()
+
     def Equip(self):
         self.Set_Equip(True)
         self.Set_Entity(self.game.player)

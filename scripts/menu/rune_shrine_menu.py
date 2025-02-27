@@ -108,9 +108,9 @@ class Rune_Shrine_Menu(Menu):
         clear_available_rune.fill((20,20,20)) # Gold color
 
         self.game.display.blit(clear_available_rune, (self.available_rune.menu_pos[0] - 5, self.available_rune.menu_pos[1] - 30))
-        self.game.rune_handler.Remove_Rune_From_Inventory(rune_to_replace.type)
+        self.game.rune_handler.Replace_Rune_In_Inventory(rune_to_replace, self.available_rune)
 
-        self.game.rune_handler.Add_Rune_To_Rune_Inventory(self.available_rune.type)
+        # self.game.rune_handler.Add_Rune_To_Rune_Inventory(self.available_rune.type)
         self.game.player.Decrease_Souls(self.available_rune.cost_to_buy)
 
         self.Set_Active_Runes_Menu_Pos()

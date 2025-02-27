@@ -31,8 +31,8 @@ class Entity_Renderer():
             return
         
         tile = self.game.tilemap.Current_Tile(entity.tile)
-        
-        tile.Clear_Entity(entity.ID)
+        if tile:
+            tile.Clear_Entity(entity.ID)
         self.entities.remove(entity)
 
 

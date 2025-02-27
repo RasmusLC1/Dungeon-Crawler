@@ -68,7 +68,7 @@ class Weapon_Handler():
             # Lookup the class; return False if not found
             weapon_class = self.weapon_map.get(name)
             if not weapon_class:
-                return False
+                return None
             weapon = weapon_class(self.game, (pos_x, pos_y))
 
         # Load custom data if any
@@ -80,7 +80,7 @@ class Weapon_Handler():
 
         # Finally, add to the item handler
         self.game.item_handler.Add_Item(weapon)
-        return True
+        return weapon
 
     def Spawn_Random_Weapon(self, pos):
         random_weapon_index = random.randint(0, 17)

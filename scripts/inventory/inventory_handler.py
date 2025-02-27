@@ -36,7 +36,7 @@ class Inventory_Handler():
 
     # Loads inventory data and updates inventory_dic
     def Load_Data(self, data):
-        active_inventory_slot = None
+        active_inventory_slot = 12 # Default value
         self.saved_data = data  # Store loaded data
         lookup_dic = {
                 'item': self.item_inventory,
@@ -51,13 +51,14 @@ class Inventory_Handler():
             if isinstance(item_data, int):
                 active_inventory_slot = item_data
                 continue
-
+            
+            if "inventory_index" not in item_data:
+                continue
             # Find correct slot
             inventory_slot = next((slot for slot in self.inventory if slot.index == item_data["inventory_index"]), None)
             if not inventory_slot:
                 continue
-            self.game.item_handler.Load_Item_From_Data(item_data)
-            item = self.game.item_handler.Find_Item(item_data["ID"])
+            item = self.game.item_handler.Load_Item_From_Data(item_data)
             if not item:
                 continue
             
@@ -69,6 +70,7 @@ class Inventory_Handler():
             
             # self.weapon_inventory.Set_Active_Inventory_Slot()
             lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
+        self.rune_inventory.Add_Active_Runes()
 
         self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory_dic[active_inventory_slot])
 
@@ -95,6 +97,8 @@ class Inventory_Handler():
         self.keyboard_inventory.Key_Board_Input()
         return
 
+    def Update_Runes(self):
+        self.rune_inventory.Add_Active_Runes()
 
     def Update_Inventory_Slot_Pos(self):
         for index, inventory_slot in enumerate(self.inventory):
@@ -151,13 +155,28 @@ class Inventory_Handler():
     # Handle double clicking behaviour, return True if valid double click
     # TODO: fix with UPDATE
     def Item_Double_Click(self):
-        return
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
-            if self.clicked_inventory_slot.item.sub_category == 'weapon':
-                self.clicked_inventory_slot.Set_Active(True)
-                self.game.mouse.Reset_Double_Click()
+            if not self.clicked_inventory_slot.item.sub_category == 'weapon':
+                return False
+            active_inventory_slot = self.weapon_inventory.active_inventory_slot
+            self.clicked_inventory_slot
+
+
+            if self.Swap_Item(active_inventory_slot):
+                self.clicked_inventory_slot = None
                 return True
-            
+
+            if self.Move_Item(self.clicked_inventory_slot.item, active_inventory_slot):
+                self.Reset_Inventory_Slot()
+                for inventory_slot in self.inventory:
+                    if not inventory_slot.item:
+                        continue
+                self.clicked_inventory_slot = None
+                return True
+            self.clicked_inventory_slot = None
+            return True
+        
+        self.clicked_inventory_slot = None
         return False
 
     # Finds the first empty inventory slot
@@ -173,6 +192,9 @@ class Inventory_Handler():
 
     def Add_Rune(self, rune):
         self.rune_inventory.Add_Item(rune)
+
+    def Replace_Rune(self, old_rune, new_rune):
+        self.rune_inventory.Replace_Rune(old_rune, new_rune)
 
     # Handle single clicking behavior, return True if valid click
     def Item_Single_Click(self):
@@ -265,7 +287,7 @@ class Inventory_Handler():
                 if inventory_slot.active:
                     return False
 
-                if self.Swap_Item(self.active_item, inventory_slot):
+                if self.Swap_Item(inventory_slot):
                     return True
 
                 if self.Move_Item(self.active_item, inventory_slot):
@@ -295,7 +317,7 @@ class Inventory_Handler():
         return True
 
 
-    def Swap_Item(self, item, inventory_slot):
+    def Swap_Item(self, inventory_slot):
         if inventory_slot.item:
             item_holder = inventory_slot.item  # Store item to be swapped
             self.clicked_inventory_slot.Reset_Inventory_Slot()

@@ -30,8 +30,8 @@ class Item_Inventory(Base_Inventory):
     # Add item to the inventory
     def Add_Item(self, item):
         # Check if an item can have more than one charge, example health potion is 3
+        item.Remove_Tile()
         if self.Add_Item_To_Inventory_Slot_Merge(item):
-            item.Remove_Tile()
             return True
                     
         return self.Add_Item_To_Inventory_Slot(item)
@@ -59,7 +59,6 @@ class Item_Inventory(Base_Inventory):
 
             # If the entire item was merged, remove it
             if item.amount == 0:
-                item.Remove_Tile()
                 self.game.item_handler.Remove_Item(item)
                 inventory_slot.item.Update()
                 return True

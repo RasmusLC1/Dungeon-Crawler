@@ -8,9 +8,9 @@ class Rune_Inventory(Base_Inventory):
             return
         # Ensure the type exists in the dictionary before appending
         if inventory_slot.item.type not in self.inventory_dic:
-            self.inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
+            self.inventory_dic[inventory_slot.index] = []  # Initialize if not present
         
-        self.inventory_dic[inventory_slot.item.type].append(inventory_slot)
+        self.inventory_dic[inventory_slot.index].append(inventory_slot)
         
 
     def Setup(self):
@@ -26,14 +26,41 @@ class Rune_Inventory(Base_Inventory):
             inventory_slot.Set_White_List(['rune'])
             self.Add_Inventory_Slot(inventory_slot)
 
-            self.inventory_dic[inventory_slot.index] = []
-            self.inventory_dic[inventory_slot.index].append(inventory_slot)
-
     def Set_Inventory_Slot_Pos(self, index):
         x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 160
         y_pos = self.game.screen_height / self.game.render_scale - 40
         return (x_pos, y_pos)
     
+    # Initialise the active runes
+    def Add_Active_Runes(self):
+        for rune in self.game.rune_handler.active_runes:
+            self.shared_inventory_dic[rune.inventory_index].Add_Item(rune)
+
+    def Replace_Rune(self, old_rune, new_rune):
+        # Find the corresponding inventory slot
+        for inventory_slot in self.shared_inventory:
+            if not inventory_slot.item:
+                continue
+
+            if inventory_slot.item.type != old_rune.type:
+                continue
+            print(inventory_slot)
+
+            # Replace with the new rune
+            inventory_slot.item = new_rune
+
+            # Ensure the new rune is added to the dictionary
+            if new_rune.type not in self.inventory_dic:
+                self.inventory_dic[new_rune.type] = []
+
+            self.inventory_dic[new_rune.type].append(inventory_slot)
+
+            # Optionally remove the old rune from the dictionary
+            # self.inventory_dic[old_rune.type].remove(inventory_slot)
+            # if not self.inventory_dic[old_rune.type]:
+            #     del self.inventory_dic[old_rune.type]
+            return True  # Successfully replaced the rune
+
 
     
     def Add_Item(self, item):
