@@ -23,9 +23,11 @@ class Text_Box_handler():
         if self.current_item:
             return
         for inventory_slot in self.game.inventory.inventory:
+
             if not inventory_slot.item:
                 continue
-            self.current_item = inventory_slot.item.Update_Text_Box(inventory_slot.item.rect(), self.game.mouse.rect_pos(self.game.render_scroll))
+            self.current_item = inventory_slot.item.Update_Text_Box(inventory_slot.rect(), self.game.mouse.rect_pos(self.game.render_scroll))
+            
             if self.current_item:
                 return
 

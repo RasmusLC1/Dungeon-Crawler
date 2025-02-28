@@ -667,6 +667,7 @@ class Weapon(Item):
             self.render = False
         else:
             self.render = True
+            
 
     def Set_Equipped_Position(self, direction_y):
         if not self.entity:

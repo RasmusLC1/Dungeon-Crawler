@@ -53,6 +53,8 @@ class Text_Box():
         
         rectangle_surface = self.Set_Text_Box_Size(entity_name)
         text_box_pos = self.Set_Text_Box_pos(offset)
+        if not text_box_pos:
+            return None
 
         surf.blit(rectangle_surface, text_box_pos)
         return text_box_pos
@@ -63,6 +65,9 @@ class Text_Box():
         entity_name = self.Edit_Entity_Name()
 
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
+        if not text_box_pos:
+            return None
+        
         self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
 
         # Render the description of the entity

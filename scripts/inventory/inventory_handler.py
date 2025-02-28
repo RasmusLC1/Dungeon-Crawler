@@ -76,6 +76,7 @@ class Inventory_Handler():
 
     # General Update function
     def Update(self, offset=(0, 0)):
+
         self.Active_Item(offset)
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
@@ -100,7 +101,9 @@ class Inventory_Handler():
     def Update_Runes(self):
         self.rune_inventory.Add_Active_Runes()
 
+    # Needs to resize the UI correctly when screen is resized
     def Update_Inventory_Slot_Pos(self):
+        return
         for index, inventory_slot in enumerate(self.inventory):
             pos = self.Set_Item_Inventory_Slot_Pos(index)
             inventory_slot.Update_Pos(pos)
@@ -147,6 +150,8 @@ class Inventory_Handler():
         if not self.game.mouse.left_click:
             if self.clicked_inventory_slot:
                 if self.Item_Double_Click():
+                    if self.weapon_inventory.active_inventory_slot.item:
+                        self.weapon_inventory.active_inventory_slot.item.Set_Position(self.weapon_inventory.active_inventory_slot.pos)
                     return
                 if self.Item_Single_Click():
                     return
@@ -160,7 +165,6 @@ class Inventory_Handler():
                 return False
             active_inventory_slot = self.weapon_inventory.active_inventory_slot
             self.clicked_inventory_slot
-
 
             if self.Swap_Item(active_inventory_slot):
                 self.clicked_inventory_slot = None
@@ -389,6 +393,10 @@ class Inventory_Handler():
 
         return False
 
+    def Find_Inventory_Slot(self, index):
+        if not index:
+            return None 
+        return self.inventory_dic[index]
     
 
     def Render(self, surf):

@@ -8,5 +8,8 @@ class Rune_Textbox(Text_Box):
         return entity_name
 
     def Set_Text_Box_pos(self, offset):
-        text_box_pos = (self.entity.game.screen_width // self.entity.game.render_scale - self.x_size - 20, self.entity.pos[1] -  self.y_size - 20)
+        inventory_slot = self.entity.game.inventory.Find_Inventory_Slot(self.entity.inventory_index)
+        if not inventory_slot:
+            return None
+        text_box_pos = (inventory_slot.pos[0], inventory_slot.pos[1] -  self.y_size)
         return text_box_pos
