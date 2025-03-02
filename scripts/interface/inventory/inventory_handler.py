@@ -1,7 +1,7 @@
-from scripts.inventory.keyboard_inventory import Keyboard_Inventory
-from scripts.inventory.weapon_inventory.weapon_inventory import Weapon_Inventory
-from scripts.inventory.rune_inventory.rune_inventory import Rune_Inventory
-from scripts.inventory.item_inventory.item_inventory import Item_Inventory
+from scripts.interface.inventory.keyboard_inventory import Keyboard_Inventory
+from scripts.interface.inventory.weapon_inventory.weapon_inventory import Weapon_Inventory
+from scripts.interface.inventory.rune_inventory.rune_inventory import Rune_Inventory
+from scripts.interface.inventory.item_inventory.item_inventory import Item_Inventory
 
 
 

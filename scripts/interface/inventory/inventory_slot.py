@@ -1,4 +1,3 @@
-import traceback
 import pygame
 
 class Inventory_Slot():

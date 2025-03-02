@@ -1,6 +1,6 @@
 import pygame
 
-from scripts.inventory.inventory_slot import Inventory_Slot
+from scripts.interface.inventory.inventory_slot import Inventory_Slot
 
 class Weapon_Inventory_Slot(Inventory_Slot):
     def __init__(self, game, pos, type, size, item, index, key = None):

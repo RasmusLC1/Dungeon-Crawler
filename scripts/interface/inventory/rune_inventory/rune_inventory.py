@@ -1,5 +1,5 @@
-from scripts.inventory.base_inventory import Base_Inventory
-from scripts.inventory.inventory_slot import Inventory_Slot
+from scripts.interface.inventory.base_inventory import Base_Inventory
+from scripts.interface.inventory.inventory_slot import Inventory_Slot
 
 class Rune_Inventory(Base_Inventory):
 

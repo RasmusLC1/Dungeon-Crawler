@@ -104,8 +104,6 @@ class State_Machine():
         # if self.game_state != 'rune_shrine_menu':
         #     self.game.menu_handler.rune_shrine_menu.Reset_Rune_Bought()
   
-  
-
 
     def Exit_Game(self, save_game):
         if save_game:

@@ -1,4 +1,4 @@
-from scripts.inventory.inventory_slot import Inventory_Slot
+from scripts.interface.inventory.inventory_slot import Inventory_Slot
 
 
 class Base_Inventory():

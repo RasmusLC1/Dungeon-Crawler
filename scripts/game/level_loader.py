@@ -7,12 +7,10 @@ from scripts.entities.items.item_handler import Item_Handler
 from scripts.entities.decoration.decoration_handler import Decoration_Handler
 from scripts.entities.moving_entities.enemies.enemy_handler import Enemy_Handler
 from scripts.engine.lights.light_handler import Light_Handler
-from scripts.inventory.inventory_handler import Inventory_Handler
+from scripts.interface.inventory.inventory_handler import Inventory_Handler
 
 
 from scripts.entities.items.runes.rune_handler import Rune_Handler
-
-import os
 
 
 class Level_Loader():
