@@ -8,7 +8,7 @@ import copy
 
 # Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
-PHYSICS_TILES = {'wall', 'wall_left', 'wall_right', 'wall_middle', 'wall_top', 'wall_bottom', 'Door_Basic'}
+PHYSICS_TILES = {'wall', 'wall_left', 'wall_right', 'wall_middle', 'wall_top', 'wall_bottom'}
 FLOOR_TTLES = {'floor'}
 
 class Tilemap:
@@ -63,7 +63,7 @@ class Tilemap:
         active = tile_values['active']
         light_level = tile_values['light']
         physics = False
-        if 'wall' in type or 'Door' in type:
+        if 'wall' in type:
             physics = True
 
         tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
@@ -83,7 +83,6 @@ class Tilemap:
                 matches.append(copy.copy(tile))
                 if not keep:
                     self.offgrid_tiles.remove(tile)
-                    
         for loc in self.tilemap:
             tile = self.tilemap[loc]
             if (tile.type, tile.variant) in id_pairs:
@@ -209,11 +208,7 @@ class Tilemap:
             tile.Set_Active(10000)
         return
     
-    # Get the tile size
-    def Get_Tile_Size(self):
-        return self.tile_size
 
-        
 
     # Get surrounding tiles
     def tiles_around(self, pos):
@@ -265,9 +260,10 @@ class Tilemap:
                 nearby_tiles.append(tile)
         return nearby_tiles
     
-    def Update_Tile_Type(self, pos, new_type):
-        tile = self.Current_Tile(pos)
+    def Update_Tile_Type(self, tile_key, new_type):
+        tile = self.Current_Tile(tile_key)
         tile.Set_Type(new_type)
+        tile.Set_Sprite()
 
 
     # Check for collision on relevant tile
@@ -327,7 +323,12 @@ class Tilemap:
             self.tilemap[tile_key].Render_All()
             self.game.ray_caster.Add_Tile(self.tilemap[tile_key])
 
-    
+    def Set_Physics(self, tile, state):
+        tile = self.Current_Tile(tile)
+        if not tile:
+            return
+        
+        tile.Set_Physics(state)
 
 
     def Set_Light_Level(self, tile, new_light_level):

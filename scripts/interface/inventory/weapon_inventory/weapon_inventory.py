@@ -61,6 +61,7 @@ class Weapon_Inventory(Base_Inventory):
         if not self.active_inventory_slot.item:
             return
         
+        self.active_inventory_slot.item.Reset_Weapon_Charge() # Prevents instant attack when equipped
         self.active_inventory_slot.item.Equip()
         
 

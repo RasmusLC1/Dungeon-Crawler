@@ -10,6 +10,7 @@ class Item(PhysicsEntity):
         self.sub_type = type
         self.used = False
         self.picked_up = False
+        self.clicked = False # Used for if the item is active
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
         self.inventory_type = None
         self.inventory_index = None
@@ -55,6 +56,9 @@ class Item(PhysicsEntity):
     def Update(self):
         self.Update_Activate_Cooldown()
 
+    def Update_In_Inventory(self):
+        pass
+
     
     def Activate(self):
         if self.activate_cooldown:
@@ -77,25 +81,18 @@ class Item(PhysicsEntity):
 
     def Pick_Up(self):
         # First Check if the player is colliding with the object as this is priority
-        if self.game.inventory.Add_Item(self):
-            self.picked_up = True
-            self.game.entities_render.Remove_Entity(self)
-            # self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
-
-            return self.game.player
+        if not self.game.inventory.Add_Item(self):
+            return None
         
-        self.Find_Nearby_Entities(2)
-        for entity in self.nearby_entities:
-            if not self.rect().colliderect(entity.rect()):
-                continue
-            if self.game.inventory.Add_Item(self):
-                self.picked_up = False
-                self.game.entities_render.Remove_Entity(self)
-                self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+        self.picked_up = True
+        self.Remove_Tile()
 
-                return entity
-                
-        return None
+        self.game.entities_render.Remove_Entity(self)
+
+        return self.game.player
+        
+
+         
 
     # TODO: Might crash, need to update traps or remove damage
     def Place_Down(self):
@@ -167,6 +164,8 @@ class Item(PhysicsEntity):
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
 
+    
+
     def Update_Delete_Cooldown(self):
         if not self.delete_countdown:
             return False
@@ -204,14 +203,7 @@ class Item(PhysicsEntity):
         if not self.Update_Light_Level():
             return
         
-        # Set alpha value to make item fade out
-        alpha_value = max(0, min(255, self.active))
-
-        if not alpha_value:
-            return
-        
-        if self.render_needs_update:
-            self.Update_Dark_Surface(alpha_value)
+        self.Update_Dark_Surface()
         
         # Render the item
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
@@ -233,3 +225,7 @@ class Item(PhysicsEntity):
 
         # Render on Mouse position as the item position is not being updated
         surf.blit(self.entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+    
+    # Used to render effect when active
+    def Render_Active(self, surf, offset = (0,0)):
+        pass

@@ -2,7 +2,7 @@ import pygame
 import random
 from scripts.entities.decoration.decoration import Decoration
 from scripts.entities.items.loot.gold import Gold
-from scripts.entities.items.loot.key import Key
+from scripts.entities.items.loot.keys.key import Key
 from scripts.entities.entities import PhysicsEntity
 
 
@@ -38,6 +38,7 @@ class Chest(Decoration):
             'vampiric'
         ]
 
+
     
 
     def Save_Data(self):
@@ -62,7 +63,7 @@ class Chest(Decoration):
         
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
-        self.loot_type = random.randint(1, 2) # Spawn normal
+        self.loot_type = random.randint(5, 6) # Spawn normal
         if self.loot_type in range(0, 3):
             if not self.Potion_Spawner():
                 self.Open()
@@ -71,10 +72,8 @@ class Chest(Decoration):
         elif self.loot_type in range(4, 6):
             rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
             rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-            loot = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(60,60))
-            # loot = Key(self.game, (rand_pos_x, rand_pos_y))
-
-            self.game.item_handler.Add_Item(loot)
+            # loot = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(60,60))
+            self.game.item_handler.loot_handler.Spawn_Key(rand_pos_x, rand_pos_y)
 
         # Call itself recursively if it should fail
         else:

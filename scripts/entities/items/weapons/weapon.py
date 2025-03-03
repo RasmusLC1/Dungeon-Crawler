@@ -609,14 +609,8 @@ class Weapon(Item):
         if not self.Update_Light_Level():
             return
         
-        # Set alpha value to make chest fade out
-        alpha_value = max(0, min(255, self.active))
-
-        if not alpha_value:
-            return
         
-        if self.render_needs_update:
-            self.Update_Dark_Surface(alpha_value)
+        self.Update_Dark_Surface()
         # Render the chest
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
@@ -634,14 +628,15 @@ class Weapon(Item):
         if not alpha_value:
             return
 
-        if self.render_needs_update:
-            self.Update_Dark_Surface_Enemy(alpha_value)
+        self.Update_Dark_Surface_Enemy(alpha_value)
         
         surf.blit(
             pygame.transform.flip(self.rendered_image, False, False),
                                   (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
     def Update_Dark_Surface_Enemy(self, alpha_value):
+        if not self.render_needs_update:
+            return
         self.rendered_image = self.entity_image.copy()
         self.rendered_image.set_alpha(alpha_value)
 
@@ -660,6 +655,14 @@ class Weapon(Item):
         self.rotate = 0
         self.enemy_hit = False
         self.light_level = 10
+    
+    # Prevent textbox when carried by enemy
+    def Update_Text_Box(self, hitbox_1, hitbox_2):
+        if self.entity:
+            if self.entity.category == 'enemy':
+                return
+        return super().Update_Text_Box(hitbox_1, hitbox_2)
+
 
     def Set_Equip(self, state):
         self.equipped = state

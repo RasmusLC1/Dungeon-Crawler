@@ -30,7 +30,6 @@ class Item_Inventory(Base_Inventory):
     # Add item to the inventory
     def Add_Item(self, item):
         # Check if an item can have more than one charge, example health potion is 3
-        item.Remove_Tile()
         if self.Add_Item_To_Inventory_Slot_Merge(item):
             return True
                     
@@ -92,4 +91,5 @@ class Item_Inventory(Base_Inventory):
                 print("FAILED TO ADD ITEM", e, item, self.inventory_dic)
             inventory_slot.item.Update()
             return True
+        
         return False  # No available slots

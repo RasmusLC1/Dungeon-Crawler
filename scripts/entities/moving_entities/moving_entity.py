@@ -73,7 +73,6 @@ class Moving_Entity(PhysicsEntity):
         # Handle attack animations
         self.attacking = 0
 
-
         # Handle Blocking
         self.block_direction = (0,0)
 
@@ -487,8 +486,7 @@ class Moving_Entity(PhysicsEntity):
         if not self.animation_handler.entity_image:
             return False
 
-        if self.render_needs_update:
-            self.Set_Dark_Surface()
+        self.Update_Dark_Surface()
 
 
         # Render status effects
@@ -496,37 +494,35 @@ class Moving_Entity(PhysicsEntity):
         self.effects.Render_Effects(surf, offset)
 
         if self.damage_cooldown:
-            self.Render_Damage_Lightup(self.rendered_surface)
+            self.Lightup(self.rendered_image)
             scroll_up_effect = 20 - self.damage_cooldown
             self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
 
-        surf.blit(pygame.transform.flip(self.rendered_surface, self.flip[0], False), 
+        surf.blit(pygame.transform.flip(self.rendered_image, self.flip[0], False), 
                 (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         return True
     
         
 
-    def Render_Damage_Lightup(self, entity_image):
+    def Lightup(self, entity_image):
         if self.damage_cooldown < self.damage_cooldown_max - 10:
             return
-        # Blit the dark layer
-        light_up_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        light_up_surface.fill((255, 0, 0, 255))
-
-        # Blit the chest layer on top the dark layer
-        entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        return super().Lightup(entity_image)
 
 
-    def Set_Dark_Surface(self):
-        self.rendered_surface = self.animation_handler.entity_image.copy()
+    # Seperate Update Dark surface since the animations are handled by animation handler
+    def Update_Dark_Surface(self):
+        if not self.render_needs_update:
+            return
+        self.rendered_image = self.animation_handler.entity_image.copy()
         
-        self.rendered_surface.set_alpha(min(255, self.active))
+        self.rendered_image.set_alpha(min(255, self.active))
 
          # Create a darkening surface that is affected by darkness
-        dark_surface = pygame.Surface(self.rendered_surface.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface = pygame.Surface(self.rendered_image.get_size(), pygame.SRCALPHA).convert_alpha()
         dark_surface.fill((self.light_level, self.light_level, self.light_level, 255))  
 
 
         # Apply darkening effect using BLEND_RGBA_MULT
-        self.rendered_surface.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        self.rendered_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         self.render_needs_update = False

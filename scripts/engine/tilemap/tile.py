@@ -1,6 +1,8 @@
 import math
 import pygame
 
+not_rendered_tiles = ['door_basic']
+
 # Use dictionary keyed to pos in tilemap
 class Tile():
     def __init__(self, game, type, variant, pos, size, active, light_level, physics) -> None:
@@ -15,6 +17,8 @@ class Tile():
         self.physics = physics
         self.next_to_Wall = False
         self.entities = {}
+        self.update_entity_cooldown = 0
+        self.sprite = None
         self.needs_redraw = True  # ✅ Add flag to track if we need to redraw
         self.rendered_surface = None  # ✅ Cached surface
         # Dictionary to hold each light's contribution
@@ -62,11 +66,17 @@ class Tile():
         return [entity for entity in self.entities.values()
                 if entity.type == type and entity.ID != ID]
     
+    # Update the dark level of nearby entities 
     def Set_Entity_Active(self):
+        if self.update_entity_cooldown:
+            self.update_entity_cooldown -= 1
+            return
         for entity in self.entities.values():
             entity.Set_Active(self.active)
-            alpha_value = max(0, min(255, entity.active))
-            entity.Update_Dark_Surface(alpha_value)
+            entity.render_needs_update = True
+            entity.Update_Dark_Surface()
+
+        self.update_entity_cooldown = 10
         
 
     def Add_Entity(self, entity):
@@ -76,6 +86,9 @@ class Tile():
     def Clear_Entity(self, entity_ID):
         self.entities.pop(entity_ID, None)
 
+    def Set_Physics(self, state):
+        self.physics = state
+    
 
     def Add_Light_Contribution(self, light_id, contribution):
         # Add/update light contribution
@@ -101,6 +114,9 @@ class Tile():
 
     # Recalculates the tile's visual state and caches it 
     def Update_Tile_Surface(self):
+        if not self.sprite:
+            return
+
         # Get the tile surface from the assets
         self.rendered_surface = self.sprite.copy()
         # Adjust the tile activeness calculation
@@ -126,6 +142,8 @@ class Tile():
     
     # Only render active tiles from raycaster
     def Render(self, surf, offset = (0,0)):
+        if not self.sprite:
+            return
         if self.needs_redraw:
             self.Update_Tile_Surface() 
         # Blit the darkened tile surface onto the main surface

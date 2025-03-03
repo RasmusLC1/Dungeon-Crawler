@@ -50,11 +50,15 @@ class Text_Box():
 
     def Text_Box_Setup(self, surf, entity_name, offset):
         # Scale the textbox to the name of the entity
-        
-        rectangle_surface = self.Set_Text_Box_Size(entity_name)
-        text_box_pos = self.Set_Text_Box_pos(offset)
+        try:
+            rectangle_surface = self.Set_Text_Box_Size(entity_name)
+            text_box_pos = self.Set_Text_Box_pos(offset)
 
-        surf.blit(rectangle_surface, text_box_pos)
+            surf.blit(rectangle_surface, text_box_pos)
+        except TypeError as e:
+            print(f"Text_Box_Setup not valid: {e}", rectangle_surface, text_box_pos, surf)
+        
+        
         return text_box_pos
 
     def Render(self, surf, offset=(0, 0)):
@@ -63,6 +67,9 @@ class Text_Box():
         entity_name = self.Edit_Entity_Name()
 
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
+        if not text_box_pos:
+            print(vars(self))
+            return
         self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
 
         # Render the description of the entity

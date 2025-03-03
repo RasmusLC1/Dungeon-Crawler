@@ -72,7 +72,7 @@ class Inventory_Handler():
             lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
         self.rune_inventory.Add_Active_Runes()
 
-        self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory_dic[active_inventory_slot])
+        self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory_dic.get(active_inventory_slot))
 
     # General Update function
     def Update(self, offset=(0, 0)):
@@ -192,7 +192,7 @@ class Inventory_Handler():
 
     # Add item to the inventory
     def Add_Item(self, item):
-        self.item_inventory.Add_Item(item)
+        return self.item_inventory.Add_Item(item)
 
     def Add_Rune(self, rune):
         self.rune_inventory.Add_Item(rune)
@@ -204,7 +204,7 @@ class Inventory_Handler():
     def Item_Single_Click(self):
         if not self.clicked_inventory_slot or not self.clicked_inventory_slot.item:
             return False
-
+        print("SINGLE CLICK")
         if self.game.mouse.single_click_delay and self.game.mouse.double_click:
             return False
 
@@ -222,7 +222,7 @@ class Inventory_Handler():
         if self.clicked_inventory_slot:
             if not self.clicked_inventory_slot.item:  # Ensure slot is empty before returning item
                 self.Move_Item(self.active_item, self.clicked_inventory_slot)
-                self.item_inventory_dic[self.active_item.type] = self.clicked_inventory_slot.index  # Update inventory dictionary
+                self.item_inventory.inventory_dic[self.active_item.type] = self.clicked_inventory_slot.index  # Update inventory dictionary
                 self.active_item = None
                 self.clicked_inventory_slot = None
             else:
@@ -246,7 +246,7 @@ class Inventory_Handler():
             self.game.item_handler.Add_Item(self.active_item)
             self.active_item.picked_up = False
             self.active_item.Set_Tile()
-            self.item_inventory_dic[self.active_item.type] = self.active_item.inventory_index  # Update dictionary
+            self.item_inventory.inventory_dic[self.active_item.type] = self.active_item.inventory_index  # Update dictionary
             # self.item_inventory_dic[self.active_item.type].clear()
         self.active_item = None
 
@@ -344,18 +344,19 @@ class Inventory_Handler():
         return False
 
 
-    def Remove_Item(self, item, move_item):
-        if not move_item:
+    def Remove_Item(self, item):
+        # Ensure item is in the inventory
+        inventory_slot = self.inventory_dic.get(item.inventory_index)
+    
+        if not inventory_slot:  
+            return False  # Item not found or slot is None
+
+        if not inventory_slot:
             return False
-        
-        for inventory_slot in self.inventory:
-            if not inventory_slot.item.ID == item.ID:
-                continue
-            inventory_slot.Set_Active(False)  # Deactivate the slot
-            inventory_slot.item = None  # Remove the item
-            return True
-        
-        return False
+
+        inventory_slot.Set_Active(False)  # Deactivate the slot
+        inventory_slot.Remove_Item()
+        return True
 
     def Active_Item(self, offset=(0, 0)):
         if not self.active_item:
@@ -384,10 +385,7 @@ class Inventory_Handler():
             )
 
     def Find_Inventory_Slot(self, index):
-        if not index in self.inventory_dic:
-            return None
-
-        return self.inventory_dic[index]
+        return self.inventory_dic.get(index)
 
     def Overflow(self, item):
         empty_slots = {i: slot for i, slot in enumerate(self.inventory) if not slot.item}
@@ -400,9 +398,7 @@ class Inventory_Handler():
         return False
 
     def Find_Inventory_Slot(self, index):
-        if not index in self.inventory_dic:
-            return None 
-        return self.inventory_dic[index]
+        return self.inventory_dic.get(index)
     
 
     def Render(self, surf):

@@ -50,6 +50,11 @@ class Inventory_Slot():
             return
         if self.item.sub_category == 'weapon':
             return
+        if self.item.sub_category == 'loot':
+            self.item.Update_In_Inventory()
+        
+        if not self.item:
+            return
         self.item.Update()
 
     def Move_Item(self):
@@ -105,6 +110,9 @@ class Inventory_Slot():
 
         if not self.item:
             return
+        
+        if self.item.clicked:
+            self.item.Render_Active(surf, self.game.render_scroll)
 
         if self.item and not self.active:
             item_image = pygame.transform.scale(self.item.entity_image, self.size)
