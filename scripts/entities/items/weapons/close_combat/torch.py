@@ -74,5 +74,5 @@ class Torch(Weapon):
         self.light_source.Move_Light(self.pos, self.tile)
         return True
 
-    def Update_Dark_Surface(self, alpha_value):
+    def Update_Dark_Surface(self):
         self.rendered_image = self.entity_image

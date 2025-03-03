@@ -1,5 +1,5 @@
 from scripts.entities.items.loot.gold import Gold
-from scripts.entities.items.loot.key import Key
+from scripts.entities.items.loot.keys.key import Key
 
 
 class Loot_Handler():
@@ -13,7 +13,7 @@ class Loot_Handler():
 
     def Loot_Spawner(self, name, pos_x, pos_y, amount = 0, data = None):
         loot_class = self.loot_map.get(name)
-        if amount:
+        if amount > 1:
             loot = loot_class(self.game, (pos_x, pos_y), amount)
         else:
             loot = loot_class(self.game, (pos_x, pos_y))

@@ -55,6 +55,9 @@ class Item(PhysicsEntity):
     def Update(self):
         self.Update_Activate_Cooldown()
 
+    def Update_In_Inventory(self):
+        pass
+
     
     def Activate(self):
         if self.activate_cooldown:
@@ -167,6 +170,8 @@ class Item(PhysicsEntity):
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
 
+    
+
     def Update_Delete_Cooldown(self):
         if not self.delete_countdown:
             return False
@@ -204,14 +209,8 @@ class Item(PhysicsEntity):
         if not self.Update_Light_Level():
             return
         
-        # Set alpha value to make item fade out
-        alpha_value = max(0, min(255, self.active))
-
-        if not alpha_value:
-            return
-        
         if self.render_needs_update:
-            self.Update_Dark_Surface(alpha_value)
+            self.Update_Dark_Surface()
         
         # Render the item
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

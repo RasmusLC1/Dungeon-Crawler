@@ -65,8 +65,7 @@ class Tile():
     def Set_Entity_Active(self):
         for entity in self.entities.values():
             entity.Set_Active(self.active)
-            alpha_value = max(0, min(255, entity.active))
-            entity.Update_Dark_Surface(alpha_value)
+            entity.Update_Dark_Surface()
         
 
     def Add_Entity(self, entity):
@@ -101,6 +100,9 @@ class Tile():
 
     # Recalculates the tile's visual state and caches it 
     def Update_Tile_Surface(self):
+        if not self.sprite:
+            return
+
         # Get the tile surface from the assets
         self.rendered_surface = self.sprite.copy()
         # Adjust the tile activeness calculation

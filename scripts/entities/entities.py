@@ -105,9 +105,10 @@ class PhysicsEntity:
 
     def Set_Sprite(self):
         pass
-        # self.sprite = self.game.assets[self.type]
 
-
+    # Setting the item image and scaling it
+    def Set_Entity_Image(self):
+        pass
 
     def Set_Light_Level(self, value):
         self.light_level = value
@@ -147,8 +148,11 @@ class PhysicsEntity:
     def Render(self, surf, offset=(0, 0)):
         pass
 
-    def Update_Dark_Surface(self, alpha_value):
+    def Update_Dark_Surface(self):
         if not self.entity_image:
+            return
+        alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
+        if not alpha_value:
             return
         # Set image
         self.rendered_image = self.entity_image.copy()
@@ -162,3 +166,14 @@ class PhysicsEntity:
         # Blit the chest layer on top the dark layer
         self.rendered_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         self.render_needs_update = False
+
+
+    def Lightup(self, entity_image):
+        
+        self.rendered_image
+        # Blit the dark layer
+        light_up_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        light_up_surface.fill((255, 0, 0, 255))
+
+        # Blit the chest layer on top the dark layer
+        entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)

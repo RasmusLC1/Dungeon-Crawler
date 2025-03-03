@@ -4,7 +4,7 @@ from scripts.entities.textbox.potion_textbox import Potion_Textbox
 
 class Potion(Item):
     def __init__(self, game, type, pos, amount, strength):
-        super().__init__(game, type, 'potion', pos, (20, 20), amount)
+        super().__init__(game, type, 'potion', pos, (16, 16), amount)
         self.Update()
         self.max_amount = 3
         self.max_animation = 4
@@ -12,7 +12,6 @@ class Potion(Item):
         
         self.text_box = Potion_Textbox(self)
         
-        text_box_effect = self.effect.replace('_resistance', '')
         self.description = (
                             f"{self.effect} {self.amount}\n"
                             f"gold {self.value}\n"

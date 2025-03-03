@@ -377,7 +377,7 @@ class Graphics_Loader:
         white = (255,255,255)
         Objects_assets = {
             'chest' : get_tiles_from_sheet('decoration/chest.png', 8, 0, 0, 0, 32, 32, white),
-            'Door_Basic' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 32, 32),
+            'door_basic' : get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 32, 32),
             'rune_shrine' : get_tiles_from_sheet('decoration/shrine/rune_shrine.png', 3, 0, 0, 0, 64, 64),
             'portal_shrine' : get_tiles_from_sheet('decoration/shrine/portal_shrine.png', 3, 0, 0, 0, 64, 64),
             'bones' : get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
@@ -470,6 +470,10 @@ class Graphics_Loader:
         loot = {
             'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 16, 16),
             'key' : get_tiles_from_sheet('loot/key.png', 0, 0, 0, 0, 16, 16),
+            'lockpick' : get_tiles_from_sheet('items/keys/lockpick.png', 0, 0, 0, 0, 32, 32),
+            'blood_key' : get_tiles_from_sheet('items/keys/blood_key.png', 0, 0, 0, 0, 32, 32),
+            'skeleton_key' : get_tiles_from_sheet('items/keys/skeleton_key.png', 0, 0, 0, 0, 32, 32),
+            'soul_key' : get_tiles_from_sheet('items/keys/soul_key.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

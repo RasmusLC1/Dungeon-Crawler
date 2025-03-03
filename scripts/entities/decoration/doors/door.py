@@ -1,10 +1,11 @@
 from scripts.entities.decoration.decoration import Decoration
-import random
+import pygame
 
 class Door(Decoration):
     def __init__(self, game, type, pos, size) -> None:
         super().__init__(game, type, pos, size)
         self.is_open = False
+        self.high_light_cooldown = 0
 
     def Save_Data(self):
         super().Save_Data()
@@ -17,11 +18,15 @@ class Door(Decoration):
         if self.is_open:
             self.Open(False)
 
-    def Set_Sprite(self):
-        pass
+    def Update(self):
+        if not self.high_light_cooldown:
+            return
+        self.high_light_cooldown -= 1
 
-    def Set_Entity_Image(self):
-        pass
+
+    def Set_Highlight(self):
+        self.high_light_cooldown = 10
+
 
     # TODO: IMPLEMENT walls that can be walked through, I.E walls without physics in tilemap
     def Open(self, generate_clatter = True):
@@ -35,4 +40,8 @@ class Door(Decoration):
 
 
     def Render(self, surf, offset=...):
-        pass
+        super().Render(surf, offset)
+        # print(self.rendered_image)
+        if not self.high_light_cooldown:
+            return
+        self.Lightup(self.rendered_image)

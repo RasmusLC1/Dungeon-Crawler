@@ -26,7 +26,6 @@ class Decoration_Handler():
 
         self.opening_methods = {
             'chest': self.Open_Chest,
-            'door': self.Open_Door,
             'rune_shrine': self.Open_Shrine,
             'portal_shrine': self.Open_Shrine,
         }
@@ -39,7 +38,7 @@ class Decoration_Handler():
 
     def Initialise(self, depth=0):
         # door initialisation
-        for door in self.game.tilemap.extract([('Door_Basic', 0)].copy(), True):
+        for door in self.game.tilemap.extract([('door_basic', 0)].copy(), True):
             size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
             self.Decoration_Spawner('door', door.pos, size=size)
 
@@ -106,7 +105,7 @@ class Decoration_Handler():
         return decoration
 
     def Spawn_Door(self, pos, size, version=None, radius=None, level=None):
-        door = Door(self.game, 'door', pos, size)
+        door = Door(self.game, 'door_basic', pos, size)
         self.decorations.append(door)
         return door
 
@@ -202,27 +201,6 @@ class Decoration_Handler():
         decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         return decorations
 
-    def Open_Door_With_Key(self, door):
-        key_found = False
-        for inventory_slot in self.game.inventory.inventory:
-            if not inventory_slot.item:
-                continue
-            if inventory_slot.item.type == 'key':
-                inventory_slot.Remove_Item()
-                key_found = True
-                break
-        if not key_found:
-            return False
-        door.Open()
-        return True
-
-    def Open_Door_Without_Key(self):
-        decorations = self.Find_Nearby_Decorations(self.game.player.pos, 3)
-        sorted_decorations = self.Sort_Decorations(decorations)
-        for decoration in sorted_decorations:
-            if decoration.type == 'door':
-                return self.Open_Door(decoration, False)
-        return False
 
     def Add_Decoration(self, decoration):
         if decoration in self.decorations:

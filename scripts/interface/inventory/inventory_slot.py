@@ -50,6 +50,8 @@ class Inventory_Slot():
             return
         if self.item.sub_category == 'weapon':
             return
+        if self.item.sub_category == 'loot':
+            self.item.Update_In_Inventory()
         self.item.Update()
 
     def Move_Item(self):

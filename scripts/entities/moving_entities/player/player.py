@@ -207,7 +207,7 @@ class Player(Moving_Entity):
         entity_image.set_alpha(min(255, self.active))
 
         if self.damage_cooldown:
-            self.Render_Damage_Lightup(entity_image)
+            self.Lightup(entity_image)
             scroll_up_effect = 20 - self.damage_cooldown
             self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]),  'player_damage')
         if not "up" in self.animation_handler.animation:
