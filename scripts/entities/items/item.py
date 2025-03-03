@@ -81,25 +81,18 @@ class Item(PhysicsEntity):
 
     def Pick_Up(self):
         # First Check if the player is colliding with the object as this is priority
-        if self.game.inventory.Add_Item(self):
-            self.picked_up = True
-            self.game.entities_render.Remove_Entity(self)
-            # self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
-
-            return self.game.player
+        if not self.game.inventory.Add_Item(self):
+            return None
         
-        self.Find_Nearby_Entities(2)
-        for entity in self.nearby_entities:
-            if not self.rect().colliderect(entity.rect()):
-                continue
-            if self.game.inventory.Add_Item(self):
-                self.picked_up = False
-                self.game.entities_render.Remove_Entity(self)
-                self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
+        self.picked_up = True
+        self.Remove_Tile()
 
-                return entity
-                
-        return None
+        self.game.entities_render.Remove_Entity(self)
+
+        return self.game.player
+        
+
+         
 
     # TODO: Might crash, need to update traps or remove damage
     def Place_Down(self):

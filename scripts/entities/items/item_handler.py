@@ -161,6 +161,7 @@ class Item_Handler():
         # Remove items that have been picked up already
         for item in nearby_items:
             if item.picked_up:
+                print("ITEM DELETED")
                 nearby_items.remove(item)
         if not nearby_items:
             return False
@@ -169,7 +170,7 @@ class Item_Handler():
         nearby_item = nearby_items[0]
         if not self.game.player.rect().colliderect(nearby_item.rect()):
             return False
-
+        print("TESTTEST")
         nearby_items[0].Pick_Up()
         return True
     
