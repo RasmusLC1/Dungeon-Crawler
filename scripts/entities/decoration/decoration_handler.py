@@ -16,7 +16,7 @@ class Decoration_Handler():
         self.saved_data = {}
 
         self.spawn_methods = {
-            'door': self.Spawn_Door,
+            'door_basic': self.Spawn_Door,
             'chest': self.Spawn_Chest,
             'rune_shrine': self.Spawn_Rune_Shrine,
             'portal_shrine': self.Spawn_Portal_Shrine,
@@ -41,7 +41,7 @@ class Decoration_Handler():
         # door initialisation
         for door in self.game.tilemap.extract([('door_basic', 0)].copy(), True):
             size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
-            self.Decoration_Spawner('door', door.pos, size=size)
+            self.Decoration_Spawner('door_basic', door.pos, size=size)
 
         for chest in self.game.tilemap.extract([('chest', 0)]):
             version = self.Set_Chest_Version(depth)

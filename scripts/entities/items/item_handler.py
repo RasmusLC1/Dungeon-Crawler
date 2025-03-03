@@ -60,7 +60,7 @@ class Item_Handler():
             self.weapon_handler.Weapon_Spawner('torch', torch.pos[0], torch.pos[1])
         
         for key in self.game.tilemap.extract([('key', 0)].copy()):
-            self.loot_handler.Loot_Spawner('key', key.pos[0], key.pos[1])
+            self.loot_handler.Spawn_Key(key.pos[0], key.pos[1])
 
 
         for gold in self.game.tilemap.extract([('gold', 0)].copy()):

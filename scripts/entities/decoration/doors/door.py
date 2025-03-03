@@ -8,6 +8,7 @@ class Door(Decoration):
         self.is_open = False
         self.high_light_cooldown = 0
         self.game.tilemap.Set_Physics(self.tile, True)
+        self.game.tilemap.Update_Tile_Type(self.tile, 'floor')
 
     def Save_Data(self):
         super().Save_Data()
@@ -45,7 +46,6 @@ class Door(Decoration):
 
 
     def Render(self, surf, offset = (0,0)):
-        # print("TEST DOOR", self.sprite, self.entity_image, self.rendered_image)
         super().Render(surf, offset)
         # print(self.rendered_image)
         if not self.high_light_cooldown:

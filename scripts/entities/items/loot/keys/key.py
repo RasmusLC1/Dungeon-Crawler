@@ -2,8 +2,8 @@ from scripts.entities.items.loot.loot import Loot
 import random
 
 class Key(Loot):
-    def __init__(self, game, pos):
-        super().__init__(game, 'key', 'loot', pos, (20, 20), 1)
+    def __init__(self, game, type, pos):
+        super().__init__(game, type, 'loot', pos, (20, 20), 1)
 
     def Update(self):
         if self.game.mouse.right_click:
@@ -11,14 +11,10 @@ class Key(Loot):
 
         return super().Update()
 
-    def Unlock_Door(self):
-        pass
 
     def Activate(self):
-        print("TRY TO ACTIVATE")
         if not super().Activate():
             return
-        print("TESTTEST")
         self.clicked = True
 
     # The update function in the inventory
@@ -40,8 +36,6 @@ class Key(Loot):
 
     # Effect of opening door on key
     def Open_Door(self):
-        self.game.inventory.Remove_Item(self)
-        self.game.item_handler.Remove_Item(self, True)
         pass
 
     def Render_Active(self, surf, offset = (0,0)):

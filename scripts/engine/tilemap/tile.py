@@ -28,8 +28,6 @@ class Tile():
 
     # Use try catch to avoid loading sprites for temporary offgrid tiles
     def Set_Sprite(self):
-        if self.type in not_rendered_tiles:
-            self.type = 'floor'
         try:
             self.sprite = self.game.assets[self.type][self.variant].copy()
         except Exception as e:

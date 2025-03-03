@@ -83,7 +83,6 @@ class Tilemap:
                 matches.append(copy.copy(tile))
                 if not keep:
                     self.offgrid_tiles.remove(tile)
-                    
         for loc in self.tilemap:
             tile = self.tilemap[loc]
             if (tile.type, tile.variant) in id_pairs:
@@ -261,9 +260,10 @@ class Tilemap:
                 nearby_tiles.append(tile)
         return nearby_tiles
     
-    def Update_Tile_Type(self, pos, new_type):
-        tile = self.Current_Tile(pos)
+    def Update_Tile_Type(self, tile_key, new_type):
+        tile = self.Current_Tile(tile_key)
         tile.Set_Type(new_type)
+        tile.Set_Sprite()
 
 
     # Check for collision on relevant tile
