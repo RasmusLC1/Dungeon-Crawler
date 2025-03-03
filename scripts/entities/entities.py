@@ -24,6 +24,7 @@ class PhysicsEntity:
         self.saved_data = {}
         self.text_box = None
         self.description = ''
+        self.light_up_color = (255, 0, 0, 255)
 
 
     def Save_Data(self):
@@ -149,6 +150,8 @@ class PhysicsEntity:
         pass
 
     def Update_Dark_Surface(self):
+        if not self.render_needs_update:
+            return
         if not self.entity_image:
             return
         alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
@@ -156,7 +159,6 @@ class PhysicsEntity:
             return
         # Set image
         self.rendered_image = self.entity_image.copy()
-
         self.rendered_image.set_alpha(alpha_value)
 
         # Blit the dark layer
@@ -170,10 +172,8 @@ class PhysicsEntity:
 
     def Lightup(self, entity_image):
         
-        self.rendered_image
         # Blit the dark layer
         light_up_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
-        light_up_surface.fill((255, 0, 0, 255))
-
+        light_up_surface.fill(self.light_up_color)
         # Blit the chest layer on top the dark layer
         entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)

@@ -10,6 +10,7 @@ class Item(PhysicsEntity):
         self.sub_type = type
         self.used = False
         self.picked_up = False
+        self.clicked = False # Used for if the item is active
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
         self.inventory_type = None
         self.inventory_index = None
@@ -209,8 +210,7 @@ class Item(PhysicsEntity):
         if not self.Update_Light_Level():
             return
         
-        if self.render_needs_update:
-            self.Update_Dark_Surface()
+        self.Update_Dark_Surface()
         
         # Render the item
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
@@ -232,3 +232,7 @@ class Item(PhysicsEntity):
 
         # Render on Mouse position as the item position is not being updated
         surf.blit(self.entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+    
+    # Used to render effect when active
+    def Render_Active(self, surf, offset = (0,0)):
+        pass

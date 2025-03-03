@@ -1,11 +1,13 @@
 from scripts.entities.decoration.decoration import Decoration
 import pygame
+import traceback
 
 class Door(Decoration):
     def __init__(self, game, type, pos, size) -> None:
         super().__init__(game, type, pos, size)
         self.is_open = False
         self.high_light_cooldown = 0
+        self.game.tilemap.Set_Physics(self.tile, True)
 
     def Save_Data(self):
         super().Save_Data()
@@ -25,7 +27,7 @@ class Door(Decoration):
 
 
     def Set_Highlight(self):
-        self.high_light_cooldown = 10
+        self.high_light_cooldown = 5
 
 
     # TODO: IMPLEMENT walls that can be walked through, I.E walls without physics in tilemap
@@ -33,15 +35,37 @@ class Door(Decoration):
         self.is_open = True
         x = self.pos[0] // self.game.tilemap.tile_size
         y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.Add_Tile('floor', 0, (x, y), False, 0, self.light_level)
+        self.game.tilemap.Set_Physics(self.tile, False)
+
         self.render = False
         if generate_clatter:
             self.game.clatter.Generate_Clatter(self.pos, 700) # Generate clatter to alert nearby enemies
+        self.game.decoration_handler.Remove_Decoration(self)
+    
 
 
-    def Render(self, surf, offset=...):
+    def Render(self, surf, offset = (0,0)):
+        # print("TEST DOOR", self.sprite, self.entity_image, self.rendered_image)
         super().Render(surf, offset)
         # print(self.rendered_image)
         if not self.high_light_cooldown:
             return
         self.Lightup(self.rendered_image)
+
+    def Update_Dark_Surface(self):
+        if self.high_light_cooldown:
+            return
+        return super().Update_Dark_Surface()
+
+
+    def Update_Light_Level(self):
+        nearby_tile = self.game.tilemap.tiles_around(self.pos)
+        # Set the light level based on the tile that the entity is placed on
+        tile = self.game.tilemap.Current_Tile(self.tile)
+
+        nearby_tile.remove(tile)
+        max_light = max(tile.light_level for tile in nearby_tile)
+
+        tile.Set_Light_Level(max_light)
+
+        return super().Update_Light_Level()

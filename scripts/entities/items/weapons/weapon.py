@@ -610,8 +610,7 @@ class Weapon(Item):
             return
         
         
-        if self.render_needs_update:
-            self.Update_Dark_Surface()
+        self.Update_Dark_Surface()
         # Render the chest
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
@@ -629,14 +628,15 @@ class Weapon(Item):
         if not alpha_value:
             return
 
-        if self.render_needs_update:
-            self.Update_Dark_Surface_Enemy(alpha_value)
+        self.Update_Dark_Surface_Enemy(alpha_value)
         
         surf.blit(
             pygame.transform.flip(self.rendered_image, False, False),
                                   (self.pos[0] - offset[0], self.pos[1] - offset[1]))
         
     def Update_Dark_Surface_Enemy(self, alpha_value):
+        if not self.render_needs_update:
+            return
         self.rendered_image = self.entity_image.copy()
         self.rendered_image.set_alpha(alpha_value)
 

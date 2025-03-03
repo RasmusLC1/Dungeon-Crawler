@@ -73,7 +73,6 @@ class Moving_Entity(PhysicsEntity):
         # Handle attack animations
         self.attacking = 0
 
-
         # Handle Blocking
         self.block_direction = (0,0)
 
@@ -487,8 +486,7 @@ class Moving_Entity(PhysicsEntity):
         if not self.animation_handler.entity_image:
             return False
 
-        if self.render_needs_update:
-            self.Update_Dark_Surface()
+        self.Update_Dark_Surface()
 
 
         # Render status effects
@@ -514,6 +512,8 @@ class Moving_Entity(PhysicsEntity):
 
     # Seperate Update Dark surface since the animations are handled by animation handler
     def Update_Dark_Surface(self):
+        if not self.render_needs_update:
+            return
         self.rendered_image = self.animation_handler.entity_image.copy()
         
         self.rendered_image.set_alpha(min(255, self.active))

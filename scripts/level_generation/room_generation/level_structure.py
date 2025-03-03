@@ -22,7 +22,7 @@ class Level_Structure():
                 elif map[i][j] == LAVA:
                     tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Lava_env', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                 elif map[i][j] == DOOR:
-                    tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'Door_Basic', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
+                    tilemap.tilemap[str(i) + ';' + str(j)] = {'type': 'door_basic', 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}
                 elif map[i][j] == TRAP:
                     trap_type = random.randint(0, 2)
                     tilemap.tilemap[str(i) + ';' + str(j)] = {'type': traps[trap_type], 'variant': 0, 'pos': (i, j), 'active': 0, 'light': 0}

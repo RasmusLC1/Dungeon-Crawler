@@ -20,6 +20,7 @@ class Decoration_Handler():
             'chest': self.Spawn_Chest,
             'rune_shrine': self.Spawn_Rune_Shrine,
             'portal_shrine': self.Spawn_Portal_Shrine,
+            'door_basic': self.Spawn_Door,
             'bones': self.Spawn_Bones,
             'boss_room': self.Spawn_Boss_Room
         }
@@ -212,6 +213,7 @@ class Decoration_Handler():
             self.decorations.remove(decoration)
             self.game.item_handler.Remove_Item(decoration)
             self.game.tilemap.Remove_Entity_From_Tile(decoration.tile, decoration.ID)
+            decoration.Delete()
 
     def Remove_Bones(self, bones):
         self.bones.remove(bones)

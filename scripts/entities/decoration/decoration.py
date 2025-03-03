@@ -1,7 +1,6 @@
 import pygame
 from scripts.entities.entities import PhysicsEntity
-import random
-import math
+
 
 
 class Decoration(PhysicsEntity):
@@ -30,14 +29,11 @@ class Decoration(PhysicsEntity):
 
 
     def Render(self, surf, offset = (0,0)):
-
         if not self.Update_Light_Level():
             return
 
-
-        if self.render_needs_update:
-            self.Update_Dark_Surface()
         
+        self.Update_Dark_Surface()
         
         # Render the chest
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
