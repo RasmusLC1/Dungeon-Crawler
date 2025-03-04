@@ -53,7 +53,10 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
 
 
     def Set_Effect(self, effect, duration):
+        # for effects in self.effects:
+        #     print(effect, effects)
         if not effect in self.effects:
+            print("NOT FOUND")
             return False
         
         # Check if the effect is already in the active effects before setting it

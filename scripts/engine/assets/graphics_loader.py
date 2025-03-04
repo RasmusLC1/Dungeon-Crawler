@@ -474,6 +474,7 @@ class Graphics_Loader:
             'blood_key' : get_tiles_from_sheet('items/keys/blood_key.png', 0, 0, 0, 0, 32, 32),
             'skeleton_key' : get_tiles_from_sheet('items/keys/skeleton_key.png', 0, 0, 0, 0, 32, 32),
             'soul_key' : get_tiles_from_sheet('items/keys/soul_key.png', 0, 0, 0, 0, 32, 32),
+            'cursed_key' : get_tiles_from_sheet('items/keys/cursed_key.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

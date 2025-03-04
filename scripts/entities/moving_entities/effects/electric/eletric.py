@@ -5,7 +5,7 @@ import random
 class Electric(Effect):
     def __init__(self, entity):
         description = 'Damage and snare,\nspreads to nearby\nenemy, increased\nby wet'
-        super().__init__(entity, 'electric', 5, 10, (10, 15), description)
+        super().__init__(entity, 'electric', 5, 10, (70, 100), description)
 
     
     #set Fire effect
@@ -32,11 +32,11 @@ class Electric(Effect):
         if self.Update_Cooldown():
             effect = max(self.effect - 1, 0)
             if not effect:
-                return
+                return False
             for enemy in self.entity.nearby_enemies:
                 if enemy.Set_Effect(self.effect_type, effect):
-                    self.entity.Set_Effect('electric_resistance', 1)
-                    break
+                    self.entity.Set_Effect('electric_resistance', 0)
+                    return True
                 
 
 

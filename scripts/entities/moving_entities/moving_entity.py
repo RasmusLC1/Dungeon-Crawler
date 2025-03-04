@@ -516,6 +516,9 @@ class Moving_Entity(PhysicsEntity):
     def Update_Dark_Surface(self):
         if not self.render_needs_update:
             return
+        if not self.animation_handler.entity_image:
+            print(self.type)
+            return
         self.rendered_image = self.animation_handler.entity_image.copy()
         
         self.rendered_image.set_alpha(min(255, self.active))

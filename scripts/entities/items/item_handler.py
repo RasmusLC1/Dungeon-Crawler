@@ -123,6 +123,8 @@ class Item_Handler():
         
         for item in self.items:
             item.Update_Delete_Cooldown()
+            if not item:
+                self.Remove_Item(item, True)
 
             if item.picked_up:
                 self.items.remove(item)
@@ -170,7 +172,6 @@ class Item_Handler():
         nearby_item = nearby_items[0]
         if not self.game.player.rect().colliderect(nearby_item.rect()):
             return False
-        print("TESTTEST")
         nearby_items[0].Pick_Up()
         return True
     

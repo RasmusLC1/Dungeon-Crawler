@@ -2,6 +2,7 @@ from scripts.entities.items.loot.gold import Gold
 from scripts.entities.items.loot.keys.skeleton_key import Skeleton_Key
 from scripts.entities.items.loot.keys.blood_key import Blood_Key
 from scripts.entities.items.loot.keys.soul_key import Soul_Key
+from scripts.entities.items.loot.keys.cursed_key import Cursed_Key
 from scripts.entities.items.loot.keys.lockpick import Lockpick
 
 import random
@@ -15,15 +16,17 @@ class Loot_Handler():
             'skeleton_key': Skeleton_Key,
             'blood_key': Blood_Key,
             'soul_key': Soul_Key,
+            'cursed_key': Cursed_Key,
             'lockpick': Lockpick,
             'gold': Gold,
         }
 
         self.key_types = [
-            'skeleton_key',
-            'blood_key',
-            'soul_key',
-            'lockpick',
+            # 'skeleton_key',
+            # 'blood_key',
+            # 'soul_key',
+            'cursed_key',
+            # 'lockpick',
         ]
 
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
