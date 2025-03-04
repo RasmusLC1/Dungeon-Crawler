@@ -22,11 +22,11 @@ class Loot_Handler():
         }
 
         self.key_types = [
-            # 'skeleton_key',
-            # 'blood_key',
-            # 'soul_key',
+            'skeleton_key',
+            'blood_key',
+            'soul_key',
             'cursed_key',
-            # 'lockpick',
+            'lockpick',
         ]
 
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):

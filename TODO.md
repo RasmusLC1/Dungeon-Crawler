@@ -118,8 +118,14 @@ Create color coded backgrounds based on level, render image and text on top
 
 
     ## utility:
-        lockpick, has a 7/10 chance to open the door and persist, but if it breaks door does not open and generates clank
-        Skeletal Key – Unlocks any door but disappears after three uses.
+        ### Keys:
+            lockpick, has a 1/3chance to open the door and persist, but if it breaks door does not open and generates clank
+            Skeletal Key – Unlocks any door but disappears after 1 use
+            Blood Key – Unlocks any door but costs health
+            Soul Key – Unlocks any door but costs souls
+            Cursed Key – Unlocks any door but gives a random curse
+
+
         Torch of Guidance - Reveal the portal shrine on minimap
         Echo Bell – Creates a noise at a targeted location to lure enemies away.
         Cloak of Shadows – Temporarily makes the player invisible to enemies.
