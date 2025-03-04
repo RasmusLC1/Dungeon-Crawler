@@ -44,7 +44,13 @@ class Projectile(Weapon):
     # Run once to setup the shooting
     def Initialise_Shooting(self, speed):
         if not self.shoot_speed:
+            # Set the tile, so projectile can interact with environment
+            self.Set_Tile()
+            # Initialise the rendering
             self.render = True
+            self.render_needs_update = True
+            self.Update_Dark_Surface()
+
             self.shoot_distance = self.shoot_distance_holder
             self.active = 255
             self.shoot_speed = speed * 2
@@ -81,6 +87,7 @@ class Projectile(Weapon):
     
     # Reset the weapon after the maximum distance has been rached
     def Reset_Shot(self):
+        self.entity = None
         self.shoot_speed = 0
         self.special_attack = 0
         self.shoot_speed = 0
@@ -132,14 +139,17 @@ class Projectile(Weapon):
         return True
 
     def Drop_Weapon_After_Shot(self):
-        active_inventory = self.game.weapon_inventory.active_inventory
-        weapon_inventory = self.game.weapon_inventory.inventories[active_inventory]
-        if self.entity.category == 'player':
-            self.entity.Remove_Active_Weapon(self.inventory_type)
-            weapon_inventory.Remove_Item(self, True)
+        # Set the attack attributes
+        entity = self.entity
+        self.attack_direction = entity.attack_direction
+        self.entity_strength = entity.strength
+
+
+        if entity.category == 'player':
+            entity.Remove_Active_Weapon()
+            self.entity = entity
+            self.game.inventory.Remove_Item(self)
             self.game.item_handler.Add_Item(self)
-        self.attack_direction = self.entity.attack_direction
-        self.entity_strength = self.entity.strength
         self.in_inventory = False
         self.picked_up = False
 

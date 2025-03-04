@@ -163,7 +163,7 @@ class PhysicsEntity:
         self.rendered_image.set_alpha(alpha_value)
 
         # Blit the dark layer
-        dark_surface_head = pygame.Surface(self.rendered_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
         dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
 
         # Blit the chest layer on top the dark layer
@@ -174,7 +174,7 @@ class PhysicsEntity:
     def Lightup(self, entity_image):
         
         # Blit the dark layer
-        light_up_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        light_up_surface = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
         light_up_surface.fill(self.light_up_color)
         # Blit the chest layer on top the dark layer
         entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)

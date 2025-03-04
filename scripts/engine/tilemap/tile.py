@@ -80,6 +80,8 @@ class Tile():
         
 
     def Add_Entity(self, entity):
+        if not entity:
+            return
         self.entities[entity.ID] = entity
         entity.Set_Active(self.active)
 

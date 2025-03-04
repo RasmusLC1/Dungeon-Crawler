@@ -12,6 +12,8 @@ class Door(Decoration):
 
     def Save_Data(self):
         super().Save_Data()
+        self.game.tilemap.Set_Physics(self.tile, True)
+        self.game.tilemap.Update_Tile_Type(self.tile, 'door_basic')
         self.saved_data['is_open'] = self.is_open
 
 

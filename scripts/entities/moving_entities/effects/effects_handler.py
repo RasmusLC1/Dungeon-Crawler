@@ -155,7 +155,7 @@ class Status_Effect_Handler:
         return effect.description
     
     def Get_Effect(self, effect):
-        return self.effects[effect]
+        return self.effects.get(effect)
 
     def Remove_Effect(self, effect):
         
