@@ -47,12 +47,12 @@ class Projectile(Weapon):
             # Set the tile, so projectile can interact with environment
             self.Set_Tile()
             # Initialise the rendering
+            self.active = 255
             self.render = True
             self.render_needs_update = True
             self.Update_Dark_Surface()
 
             self.shoot_distance = self.shoot_distance_holder
-            self.active = 255
             self.shoot_speed = speed * 2
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * self.shoot_speed)
             if self.entity.category == "enemy":

@@ -1,5 +1,4 @@
 from scripts.entities.items.loot.interactive_loot import Interactive_Loot
-import math
 
 class Key(Interactive_Loot):
     def __init__(self, game, type, pos):

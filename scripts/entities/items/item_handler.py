@@ -139,11 +139,12 @@ class Item_Handler():
         if not item.is_projectile:
             return
         if not item.special_attack:
+            
             if not item.entity:
                 return
             if item.shoot_speed and item.entity.category == 'enemy' and not item.delete_countdown:
                 item.Set_Delete_Countdown(10)
-            return
+                return
         try:
             if not item in self.items:
                 return
