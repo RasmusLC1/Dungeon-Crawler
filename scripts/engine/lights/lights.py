@@ -51,14 +51,14 @@ class Light():
     
     def Handle_Base_Tile(self):
         # Setup the main tile under the light
-        base_tile = self.game.tilemap.Current_Tile(self.tile)
-        if not self.Check_Base_Tile(base_tile):
+        tile = self.tile
+        if not self.Check_Base_Tile(tile):
             return
 
         # If current tile is dimmer than this light, add/update this light’s contribution
-        if self.light_level > base_tile.light_level:
-            base_tile.Add_Light_Contribution(self.id, self.light_level)
-            self.tiles.append(base_tile)
+        if self.light_level > tile.light_level:
+            tile.Add_Light_Contribution(self.id, self.light_level)
+            self.tiles.append(tile)
 
 
     def Ray_Caster(self):

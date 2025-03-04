@@ -34,6 +34,10 @@ class Decoration(PhysicsEntity):
 
         
         self.Update_Dark_Surface()
+
+        if not self.rendered_image:
+            print(vars(self))
+            return
         
         # Render the chest
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))

@@ -22,14 +22,18 @@ class Frozen(Effect):
         if not self.effect:
             return False
         
+
         if self.entity.effects.frozen_resistance.effect:
             self.effect = 0
             self.cooldown = 0
             return False
         
-        self.Update_Cooldown()
+        if self.Update_Cooldown():
+            damage = random.randint(1, 2)
+            self.entity.Damage_Taken(damage)
         
         self.entity.effects.Set_Effect("slow_down", self.effect)
 
         self.Effect_Animation_Cooldown()
-        return False
+
+        return True

@@ -63,7 +63,7 @@ class Projectile_Rune(Rune):
         
         temp_surf = pygame.Surface(surf.get_size(), pygame.SRCALPHA)
         # Draw a line on the temporary surface
-        player_pos = (self.game.player.pos[0] - offset[0], self.game.player.pos[1] - offset[1])
+        player_pos = (self.game.player.rect().center[0] - offset[0], self.game.player.rect().center[1] - offset[1])
         mouse_pos = (self.game.mouse.player_mouse[0] - offset[0], self.game.mouse.player_mouse[1] - offset[1])
 
         distance =  math.sqrt((player_pos[0] - mouse_pos[0]) ** 2 + (player_pos[1] - mouse_pos[1]) ** 2)

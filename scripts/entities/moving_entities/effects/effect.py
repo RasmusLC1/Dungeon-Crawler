@@ -36,12 +36,14 @@ class Effect():
         if self.effect >= self.effect_max:
             return False
         self.effect = min(effect_time + self.effect, self.effect_max)
+        self.Set_Cooldown()
         return True
     
     def Update_Effect(self):
         pass
 
     def Remove_Effect(self):
+         
          self.effect = 0
          self.aniamtion = 0
          self.cooldown = 0
@@ -54,10 +56,13 @@ class Effect():
         if self.cooldown:
             self.cooldown -= 1
             return False
-        
+        self.Set_Cooldown()
         self.effect -= 1
-        self.cooldown = random.randint(self.cooldown_range[0], self.cooldown_range[1])
+        
         return True
+    
+    def Set_Cooldown(self):
+        self.cooldown = random.randint(self.cooldown_range[0], self.cooldown_range[1])
 
     def Effect_Animation_Cooldown(self):
         if self.animation_cooldown:

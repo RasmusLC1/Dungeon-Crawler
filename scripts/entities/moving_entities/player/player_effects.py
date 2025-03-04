@@ -53,8 +53,6 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
 
 
     def Set_Effect(self, effect, duration):
-        if not effect in self.effects:
-            return False
         
         # Check if the effect is already in the active effects before setting it
         # Prevents effect icon duplication

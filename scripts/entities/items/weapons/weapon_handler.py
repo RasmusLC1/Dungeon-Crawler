@@ -40,7 +40,7 @@ class Weapon_Handler():
             'crossbow': Crossbow,
         }
 
-        self.randon_weapon_map = {
+        self.random_weapon_map = {
             0 : Sword,
             1 : Halberd,
             2 : Hatchet,
@@ -85,7 +85,7 @@ class Weapon_Handler():
     def Spawn_Random_Weapon(self, pos):
         random_weapon_index = random.randint(0, 17)
 
-        selected_weapon = self.randon_weapon_map.get(random_weapon_index)
+        selected_weapon = self.random_weapon_map.get(random_weapon_index)
 
         # If the random weapon is an arrow
         if random_weapon_index >= 12:

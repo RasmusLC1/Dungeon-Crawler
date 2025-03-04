@@ -18,8 +18,9 @@ class Symbols():
                 'power', 'gold', 'range', 'key',
                 'arcane_conduit', 'magnet', 'hunger', 
                 'invulnerable', 'snare', 'thorns',
-                'electric_resistance', 'electric',
-                'chain', 'enemy', 'water'
+                'electric_resistance',
+                'chain', 'enemy', 'curse',
+                'weakness'
             ])
         }
 

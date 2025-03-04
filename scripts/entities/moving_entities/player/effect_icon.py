@@ -15,7 +15,7 @@ class Effect_Icon():
     def Update(self):
         self.Update_Effect_Text()
 
-        if self.effect.effect <= 0:
+        if self.effect not in self.game.player.effects.active_effects:
             return True
         
         return False

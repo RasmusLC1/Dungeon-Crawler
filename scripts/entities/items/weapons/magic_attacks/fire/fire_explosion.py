@@ -1,6 +1,4 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_explosion import Elemental_Explosion
-import pygame
-import math
 
 class Fire_Explosion(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):

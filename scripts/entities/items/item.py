@@ -43,7 +43,6 @@ class Item(PhysicsEntity):
     
     def Load_Data(self, data):
         super().Load_Data(data)
-        self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
         self.sub_type = data['sub_type']
         self.sub_category = data['sub_category']
         self.used = data['used']
@@ -51,7 +50,6 @@ class Item(PhysicsEntity):
         self.inventory_type = data['inventory_type']
         self.amount = data['amount']
         self.inventory_index = data['inventory_index']
-        self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
         
     def Update(self):
         self.Update_Activate_Cooldown()
@@ -158,8 +156,11 @@ class Item(PhysicsEntity):
 
     def Update_Tile(self, new_pos):
 
-        new_tile = str(int(new_pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(new_pos[1] // self.game.tilemap.tile_size))
-        if new_tile != self.tile:
+        new_tile_key = str(int(self.pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(self.pos[1] // self.game.tilemap.tile_size))
+        new_tile = self.game.tilemap.Current_Tile(new_tile_key)
+        if not (new_tile, self.tile):
+            return
+        if new_tile_key != self.tile.pos:
             self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile

@@ -12,6 +12,8 @@ class Door(Decoration):
 
     def Save_Data(self):
         super().Save_Data()
+        self.game.tilemap.Set_Physics(self.tile, True)
+        self.game.tilemap.Update_Tile_Type(self.tile, 'door_basic')
         self.saved_data['is_open'] = self.is_open
 
 
@@ -61,7 +63,7 @@ class Door(Decoration):
     def Update_Light_Level(self):
         nearby_tile = self.game.tilemap.tiles_around(self.pos)
         # Set the light level based on the tile that the entity is placed on
-        tile = self.game.tilemap.Current_Tile(self.tile)
+        tile = self.tile
 
         nearby_tile.remove(tile)
         max_light = max(tile.light_level for tile in nearby_tile)

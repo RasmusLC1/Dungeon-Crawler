@@ -351,8 +351,7 @@ class Inventory_Handler():
         if not inventory_slot:  
             return False  # Item not found or slot is None
 
-        if not inventory_slot:
-            return False
+        
 
         inventory_slot.Set_Active(False)  # Deactivate the slot
         inventory_slot.Remove_Item()

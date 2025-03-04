@@ -89,11 +89,13 @@ class PhysicsEntity:
         pass
     
     def Set_Tile(self):
-        self.tile = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
-        tile = self.game.tilemap.Current_Tile(self.tile)
-        if not tile:
+        tile_key = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
+        self.tile = self.game.tilemap.Current_Tile(tile_key)
+        if not self.tile:
             return
-        tile.Add_Entity(self)
+        self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
+        
+        self.tile.Add_Entity(self)
 
     def Remove_Tile(self):
         if not self.tile:
@@ -116,12 +118,11 @@ class PhysicsEntity:
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on
-        tile = self.game.tilemap.Current_Tile(self.tile)
+        tile = self.tile
         if not tile:
             return True
         if tile.light_level == self.light_level:
             return True
-
         new_light_level = min(255, tile.light_level * 30)
         if self.light_level < new_light_level:
             self.Set_Light_Level(self.light_level + 5)
@@ -162,7 +163,7 @@ class PhysicsEntity:
         self.rendered_image.set_alpha(alpha_value)
 
         # Blit the dark layer
-        dark_surface_head = pygame.Surface(self.rendered_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
         dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
 
         # Blit the chest layer on top the dark layer
@@ -173,7 +174,7 @@ class PhysicsEntity:
     def Lightup(self, entity_image):
         
         # Blit the dark layer
-        light_up_surface = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA).convert_alpha()
+        light_up_surface = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
         light_up_surface.fill(self.light_up_color)
         # Blit the chest layer on top the dark layer
         entity_image.blit(light_up_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)

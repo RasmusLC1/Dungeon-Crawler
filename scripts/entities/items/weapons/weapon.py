@@ -629,6 +629,9 @@ class Weapon(Item):
             return
 
         self.Update_Dark_Surface_Enemy(alpha_value)
+
+        if not self.rendered_image:
+            self.rendered_image = self.entity_image.copy()
         
         surf.blit(
             pygame.transform.flip(self.rendered_image, False, False),

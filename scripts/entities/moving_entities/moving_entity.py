@@ -190,8 +190,11 @@ class Moving_Entity(PhysicsEntity):
             self.update_tile_cooldown -= 1
 
         self.update_tile_cooldown = 10
-        new_tile = str(int(self.pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(self.pos[1] // self.game.tilemap.tile_size))
-        if new_tile != self.tile:
+        new_tile_key = str(int(self.pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(self.pos[1] // self.game.tilemap.tile_size))
+        if new_tile_key != self.tile.pos:
+            new_tile = self.game.tilemap.Current_Tile(new_tile_key)
+            if not new_tile:
+                return
             self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
@@ -330,10 +333,9 @@ class Moving_Entity(PhysicsEntity):
         if self.health <= 0: # Entity dead
             # self.effects.Reset_Effects()
             self.Update_Status_Effects()
-            tile = self.game.tilemap.Current_Tile(self.tile)
-            if not tile:
+            if not self.tile:
                 return True
-            tile.Clear_Entity(self.ID)
+            self.tile.Clear_Entity(self.ID)
         return True
 
     
@@ -513,6 +515,9 @@ class Moving_Entity(PhysicsEntity):
     # Seperate Update Dark surface since the animations are handled by animation handler
     def Update_Dark_Surface(self):
         if not self.render_needs_update:
+            return
+        if not self.animation_handler.entity_image:
+            print(self.type)
             return
         self.rendered_image = self.animation_handler.entity_image.copy()
         

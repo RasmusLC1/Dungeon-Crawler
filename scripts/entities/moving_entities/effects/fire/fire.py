@@ -30,7 +30,7 @@ class Fire(Effect):
             return False
         
         if self.Update_Cooldown():
-            damage = random.randint(1, 3)
+            damage = random.randint(2, 3)
             self.entity.Damage_Taken(damage)
 
 

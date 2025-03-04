@@ -123,6 +123,8 @@ class Item_Handler():
         
         for item in self.items:
             item.Update_Delete_Cooldown()
+            if not item:
+                self.Remove_Item(item, True)
 
             if item.picked_up:
                 self.items.remove(item)
@@ -137,17 +139,18 @@ class Item_Handler():
         if not item.is_projectile:
             return
         if not item.special_attack:
+            
             if not item.entity:
                 return
             if item.shoot_speed and item.entity.category == 'enemy' and not item.delete_countdown:
                 item.Set_Delete_Countdown(10)
-            return
+                return
         try:
             if not item in self.items:
                 return
             item.Shoot()
         except Exception as e:
-            print(f"Item is not throwable {e}", item.type, item.entity)
+            print(f"Item is not throwable {e}", item.type, item.entity, item.tile, vars(item))
 
     def Check_Keyboard_Input(self):
         if self.game.keyboard_handler.e_pressed:
@@ -170,7 +173,6 @@ class Item_Handler():
         nearby_item = nearby_items[0]
         if not self.game.player.rect().colliderect(nearby_item.rect()):
             return False
-        print("TESTTEST")
         nearby_items[0].Pick_Up()
         return True
     

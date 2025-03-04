@@ -29,6 +29,8 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Inventory(self)
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
+        Graphics_Loader.Asset_Keys(self)
+        Graphics_Loader.Asset_Bombs(self)
         Graphics_Loader.Asset_Rune(self)
         Graphics_Loader.Asset_Menu(self)
         Graphics_Loader.Asset_Health_Bar(self)
@@ -469,11 +471,31 @@ class Graphics_Loader:
     def Asset_Loot(self):
         loot = {
             'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 16, 16),
-            'key' : get_tiles_from_sheet('loot/key.png', 0, 0, 0, 0, 16, 16),
             'lockpick' : get_tiles_from_sheet('items/keys/lockpick.png', 0, 0, 0, 0, 32, 32),
             'blood_key' : get_tiles_from_sheet('items/keys/blood_key.png', 0, 0, 0, 0, 32, 32),
             'skeleton_key' : get_tiles_from_sheet('items/keys/skeleton_key.png', 0, 0, 0, 0, 32, 32),
             'soul_key' : get_tiles_from_sheet('items/keys/soul_key.png', 0, 0, 0, 0, 32, 32),
+            'cursed_key' : get_tiles_from_sheet('items/keys/cursed_key.png', 0, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(loot)
+
+    def Asset_Keys(self):
+        loot = {
+            'lockpick' : get_tiles_from_sheet('items/keys/lockpick.png', 0, 0, 0, 0, 32, 32),
+            'blood_key' : get_tiles_from_sheet('items/keys/blood_key.png', 0, 0, 0, 0, 32, 32),
+            'skeleton_key' : get_tiles_from_sheet('items/keys/skeleton_key.png', 0, 0, 0, 0, 32, 32),
+            'soul_key' : get_tiles_from_sheet('items/keys/soul_key.png', 0, 0, 0, 0, 32, 32),
+            'cursed_key' : get_tiles_from_sheet('items/keys/cursed_key.png', 0, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(loot)
+
+    def Asset_Bombs(self):
+        loot = {
+            'fire_bomb' : get_tiles_from_sheet('items/bombs/fire_bomb.png', 0, 0, 0, 0, 32, 32),
+            'frozen_bomb' : get_tiles_from_sheet('items/bombs/frozen_bomb.png', 0, 0, 0, 0, 32, 32),
+            'electric_bomb' : get_tiles_from_sheet('items/bombs/electric_bomb.png', 0, 0, 0, 0, 32, 32),
+            'poison_bomb' : get_tiles_from_sheet('items/bombs/poison_bomb.png', 0, 0, 0, 0, 32, 32),
+            'vampiric_bomb' : get_tiles_from_sheet('items/bombs/vampiric_bomb.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

@@ -13,7 +13,7 @@ class Spawn_Loot_Room():
         success = 0
         fail = 0
 
-        rooms = random.randint(level * 3, level * 3 + 8)
+        rooms = random.randint(level * 2 + 3, level * 2 + 10)
 
         while success <= rooms:
             room_size_x = random.randint(4, 6)

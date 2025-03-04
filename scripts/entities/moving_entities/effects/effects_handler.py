@@ -3,7 +3,8 @@ from scripts.entities.moving_entities.effects.frozen.frozen import Frozen
 from scripts.entities.moving_entities.effects.water.wet import Wet
 from scripts.entities.moving_entities.effects.healing.regen import Regen
 from scripts.entities.moving_entities.effects.movement.speed import Speed
-from scripts.entities.moving_entities.effects.general.Increase_Strength import Increase_Strength
+from scripts.entities.moving_entities.effects.general.increase_Strength import Increase_Strength
+from scripts.entities.moving_entities.effects.general.weakness import Weakness
 from scripts.entities.moving_entities.effects.general.invisibility import Invisibility
 from scripts.entities.moving_entities.effects.fire.fire_resistance import Fire_Resistance
 from scripts.entities.moving_entities.effects.fire.fire import Fire
@@ -69,6 +70,8 @@ class Status_Effect_Handler:
         self.speed = Speed(self.entity)
 
         self.increase_strength = Increase_Strength(self.entity)
+        
+        self.weakness = Weakness(self.entity)
 
         self.invisibility = Invisibility(self.entity)
         
@@ -102,6 +105,7 @@ class Status_Effect_Handler:
             self.regen.effect_type: self.regen,
             self.speed.effect_type: self.speed,
             self.increase_strength.effect_type: self.increase_strength,
+            self.weakness.effect_type: self.weakness,
             self.invisibility.effect_type: self.invisibility,
             self.fire_resistance.effect_type: self.fire_resistance,
             self.poison_resistance.effect_type: self.poison_resistance,
@@ -151,7 +155,7 @@ class Status_Effect_Handler:
         return effect.description
     
     def Get_Effect(self, effect):
-        return self.effects[effect]
+        return self.effects.get(effect)
 
     def Remove_Effect(self, effect):
         

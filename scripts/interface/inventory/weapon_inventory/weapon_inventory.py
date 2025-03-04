@@ -54,7 +54,6 @@ class Weapon_Inventory(Base_Inventory):
         self.active_inventory_slot = inventory_slot
         inventory_slot.Set_Active_Inventory()
 
-
     # Equip the weapon in the active inventory regardless of wether it's set or not
     # Worst case it just overrides existing, but it prevents the inventory from getting stuck
     def Equip_Weapon(self):
