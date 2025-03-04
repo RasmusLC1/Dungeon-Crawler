@@ -61,7 +61,7 @@ class Door(Decoration):
     def Update_Light_Level(self):
         nearby_tile = self.game.tilemap.tiles_around(self.pos)
         # Set the light level based on the tile that the entity is placed on
-        tile = self.game.tilemap.Current_Tile(self.tile)
+        tile = self.tile
 
         nearby_tile.remove(tile)
         max_light = max(tile.light_level for tile in nearby_tile)

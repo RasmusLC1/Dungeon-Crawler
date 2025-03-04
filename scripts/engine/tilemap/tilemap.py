@@ -184,15 +184,11 @@ class Tilemap:
 
 
     # Add an remove entities from tiles dynamically as needed
-    def Remove_Entity_From_Tile(self, tile_key, entity_ID):
-        if not tile_key in self.tilemap:
-            return
-        self.tilemap[tile_key].Clear_Entity(entity_ID)
+    def Remove_Entity_From_Tile(self, tile, entity_ID):
+        tile.Clear_Entity(entity_ID)
 
-    def Add_Entity_To_Tile(self, tile_key, entity):
-        if not tile_key in self.tilemap:
-            return
-        self.tilemap[tile_key].Add_Entity(entity)
+    def Add_Entity_To_Tile(self, tile, entity):
+        tile.Add_Entity(entity)
 
     # Get the position of tiles in the tilemap
     def Get_Pos(self):
@@ -260,8 +256,7 @@ class Tilemap:
                 nearby_tiles.append(tile)
         return nearby_tiles
     
-    def Update_Tile_Type(self, tile_key, new_type):
-        tile = self.Current_Tile(tile_key)
+    def Update_Tile_Type(self, tile, new_type):
         tile.Set_Type(new_type)
         tile.Set_Sprite()
 
@@ -324,10 +319,6 @@ class Tilemap:
             self.game.ray_caster.Add_Tile(self.tilemap[tile_key])
 
     def Set_Physics(self, tile, state):
-        tile = self.Current_Tile(tile)
-        if not tile:
-            return
-        
         tile.Set_Physics(state)
 
 

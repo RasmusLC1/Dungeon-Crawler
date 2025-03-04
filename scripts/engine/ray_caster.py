@@ -78,7 +78,7 @@ class Ray_Caster():
 
     def Add_Tile_Around_Player(self):
         radius = 2
-        (center_x, center_y) = tuple(map(int, self.game.player.tile.split(';')))
+        (center_x, center_y) = tuple(map(int, self.game.player.tile.pos))
         for y in range(center_y - radius, center_y + radius + 1):
             for x in range(center_x - radius, center_x + radius + 1):
                 tile_key = str(x) + ';' + str(y)

@@ -89,11 +89,13 @@ class PhysicsEntity:
         pass
     
     def Set_Tile(self):
-        self.tile = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
-        tile = self.game.tilemap.Current_Tile(self.tile)
-        if not tile:
+        tile_key = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)
+        self.tile = self.game.tilemap.Current_Tile(tile_key)
+        if not self.tile:
             return
-        tile.Add_Entity(self)
+        self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
+        
+        self.tile.Add_Entity(self)
 
     def Remove_Tile(self):
         if not self.tile:
@@ -116,12 +118,11 @@ class PhysicsEntity:
 
     def Update_Light_Level(self):
         # Set the light level based on the tile that the entity is placed on
-        tile = self.game.tilemap.Current_Tile(self.tile)
+        tile = self.tile
         if not tile:
             return True
         if tile.light_level == self.light_level:
             return True
-
         new_light_level = min(255, tile.light_level * 30)
         if self.light_level < new_light_level:
             self.Set_Light_Level(self.light_level + 5)

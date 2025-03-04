@@ -72,7 +72,10 @@ class Rune_Handler():
             if not ID in self.runes:
                 continue
             try:
-                rune = self.runes[ID]
+                rune = self.runes.get(ID)
+                if not rune:
+                    print("RUNE MISSING", rune_data, ID)
+                    return
                 rune.Load_Data(rune_data)
                 self.game.item_handler.Add_Item(rune)
 

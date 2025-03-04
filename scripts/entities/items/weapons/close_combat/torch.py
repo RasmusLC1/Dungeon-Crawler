@@ -59,7 +59,9 @@ class Torch(Weapon):
             self.game.player.Update_Light_Source(12)
         else:
             self.game.player.Update_Light_Source(self.game.player.default_light_level)
-            
+    
+    def Update_Light_Level(self):
+        return True
 
     def Place_Down(self):
         # Parent class Place_down function
