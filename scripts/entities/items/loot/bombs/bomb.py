@@ -4,13 +4,10 @@ import math
 
 class Bomb(Interactive_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 128, (20, 20))
+        super().__init__(game, type, pos, 192, (20, 20))
  
     def Update(self):
         super().Update()
-
-        if not self.target:
-            return
 
     def Reset_Bomb(self):
         self.game.item_handler.Remove_Item(self, True)
@@ -28,6 +25,7 @@ class Bomb(Interactive_Loot):
 
     # Effect of opening door on key
     def Initalise_Throw(self):
+        player = self.game.player
         # SPAWN ACTUAL BOMB PROJECTILE HERE, same sprite
-
+        player.bomb_launcher.Shoot_Bomb(player, 100, self.type, self.game.mouse.mpos)
         self.Reset_Bomb()

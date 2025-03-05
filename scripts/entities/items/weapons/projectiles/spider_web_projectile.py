@@ -1,9 +1,5 @@
 from scripts.traps.trap import Trap
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
-import random
-import math
-import pygame
-
 
 class Spider_Web_Projectile(Projectile):
     def __init__(self, game, pos, type, damage, speed, shoot_distance, weapon_class, special_attack, direction, entity):

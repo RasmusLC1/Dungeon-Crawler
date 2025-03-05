@@ -9,8 +9,11 @@ class Fire_Explosion(Elemental_Explosion):
 
     def Update_Animation(self):
         if self.delete_countdown == 1:
-            self.game.light_handler.Remove_Light(self.light_source)
-            del(self.light_source)
+            try:
+                self.game.light_handler.Remove_Light(self.light_source)
+                del(self.light_source)
+            except Exception as e:
+                return
             
         
         super().Update_Animation()

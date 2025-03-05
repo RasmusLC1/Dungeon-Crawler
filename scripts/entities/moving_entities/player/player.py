@@ -4,9 +4,9 @@ from scripts.entities.moving_entities.player.player_weapon import Player_Weapon_
 from scripts.entities.moving_entities.player.player_movement import Player_Movement
 from scripts.entities.moving_entities.player.player_animation_handler import Player_Animation_Handler
 
+from scripts.entities.items.weapons.projectiles.bombs.bomb_launcher import Bomb_Launcher
 
 import random
-import math
 import pygame
 
 
@@ -38,7 +38,7 @@ class Player(Moving_Entity):
         self.movement_handler = Player_Movement(self.game, self)
 
 
-
+        self.bomb_launcher = Bomb_Launcher(game)
 
 
 
