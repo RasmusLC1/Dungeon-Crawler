@@ -4,7 +4,7 @@ from scripts.entities.items.loot.keys.blood_key import Blood_Key
 from scripts.entities.items.loot.keys.soul_key import Soul_Key
 from scripts.entities.items.loot.keys.cursed_key import Cursed_Key
 from scripts.entities.items.loot.keys.lockpick import Lockpick
-from scripts.entities.items.loot.bombs.fire_bomb import Fire_Bomb
+from scripts.entities.items.loot.bombs.bomb import Bomb
 
 import random
 
@@ -20,7 +20,7 @@ class Loot_Handler():
             'cursed_key': Cursed_Key,
             'lockpick': Lockpick,
             'gold': Gold,
-            'fire_bomb': Fire_Bomb
+            'bomb': Bomb
         }
 
         self.key_types = [
@@ -33,9 +33,17 @@ class Loot_Handler():
 
         self.bomb_types = [
             'fire_bomb',
+            'frozen_bomb',
+            'electric_bomb',
+            'poison_bomb',
+            'vampiric_bomb',
         ]
 
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
+        if 'bomb' in type:
+            bomb = self.Spawn_Bomb(pos_x, pos_y, type, data)
+            return bomb
+        
         loot_class = self.loot_map.get(type)
         if not loot_class:
             return None
@@ -58,10 +66,19 @@ class Loot_Handler():
 
         self.Loot_Spawner(type, pos_x, pos_y, 0, data)
 
-    def Spawn_Bomb(self, pos_x, pos_y, data = None):
-        type = random.choice(self.bomb_types)
+    def Spawn_Bomb(self, pos_x, pos_y, type = None, data = None):
+        if not type:
+            type = random.choice(self.bomb_types)
 
-        self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+        bomb = Bomb(self.game, type, (pos_x, pos_y))
+        if not bomb:
+            return None
+        
+        if data:
+            bomb.Load_Data(data)
+        self.game.item_handler.Add_Item(bomb)
+        return bomb
+  
 
 
 

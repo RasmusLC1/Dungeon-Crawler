@@ -1,6 +1,5 @@
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
-import math
-import pygame
+
 
 class Arrow(Projectile):
     def __init__(self, game, pos, amount = 1, direction = (0,0), damage_type = 'slash'):

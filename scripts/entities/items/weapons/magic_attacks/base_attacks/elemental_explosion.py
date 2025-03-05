@@ -112,3 +112,14 @@ class Elemental_Explosion(Item):
 
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         pass
+
+    def Update_Dark_Surface(self):
+        if not self.render_needs_update:
+            return
+        if not self.entity_image:
+            return
+        self.rendered_image = self.entity_image.copy()
+        
+
+    def Lightup(self, entity_image):
+        pass
