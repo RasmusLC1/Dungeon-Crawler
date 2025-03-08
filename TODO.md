@@ -119,17 +119,17 @@ Create color coded backgrounds based on level, render image and text on top
 
     ## utility:
         ### Keys:
-            lockpick, has a 1/3chance to open the door and persist, but if it breaks door does not open and generates clank
-            Skeletal Key – Unlocks any door but disappears after 1 use
-            Blood Key – Unlocks any door but costs health
-            Soul Key – Unlocks any door but costs souls
-            Cursed Key – Unlocks any door but gives a random curse
+            # lockpick, has a 1/3chance to open the door and persist, but if it breaks door does not open and generates clank
+            # Skeletal Key – Unlocks any door but disappears after 1 use
+            # Blood Key – Unlocks any door but costs health
+            # Soul Key – Unlocks any door but costs souls
+            # Cursed Key – Unlocks any door but gives a random curse
 
 
         Torch of Guidance - Reveal the portal shrine on minimap
-        Echo Bell – Creates a noise at a targeted location to lure enemies away.
-        Cloak of Shadows – Temporarily makes the player invisible to enemies.
-        Rope Hook – Can be thrown to attach to certain walls and pull the player across gaps.
+        # Echo Bell – Creates a noise at a targeted location to lure enemies away.
+        # Cloak of Shadows – Temporarily makes the player invisible to enemies.
+        # Rope Hook – Can be thrown to pull the player across gaps.
         Alchemy Flask – Randomly turns a minor item into another item upon use.
         Timeworn Hourglass – Slows down nearby enemies movement
         Parchment of Recall – Teleports the player back to the last shrine visited.
@@ -138,11 +138,11 @@ Create color coded backgrounds based on level, render image and text on top
 
     ## Combat item
         Oil Flask – Can be thrown to create a flammable puddle.
-        electric Orb – electric explosion
-        Fire Orb – Fire explosion
-        Frozen Orb – Frozen Explosion
-        Poison Orb – Poison Explosion
-        Vampiric Orb – Vampiric Explosion
+        # electric Bomb – electric explosion
+        # Fire Bomb – Fire explosion
+        # Frozen Bomb – Frozen Explosion
+        # Poison Bomb – Poison Explosion
+        # Vampiric Bomb – Vampiric Explosion
         Holy Water – Weapons deals extra damage to undead and ghosts.
         Hexing Charm – Weakens the next enemy hit, cooldown.
         Hunter’s Fang – Increases weapon damage against beasts.

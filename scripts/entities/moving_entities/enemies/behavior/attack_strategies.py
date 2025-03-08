@@ -39,11 +39,15 @@ class Attack_Stategies():
             return True       
         
         if self.entity.distance_to_player < max_range and self.entity.distance_to_player > closest_range:
-            random_x = random.randint(1, 10) / 10
-            random_y = random.randint(1, 10) / 10
-            self.entity.direction = pygame.math.Vector2(random_x, random_y)
+            
+            path = self.Find_Escape_Path()
+
+            self.direct_pathing_cooldown = 40
+            if not path:
+                return True
+            
+            self.entity.direction = pygame.math.Vector2(path[0], path[1])
             self.entity.direction.normalize_ip()
-            self.direct_pathing_cooldown = 20
 
             return True
         
@@ -52,7 +56,24 @@ class Attack_Stategies():
         
         return self.Run_Away(60)
 
-        
+    # Find an escape path and ensure that there are no walls in the way
+    def Find_Escape_Path(self):
+        iterations = 0
+
+        speed_modifier = self.game.tilemap.tile_size * self.entity.agility * 2
+        while True:
+            random_x = (random.randint(1, 10) / 10) * random.choice([-1, 1])
+            random_y = (random.randint(1, 10) / 10) * random.choice([-1, 1])
+
+            # Check for tiles along the escape path
+            target_pos = (self.entity.pos[0] + random_x * speed_modifier, self.entity.pos[1] + random_y * speed_modifier)
+            if self.Line_Of_Sight(target_pos):
+                return (random_x, random_y)
+            iterations += 1
+            if iterations > 10:
+                break
+            
+        return None
 
     def Direct_Pathing(self):
         # Cooldown since the player's relative position does not need constant update
@@ -64,11 +85,11 @@ class Attack_Stategies():
         
     def Run_Away(self, distance):
         if self.entity.distance_to_player < distance:
+            # Check if the enemy has 
+            if not self.Line_Of_Sight(self.game.player.pos):
+                return False
             dx = (self.game.player.pos[0] - self.entity.pos[0]) * -1
             dy = (self.game.player.pos[1] - self.entity.pos[1]) * -1
-            # Check if the enemy has 
-            if not self.Line_Of_Sight(self.entity.distance_to_player, dx, dy):
-                return False
             self.entity.direction = pygame.math.Vector2(dx, dy)
             if self.entity.direction[0] == 0 and self.entity.direction[1] == 0:
                 return False
@@ -83,16 +104,40 @@ class Attack_Stategies():
         
         return False
 
-    # Check for line of sight with the player
-    def Line_Of_Sight(self, distance, dx, dy):
+
+
+    def Charge_player(self, distance):
+        if self.entity.distance_to_player < distance:
+            # Check if the enemy has 
+            if not self.Line_Of_Sight(self.game.player.pos):
+                return False
+            dx = self.game.player.pos[0] - self.entity.pos[0]
+            dy = self.game.player.pos[1] - self.entity.pos[1]
+            self.entity.direction = pygame.math.Vector2(dx, dy)
+            if self.entity.direction[0] == 0 and self.entity.direction[1] == 0:
+                return False
+            self.entity.direction.normalize_ip()
+            self.player_found = True
+            # Only update every 1000 ticks since you don't want
+            # the enemies to spam the ability and lag the game
+            if not self.entity.alert_cooldown:
+                self.entity.Set_Alert_Cooldown(1000)
+                self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
+            self.direct_pathing_cooldown = 10
+            return True
+        return False
+    
+
+    # Check for line of sight with target, returns true when found
+    def Line_Of_Sight(self, target_pos):
         tile_size = self.game.tilemap.tile_size
 
         # Convert enemy’s pixel position to tile coordinates
         ex = int(self.entity.pos[0] // tile_size)
         ey = int(self.entity.pos[1] // tile_size)
         # Convert player’s pixel position to tile coordinates
-        px = int(self.game.player.pos[0] // tile_size)
-        py = int(self.game.player.pos[1] // tile_size)
+        px = int(target_pos[0] // tile_size)
+        py = int(target_pos[1] // tile_size)
 
         # Generate the list of tiles along the line
         line_tiles = self.bresenham_line((ex, ey), (px, py))
@@ -135,24 +180,3 @@ class Attack_Stategies():
                 y1 += sy
 
         return points
-
-    def Charge_player(self, distance):
-        if self.entity.distance_to_player < distance:
-            dx = self.game.player.pos[0] - self.entity.pos[0]
-            dy = self.game.player.pos[1] - self.entity.pos[1]
-            # Check if the enemy has 
-            if not self.Line_Of_Sight(self.entity.distance_to_player, dx, dy):
-                return False
-            self.entity.direction = pygame.math.Vector2(dx, dy)
-            if self.entity.direction[0] == 0 and self.entity.direction[1] == 0:
-                return False
-            self.entity.direction.normalize_ip()
-            self.player_found = True
-            # Only update every 1000 ticks since you don't want
-            # the enemies to spam the ability and lag the game
-            if not self.entity.alert_cooldown:
-                self.entity.Set_Alert_Cooldown(1000)
-                self.game.clatter.Generate_Clatter(self.entity.pos, 400) # Generate clatter to alert nearby enemies
-            self.direct_pathing_cooldown = 10
-            return True
-        return False
