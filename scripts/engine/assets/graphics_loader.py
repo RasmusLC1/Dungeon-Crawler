@@ -473,6 +473,7 @@ class Graphics_Loader:
             'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 16, 16),
             'echo_bell' : get_tiles_from_sheet('items/utility/echo_bell.png', 0, 0, 0, 0, 32, 32),
             'shadow_cloak' : get_tiles_from_sheet('items/utility/shadow_cloak.png', 0, 0, 0, 0, 32, 32),
+            'lantern' : get_tiles_from_sheet('items/passive/lantern.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

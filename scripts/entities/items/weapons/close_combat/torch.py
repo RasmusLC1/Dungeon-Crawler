@@ -43,7 +43,6 @@ class Torch(Weapon):
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:
-            self.light_source.Update_Light_Level(8)
             self.Reset_Special_Attack()
             return
         self.special_attack = self.flame_thrower.Particle_Creation(self.entity, self.special_attack)

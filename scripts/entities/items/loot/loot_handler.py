@@ -7,6 +7,7 @@ from scripts.entities.items.loot.keys.lockpick import Lockpick
 from scripts.entities.items.loot.bombs.bomb import Bomb
 from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
 from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
+from scripts.entities.items.loot.passive.lantern import Lantern
 
 import random
 
@@ -25,6 +26,7 @@ class Loot_Handler():
             'bomb': Bomb,
             'echo_bell': Echo_Bell,
             'shadow_cloak': Shadow_Cloak,
+            'lantern': Lantern,
         }
 
         self.key_types = [
@@ -46,6 +48,10 @@ class Loot_Handler():
         self.utility_types = [
             'echo_bell',
             'shadow_cloak',
+        ]
+
+        self.passive_types = [
+            'lantern'
         ]
 
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
@@ -90,6 +96,11 @@ class Loot_Handler():
     
     def Spawn_Utility(self, pos_x, pos_y, data = None):
         type = random.choice(self.utility_types)
+
+        self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+
+    def Spawn_Passive(self, pos_x, pos_y, data = None):
+        type = random.choice(self.passive_types)
 
         self.Loot_Spawner(type, pos_x, pos_y, 0, data)
 
