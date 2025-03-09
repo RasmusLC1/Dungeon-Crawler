@@ -5,6 +5,8 @@ from scripts.entities.items.loot.keys.soul_key import Soul_Key
 from scripts.entities.items.loot.keys.cursed_key import Cursed_Key
 from scripts.entities.items.loot.keys.lockpick import Lockpick
 from scripts.entities.items.loot.bombs.bomb import Bomb
+from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
+from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
 
 import random
 
@@ -20,7 +22,9 @@ class Loot_Handler():
             'cursed_key': Cursed_Key,
             'lockpick': Lockpick,
             'gold': Gold,
-            'bomb': Bomb
+            'bomb': Bomb,
+            'echo_bell': Echo_Bell,
+            'shadow_cloak': Shadow_Cloak,
         }
 
         self.key_types = [
@@ -37,6 +41,11 @@ class Loot_Handler():
             'electric_bomb',
             'poison_bomb',
             'vampiric_bomb',
+        ]
+
+        self.utility_types = [
+            'echo_bell',
+            'shadow_cloak',
         ]
 
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
@@ -78,6 +87,12 @@ class Loot_Handler():
             bomb.Load_Data(data)
         self.game.item_handler.Add_Item(bomb)
         return bomb
+    
+    def Spawn_Utility(self, pos_x, pos_y, data = None):
+        type = random.choice(self.utility_types)
+
+        self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+
   
 
 

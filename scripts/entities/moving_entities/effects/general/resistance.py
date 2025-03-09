@@ -18,4 +18,4 @@ class Resistance(Effect):
             self.entity.health = min(self.entity.health + self.effect, self.entity_health_holder - 2)
         
         self.entity_health_holder = self.entity.health
-        return False
+        return True
