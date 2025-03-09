@@ -13,6 +13,7 @@ import pygame
 class Player(Moving_Entity):
 
     _animation_handler = Player_Animation_Handler
+    _effect_handler = Player_Status_Effect_Handler
 
     def __init__(self, game, pos, size, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, 'player', 'player', pos, size, health, strength, max_speed, agility, intelligence, stamina, 'player')
@@ -33,7 +34,6 @@ class Player(Moving_Entity):
         self.player_particle_cooldown = 0
 
         self.weapons = []
-        self.effects = Player_Status_Effect_Handler(self)
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
         self.movement_handler = Player_Movement(self.game, self)
 
@@ -205,7 +205,6 @@ class Player(Moving_Entity):
         entity_image = self.animation_handler.entity_image.copy()
 
         entity_image.set_alpha(min(255, self.active))
-
         if self.damage_cooldown:
             self.Lightup(entity_image)
             scroll_up_effect = 20 - self.damage_cooldown

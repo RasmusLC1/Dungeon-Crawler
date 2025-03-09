@@ -471,11 +471,9 @@ class Graphics_Loader:
     def Asset_Loot(self):
         loot = {
             'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 16, 16),
-            'lockpick' : get_tiles_from_sheet('items/keys/lockpick.png', 0, 0, 0, 0, 32, 32),
-            'blood_key' : get_tiles_from_sheet('items/keys/blood_key.png', 0, 0, 0, 0, 32, 32),
-            'skeleton_key' : get_tiles_from_sheet('items/keys/skeleton_key.png', 0, 0, 0, 0, 32, 32),
-            'soul_key' : get_tiles_from_sheet('items/keys/soul_key.png', 0, 0, 0, 0, 32, 32),
-            'cursed_key' : get_tiles_from_sheet('items/keys/cursed_key.png', 0, 0, 0, 0, 32, 32),
+            'echo_bell' : get_tiles_from_sheet('items/utility/echo_bell.png', 0, 0, 0, 0, 32, 32),
+            'shadow_cloak' : get_tiles_from_sheet('items/utility/shadow_cloak.png', 0, 0, 0, 0, 32, 32),
+            'lantern' : get_tiles_from_sheet('items/passive/lantern.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

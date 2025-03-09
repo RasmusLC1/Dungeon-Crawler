@@ -4,7 +4,9 @@ import math
 
 class Bomb(Interactive_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 192, (20, 20))
+        super().__init__(game, type, pos, 192, (16, 16))
+        effect = self.type.replace('_bomb', '')
+        self.description = effect + ' explosion\nwhen trown'
  
     def Update(self):
         super().Update()

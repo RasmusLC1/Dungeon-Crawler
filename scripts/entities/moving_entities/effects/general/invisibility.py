@@ -8,12 +8,13 @@ class Invisibility(Effect):
         description = 'Invisible to\nother entities'
         super().__init__(entity, "invisibility", 0, 0, (130, 160), description)
 
-    # TODO: NOT WORKING, FUNCTIONAL BUILD AT 10th february 2025
     def Update_Effect(self):
         if not self.effect:
             return False
         
-        self.entity.Set_Active(max(0, 110 - self.effect * 10))
-
-        return self.Update_Cooldown()
+        # Use direct call instead of Set_Active since Set_Active is locked when invisible
+        self.entity.active = (max(0, 110 - self.effect * 10))
+        self.entity.render_needs_update = True
+        self.Update_Cooldown()
+        return True
     

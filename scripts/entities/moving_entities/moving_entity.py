@@ -4,12 +4,11 @@ from scripts.entities.moving_entities.effects.effects_handler import Status_Effe
 from scripts.entities.moving_entities.animation.animation_handler import Animation_Handler
 from scripts.entities.entities import PhysicsEntity
 
-
-
-
 class Moving_Entity(PhysicsEntity):
 
     _animation_handler = Animation_Handler
+    _effect_handler = Status_Effect_Handler
+
 
     
     def __init__(self, game, type, category, pos, size, health, strength, max_speed, agility, intelligence, stamina, sub_category):
@@ -77,7 +76,7 @@ class Moving_Entity(PhysicsEntity):
         self.block_direction = (0,0)
 
         # Status Effects
-        self.effects = Status_Effect_Handler(self)
+        self.effects = self._effect_handler(self)
         self.animation_handler = self._animation_handler(self)
         
         self.damage_text = ''
@@ -199,6 +198,12 @@ class Moving_Entity(PhysicsEntity):
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
 
+    def Set_Active(self, duration):
+        # use hasattr to check if self.effects exists
+        if hasattr(self, "effects"):
+            if self.effects.invisibility.effect:
+                return
+        return super().Set_Active(duration)
     
 
     def Set_Description(self):
@@ -369,8 +374,7 @@ class Moving_Entity(PhysicsEntity):
         
         return False
 
-    
-        
+
     def Attack_Direction_Handler(self, offset = (0, 0)):
         self.Set_Attack_Direction()
         
@@ -382,10 +386,10 @@ class Moving_Entity(PhysicsEntity):
             self.flip[0] = False
             self.animation_handler.Set_Animation('attack')
 
-        
         if self.attack_direction[1] < -0.5:
             # TODO: UPDATE to attack up when that has been animated
             self.animation_handler.Set_Animation('attack')
+
 
     def Set_Attack_Direction(self, attack_direction = None):
         if not attack_direction:
@@ -399,7 +403,6 @@ class Moving_Entity(PhysicsEntity):
         if not self.charging:
             self.charging = min(12, charge_speed)
 
-   
 
     # Handle Charging Updates
     def Charge_Update(self):
@@ -415,8 +418,6 @@ class Moving_Entity(PhysicsEntity):
 
     def Set_Frame_movement(self, movement):
         self.frame_movement = movement
-
-    
 
     def Set_Target(self, pos):
         self.target = pos

@@ -7,6 +7,15 @@ class Interactive_Loot(Loot):
         super().__init__(game, type, pos, size, 1)
         self.distance_to_player = 0
         self.max_distance = max_distance
+        self.activations = 0
+
+    def Save_Data(self):
+        super().Save_Data()
+        self.saved_data['activations'] = self.activations
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.activations = data['activations']
 
     def Update(self):
         if self.game.mouse.right_click:
