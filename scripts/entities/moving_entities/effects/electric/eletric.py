@@ -9,7 +9,7 @@ class Electric(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.entity.effects.electric_resistance.effect:
             return False
         
@@ -18,7 +18,7 @@ class Electric(Effect):
 
         self.entity.Damage_Taken(effect_time)
             
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
     
     def Update_Effect(self):
         if not self.effect:

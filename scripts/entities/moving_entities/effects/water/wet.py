@@ -8,14 +8,14 @@ class Wet(Effect):
         super().__init__(entity, "wet", 2, 20, (200, 250), description)
 
     
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.entity.effects.fire.effect:
             self.effects.fire.Remove_Effect()
 
         if self.entity.effects.frozen:
             self.entity.effects.frozen.Decrease_Effect()
             
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
 
     
     def Update_Effect(self):

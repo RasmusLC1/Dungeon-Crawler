@@ -6,6 +6,7 @@ class Effect():
         self.entity = entity
         self.effect_type = effect_type
         self.effect_max = 10
+        self.permanent = False
         self.effect = 0
         self.cooldown = 0
         self.animation = 0
@@ -21,6 +22,7 @@ class Effect():
         self.saved_data['cooldown'] = self.cooldown
         self.saved_data['animation'] = self.animation
         self.saved_data['animation_cooldown'] = self.animation_cooldown
+        self.saved_data['permanent'] = self.permanent
         return self.saved_data
 
 
@@ -29,10 +31,14 @@ class Effect():
         self.cooldown = data['cooldown']
         self.animation = data['animation']
         self.animation_cooldown = data['animation_cooldown']
+        self.permanent = data['permanent']
 
 
-    #set effect
-    def Set_Effect(self, effect_time):
+    # set effect, defualt is not permanent
+    def Set_Effect(self, effect_time, permanent = False):
+        if permanent:
+            self.Set_Permanent(True)
+
         if self.effect >= self.effect_max:
             return False
         self.effect = min(effect_time + self.effect, self.effect_max)
@@ -48,11 +54,17 @@ class Effect():
          self.aniamtion = 0
          self.cooldown = 0
          self.animation_cooldown = 0
+         self.permanent = False
+
+    def Set_Permanent(self, state):
+        self.permanent = state
 
     def Decrease_Effect(self):
         self.effect = max(self.effect - 1, 0)
 
-    def Update_Cooldown(self) -> bool: 
+    def Update_Cooldown(self) -> bool:
+        if self.permanent:
+            return
         if self.cooldown:
             self.cooldown -= 1
             return False

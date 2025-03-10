@@ -8,10 +8,10 @@ class Slow_Down(Effect):
         super().__init__(entity, 'slow_down', 0, 0, (0,0), description)
 
     
-    def Set_Effect(self, effect):
-        if not effect:
+    def Set_Effect(self, effect_time, permanent = False):
+        if not effect_time:
             return
         try:
-            self.entity.max_speed = max(0.1, self.entity.max_speed / effect)
+            self.entity.max_speed = max(0.1, self.entity.max_speed / effect_time)
         except ZeroDivisionError as e:
-            print(f"SLOWDOWN: {e}", self.entity.max_speed, effect)
+            print(f"SLOWDOWN: {e}", self.entity.max_speed, effect_time)

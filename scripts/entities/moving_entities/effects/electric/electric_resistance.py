@@ -10,11 +10,11 @@ class Electric_Resistance(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.effect >= self.effect_max:
             return False
         
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
 
     
     def Update_Effect(self):

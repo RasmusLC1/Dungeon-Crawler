@@ -6,17 +6,10 @@ Save it in a seperate class that accepts an increment from dungeon generator
 
 
 # Dungeon Crawler Gameplay Ideas
-    Earn money from Dungeon to pay for inn at night
-    Collect companions from prison cells in Dungeon
-    Each prisoner increases rent cost in Inn
-    Prisoners become companions or merchants/trainers/teachers
-    Prisoners if companions can go with you to the dungeon, but will get perma killed if they die
     Can find weapons, armor and magic tombes to learn runes
     There are layers to the dungeon, each layer have one exit and different staircases down to a new random dungeon. You cannot go up through the original entrance again
-    Clank card system to trigger dungeon events, it's an artifical dungeon
-    Loot has weight which will slow you down, also lowers your initiative in combat
+    Clank system that spawns enemies using a director similar to left4dead
     Each dungeon layer get's progressively harder, but main challenge is to conserve resources to proceed further down
-    Enviorement effects and physics to solve puzzles in the dungeon
     Each section has at least 1 random combat from a pool of possible mobs based on enviorement, freeze section as freeze enemies
     Each layer draws a random theme, fire for example, then it draws from the tech theme for example
     Pokemon style resistances and effectivness in a rock paper scissor style
@@ -98,7 +91,7 @@ Create color coded backgrounds based on level, render image and text on top
     
     
     ## Permanent:
-        Lantern, Sets the player light to 7, passive light
+        # Lantern, Sets the player light to 7, passive light
         Blood tomb, increases speed and damage as player takes damage
         Magnet, autopickup of items
         Compass that points towards boss room

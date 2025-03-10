@@ -10,10 +10,10 @@ class Invulnerable(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         self.entity_health_holder = self.entity.health
         self.entity.effects.Set_Effect("snare", self.cooldown)
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
     
     def Update_Effect(self):
         if not self.effect:
