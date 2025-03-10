@@ -2,8 +2,9 @@ from scripts.entities.moving_entities.player.inventory_effects.inventory_effect 
 class Magnet(Inventory_Effect):
 
     def Enable(self):
-        # self.entity.
-        pass
+        self.player.Set_Effect(self.effect, 4, True)
+
 
     def Disable(self):
-        pass
+        self.player.Remove_Effect(self.effect)
+        

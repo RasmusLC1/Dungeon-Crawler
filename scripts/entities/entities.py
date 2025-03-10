@@ -85,7 +85,7 @@ class PhysicsEntity:
     def Damage_Taken(self, damage):
         pass
 
-    def Set_Effect(self, effect, duration):
+    def Set_Effect(self, effect, duration, permanent = False):
         pass
     
     def Set_Tile(self):

@@ -53,9 +53,6 @@ class Inventory_Effects_Handler:
 
         self.active_effects = []
 
-        self.Enable("magnet")
-
-
     # Enable a specific inventory effect
     def Enable(self, effect_name):
         effect = self.effects.get(effect_name)

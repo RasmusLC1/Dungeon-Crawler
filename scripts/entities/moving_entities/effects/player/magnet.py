@@ -10,13 +10,15 @@ class Magnet(Effect):
 
 
     
-    #set Fire effect
-    def Set_Effect(self, effect_time, permanent = False):
-        self.effect = min(effect_time, self.effect_max)
-        return True
+    # #set Fire effect
+    # def Set_Effect(self, effect_time, permanent = False):
+    #     self.effect = min(effect_time, self.effect_max)
+    #     return True
     
     def Update_Effect(self):
         self.entity.game.item_handler.Pick_Up_All_Nearby_Items(self.effect)
+        return True
+
     
 
     
