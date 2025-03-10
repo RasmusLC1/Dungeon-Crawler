@@ -122,14 +122,16 @@ class Status_Effect_Handler:
             'blunt': None,
         }
 
-    def Set_Effect(self, effect, duration):
+
+    # Set the effect of the entity
+    def Set_Effect(self, effect, duration, permanent = False):
         if self.entity.effects.invulnerable.effect:
             return False
         try:
-            effect = self.effects[effect]
+            effect = self.effects.get(effect)
             if not effect:
                 return False
-            effect_set_success = effect.Set_Effect(duration)
+            effect_set_success = effect.Set_Effect(duration, permanent)
             if effect_set_success:
                 if effect not in self.active_effects:
                     self.active_effects.append(effect)

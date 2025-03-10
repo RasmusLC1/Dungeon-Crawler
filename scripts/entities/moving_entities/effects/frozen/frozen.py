@@ -8,7 +8,7 @@ class Frozen(Effect):
         super().__init__(entity, "frozen", 2, 30, (160, 200), description)
 
     
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.entity.effects.fire.effect or self.entity.effects.frozen_resistance.effect:
             return False
         
@@ -16,7 +16,7 @@ class Frozen(Effect):
             effect_time *= 2
             self.wet = 0
 
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
     
     def Update_Effect(self):
         if not self.effect:

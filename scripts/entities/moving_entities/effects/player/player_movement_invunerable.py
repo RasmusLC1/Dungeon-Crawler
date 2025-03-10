@@ -9,7 +9,7 @@ class Player_Movement_Invunerable(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.effect:
             return
         self.entity_health_holder = self.entity.health

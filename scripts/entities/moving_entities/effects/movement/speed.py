@@ -10,10 +10,10 @@ class Speed(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.entity.effects.frozen.effect:
             return False
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
 
     def Update_Effect(self):
 

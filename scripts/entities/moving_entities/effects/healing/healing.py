@@ -8,7 +8,7 @@ class Healing(Effect):
         super().__init__(entity, 'healing', 0, 0, (0,0), description)
 
     
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.entity.effects.poison.effect:
             return False
         

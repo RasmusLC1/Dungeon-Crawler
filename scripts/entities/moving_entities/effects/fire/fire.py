@@ -9,13 +9,13 @@ class Fire(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         if self.entity.effects.wet.effect or self.entity.effects.fire_resistance.effect:
             return False
         if self.entity.effects.frozen.effect:
             self.entity.effects.frozen.Remove_Effect()
             
-        return super().Set_Effect(effect_time)
+        return super().Set_Effect(effect_time, permanent)
     
     def Update_Effect(self):
         if not self.effect:

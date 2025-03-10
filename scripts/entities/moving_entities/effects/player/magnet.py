@@ -11,7 +11,7 @@ class Magnet(Effect):
 
     
     #set Fire effect
-    def Set_Effect(self, effect_time):
+    def Set_Effect(self, effect_time, permanent = False):
         self.effect = min(effect_time, self.effect_max)
         return True
     

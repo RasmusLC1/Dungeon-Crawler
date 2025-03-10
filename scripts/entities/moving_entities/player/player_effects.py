@@ -52,7 +52,11 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
                 self.Disable_Effect_Icon(effect_icon)
 
 
-    def Set_Effect(self, effect, duration):
+    def Set_Effect(self, effect, duration, permanent):
+        
+        if not super().Set_Effect(effect, duration, permanent):
+            return False
+        
         # Check if the effect is already in the active effects before setting it
         # Prevents effect icon duplication
         check_effect = self.Get_Effect(effect)
@@ -61,11 +65,6 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         
         already_in_effects =  self.Check_If_Effect_Symbol_Exists(check_effect.effect_type)
 
-        
-
-        
-        if not super().Set_Effect(effect, duration):
-            return False
         if already_in_effects:
             return True
         
