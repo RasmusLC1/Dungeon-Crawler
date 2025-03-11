@@ -15,6 +15,7 @@ from scripts.entities.moving_entities.effects.healing.healing import Healing
 from scripts.entities.moving_entities.effects.movement.slow_down import Slow_Down
 from scripts.entities.moving_entities.effects.healing.vampiric import Vampiric
 from scripts.entities.moving_entities.effects.damage.invulnerable import Invulnerable
+from scripts.entities.moving_entities.effects.damage.vulnerable import Vulnerable
 from scripts.entities.moving_entities.effects.damage.thorns import Thorns
 from scripts.entities.moving_entities.effects.electric.eletric import Electric
 from scripts.entities.moving_entities.effects.electric.electric_resistance import Electric_Resistance
@@ -90,6 +91,8 @@ class Status_Effect_Handler:
         self.vampiric = Vampiric(self.entity)
 
         self.invulnerable = Invulnerable(self.entity)
+        
+        self.vulnerable = Vulnerable(self.entity)
 
         self.thorns = Thorns(self.entity)
 
@@ -115,6 +118,7 @@ class Status_Effect_Handler:
             self.slow_down.effect_type: self.slow_down,
             self.vampiric.effect_type: self.vampiric,
             self.invulnerable.effect_type: self.invulnerable,
+            self.vulnerable.effect_type: self.vulnerable,
             self.thorns.effect_type: self.thorns,
             self.electric.effect_type: self.electric,
             self.electric_resistance.effect_type: self.electric_resistance,
@@ -135,6 +139,7 @@ class Status_Effect_Handler:
             effect_set_success = effect.Set_Effect(duration, permanent)
             if effect_set_success:
                 effect_found = False
+                
                 for active_effect in self.active_effects:
                     # Check if the type is in effects and skip if yes
                     if effect.effect_type == active_effect.effect_type:

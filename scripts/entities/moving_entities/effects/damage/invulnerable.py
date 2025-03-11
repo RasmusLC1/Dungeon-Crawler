@@ -1,5 +1,4 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
 
 # Immune to damage but cannot move
 class Invulnerable(Effect):

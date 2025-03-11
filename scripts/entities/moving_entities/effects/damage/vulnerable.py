@@ -1,7 +1,6 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
 
-# Take fire damage
+# Take extra damage
 class Vulnerable(Effect):
     def __init__(self, entity):
         description = 'Increases damage\ntaken'
