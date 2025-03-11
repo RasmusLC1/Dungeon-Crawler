@@ -1,5 +1,4 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
 
 # 
 class Electric(Effect):
@@ -35,7 +34,8 @@ class Electric(Effect):
                 return False
             for enemy in self.entity.nearby_enemies:
                 if enemy.Set_Effect(self.effect_type, effect):
-                    self.entity.Set_Effect('electric_resistance', 0)
+                    # Simulate the electricity moving to the next target and prevent infinite loops
+                    self.entity.Set_Effect('electric_resistance', 2) 
                     return True
                 
 

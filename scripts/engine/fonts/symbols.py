@@ -20,7 +20,7 @@ class Symbols():
                 'invulnerable', 'snare', 'thorns',
                 'electric_resistance',
                 'chain', 'enemy', 'curse',
-                'weakness'
+                'weakness', 'vulnerable', 'luck',
             ])
         }
 

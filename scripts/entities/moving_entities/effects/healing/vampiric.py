@@ -7,12 +7,3 @@ class Vampiric(Effect):
         description = 'Heals when\ndealing damage'
         super().__init__(entity, "vampiric", 0, 0, (150, 200), description)
 
-    
-
-    def Update_Effect(self):
-        if not self.effect:
-            return False
-        
-        self.Update_Cooldown()
-
-        return False

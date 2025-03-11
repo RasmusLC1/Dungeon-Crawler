@@ -46,12 +46,16 @@ class Effect():
         return True
     
     def Update_Effect(self):
-        pass
+        if not self.effect:
+            return False
+        
+        self.Update_Cooldown()
+        
+        return True
 
     def Remove_Effect(self):
-         
          self.effect = 0
-         self.aniamtion = 0
+         self.animation = 0
          self.cooldown = 0
          self.animation_cooldown = 0
          self.permanent = False
@@ -64,7 +68,7 @@ class Effect():
 
     def Update_Cooldown(self) -> bool:
         if self.permanent:
-            return
+            return False
         if self.cooldown:
             self.cooldown -= 1
             return False
@@ -87,6 +91,12 @@ class Effect():
         else:
             self.animation += 1
 
+    def Damage_Dealth(self, damage):
+        pass
+
+
+    def Damage_Taken(self, damage):
+        pass
    
     def Render_Effect(self, surf, offset=(0, 0)):
         if not self.effect:

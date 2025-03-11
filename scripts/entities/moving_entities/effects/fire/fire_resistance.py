@@ -8,11 +8,3 @@ class Fire_Resistance(Effect):
         description = 'Prevents fire damage'
         super().__init__(entity, "fire_resistance", 0, 0, (200, 250), description)
 
-
-    def Update_Effect(self):
-        if not self.effect:
-            return False
-        
-        self.Update_Cooldown()
-        
-        return True

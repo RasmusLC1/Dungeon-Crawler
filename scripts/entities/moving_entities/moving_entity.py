@@ -272,8 +272,7 @@ class Moving_Entity(PhysicsEntity):
         # Push the other entity backwards
         self.Move_Entity(other_entity, direction_vector, tilemap)
     
-
-        
+    
     # Function to move the entity with pushback
     def Move_Entity(self, other_entity, direction, tilemap):
         other_entity.Set_Frame_movement((direction[0] * -1, direction[1] * -1))
@@ -319,21 +318,20 @@ class Moving_Entity(PhysicsEntity):
     def Damage_Taken(self, damage, direction = (0, 0)):
         if self.damage_cooldown:
             return False
-        
-        if self.effects.invulnerable.effect:
-            self.damage_cooldown = self.damage_cooldown_max
-            return False
-        
+                
         if self.Check_Blocking_Direction(direction):
             return False
 
         self.damage_text = str(damage)
 
         self.damage_cooldown = self.damage_cooldown_max
-        self.health -= damage
+        self.Set_Health(self.health - damage)
 
         # Update the entitty description
         self.Set_Description()
+        
+        # Check if any active effects affect damage
+        self.effects.Damage_Taken(damage)
 
         if self.health <= 0: # Entity dead
             # self.effects.Reset_Effects()
@@ -342,8 +340,6 @@ class Moving_Entity(PhysicsEntity):
                 return True
             self.tile.Clear_Entity(self.ID)
         return True
-
-    
     
     def Check_Blocking_Direction(self, direction) -> bool:
         # Check if entity is blocking
@@ -421,6 +417,9 @@ class Moving_Entity(PhysicsEntity):
 
     def Set_Target(self, pos):
         self.target = pos
+
+    def Set_Health(self, amount):
+        self.health = amount
 
     def Reduce_Movement(self, factor):
         self.max_speed = self.max_speed // factor

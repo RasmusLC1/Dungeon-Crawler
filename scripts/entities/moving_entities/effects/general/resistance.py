@@ -9,10 +9,8 @@ class Resistance(Effect):
 
     
     def Update_Effect(self):
-        if not self.effect:
+        if not super().Update_Effect():
             return False
-        
-        self.Update_Cooldown()
         
         if self.entity.health < self.entity_health_holder:
             self.entity.health = min(self.entity.health + self.effect, self.entity_health_holder - 2)

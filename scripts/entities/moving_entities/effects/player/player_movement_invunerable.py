@@ -16,10 +16,8 @@ class Player_Movement_Invunerable(Effect):
         self.effect = effect_time
     
     def Update_Effect(self):
-        if not self.effect:
+        if not super().Update_Effect():
             return False
-        
-        self.Update_Cooldown()
 
         
         if self.entity.health < self.entity_health_holder:

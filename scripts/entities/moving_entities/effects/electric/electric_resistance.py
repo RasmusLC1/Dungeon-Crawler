@@ -15,12 +15,3 @@ class Electric_Resistance(Effect):
             return False
         
         return super().Set_Effect(effect_time, permanent)
-
-    
-    def Update_Effect(self):
-        if not self.effect:
-            return False
-        
-        self.Update_Cooldown()
-        
-        return True

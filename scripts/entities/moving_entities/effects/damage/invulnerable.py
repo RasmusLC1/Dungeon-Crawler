@@ -1,5 +1,4 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
 
 # Immune to damage but cannot move
 class Invulnerable(Effect):
@@ -23,9 +22,7 @@ class Invulnerable(Effect):
             if self.effect <= 0:
                 self.entity.effects.Set_Effect("snare", -10)
 
-        
-        if self.entity.health < self.entity_health_holder:
-            self.entity.health = self.entity_health_holder
-    
-        self.entity_health_holder = self.entity.health
         return False
+    
+    def Damage_Taken(self, damage):
+        self.entity.Set_Health(self.entity_health_holder)

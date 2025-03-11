@@ -17,10 +17,7 @@ class Regen(Effect):
 
     
     def Update_Effect(self):
-        if not self.effect:
-            return False
-        
-        if not self.Update_Cooldown():
+        if not super().Update_Effect():
             return False
                   
         if self.entity.effects.poison.effect:
