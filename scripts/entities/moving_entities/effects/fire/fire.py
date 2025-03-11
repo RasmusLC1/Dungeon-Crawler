@@ -4,7 +4,7 @@ import random
 # Take fire damage
 class Fire(Effect):
     def __init__(self, entity):
-        description = 'fire Damage over time.\nStopped by water'
+        description = 'fire Damage over time.\nStopped by water\nIncreases damage\ntaken'
         super().__init__(entity, 'fire', 7, 20, (30, 50), description)
 
     
@@ -21,7 +21,7 @@ class Fire(Effect):
         if not self.effect:
             return False
         
-
+        # Check for resistances
         if self.entity.effects.fire_resistance.effect or self.entity.effects.wet.effect:
             self.effect = 0
             self.cooldown = 0
@@ -36,3 +36,6 @@ class Fire(Effect):
 
         self.Effect_Animation_Cooldown()
         return True
+    
+    def Damage_Taken(self, damage):
+        self.entity.Set_Health(self.entity.health - damage // 2)

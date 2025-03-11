@@ -137,7 +137,7 @@ class Status_Effect_Handler:
                 effect_found = False
                 for active_effect in self.active_effects:
                     # Check if the type is in effects and skip if yes
-                    if effect.type == active_effect.type:
+                    if effect.effect_type == active_effect.effect_type:
                         effect_found = True
                         break
                 
@@ -145,7 +145,7 @@ class Status_Effect_Handler:
                     self.active_effects.append(effect)
             return effect_set_success
         except Exception as e:
-            print(f"Wrong effect input{e}", effect, duration)
+            print(f"Wrong effect input{e}", effect, duration, effect.effect_type)
 
 
 
@@ -179,6 +179,11 @@ class Status_Effect_Handler:
         
         except Exception as e:
                 print(f"Wrong effect input{e} EFFECT NAME", effect)
+
+
+    def Damage_Taken(self, damage):
+        for effect in self.active_effects:
+            effect.Damage_Taken(damage)
 
 
     def Render_Effects(self, surf, offset=(0, 0)):

@@ -73,9 +73,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         return True
     
     def Check_If_Effect_Symbol_Exists(self, check_effect_type):
-        print("TESTETST", self.active_effect_symbols)
         for effect_symbol in self.active_effect_symbols:
-            print(effect_symbol.effect.effect_type, check_effect_type)
             if effect_symbol.effect.effect_type == check_effect_type:
                 return True
 
