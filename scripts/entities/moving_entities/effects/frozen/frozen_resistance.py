@@ -8,10 +8,3 @@ class Frozen_Resistance(Effect):
         super().__init__(entity, "frozen_resistance", 0, 0, (200, 250), description)
 
     
-    def Update_Effect(self):
-        if not self.effect:
-            return False
-        
-        
-        return self.Update_Cooldown()
-    

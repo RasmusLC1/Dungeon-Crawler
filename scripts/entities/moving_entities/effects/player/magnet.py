@@ -16,6 +16,8 @@ class Magnet(Effect):
     #     return True
     
     def Update_Effect(self):
+        if not super().Update_Effect():
+            return False
         self.entity.game.item_handler.Pick_Up_All_Nearby_Items(self.effect)
         return True
 
