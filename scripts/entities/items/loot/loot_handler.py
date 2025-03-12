@@ -65,6 +65,35 @@ class Loot_Handler():
             'blood_tomb',
         ]
 
+    def Loot_Loader(self, type, pos_x, pos_y, amount, data):
+        # Handle when there's no data
+        if not data:
+            self.Loot_Spawner(type, pos_x, pos_y, amount)
+            return
+        
+        loot_type = data.get('loot_type')
+
+        if not loot_type:
+            return
+        
+        # Match statement for loot type handling
+        match loot_type:
+            case 'key':
+                return self.Spawn_Key(pos_x, pos_y, type, data)
+            case 'bomb':
+                return self.Spawn_Bomb(pos_x, pos_y, type, data)
+            case 'utility':
+                return self.Spawn_Utility(pos_x, pos_y, type, data)
+            case 'passive':
+                return self.Spawn_Passive(pos_x, pos_y, type, data)
+            case 'cursed':
+                return self.Spawn_Cursed(pos_x, pos_y, type, data)
+            case _:
+                return self.Loot_Spawner(type, pos_x, pos_y, amount, data)
+
+
+
+
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
         if 'bomb' in type:
             bomb = self.Spawn_Bomb(pos_x, pos_y, type, data)
@@ -92,10 +121,11 @@ class Loot_Handler():
         return loot
     
 
-    def Spawn_Key(self, pos_x, pos_y, data = None):
-        type = random.choice(self.key_types)
+    def Spawn_Key(self, pos_x, pos_y, type = None, data = None):
+        if not type:
+            type = random.choice(self.key_types)
 
-        self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+        return self.Loot_Spawner(type, pos_x, pos_y, 0, data)
 
     def Spawn_Bomb(self, pos_x, pos_y, type = None, data = None):
         if not type:
@@ -106,13 +136,15 @@ class Loot_Handler():
         return self.Load_Data(bomb, data)
 
     
-    def Spawn_Utility(self, pos_x, pos_y, data = None):
-        type = random.choice(self.utility_types)
+    def Spawn_Utility(self, pos_x, pos_y, type = None, data = None):
+        if not type:
+            type = random.choice(self.utility_types)
 
-        self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+        return self.Loot_Spawner(type, pos_x, pos_y, 0, data)
 
-    def Spawn_Passive(self, pos_x, pos_y, data = None):
-        type = random.choice(self.passive_types)
+    def Spawn_Passive(self, pos_x, pos_y, type = None, data = None):
+        if not type:
+            type = random.choice(self.passive_types)
 
         if type == 'lantern': # Handle lantern seperately as it needs light updates
             self.Loot_Spawner(type, pos_x, pos_y, 0, data)
@@ -122,6 +154,12 @@ class Loot_Handler():
 
         return self.Load_Data(passive_Loot, data)
 
+
+    def Spawn_Cursed(self, pos_x, pos_y, type = None, data = None):
+        if not type:
+            type = random.choice(self.cursed_items)
+
+        return self.Loot_Spawner(type, pos_x, pos_y, 0, data)
 
 
 

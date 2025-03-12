@@ -3,8 +3,8 @@ import math
 import pygame
 
 class Interactive_Loot(Loot):
-    def __init__(self, game, type, pos, max_distance, size):
-        super().__init__(game, type, pos, size, 1)
+    def __init__(self, game, type, pos, max_distance, size, loot_type):
+        super().__init__(game, type, pos, size, 10, loot_type, 1)
         self.distance_to_player = 0
         self.max_distance = max_distance
         self.activations = 0
