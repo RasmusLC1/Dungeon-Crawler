@@ -3,7 +3,7 @@ from scripts.entities.moving_entities.effects.player.silence import Silence
 from scripts.entities.moving_entities.effects.souls.arcane_conduit import Arcane_Conduit
 from scripts.entities.moving_entities.effects.souls.hunger import Hunger
 from scripts.entities.moving_entities.effects.player.magnet import Magnet
-from scripts.entities.moving_entities.effects.general.resistance import Resistance
+from scripts.entities.moving_entities.effects.player.blood_tomb import Blood_Tomb
 from scripts.entities.moving_entities.effects.player.player_movement_invunerable import Player_Movement_Invunerable
 
 from scripts.entities.moving_entities.player.effect_icon import Effect_Icon
@@ -35,14 +35,14 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.arcane_conduit = Arcane_Conduit(self.entity)
         self.hunger = Hunger(self.entity)
         self.magnet = Magnet(self.entity)
-        self.resistance = Resistance(self.entity)
+        self.blood_tomb = Blood_Tomb(self.entity)
         self.player_movement_invunerable = Player_Movement_Invunerable(self.entity)
 
         self.effects[self.silence.effect_type] = self.silence
         self.effects[self.arcane_conduit.effect_type] = self.arcane_conduit
         self.effects[self.hunger.effect_type] = self.hunger
         self.effects[self.magnet.effect_type] = self.magnet
-        self.effects[self.resistance.effect_type] = self.resistance
+        self.effects[self.blood_tomb.effect_type] = self.blood_tomb
         self.effects['player_movement_invunerable'] = self.player_movement_invunerable
 
     def Update_Status_Effects(self):

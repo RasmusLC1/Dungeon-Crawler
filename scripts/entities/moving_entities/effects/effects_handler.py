@@ -20,6 +20,8 @@ from scripts.entities.moving_entities.effects.damage.vulnerable import Vulnerabl
 from scripts.entities.moving_entities.effects.damage.thorns import Thorns
 from scripts.entities.moving_entities.effects.electric.eletric import Electric
 from scripts.entities.moving_entities.effects.electric.electric_resistance import Electric_Resistance
+from scripts.entities.moving_entities.effects.general.resistance import Resistance
+
 
 
 class Status_Effect_Handler:
@@ -83,6 +85,8 @@ class Status_Effect_Handler:
         
         self.frozen_resistance = Frozen_Resistance(self.entity)
 
+        self.resistance = Resistance(self.entity)
+
         self.snare = Snare(self.entity)
 
         self.anchor = Anchor(self.entity)
@@ -116,6 +120,7 @@ class Status_Effect_Handler:
             self.fire_resistance.effect_type: self.fire_resistance,
             self.poison_resistance.effect_type: self.poison_resistance,
             self.frozen_resistance.effect_type: self.frozen_resistance,
+            self.resistance.effect_type: self.resistance,
             self.snare.effect_type: self.snare,
             self.anchor.effect_type: self.anchor,
             self.healing.effect_type: self.healing,

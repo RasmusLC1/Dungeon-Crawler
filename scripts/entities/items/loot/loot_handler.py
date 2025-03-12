@@ -55,10 +55,11 @@ class Loot_Handler():
             # 'lantern',
             # 'anchor_stone',
             # 'magnet',
-            'strength_totem',
+            # 'strength_totem',
             # 'faith_pendant',
             # 'lucky_charm',
             # 'power_totem',
+            'blood_tomb',
         ]
 
         self.cursed_items = [

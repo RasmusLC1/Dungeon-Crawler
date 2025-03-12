@@ -4,10 +4,11 @@ class Vampire_Locket(Inventory_Effect):
         super().__init__(entity, "vampire_locket")
 
     def Enable(self):
-        pass
+        self.player.Set_Effect('vampiric', 2, True)
+        
 
     def Disable(self):
-        pass
+        self.player.Remove_Effect('vampiric')
     
     def Set_Decription(self):
         self.description = 'lifesteal, but drains health'
