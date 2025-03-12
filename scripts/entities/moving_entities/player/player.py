@@ -3,7 +3,7 @@ from scripts.entities.moving_entities.player.player_effects import Player_Status
 from scripts.entities.moving_entities.player.player_weapon import Player_Weapon_Handler
 from scripts.entities.moving_entities.player.player_movement import Player_Movement
 from scripts.entities.moving_entities.player.player_animation_handler import Player_Animation_Handler
-from scripts.entities.moving_entities.player.inventory_effects.inventory_effects_handler import Inventory_Effects_Handler
+from scripts.entities.moving_entities.player.inventory_effects_handler import Inventory_Effects_Handler
 
 from scripts.entities.items.weapons.projectiles.bombs.bomb_launcher import Bomb_Launcher
 

@@ -7,7 +7,7 @@ from scripts.entities.moving_entities.player.inventory_effects.strength_totem im
 from scripts.entities.moving_entities.player.inventory_effects.luck_totem import Luck_Totem
 from scripts.entities.moving_entities.player.inventory_effects.faith_pendant import Faith_Pendant
 from scripts.entities.moving_entities.player.inventory_effects.anchor_stone import Anchor_Stone
-from scripts.entities.moving_entities.player.inventory_effects.silence_cloak import Silence_Cloak
+from scripts.entities.moving_entities.player.inventory_effects.muffled_boots import Muffled_Boots
 from scripts.entities.moving_entities.player.inventory_effects.halo import Halo
 from scripts.entities.moving_entities.player.inventory_effects.black_coin import Black_Coin
 from scripts.entities.moving_entities.player.inventory_effects.vampire_locket import Vampire_Locket
@@ -29,26 +29,26 @@ class Inventory_Effects_Handler:
 
         # Instantiate effect objects with their name
         self.effects = {
-            "blood_tomb": Blood_Tomb(self.entity, "blood_tomb"),
-            "magnet": Magnet(self.entity, "magnet"),
-            "compass": Compass(self.entity, "compass"),
-            "power_totem": Power_Totem(self.entity, "power_totem"),
-            "strength_totem": Strength_Totem(self.entity, "strength_totem"),
-            "luck_totem": Luck_Totem(self.entity, "luck_totem"),
-            "faith_pendant": Faith_Pendant(self.entity, "faith_pendant"),
-            "anchor_stone": Anchor_Stone(self.entity, "anchor_stone"),
-            "silence_cloak": Silence_Cloak(self.entity, "silence_cloak"),
-            "halo": Halo(self.entity, "halo"),
-            "black_coin": Black_Coin(self.entity, "black_coin"),
-            "vampire_locket": Vampire_Locket(self.entity, "vampire_locket"),
-            "blood_pact": Blood_Pact(self.entity, "blood_pact"),
-            "demonic_bargain": Demonic_Bargain(self.entity, "demonic_bargain"),
-            "demonic_strength": Demonic_Strength(self.entity, "demonic_strength"),
-            "cursed_dice": Cursed_Dice(self.entity, "cursed_dice"),
-            "eldritch_mirror": Eldritch_Mirror(self.entity, "eldritch_mirror"),
-            "forsaken_grimoire": Forsaken_Grimoire(self.entity, "forsaken_grimoire"),
-            "cracked_talisman": Cracked_Talisman(self.entity, "cracked_talisman"),
-            "echoing_skull": Echoing_Skull(self.entity, "echoing_skull"),
+            "blood_tomb": Blood_Tomb(self.entity),
+            "magnet": Magnet(self.entity),
+            "compass": Compass(self.entity),
+            "power_totem": Power_Totem(self.entity),
+            "strength_totem": Strength_Totem(self.entity),
+            "luck_totem": Luck_Totem(self.entity),
+            "faith_pendant": Faith_Pendant(self.entity),
+            "anchor_stone": Anchor_Stone(self.entity),
+            "silence_cloak": Muffled_Boots(self.entity),
+            "halo": Halo(self.entity),
+            "black_coin": Black_Coin(self.entity),
+            "vampire_locket": Vampire_Locket(self.entity),
+            "blood_pact": Blood_Pact(self.entity),
+            "demonic_bargain": Demonic_Bargain(self.entity),
+            "demonic_strength": Demonic_Strength(self.entity, ),
+            "cursed_dice": Cursed_Dice(self.entity, ),
+            "eldritch_mirror": Eldritch_Mirror(self.entity),
+            "forsaken_grimoire": Forsaken_Grimoire(self.entity),
+            "cracked_talisman": Cracked_Talisman(self.entity),
+            "echoing_skull": Echoing_Skull(self.entity),
         }
 
         self.active_effects = []
@@ -64,3 +64,9 @@ class Inventory_Effects_Handler:
         effect = self.effects.get(effect_name)
         if effect:
             effect.Disable()
+
+
+    def Get_Description(self, effect_name):
+        effect = self.effects.get(effect_name)
+        if effect:
+            return effect.description

@@ -1,7 +1,7 @@
 from scripts.entities.moving_entities.player.inventory_effects.inventory_effect import Inventory_Effect
-class Faith_Pendant(Inventory_Effect):
+class Muffled_Boots(Inventory_Effect):
     def __init__(self, entity):
-        super().__init__(entity, "faith_pendant")
+        super().__init__(entity, "muffled_cloak")
 
     def Enable(self):
         pass
@@ -10,4 +10,4 @@ class Faith_Pendant(Inventory_Effect):
         pass
     
     def Set_Decription(self):
-        self.description = 'highlights traps'
+        self.description = 'reduces noise'

@@ -470,10 +470,17 @@ class Graphics_Loader:
 
     def Asset_Loot(self):
         loot = {
-            'gold' : get_tiles_from_sheet('loot/gold_coins.png', 3, 0, 0, 0, 16, 16),
+            'gold' : get_tiles_from_sheet('items/valuables/gold_coins.png', 3, 0, 0, 0, 16, 16),
             'echo_bell' : get_tiles_from_sheet('items/utility/echo_bell.png', 0, 0, 0, 0, 32, 32),
             'shadow_cloak' : get_tiles_from_sheet('items/utility/shadow_cloak.png', 0, 0, 0, 0, 32, 32),
             'lantern' : get_tiles_from_sheet('items/passive/lantern.png', 0, 0, 0, 0, 32, 32),
+            'anchor_stone' : get_tiles_from_sheet('items/passive/anchor_stone.png', 0, 0, 0, 0, 32, 32),
+            'blood_tomb' : get_tiles_from_sheet('items/passive/blood_tomb.png', 0, 0, 0, 0, 32, 32),
+            'faith_pendant' : get_tiles_from_sheet('items/passive/faith_pendant.png', 0, 0, 0, 0, 32, 32),
+            'lucky_charm' : get_tiles_from_sheet('items/passive/lucky_charm.png', 0, 0, 0, 0, 32, 32),
+            'magnet' : get_tiles_from_sheet('items/passive/magnet.png', 0, 0, 0, 0, 32, 32),
+            'power_totem' : get_tiles_from_sheet('items/passive/power_totem.png', 0, 0, 0, 0, 32, 32),
+            'strength_totem' : get_tiles_from_sheet('items/passive/strength_totem.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 
