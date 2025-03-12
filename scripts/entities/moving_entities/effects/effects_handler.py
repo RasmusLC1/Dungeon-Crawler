@@ -11,6 +11,7 @@ from scripts.entities.moving_entities.effects.fire.fire import Fire
 from scripts.entities.moving_entities.effects.frozen.frozen_resistance import Frozen_Resistance
 from scripts.entities.moving_entities.effects.poison.poison_resistance import Poison_Resistance
 from scripts.entities.moving_entities.effects.movement.snare import Snare
+from scripts.entities.moving_entities.effects.movement.anchor import Anchor
 from scripts.entities.moving_entities.effects.healing.healing import Healing
 from scripts.entities.moving_entities.effects.movement.slow_down import Slow_Down
 from scripts.entities.moving_entities.effects.healing.vampiric import Vampiric
@@ -84,6 +85,8 @@ class Status_Effect_Handler:
 
         self.snare = Snare(self.entity)
 
+        self.anchor = Anchor(self.entity)
+
         self.healing = Healing(self.entity)
         
         self.slow_down = Slow_Down(self.entity)
@@ -114,6 +117,7 @@ class Status_Effect_Handler:
             self.poison_resistance.effect_type: self.poison_resistance,
             self.frozen_resistance.effect_type: self.frozen_resistance,
             self.snare.effect_type: self.snare,
+            self.anchor.effect_type: self.anchor,
             self.healing.effect_type: self.healing,
             self.slow_down.effect_type: self.slow_down,
             self.vampiric.effect_type: self.vampiric,
@@ -139,7 +143,7 @@ class Status_Effect_Handler:
             effect_set_success = effect.Set_Effect(duration, permanent)
             if effect_set_success:
                 effect_found = False
-                
+
                 for active_effect in self.active_effects:
                     # Check if the type is in effects and skip if yes
                     if effect.effect_type == active_effect.effect_type:
@@ -189,6 +193,10 @@ class Status_Effect_Handler:
     def Damage_Taken(self, damage):
         for effect in self.active_effects:
             effect.Damage_Taken(damage)
+
+    def Push(self, direction):
+        for effect in self.active_effects:
+            effect.Push(direction)
 
 
     def Render_Effects(self, surf, offset=(0, 0)):

@@ -52,13 +52,13 @@ class Loot_Handler():
         ]
 
         self.passive_types = [
-            'lantern',
+            # 'lantern',
             'anchor_stone',
-            'faith_pendant',
-            'lucky_charm',
-            'magnet',
-            'power_totem',
-            'strength_totem',
+            # 'faith_pendant',
+            # 'lucky_charm',
+            # 'magnet',
+            # 'power_totem',
+            # 'strength_totem',
         ]
 
         self.cursed_items = [

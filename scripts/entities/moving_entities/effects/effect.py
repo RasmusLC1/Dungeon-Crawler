@@ -97,6 +97,9 @@ class Effect():
 
     def Damage_Taken(self, damage):
         pass
+
+    def Push(self, direction):
+        pass
    
     def Render_Effect(self, surf, offset=(0, 0)):
         if not self.effect:

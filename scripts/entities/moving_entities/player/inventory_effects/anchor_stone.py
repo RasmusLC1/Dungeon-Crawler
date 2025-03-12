@@ -4,10 +4,12 @@ class Anchor_Stone(Inventory_Effect):
         super().__init__(entity, "anchor_stone")
 
     def Enable(self):
-        pass
+        self.player.Set_Effect('anchor', 1, True)
+        
 
     def Disable(self):
-        pass
+        self.player.Remove_Effect('anchor')
+        
     
     def Set_Decription(self):
         self.description = 'Prevents pushing'
