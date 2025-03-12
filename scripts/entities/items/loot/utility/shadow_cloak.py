@@ -1,9 +1,9 @@
-from scripts.entities.items.loot.interactive_loot import Interactive_Loot
+from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
 import random
 
-class Shadow_Cloak(Interactive_Loot):
+class Shadow_Cloak(Utility_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'shadow_cloak', pos, 320, (16, 16))
+        super().__init__(game, 'shadow_cloak', pos, 320)
         self.activations = random.randint(2, 4)
         self.Set_Description()
 

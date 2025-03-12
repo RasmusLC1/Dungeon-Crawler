@@ -22,4 +22,6 @@ class Speed(Effect):
 
         self.entity.max_speed = min(14, self.entity.max_speed * 2)
         
-        return self.Update_Cooldown()
+        self.Update_Cooldown()
+
+        return True

@@ -35,9 +35,10 @@ class Effect():
 
 
     # set effect, defualt is not permanent
+    # If permanent is enabled it sets a lower boundary for effect
     def Set_Effect(self, effect_time, permanent = False):
         if permanent:
-            self.Set_Permanent(True)
+            self.Set_Permanent(effect_time)
 
         if self.effect >= self.effect_max:
             return False
@@ -53,21 +54,26 @@ class Effect():
         
         return True
 
-    def Remove_Effect(self):
+    def Remove_Effect(self, reduce_permanent = 0):
+         print(reduce_permanent)
+         self.Set_Permanent(-reduce_permanent)
+         if self.permanent > 0:
+             self.effect -= reduce_permanent
+             return False
          self.effect = 0
          self.animation = 0
          self.cooldown = 0
          self.animation_cooldown = 0
-         self.permanent = False
+         return True
 
-    def Set_Permanent(self, state):
-        self.permanent = state
+    def Set_Permanent(self, amount):
+        self.permanent += amount
 
     def Decrease_Effect(self):
         self.effect = max(self.effect - 1, 0)
 
     def Update_Cooldown(self) -> bool:
-        if self.permanent:
+        if self.permanent >= self.effect:
             return False
         if self.cooldown:
             self.cooldown -= 1
@@ -96,6 +102,9 @@ class Effect():
 
 
     def Damage_Taken(self, damage):
+        pass
+
+    def Push(self, direction):
         pass
    
     def Render_Effect(self, surf, offset=(0, 0)):

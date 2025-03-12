@@ -6,9 +6,7 @@ import random
 class Increase_Strength(Effect):
     def __init__(self, entity):
         description = 'Increases\nmelee damage'
-
         super().__init__(entity, "increase_strength", 0, 0, (130, 160), description)
-
     
     #set Fire effect
     def Set_Effect(self, effect_time, permanent = False):
@@ -18,11 +16,10 @@ class Increase_Strength(Effect):
 
 
     def Update_Effect(self):
-
         if not self.effect or self.entity.effects.poison.effect:
             return False
-        
-        self.entity.strength = min(20, self.entity.strength * 2)
+        self.entity.strength = min(20, self.entity.strength + self.effect)
 
-        return self.Update_Cooldown()
-    
+        self.Update_Cooldown()
+
+        return True

@@ -11,6 +11,7 @@ from scripts.entities.moving_entities.effects.fire.fire import Fire
 from scripts.entities.moving_entities.effects.frozen.frozen_resistance import Frozen_Resistance
 from scripts.entities.moving_entities.effects.poison.poison_resistance import Poison_Resistance
 from scripts.entities.moving_entities.effects.movement.snare import Snare
+from scripts.entities.moving_entities.effects.movement.anchor import Anchor
 from scripts.entities.moving_entities.effects.healing.healing import Healing
 from scripts.entities.moving_entities.effects.movement.slow_down import Slow_Down
 from scripts.entities.moving_entities.effects.healing.vampiric import Vampiric
@@ -19,6 +20,8 @@ from scripts.entities.moving_entities.effects.damage.vulnerable import Vulnerabl
 from scripts.entities.moving_entities.effects.damage.thorns import Thorns
 from scripts.entities.moving_entities.effects.electric.eletric import Electric
 from scripts.entities.moving_entities.effects.electric.electric_resistance import Electric_Resistance
+from scripts.entities.moving_entities.effects.general.resistance import Resistance
+
 
 
 class Status_Effect_Handler:
@@ -82,7 +85,11 @@ class Status_Effect_Handler:
         
         self.frozen_resistance = Frozen_Resistance(self.entity)
 
+        self.resistance = Resistance(self.entity)
+
         self.snare = Snare(self.entity)
+
+        self.anchor = Anchor(self.entity)
 
         self.healing = Healing(self.entity)
         
@@ -113,7 +120,9 @@ class Status_Effect_Handler:
             self.fire_resistance.effect_type: self.fire_resistance,
             self.poison_resistance.effect_type: self.poison_resistance,
             self.frozen_resistance.effect_type: self.frozen_resistance,
+            self.resistance.effect_type: self.resistance,
             self.snare.effect_type: self.snare,
+            self.anchor.effect_type: self.anchor,
             self.healing.effect_type: self.healing,
             self.slow_down.effect_type: self.slow_down,
             self.vampiric.effect_type: self.vampiric,
@@ -139,7 +148,7 @@ class Status_Effect_Handler:
             effect_set_success = effect.Set_Effect(duration, permanent)
             if effect_set_success:
                 effect_found = False
-                
+
                 for active_effect in self.active_effects:
                     # Check if the type is in effects and skip if yes
                     if effect.effect_type == active_effect.effect_type:
@@ -151,7 +160,6 @@ class Status_Effect_Handler:
             return effect_set_success
         except Exception as e:
             print(f"Wrong effect input{e}", effect, duration, effect.effect_type)
-
 
 
     def Reset_Effects(self):
@@ -174,10 +182,10 @@ class Status_Effect_Handler:
     def Get_Effect(self, effect):
         return self.effects.get(effect)
 
-    def Remove_Effect(self, effect):
+    def Remove_Effect(self, effect, reduce_permanent = 0):
         
         try:
-            remove_effect_succes = self.effects[effect].Remove_Effect()
+            remove_effect_succes = self.effects[effect].Remove_Effect(reduce_permanent)
             if remove_effect_succes:
                 self.active_effects.remove(self.effects[effect])
             return remove_effect_succes 
@@ -189,6 +197,10 @@ class Status_Effect_Handler:
     def Damage_Taken(self, damage):
         for effect in self.active_effects:
             effect.Damage_Taken(damage)
+
+    def Push(self, direction):
+        for effect in self.active_effects:
+            effect.Push(direction)
 
 
     def Render_Effects(self, surf, offset=(0, 0)):

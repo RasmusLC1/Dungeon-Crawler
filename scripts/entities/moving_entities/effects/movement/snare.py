@@ -26,3 +26,6 @@ class Snare(Effect):
         
         self.entity.frame_movement = (0, 0)
         return True
+    
+    def Push(self, direction):
+        self.entity.Set_Frame_movement((0, 0)) # Cancel frame movement

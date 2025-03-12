@@ -250,7 +250,6 @@ class Moving_Entity(PhysicsEntity):
                 
         return None
 
-    # TODO: FIX effect also called strength
     def Apply_Repulsion(self, other_entity, tilemap) -> None:
         if not other_entity:
             return
@@ -270,14 +269,8 @@ class Moving_Entity(PhysicsEntity):
         direction_vector *= repulsion_strength
 
         # Push the other entity backwards
-        self.Move_Entity(other_entity, direction_vector, tilemap)
+        other_entity.Push(direction_vector, tilemap)
     
-    
-    # Function to move the entity with pushback
-    def Move_Entity(self, other_entity, direction, tilemap):
-        other_entity.Set_Frame_movement((direction[0] * -1, direction[1] * -1))
-        other_entity.Tile_Map_Collision_Detection(tilemap)
-
 
     def rect_future(self, future_pos):
         return pygame.Rect(future_pos[0], future_pos[1], self.size[0], self.size[1])     
@@ -428,9 +421,11 @@ class Moving_Entity(PhysicsEntity):
         self.max_speed = self.max_speed_holder
         
     # Push the entity in the given direction
-    def Push(self, x_direction, y_direction):
-        self.pos[0] += x_direction
-        self.pos[1] += y_direction
+    def Push(self, direction, tilemap):
+        self.Set_Frame_movement((direction[0] * -1, direction[1] * -1))
+        self.effects.Push(direction)
+        self.Tile_Map_Collision_Detection(tilemap)
+
 
     # Ice mechanic, lower friction and acceleration to simulate ice
     def On_Ice(self, effect):
@@ -449,6 +444,9 @@ class Moving_Entity(PhysicsEntity):
     
     def Set_Effect(self, effect, duration, permanent = False):
         return self.effects.Set_Effect(effect, duration, permanent)
+    
+    def Remove_Effect(self, effect, permanent = 0):
+        return self.effects.Remove_Effect(effect, permanent)
 
     def Set_Block_Direction(self, direction):
         self.block_direction = direction

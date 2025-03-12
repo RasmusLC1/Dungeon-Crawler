@@ -38,4 +38,4 @@ class Fire(Effect):
         return True
     
     def Damage_Taken(self, damage):
-        self.entity.Set_Health(self.entity.health - damage // 2)
+        self.entity.Set_Health(self.entity.health - max(1, damage // 2))

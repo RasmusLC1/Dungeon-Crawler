@@ -4,6 +4,8 @@ class Inventory_Effect():
     def __init__(self, entity, effect):
         self.player = entity
         self.effect = effect
+        self.description = ''
+        self.Set_Decription()
         
     def Update(self):
         pass
@@ -15,4 +17,7 @@ class Inventory_Effect():
         pass
 
     def Damage_Taken(self):
+        pass
+
+    def Set_Decription(self):
         pass

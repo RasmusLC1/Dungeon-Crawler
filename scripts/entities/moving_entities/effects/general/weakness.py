@@ -25,5 +25,7 @@ class Weakness(Effect):
         
         self.entity.strength = min(20, self.entity.strength // 2)
 
-        return self.Update_Cooldown()
+        self.Update_Cooldown()
+
+        return True
     

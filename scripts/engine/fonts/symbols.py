@@ -21,6 +21,7 @@ class Symbols():
                 'electric_resistance',
                 'chain', 'enemy', 'curse',
                 'weakness', 'vulnerable', 'luck',
+                'anchor', 'blood_tomb'
             ])
         }
 
