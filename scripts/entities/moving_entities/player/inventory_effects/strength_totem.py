@@ -2,12 +2,14 @@ from scripts.entities.moving_entities.player.inventory_effects.inventory_effect 
 class Strength_Totem(Inventory_Effect):
     def __init__(self, entity):
         super().__init__(entity, "strength_totem")
+        self.strength = 4
 
     def Enable(self):
-        pass
+        self.player.Set_Effect('increase_strength', self.strength, True)
+        
 
     def Disable(self):
-        pass
+        self.player.Remove_Effect('increase_strength', self.strength)
     
     def Set_Decription(self):
-        self.description = 'Increases strength'
+        self.description = 'Increases strength by 4'

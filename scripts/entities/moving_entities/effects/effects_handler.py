@@ -157,7 +157,6 @@ class Status_Effect_Handler:
             print(f"Wrong effect input{e}", effect, duration, effect.effect_type)
 
 
-
     def Reset_Effects(self):
         for effect in self.active_effects:
             effect.Remove_Effect()
@@ -178,10 +177,10 @@ class Status_Effect_Handler:
     def Get_Effect(self, effect):
         return self.effects.get(effect)
 
-    def Remove_Effect(self, effect):
+    def Remove_Effect(self, effect, reduce_permanent = 0):
         
         try:
-            remove_effect_succes = self.effects[effect].Remove_Effect()
+            remove_effect_succes = self.effects[effect].Remove_Effect(reduce_permanent)
             if remove_effect_succes:
                 self.active_effects.remove(self.effects[effect])
             return remove_effect_succes 
