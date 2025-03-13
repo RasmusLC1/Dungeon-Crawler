@@ -164,7 +164,6 @@ class Item_Handler():
         # Remove items that have been picked up already
         for item in nearby_items:
             if item.picked_up:
-                print("ITEM DELETED")
                 nearby_items.remove(item)
         if not nearby_items:
             return False

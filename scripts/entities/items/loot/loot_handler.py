@@ -59,7 +59,8 @@ class Loot_Handler():
             # 'faith_pendant',
             # 'lucky_charm',
             # 'power_totem',
-            'blood_tomb',
+            # 'blood_tomb',
+            'halo',
         ]
 
         self.cursed_items = [

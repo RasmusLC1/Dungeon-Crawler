@@ -68,7 +68,7 @@ class Text_Box():
 
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
         if not text_box_pos:
-            print(vars(self))
+            print("TEXTBOX ERROR", vars(self))
             return
         self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
 
