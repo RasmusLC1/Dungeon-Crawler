@@ -8,7 +8,7 @@ class Magnet(Inventory_Effect):
 
 
     def Disable(self):
-        self.player.Remove_Effect(self.effect)
+        self.player.Remove_Effect(self.effect, 4)
         
     
     def Set_Decription(self):

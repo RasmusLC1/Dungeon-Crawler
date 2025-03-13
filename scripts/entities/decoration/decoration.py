@@ -36,7 +36,7 @@ class Decoration(PhysicsEntity):
         self.Update_Dark_Surface()
 
         if not self.rendered_image:
-            print(vars(self))
+            print("DECORATION ERROR", vars(self))
             return
         
         # Render the chest

@@ -4,17 +4,17 @@ class Clatter():
         self.game = game
 
 
-    def Generate_Clatter(self, center, range):
-        if self.game.player.effects.silence.effect:
-            return
+    def Generate_Clatter(self, center, clatter_range):
 
-        nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.game.player, range)
+        clatter_range = self.Calculate_Silence_Modifier(clatter_range)
+        
+        # find nearby enemies and prefilter them 
+        nearby_enemies = [
+            enemy for enemy in self.game.enemy_handler.Find_Nearby_Enemies(self.game.player, clatter_range)
+            if enemy and not enemy.locked_on_target
+        ]
+            
         for enemy in nearby_enemies:
-            if not enemy:
-                continue
-            # Check if enemy already has a target
-            if enemy.locked_on_target:
-                continue
             # Add enemy to pathfinding queue
             self.game.enemy_handler.Add_To_Pathfinding_Queue(enemy, center)
         
@@ -22,6 +22,8 @@ class Clatter():
         self.game.enemy_handler.Sort_Pathfinding_Queue()
 
 
+    def Calculate_Silence_Modifier(self, clatter_range):
+        if self.game.player.effects.silence.effect:
+            clatter_range = max(1, clatter_range - self.game.player.effects.silence.effect * 100)
 
-
-    
+        return clatter_range

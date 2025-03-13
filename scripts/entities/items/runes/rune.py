@@ -8,6 +8,7 @@ from scripts.entities.textbox.rune_textbox import Rune_Textbox
 class Rune(Item):
     def __init__(self, game, type, pos, power, soul_cost):
         super().__init__(game,  type, 'rune', pos, (32, 32), 1, False)
+        self.player = self.game.player
         self.menu_pos = pos
         self.max_amount = 1
         self.upgrade_cost = max(10, math.ceil(soul_cost / 3))
@@ -28,10 +29,7 @@ class Rune(Item):
         self.activate_cooldown = 0
         self.activate_cooldown_max = 200
         self.clicked = False # Used for projectiles
-        self.description = (
-                            f"soul {self.current_soul_cost}\n"
-                            f"power {self.current_power}\n"
-                        )
+        self.Update_Description()
         self.text_box = Rune_Textbox(self)
 
 
@@ -71,14 +69,15 @@ class Rune(Item):
         
         if not super().Activate():
             return False
-        if self.game.player.Get_Total_Available_Souls() < self.current_soul_cost:
+        if self.player.Get_Total_Available_Souls() < self.current_soul_cost:
             return False
         self.Trigger_Effect()
 
         return True
     
     def Trigger_Effect(self):
-        if self.game.player.Set_Effect(self.effect, self.current_power):
+        # Add the player's current power level to the runes power
+        if self.player.Set_Effect(self.effect, self.current_power + self.player.effects.power.effect):
             self.Trigger_Rune()
 
     def Trigger_Rune(self):
@@ -86,15 +85,15 @@ class Rune(Item):
         self.Set_Animation_Time()
         self.Reset_Animation_Size()
         self.Set_Activate_Cooldown(self.activate_cooldown_max)
-        self.game.player.weapon_handler.Set_Attack_Lock(True)
+        self.player.weapon_handler.Set_Attack_Lock(True)
         self.clicked = False
 
     
     def Compute_Souls_Cost(self):
-        if self.game.player.effects.arcane_conduit.effect:
-            self.game.player.Decrease_Souls(max(1, self.current_soul_cost - self.game.rune_handler.arcane_conduit_rune.current_power))
+        if self.player.effects.arcane_conduit.effect:
+            self.player.Decrease_Souls(max(1, self.current_soul_cost - self.game.rune_handler.arcane_conduit_rune.current_power))
         else:
-            self.game.player.Decrease_Souls(self.current_soul_cost)
+            self.player.Decrease_Souls(self.current_soul_cost)
 
     def Set_Menu_Pos(self, pos):
         self.menu_pos = pos
@@ -103,7 +102,7 @@ class Rune(Item):
         pass
 
     def Modify_Souls_Cost(self, change):
-        if self.game.player.Get_Total_Available_Souls() < self.upgrade_cost:
+        if self.player.Get_Total_Available_Souls() < self.upgrade_cost:
             return False
         if self.current_soul_cost + change < self.min_soul_cost:
             return False
@@ -115,7 +114,7 @@ class Rune(Item):
         return True
     
     def Modify_Power(self, change):
-        if self.game.player.Get_Total_Available_Souls() < self.upgrade_cost:
+        if self.player.Get_Total_Available_Souls() < self.upgrade_cost:
             return False
         self.current_power += change
         return True
@@ -124,12 +123,18 @@ class Rune(Item):
         if self.activate_cooldown:
             self.activate_cooldown -= 1
             if self.activate_cooldown > 0:
-                self.game.player.weapon_handler.Set_Attack_Lock(True)
+                self.player.weapon_handler.Set_Attack_Lock(True)
             else:
-                self.game.player.weapon_handler.Set_Attack_Lock(False)
+                self.player.weapon_handler.Set_Attack_Lock(False)
 
             return
-        
+
+    # Updated in rune inventory when player's power is modified
+    def Update_Description(self):
+        self.description = (
+                            f"soul {self.current_soul_cost}\n"
+                            f"power {self.current_power + self.player.effects.power.effect}\n"
+                        )  
 
     
     def Set_Activate_Cooldown(self, value):
@@ -172,7 +177,7 @@ class Rune(Item):
             return
         inversed_animation_size = (20 - self.animation_size) / 10 + 1
         
-        self.game.symbols.Render_Symbol(surf, self.effect,  (self.game.player.pos[0] - offset[0] + 8 - inversed_animation_size, self.game.player.pos[1] - offset[1] - inversed_animation_size), inversed_animation_size)
+        self.game.symbols.Render_Symbol(surf, self.effect,  (self.player.pos[0] - offset[0] + 8 - inversed_animation_size, self.player.pos[1] - offset[1] - inversed_animation_size), inversed_animation_size)
         
 
 

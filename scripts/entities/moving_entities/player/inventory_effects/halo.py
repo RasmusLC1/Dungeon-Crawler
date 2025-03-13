@@ -4,10 +4,12 @@ class Halo(Inventory_Effect):
         super().__init__(entity, "halo")
 
     def Enable(self):
-        pass
+        self.player.Set_Effect('halo', 1, True)
+        
 
     def Disable(self):
-        pass
-    
+        self.player.Remove_Effect('halo')
+
+
     def Set_Decription(self):
-        self.description = 'Drains nearby enemies/nDestroyed on damage'
+        self.description = '1/10 chance\nto cancel damage'

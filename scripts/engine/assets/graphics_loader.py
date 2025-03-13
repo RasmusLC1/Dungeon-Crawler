@@ -481,6 +481,8 @@ class Graphics_Loader:
             'magnet' : get_tiles_from_sheet('items/passive/magnet.png', 0, 0, 0, 0, 32, 32),
             'power_totem' : get_tiles_from_sheet('items/passive/power_totem.png', 0, 0, 0, 0, 32, 32),
             'strength_totem' : get_tiles_from_sheet('items/passive/strength_totem.png', 0, 0, 0, 0, 32, 32),
+            'halo' : get_tiles_from_sheet('items/passive/halo.png', 0, 0, 0, 0, 32, 32),
+            'muffled_boots' : get_tiles_from_sheet('items/passive/muffled_boots.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 
@@ -557,7 +559,7 @@ class Graphics_Loader:
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 16, 16),
             'player_damage_font' : get_tiles_from_sheet('font/player_damage_font.png', 7, 5, 0, 0, 16, 16),
             'floating_e' : get_tiles_from_sheet('font/floating_e.png', 1, 0, 0, 0, 16, 16),
-            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 4, 0, 0, 16, 16),
+            'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 5, 0, 0, 16, 16),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 32, 32),
         }
         self.assets.update(font)
