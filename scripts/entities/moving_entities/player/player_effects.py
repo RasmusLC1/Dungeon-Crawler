@@ -6,6 +6,7 @@ from scripts.entities.moving_entities.effects.player.magnet import Magnet
 from scripts.entities.moving_entities.effects.player.halo import Halo
 from scripts.entities.moving_entities.effects.player.blood_tomb import Blood_Tomb
 from scripts.entities.moving_entities.effects.player.player_movement_invunerable import Player_Movement_Invunerable
+from scripts.entities.moving_entities.effects.player.power import Power
 
 from scripts.entities.moving_entities.player.effect_icon import Effect_Icon
 
@@ -39,14 +40,18 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.blood_tomb = Blood_Tomb(self.entity)
         self.player_movement_invunerable = Player_Movement_Invunerable(self.entity)
         self.halo = Halo(self.entity)
+        self.power = Power(self.entity)
 
-        self.effects[self.silence.effect_type] = self.silence
-        self.effects[self.arcane_conduit.effect_type] = self.arcane_conduit
-        self.effects[self.hunger.effect_type] = self.hunger
-        self.effects[self.magnet.effect_type] = self.magnet
-        self.effects[self.blood_tomb.effect_type] = self.blood_tomb
-        self.effects[self.halo.effect_type] = self.halo
-        self.effects['player_movement_invunerable'] = self.player_movement_invunerable
+        self.effects.update({
+            self.silence.effect_type: self.silence,
+            self.arcane_conduit.effect_type: self.arcane_conduit,
+            self.hunger.effect_type: self.hunger,
+            self.magnet.effect_type: self.magnet,
+            self.blood_tomb.effect_type: self.blood_tomb,
+            self.halo.effect_type: self.halo,
+            self.power.effect_type: self.power,
+            'player_movement_invunerable': self.player_movement_invunerable
+        })
 
     def Update_Status_Effects(self):
         super().Update_Status_Effects()

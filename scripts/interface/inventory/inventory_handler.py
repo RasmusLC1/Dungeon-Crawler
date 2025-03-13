@@ -40,8 +40,8 @@ class Inventory_Handler():
         self.saved_data = data  # Store loaded data
         lookup_dic = {
                 'item': self.item_inventory,
-                'rune': self.weapon_inventory,
-                'weapon': self.rune_inventory,
+                'weapon': self.weapon_inventory,
+                'rune': self.rune_inventory,
                 }
         for inventory_index, item_data in data.items():
             if not item_data:

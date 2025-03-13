@@ -37,7 +37,7 @@ class Inventory_Effects_Handler:
             "luck_totem": Luck_Totem(self.entity),
             "faith_pendant": Faith_Pendant(self.entity),
             "anchor_stone": Anchor_Stone(self.entity),
-            "silence_cloak": Muffled_Boots(self.entity),
+            "muffled_boots": Muffled_Boots(self.entity),
             "halo": Halo(self.entity),
             "black_coin": Black_Coin(self.entity),
             "vampire_locket": Vampire_Locket(self.entity),

@@ -14,7 +14,6 @@ class Halo(Effect):
         damage_saved = random.randint(1, 10 - self.effect)
         entity = self.entity
         if damage_saved == 1:
-            print(damage_saved, self.effect)
             self.entity.game.particle_handler.Activate_Particles(20, 'gold', self.entity.rect().center, frame=random.randint(20, 40))
             entity.Set_Health(self.entity_health_holder)
 

@@ -482,6 +482,7 @@ class Graphics_Loader:
             'power_totem' : get_tiles_from_sheet('items/passive/power_totem.png', 0, 0, 0, 0, 32, 32),
             'strength_totem' : get_tiles_from_sheet('items/passive/strength_totem.png', 0, 0, 0, 0, 32, 32),
             'halo' : get_tiles_from_sheet('items/passive/halo.png', 0, 0, 0, 0, 32, 32),
+            'muffled_boots' : get_tiles_from_sheet('items/passive/muffled_boots.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

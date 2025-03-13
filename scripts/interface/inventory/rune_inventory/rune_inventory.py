@@ -55,11 +55,14 @@ class Rune_Inventory(Base_Inventory):
 
             self.inventory_dic[new_rune.type].append(inventory_slot)
 
-            # Optionally remove the old rune from the dictionary
-            # self.inventory_dic[old_rune.type].remove(inventory_slot)
-            # if not self.inventory_dic[old_rune.type]:
-            #     del self.inventory_dic[old_rune.type]
             return True  # Successfully replaced the rune
+
+    def Update_Descriptions(self):
+        for slot_list in self.inventory_dic.values():  # Each value is a list of slots
+            for inventory_slot in slot_list:  # Iterate through the list
+                if inventory_slot and inventory_slot.item:
+                    inventory_slot.item.Update_Description()
+
 
 
     
