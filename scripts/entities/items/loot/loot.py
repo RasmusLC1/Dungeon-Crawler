@@ -23,3 +23,7 @@ class Loot(Item):
 
     def Update_Animation(self):
         pass
+
+    
+    def Revive(self):
+        return False

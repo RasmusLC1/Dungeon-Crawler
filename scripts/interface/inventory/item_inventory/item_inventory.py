@@ -81,6 +81,18 @@ class Item_Inventory(Base_Inventory):
             self.Remove_Item_From_Inventory(inventory_slot)
 
         return True
+    
+    def Revive(self):
+        for slot_list in self.inventory_dic.values():  # Each value is a list of slots
+            for inventory_slot in slot_list:  # Iterate through the list
+                item = inventory_slot.item
+                if not item:
+                    continue
+                if hasattr(item, "Revive") and callable(getattr(item, "Revive")):
+                    if item.Revive():
+                        return True
+                
+        return False
 
     # Places an item in an empty slot if merging is not possible
     def Add_Item_To_Inventory_Slot(self, item):
