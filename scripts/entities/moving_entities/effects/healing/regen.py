@@ -10,7 +10,7 @@ class Regen(Effect):
     
     #set Fire effect
     def Set_Effect(self, effect_time, permanent = False):
-        if self.entity.effects.poison.effect:
+        if not self.entity.healing_enabled:
             return False
         
         return super().Set_Effect(effect_time, permanent)

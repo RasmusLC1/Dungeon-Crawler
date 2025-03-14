@@ -8,7 +8,7 @@ class Anchor_Stone(Inventory_Effect):
         
 
     def Disable(self):
-        self.player.Remove_Effect('anchor')
+        self.player.Remove_Effect('anchor', 1)
         
     
     def Set_Decription(self):

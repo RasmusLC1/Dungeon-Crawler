@@ -4,10 +4,11 @@ class Demonic_Bargain(Inventory_Effect):
         super().__init__(entity, "demonic_bargain")
 
     def Enable(self):
-        pass
+        self.player.Set_Effect('demonic_bargain', 1, True)
+        
 
     def Disable(self):
-        pass
+        self.player.Remove_Effect('demonic_bargain', 1)
     
     def Set_Decription(self):
         self.description = 'Increases damage/nPrevents healing'

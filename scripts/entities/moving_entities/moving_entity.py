@@ -53,6 +53,7 @@ class Moving_Entity(PhysicsEntity):
         self.intelligence = intelligence # spells and trap detection
         self.stamina = stamina # movement ability recharge and weapon cooldown
         self.health = health
+        self.healing_enabled = True
         self.max_health = self.health
         
         # Movement variables
@@ -450,6 +451,9 @@ class Moving_Entity(PhysicsEntity):
 
     def Set_Block_Direction(self, direction):
         self.block_direction = direction
+
+    def Set_Healing_Enabled(self, state):
+        self.healing_enabled = state
 
     def Set_Action(self, movement):
         if not movement[0] and not movement[1]:

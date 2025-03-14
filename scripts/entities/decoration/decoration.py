@@ -36,6 +36,8 @@ class Decoration(PhysicsEntity):
         self.Update_Dark_Surface()
 
         if not self.rendered_image:
+            self.render_needs_update = True
+            self.Update_Dark_Surface()
             print("DECORATION ERROR", vars(self))
             return
         

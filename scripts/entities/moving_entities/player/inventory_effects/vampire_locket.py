@@ -8,7 +8,7 @@ class Vampire_Locket(Inventory_Effect):
         
 
     def Disable(self):
-        self.player.Remove_Effect('vampiric')
+        self.player.Remove_Effect('vampiric', 2)
     
     def Set_Decription(self):
         self.description = 'lifesteal, but drains health'
