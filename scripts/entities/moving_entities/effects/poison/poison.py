@@ -14,9 +14,21 @@ class Poison(Effect):
         if self.entity.effects.poison_resistance.effect:
             return False
         
-        return super().Set_Effect(effect_time, permanent)
+        if not super().Set_Effect(effect_time, permanent):
+            return False
+        
+        self.entity.Set_Healing_Enabled(False)
+        return True
 
     
+    def Remove_Effect(self, reduce_permanent=0):
+        if not super().Remove_Effect(reduce_permanent):
+            return False
+        
+        self.entity.Set_Healing_Enabled(True)
+        return True
+        
+
     def Update_Effect(self):
         if not self.effect:
             return False

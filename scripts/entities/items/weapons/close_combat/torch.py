@@ -66,11 +66,9 @@ class Torch(Weapon):
         # Parent class Place_down function
         if not super().Place_Down():
             return False
-        print(self.light_level, self.light_source)
-        
+
         # Set the player light to False to trigger a general update of the light
         # levels around the player and move the torch light to the new location
-        # self.game.player.Set_Light_State(False)
         self.game.light_handler.Add_Light_Source(self.light_source)
         self.light_source.Move_Light(self.pos, self.tile)
         return True

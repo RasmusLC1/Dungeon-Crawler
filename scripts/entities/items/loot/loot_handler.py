@@ -54,18 +54,19 @@ class Loot_Handler():
         self.passive_types = [
             # 'lantern',
             # 'anchor_stone',
-            # 'magnet',
+            'magnet',
             # 'strength_totem',
+            # 'power_totem',
+            # 'muffled_boots',
+            # 'halo',
             # 'faith_pendant',
             # 'lucky_charm',
-            # 'power_totem',
-            'muffled_boots',
-            # 'blood_tomb',
-            # 'halo',
         ]
 
         self.cursed_items = [
+            'demonic_bargain',
             'blood_tomb',
+            'temptress_embrace',
         ]
 
     def Loot_Loader(self, type, pos_x, pos_y, amount, data):

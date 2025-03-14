@@ -8,7 +8,7 @@ class Halo(Inventory_Effect):
         
 
     def Disable(self):
-        self.player.Remove_Effect('halo')
+        self.player.Remove_Effect('halo', 1)
 
 
     def Set_Decription(self):

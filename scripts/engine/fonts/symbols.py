@@ -21,7 +21,8 @@ class Symbols():
                 'electric_resistance',
                 'chain', 'enemy', 'curse',
                 'weakness', 'vulnerable', 'luck',
-                'anchor', 'blood_tomb', 'halo'
+                'anchor', 'blood_tomb', 'halo',
+                'demonic_bargain', 'temptress_embrace'
             ])
         }
 

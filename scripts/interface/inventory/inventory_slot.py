@@ -8,6 +8,7 @@ class Inventory_Slot():
         self.index = index
         self.size = size
         self.item = item
+        self.item_type = None
         self.key = key
         self.background = None
         self.inventory_type = None
@@ -72,6 +73,7 @@ class Inventory_Slot():
         self.item.picked_up = True
         self.Move_Item()
         self.item.Set_Inventory_Index(self.index)
+        self.item_type = item.type
         if self.inventory_type:
             self.item.Set_Inventory_Type(self.inventory_type)
         else:

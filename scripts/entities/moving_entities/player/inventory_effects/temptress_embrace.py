@@ -1,13 +1,15 @@
 from scripts.entities.moving_entities.player.inventory_effects.inventory_effect import Inventory_Effect
-class Demonic_Strength(Inventory_Effect):
+class Temptress_Embrace(Inventory_Effect):
     def __init__(self, entity):
-        super().__init__(entity, "demonic_strength")
+        super().__init__(entity, "temptress_embrace")
 
     def Enable(self):
-        pass
+        self.player.Set_Effect('temptress_embrace', 1, True)
+        
 
     def Disable(self):
-        pass
+        self.player.Remove_Effect('temptress_embrace', 1)
+    
     
     def Set_Decription(self):
         self.description = 'Damage scales\nwith health lost'

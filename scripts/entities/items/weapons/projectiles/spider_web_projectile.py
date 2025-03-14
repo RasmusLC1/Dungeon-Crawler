@@ -9,6 +9,7 @@ class Spider_Web_Projectile(Projectile):
         self.attack_direction = direction  # Store the direction vector
         self.target_hit = 0
         self.delete_countdown = 100
+        self.pickup_allowed = False
         self.attack_animation_max = 3
         self.attack_animation_time = shoot_distance // self.attack_animation_max
 

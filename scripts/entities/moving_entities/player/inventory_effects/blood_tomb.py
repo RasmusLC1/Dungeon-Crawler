@@ -8,7 +8,7 @@ class Blood_Tomb(Inventory_Effect):
         
 
     def Disable(self):
-        self.player.Remove_Effect('blood_tomb')
+        self.player.Remove_Effect('blood_tomb', 1)
     
     def Set_Decription(self):
         self.description = 'Gain souls\nwhen damaged'

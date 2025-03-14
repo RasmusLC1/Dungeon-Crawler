@@ -475,7 +475,7 @@ class Graphics_Loader:
             'shadow_cloak' : get_tiles_from_sheet('items/utility/shadow_cloak.png', 0, 0, 0, 0, 32, 32),
             'lantern' : get_tiles_from_sheet('items/passive/lantern.png', 0, 0, 0, 0, 32, 32),
             'anchor_stone' : get_tiles_from_sheet('items/passive/anchor_stone.png', 0, 0, 0, 0, 32, 32),
-            'blood_tomb' : get_tiles_from_sheet('items/passive/blood_tomb.png', 0, 0, 0, 0, 32, 32),
+            'blood_tomb' : get_tiles_from_sheet('items/cursed/blood_tomb.png', 0, 0, 0, 0, 32, 32),
             'faith_pendant' : get_tiles_from_sheet('items/passive/faith_pendant.png', 0, 0, 0, 0, 32, 32),
             'lucky_charm' : get_tiles_from_sheet('items/passive/lucky_charm.png', 0, 0, 0, 0, 32, 32),
             'magnet' : get_tiles_from_sheet('items/passive/magnet.png', 0, 0, 0, 0, 32, 32),
@@ -483,6 +483,8 @@ class Graphics_Loader:
             'strength_totem' : get_tiles_from_sheet('items/passive/strength_totem.png', 0, 0, 0, 0, 32, 32),
             'halo' : get_tiles_from_sheet('items/passive/halo.png', 0, 0, 0, 0, 32, 32),
             'muffled_boots' : get_tiles_from_sheet('items/passive/muffled_boots.png', 0, 0, 0, 0, 32, 32),
+            'demonic_bargain' : get_tiles_from_sheet('items/cursed/demonic_bargain.png', 0, 0, 0, 0, 32, 32),
+            'temptress_embrace' : get_tiles_from_sheet('items/cursed/temptress_embrace.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

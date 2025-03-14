@@ -194,6 +194,10 @@ class Status_Effect_Handler:
                 print(f"Wrong effect input{e} EFFECT NAME", effect)
 
 
+    def Damage_Dealt(self, damage):
+        for effect in self.active_effects:
+            effect.Damage_Dealt(damage)
+
     def Damage_Taken(self, damage):
         for effect in self.active_effects:
             effect.Damage_Taken(damage)
@@ -201,6 +205,10 @@ class Status_Effect_Handler:
     def Push(self, direction):
         for effect in self.active_effects:
             effect.Push(direction)
+
+    def Entity_Dead(self):
+        for effect in self.active_effects:
+            effect.Entity_Dead()
 
 
     def Render_Effects(self, surf, offset=(0, 0)):
