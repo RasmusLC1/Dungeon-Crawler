@@ -13,7 +13,7 @@ from scripts.entities.moving_entities.player.inventory_effects.black_coin import
 from scripts.entities.moving_entities.player.inventory_effects.vampire_locket import Vampire_Locket
 from scripts.entities.moving_entities.player.inventory_effects.blood_pact import Blood_Pact
 from scripts.entities.moving_entities.player.inventory_effects.demonic_bargain import Demonic_Bargain
-from scripts.entities.moving_entities.player.inventory_effects.demonic_strength import Demonic_Strength
+from scripts.entities.moving_entities.player.inventory_effects.temptress_embrace import Temptress_Embrace
 from scripts.entities.moving_entities.player.inventory_effects.cursed_dice import Cursed_Dice
 from scripts.entities.moving_entities.player.inventory_effects.eldritch_mirror import Eldritch_Mirror
 from scripts.entities.moving_entities.player.inventory_effects.forsaken_grimoire import Forsaken_Grimoire
@@ -43,7 +43,7 @@ class Inventory_Effects_Handler:
             "vampire_locket": Vampire_Locket(self.entity),
             "blood_pact": Blood_Pact(self.entity),
             "demonic_bargain": Demonic_Bargain(self.entity),
-            "demonic_strength": Demonic_Strength(self.entity, ),
+            "temptress_embrace": Temptress_Embrace(self.entity, ),
             "cursed_dice": Cursed_Dice(self.entity, ),
             "eldritch_mirror": Eldritch_Mirror(self.entity),
             "forsaken_grimoire": Forsaken_Grimoire(self.entity),

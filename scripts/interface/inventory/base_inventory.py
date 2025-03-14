@@ -32,6 +32,26 @@ class Base_Inventory():
     def Add_Item(self, item):
         pass
 
+    # Clears the item from the inventory and removes it from the dictionary
+    def Remove_Item_From_Inventory(self, inventory_slot):
+        item_type = inventory_slot.item_type
+        
+        # Remove the specific inventory slot from the list
+        if item_type in self.inventory_dic:
+            self.inventory_dic[item_type].remove(inventory_slot)
+            if not self.inventory_dic[item_type]:  # If list is empty, remove the key
+                self.inventory_dic.pop(item_type)
+
+        # Remove from shared dictionary (if needed)
+        self.shared_inventory_dic.pop(inventory_slot.index, None)
+        
+        # Remove the item from the game
+        self.game.item_handler.Remove_Item(inventory_slot.item, True)
+        
+        # Clear the inventory slot
+        inventory_slot.Remove_Item()
+
+
     def Add_Inventory_Slot(self, inventory_slot):
         self.shared_inventory.append(inventory_slot)
         self.shared_inventory_dic[inventory_slot.index] = inventory_slot

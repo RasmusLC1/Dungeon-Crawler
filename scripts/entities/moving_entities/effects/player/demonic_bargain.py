@@ -8,8 +8,12 @@ class Demonic_Bargain(Effect):
         super().__init__(entity, 'demonic_bargain', 0, 0, (120, 160), description)
 
     def Update_Effect(self):
-        if not self.effect or self.entity.effects.poison.effect:
+        if not self.effect:
             return False
+        
+        if self.entity.effects.poison.effect:
+            return True
+        
         self.entity.strength = min(20, self.entity.strength * 2)
 
         self.Update_Cooldown()

@@ -145,8 +145,8 @@ Create color coded backgrounds based on level, render image and text on top
         Black Coin – Increases gold earned but increases damage taken
         Vampire’s Locket – Grants lifesteal but slowly reduces max health over time.
         Blood Pact Scroll – Allows revival at the cost of a permanent debuff.
-        Demonic Bargain – Increases damage output but prevents healing
-        Demonic strength - Reduces damage output when health > 50% but increases below 50%
+        # Demonic Bargain – Increases damage output but prevents healing
+        # Temptress Embrace - Reduces damage output when health > 50% but increases below 50%
         Cursed Dice – Rerolls effects to be random, but weighted for positive effects
         Eldritch Mirror – Reflects a portion of damage taken but doubles negative status effect duration.
         Forsaken Grimoire – Increases rune power but randomly casts negative effects on the player

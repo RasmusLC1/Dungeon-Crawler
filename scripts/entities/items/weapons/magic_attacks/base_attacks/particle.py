@@ -6,6 +6,7 @@ class Particle(Projectile):
         super().__init__(game, pos, type, 0, damage, speed, range, max_charge_time, 'particle', damage_type, shoot_distance, 'cut', (4, 4), False)
         self.attack_animation_max = 3
         self.disabled = True
+        self.pickup_allowed = False
 
     def Save_Data(self):
         pass

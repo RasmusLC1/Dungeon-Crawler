@@ -67,7 +67,20 @@ class Item_Inventory(Base_Inventory):
             return self.Add_Item_To_Inventory_Slot(item)
 
         return False  # No slot to merge into
+    
 
+    def Find_Arrow(self):
+        inventory_slots = self.inventory_dic.get('arrow')
+
+        if not inventory_slots:
+            return False
+        inventory_slot = inventory_slots[0]
+        inventory_slot.item.Decrease_Amount(1)
+        
+        if inventory_slot.item.amount <= 0:
+            self.Remove_Item_From_Inventory(inventory_slot)
+
+        return True
 
     # Places an item in an empty slot if merging is not possible
     def Add_Item_To_Inventory_Slot(self, item):

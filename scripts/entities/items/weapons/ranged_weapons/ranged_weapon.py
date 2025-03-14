@@ -97,23 +97,13 @@ class Ranged_Weapon(Weapon):
     def Find_Arrow(self):
         if self.arrow:
             return True
-        weapon_inventory = self.game.weapon_inventory.inventories[1]
-        inventory_slot = weapon_inventory.inventory[1]
-        if not inventory_slot.item:
+        
+        if not self.game.inventory.item_inventory.Find_Arrow():
             return False
-        
-        if not inventory_slot.item.type == 'arrow':
-            return False
-        
-        if not inventory_slot.item.amount > 0:
-            return False
-        
-        
+
         if not self.Spawn_Arrow():
             return False
         
-        inventory_slot.item.Decrease_Amount(1)
-        inventory_slot.Remove_Item_On_Amount()
         return True
 
 

@@ -96,9 +96,11 @@ class Effect():
         else:
             self.animation += 1
 
-    def Damage_Dealth(self, damage):
+    def Damage_Dealt(self, damage):
         pass
-
+    
+    def Entity_Dead(self):
+        pass
 
     def Damage_Taken(self, damage):
         pass

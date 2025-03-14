@@ -52,6 +52,7 @@ class Crossbow(Ranged_Weapon):
             self.is_charging = 120
             self.Spawn_Arrow()
             self.arrow.Set_Delete_Countdown(50)
+            self.arrow.pickup_allowed = False
             self.Shoot_Arrow()
             self.Reset_Bow()
             return True

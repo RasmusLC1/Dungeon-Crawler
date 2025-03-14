@@ -56,8 +56,7 @@ class Text_Box():
 
             surf.blit(rectangle_surface, text_box_pos)
         except TypeError as e:
-            print(f"Text_Box_Setup not valid: {e}", rectangle_surface, text_box_pos, surf)
-        
+            print(f"Text_Box_Setup not valid: {e}", rectangle_surface, text_box_pos, surf, self.y_size, offset)
         
         return text_box_pos
 
@@ -68,7 +67,6 @@ class Text_Box():
 
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
         if not text_box_pos:
-            print("TEXTBOX ERROR", vars(self))
             return
         self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
 

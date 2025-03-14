@@ -484,6 +484,7 @@ class Graphics_Loader:
             'halo' : get_tiles_from_sheet('items/passive/halo.png', 0, 0, 0, 0, 32, 32),
             'muffled_boots' : get_tiles_from_sheet('items/passive/muffled_boots.png', 0, 0, 0, 0, 32, 32),
             'demonic_bargain' : get_tiles_from_sheet('items/cursed/demonic_bargain.png', 0, 0, 0, 0, 32, 32),
+            'temptress_embrace' : get_tiles_from_sheet('items/cursed/temptress_embrace.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

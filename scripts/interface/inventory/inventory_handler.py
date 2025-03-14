@@ -66,7 +66,6 @@ class Inventory_Handler():
             item.Remove_Tile()
             if not inventory_slot.Add_Item(item):
                 print("FAILED TO LOAD ITEM: ", item.type, inventory_slot)
-                # print(inventory_slot.index, item_data['type'])
             
             # self.weapon_inventory.Set_Active_Inventory_Slot()
             lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
@@ -204,7 +203,6 @@ class Inventory_Handler():
     def Item_Single_Click(self):
         if not self.clicked_inventory_slot or not self.clicked_inventory_slot.item:
             return False
-        print("SINGLE CLICK")
         if self.game.mouse.single_click_delay and self.game.mouse.double_click:
             return False
 
@@ -243,12 +241,19 @@ class Inventory_Handler():
     # Places an item down in the inventory
     def Place_Down_Item(self):
         if self.active_item.Place_Down():
+            inventory_slots = self.item_inventory.inventory_dic.get(self.active_item.type)
+            
+            if inventory_slots:
+                first_slot = next((slot for slot in inventory_slots if slot.item), None)
+                if first_slot:
+                    self.item_inventory.Remove_Item_From_Inventory(first_slot)
+            
             self.game.item_handler.Add_Item(self.active_item)
             self.active_item.picked_up = False
             self.active_item.Set_Tile()
-            self.item_inventory.inventory_dic[self.active_item.type] = self.active_item.inventory_index  # Update dictionary
-            # self.item_inventory_dic[self.active_item.type].clear()
+        
         self.active_item = None
+
 
     def Reset_Inventory_Dic_Slot(self, inventory_slot):
         if not inventory_slot.item:
@@ -353,8 +358,10 @@ class Inventory_Handler():
 
         
 
+        self.inventory_dic.pop(inventory_slot.item.type, None)
         inventory_slot.Set_Active(False)  # Deactivate the slot
         inventory_slot.Remove_Item()
+
         return True
 
     def Active_Item(self, offset=(0, 0)):
