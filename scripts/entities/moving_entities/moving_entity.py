@@ -332,13 +332,14 @@ class Moving_Entity(PhysicsEntity):
         return True
     
     def Check_If_Dead(self):
-        if self.health > 0: # Entity dead
-            return
+        if self.health > 0: # Entity alive
+            return False
         if self.tile:
             self.tile.Clear_Entity(self.ID)
         self.game.enemy_handler.Delete_Enemy(self)
         self.effects.Reset_Effects()
         self.Update_Status_Effects()
+        return True
 
     def Check_Blocking_Direction(self, direction) -> bool:
         # Check if entity is blocking

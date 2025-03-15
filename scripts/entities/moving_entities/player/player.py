@@ -189,7 +189,12 @@ class Player(Moving_Entity):
     def Damage_Taken(self, damage, direction=...):
         return super().Damage_Taken(damage, direction)
     
-    
+    def Check_If_Dead(self):
+        # Check if the player can be revived
+        if self.health <= 0:
+            if self.game.inventory.item_inventory.Revive():
+                return False
+        return super().Check_If_Dead()
 
 
     # Spawn player particles at random intervals
