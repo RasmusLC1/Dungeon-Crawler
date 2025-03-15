@@ -103,10 +103,11 @@ Create color coded backgrounds based on level, render image and text on top
         # Halo, 1/10 chance to cancel damage
 
     # Triggered:
-        Pendant of light, Revive the player one time to full health for 100 gold
-        Phoenix Feather – Upon death, revives the player with 1 health, then burns up.
-        Mirror of Reflection – Reflects the first ranged attack back at its source.
-        Gravedigger’s Coin – Revive on death for souls 
+        # Pendant of light, Revive the player one time to full health for 100 gold
+        # Phoenix Feather – Upon death, revives the player with 1 health, then burns up.
+        # Gravedigger’s Coin – Revive on death for souls 
+        # Blood Pact Scroll – Allows revival at the cost of a permanent debuff.
+
 
 
     ## utility:
@@ -144,7 +145,6 @@ Create color coded backgrounds based on level, render image and text on top
         # Blood tomb, Gain souls when damaged
         Black Coin – Increases gold earned but increases damage taken
         Vampire’s Locket – Grants lifesteal but slowly reduces max health over time.
-        Blood Pact Scroll – Allows revival at the cost of a permanent debuff.
         # Demonic Bargain – Increases damage output but prevents healing
         # Temptress Embrace - Reduces damage output when health > 50% but increases below 50%
         Cursed Dice – Rerolls effects to be random, but weighted for positive effects

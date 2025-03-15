@@ -485,6 +485,10 @@ class Graphics_Loader:
             'muffled_boots' : get_tiles_from_sheet('items/passive/muffled_boots.png', 0, 0, 0, 0, 32, 32),
             'demonic_bargain' : get_tiles_from_sheet('items/cursed/demonic_bargain.png', 0, 0, 0, 0, 32, 32),
             'temptress_embrace' : get_tiles_from_sheet('items/cursed/temptress_embrace.png', 0, 0, 0, 0, 32, 32),
+            'blood_coin' : get_tiles_from_sheet('items/revive/blood_coin.png', 0, 0, 0, 0, 32, 32),
+            'blood_pact' : get_tiles_from_sheet('items/revive/blood_pact.png', 0, 0, 0, 0, 32, 32),
+            'phoenix_feather' : get_tiles_from_sheet('items/revive/phoenix_feather.png', 0, 0, 0, 0, 32, 32),
+            'light_pendant' : get_tiles_from_sheet('items/revive/light_pendant.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

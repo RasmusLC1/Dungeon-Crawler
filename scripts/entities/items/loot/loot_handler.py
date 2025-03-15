@@ -9,6 +9,7 @@ from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
 from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
+from scripts.entities.items.loot.revive.phoenix_feather import Phoenix_Feather
 
 import random
 
@@ -28,6 +29,7 @@ class Loot_Handler():
             'echo_bell': Echo_Bell,
             'shadow_cloak': Shadow_Cloak,
             'lantern': Lantern,
+            'phoenix_feather': Phoenix_Feather,
         }
 
         self.key_types = [
@@ -54,13 +56,17 @@ class Loot_Handler():
         self.passive_types = [
             # 'lantern',
             # 'anchor_stone',
-            'magnet',
+            # 'magnet',
             # 'strength_totem',
             # 'power_totem',
             # 'muffled_boots',
             # 'halo',
             # 'faith_pendant',
             # 'lucky_charm',
+        ]
+
+        self.revive_items = [
+            'phoenix_feather',
         ]
 
         self.cursed_items = [
@@ -164,6 +170,15 @@ class Loot_Handler():
             type = random.choice(self.cursed_items)
 
         return self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+
+
+    def Spawn_Revive(self, pos_x, pos_y, type = None, data = None):
+        if not type:
+            type = random.choice(self.revive_items)
+
+        return self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+
+
 
 
 
