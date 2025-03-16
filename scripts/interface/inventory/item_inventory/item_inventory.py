@@ -93,6 +93,18 @@ class Item_Inventory(Base_Inventory):
                         return True
                 
         return False
+    
+    def Check_Gold_In_Inventory(self):
+        gold_inventory_slots = self.inventory_dic.get("gold")
+        gold_sum = 0
+        for inventory_slot in gold_inventory_slots:
+            item = inventory_slot.item
+            if not item:
+                continue
+
+            gold_sum += item.amount
+
+        return gold_sum
 
     # Places an item in an empty slot if merging is not possible
     def Add_Item_To_Inventory_Slot(self, item):

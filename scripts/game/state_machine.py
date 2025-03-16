@@ -31,6 +31,7 @@ class State_Machine():
             'new_game' : self.New_Game,
             'init' : self.Initialise_Game,
             'new_level' : self.New_Level,
+            'game_over' : self.Game_Over_Menu,
         }
 
 
@@ -89,6 +90,9 @@ class State_Machine():
 
     def Pause_Menu(self):
         self.game.menu_handler.Select_Menu('pause_menu')
+
+    def Game_Over_Menu(self):
+        self.game.menu_handler.Select_Menu('game_over_menu')
 
     def Rune_Shrine_Menu(self):
         self.game.menu_handler.Select_Menu('rune_shrine_menu')
