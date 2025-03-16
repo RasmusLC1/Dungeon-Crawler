@@ -9,7 +9,9 @@ from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
 from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
+
 from scripts.entities.items.loot.revive.phoenix_feather import Phoenix_Feather
+from scripts.entities.items.loot.revive.light_pendant import Light_Pendant
 
 import random
 
@@ -30,6 +32,7 @@ class Loot_Handler():
             'shadow_cloak': Shadow_Cloak,
             'lantern': Lantern,
             'phoenix_feather': Phoenix_Feather,
+            'light_pendant': Light_Pendant,
         }
 
         self.key_types = [
@@ -66,7 +69,8 @@ class Loot_Handler():
         ]
 
         self.revive_items = [
-            'phoenix_feather',
+            # 'phoenix_feather',
+            'light_pendant',
         ]
 
         self.cursed_items = [

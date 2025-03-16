@@ -62,7 +62,9 @@ class Rune(Item):
         self.Update_Activate_Cooldown()
         return super().Update()
     
-    
+    # Calls when the rune is activated, starts by checking for cooldown, then
+    # Checks defauls activation is valid, then checks if the player can pay the souls
+    # Then trigger the effect
     def Activate(self):
         if self.activate_cooldown:
             return False
@@ -74,12 +76,14 @@ class Rune(Item):
         self.Trigger_Effect()
 
         return True
-    
+
+    # Add the player's current power level to the runes power and checks if it is
+    # Valid. If yes then it triggers the rune and subtract the cost
     def Trigger_Effect(self):
-        # Add the player's current power level to the runes power
         if self.player.Set_Effect(self.effect, self.current_power + self.player.effects.power.effect):
             self.Trigger_Rune()
 
+    # Trigger the rune, cost already verified as possible in activate
     def Trigger_Rune(self):
         self.Compute_Souls_Cost()
         self.Set_Animation_Time()

@@ -7,9 +7,7 @@ class Loot(Item):
         self.loot_type =  loot_type
 
         self.text_box = Loot_Textbox(self)
-        self.description = (
-                            f"gold {self.value}\n"
-                        )
+        self.description = f"gold {self.value}\n"
 
     def Save_Data(self):
         # self.saved_data['type'] = self.type

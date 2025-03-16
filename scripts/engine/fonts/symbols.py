@@ -7,7 +7,7 @@ class Symbols():
         # Use dictionary for O(1) lookup time, using enumerate to number them
         self.symbols_lookup = {
             symbol: index for index, symbol in enumerate([
-                'health', 'increase_strength', 'speed',
+                'healing', 'increase_strength', 'speed',
                 'soul', 'invisibility',
                 'slash', 'blunt', 'electric',
                 'resistance', 'regen', 'silence',
