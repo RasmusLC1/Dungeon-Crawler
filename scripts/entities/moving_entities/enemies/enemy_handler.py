@@ -266,11 +266,11 @@ class Enemy_Handler():
 
 
     def Delete_Enemy(self, enemy):
+        self.game.entities_render.Remove_Entity(enemy)
         if enemy in self.enemies:
             self.enemies.remove(enemy)
         if enemy in self.pathfinding_queue:
             self.pathfinding_queue.remove(enemy) 
-        self.game.entities_render.Remove_Entity(enemy)
 
     def Update(self):
         self.Update_Pathfinding_Queue()

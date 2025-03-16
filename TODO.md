@@ -103,9 +103,9 @@ Create color coded backgrounds based on level, render image and text on top
         # Halo, 1/10 chance to cancel damage
 
     # Triggered:
-        # Pendant of light, Revive the player one time to full health for 100 gold
+        # Pendant of light, Revive on death for souls 
         # Phoenix Feather – Upon death, revives the player with 1 health, then burns up.
-        # Gravedigger’s Coin – Revive on death for souls 
+        # Gravedigger’s Coin – Revive the player one time to full health for 100 gold
         # Blood Pact Scroll – Allows revival at the cost of a permanent debuff.
 
 

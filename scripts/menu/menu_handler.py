@@ -3,6 +3,7 @@ from scripts.menu.main_menu import Main_Menu
 from scripts.menu.rune_shrine_menu import Rune_Shrine_Menu
 from scripts.menu.portal_shrine_menu import Portal_Shrine_Menu
 from scripts.menu.loading_menu import Loading_Menu
+from scripts.menu.game_over_menu import Game_Over_Menu
 
 
 class Menu_Handler():
@@ -13,6 +14,7 @@ class Menu_Handler():
         self.rune_shrine_menu = Rune_Shrine_Menu(self.game)
         self.portal_shrine_menu = Portal_Shrine_Menu(self.game)
         self.loading_menu = Loading_Menu(self.game)
+        self.game_over_menu = Game_Over_Menu(self.game)
 
         self.menus = {
             'pause_menu' : self.pause_menu,
@@ -20,6 +22,7 @@ class Menu_Handler():
             'rune_shrine_menu': self.rune_shrine_menu,
             'portal_shrine_menu': self.portal_shrine_menu,
             'loading_menu': self.loading_menu,
+            'game_over_menu': self.game_over_menu,
         }
 
 

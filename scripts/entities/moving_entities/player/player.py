@@ -97,6 +97,7 @@ class Player(Moving_Entity):
         self.souls += added_soul
 
     def Decrease_Souls(self, subtract_soul):
+
         self.souls_to_remove += subtract_soul
 
     # Subtract the souls that are to be removed from total souls to get a correct souls count
@@ -194,7 +195,14 @@ class Player(Moving_Entity):
         if self.health <= 0:
             if self.game.inventory.item_inventory.Revive():
                 return False
-        return super().Check_If_Dead()
+        if not super().Check_If_Dead():
+            return False
+        
+        self.game.state_machine.Set_State('game_over')
+
+        return True
+        
+
 
 
     # Spawn player particles at random intervals

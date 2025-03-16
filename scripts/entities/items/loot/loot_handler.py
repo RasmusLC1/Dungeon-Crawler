@@ -9,7 +9,9 @@ from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
 from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
+
 from scripts.entities.items.loot.revive.phoenix_feather import Phoenix_Feather
+from scripts.entities.items.loot.revive.light_pendant import Light_Pendant
 
 import random
 
@@ -24,12 +26,12 @@ class Loot_Handler():
             'soul_key': Soul_Key,
             'cursed_key': Cursed_Key,
             'lockpick': Lockpick,
-            'gold': Gold,
             'bomb': Bomb,
             'echo_bell': Echo_Bell,
             'shadow_cloak': Shadow_Cloak,
             'lantern': Lantern,
             'phoenix_feather': Phoenix_Feather,
+            'light_pendant': Light_Pendant,
         }
 
         self.key_types = [
@@ -66,7 +68,8 @@ class Loot_Handler():
         ]
 
         self.revive_items = [
-            'phoenix_feather',
+            # 'phoenix_feather',
+            'light_pendant',
         ]
 
         self.cursed_items = [
@@ -75,6 +78,8 @@ class Loot_Handler():
             'temptress_embrace',
         ]
 
+
+    # Responsible initalising loot and finding the correct type
     def Loot_Loader(self, type, pos_x, pos_y, amount, data):
         # Handle when there's no data
         if not data:
@@ -88,6 +93,8 @@ class Loot_Handler():
         
         # Match statement for loot type handling
         match loot_type:
+            case 'gold':
+                return self.Spawn_Gold(pos_x, pos_y, amount, data)
             case 'key':
                 return self.Spawn_Key(pos_x, pos_y, type, data)
             case 'bomb':
@@ -105,18 +112,13 @@ class Loot_Handler():
 
 
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
-        if 'bomb' in type:
-            bomb = self.Spawn_Bomb(pos_x, pos_y, type, data)
-            return bomb
-        
+
         loot_class = self.loot_map.get(type)
         if not loot_class:
             return None
         
-        if amount > 1:
-            loot = loot_class(self.game, (pos_x, pos_y), amount)
-        else:
-            loot = loot_class(self.game, (pos_x, pos_y))
+
+        loot = loot_class(self.game, (pos_x, pos_y))
 
         return self.Load_Data(loot, data)
     
@@ -145,7 +147,14 @@ class Loot_Handler():
         
         return self.Load_Data(bomb, data)
 
-    
+    def Spawn_Gold(self, pos_x, pos_y, amount, type = None, data = None):
+        print(amount)
+        gold = Gold(self.game, (pos_x, pos_y), amount)
+
+        return self.Load_Data(gold, data)
+
+
+
     def Spawn_Utility(self, pos_x, pos_y, type = None, data = None):
         if not type:
             type = random.choice(self.utility_types)

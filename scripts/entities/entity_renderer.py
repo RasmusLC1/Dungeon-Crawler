@@ -9,7 +9,6 @@ class Entity_Renderer():
         self.entities.clear()
 
     def Update(self):
-        
         self.Find_Nearby_Entities()
         self.entities.sort(key=lambda entity: (entity.category != 'trap', entity.pos[1]))
 
