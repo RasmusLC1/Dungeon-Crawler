@@ -3,7 +3,6 @@ import re
 
 class Enemy_Textbox(Text_Box):
 
-
     def Edit_Entity_Name(self):
         entity_name = self.entity.type
         entity_name = entity_name.replace('skeleton_', '')

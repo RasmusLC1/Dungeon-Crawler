@@ -1,6 +1,10 @@
 from scripts.entities.moving_entities.effects.effect import Effect
 import random
 
+# TODO:
+# Expensive to keep updating, slowdown could be improved by triggering a disable
+
+
 # Reduce the entity speed
 class Slow_Down(Effect):
     def __init__(self, entity):

@@ -489,6 +489,7 @@ class Graphics_Loader:
             'blood_pact' : get_tiles_from_sheet('items/revive/blood_pact.png', 0, 0, 0, 0, 32, 32),
             'phoenix_feather' : get_tiles_from_sheet('items/revive/phoenix_feather.png', 0, 0, 0, 0, 32, 32),
             'light_pendant' : get_tiles_from_sheet('items/revive/light_pendant.png', 0, 0, 0, 0, 32, 32),
+            'faded_hourglass' : get_tiles_from_sheet('items/utility/faded_hourglass.png', 4, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 

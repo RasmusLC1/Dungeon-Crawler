@@ -336,10 +336,10 @@ class Moving_Entity(PhysicsEntity):
             return False
         if self.tile:
             self.tile.Clear_Entity(self.ID)
-        # self.game.entity_renderer.Remove_Entity(self)
         self.game.enemy_handler.Delete_Enemy(self)
         self.effects.Reset_Effects()
         self.Update_Status_Effects()
+        self.text_box = None
         self.render = False
         return True
 

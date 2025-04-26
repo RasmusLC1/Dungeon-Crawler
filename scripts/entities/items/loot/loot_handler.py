@@ -7,6 +7,8 @@ from scripts.entities.items.loot.keys.lockpick import Lockpick
 from scripts.entities.items.loot.bombs.bomb import Bomb
 from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
 from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
+from scripts.entities.items.loot.utility.faded_hourglass import Faded_Hourglass
+
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
 
@@ -28,6 +30,7 @@ class Loot_Handler():
             'lockpick': Lockpick,
             'bomb': Bomb,
             'echo_bell': Echo_Bell,
+            'faded_hourglass' : Faded_Hourglass,
             'shadow_cloak': Shadow_Cloak,
             'lantern': Lantern,
             'phoenix_feather': Phoenix_Feather,
@@ -51,24 +54,25 @@ class Loot_Handler():
         ]
 
         self.utility_types = [
-            'echo_bell',
-            'shadow_cloak',
+            # 'echo_bell',
+            # 'shadow_cloak',
+            'faded_hourglass',
         ]
 
         self.passive_types = [
-            # 'lantern',
-            # 'anchor_stone',
-            # 'magnet',
-            # 'strength_totem',
-            # 'power_totem',
-            # 'muffled_boots',
-            # 'halo',
-            # 'faith_pendant',
-            # 'lucky_charm',
+            'lantern',
+            'anchor_stone',
+            'magnet',
+            'strength_totem',
+            'power_totem',
+            'muffled_boots',
+            'halo',
+            'faith_pendant',
+            'lucky_charm',
         ]
 
         self.revive_items = [
-            # 'phoenix_feather',
+            'phoenix_feather',
             'light_pendant',
         ]
 
@@ -148,7 +152,6 @@ class Loot_Handler():
         return self.Load_Data(bomb, data)
 
     def Spawn_Gold(self, pos_x, pos_y, amount, type = None, data = None):
-        print(amount)
         gold = Gold(self.game, (pos_x, pos_y), amount)
 
         return self.Load_Data(gold, data)

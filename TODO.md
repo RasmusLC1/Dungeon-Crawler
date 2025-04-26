@@ -124,7 +124,7 @@ Create color coded backgrounds based on level, render image and text on top
         # Cloak of Shadows – Temporarily makes the player invisible to enemies.
         # Rope Hook – Can be thrown to pull the player across gaps.
         Alchemy Flask – Randomly turns a minor item into another item upon use.
-        Timeworn Hourglass – Slows down nearby enemies movement
+        Faded Hourglass – Slows down nearby enemies movement
         Parchment of Recall – Teleports the player back to the last shrine visited.
         Dungeon Map Fragment – Reveals part of the current dungeon layer.
         Ethereal Chains – snares nearby enemies for a short duration.
