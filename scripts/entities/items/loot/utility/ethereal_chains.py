@@ -2,42 +2,23 @@ from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
 import random
 import pygame
 
-class Faded_Hourglass(Utility_Loot):
+class Ethereal_Chains(Utility_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'faded_hourglass', pos, 320)
+        super().__init__(game, 'ethereal_chains', pos, 150)
         self.activations = random.randint(2, 4)
         self.Set_Description()
-        self.slowdown_triggered = 0
-        self.animation_cooldown = 20
-        self.max_animation = 4
-        self.slowdown_amount = 8
-        self.range = 4
+        self.range = 3
         self.Set_Radius_Image()
    
 
     def Set_Description(self):
-        self.description = 'Slow nearby\n enemies' + str(self.activations) + 'times'
+        self.description = 'Snares nearby\n enemies' + str(self.activations) + 'times'
 
     def Update(self):
-        self.Handle_Slowdown()
         return super().Update()
 
-    def Handle_Slowdown(self):
-        if not self.slowdown_triggered:
-            return
-        
-        self.slowdown_triggered -= 1
-
-        if self.slowdown_triggered:
-            return
-        
-        for enemy in self.nearby_entities:
-            enemy.Remove_Effect("slow_down", self.slowdown_amount)
-
-        self.nearby_entities = None
-
-    # If out of animations, reset the hourglass
-    def Reset_Hourglass(self):
+    # If out of activations, reset the hourglass
+    def Reset_Chains(self):
         self.activations -= 1
 
         if self.activations:
@@ -52,12 +33,9 @@ class Faded_Hourglass(Utility_Loot):
     def Update_In_Inventory(self):
         if not super().Update_In_Inventory():
             return False
-        
-        if self.slowdown_triggered:
-            return False
 
         if self.game.mouse.left_click:
-            self.Slow_Enemies()
+            self.Snare_Enemies()
 
         return True
 
@@ -66,12 +44,11 @@ class Faded_Hourglass(Utility_Loot):
         pass
 
     # Effect of opening door on key
-    def Slow_Enemies(self):
+    def Snare_Enemies(self):
         self.Find_Nearby_Entities_Mouse()
-        self.slowdown_triggered = 200
         for enemy in self.nearby_entities:
-            enemy.Set_Effect("slow_down", self.slowdown_amount)
-        self.Reset_Hourglass()
+            enemy.effects.Set_Effect("snare", 3)
+        self.Reset_Chains()
     
     # Setting the radius image and scaling it
     def Set_Radius_Image(self):

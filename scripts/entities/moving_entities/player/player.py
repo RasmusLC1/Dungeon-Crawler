@@ -33,6 +33,7 @@ class Player(Moving_Entity):
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.default_light_level, self.tile)
         self.game.light_handler.Initialise_Light_Level(self.tile)
         self.player_particle_cooldown = 0
+        self.last_shrine_visited = None
 
         self.weapons = []
         self.weapon_handler = Player_Weapon_Handler(self.game, self)
@@ -203,7 +204,8 @@ class Player(Moving_Entity):
         return True
         
 
-
+    def Set_Last_Shrine(self, shrine):
+        self.last_shrine_visited = shrine
 
     # Spawn player particles at random intervals
     def Spawn_Particles(self):
