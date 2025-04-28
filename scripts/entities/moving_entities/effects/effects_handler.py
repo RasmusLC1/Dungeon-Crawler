@@ -183,11 +183,15 @@ class Status_Effect_Handler:
         return self.effects.get(effect)
 
     def Remove_Effect(self, effect, reduce_permanent = 0):
+
+        effect = self.effects[effect]
         
+        if not effect:
+            return False
         try:
-            remove_effect_succes = self.effects[effect].Remove_Effect(reduce_permanent)
+            remove_effect_succes = effect.Remove_Effect(reduce_permanent)
             if remove_effect_succes:
-                self.active_effects.remove(self.effects[effect])
+                self.active_effects.remove(effect)
             return remove_effect_succes 
         
         except Exception as e:

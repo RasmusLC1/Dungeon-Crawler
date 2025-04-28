@@ -9,10 +9,21 @@ class Ice(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 1)
 
-    def Update(self, entity):
-        if entity.category == 'item':
+    def Update(self):
+        if not super().Update():
+            return False
+        
+        if not self.Update_Cooldown():
             return
-        if self.rect().colliderect(entity.rect()):
+        self.Update_Trapped_Entities()
+        return True
+        
+        
+    def Update_Trapped_Entities(self):
+        for entity in self.entities:
+            if not self.rect().colliderect(entity.rect()):
+                self.entities.remove(entity)
+                continue
 
             if self.type == 'shallow_ice_env':
                 entity.On_Ice(20)
@@ -22,5 +33,3 @@ class Ice(Trap):
                 entity.On_Ice(20)
 
 
-    def Render(self, surf, offset=(0, 0)):
-        surf.blit(self.game.assets[self.type][self.animation], (self.pos[0] - offset[0], self.pos[1] - offset[1]))

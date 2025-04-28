@@ -35,6 +35,7 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Menu(self)
         Graphics_Loader.Asset_Health_Bar(self)
         Graphics_Loader.Asset_Particles_List(self)
+        Graphics_Loader.Asset_Tooltips(self)
 
         Graphics_Loader.Asset_TEST(self)
         
@@ -489,6 +490,7 @@ class Graphics_Loader:
             'blood_pact' : get_tiles_from_sheet('items/revive/blood_pact.png', 0, 0, 0, 0, 32, 32),
             'phoenix_feather' : get_tiles_from_sheet('items/revive/phoenix_feather.png', 0, 0, 0, 0, 32, 32),
             'light_pendant' : get_tiles_from_sheet('items/revive/light_pendant.png', 0, 0, 0, 0, 32, 32),
+            'faded_hourglass' : get_tiles_from_sheet('items/utility/faded_hourglass.png', 4, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 
@@ -590,6 +592,13 @@ class Graphics_Loader:
             'loading_bar' : get_tiles_from_sheet('menu/loading_screen.png', 6, 0, 0, 0, 96, 96),
         }
         self.assets.update(menu)
+
+    def Asset_Tooltips(self):
+        menu = {
+            'radius' : get_tiles_from_sheet('items/tooltips/radius.png', 0, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(menu)
+
 
 
     def Asset_TEST(self):

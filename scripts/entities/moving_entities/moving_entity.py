@@ -280,20 +280,21 @@ class Moving_Entity(PhysicsEntity):
     # Update only the nearby traps
     def Update_Traps(self):
         if not self.nearby_traps_cooldown:
-            self.Find_Nearby_Traps(40)
+            self.Find_Nearby_Traps(3)
             self.nearby_traps_cooldown = 10
         else:
             self.nearby_traps_cooldown -= 1
         for trap in self.nearby_traps:
-            trap.Update(self)
+            trap.Add_Entity_To_Trap(self)
 
     def Find_Nearby_Traps(self, distance) -> None:
         if self.nearby_traps_cooldown:
             self.nearby_traps_cooldown = max(0, self.nearby_traps_cooldown - 1)
             return
-        self.nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, distance)
+        self.nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, distance)
         self.nearby_traps_cooldown = 20
         return
+    
 
     def Nearby_Enemies(self, max_distance) -> None:
         if self.nearby_enemies_cooldown:
@@ -303,6 +304,7 @@ class Moving_Entity(PhysicsEntity):
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, max_distance)
         self.nearby_enemies_cooldown = 20
         return
+    
 
     def Update_Damage_Cooldown(self):
         if self.damage_cooldown:
@@ -336,10 +338,10 @@ class Moving_Entity(PhysicsEntity):
             return False
         if self.tile:
             self.tile.Clear_Entity(self.ID)
-        # self.game.entity_renderer.Remove_Entity(self)
         self.game.enemy_handler.Delete_Enemy(self)
         self.effects.Reset_Effects()
         self.Update_Status_Effects()
+        self.text_box = None
         self.render = False
         return True
 
