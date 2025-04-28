@@ -1,8 +1,6 @@
 from scripts.traps.traps.spike import Spike
 from scripts.traps.traps.spike_poisoned import Spike_Poisoned
-from scripts.traps.traps.bear_trap import Bear_Trap
 from scripts.traps.traps.spike_pit import Spike_Pit
-from scripts.traps.traps.top_push_trap import Top_Push_Trap
 from scripts.traps.traps.fire_trap import Fire_Trap
 from scripts.traps.environment.lava import Lava
 from scripts.traps.environment.water import Water
@@ -170,11 +168,6 @@ class Trap_Handler:
     def Spawn_Spike_Pit(self, pos, size, type):
         return Spike_Pit(self.game, pos, size, type)
     
-    def Spawn_Bear_Trap(self, pos, size, type):
-        return Bear_Trap(self.game, pos, size, type)
-    
-    def Spawn_Top_Push_Trap(self, pos, size, type):
-        return Top_Push_Trap(self.game, pos, size, type)
     
     def Spawn_Spike_Poisoned(self, pos, size, type):
         return Spike_Poisoned(self.game, pos, size, type)
@@ -186,25 +179,41 @@ class Trap_Handler:
         return Spider_Web(self.game, pos, size, type)
     
 
-    def Find_Nearby_Traps(self, player_pos, max_distance):
-        
+    def Find_Nearby_Traps(self, entity, max_distance):
+        return self.game.tilemap.Search_Nearby_Tiles(max_distance, entity.pos, 'trap', entity.ID)
+
+    def Find_Traps_Near_Player(self):
         nearby_traps = []
+        player = self.game.player
         for trap in self.traps:
             # Calculate the Euclidean distance
-            distance = math.sqrt((player_pos[0] - trap.pos[0]) ** 2 + (player_pos[1] - trap.pos[1]) ** 2)
-            if distance < max_distance:
+            distance = math.sqrt((player.pos[0] - trap.pos[0]) ** 2 + (player.pos[1] - trap.pos[1]) ** 2)
+            if distance < 200:
                 nearby_traps.append(trap)
+        
         return nearby_traps
-    
+
     def Update(self):
         if self.Update_Nearby_Traps_Cooldown():
             self.nearby_traps.clear()
-            self.nearby_traps = self.Find_Nearby_Traps(self.game.player.pos, 200)
+            self.nearby_traps = self.Find_Traps_Near_Player()
 
+        self.Update_Nearby_Trap_Animation()
+        self.Update_Nearby_Traps_Logic()
+
+    def Update_Nearby_Trap_Animation(self):
+        if not self.nearby_traps:
+            return
         for trap in self.nearby_traps:
             if not trap:
                 continue
             trap.Animation_Update()
+
+    def Update_Nearby_Traps_Logic(self):
+        if not self.nearby_traps:
+            return
+        for trap in self.nearby_traps:
+            trap.Update()
     
     def Reset_Nearby_Traps_Cooldown(self):
         self.nearby_traps_cooldown = 1

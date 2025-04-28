@@ -1,21 +1,28 @@
 from scripts.entities.moving_entities.effects.effect import Effect
 import random
 
-# TODO:
-# Expensive to keep updating, slowdown could be improved by triggering a disable
-
-
 # Reduce the entity speed
 class Slow_Down(Effect):
     def __init__(self, entity):
         description = 'Reduces speed'
-        super().__init__(entity, 'slow_down', 0, 0, (0,0), description)
+        super().__init__(entity, 'slow_down', 0, 0, (5,10), description)
 
     
-    def Set_Effect(self, effect_time, permanent = False):
-        if not effect_time:
-            return
+    #set Fire effect
+    def Set_Effect(self, effect_time, permanent = True):
+        return super().Set_Effect(effect_time, True)
+
+    def Update_Effect(self):
+
+        if not self.effect:
+            return False
+
         try:
-            self.entity.max_speed = max(0.1, self.entity.max_speed / effect_time)
+            self.entity.max_speed = max(0.1, self.entity.max_speed / self.effect)
         except ZeroDivisionError as e:
-            print(f"SLOWDOWN: {e}", self.entity.max_speed, effect_time)
+            print(f"SLOWDOWN: {e}", self.entity.max_speed, self.effect)
+        
+        self.Update_Cooldown()
+
+        return True
+    

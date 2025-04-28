@@ -9,15 +9,37 @@ class Water(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 2)
 
-    def Update(self, entity):
-        if self.rect().colliderect(entity.rect()):
-            if self.type == 'shallow_water_env':
-                entity.Set_Effect('slow_down', 2)
-            elif self.type == 'medium_water_env':
-                entity.Set_Effect('slow_down', 4)
-            elif self.type == 'deep_water_env':
-                entity.Set_Effect('slow_down', 8)
+        self.Set_Slowdown_Amount()
+
+
+    def Update(self):
+        if not super().Update():
+            return False
+        
+        if not self.Update_Cooldown():
+            return
+        self.Update_Trapped_Entities()
+        return True
+        
+        
+    def Update_Trapped_Entities(self):
+        for entity in self.entities:
+            if not self.rect().colliderect(entity.rect()):
+                self.entities.remove(entity)
+                continue
+
+            entity.Set_Effect('slow_down', self.slow_down_amount)
             entity.Set_Effect('wet', 2)
+
+    
+    def Set_Slowdown_Amount(self):
+        if self.type == 'shallow_water_env':
+            self.slow_down_amount = 2
+        elif self.type == 'medium_water_env':
+            self.slow_down_amount = 4
+        elif self.type == 'deep_water_env':
+            self.slow_down_amount = 8
+
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

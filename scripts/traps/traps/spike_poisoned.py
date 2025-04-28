@@ -8,15 +8,27 @@ class Spike_Poisoned(Trap):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 13)
 
-    def Update(self, entity):
-        if entity.category == 'item':
+
+    def Update(self):
+        if not super().Update():
+            return False
+        if not self.Update_Cooldown():
             return
         
-        if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 8 and self.animation < 12:
+        self.Update_Trapped_Entities()
+        
+        
+    def Update_Trapped_Entities(self):
+        for entity in self.entities:
+            if not self.rect().colliderect(entity.rect()):
+                self.entities.remove(entity)
+                continue
+
             if entity.effects.invulnerable.effect:
                 return
             entity.Damage_Taken(2)
             entity.Set_Effect('poison', random.randint(3,5))
+
 
     def Animation_Update(self):
         if self.animation_cooldown > 0:

@@ -17,9 +17,9 @@ class Game_Over_Menu(Menu):
         self.buttons = []
         
 
-        self.Generate_Button((self.width - self.button_size_x // 2, self.button_size_y * 6.5), (self.button_size_x, self.button_size_y), 'New Game', 'new_game')
-        self.Generate_Button((self.width - self.button_size_x // 2, self.button_size_y * 8.5), (self.button_size_x, self.button_size_y), 'Main Menu', 'main_menu')
-        self.Generate_Button((self.width - self.button_size_x // 2, self.button_size_y * 10.5), (self.button_size_x, self.button_size_y), 'Exit Game', 'exit_game')
+        self.Generate_Button((self.width - self.button_size_x // 2, self.button_size_y * 6), (self.button_size_x, self.button_size_y), 'New Game', 'new_game')
+        self.Generate_Button((self.width - self.button_size_x // 2, self.button_size_y * 7.5), (self.button_size_x, self.button_size_y), 'Main Menu', 'main_menu')
+        self.Generate_Button((self.width - self.button_size_x // 2, self.button_size_y * 9), (self.button_size_x, self.button_size_y), 'Exit Game', 'exit_game')
 
 
     def Set_Screen_Size(self, resize_screen):

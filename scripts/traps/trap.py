@@ -12,6 +12,8 @@ class Trap(PhysicsEntity):
         self.animation_cooldown = 0
         self.animation_max = 0
         self.ID = random.randint(1, 1000000)
+        self.entity_check_cooldown = 0
+        self.entities = []
 
 
     def Save_Data(self):
@@ -29,8 +31,33 @@ class Trap(PhysicsEntity):
         self.animation_cooldown = data['animation_cooldown']
         self.animation_max = data['animation_max']
 
-    # def Update(self, entity):
-    #     pass
+    def Update(self):
+        if not self.entities:
+            return False
+        
+        return True
+
+    def Add_Entity_To_Trap(self, entity):
+        if entity.category == 'item':
+            return False
+        
+        if entity in self.entities:
+            return False
+        
+        if not self.rect().colliderect(entity.rect()):
+            return False
+        
+
+        self.entities.append(entity)
+        return True
+    
+    def Update_Cooldown(self):
+        if self.entity_check_cooldown:
+            self.entity_check_cooldown -= 1
+            return False
+
+        self.entity_check_cooldown = 20
+        return True
 
     def Animation_Update(self):
         pass

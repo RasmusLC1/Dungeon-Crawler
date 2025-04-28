@@ -96,7 +96,11 @@ class Item_Inventory(Base_Inventory):
     
     def Check_Gold_In_Inventory(self):
         gold_inventory_slots = self.inventory_dic.get("gold")
+        if not gold_inventory_slots:
+            return 0
+        
         gold_sum = 0
+        
         for inventory_slot in gold_inventory_slots:
             item = inventory_slot.item
             if not item:

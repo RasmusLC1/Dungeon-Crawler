@@ -27,11 +27,13 @@ class Faded_Hourglass(Utility_Loot):
         
         self.slowdown_triggered -= 1
 
+        if self.slowdown_triggered:
+            return
+        
         for enemy in self.nearby_entities:
-            enemy.Set_Effect("slow_down", 8)
+            enemy.Remove_Effect("slow_down", 1)
 
-        if not self.slowdown_triggered:
-            self.nearby_entities = None
+        self.nearby_entities = None
 
     # If out of animations, reset the hourglass
     def Reset_Hourglass(self):
@@ -50,9 +52,14 @@ class Faded_Hourglass(Utility_Loot):
         if not super().Update_In_Inventory():
             return False
         
+        if self.slowdown_triggered:
+            return False
 
         if self.game.mouse.left_click:
             self.Slow_Enemies()
+
+        return True
+
 
     def Render_Line(self, surf, offset, alpha):
         pass
@@ -61,7 +68,8 @@ class Faded_Hourglass(Utility_Loot):
     def Slow_Enemies(self):
         self.Find_Nearby_Entities_Mouse()
         self.slowdown_triggered = 200
-        
+        for enemy in self.nearby_entities:
+            enemy.Set_Effect("slow_down", 8)
         self.Reset_Hourglass()
     
     # Setting the radius image and scaling it

@@ -1,24 +1,41 @@
 from scripts.traps.trap import Trap
 
 import random
-import math
-import pygame
 
 class Spike(Trap):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 5)
+        self.slow_down_amount = 2
 
-    def Update(self, entity):
 
-        if entity.category == 'item':
+    def Update(self):
+        if not super().Update():
+            return False
+        
+        if not self.Update_Cooldown():
             return
+        self.Update_Trapped_Entities()
+        return True
+    
+    def Add_Entity_To_Trap(self, entity):
+        if not super().Add_Entity_To_Trap(entity):
+            return False
+        entity.Set_Effect('slow_down', self.slow_down_amount)
+        return True
 
-        if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 3:
+        
+    def Update_Trapped_Entities(self):
+        for entity in self.entities:
+            if not self.rect().colliderect(entity.rect()):
+                self.entities.remove(entity)
+                entity.Remove_Effect('slow_down', self.slow_down_amount)
+
+                continue
+
             if entity.effects.invulnerable.effect:
                 return
-            entity.Damage_Taken(2)
-            entity.Set_Effect('slow_down', 4)
+            entity.Damage_Taken(2)            
             
 
     def Animation_Update(self):
