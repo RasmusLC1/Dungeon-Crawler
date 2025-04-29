@@ -3,9 +3,10 @@ import random
 
 class Echo_Bell(Utility_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'echo_bell', pos, 320)
-        self.activations = random.randint(2, 4)
+        amount = random.randint(2, 4)
+        super().__init__(game, 'echo_bell', pos, 320, amount)
         self.Set_Description()
+        self.max_amount = 5
     
     
 
@@ -13,12 +14,12 @@ class Echo_Bell(Utility_Loot):
         super().Update()
 
     def Set_Description(self):
-        self.description = 'Lure enemies\nto a location\n' + str(self.activations) + 'times'
+        self.description = 'Lure enemies\nto a location'
 
 
     def Reset_Bell(self):
-        self.activations -= 1
-        if self.activations:
+        self.amount -= 1
+        if self.amount:
             self.clicked = False
             self.Set_Description() # Update description
             return

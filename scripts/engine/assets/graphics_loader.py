@@ -493,6 +493,7 @@ class Graphics_Loader:
             'faded_hourglass' : get_tiles_from_sheet('items/utility/faded_hourglass.png', 4, 0, 0, 0, 32, 32),
             'ethereal_chains' : get_tiles_from_sheet('items/utility/ethereal_chains.png', 0, 0, 0, 0, 32, 32),
             'recall_parchment' : get_tiles_from_sheet('items/utility/recall_parchment.png', 0, 0, 0, 0, 32, 32),
+            'echo_sigil' : get_tiles_from_sheet('items/passive/echo_sigil.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)
 
@@ -568,6 +569,7 @@ class Graphics_Loader:
         font = {
             'font' : get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 16, 16),
             'player_damage_font' : get_tiles_from_sheet('font/player_damage_font.png', 7, 5, 0, 0, 16, 16),
+            'small_font' : get_tiles_from_sheet('font/small_font.png', 7, 5, 0, 0, 8, 8),
             'floating_e' : get_tiles_from_sheet('font/floating_e.png', 1, 0, 0, 0, 16, 16),
             'symbols' : get_tiles_from_sheet('font/symbols.png', 7, 5, 0, 0, 16, 16),
             'souls' : get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 32, 32),

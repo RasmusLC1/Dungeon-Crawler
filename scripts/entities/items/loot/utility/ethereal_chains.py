@@ -4,23 +4,24 @@ import pygame
 
 class Ethereal_Chains(Radius_Effect_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'ethereal_chains', pos, 150, 'utility', 3)
-        self.activations = random.randint(2, 4)
+        amount = random.randint(2, 4)
+        super().__init__(game, 'ethereal_chains', pos, 150, 'utility', 3, amount)
         self.Set_Description()
+        self.max_amount = 5
         
    
 
     def Set_Description(self):
-        self.description = 'Snares nearby\n enemies' + str(self.activations) + 'times'
+        self.description = 'Snares nearby\n enemies'
 
     def Update(self):
         return super().Update()
 
-    # If out of activations, reset the hourglass
+    # If out of amount, reset the hourglass
     def Reset_Chains(self):
-        self.activations -= 1
+        self.amount -= 1
 
-        if self.activations:
+        if self.amount:
             self.clicked = False
             self.Set_Description() # Update description
             return

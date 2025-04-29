@@ -4,9 +4,10 @@ import pygame
 
 class Faded_Hourglass(Radius_Effect_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'faded_hourglass', pos, 320, 'utility', 4)
-        self.activations = random.randint(2, 4)
+        amount = random.randint(2, 4)
+        super().__init__(game, 'faded_hourglass', pos, 320, 'utility', 4, amount)
         self.Set_Description()
+        self.max_amount = 5
         self.slowdown_triggered = 0
         self.animation_cooldown = 20
         self.max_animation = 4
@@ -14,7 +15,7 @@ class Faded_Hourglass(Radius_Effect_Loot):
    
 
     def Set_Description(self):
-        self.description = 'Slow nearby\n enemies' + str(self.activations) + 'times'
+        self.description = 'Slow nearby\n enemies'
 
     def Update(self):
         self.Handle_Slowdown()
@@ -36,9 +37,9 @@ class Faded_Hourglass(Radius_Effect_Loot):
 
     # If out of animations, reset the hourglass
     def Reset_Hourglass(self):
-        self.activations -= 1
+        self.amount -= 1
 
-        if self.activations:
+        if self.amount:
             self.clicked = False
             self.Set_Description() # Update description
             return

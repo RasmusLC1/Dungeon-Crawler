@@ -3,8 +3,9 @@ import random
 
 class Shadow_Cloak(Utility_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'shadow_cloak', pos, 320)
-        self.activations = random.randint(2, 4)
+        amount = random.randint(1, 2)
+        super().__init__(game, 'shadow_cloak', pos, 320, amount)
+        self.max_amount = 3
         self.Set_Description()
 
  
@@ -12,12 +13,12 @@ class Shadow_Cloak(Utility_Loot):
         super().Update()
 
     def Set_Description(self):
-        self.description = 'Become invisibility\n' + str(self.activations) + 'times'
+        self.description = 'Become invisibile'
 
     # When cloak runs out of charges it's deleted
     def Reset_Cloak(self):
-        self.activations -= 1
-        if self.activations:
+        self.amount -= 1
+        if self.amount:
             self.clicked = False
             self.Set_Description() # Update description
             return

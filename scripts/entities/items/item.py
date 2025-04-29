@@ -18,7 +18,7 @@ class Item(PhysicsEntity):
         self.animation_cooldown = 0
         self.animation_cooldown_max = 50
         self.amount = amount
-        self.max_amount = 0
+        self.max_amount = 1
         self.max_animation = 0
         self.animation = random.randint(0, self.max_animation)
         self.nearby_entities = []
@@ -132,7 +132,7 @@ class Item(PhysicsEntity):
         self.amount = min(self.max_amount, self.amount + amount)
 
     def Decrease_Amount(self, amount):
-        self.amount = min(self.max_amount, self.amount - amount)
+        self.amount = max(0, self.amount - amount)
 
     def Set_Inventory_Type(self, inventory_type):
         self.inventory_type = inventory_type
