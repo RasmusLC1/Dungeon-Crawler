@@ -120,24 +120,24 @@ Create color coded backgrounds based on level, render image and text on top
             # Cursed Key – Unlocks any door but gives a random curse
 
 
-        Torch of Guidance - Reveal the portal shrine on minimap
         # Echo Bell – Creates a noise at a targeted location to lure enemies away.
         # Cloak of Shadows – Temporarily makes the player invisible to enemies.
-        Rope Hook – Can be thrown to pull the player across gaps.
-        Alchemy Flask – Randomly turns a minor item into another item upon use.
         # Faded Hourglass – Slows down nearby enemies movement
         # Ethereal Chains – snares nearby enemies for a short duration.
         # Recall Parchment – Teleports the player back to the last shrine visited.
 
+        Torch of Guidance - Reveal the portal shrine on minimap
+        Rope Hook – Can be thrown to pull the player across gaps.
+        Alchemy Flask – Randomly turns a minor item into another item upon use.
         Dungeon Map Fragment – Reveals part of the current dungeon layer.
 
     ## Combat item
-        Oil Flask – Can be thrown to create a flammable puddle.
         # electric Bomb – electric explosion
         # Fire Bomb – Fire explosion
         # Frozen Bomb – Frozen Explosion
         # Poison Bomb – Poison Explosion
         # Vampiric Bomb – Vampiric Explosion
+        Oil Flask – Can be thrown to create a flammable puddle.
         Holy Water – Weapons deals extra damage to undead and ghosts.
         Hexing Charm – Weakens the next enemy hit, cooldown.
         Hunter’s Fang – Increases weapon damage against beasts.

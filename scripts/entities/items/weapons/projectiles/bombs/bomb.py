@@ -55,7 +55,6 @@ class Bomb(Projectile):
 
     def Spawn_Explosion(self):
         explosion_type = self.explosions.get(self.type)
-        print(explosion_type, self.type)
         explosion = explosion_type(self.game, self.pos, 4)
         self.game.item_handler.Add_Item(explosion)
 

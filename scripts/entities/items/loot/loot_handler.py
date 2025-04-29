@@ -62,7 +62,7 @@ class Loot_Handler():
             # 'shadow_cloak',
             # 'faded_hourglass',
             # 'ethereal_chains',
-            'recall_parchment'
+            # 'recall_parchment'
         ]
 
         self.passive_types = [

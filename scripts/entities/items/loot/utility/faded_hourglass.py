@@ -1,18 +1,16 @@
-from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
+from scripts.entities.items.loot.radius_effect_loot import Radius_Effect_Loot
 import random
 import pygame
 
-class Faded_Hourglass(Utility_Loot):
+class Faded_Hourglass(Radius_Effect_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'faded_hourglass', pos, 320)
+        super().__init__(game, 'faded_hourglass', pos, 320, 'utility', 4)
         self.activations = random.randint(2, 4)
         self.Set_Description()
         self.slowdown_triggered = 0
         self.animation_cooldown = 20
         self.max_animation = 4
         self.slowdown_amount = 8
-        self.range = 4
-        self.Set_Radius_Image()
    
 
     def Set_Description(self):
@@ -72,29 +70,3 @@ class Faded_Hourglass(Utility_Loot):
         for enemy in self.nearby_entities:
             enemy.Set_Effect("slow_down", self.slowdown_amount)
         self.Reset_Hourglass()
-    
-    # Setting the radius image and scaling it
-    def Set_Radius_Image(self):
-        sprite = self.game.assets['radius']
-        item_image = sprite[0].convert_alpha()
-        range = self.range * self.game.tilemap.tile_size
-        self.radius_image = pygame.transform.scale(item_image, (range, range))
-
-    # Render the range of the effect
-    def Render_Range(self, surf, offset):
-        radius_image = self.radius_image.copy()
-        if self.distance_to_player > self.max_distance:
-            radius_image.set_alpha(200)
-        game = self.game
-        range = self.range * self.game.tilemap.tile_size // 2
-        surf.blit(radius_image, (game.mouse.mpos[0] - offset[0] - range, game.mouse.mpos[1] - offset[1] - range))
-        
-
-    # Seperate find enemies close to the mouse
-    def Find_Nearby_Entities_Mouse(self):
-        self.nearby_entities = self.game.tilemap.Search_Nearby_Tiles(self.range, self.game.mouse.mpos, 'enemy', self.ID)
-
-    def Render_Active(self, surf, offset=...):
-        if self.clicked:
-            self.Render_Range(surf, offset)
-        return super().Render(surf, offset)
