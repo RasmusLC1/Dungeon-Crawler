@@ -198,6 +198,7 @@ class Moving_Entity(PhysicsEntity):
             self.game.tilemap.Remove_Entity_From_Tile(self.tile, self.ID)
             self.game.tilemap.Add_Entity_To_Tile(new_tile, self)
             self.tile = new_tile
+            
 
     def Set_Active(self, duration):
         # use hasattr to check if self.effects exists

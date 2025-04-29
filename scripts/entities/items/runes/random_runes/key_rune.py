@@ -13,10 +13,19 @@ class Key_Rune(Rune):
         if not super().Activate():
             return
         
-        if not self.game.decoration_handler.Open_Door_Without_Key():
-            return
-        
-        self.game.player.Decrease_Souls(self.current_soul_cost)
-        self.Set_Animation_Time()
-        self.Reset_Animation_Size()
+        nearby_decorations = self.game.decoration_handler.Find_Nearby_Decorations(self.game.player.pos, 4)
+
+        # Filter for doors
+        doors = [decoration for decoration in nearby_decorations if 'door' in decoration.type]
+        mouse = self.game.mouse
+        # Iterate over doors and check for collision
+        for door in doors:
+            if not door.rect().colliderect(mouse.rect_pos()):
+                continue
+            
+            door.Set_Highlight()
+            door.Open()
+            self.game.player.Decrease_Souls(self.current_soul_cost)
+            self.Set_Animation_Time()
+            self.Reset_Animation_Size()
         return

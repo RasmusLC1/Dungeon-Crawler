@@ -24,8 +24,9 @@ class Key(Interactive_Loot):
             door.Set_Highlight()
             if not mouse.left_click:
                 continue
+            if not self.Open_Door():
+                return
             door.Open()
-            self.Open_Door()
 
     # Effect of opening door on key
     def Open_Door(self):

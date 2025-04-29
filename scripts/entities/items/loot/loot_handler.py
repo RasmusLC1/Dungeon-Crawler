@@ -9,6 +9,7 @@ from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
 from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
 from scripts.entities.items.loot.utility.faded_hourglass import Faded_Hourglass
 from scripts.entities.items.loot.utility.ethereal_chains import Ethereal_Chains
+from scripts.entities.items.loot.utility.recall_parchment import Recall_Parchment
 
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
@@ -34,6 +35,7 @@ class Loot_Handler():
             'faded_hourglass' : Faded_Hourglass,
             'ethereal_chains' : Ethereal_Chains,
             'shadow_cloak': Shadow_Cloak,
+            'recall_parchment': Recall_Parchment,
             'lantern': Lantern,
             'phoenix_feather': Phoenix_Feather,
             'light_pendant': Light_Pendant,
@@ -59,7 +61,8 @@ class Loot_Handler():
             # 'echo_bell',
             # 'shadow_cloak',
             # 'faded_hourglass',
-            'ethereal_chains'
+            # 'ethereal_chains',
+            'recall_parchment'
         ]
 
         self.passive_types = [

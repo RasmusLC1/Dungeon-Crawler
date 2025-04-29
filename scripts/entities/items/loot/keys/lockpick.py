@@ -8,8 +8,9 @@ class Lockpick(Key):
 
     def Open_Door(self):
         if random.randint(1, 3) != 1:
-            return
+            return True
         game = self.game # cache game for quick lookup
         game.inventory.Remove_Item(self)
         game.item_handler.Remove_Item(self, True)
         game.clatter.Generate_Clatter(self.pos, 1000) # Generate extra clatter for failure
+        return True

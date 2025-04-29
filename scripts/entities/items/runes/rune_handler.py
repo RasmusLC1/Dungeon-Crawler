@@ -146,7 +146,7 @@ class Rune_Handler():
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory('healing_rune')
+        self.Add_Rune_To_Rune_Inventory('key_rune')
         self.Add_Rune_To_Rune_Inventory('freeze_spray_rune')
         self.Add_Rune_To_Rune_Inventory('dash_rune')
 

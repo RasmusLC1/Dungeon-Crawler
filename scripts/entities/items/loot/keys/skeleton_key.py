@@ -10,3 +10,4 @@ class Skeleton_Key(Key):
     def Open_Door(self):
         self.game.inventory.Remove_Item(self)
         self.game.item_handler.Remove_Item(self, True)
+        return True
