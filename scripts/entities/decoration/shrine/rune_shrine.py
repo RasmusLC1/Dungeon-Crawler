@@ -23,6 +23,7 @@ class Rune_Shrine(Decoration):
             return
         
         self.saved_data['rune_type'] = self.available_rune.type
+        print(self.is_open, self.available_rune.type)
 
 
     def Load_Data(self, data):

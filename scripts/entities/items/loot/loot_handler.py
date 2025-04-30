@@ -63,8 +63,8 @@ class Loot_Handler():
             # 'echo_bell',
             # 'shadow_cloak',
             # 'faded_hourglass',
-            # 'ethereal_chains',
-            'recall_scroll'
+            'ethereal_chains',
+            # 'recall_scroll'
         ]
 
         self.passive_types = [

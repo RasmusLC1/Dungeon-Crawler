@@ -54,7 +54,10 @@ class Save_Load_Manager():
         except FileNotFoundError:
             print("File not found")
         data_file = open(self.save_folder+"/"+name+self.file_extension, "wb")
-        pickle.dump(self.saved_data, data_file)
+        try:
+            pickle.dump(self.saved_data, data_file)
+        except Exception as e:
+            print("Error pickling save file", e)
 
     # Initialise the data that needs to be saved
     def Save_Data(self):

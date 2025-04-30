@@ -49,6 +49,8 @@ class Ethereal_Chains(Radius_Effect_Loot):
         for enemy in self.nearby_entities:
             enemy.effects.Set_Effect("snare", 3)
         self.Reset_Chains()
+        self.game.sound_handler.Play_Sound(self.type, 1)
+
     
 
     
