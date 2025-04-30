@@ -2,7 +2,7 @@ from scripts.entities.items.loot.interactive_loot import Interactive_Loot
 
 class Key(Interactive_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 64, (16, 16), 'key')
+        super().__init__(game, type, pos, 64, (16, 16), 'key', 1)
 
 
     # The update function in the inventory
@@ -24,8 +24,9 @@ class Key(Interactive_Loot):
             door.Set_Highlight()
             if not mouse.left_click:
                 continue
+            if not self.Open_Door():
+                return
             door.Open()
-            self.Open_Door()
 
     # Effect of opening door on key
     def Open_Door(self):

@@ -47,7 +47,7 @@ class Portal_Shrine(Decoration):
         if not self.is_open:
             self.game.menu_handler.portal_shrine_menu.Initialise_Shrine(self)
             self.game.clatter.Generate_Clatter(self.pos, 400) # Generate clatter to alert nearby enemies
-        
+        self.game.player.Set_Last_Shrine(self)
         self.game.state_machine.Set_State('portal_shrine_menu')
 
     def Activate(self):

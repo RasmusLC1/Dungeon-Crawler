@@ -16,6 +16,7 @@ class Frozen(Effect):
             effect_time *= 2
             self.wet = 0
 
+
         return super().Set_Effect(effect_time, permanent)
     
     def Update_Effect(self):
@@ -26,14 +27,20 @@ class Frozen(Effect):
         if self.entity.effects.frozen_resistance.effect:
             self.effect = 0
             self.cooldown = 0
+
             return False
         
         if self.Update_Cooldown():
             damage = random.randint(1, 2)
             self.entity.Damage_Taken(damage)
         
-        self.entity.effects.Set_Effect("slow_down", self.effect)
+        try:
+            self.entity.max_speed = max(0.1, self.entity.max_speed / max( 1.1, self.effect // 2))
+        except ZeroDivisionError as e:
+            print(f"SLOWDOWN: {e}", self.entity.max_speed, self.effect)
+        
 
         self.Effect_Animation_Cooldown()
 
         return True
+    

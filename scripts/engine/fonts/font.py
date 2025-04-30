@@ -3,6 +3,7 @@ class Font():
         self.game = game
         self.font = self.game.assets['font']
         self.player_damage_font = self.game.assets['player_damage_font']
+        self.small_font = self.game.assets['small_font']
 
         # Use dictionary for O(1) lookup time, using enumerate to number them
         self.font_lookup_table = {
@@ -30,15 +31,23 @@ class Font():
         font_styles = {
         'default': self.font,
         'player_damage': self.player_damage_font,
+        'small_font': self.small_font,
         }
         return font_styles.get(font_style, self.font)
 
+    def Find_Font_Size(self, font_style):
+        font_styles = {
+        'default': (15, 16),
+        'player_damage': (15, 16),
+        'small_font': (7, 8),
+        }
+        return font_styles.get(font_style, (16, 16))
 
     def Render_Word(self, surf, text, pos, font_style='default'):
-        line_height = 16  # Adjust based on your font's line height
         original_x, original_y = pos
         current_y = original_y
         font = self.Find_Font(font_style)
+        size = self.Find_Font_Size(font_style)
 
         # Split by newline and then process each line
         lines = text.split('\n')
@@ -51,18 +60,18 @@ class Font():
             for chunk in chunks:
                 line_text = ' '.join(chunk)
                 char_positions = self.find_char_positions(line_text)
-                self.Render_Chunk(surf, current_x, current_y, char_positions, font)
-                current_x += len(line_text) * 14  # Adjust spacing if needed
+                self.Render_Chunk(surf, current_x, current_y, char_positions, size[0], font)
+                current_x += len(line_text) * size[0]  # Adjust spacing if needed
 
-            current_y += line_height  # Move to the next line
+            current_y += size[1]  # Move to the next line
 
-
-    def Render_Chunk(self, surf, current_x, current_y, char_positions, font):
+    # Handles words
+    def Render_Chunk(self, surf, current_x, current_y, char_positions, x_increment, font):
         for font_position in char_positions:
             if font_position is None:
                 continue  # Skip characters not found in font_lookup
             try:
                 surf.blit(font[font_position], (current_x, current_y))
-                current_x += 14  # Increment x position for next character
+                current_x += x_increment  # Increment x position for next character
             except Exception as e:
                 print(f"WRONG SYMBOL FONT: {e}")

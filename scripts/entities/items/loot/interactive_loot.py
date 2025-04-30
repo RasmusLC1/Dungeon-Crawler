@@ -3,19 +3,10 @@ import math
 import pygame
 
 class Interactive_Loot(Loot):
-    def __init__(self, game, type, pos, max_distance, size, loot_type):
-        super().__init__(game, type, pos, size, 10, loot_type, 1)
+    def __init__(self, game, type, pos, max_distance, size, loot_type, amount):
+        super().__init__(game, type, pos, size, 10, loot_type, amount)
         self.distance_to_player = 0
         self.max_distance = max_distance
-        self.activations = 0
-
-    def Save_Data(self):
-        super().Save_Data()
-        self.saved_data['activations'] = self.activations
-
-    def Load_Data(self, data):
-        super().Load_Data(data)
-        self.activations = data['activations']
 
     def Update(self):
         if self.game.mouse.right_click:

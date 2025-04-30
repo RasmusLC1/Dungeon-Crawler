@@ -121,6 +121,8 @@ class PhysicsEntity:
         tile = self.tile
         if not tile:
             return True
+        if not self.light_level:
+            self.light_level = 0
         if tile.light_level == self.light_level:
             return True
         new_light_level = min(255, tile.light_level * 30)
@@ -160,17 +162,20 @@ class PhysicsEntity:
         alpha_value = max(0, min(255, self.active))  # Adjust the factor as needed
         if not alpha_value:
             return
-        # Set image
-        self.rendered_image = self.entity_image.copy()
-        self.rendered_image.set_alpha(alpha_value)
+        try:
+            # Set image
+            self.rendered_image = self.entity_image.copy()
+            self.rendered_image.set_alpha(alpha_value)
 
-        # Blit the dark layer
-        dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
-        dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
+            # Blit the dark layer
+            dark_surface_head = pygame.Surface(self.size, pygame.SRCALPHA).convert_alpha()
+            dark_surface_head.fill((self.light_level, self.light_level, self.light_level, 255))
 
-        # Blit the chest layer on top the dark layer
-        self.rendered_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        self.render_needs_update = False
+            # Blit the chest layer on top the dark layer
+            self.rendered_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.render_needs_update = False
+        except Exception as e:
+            print("Error in Updating dark surface entity: ", e, dark_surface_head, self.light_level, alpha_value, )
 
 
     def Lightup(self, entity_image):

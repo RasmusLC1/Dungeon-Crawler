@@ -6,6 +6,9 @@ class Audio_Loader:
         self.sfx = {}
         Audio_Loader.Chest_Effects(self)
         Audio_Loader.Weapons_Effects(self)
+        Audio_Loader.Magic_Effects(self)
+        Audio_Loader.Loot_Effects(self)
+        Audio_Loader.Effect_Effects(self)
 
 
     def Chest_Effects(self):
@@ -39,4 +42,63 @@ class Audio_Loader:
         self.sfx['torch_attack'].set_volume(0.2)
         self.sfx['torch_equipped'].set_volume(0.2)
         self.sfx['sword_swing'].set_volume(0.2)
+
+    def Magic_Effects(self):
+        weapon_effects ={
+            'electric_ball' : pygame.mixer.Sound('data/sounds/magic/electric/electric_ball.wav'),
+            'electric_explosion' : pygame.mixer.Sound('data/sounds/magic/electric/electric_explosion.wav'),
+            'fire_ball' : pygame.mixer.Sound('data/sounds/magic/fire/fire_ball.wav'),
+            'fire_explosion' : pygame.mixer.Sound('data/sounds/magic/fire/fire_explosion.wav'),
+            'fire_particle' : pygame.mixer.Sound('data/sounds/magic/fire/fire_particle.wav'),
+            'frozen_explosion' : pygame.mixer.Sound('data/sounds/magic/frozen/frozen_explosion.wav'),
+            'frozen_projectile' : pygame.mixer.Sound('data/sounds/magic/frozen/frozen_projectile.wav'),
+            'poison_cloud' : pygame.mixer.Sound('data/sounds/magic/poison/poison_cloud.wav'),
+            'poison_plume' : pygame.mixer.Sound('data/sounds/magic/poison/poison_plume.wav'),
+            'vampiric_ball' : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_ball.wav'),
+            'vampiric_explosion' : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_explosion.wav'),
+            'vampiric_projectile' : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_projectile.wav'),
+        }
+
+        self.sfx.update(weapon_effects)
+
+        self.sfx['electric_ball'].set_volume(0.2)
+        self.sfx['electric_explosion'].set_volume(0.3)
+        self.sfx['fire_ball'].set_volume(0.4)
+        self.sfx['fire_explosion'].set_volume(0.2)
+        self.sfx['fire_particle'].set_volume(0.3)
+        self.sfx['frozen_explosion'].set_volume(0.2)
+        self.sfx['frozen_projectile'].set_volume(0.2)
+        self.sfx['poison_cloud'].set_volume(0.2)
+        self.sfx['poison_plume'].set_volume(0.2)
+        self.sfx['vampiric_ball'].set_volume(0.2)
+        self.sfx['vampiric_explosion'].set_volume(0.2)
+        self.sfx['vampiric_projectile'].set_volume(0.2)
+
+
+    def Loot_Effects(self):
+        weapon_effects ={
+            'bell' : pygame.mixer.Sound('data/sounds/loot/bell.wav'),
+            'recall_scroll' : pygame.mixer.Sound('data/sounds/loot/recall_scroll.wav'),
+        }
+
+        self.sfx.update(weapon_effects)
+
+        self.sfx['bell'].set_volume(0.2)
+        self.sfx['recall_scroll'].set_volume(0.3)
+
+    
+    def Effect_Effects(self):
+        weapon_effects ={
+            'healing' : pygame.mixer.Sound('data/sounds/effects/healing.wav'),
+            'slow' : pygame.mixer.Sound('data/sounds/effects/slow.wav'),
+            'speed' : pygame.mixer.Sound('data/sounds/effects/speed.wav'),
+        }
+
+        self.sfx.update(weapon_effects)
+
+        self.sfx['healing'].set_volume(0.2)
+        self.sfx['slow'].set_volume(0.3)
+        self.sfx['speed'].set_volume(0.3)
+
+    
     

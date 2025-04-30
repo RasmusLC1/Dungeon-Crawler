@@ -1,15 +1,13 @@
-from scripts.entities.items.loot.interactive_loot import Interactive_Loot
+from scripts.entities.items.loot.radius_effect_loot import Radius_Effect_Loot
 import pygame
 import math
 
-class Bomb(Interactive_Loot):
+class Bomb(Radius_Effect_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 192, (16, 16), 'bomb')
+        super().__init__(game, type, pos, 192, 'bomb', 4, 1)
         effect = self.type.replace('_bomb', '')
         self.description = effect + ' explosion\nwhen trown'
- 
-    def Update(self):
-        super().Update()
+        
 
     def Reset_Bomb(self):
         self.game.item_handler.Remove_Item(self, True)
@@ -25,9 +23,12 @@ class Bomb(Interactive_Loot):
 
     
 
+    
+
     # Effect of opening door on key
     def Initalise_Throw(self):
         player = self.game.player
         # SPAWN ACTUAL BOMB PROJECTILE HERE, same sprite
         player.bomb_launcher.Shoot_Bomb(player, 100, self.type, self.game.mouse.mpos)
         self.Reset_Bomb()
+

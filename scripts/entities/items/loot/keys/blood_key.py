@@ -8,4 +8,9 @@ class Blood_Key(Key):
 
     # Sacrifice 5 health to open door
     def Open_Door(self):
+        player = self.game.player
+
+        if player.health <= 5:
+            return False
         self.game.player.Damage_Taken(5)
+        return True

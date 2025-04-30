@@ -58,7 +58,8 @@ class Rune_Shrine(Decoration):
             self.game.menu_handler.rune_shrine_menu.Initialise_Runes(self, self.available_rune)
         else:
             self.game.menu_handler.rune_shrine_menu.Initialise_Runes(self)
-            
+        
+        self.game.player.Set_Last_Shrine(self)
         self.game.state_machine.Set_State('rune_shrine_menu')
         self.game.clatter.Generate_Clatter(self.pos, 400) # Generate clatter to alert nearby enemies
         

@@ -15,8 +15,11 @@ class Elemental_Explosion(Item):
         self.damage = power
         self.effect_strength = effect_strength
         self.effect = effect
+        self.light_source = self.game.light_handler.Add_Light(self.pos, 4, self.tile)
+        self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
         self.size = ( self.power * self.size[0], self.power * self.size[1])
         self.nearby_entities = []
+        
         self.Initialise_Explosion()
 
     def Initialise_Explosion(self):
@@ -87,6 +90,12 @@ class Elemental_Explosion(Item):
         return True
 
     def Update_Animation(self):
+        if self.delete_countdown == 1:
+            try:
+                self.game.light_handler.Remove_Light(self.light_source)
+                del(self.light_source)
+            except Exception as e:
+                return
         if self.animation_cooldown >= self.animation_cooldown_max:
             self.animation_cooldown = 0
             self.animation = min(self.animation + 1, self.max_animation)

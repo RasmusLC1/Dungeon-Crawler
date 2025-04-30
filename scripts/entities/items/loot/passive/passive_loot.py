@@ -1,5 +1,7 @@
 from scripts.entities.items.loot.loot import Loot
 
+# Generic passive loot that changes depending on the type, simplified to one
+# class since it uses effects
 class Passive_Loot(Loot):
     def __init__(self, game, type, pos):
         super().__init__(game, type, pos, (16, 16), 10, 'passive')
