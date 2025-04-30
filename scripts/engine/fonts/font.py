@@ -37,8 +37,8 @@ class Font():
 
     def Find_Font_Size(self, font_style):
         font_styles = {
-        'default': (16, 16),
-        'player_damage': (16, 16),
+        'default': (15, 16),
+        'player_damage': (15, 16),
         'small_font': (7, 8),
         }
         return font_styles.get(font_style, (16, 16))

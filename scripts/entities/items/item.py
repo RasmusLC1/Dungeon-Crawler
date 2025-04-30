@@ -94,9 +94,9 @@ class Item(PhysicsEntity):
 
     # TODO: Might crash, need to update traps or remove damage
     def Place_Down(self):
-        nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 3)
-        for trap in nearby_traps:
-            trap.Update(self)
+        nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, 3)
+        # for trap in nearby_traps:
+        #     trap.Update(self)
         self.Set_Tile()
         self.picked_up = False
         self.in_inventory = False

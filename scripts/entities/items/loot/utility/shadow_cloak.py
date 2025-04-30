@@ -13,7 +13,7 @@ class Shadow_Cloak(Utility_Loot):
         super().Update()
 
     def Set_Description(self):
-        self.description = 'Become invisibile'
+        self.description = 'Become\ninvisibile'
 
     # When cloak runs out of charges it's deleted
     def Reset_Cloak(self):

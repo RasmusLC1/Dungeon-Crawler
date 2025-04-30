@@ -82,6 +82,20 @@ class Item_Inventory(Base_Inventory):
 
         return True
     
+    def Find_Loot(self):
+        loot_items = []
+        for item_type, inventory_slots in self.inventory_dic.items():
+            for inventory_slot in inventory_slots:
+                item = inventory_slot.item
+                if not item:
+                    continue
+                if item.sub_category == 'loot':
+                    loot_items.append(item)
+
+        return loot_items
+
+
+    
     def Revive(self):
         for slot_list in self.inventory_dic.values():  # Each value is a list of slots
             for inventory_slot in slot_list:  # Iterate through the list

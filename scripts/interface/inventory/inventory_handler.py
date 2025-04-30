@@ -403,10 +403,6 @@ class Inventory_Handler():
 
         return False
 
-    def Find_Inventory_Slot(self, index):
-        return self.inventory_dic.get(index)
-    
-
     def Render(self, surf):
         for inventory_slot in self.inventory:
             inventory_slot.Render(surf)
