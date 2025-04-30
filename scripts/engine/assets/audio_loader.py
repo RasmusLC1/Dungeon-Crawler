@@ -79,12 +79,14 @@ class Audio_Loader:
         weapon_effects ={
             'bell' : pygame.mixer.Sound('data/sounds/loot/bell.wav'),
             'recall_scroll' : pygame.mixer.Sound('data/sounds/loot/recall_scroll.wav'),
+            'faded_hourglass' : pygame.mixer.Sound('data/sounds/loot/faded_hourglass.wav'),
         }
 
         self.sfx.update(weapon_effects)
 
         self.sfx['bell'].set_volume(0.2)
         self.sfx['recall_scroll'].set_volume(0.3)
+        self.sfx['faded_hourglass'].set_volume(0.3)
 
     
     def Effect_Effects(self):

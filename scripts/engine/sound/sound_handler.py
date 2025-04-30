@@ -2,7 +2,7 @@ class Sound_Handler():
     def __init__(self, game) -> None:
         self.game = game
 
-    def Play_Sound(self, sound_name, volume):
+    def Play_Sound(self, sound_name, volume = 1):
         # Disable all sounds if the player is silenced
         if self.game.player.effects.silence.effect:
             return

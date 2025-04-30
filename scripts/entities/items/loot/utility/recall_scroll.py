@@ -1,8 +1,8 @@
 from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
 
-class Recall_Parchment(Utility_Loot):
+class Recall_Scroll(Utility_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'recall_parchment', pos, 320, 1)
+        super().__init__(game, 'recall_scroll', pos, 320, 1)
         self.max_amount = 3
         self.Set_Description()
 
@@ -40,6 +40,7 @@ class Recall_Parchment(Utility_Loot):
             return False
         player.Set_Position(player.last_shrine_visited.pos.copy())
         self.Reset_Cloak()
+        self.game.sound_handler.Play_Sound(self.type, 1)
         return True
 
     def Render_Line(self, surf, offset, alpha):

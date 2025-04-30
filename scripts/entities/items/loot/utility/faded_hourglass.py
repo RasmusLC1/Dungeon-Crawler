@@ -71,3 +71,6 @@ class Faded_Hourglass(Radius_Effect_Loot):
         for enemy in self.nearby_entities:
             enemy.Set_Effect("slow_down", self.slowdown_amount)
         self.Reset_Hourglass()
+        
+        self.game.sound_handler.Play_Sound(self.type, 1)
+
