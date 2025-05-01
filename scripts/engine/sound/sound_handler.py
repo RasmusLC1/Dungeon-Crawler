@@ -11,3 +11,7 @@ class Sound_Handler():
             self.game.sfx[sound_name].play()
         except Exception as e:
             print(f"Wrong sound input {e}", sound_name, volume)
+
+    
+    def Check_If_Sound_Exist(self, sound_name) -> bool:
+        return sound_name in self.game.sfx

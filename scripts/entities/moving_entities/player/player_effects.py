@@ -22,6 +22,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.x_pos = 20
         self.y_pos = 60
         self.y_pos_increment = 20
+        self.sound_cooldown = 0
         
         self.Initalise_Effect_Icons()
 
@@ -62,17 +63,46 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
     def Update_Status_Effects(self):
         super().Update_Status_Effects()
 
+        self.Update_Sound_Cooldown()
+
         for effect_icon in self.active_effect_symbols:
             if effect_icon.Update():
                 self.Disable_Effect_Icon(effect_icon)
 
+    # Prevent spamming of sound effects
+    def Update_Sound_Cooldown(self):
+        if not self.sound_cooldown:
+            return
+        
+        self.sound_cooldown -= 1
+        return
 
     def Set_Effect(self, effect, duration, permanent = False):
         
         if not super().Set_Effect(effect, duration, permanent):
             return False
-        # Check if the effect is already in the active effects before setting it
-        # Prevents effect icon duplication
+        
+        self.Play_Sound_Effect(effect)
+
+        return self.Set_Effect_Icon(effect)
+
+    def Play_Sound_Effect(self, effect):
+        if self.sound_cooldown:
+            return
+        
+        self.sound_cooldown = 40
+        sound = self.entity.game.sound_handler
+        if not sound.Check_If_Sound_Exist(effect):
+            print(effect)
+            sound.Play_Sound('generic_effect', 0.3)
+
+            return
+        sound.Play_Sound(effect, 0.2)
+
+
+    # Check if the effect is already in the active effects before setting it
+    # Prevents effect icon duplication
+    def Set_Effect_Icon(self, effect):
         check_effect = self.Get_Effect(effect)
         if not check_effect:
             return False

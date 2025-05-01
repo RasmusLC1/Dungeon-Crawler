@@ -6,11 +6,11 @@ class Ice_Explosion(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
         super().__init__(game, 'ice_explosion', 'frozen', pos, power, 5, 5, 5, entity)
 
-    def Slow_Down_Entities(self):
+    def Slow_Entities(self):
         for entity in self.nearby_entities:
-            entity.effects.Set_Effect("slow_down", self.power)
+            entity.effects.Set_Effect("frozen", self.power)
 
     def Update_Animation(self):
-        self.Slow_Down_Entities()
+        self.Slow_Entities()
 
         return super().Update_Animation()

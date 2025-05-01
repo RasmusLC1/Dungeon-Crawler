@@ -28,17 +28,17 @@ class Water(Trap):
                 self.entities.remove(entity)
                 continue
 
-            entity.Set_Effect('slow_down', self.slow_down_amount)
+            entity.Set_Effect('slow', self.slow_amount)
             entity.Set_Effect('wet', 2)
 
     
     def Set_Slowdown_Amount(self):
         if self.type == 'shallow_water_env':
-            self.slow_down_amount = 2
+            self.slow_amount = 2
         elif self.type == 'medium_water_env':
-            self.slow_down_amount = 4
+            self.slow_amount = 4
         elif self.type == 'deep_water_env':
-            self.slow_down_amount = 8
+            self.slow_amount = 8
 
 
     def Animation_Update(self):

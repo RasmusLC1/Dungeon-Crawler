@@ -22,7 +22,8 @@ class Symbols():
                 'chain', 'enemy', 'curse',
                 'weakness', 'vulnerable', 'luck',
                 'anchor', 'blood_tomb', 'halo',
-                'demonic_bargain', 'temptress_embrace'
+                'demonic_bargain', 'temptress_embrace',
+                'slow',
             ])
         }
 

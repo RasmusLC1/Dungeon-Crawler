@@ -13,7 +13,7 @@ from scripts.entities.moving_entities.effects.poison.poison_resistance import Po
 from scripts.entities.moving_entities.effects.movement.snare import Snare
 from scripts.entities.moving_entities.effects.movement.anchor import Anchor
 from scripts.entities.moving_entities.effects.healing.healing import Healing
-from scripts.entities.moving_entities.effects.movement.slow_down import Slow_Down
+from scripts.entities.moving_entities.effects.movement.slow import Slow
 from scripts.entities.moving_entities.effects.healing.vampiric import Vampiric
 from scripts.entities.moving_entities.effects.damage.invulnerable import Invulnerable
 from scripts.entities.moving_entities.effects.damage.vulnerable import Vulnerable
@@ -93,7 +93,7 @@ class Status_Effect_Handler:
 
         self.healing = Healing(self.entity)
         
-        self.slow_down = Slow_Down(self.entity)
+        self.slow = Slow(self.entity)
         
         self.vampiric = Vampiric(self.entity)
 
@@ -124,7 +124,7 @@ class Status_Effect_Handler:
             self.snare.effect_type: self.snare,
             self.anchor.effect_type: self.anchor,
             self.healing.effect_type: self.healing,
-            self.slow_down.effect_type: self.slow_down,
+            self.slow.effect_type: self.slow,
             self.vampiric.effect_type: self.vampiric,
             self.invulnerable.effect_type: self.invulnerable,
             self.vulnerable.effect_type: self.vulnerable,
