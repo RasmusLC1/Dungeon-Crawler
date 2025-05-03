@@ -85,6 +85,9 @@ class Item_Inventory(Base_Inventory):
     def Find_Loot(self):
         loot_items = []
         for item_type, inventory_slots in self.inventory_dic.items():
+            if not isinstance(inventory_slots, (list, tuple)):
+                print(f"Expected list, got {type(inventory_slots)} for key: {item_type}")
+                continue
             for inventory_slot in inventory_slots:
                 item = inventory_slot.item
                 if not item:
@@ -93,6 +96,7 @@ class Item_Inventory(Base_Inventory):
                     loot_items.append(item)
 
         return loot_items
+
 
 
     
