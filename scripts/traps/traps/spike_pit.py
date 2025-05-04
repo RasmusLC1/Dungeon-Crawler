@@ -7,7 +7,7 @@ import pygame
 class Spike_Pit(Trap):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type)
-        self.slow_down_amount = 4
+        self.slow_amount = 4
 
 
     def Update(self):
@@ -24,7 +24,7 @@ class Spike_Pit(Trap):
         for entity in self.entities:
             if not self.rect().colliderect(entity.rect()):
                 self.entities.remove(entity)
-                entity.Remove_Effect('slow_down', self.slow_down_amount)
+                entity.Remove_Effect('slow', self.slow_amount)
                 continue
 
             if entity.effects.invulnerable.effect:
@@ -39,7 +39,7 @@ class Spike_Pit(Trap):
             self.animation = 1
             entity.Set_Effect('snare', 2)
         else:
-            entity.Set_Effect('slow_down', self.slow_down_amount)
+            entity.Set_Effect('slow', self.slow_amount)
         return True
 
     def rect(self):

@@ -6,7 +6,7 @@ class Spike(Trap):
     def __init__(self, game, pos, size, type):
         super().__init__(game, pos, size, type)
         self.animation = random.randint(0, 5)
-        self.slow_down_amount = 2
+        self.slow_amount = 2
 
 
     def Update(self):
@@ -21,7 +21,7 @@ class Spike(Trap):
     def Add_Entity_To_Trap(self, entity):
         if not super().Add_Entity_To_Trap(entity):
             return False
-        entity.Set_Effect('slow_down', self.slow_down_amount)
+        entity.Set_Effect('slow', self.slow_amount)
         return True
 
         
@@ -29,7 +29,7 @@ class Spike(Trap):
         for entity in self.entities:
             if not self.rect().colliderect(entity.rect()):
                 self.entities.remove(entity)
-                entity.Remove_Effect('slow_down', self.slow_down_amount)
+                entity.Remove_Effect('slow', self.slow_amount)
 
                 continue
 

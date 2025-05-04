@@ -492,7 +492,7 @@ class Graphics_Loader:
             'light_pendant' : get_tiles_from_sheet('items/revive/light_pendant.png', 0, 0, 0, 0, 32, 32),
             'faded_hourglass' : get_tiles_from_sheet('items/utility/faded_hourglass.png', 4, 0, 0, 0, 32, 32),
             'ethereal_chains' : get_tiles_from_sheet('items/utility/ethereal_chains.png', 0, 0, 0, 0, 32, 32),
-            'recall_parchment' : get_tiles_from_sheet('items/utility/recall_parchment.png', 0, 0, 0, 0, 32, 32),
+            'recall_scroll' : get_tiles_from_sheet('items/utility/recall_parchment.png', 0, 0, 0, 0, 32, 32),
             'echo_sigil' : get_tiles_from_sheet('items/passive/echo_sigil.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(loot)

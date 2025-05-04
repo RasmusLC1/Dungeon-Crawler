@@ -2,10 +2,10 @@ from scripts.entities.moving_entities.effects.effect import Effect
 import random
 
 # Reduce the entity speed
-class Slow_Down(Effect):
+class Slow(Effect):
     def __init__(self, entity):
         description = 'Reduces speed'
-        super().__init__(entity, 'slow_down', 0, 0, (5,10), description)
+        super().__init__(entity, 'slow', 0, 0, (5,10), description)
 
     
     #set Fire effect

@@ -31,7 +31,7 @@ class Faded_Hourglass(Radius_Effect_Loot):
             return
         
         for enemy in self.nearby_entities:
-            enemy.Remove_Effect("slow_down", self.slowdown_amount)
+            enemy.Remove_Effect("slow", self.slowdown_amount)
 
         self.nearby_entities = None
 
@@ -69,5 +69,8 @@ class Faded_Hourglass(Radius_Effect_Loot):
         self.Find_Nearby_Entities_Mouse()
         self.slowdown_triggered = 200
         for enemy in self.nearby_entities:
-            enemy.Set_Effect("slow_down", self.slowdown_amount)
+            enemy.Set_Effect("slow", self.slowdown_amount)
         self.Reset_Hourglass()
+
+        self.game.sound_handler.Play_Sound(self.type, 1)
+

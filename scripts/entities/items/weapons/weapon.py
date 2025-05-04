@@ -126,7 +126,7 @@ class Weapon(Item):
     # Initialise the attack and reset attack values
     def Set_Attack(self):
         if not self.Check_Entity_Cooldown():
-            return
+            return False
         # Compute attack each time to account for changing entity agility level
         self.attacking = max(int((self.speed * 30) // self.entity.agility), self.attack_animation_max) 
         self.enemy_hit = False  # Reset at the start of a new attack
@@ -138,6 +138,7 @@ class Weapon(Item):
         self.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
         self.rotate += 90
+        return True
 
 
     def Set_Enemy_Attack(self):

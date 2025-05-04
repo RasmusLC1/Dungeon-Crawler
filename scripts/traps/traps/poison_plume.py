@@ -18,7 +18,7 @@ class Poison_Plume(Trap):
             if entity.effects.invulnerable.effect:
                 return
             entity.Damage_Taken(2)
-            entity.Set_Effect('slow_down', 4)
+            # entity.Set_Effect('slow_down', 4)
             
 
     def Animation_Update(self):

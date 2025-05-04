@@ -1,11 +1,12 @@
 from scripts.entities.items.loot.loot import Loot
+import pygame
 
 class Echo_Sigil(Loot):
     def __init__(self, game, pos):
         super().__init__(game, 'echo_sigil', pos, (16, 16), 10, 'passive')
         self.update_cooldown = 0
         self.loot_IDs = []
-        self.description = 'Grants\nextra use\nto items'
+        self.description = 'Grants\nextra use\nto items\n'
 
 
     def Update(self):
@@ -33,3 +34,25 @@ class Echo_Sigil(Loot):
             if item.max_amount > 1 and item.max_amount < 10:
                 item.Increase_Amount(1)
             self.loot_IDs.append(item.ID)
+
+
+    # TODO: MAKE a red overlay for item
+    # # Render item with fadeout if it's in an illegal position
+    def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
+         # Copy image and set alpha
+        entity_image = self.entity_image.copy()
+        # entity_image.set_alpha(255)
+
+        # Create red overlay
+        red_overlay = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA)
+        red_overlay.fill((255, 0, 0, 100))  # Red with transparency
+
+        # Blit entity and red overlay
+        pos = (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1])
+        surf.blit(entity_image, pos)
+        surf.blit(red_overlay, pos)
+        # Render on Mouse position as the item position is not being updated
+        # surf.blit(self.entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+
+    def Place_Down(self):
+        self.Delete_Item()

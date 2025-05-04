@@ -238,7 +238,7 @@ class Inventory_Handler():
             return False
         return True
 
-    # Places an item down in the inventory
+    # Places an item down from the inventory
     def Place_Down_Item(self):
         if self.active_item.Place_Down():
             inventory_slots = self.item_inventory.inventory_dic.get(self.active_item.type)

@@ -87,6 +87,7 @@ class Boss_Room():
             'wight_king',
             self.pos,
         )
+        self.game.sound_handler.Play_Sound('boss_spawning', 0.5)
         self.Close_Room()
         self.Spawn_Torches()
     

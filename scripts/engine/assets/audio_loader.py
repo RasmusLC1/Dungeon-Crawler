@@ -14,9 +14,13 @@ class Audio_Loader:
     def Chest_Effects(self):
         chest_effects ={
             'chest_open' : pygame.mixer.Sound('data/sounds/decorations/chest_open.wav'),
+            'door_open' : pygame.mixer.Sound('data/sounds/decorations/door_open.wav'),
+            'boss_spawning' : pygame.mixer.Sound('data/sounds/decorations/shrine/boss_spawning.wav'),
         }
         self.sfx.update(chest_effects)
         self.sfx['chest_open'].set_volume(0.1)
+        self.sfx['door_open'].set_volume(0.4)
+        self.sfx['boss_spawning'].set_volume(0.4)
 
     def Weapons_Effects(self):
         weapon_effects ={
@@ -79,26 +83,33 @@ class Audio_Loader:
         weapon_effects ={
             'bell' : pygame.mixer.Sound('data/sounds/loot/bell.wav'),
             'recall_scroll' : pygame.mixer.Sound('data/sounds/loot/recall_scroll.wav'),
+            'faded_hourglass' : pygame.mixer.Sound('data/sounds/loot/faded_hourglass.wav'),
+            'ethereal_chains' : pygame.mixer.Sound('data/sounds/loot/ethereal_chains.wav'),
         }
 
         self.sfx.update(weapon_effects)
 
         self.sfx['bell'].set_volume(0.2)
         self.sfx['recall_scroll'].set_volume(0.3)
+        self.sfx['faded_hourglass'].set_volume(0.3)
+        self.sfx['ethereal_chains'].set_volume(0.3)
 
     
     def Effect_Effects(self):
         weapon_effects ={
             'healing' : pygame.mixer.Sound('data/sounds/effects/healing.wav'),
-            'slow' : pygame.mixer.Sound('data/sounds/effects/slow.wav'),
+            # 'slow' : pygame.mixer.Sound('data/sounds/effects/slow.wav'),
             'speed' : pygame.mixer.Sound('data/sounds/effects/speed.wav'),
+            'generic_effect' : pygame.mixer.Sound('data/sounds/effects/general_effect.wav'),
         }
 
         self.sfx.update(weapon_effects)
 
         self.sfx['healing'].set_volume(0.2)
-        self.sfx['slow'].set_volume(0.3)
+        # self.sfx['slow'].set_volume(0.1)
         self.sfx['speed'].set_volume(0.3)
+        self.sfx['generic_effect'].set_volume(0.2)
 
     
+
     

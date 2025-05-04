@@ -94,7 +94,7 @@ class Item(PhysicsEntity):
 
     # TODO: Might crash, need to update traps or remove damage
     def Place_Down(self):
-        nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, 3)
+        # nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, 3)
         # for trap in nearby_traps:
         #     trap.Update(self)
         self.Set_Tile()
@@ -133,6 +133,8 @@ class Item(PhysicsEntity):
 
     def Decrease_Amount(self, amount):
         self.amount = max(0, self.amount - amount)
+        if self.amount <= 0:
+            self.used = True
 
     def Set_Inventory_Type(self, inventory_type):
         self.inventory_type = inventory_type

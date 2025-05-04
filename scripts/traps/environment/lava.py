@@ -10,7 +10,7 @@ class Lava(Trap):
         self.light_level = 10
         self.light_source = self.game.light_handler.Add_Light(self.pos, self.light_level, self.tile)
         self.fire_particle_cooldown = 0
-        self.slow_down_amount = 4
+        self.slow_amount = 4
         
         
 
@@ -28,7 +28,7 @@ class Lava(Trap):
         for entity in self.entities:
             if not self.rect().colliderect(entity.rect()):
                 self.entities.remove(entity)
-                entity.Remove_Effect('slow_down', self.slow_down_amount)
+                entity.Remove_Effect('slow', self.slow_amount)
                 continue
             
             if entity.effects.invulnerable.effect:
@@ -42,7 +42,7 @@ class Lava(Trap):
     def Add_Entity_To_Trap(self, entity):
         if not super().Add_Entity_To_Trap(entity):
             return False
-        entity.Set_Effect('slow_down', self.slow_down_amount)
+        entity.Set_Effect('slow', self.slow_amount)
         return True
 
 

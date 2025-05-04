@@ -44,6 +44,9 @@ class Door(Decoration):
         if generate_clatter:
             self.game.clatter.Generate_Clatter(self.pos, 700) # Generate clatter to alert nearby enemies
         self.game.decoration_handler.Remove_Decoration(self)
+        self.game.sound_handler.Play_Sound('door_open', 1)
+
+
     
 
 

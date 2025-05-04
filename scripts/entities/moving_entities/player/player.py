@@ -50,6 +50,7 @@ class Player(Moving_Entity):
         super().Save_Data()
         self.saved_data['souls'] = self.souls
         self.saved_data['max_speed'] = self.max_speed
+        self.saved_data['last_shrine_visited'] = self.last_shrine_visited 
 
 
     
@@ -60,6 +61,7 @@ class Player(Moving_Entity):
         super().Load_Data(data)
         self.souls = data['souls']
         self.max_speed = data['max_speed']
+        self.last_shrine_visited = data['last_shrine_visited']
 
         
 

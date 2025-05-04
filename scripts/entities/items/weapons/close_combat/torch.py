@@ -33,6 +33,13 @@ class Torch(Weapon):
         self.fire_particle_cooldown -= 1
         return
     
+    def Set_Attack(self):
+        if not super().Set_Attack():
+            return False
+        self.game.sound_handler.Play_Sound('torch_attack', 0.5)
+        return True
+
+
     def Update_Animation(self):
         self.Spawn_Fire_Particle()
         if self.animation_cooldown:
