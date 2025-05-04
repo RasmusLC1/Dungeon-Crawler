@@ -3,7 +3,6 @@ from scripts.interface.inventory.inventory_slot import Inventory_Slot
 from scripts.interface.inventory.weapon_inventory.weapon_inventory_slot import Weapon_Inventory_Slot
 
 
-# TODO: Double clicking a second weapon into the weapon inventory deletes the existing one
 
 class Weapon_Inventory(Base_Inventory):
     def __init__(self, game, shared_inventory):
@@ -56,6 +55,13 @@ class Weapon_Inventory(Base_Inventory):
             self.active_inventory_slot.Remove_Active_Inventory()
         self.active_inventory_slot = inventory_slot
         inventory_slot.Set_Active_Inventory()
+
+    def Find_Free_Inventory_Slot(self):
+        for inventory_Slot in self.inventory:
+            if not inventory_Slot.item:
+                return inventory_Slot
+            
+        return None
 
     # Equip the weapon in the active inventory regardless of wether it's set or not
     # Worst case it just overrides existing, but it prevents the inventory from getting stuck

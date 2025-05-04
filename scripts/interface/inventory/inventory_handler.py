@@ -48,9 +48,7 @@ class Inventory_Handler():
             
             # Get the active_inventory_slot
             if isinstance(item_data, int):
-                active_inventory_slot = item_data
                 continue
-            
             if "inventory_index" not in item_data:
                 continue
             # Find correct slot
@@ -58,6 +56,7 @@ class Inventory_Handler():
             if not inventory_slot:
                 continue
             item = self.game.item_handler.Load_Item_From_Data(item_data)
+            print(item)
             if not item:
                 continue
             
@@ -67,10 +66,9 @@ class Inventory_Handler():
                 print("FAILED TO LOAD ITEM: ", item.type, inventory_slot)
             
             # self.weapon_inventory.Set_Active_Inventory_Slot()
-            lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
         self.rune_inventory.Add_Active_Runes()
 
-        self.weapon_inventory.Set_Active_Inventory_Slot(0)
+        # self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory[0])
 
     # General Update function
     def Update(self, offset=(0, 0)):
@@ -165,10 +163,11 @@ class Inventory_Handler():
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
             if not self.clicked_inventory_slot.item.sub_category == 'weapon':
                 return False
+            
+            # Transfer to the current active inventory_slot
             active_inventory_slot = self.weapon_inventory.active_inventory_slot
-            self.clicked_inventory_slot
 
-            if self.Swap_Item(active_inventory_slot):
+            if self.Swap_Item(active_inventory_slot, self.clicked_inventory_slot.item):
                 self.clicked_inventory_slot = None
                 return True
 
@@ -182,6 +181,7 @@ class Inventory_Handler():
             self.clicked_inventory_slot = None
             return True
         
+        self.active_item = None
         self.clicked_inventory_slot = None
         return False
 
@@ -286,7 +286,7 @@ class Inventory_Handler():
                 if inventory_slot.active:
                     return False
 
-                if self.Swap_Item(inventory_slot):
+                if self.Swap_Item(inventory_slot, self.active_item):
                     return True
 
                 if self.Move_Item(self.active_item, inventory_slot):
@@ -316,27 +316,29 @@ class Inventory_Handler():
         return True
 
 
-    def Swap_Item(self, inventory_slot):
-        if inventory_slot.item:
-            item_holder = inventory_slot.item  # Store item to be swapped
-            self.clicked_inventory_slot.Reset_Inventory_Slot()
-            inventory_slot.Reset_Inventory_Slot()
+    def Swap_Item(self, receiving_inventory_slot, item_being_moved):
+        if not receiving_inventory_slot.item:
+            return False
+        
 
-            # Move original item to active inventory slot
-            self.clicked_inventory_slot.Add_Item(item_holder)
+        item_holder = receiving_inventory_slot.item  # Store item to be swapped
+        self.clicked_inventory_slot.Reset_Inventory_Slot()
+        receiving_inventory_slot.Reset_Inventory_Slot()
 
-            self.clicked_inventory_slot = None  # Clear clicked slot
+        # Move original item to active inventory slot
+        self.clicked_inventory_slot.Add_Item(item_holder)
 
-            # Move active item into the new slot
-            inventory_slot.Add_Item(self.active_item)
+        self.clicked_inventory_slot = None  # Clear clicked slot
 
-            self.weapon_inventory.Equip_Weapon()
+        # Move active item into the new slot
+        receiving_inventory_slot.Add_Item(item_being_moved)
+
+        self.weapon_inventory.Equip_Weapon()
 
 
-            self.active_item = None  # Clear active item
-            return True
+        self.active_item = None  # Clear active item
+        return True
 
-        return False
 
 
 

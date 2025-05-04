@@ -61,11 +61,15 @@ class Rune_Handler():
 
         return self.saved_data
     
+    # TODO: REWRITE to handle rune spawning better, problem is that the data
+    # is not currently handled correctly, use loot_handler as example
     def Load_Data(self, data):
+        print("RUNE", data)
         if not self.runes:
             self.Rune_Spawner()
 
         for ID, rune_data in data.items():
+            print("TESTTEST", ID)
             if not rune_data:
                 continue
             
@@ -86,9 +90,12 @@ class Rune_Handler():
                     if rune.type == active_rune.type:
                         return
                 self.active_runes.append(rune)
+                return rune
 
             except Exception as e:
                 print(f"Wrong loaded data{e}", rune_data, ID)
+        
+        return None
 
     
     def Update(self, offset = (0,0)):
