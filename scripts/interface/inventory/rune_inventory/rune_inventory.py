@@ -3,15 +3,6 @@ from scripts.interface.inventory.inventory_slot import Inventory_Slot
 
 class Rune_Inventory(Base_Inventory):
 
-    def Append_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.inventory_dic:
-            self.inventory_dic[inventory_slot.index] = []  # Initialize if not present
-        
-        self.inventory_dic[inventory_slot.index].append(inventory_slot)
-        
 
     def Setup(self):
         symbols = ['z', 'x', 'c']
@@ -33,41 +24,31 @@ class Rune_Inventory(Base_Inventory):
     
     # Initialise the active runes
     def Add_Active_Runes(self):
+        return
         for rune in self.game.rune_handler.active_runes:
             self.shared_inventory_dic[rune.inventory_index].Add_Item(rune)
 
     def Replace_Rune(self, old_rune, new_rune):
         # Find the corresponding inventory slot
-        for inventory_slot in self.shared_inventory:
-            if not inventory_slot.item:
-                continue
+        inventory_slot = self.Find_Item_Inventory_Slot_ID(old_rune.ID)
 
-            if inventory_slot.item.type != old_rune.type:
-                continue
-            print(inventory_slot)
-
-            # Replace with the new rune
-            inventory_slot.item = new_rune
-
-            # Ensure the new rune is added to the dictionary
-            if new_rune.type not in self.inventory_dic:
-                self.inventory_dic[new_rune.type] = []
-
-            self.inventory_dic[new_rune.type].append(inventory_slot)
-
-            return True  # Successfully replaced the rune
+        if not inventory_slot:
+            return False
+        
+        return inventory_slot.Add_Item(new_rune)
 
     def Update_Descriptions(self):
-        for slot_list in self.inventory_dic.values():  # Each value is a list of slots
-            for inventory_slot in slot_list:  # Iterate through the list
-                if inventory_slot and inventory_slot.item:
-                    inventory_slot.item.Update_Description()
+        for inventory_slot in self.inventory:  # Each value is a list of slots
+            item = inventory_slot.item
+            if not item:
+                continue
+            item.Update_Description()
 
 
 
     
     def Add_Item(self, item):
-        for inventory_slot in self.shared_inventory:
+        for inventory_slot in self.inventory:
             if inventory_slot.item:
                 continue
             if not inventory_slot.Add_Item(item):
@@ -75,15 +56,6 @@ class Rune_Inventory(Base_Inventory):
             
             self.game.item_handler.Remove_Item(item)
             
-            try:
-                # Update inventory dictionary
-                if item.type not in self.inventory_dic or not isinstance(self.inventory_dic[item.type], list):
-                    self.inventory_dic[item.type] = []
-
-    
-                self.inventory_dic[item.type].append(inventory_slot)
-            except Exception as e:
-                print("FAILED TO ADD ITEM", e, item, self.inventory_dic)
             inventory_slot.item.Update()
             item.Remove_Tile()
             return True

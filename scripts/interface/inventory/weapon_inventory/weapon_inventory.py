@@ -11,14 +11,6 @@ class Weapon_Inventory(Base_Inventory):
         self.max_active_index = None
         super().__init__(game, shared_inventory, shared_inventory_dic)
 
-    def Append_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.inventory_dic:
-            self.inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
-        
-        self.inventory_dic[inventory_slot.item.type].append(inventory_slot)
         
 
     def Setup(self):

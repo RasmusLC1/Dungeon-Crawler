@@ -3,16 +3,6 @@ from scripts.interface.inventory.inventory_slot import Inventory_Slot
 
 class Item_Inventory(Base_Inventory):
 
-    def Append_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.inventory_dic:
-            self.inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
-        
-        self.inventory_dic[inventory_slot.item.type].append(inventory_slot)
-        
-
     def Setup(self):
         for i in range(9):
             (x, y) = self.Set_Inventory_Slot_Pos(i)
@@ -35,16 +25,24 @@ class Item_Inventory(Base_Inventory):
                     
         return self.Add_Item_To_Inventory_Slot(item)
 
+    def Remove_Item(self, item):
+        inventory_slot = self.Find_Item_Inventory_Slot_ID(item.ID)
+        if not inventory_slot:
+            return False
+        
+        self.Remove_Item_From_Inventory(inventory_slot)
 
     # Merges items into existing slots if possible
     def Add_Item_To_Inventory_Slot_Merge(self, item):
         if item.max_amount <= 1:
             return False  # Can't merge single-stack items
-        # Check if this item type is already in the dictionary
-        if not item.type in self.inventory_dic:
+        # Check if this item type is already in the inventory, return false
+        # if not return False
+        inventory_slots_with_type = self.Find_Inventory_Slots_With_Type(item.type)
+        if not inventory_slots_with_type:
             return False
 
-        for inventory_slot in self.inventory_dic[item.type]:  
+        for inventory_slot in inventory_slots_with_type:  
             if not inventory_slot.item or inventory_slot.item.amount >= inventory_slot.item.max_amount:
                 continue
 
@@ -70,10 +68,11 @@ class Item_Inventory(Base_Inventory):
     
 
     def Find_Arrow(self):
-        inventory_slots = self.inventory_dic.get('arrow')
+        inventory_slots = self.Find_Inventory_Slots_With_Type('arrow')
 
         if not inventory_slots:
             return False
+        
         inventory_slot = inventory_slots[0]
         inventory_slot.item.Decrease_Amount(1)
         
@@ -84,15 +83,11 @@ class Item_Inventory(Base_Inventory):
     
     def Find_Loot(self):
         loot_items = []
-        for item_type, inventory_slots in self.inventory_dic.items():
-            if not isinstance(inventory_slots, (list, tuple)):
-                print(f"Expected list, got {type(inventory_slots)} for key: {item_type}")
+        for inventory_slot in self.inventory:
+            item = inventory_slot.item
+            if not item:
                 continue
-            for inventory_slot in inventory_slots:
-                item = inventory_slot.item
-                if not item:
-                    continue
-                if item.sub_category == 'loot':
+            if item.sub_category == 'loot':
                     loot_items.append(item)
 
         return loot_items
@@ -101,19 +96,18 @@ class Item_Inventory(Base_Inventory):
 
     
     def Revive(self):
-        for slot_list in self.inventory_dic.values():  # Each value is a list of slots
-            for inventory_slot in slot_list:  # Iterate through the list
-                item = inventory_slot.item
-                if not item:
-                    continue
-                if hasattr(item, "Revive") and callable(getattr(item, "Revive")):
-                    if item.Revive():
-                        return True
+        for inventory_slot in self.inventory:
+            item = inventory_slot.item
+            if not item:
+                continue
+            if hasattr(item, "Revive") and callable(getattr(item, "Revive")):
+                if item.Revive():
+                    return True
                 
         return False
     
     def Check_Gold_In_Inventory(self):
-        gold_inventory_slots = self.inventory_dic.get("gold")
+        gold_inventory_slots = self.Find_Inventory_Slots_With_Type("gold")
         if not gold_inventory_slots:
             return 0
         
@@ -131,7 +125,7 @@ class Item_Inventory(Base_Inventory):
     # Places an item in an empty slot if merging is not possible
     def Add_Item_To_Inventory_Slot(self, item):
 
-        for inventory_slot in self.shared_inventory:
+        for inventory_slot in self.inventory:
             if inventory_slot.item:
                 continue
             if not inventory_slot.Add_Item(item):
@@ -139,15 +133,6 @@ class Item_Inventory(Base_Inventory):
             
             self.game.item_handler.Remove_Item(item)
             
-            try:
-                # Update inventory dictionary
-                if item.type not in self.inventory_dic or not isinstance(self.inventory_dic[item.type], list):
-                    self.inventory_dic[item.type] = []
-
-
-                self.inventory_dic[item.type].append(inventory_slot)
-            except Exception as e:
-                print("FAILED TO ADD ITEM", e, item, self.inventory_dic)
             inventory_slot.item.Update()
             return True
         

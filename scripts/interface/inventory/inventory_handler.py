@@ -13,8 +13,8 @@ class Inventory_Handler():
         self.click_cooldown = 0
         self.clicked_inventory_slot = None
         self.inventory = [] # General shared inventory
-        self.inventory_dic = {}
 
+        self.inventory_dic = {}
         self.item_inventory = Item_Inventory(game, self.inventory, self.inventory_dic)
         self.weapon_inventory = Weapon_Inventory(game, self.inventory, self.inventory_dic)
         self.rune_inventory = Rune_Inventory(game, self.inventory, self.inventory_dic)
@@ -108,13 +108,17 @@ class Inventory_Handler():
             inventory_slot.Update_Pos(pos)
 
     def Clear_Inventory(self):
-        for inventory_slot in self.inventory:
-            inventory_slot.Remove_Item()
+        self.item_inventory.Clear_Inventory()
+        self.weapon_inventory.Clear_Inventory()
+        self.rune_inventory.Clear_Inventory()
 
 
     def Increment_Weapon_Inventory(self):
         self.weapon_inventory.Mouse_Scroll_Update_Active_Inventory()
 
+
+    def Remove_Item(self, item):
+        self.item_inventory.Remove_Item(item)
 
     # Activates when mouse has been held down for 10 ticks and
     # the inventory slot is not active anymore 
@@ -215,12 +219,15 @@ class Inventory_Handler():
         self.game.mouse.Set_Inventory_Clicked(10)
         return True
 
+    def Find_Inventory_Slot(self, index):
+        return self.inventory[index]
+
     # Return the item to its previous Inventory slot and deactivate the item and slot
     def Return_Item(self):
         if self.clicked_inventory_slot:
             if not self.clicked_inventory_slot.item:  # Ensure slot is empty before returning item
                 self.Move_Item(self.active_item, self.clicked_inventory_slot)
-                self.item_inventory.inventory_dic[self.active_item.type] = self.clicked_inventory_slot.index  # Update inventory dictionary
+                # inventory_slot = self.item_inventory.Find_Item_Inventory_Slot_ID(self.active_item.ID)
                 self.active_item = None
                 self.clicked_inventory_slot = None
             else:
@@ -241,12 +248,10 @@ class Inventory_Handler():
     # Places an item down from the inventory
     def Place_Down_Item(self):
         if self.active_item.Place_Down():
-            inventory_slots = self.item_inventory.inventory_dic.get(self.active_item.type)
+            inventory_slot = self.item_inventory.Find_Item_Inventory_Slot_ID(self.active_item.ID)
             
-            if inventory_slots:
-                first_slot = next((slot for slot in inventory_slots if slot.item), None)
-                if first_slot:
-                    self.item_inventory.Remove_Item_From_Inventory(first_slot)
+            if inventory_slot:
+                self.item_inventory.Remove_Item_From_Inventory(inventory_slot)
             
             self.game.item_handler.Add_Item(self.active_item)
             self.active_item.picked_up = False
@@ -255,17 +260,6 @@ class Inventory_Handler():
         self.active_item = None
 
 
-    def Reset_Inventory_Dic_Slot(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        type = inventory_slot.item.type
-        
-        if self.item_inventory.Clear_Inventory_Dic_Slot(type):
-            return
-        elif self.rune_inventory.Clear_Inventory_Dic_Slot(type):
-            return
-        elif self.weapon_inventory.Clear_Inventory_Dic_Slot(type):
-            return
 
     # Set the inventory to be inactive again
     def Reset_Inventory_Slot(self):
@@ -277,9 +271,6 @@ class Inventory_Handler():
         if self.clicked_inventory_slot.type == 'weapon':
             self.game.player.Remove_Active_Weapon()
 
-        if self.clicked_inventory_slot.item:
-            self.Reset_Inventory_Dic_Slot(self.clicked_inventory_slot)
-            
         self.clicked_inventory_slot.item = None
         self.clicked_inventory_slot = None
 
@@ -349,20 +340,6 @@ class Inventory_Handler():
         return False
 
 
-    def Remove_Item(self, item):
-        # Ensure item is in the inventory
-        inventory_slot = self.inventory_dic.get(item.inventory_index)
-    
-        if not inventory_slot:  
-            return False  # Item not found or slot is None
-
-        
-
-        self.inventory_dic.pop(inventory_slot.item.type, None)
-        inventory_slot.Set_Active(False)  # Deactivate the slot
-        inventory_slot.Remove_Item()
-
-        return True
 
     def Active_Item(self, offset=(0, 0)):
         if not self.active_item:
@@ -390,8 +367,6 @@ class Inventory_Handler():
                 self.game.player.pos, self.game.mouse.mpos, self.game.display, offset
             )
 
-    def Find_Inventory_Slot(self, index):
-        return self.inventory_dic.get(index)
 
     def Overflow(self, item):
         empty_slots = {i: slot for i, slot in enumerate(self.inventory) if not slot.item}
