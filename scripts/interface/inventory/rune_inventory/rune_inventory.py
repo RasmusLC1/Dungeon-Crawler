@@ -25,8 +25,8 @@ class Rune_Inventory(Base_Inventory):
     # Initialise the active runes
     def Add_Active_Runes(self):
         return
-        for rune in self.game.rune_handler.active_runes:
-            self.shared_inventory_dic[rune.inventory_index].Add_Item(rune)
+        # for rune in self.game.rune_handler.active_runes:
+        #     self.shared_inventory_dic[rune.inventory_index].Add_Item(rune)
 
     def Replace_Rune(self, old_rune, new_rune):
         # Find the corresponding inventory slot

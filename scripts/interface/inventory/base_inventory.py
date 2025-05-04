@@ -1,11 +1,10 @@
 
 
 class Base_Inventory():
-    def __init__(self, game, shared_inventory, shared_inventory_dic):
+    def __init__(self, game, shared_inventory):
         self.game = game
         self.size = (34, 34)
         self.shared_inventory = shared_inventory
-        self.shared_inventory_dic = shared_inventory_dic
         self.inventory = []
 
         self.Setup()
@@ -54,9 +53,6 @@ class Base_Inventory():
     # Clears the item from the inventory and removes it from the dictionary
     def Remove_Item_From_Inventory(self, inventory_slot):
 
-        # Remove from shared dictionary (if needed)
-        self.shared_inventory_dic.pop(inventory_slot.index, None)
-        
         # Remove the item from the game
         self.game.item_handler.Remove_Item(inventory_slot.item, True)
         
@@ -67,4 +63,3 @@ class Base_Inventory():
     def Add_Inventory_Slot(self, inventory_slot):
         self.shared_inventory.append(inventory_slot)
         self.inventory.append(inventory_slot)
-        self.shared_inventory_dic[inventory_slot.index] = inventory_slot

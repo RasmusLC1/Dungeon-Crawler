@@ -14,11 +14,10 @@ class Inventory_Handler():
         self.clicked_inventory_slot = None
         self.inventory = [] # General shared inventory
 
-        self.inventory_dic = {}
-        self.item_inventory = Item_Inventory(game, self.inventory, self.inventory_dic)
-        self.weapon_inventory = Weapon_Inventory(game, self.inventory, self.inventory_dic)
-        self.rune_inventory = Rune_Inventory(game, self.inventory, self.inventory_dic)
-        self.keyboard_inventory = Keyboard_Inventory(game, self.inventory, self.inventory_dic)
+        self.item_inventory = Item_Inventory(game, self.inventory)
+        self.weapon_inventory = Weapon_Inventory(game, self.inventory)
+        self.rune_inventory = Rune_Inventory(game, self.inventory)
+        self.keyboard_inventory = Keyboard_Inventory(game, self.inventory)
         self.saved_data = {}
         
     
@@ -71,7 +70,7 @@ class Inventory_Handler():
             lookup_dic.get(inventory_slot.type).Append_Inventory_Dic(inventory_slot)
         self.rune_inventory.Add_Active_Runes()
 
-        self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory_dic.get(active_inventory_slot))
+        self.weapon_inventory.Set_Active_Inventory_Slot(0)
 
     # General Update function
     def Update(self, offset=(0, 0)):

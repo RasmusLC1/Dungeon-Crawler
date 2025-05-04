@@ -3,13 +3,14 @@ from scripts.interface.inventory.inventory_slot import Inventory_Slot
 from scripts.interface.inventory.weapon_inventory.weapon_inventory_slot import Weapon_Inventory_Slot
 
 
+# TODO: Double clicking a second weapon into the weapon inventory deletes the existing one
 
 class Weapon_Inventory(Base_Inventory):
-    def __init__(self, game, shared_inventory, shared_inventory_dic):
+    def __init__(self, game, shared_inventory):
         self.active_inventory_slot = None
         self.current_active_index = None
         self.max_active_index = None
-        super().__init__(game, shared_inventory, shared_inventory_dic)
+        super().__init__(game, shared_inventory)
 
         
 
@@ -36,8 +37,18 @@ class Weapon_Inventory(Base_Inventory):
             self.current_active_index -= 1
         else:
             self.current_active_index += 1 
+        inventory_slot = self.Find_Inventory_Slot_By_Index(self.current_active_index)
+        if not inventory_slot:
+            print("Wrong inventory slot in weapon inventory", inventory_slot, self.inventory)
+            return False
+        self.Set_Active_Inventory_Slot(inventory_slot)
 
-        self.Set_Active_Inventory_Slot(self.shared_inventory_dic[self.current_active_index])
+    def Find_Inventory_Slot_By_Index(self, index):
+        for inventory_slot in self.inventory:
+            if inventory_slot.index == index:
+                return inventory_slot
+
+        return None 
 
     # Set the new inventory slot and reset previous one
     def Set_Active_Inventory_Slot(self, inventory_slot):
