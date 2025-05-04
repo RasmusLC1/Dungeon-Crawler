@@ -1,7 +1,6 @@
 class Keyboard_Inventory():
-    def __init__(self, game, shared_inventory, shared_inventory_dic):
+    def __init__(self, game, shared_inventory):
         self.inventory = shared_inventory
-        self.shared_inventory_dic = shared_inventory_dic
         self.game = game
     
     def Key_Board_Input(self):
@@ -46,8 +45,20 @@ class Keyboard_Inventory():
                 return -999
 
 
+    def Find_Inventory_Slot_By_Index(self, index):
+        for inventory_slot in self.inventory:
+            if inventory_slot.index == index:
+                return inventory_slot
+
+        return None 
+
     def Activate_Inventory_Slot(self, index):
-        inventory_slot = self.shared_inventory_dic[index]
-        if inventory_slot.item:
-            inventory_slot.item.Activate()
-            inventory_slot.Update()
+        inventory_slot = self.Find_Inventory_Slot_By_Index(index)
+        if not inventory_slot:
+            return
+        
+        if not inventory_slot.item:
+            return
+        
+        inventory_slot.item.Activate()
+        inventory_slot.Update()

@@ -41,7 +41,7 @@ class Item_Handler():
             elif item_data['sub_category'] == 'loot':
                 item = self.loot_handler.Loot_Loader(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'rune':
-                self.game.rune_handler.Load_Data(item_data)
+                item = self.game.rune_handler.Load_Data(item_data)
             else:
                 return None
             

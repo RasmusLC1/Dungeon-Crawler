@@ -5,20 +5,12 @@ from scripts.interface.inventory.weapon_inventory.weapon_inventory_slot import W
 
 
 class Weapon_Inventory(Base_Inventory):
-    def __init__(self, game, shared_inventory, shared_inventory_dic):
+    def __init__(self, game, shared_inventory):
         self.active_inventory_slot = None
         self.current_active_index = None
         self.max_active_index = None
-        super().__init__(game, shared_inventory, shared_inventory_dic)
+        super().__init__(game, shared_inventory)
 
-    def Append_Inventory_Dic(self, inventory_slot):
-        if not inventory_slot.item:
-            return
-        # Ensure the type exists in the dictionary before appending
-        if inventory_slot.item.type not in self.inventory_dic:
-            self.inventory_dic[inventory_slot.item.type] = []  # Initialize if not present
-        
-        self.inventory_dic[inventory_slot.item.type].append(inventory_slot)
         
 
     def Setup(self):
@@ -44,8 +36,18 @@ class Weapon_Inventory(Base_Inventory):
             self.current_active_index -= 1
         else:
             self.current_active_index += 1 
+        inventory_slot = self.Find_Inventory_Slot_By_Index(self.current_active_index)
+        if not inventory_slot:
+            print("Wrong inventory slot in weapon inventory", inventory_slot, self.inventory)
+            return False
+        self.Set_Active_Inventory_Slot(inventory_slot)
 
-        self.Set_Active_Inventory_Slot(self.shared_inventory_dic[self.current_active_index])
+    def Find_Inventory_Slot_By_Index(self, index):
+        for inventory_slot in self.inventory:
+            if inventory_slot.index == index:
+                return inventory_slot
+
+        return None 
 
     # Set the new inventory slot and reset previous one
     def Set_Active_Inventory_Slot(self, inventory_slot):
@@ -53,6 +55,13 @@ class Weapon_Inventory(Base_Inventory):
             self.active_inventory_slot.Remove_Active_Inventory()
         self.active_inventory_slot = inventory_slot
         inventory_slot.Set_Active_Inventory()
+
+    def Find_Free_Inventory_Slot(self):
+        for inventory_Slot in self.inventory:
+            if not inventory_Slot.item:
+                return inventory_Slot
+            
+        return None
 
     # Equip the weapon in the active inventory regardless of wether it's set or not
     # Worst case it just overrides existing, but it prevents the inventory from getting stuck

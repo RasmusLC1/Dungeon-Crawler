@@ -61,34 +61,27 @@ class Rune_Handler():
 
         return self.saved_data
     
+    
     def Load_Data(self, data):
         if not self.runes:
             self.Rune_Spawner()
-
-        for ID, rune_data in data.items():
-            if not rune_data:
-                continue
             
-            if not ID in self.runes:
-                continue
-            try:
-                rune = self.runes.get(ID)
-                if not rune:
-                    print("RUNE MISSING", rune_data, ID)
-                    return
-                rune.Load_Data(rune_data)
-                self.game.item_handler.Add_Item(rune)
+        if not data:
+            return None
+        
+        type = data.get("type")
 
-                if not rune.active:
-                    continue
+        if not type:
+            return None
+        rune = self.runes.get(type)
+        
+        if not rune:
+            return None
+        
+        rune.Load_Data(data)
+        self.active_runes.append(rune)
 
-                for active_rune in self.active_runes:
-                    if rune.type == active_rune.type:
-                        return
-                self.active_runes.append(rune)
-
-            except Exception as e:
-                print(f"Wrong loaded data{e}", rune_data, ID)
+        return rune
 
     
     def Update(self, offset = (0,0)):
