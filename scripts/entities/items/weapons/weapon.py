@@ -152,9 +152,7 @@ class Weapon(Item):
         self.Set_Rotation()
         self.rotate += 90
         
-        
-        
-        if self.entity.distance_to_player > self.game.tilemap.tile_size:
+        if self.entity.distance_to_player > self.game.tilemap.tile_size * 1.5:
             return
         self.Entity_Hit(self.game.player)
         
@@ -255,6 +253,13 @@ class Weapon(Item):
         if player_collision_result:
             return player_collision_result
 
+        enemy_hit = self.Enemy_Collision()        
+        if enemy_hit:
+            return enemy_hit
+
+        return None
+    
+    def Enemy_Collision(self):
         for enemy in self.nearby_enemies:
             # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:
@@ -265,9 +270,7 @@ class Weapon(Item):
                 # Return enemy in case further effects need to be added such as knockback
                 return enemy
             
-
         return None
-    
 
      # Initialise special attack
     def Set_Special_Attack(self, offset = (0, 0)):
@@ -313,7 +316,7 @@ class Weapon(Item):
             return
         
         self.Check_Effects(damage, entity)
-
+    
     def Check_Effects(self, damage, entity):
         # Check if weapon is vampiric first, to avoid double healing
         if self.effect == "vampiric":
