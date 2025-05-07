@@ -76,7 +76,7 @@ class Fire_Spirit(Enemy):
 
             self.look_for_health_cooldown = 2000
 
-            nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self.pos, 200)
+            nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, 200)
             for trap in nearby_traps:
 
                 if trap.type == 'Lava_env':
