@@ -13,7 +13,7 @@ from scripts.entities.items.potions.potion_handler import Potion_Handler
 
 class Chest(Decoration):
     def __init__(self, game, pos, version) -> None:
-        super().__init__(game, 'chest', pos, (32, 32))
+        super().__init__(game, 'chest', pos, (32, 32), True, 5)
         self.version = version
         self.loot_type = 0
         self.empty = False
@@ -39,8 +39,6 @@ class Chest(Decoration):
         ]
 
 
-    
-
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['version'] = self.version
@@ -52,8 +50,6 @@ class Chest(Decoration):
         self.version = data['version']
         self.empty = data['empty']
 
-
-
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
@@ -61,6 +57,18 @@ class Chest(Decoration):
         if self.empty:
             return
         
+        self.Drop_Loot()
+        
+        # self.empty = True
+        self.game.decoration_handler.Remove_Decoration(self)
+
+        self.text_cooldown = 30
+        self.game.item_handler.Reset_Nearby_Items_Cooldown()
+        self.game.sound_handler.Play_Sound('chest_open', 0.1)
+
+        self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
+
+    def Drop_Loot(self):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
         self.loot_type = random.randint(5, 6) # Spawn normal
@@ -78,20 +86,10 @@ class Chest(Decoration):
                 self.game.item_handler.loot_handler.Spawn_Passive(rand_pos_x, rand_pos_y)
             else:
                 self.game.item_handler.loot_handler.Spawn_Utility(rand_pos_x, rand_pos_y)
-
         # Call itself redcursively if it should fail
         else:
-            self.Open()
+            self.Drop_Loot()
             return
-        
-        # self.empty = True
-        self.game.decoration_handler.Remove_Decoration(self)
-
-        self.text_cooldown = 30
-        self.game.item_handler.Reset_Nearby_Items_Cooldown()
-        self.game.sound_handler.Play_Sound('chest_open', 0.15)
-
-        self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
 
     def Potion_Spawner(self):
         rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
@@ -108,6 +106,15 @@ class Chest(Decoration):
         weapon_index = random.randint(0, len(self.weapons) - 1)
         loot_amount = min(20, max(self.loot_amount // 5, 3))
         return self.weapon_handler.Weapon_Spawner(self.weapons[weapon_index], rand_pos_x, rand_pos_y, loot_amount)
+
+    def Destroyed(self):
+        if self.health > 0:
+            return
+        self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+        self.game.decoration_handler.Remove_Decoration(self)
+        self.game.sound_handler.Play_Sound('chest_break', 0.2)
+
+        self.Drop_Loot()
 
 
     def Reduce_Active(self):

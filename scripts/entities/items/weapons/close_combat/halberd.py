@@ -53,7 +53,7 @@ class Halberd(Weapon):
         new_y_pos = self.entity.pos[1] + self.entity.attack_direction[1] * 10
         self.Move((new_x_pos, new_y_pos))
         self.enemy_hit = False
-        self.Attack_Collision_Check()
+        self.Player_Attack_Collision_Check()
         return True
     
     # Initialise the charge logic

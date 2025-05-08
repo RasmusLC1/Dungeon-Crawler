@@ -13,12 +13,16 @@ class Audio_Loader:
 
     def Chest_Effects(self):
         chest_effects ={
-            'chest_open' : pygame.mixer.Sound('data/sounds/decorations/chest_open.wav'),
+            'chest_open' : pygame.mixer.Sound('data/sounds/decorations/chest/chest_open.wav'),
+            'chest_break' : pygame.mixer.Sound('data/sounds/decorations/chest/chest_break.wav'),
+            'vase_break' : pygame.mixer.Sound('data/sounds/decorations/chest/vase_break.wav'),
             'door_open' : pygame.mixer.Sound('data/sounds/decorations/door_open.wav'),
             'boss_spawning' : pygame.mixer.Sound('data/sounds/decorations/shrine/boss_spawning.wav'),
         }
         self.sfx.update(chest_effects)
         self.sfx['chest_open'].set_volume(0.1)
+        self.sfx['chest_break'].set_volume(0.2)
+        self.sfx['vase_break'].set_volume(0.2)
         self.sfx['door_open'].set_volume(0.4)
         self.sfx['boss_spawning'].set_volume(0.4)
 

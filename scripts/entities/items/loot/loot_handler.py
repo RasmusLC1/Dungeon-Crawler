@@ -60,23 +60,23 @@ class Loot_Handler():
         ]
 
         self.utility_types = [
-            # 'echo_bell',
-            # 'shadow_cloak',
-            # 'faded_hourglass',
+            'echo_bell',
+            'shadow_cloak',
+            'faded_hourglass',
             'ethereal_chains',
-            # 'recall_scroll'
+            'recall_scroll'
         ]
 
         self.passive_types = [
-            # 'lantern',
-            # 'anchor_stone',
-            # 'magnet',
-            # 'strength_totem',
-            # 'power_totem',
-            # 'muffled_boots',
-            # 'halo',
-            # 'faith_pendant',
-            # 'lucky_charm',
+            'lantern',
+            'anchor_stone',
+            'magnet',
+            'strength_totem',
+            'power_totem',
+            'muffled_boots',
+            'halo',
+            'faith_pendant',
+            'lucky_charm',
             'echo_sigil',
         ]
 

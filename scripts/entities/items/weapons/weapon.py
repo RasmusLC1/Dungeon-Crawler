@@ -33,6 +33,7 @@ class Weapon(Item):
         self.enemy_hit = False # Prevent double damage on attacks
         self.rotate = 0 # Rotation value of weapon
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
+        self.nearby_decoration = [] # Nearby decoration that the weapon can interact with
         # Can be expanded to damaged or dirty versions of weapons later
         self.weapon_class = weapon_class # Determines how it's wielded, one or two hand, bow, etc
         self.charge_time = 0  # Tracks how long the button is held
@@ -116,7 +117,7 @@ class Weapon(Item):
             return False
         self.Update_Attack_Animation()
         self.Update_Attack_Effect_Animation()
-        self.Attack_Collision_Check()
+        self.Player_Attack_Collision_Check()
         self.Attack_Align_Weapon()
         if not self.entity:
             return False
@@ -133,6 +134,8 @@ class Weapon(Item):
         self.attack_animation_time = int(self.attacking / self.attack_animation_max)
         self.charge_time = 0  # Reset charge time
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
+        self.nearby_decoration = self.game.decoration_handler.Find_Nearby_Decorations(self.entity.pos, 3)
+
         if self.entity.category == "enemy":
             self.nearby_enemies.append(self.game.player)
         self.Set_Attack_Effect_Animation_Time()
@@ -239,7 +242,7 @@ class Weapon(Item):
         return True
         
     # Check for collision on attack
-    def Attack_Collision_Check(self):
+    def Player_Attack_Collision_Check(self):
         # Check if the weapon has already hit an enemy this attack
         if self.enemy_hit:
             return None
@@ -256,8 +259,8 @@ class Weapon(Item):
         enemy_hit = self.Enemy_Collision()        
         if enemy_hit:
             return enemy_hit
+        return self.Decoration_Collision()
 
-        return None
     
     def Enemy_Collision(self):
         for enemy in self.nearby_enemies:
@@ -271,6 +274,19 @@ class Weapon(Item):
                 return enemy
             
         return None
+    
+    def Decoration_Collision(self):
+        for decoration in self.nearby_decoration:
+            # Check if the decoration can be damaged
+            if not decoration.destructable:
+                continue
+            # Check for collision with enemy
+            if self.attack_hitbox.colliderect(decoration.rect()):
+                decoration.Damage_Taken(self.Calculate_Damage(), self.effect)
+                return decoration
+        
+        return None
+
 
      # Initialise special attack
     def Set_Special_Attack(self, offset = (0, 0)):
@@ -296,6 +312,7 @@ class Weapon(Item):
     def Set_Charging_Player(self):
         # Detect if the player is holding down the button
         self.is_charging = self.game.mouse.hold_down_left
+
     def Calculate_Damage(self):
         return self.entity.strength * self.damage
 

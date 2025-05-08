@@ -4,11 +4,13 @@ from scripts.entities.entities import PhysicsEntity
 
 
 class Decoration(PhysicsEntity):
-    def __init__(self, game, type, pos, size) -> None:
+    def __init__(self, game, type, pos, size, destructable = False, health = 0) -> None:
         super().__init__(game, type, 'decoration', pos, size)
         self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
         self.light_level = 10
         self.animation = 0
+        self.destructable = destructable
+        self.health = health
         self.Set_Sprite()
 
 
@@ -27,6 +29,23 @@ class Decoration(PhysicsEntity):
     def Set_Entity_Image(self):
         entity_image = self.sprite[self.animation].convert_alpha()
         self.entity_image = pygame.transform.scale(entity_image, self.size)
+
+    def Damage_Taken(self, damage, effect):
+        if not self.health:
+            return
+
+        # Double damage for blunt weapons
+        if effect == 'blunt':
+            damage *= 2
+
+        self.health -= damage
+        print("CHEST HIT", self.health)
+        if self.health <= 0:
+            self.Destroyed()
+        
+    def Destroyed(self):
+        pass
+        
 
 
     def Render(self, surf, offset = (0,0)):
