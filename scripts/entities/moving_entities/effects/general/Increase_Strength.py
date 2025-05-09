@@ -1,6 +1,4 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import pygame
-import random
 
 # Increase entity's strength
 class Increase_Strength(Effect):

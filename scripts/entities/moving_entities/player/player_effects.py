@@ -9,6 +9,7 @@ from scripts.entities.moving_entities.effects.player.player_movement_invunerable
 from scripts.entities.moving_entities.effects.player.power import Power
 from scripts.entities.moving_entities.effects.player.demonic_bargain import Demonic_Bargain
 from scripts.entities.moving_entities.effects.player.temptress_embrace import Temptress_Embrace
+from scripts.entities.moving_entities.effects.souls.increase_souls import Increase_Souls
 
 from scripts.entities.moving_entities.player.effect_icon import Effect_Icon
 
@@ -46,6 +47,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.power = Power(self.entity)
         self.demonic_bargain = Demonic_Bargain(self.entity)
         self.temptress_embrace = Temptress_Embrace(self.entity)
+        self.increase_souls = Increase_Souls(self.entity)
 
         self.effects.update({
             self.silence.effect_type: self.silence,
@@ -57,6 +59,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
             self.power.effect_type: self.power,
             self.demonic_bargain.effect_type: self.demonic_bargain,
             self.temptress_embrace.effect_type: self.temptress_embrace,
+            self.increase_souls.effect_type: self.increase_souls,
             'player_movement_invunerable': self.player_movement_invunerable
         })
 

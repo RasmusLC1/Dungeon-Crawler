@@ -82,6 +82,9 @@ class Chest(Decoration):
             rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
             # loot = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(60,60))
             random_val = random.randint(1, 2)
+
+            self.potion_handler.Spawn_Random_Potion((rand_pos_x, rand_pos_y))
+            return
             if random_val == 1:
                 self.game.item_handler.loot_handler.Spawn_Passive(rand_pos_x, rand_pos_y)
             else:
