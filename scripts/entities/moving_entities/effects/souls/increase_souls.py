@@ -1,7 +1,8 @@
 from scripts.entities.moving_entities.effects.effect import Effect
 import random
 
-# Heal entity
+# Increase player souls once
+# TODO: Verify it works
 class Increase_Souls(Effect):
     def __init__(self, entity):
         description = 'Increase Souls once'

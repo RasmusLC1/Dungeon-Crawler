@@ -7,7 +7,7 @@ from scripts.entities.entities import PhysicsEntity
 
 
 from scripts.entities.items.weapons.weapon_handler import Weapon_Handler
-from scripts.entities.items.potions.potion_handler import Potion_Handler
+from scripts.entities.items.loot.potions.potion_handler import Potion_Handler
 
 
 

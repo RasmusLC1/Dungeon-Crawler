@@ -11,11 +11,8 @@ class Potion(Item):
         self.strength = strength
         
         self.text_box = Potion_Textbox(self)
-        
-        self.description = (
-                            f"{self.effect} {self.amount}\n"
-                            f"gold {self.value}\n"
-                        )
+        self.Set_Description()
+    
 
     def Save_Data(self):
         super().Save_Data()
@@ -27,8 +24,11 @@ class Potion(Item):
         self.effect = data['effect']
         self.strength = data['strength']
 
-    def Update(self):
-        super().Update()
+    def Set_Description(self):
+        self.description = (
+                            f"{self.effect} {self.amount}\n"
+                            f"gold {self.value}\n"
+                        )
 
     def Set_Sprite(self):
         self.effect = self.type.replace('_potion', '')
@@ -44,8 +44,6 @@ class Potion(Item):
         elif self.amount == 3:
             self.sub_type = self.effect + '_full'
 
-    
-    
 
     def Activate(self):
         if not super().Activate():
@@ -53,5 +51,6 @@ class Potion(Item):
         if self.game.player.Set_Effect(self.effect, self.strength):
             self.Decrease_Amount(1)
             self.Update_Sub_Type()
+            self.Set_Description()
         if self.amount <= 0:
             self.used = True

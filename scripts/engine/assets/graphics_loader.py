@@ -418,6 +418,11 @@ class Graphics_Loader:
 
         potion_assets = {
             'empty_bottle' : get_tiles_from_sheet('Potions/Healing_potions/empty.png', 0, 0, 0, 0, 32, 32,),
+
+            'invisibility_full' : get_tiles_from_sheet('Potions/Healing_potions/empty.png', 0, 0, 0, 0, 32, 32,),
+            'invisibility_half' : get_tiles_from_sheet('Potions/Healing_potions/empty.png', 0, 0, 0, 0, 32, 32,),
+            'invisibility_low' : get_tiles_from_sheet('Potions/Healing_potions/empty.png', 0, 0, 0, 0, 32, 32,),
+
             
             'healing_full' : get_tiles_from_sheet('Potions/Healing_potions/healing_full.png', 2, 2, 0, 0, 32, 32,),
             'healing_half' : get_tiles_from_sheet('Potions/Healing_potions/healing_half.png', 2, 2, 0, 0, 32, 32,),

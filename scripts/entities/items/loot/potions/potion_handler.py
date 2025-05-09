@@ -1,4 +1,4 @@
-from scripts.entities.items.potions.potion import Potion
+from scripts.entities.items.loot.potions.potion import Potion
 
 import random
 
@@ -6,9 +6,6 @@ import random
 class Potion_Handler:
     def __init__(self, game):
         self.game = game
-        # Map part of the name (key) to the corresponding potion class (value)
-
-
         self.potions = [
             'healing',
             'regen',
@@ -54,24 +51,27 @@ class Potion_Handler:
             'arcane_hunger': 0.1,
         }
 
-        self.update_weight_counter = False
 
-    # TODO: Remove individual potions and consolidate into central potion
 
     def Update_Potion_Weights(self):
         weights = self.weights.copy()
         player = self.game.player
         
         weights = self.Adjust_By_Player_Health(weights, player)
+        weights = self.Adjust_By_Souls(weights, player)
 
         return weights
     
     def Adjust_By_Souls(self, weights, player):
-        if player.souls > 200:
+        max_amount = 300
+        if player.souls > max_amount:
             return weights
         
-        health_index = self.potions.index('healing')
+        soul_increase = max_amount - player.souls
+        weights['increase_souls'] += soul_increase / 400
+        weights['arcane_hunger'] += soul_increase / 400
 
+        return weights
 
 
     # Adjust the drop chance of healing potions if the players health is low
@@ -103,9 +103,6 @@ class Potion_Handler:
         self.game.item_handler.Add_Item(potion)
         
         return potion
-
-
-
 
 
     def Spawn_Potions(self, name, pos_x, pos_y, amount, data=None):
