@@ -21,7 +21,7 @@ class Potion_Handler:
             'arcane_hunger',
         ]
 
-        self.potion_strength = {
+        self.strength = {
             'healing': 20,
             'regen': 4,
             'increase_souls': 20,
@@ -98,7 +98,7 @@ class Potion_Handler:
         potion_type = random.choices(self.potions, weight_values, k=1)[0]
         amount = random.randint(1, 3)
 
-        potion = Potion(self.game, potion_type, pos, amount, self.potion_strength[potion_type])
+        potion = Potion(self.game, potion_type, pos, amount, self.strength[potion_type])
 
         self.game.item_handler.Add_Item(potion)
         
@@ -114,7 +114,7 @@ class Potion_Handler:
             return None
 
         # Instantiate the matched potion class
-        potion = Potion(self.game, name, (pos_x, pos_y), amount, self.potion_strength[name])
+        potion = Potion(self.game, name, (pos_x, pos_y), amount, self.strength[name])
 
         # Load any saved data if present
         if data:

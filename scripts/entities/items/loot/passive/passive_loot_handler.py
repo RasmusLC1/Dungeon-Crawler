@@ -2,13 +2,14 @@
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
 from scripts.entities.items.loot.passive.echo_sigil import Echo_Sigil
+from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
 
 import random
 
 
-class Passive_Loot_Handler():
+class Passive_Loot_Handler(Loot_Types_Handler):
     def __init__(self, game):
-        self.game = game    
+        super().__init__(game)
 
         self.loot_map = {
             'lantern': Lantern,
@@ -22,7 +23,7 @@ class Passive_Loot_Handler():
 
 
 
-        self.passive_types = [
+        self.types = [
             'lantern',
             'anchor_stone',
             'magnet',
@@ -36,39 +37,21 @@ class Passive_Loot_Handler():
         ]
 
 
-    def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
-        loot_class = self.loot_map.get(type)
-        if not loot_class:
-            return None
-        
-
-        loot = loot_class(self.game, (pos_x, pos_y))
-
-        return self.Load_Data(loot, data)
-    
-    # Responsible for loading the data and adding the item to the itemhandler
-    def Load_Data(self, loot, data = None):
-        if not loot:
-            return None
-        if data:
-            loot.Load_Data(data)
-        self.game.item_handler.Add_Item(loot)
-        return loot
-
-
-    def Spawn_Passive(self, pos_x, pos_y, type = None, data = None):
-        if not type:
-            type = random.choice(self.passive_types)
+    def Loot_Spawner(self, type, pos):
+        type = random.choice(self.types)
+        loot = None
         if type in self.special_type: # Handle lantern seperately as it needs light updates
-            return self.Loot_Spawner(type, pos_x, pos_y, 0, data)
+            loot_class = self.loot_map.get(type)
+            if not loot_class:
+                return None
             
-        
-        passive_Loot = Passive_Loot(self.game, type, (pos_x, pos_y))
 
-        return self.Load_Data(passive_Loot, data)
+            loot = loot_class(self.game, pos)
+        else:
+            loot = Passive_Loot(self.game, type, pos)
 
 
-
+        return loot
 
 
 

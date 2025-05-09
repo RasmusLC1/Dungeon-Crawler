@@ -39,7 +39,7 @@ class Item_Handler():
             elif item_data['sub_category'] == 'potion':
                 item = self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'loot':
-                item = self.loot_handler.Loot_Loader(type, pos[0], pos[1], amount, item_data)
+                item = self.loot_handler.Spawn_Loot_Type(type, pos, item_data)
             elif item_data['sub_category'] == 'rune':
                 item = self.game.rune_handler.Load_Data(item_data)
             else:
@@ -60,7 +60,7 @@ class Item_Handler():
             self.weapon_handler.Weapon_Spawner('torch', torch.pos[0], torch.pos[1])
         
         for key in self.game.tilemap.extract([('key', 0)].copy()):
-            self.loot_handler.Spawn_Key(key.pos[0], key.pos[1])
+            self.loot_handler.Spawn_Key(key.pos)
 
 
         for gold in self.game.tilemap.extract([('gold', 0)].copy()):
