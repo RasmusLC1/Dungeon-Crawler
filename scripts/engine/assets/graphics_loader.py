@@ -568,7 +568,7 @@ class Graphics_Loader:
             'speed_rune' : get_tiles_from_sheet('runes/speed_rune.png', 1, 0, 0, 0, 32, 32),
             'increase_strength_rune' : get_tiles_from_sheet('runes/strength_rune.png', 1, 0, 0, 0, 32, 32),
             'vampiric_rune' : get_tiles_from_sheet('runes/vampiric_rune.png', 1, 0, 0, 0, 32, 32),
-            'hunger_rune' : get_tiles_from_sheet('runes/hunger_rune.png', 1, 0, 0, 0, 32, 32),
+            'arcane_hunger_rune' : get_tiles_from_sheet('runes/hunger_rune.png', 1, 0, 0, 0, 32, 32),
             'magnet_rune' : get_tiles_from_sheet('runes/magnet_rune.png', 1, 0, 0, 0, 32, 32),
             'invulnerable_rune' : get_tiles_from_sheet('runes/invulnerable_rune.png', 1, 0, 0, 0, 32, 32),
         }

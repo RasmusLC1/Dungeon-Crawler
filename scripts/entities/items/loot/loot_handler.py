@@ -49,13 +49,22 @@ class Loot_Handler():
         self.potion_loot_handler = Potion_Handler(game) 
 
         self.loot_types = [
-            # self.key_loot_handler,
-            # self.bomb_loot_handler,
-            # self.utility_loot_handler,
-            # self.passive_loot_handler,
-            # self.revive_loot_handler,
+            self.key_loot_handler,
+            self.bomb_loot_handler,
+            self.utility_loot_handler,
+            self.passive_loot_handler,
+            self.revive_loot_handler,
             self.potion_loot_handler,
         ]
+
+        self.loot_types_weights = {
+            "key" : 0.05,
+            "bomb" : 0.2,
+            "utility" : 0.1,
+            "passive" : 0.05,
+            "revive" : 0.02,
+            "potion" : 0.3,
+        }
 
         self.loot_types_dic = {
             'key' : self.key_loot_handler,
@@ -124,6 +133,9 @@ class Loot_Handler():
         self.game.item_handler.Add_Item(loot)
         return loot
     
+    def Adjust_Weights(self):
+        pass
+
     # Function for creating loot
     def Spawn_Random_Loot(self, pos):
         loot_handler = random.choice(self.loot_types)

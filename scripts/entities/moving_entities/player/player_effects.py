@@ -1,7 +1,7 @@
 from scripts.entities.moving_entities.effects.effects_handler import Status_Effect_Handler
 from scripts.entities.moving_entities.effects.player.silence import Silence
 from scripts.entities.moving_entities.effects.souls.arcane_conduit import Arcane_Conduit
-from scripts.entities.moving_entities.effects.souls.hunger import Hunger
+from scripts.entities.moving_entities.effects.souls.arcane_hunger import Arcane_Hunger
 from scripts.entities.moving_entities.effects.player.magnet import Magnet
 from scripts.entities.moving_entities.effects.player.halo import Halo
 from scripts.entities.moving_entities.effects.player.blood_tomb import Blood_Tomb
@@ -39,7 +39,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
 
         self.silence =  Silence(self.entity)
         self.arcane_conduit = Arcane_Conduit(self.entity)
-        self.hunger = Hunger(self.entity)
+        self.arcane_hunger = Arcane_Hunger(self.entity)
         self.magnet = Magnet(self.entity)
         self.blood_tomb = Blood_Tomb(self.entity)
         self.player_movement_invunerable = Player_Movement_Invunerable(self.entity)
@@ -52,7 +52,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.effects.update({
             self.silence.effect_type: self.silence,
             self.arcane_conduit.effect_type: self.arcane_conduit,
-            self.hunger.effect_type: self.hunger,
+            self.arcane_hunger.effect_type: self.arcane_hunger,
             self.magnet.effect_type: self.magnet,
             self.blood_tomb.effect_type: self.blood_tomb,
             self.halo.effect_type: self.halo,
@@ -68,6 +68,7 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
 
         self.Update_Sound_Cooldown()
 
+        # Disable the effect icon if effect no longer active
         for effect_icon in self.active_effect_symbols:
             if effect_icon.Update():
                 self.Disable_Effect_Icon(effect_icon)
@@ -96,7 +97,6 @@ class Player_Status_Effect_Handler(Status_Effect_Handler):
         self.sound_cooldown = 40
         sound = self.entity.game.sound_handler
         if not sound.Check_If_Sound_Exist(effect):
-            print(effect)
             sound.Play_Sound('generic_effect', 0.3)
 
             return

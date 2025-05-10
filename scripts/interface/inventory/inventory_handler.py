@@ -51,7 +51,6 @@ class Inventory_Handler():
             if not inventory_slot:
                 continue
             item = self.game.item_handler.Load_Item_From_Data(item_data)
-            print(item)
             if not item:
                 continue
             

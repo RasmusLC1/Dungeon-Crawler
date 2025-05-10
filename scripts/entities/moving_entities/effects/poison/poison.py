@@ -24,19 +24,21 @@ class Poison(Effect):
     def Remove_Effect(self, reduce_permanent=0):
         if not super().Remove_Effect(reduce_permanent):
             return False
-        
         self.entity.Set_Healing_Enabled(True)
         return True
         
 
     def Update_Effect(self):
+        # Enable healing when poison expires
         if not self.effect:
+            self.entity.Set_Healing_Enabled(True)
             return False
         self.entity.Set_Strength(self.strength_holder // 2)
 
         if self.entity.effects.poison_resistance.effect:
             self.effect = 0
             self.cooldown = 0
+            self.entity.Set_Healing_Enabled(True)
             return False
         
 

@@ -199,7 +199,7 @@ Create color coded backgrounds based on level, render image and text on top
         # Regen
         # Light
         # Arcane conduit, increase power level of your other runes
-        # Hunger, increase souls generation
+        # arcane_Hunger, increase souls generation
         # Magnet, Auto pickup of items
         # Resistance
         Thorns, enemies take damage when they hit you
@@ -277,7 +277,7 @@ Create color coded backgrounds based on level, render image and text on top
     Sleep – Puts the affected entity in a sleep state until hit.
     # Snare – Stops movement for a short period.
     # Arcane conduit - Reduce the cost runes
-    # Hunger - Increase souls from entity kills
+    # Arcane_Hunger - Gain souls from entity kills
 
 # Traps:
     # Spike pits, fall into and slows you down

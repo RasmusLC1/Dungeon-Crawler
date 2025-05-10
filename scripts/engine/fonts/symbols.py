@@ -16,7 +16,7 @@ class Symbols():
                 'block', 'fire_resistance',
                 'frozen_resistance', 'poison_resistance',
                 'power', 'gold', 'range', 'key',
-                'arcane_conduit', 'magnet', 'hunger', 
+                'arcane_conduit', 'magnet', 'arcane_hunger', 
                 'invulnerable', 'snare', 'thorns',
                 'electric_resistance',
                 'chain', 'enemy', 'curse',

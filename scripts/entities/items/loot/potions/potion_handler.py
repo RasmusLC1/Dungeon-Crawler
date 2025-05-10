@@ -68,9 +68,9 @@ class Potion_Handler(Loot_Types_Handler):
         if player.souls > max_amount:
             return weights
         
-        soul_increase = max_amount - player.souls
-        weights['increase_souls'] += soul_increase / 400
-        weights['arcane_hunger'] += soul_increase / 400
+        soul_increase =( max_amount - player.souls) / 400
+        weights['increase_souls'] += soul_increase 
+        weights['arcane_hunger'] += soul_increase
 
         return weights
 
@@ -82,7 +82,7 @@ class Potion_Handler(Loot_Types_Handler):
             return weights
         
 
-        player_health_missing /= 200
+        player_health_missing /= 400
         weights['healing'] += player_health_missing
         weights['regen'] += player_health_missing
         weights['vampiric'] += player_health_missing

@@ -42,7 +42,7 @@ from scripts.entities.items.runes.constant_runes.light_rune import Light_Rune
 from scripts.entities.items.runes.constant_runes.arcane_conduit_rune import Arcane_Conduit_Rune
 from scripts.entities.items.runes.basic_runes.resistance_rune import Resistance_Rune
 from scripts.entities.items.runes.constant_runes.shield_rune import Shield_Rune
-from scripts.entities.items.runes.constant_runes.hunger_rune import Hunger_Rune
+from scripts.entities.items.runes.constant_runes.arcane_hunger_rune import Arcane_Hunger_Rune
 from scripts.entities.items.runes.constant_runes.manget_rune import Magnet_Rune
 
 import math
@@ -109,7 +109,7 @@ class Rune_Handler():
         'arcane_conduit_run': Arcane_Conduit_Rune(self.game, (9999, 9999)),
         'resistance_rune': Resistance_Rune(self.game, (9999, 9999)),
         'shield_rune': Shield_Rune(self.game, (9999, 9999)),
-        'hunger_rune': Hunger_Rune(self.game, (9999, 9999)),
+        'arcane_hunger_rune': Arcane_Hunger_Rune(self.game, (9999, 9999)),
         'magnet_rune': Magnet_Rune(self.game, (9999, 9999)),
         'invulnerable_rune': Invulnerable_Rune(self.game, (9999, 9999)),
         

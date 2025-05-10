@@ -95,8 +95,8 @@ class Player(Moving_Entity):
         self.souls = souls
 
     def Increase_Souls(self, added_soul):
-        if self.effects.hunger.effect:
-            added_soul += self.effects.hunger.effect
+        if self.effects.arcane_hunger.effect:
+            added_soul += self.effects.arcane_hunger.effect
         self.souls += added_soul
 
     def Decrease_Souls(self, subtract_soul):

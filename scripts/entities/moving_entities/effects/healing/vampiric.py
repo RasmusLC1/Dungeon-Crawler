@@ -5,5 +5,5 @@ import random
 class Vampiric(Effect):
     def __init__(self, entity):
         description = 'Heals when\ndealing damage'
-        super().__init__(entity, "vampiric", 0, 0, (150, 200), description)
+        super().__init__(entity, "vampiric", 0, 0, (200, 250), description)
 
