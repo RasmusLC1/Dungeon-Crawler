@@ -125,8 +125,12 @@ class Item(PhysicsEntity):
 
     # Setting the item image and scaling it
     def Set_Entity_Image(self):
-        item_image = self.sprite[self.animation].convert_alpha()
-        self.entity_image = pygame.transform.scale(item_image, self.size)
+        try:
+            item_image = self.sprite[self.animation].convert_alpha()
+            self.entity_image = pygame.transform.scale(item_image, self.size)
+        except Exception as e:
+            print(f'SET Entity image failed {e}', self.type, self.pos, self.animation, self.max_animation, self.size, self.entity_image, self.sprite)
+
     
     def Increase_Amount(self, amount):
         self.amount = min(self.max_amount, self.amount + amount)

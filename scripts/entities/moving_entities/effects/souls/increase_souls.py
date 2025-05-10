@@ -10,6 +10,7 @@ class Increase_Souls(Effect):
 
     
     def Set_Effect(self, effect_time, permanent = False):
-
-        self.game.player.Increase_Souls(effect_time)
+        if self.entity.type != 'player':
+            return False
+        self.entity.Increase_Souls(effect_time)
         return True

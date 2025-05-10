@@ -9,9 +9,6 @@ class Bomb_Loot_Handler(Loot_Types_Handler):
         super().__init__(game)
  
 
-        self.loot_map = {
-            'bomb': Bomb,
-        }
         self.types = [
             'fire_bomb',
             'frozen_bomb',
@@ -19,3 +16,9 @@ class Bomb_Loot_Handler(Loot_Types_Handler):
             'poison_bomb',
             'vampiric_bomb',
         ]
+
+    def Loot_Spawner(self, pos):
+        type = random.choice(self.types)
+        bomb = Bomb(self.game, type, pos)
+        return bomb
+

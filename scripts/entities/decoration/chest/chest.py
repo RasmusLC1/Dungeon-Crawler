@@ -1,14 +1,6 @@
 import pygame
 import random
 from scripts.entities.decoration.decoration import Decoration
-from scripts.entities.items.loot.gold import Gold
-from scripts.entities.items.loot.keys.key import Key
-from scripts.entities.entities import PhysicsEntity
-
-
-from scripts.entities.items.weapons.weapon_handler import Weapon_Handler
-from scripts.entities.items.loot.potions.potion_handler import Potion_Handler
-
 
 
 class Chest(Decoration):
@@ -21,22 +13,6 @@ class Chest(Decoration):
         self.text_cooldown = 0
         self.text_animation = 0
         self.text_color = (255, 255, 255)
-        self.weapon_handler = Weapon_Handler(self.game)
-        self.potion_handler = Potion_Handler(self.game)
-
-        self.potions = [
-            'health',
-            'regen',
-            'soul',
-            'speed',
-            'strength',
-            'invisibility',
-            'silence',
-            'fire_resistance',
-            'frozen_resistance',
-            'poison_resistance',
-            'vampiric'
-        ]
 
 
     def Save_Data(self):
@@ -72,36 +48,10 @@ class Chest(Decoration):
         version_modifier = self.version * 3 + 1
         self.loot_amount = random.randint(1, 3) * version_modifier
         self.loot_type = random.randint(5, 6) # Spawn normal
-        if self.loot_type in range(0, 3):
-            if not self.Potion_Spawner():
-                self.Open()
-                return
-
-        elif self.loot_type in range(4, 6):
-            rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
-            rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-            # loot = Gold(self.game, (rand_pos_x, rand_pos_y), random.randint(60,60))
-            self.game.item_handler.loot_handler.Spawn_Random_Loot((rand_pos_x, rand_pos_y))
-        # Call itself redcursively if it should fail
-        else:
-            self.Drop_Loot()
-            return
-
-    def Potion_Spawner(self):
         rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
         rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-        potion_index = random.randint(0, len(self.potions) - 1)
-        potion_amount = random.randint(1,3)
-        return self.potion_handler.Spawn_Potions(self.potions[potion_index], rand_pos_x, rand_pos_y, potion_amount)
-        
-    
+        self.game.item_handler.loot_handler.Spawn_Random_Loot((rand_pos_x, rand_pos_y))
 
-    def Weapon_Spawner(self):
-        rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
-        rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-        weapon_index = random.randint(0, len(self.weapons) - 1)
-        loot_amount = min(20, max(self.loot_amount // 5, 3))
-        return self.weapon_handler.Weapon_Spawner(self.weapons[weapon_index], rand_pos_x, rand_pos_y, loot_amount)
 
     def Destroyed(self):
         if self.health > 0:

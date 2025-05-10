@@ -37,7 +37,7 @@ class Passive_Loot_Handler(Loot_Types_Handler):
         ]
 
 
-    def Loot_Spawner(self, type, pos):
+    def Loot_Spawner(self, pos):
         type = random.choice(self.types)
         loot = None
         if type in self.special_type: # Handle lantern seperately as it needs light updates

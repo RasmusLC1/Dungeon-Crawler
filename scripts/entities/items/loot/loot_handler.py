@@ -20,13 +20,16 @@ from scripts.entities.items.loot.utility.utility_loot_handler import Utility_Loo
 
 
 from scripts.entities.items.loot.passive.lantern import Lantern
-from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
 from scripts.entities.items.loot.passive.echo_sigil import Echo_Sigil
 from scripts.entities.items.loot.passive.passive_loot_handler import Passive_Loot_Handler
 
 from scripts.entities.items.loot.revive.phoenix_feather import Phoenix_Feather
 from scripts.entities.items.loot.revive.light_pendant import Light_Pendant
 from scripts.entities.items.loot.revive.revive_loot_handler import Revive_Loot_Handler
+
+from scripts.entities.items.loot.potions.potion_handler import Potion_Handler
+from scripts.entities.items.loot.potions.potion import Potion
+
 
 
 
@@ -43,13 +46,15 @@ class Loot_Handler():
         self.utility_loot_handler = Utility_Loot_Handler(game) 
         self.passive_loot_handler = Passive_Loot_Handler(game) 
         self.revive_loot_handler = Revive_Loot_Handler(game) 
+        self.potion_loot_handler = Potion_Handler(game) 
 
         self.loot_types = [
-            self.key_loot_handler,
-            self.bomb_loot_handler,
-            self.utility_loot_handler,
-            self.passive_loot_handler,
-            self.revive_loot_handler,
+            # self.key_loot_handler,
+            # self.bomb_loot_handler,
+            # self.utility_loot_handler,
+            # self.passive_loot_handler,
+            # self.revive_loot_handler,
+            self.potion_loot_handler,
         ]
 
         self.loot_types_dic = {
@@ -58,6 +63,7 @@ class Loot_Handler():
             'utility' : self.utility_loot_handler,
             'passive' : self.passive_loot_handler,
             'revive' : self.revive_loot_handler,
+            'potion' : self.potion_loot_handler,
         }
 
         self.loot_map = {
@@ -76,6 +82,7 @@ class Loot_Handler():
             'phoenix_feather': Phoenix_Feather,
             'light_pendant': Light_Pendant,
             'echo_sigil': Echo_Sigil,
+            'potion': Potion,
         }
 
 
@@ -121,6 +128,8 @@ class Loot_Handler():
     def Spawn_Random_Loot(self, pos):
         loot_handler = random.choice(self.loot_types)
         loot = loot_handler.Loot_Spawner(pos)
+        if not loot:
+            return
 
         self.game.item_handler.Add_Item(loot)
 

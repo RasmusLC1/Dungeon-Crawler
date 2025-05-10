@@ -1,18 +1,19 @@
 from scripts.entities.items.loot.potions.potion import Potion
+from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
 
 import random
 
 
-class Potion_Handler:
+class Potion_Handler(Loot_Types_Handler):
     def __init__(self, game):
-        self.game = game
+        super().__init__(game)
         self.potions = [
             'healing',
             'regen',
             'vampiric',
             'increase_souls',
             'speed',
-            'strength',
+            'increase_strength',
             'invisibility',
             'silence',
             'fire_resistance',
@@ -26,7 +27,7 @@ class Potion_Handler:
             'regen': 4,
             'increase_souls': 20,
             'speed': 4,
-            'strength': 4,
+            'increase_strength': 4,
             'invisibility': 3,
             'silence': 3,
             'fire_resistance': 6,
@@ -41,7 +42,7 @@ class Potion_Handler:
             'regen': 0.1,
             'increase_souls': 0.2,
             'speed': 0.2,
-            'strength': 0.2,
+            'increase_strength': 0.2,
             'invisibility': 0.2,
             'silence': 0.2,
             'fire_resistance': 0.1,
@@ -89,7 +90,7 @@ class Potion_Handler:
         return weights
     
 
-    def Spawn_Random_Potion(self, pos):
+    def Loot_Spawner(self, pos):
 
         weights_dict = self.Update_Potion_Weights()
         

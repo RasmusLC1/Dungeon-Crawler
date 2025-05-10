@@ -50,7 +50,7 @@ class Potion(Item):
             return
         if self.game.player.Set_Effect(self.effect, self.strength):
             self.Decrease_Amount(1)
-            self.Update_Sub_Type()
+            self.Set_Sprite()
             self.Set_Description()
         if self.amount <= 0:
             self.used = True
