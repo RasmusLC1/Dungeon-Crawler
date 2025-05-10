@@ -9,7 +9,6 @@ class Healing(Effect):
 
     
     def Set_Effect(self, effect_time, permanent = False):
-        print(self.entity.healing_enabled)
         if not self.entity.healing_enabled:
             return False
         

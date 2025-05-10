@@ -16,17 +16,12 @@ class Rune_Inventory(Base_Inventory):
             # inventory_slot.inventory_type = 'rune'
             inventory_slot.Set_White_List(['rune'])
             self.Add_Inventory_Slot(inventory_slot)
+        
 
     def Set_Inventory_Slot_Pos(self, index):
         x_pos = index * self.size[0] + self.game.screen_width / self.game.render_scale - 160
         y_pos = self.game.screen_height / self.game.render_scale - 40
         return (x_pos, y_pos)
-    
-    # Initialise the active runes
-    def Add_Active_Runes(self):
-        return
-        # for rune in self.game.rune_handler.active_runes:
-        #     self.shared_inventory_dic[rune.inventory_index].Add_Item(rune)
 
     def Replace_Rune(self, old_rune, new_rune):
         # Find the corresponding inventory slot

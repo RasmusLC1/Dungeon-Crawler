@@ -38,7 +38,8 @@ class Base_Inventory():
         pass
 
     def Clear_Inventory(self):
-        self.inventory.clear()
+        for inventory_slot in self.inventory:
+            inventory_slot.Clear()
 
     def Find_Item_Inventory_Slot_ID(self, ID):
         for inventory_slot in self.inventory:

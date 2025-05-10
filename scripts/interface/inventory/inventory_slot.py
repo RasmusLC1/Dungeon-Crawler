@@ -89,6 +89,10 @@ class Inventory_Slot():
         self.item = None
         return True
     
+    def Clear(self):
+        self.active = False
+        self.item = None
+
     def Set_White_List(self, items):
         self.white_list_items = items
 

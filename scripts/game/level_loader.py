@@ -40,7 +40,7 @@ class Level_Loader():
         self.Initialise_Level()
 
 
-        
+    # Responsible for clearing the level data, clear inventory optional clear
     def Clear_Level(self, clear_inventory = True):
         if not self.initialised:
             return

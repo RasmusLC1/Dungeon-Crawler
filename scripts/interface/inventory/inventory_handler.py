@@ -35,13 +35,8 @@ class Inventory_Handler():
 
     # Loads inventory data and updates inventory_dic
     def Load_Data(self, data):
-        active_inventory_slot = 12 # Default value
         self.saved_data = data  # Store loaded data
-        lookup_dic = {
-                'item': self.item_inventory,
-                'weapon': self.weapon_inventory,
-                'rune': self.rune_inventory,
-                }
+
         for inventory_index, item_data in data.items():
             if not item_data:
                 continue
@@ -108,6 +103,8 @@ class Inventory_Handler():
         self.item_inventory.Clear_Inventory()
         self.weapon_inventory.Clear_Inventory()
         self.rune_inventory.Clear_Inventory()
+        for inventory_slot in self.inventory:
+            inventory_slot.Clear()
 
 
     def Increment_Weapon_Inventory(self):
