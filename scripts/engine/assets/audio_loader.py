@@ -85,10 +85,12 @@ class Audio_Loader:
 
     def Loot_Effects(self):
         weapon_effects ={
-            'bell' : pygame.mixer.Sound('data/sounds/loot/bell.wav'),
-            'recall_scroll' : pygame.mixer.Sound('data/sounds/loot/recall_scroll.wav'),
-            'faded_hourglass' : pygame.mixer.Sound('data/sounds/loot/faded_hourglass.wav'),
-            'ethereal_chains' : pygame.mixer.Sound('data/sounds/loot/ethereal_chains.wav'),
+            'bell' : pygame.mixer.Sound('data/sounds/loot/items/bell.wav'),
+            'recall_scroll' : pygame.mixer.Sound('data/sounds/loot/items/recall_scroll.wav'),
+            'faded_hourglass' : pygame.mixer.Sound('data/sounds/loot/items/faded_hourglass.wav'),
+            'ethereal_chains' : pygame.mixer.Sound('data/sounds/loot/items/ethereal_chains.wav'),
+            'item_pickup' : pygame.mixer.Sound('data/sounds/loot/general/item_pickup.wav'),
+            'item_placedown' : pygame.mixer.Sound('data/sounds/loot/general/item_placedown.wav'),
         }
 
         self.sfx.update(weapon_effects)
@@ -97,6 +99,8 @@ class Audio_Loader:
         self.sfx['recall_scroll'].set_volume(0.3)
         self.sfx['faded_hourglass'].set_volume(0.3)
         self.sfx['ethereal_chains'].set_volume(0.3)
+        self.sfx['item_pickup'].set_volume(0.5)
+        self.sfx['item_placedown'].set_volume(0.3)
 
     
     def Effect_Effects(self):

@@ -87,6 +87,8 @@ class Item(PhysicsEntity):
 
         self.game.entities_render.Remove_Entity(self)
 
+        self.game.sound_handler.Play_Sound('item_pickup', 0.4)
+
         return self.game.player
         
 
@@ -100,6 +102,7 @@ class Item(PhysicsEntity):
         self.Set_Tile()
         self.picked_up = False
         self.in_inventory = False
+        self.game.sound_handler.Play_Sound('item_placedown', 0.2)
         return True
 
     def Update_Animation(self):

@@ -133,8 +133,9 @@ class Loot_Handler():
         self.game.item_handler.Add_Item(loot)
         return loot
     
+    # Adjust the weights based on events
     def Adjust_Weights(self):
-        pass
+        weights = self.loot_types_weights.copy()
 
     # Function for creating loot
     def Spawn_Random_Loot(self, pos):

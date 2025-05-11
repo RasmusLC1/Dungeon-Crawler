@@ -530,7 +530,8 @@ class Moving_Entity(PhysicsEntity):
         if not self.render_needs_update:
             return
         if not self.animation_handler.entity_image:
-            print(self.type)
+            self.animation_handler.Set_Entity_Image()
+            print("SET dark surface for entity: ", self.type, vars(self))
             return
         self.rendered_image = self.animation_handler.entity_image.copy()
         
