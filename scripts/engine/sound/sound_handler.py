@@ -6,6 +6,9 @@ class Sound_Handler():
         # Disable all sounds if the player is silenced
         if self.game.player.effects.silence.effect:
             return
+        if self.game.clatter.temp_disable_clatter:
+            return
+        
         try:
             self.game.sfx[sound_name].set_volume(volume)
             self.game.sfx[sound_name].play()

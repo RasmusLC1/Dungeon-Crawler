@@ -113,8 +113,8 @@ Create color coded backgrounds based on level, render image and text on top
 
     ## utility:
         ### Keys:
-            # lockpick, has a 1/3chance to open the door and persist, but if it breaks door does not open and generates clank
-            # Skeletal Key – Unlocks any door but disappears after 1 use
+            # lockpick, has a 1/3chance to open the door and persist
+            # Skeleton Key – Unlocks any door but disappears after 1 use
             # Blood Key – Unlocks any door but costs health
             # Soul Key – Unlocks any door but costs souls
             # Cursed Key – Unlocks any door but gives a random curse

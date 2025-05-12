@@ -2,9 +2,13 @@
 class Clatter():
     def __init__(self, game) -> None:
         self.game = game
+        self.temp_disable_clatter = False # Used to temporarily disable clatter
 
 
     def Generate_Clatter(self, center, clatter_range):
+        if self.temp_disable_clatter:
+            self.temp_disable_clatter = False
+            return
 
         clatter_range = self.Calculate_Silence_Modifier(clatter_range)
         
@@ -27,3 +31,6 @@ class Clatter():
             clatter_range = max(1, clatter_range - self.game.player.effects.silence.effect * 100)
 
         return clatter_range
+    
+    def Disable_Clatter(self):
+        self.temp_disable_clatter = True

@@ -4,7 +4,7 @@ from scripts.engine.fonts.font import Font
 from scripts.engine.fonts.mixed_symbols import Mixed_Symbols
 from scripts.engine.fonts.interactable_object import Interactable_Object
 from scripts.engine.fonts.symbols import Symbols
-from scripts.engine.Clatter import Clatter
+from scripts.engine.sound.Clatter import Clatter
 from scripts.entities.textbox.text_box_handler import Text_Box_handler
 from scripts.engine.sound.sound_handler import Sound_Handler
 from scripts.level_generation.dungeon_generator import Dungeon_Generator
@@ -17,7 +17,7 @@ from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.engine.a_star import A_Star
 from scripts.menu.menu_handler import Menu_Handler
-
+from scripts.engine.assets.dictionary import Dictionary
 
 
 
@@ -39,6 +39,8 @@ class Game_Initialiser():
         self.game.render_scroll = (0,0)
         
         self.game.movement = [False, False, False, False]
+
+        self.game.dictionary = Dictionary()
         self.game.assets = {}
         Graphics_Loader.Run_All(self.game)
         Audio_Loader.Run_All(self.game)

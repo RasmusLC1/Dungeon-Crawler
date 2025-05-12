@@ -186,13 +186,6 @@ class Decoration_Handler():
     def Open_Chest(self, decoration):
         decoration.Open()
 
-    def Open_Door(self, decoration, key=True):
-        if key:
-            if not self.Open_Door_With_Key(decoration):
-                return
-        else:
-            decoration.Open()
-            
 
     def Open_Shrine(self, decoration):
         decoration.Open()

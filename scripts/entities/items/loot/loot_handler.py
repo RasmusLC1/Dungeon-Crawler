@@ -66,6 +66,15 @@ class Loot_Handler():
             "potion" : 0.3,
         }
 
+        self.loot_types_keys = [
+            "key",
+            "bomb",
+            "utility",
+            "passive",
+            "revive",
+            "potion",
+        ]
+
         self.loot_types_dic = {
             'key' : self.key_loot_handler,
             'bomb' : self.bomb_loot_handler,
@@ -133,13 +142,35 @@ class Loot_Handler():
         self.game.item_handler.Add_Item(loot)
         return loot
     
-    # Adjust the weights based on events
+    # Adjust the weights based on events to control the inventory state closer
     def Adjust_Weights(self):
         weights = self.loot_types_weights.copy()
+        items_in_inventory = self.game.inventory.item_inventory.Find_Loot()
+        
+        key_amount = 0 
+        revive_amount = 0 
+        for item in items_in_inventory:
+            if not hasattr(item, 'loot_type'):
+                continue
 
+            if item.loot_type == 'key':
+                key_amount += 1
+            elif item.loot_type == 'revive':
+                revive_amount += 1
+        
+        if revive_amount > 0:
+            weights['revive'] /= 10
+        if key_amount == 0:
+            weights['key'] = 0.5
+
+        return weights
+
+ 
     # Function for creating loot
     def Spawn_Random_Loot(self, pos):
-        loot_handler = random.choice(self.loot_types)
+        weights_dict = self.Adjust_Weights()
+        weight_values = [weights_dict[loot_types_keys] for loot_types_keys in self.loot_types_keys]
+        loot_handler = random.choices(self.loot_types, weight_values, k=1)[0]
         loot = loot_handler.Loot_Spawner(pos)
         if not loot:
             return

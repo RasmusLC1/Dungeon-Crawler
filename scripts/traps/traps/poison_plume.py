@@ -1,8 +1,6 @@
 from scripts.traps.trap import Trap
 
 import random
-import math
-import pygame
 
 class Poison_Plume(Trap):
     def __init__(self, game, pos, size, type):

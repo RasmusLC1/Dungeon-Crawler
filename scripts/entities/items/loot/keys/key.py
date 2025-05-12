@@ -10,12 +10,15 @@ class Key(Interactive_Loot):
         if not super().Update_In_Inventory():
             return False
         
+        self.Check_If_Doors_Can_Open()
+        
+    
+    def Check_If_Doors_Can_Open(self):
         nearby_decorations = self.game.decoration_handler.Find_Nearby_Decorations(self.game.player.pos, 4)
 
         # Filter for doors
         doors = [decoration for decoration in nearby_decorations if 'door' in decoration.type]
         mouse = self.game.mouse
-
         # Iterate over doors and check for collision
         for door in doors:
             if not door.rect().colliderect(mouse.rect_pos()):
@@ -27,6 +30,7 @@ class Key(Interactive_Loot):
             if not self.Open_Door():
                 return
             door.Open()
+
 
     # Effect of opening door on key
     def Open_Door(self):

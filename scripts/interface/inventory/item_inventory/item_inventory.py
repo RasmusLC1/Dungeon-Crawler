@@ -67,6 +67,8 @@ class Item_Inventory(Base_Inventory):
         return False  # No slot to merge into
     
 
+    # Returns true if inventory contains an arrow and reduces the amount of the
+    # amount of the first arrow by 1
     def Find_Arrow(self):
         inventory_slots = self.Find_Inventory_Slots_With_Type('arrow')
 
@@ -81,6 +83,7 @@ class Item_Inventory(Base_Inventory):
 
         return True
     
+    # Returns all items in the inventory
     def Find_Loot(self):
         loot_items = []
         for inventory_slot in self.inventory:
