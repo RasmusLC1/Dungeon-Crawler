@@ -1,9 +1,9 @@
 class Font():
     def __init__(self, game):
         self.game = game
-        self.font = self.game.assets[game.dictionary.Get_Font]
-        self.player_damage_font = self.game.assets[game.dictionary.Get_Player_Damage_Font]
-        self.small_font = self.game.assets[game.dictionary.Get_Small_Font]
+        self.font = self.game.assets[game.dictionary.font]
+        self.player_damage_font = self.game.assets[game.dictionary.player_damage_font]
+        self.small_font = self.game.assets[game.dictionary.small_font]
 
         # Use dictionary for O(1) lookup time, using enumerate to number them
         self.font_lookup_table = {
@@ -29,24 +29,24 @@ class Font():
 
     def Find_Font(self, font_style):
         font_styles = {
-        self.game.dictionary.Get_Font: self.font,
-        self.game.dictionary.Get_Player_Damage_Font: self.player_damage_font,
-        self.game.dictionary.Get_Small_Font: self.small_font,
+        self.game.dictionary.font: self.font,
+        self.game.dictionary.player_damage_font: self.player_damage_font,
+        self.game.dictionary.small_font: self.small_font,
         }
         return font_styles.get(font_style, self.font)
 
     def Find_Font_Size(self, font_style):
         font_styles = {
-        self.game.dictionary.Get_Font: (15, 16),
-        self.game.dictionary.Get_Player_Damage_Font: (15, 16),
-        self.game.dictionary.Get_Small_Font: (7, 8),
+        self.game.dictionary.font: (15, 16),
+        self.game.dictionary.player_damage_font: (15, 16),
+        self.game.dictionary.small_font: (7, 8),
         }
         return font_styles.get(font_style, (16, 16))
 
     def Render_Word(self, surf, text, pos, font_style=None):
         # Initalise to default font if none found
         if not font_style:
-            font_style = self.game.dictionary.Get_Font
+            font_style = self.game.dictionary.font
         original_x, original_y = pos
         current_y = original_y
         font = self.Find_Font(font_style)

@@ -8,48 +8,48 @@ class Potion_Handler(Loot_Types_Handler):
     def __init__(self, game):
         super().__init__(game)
         self.potions = [
-            'healing',
-            'regen',
-            'vampiric',
-            'increase_souls',
-            'speed',
-            'increase_strength',
-            'invisibility',
-            'silence',
-            'fire_resistance',
-            'frozen_resistance',
-            'poison_resistance',
-            'arcane_hunger',
+            game.dictionary.healing,
+            game.dictionary.regen,
+            game.dictionary.vampiric,
+            game.dictionary.increase_souls,
+            game.dictionary.speed,
+            game.dictionary.increase_strength,
+            game.dictionary.invisibility,
+            game.dictionary.silence,
+            game.dictionary.fire_resistance,
+            game.dictionary.frozen_resistance,
+            game.dictionary.poison_resistance,
+            game.dictionary.arcane_hunger,
         ]
 
         self.strength = {
-            'healing': 20,
-            'regen': 4,
-            'increase_souls': 20,
-            'speed': 4,
-            'increase_strength': 4,
-            'invisibility': 3,
-            'silence': 3,
-            'fire_resistance': 6,
-            'frozen_resistance': 6,
-            'poison_resistance': 6,
-            'vampiric': 5,
-            'arcane_hunger': 5,
+            game.dictionary.healing: 20,
+            game.dictionary.regen: 4,
+            game.dictionary.increase_souls: 20,
+            game.dictionary.speed: 4,
+            game.dictionary.increase_strength: 4,
+            game.dictionary.invisibility: 3,
+            game.dictionary.silence: 3,
+            game.dictionary.fire_resistance: 6,
+            game.dictionary.frozen_resistance: 6,
+            game.dictionary.poison_resistance: 6,
+            game.dictionary.vampiric: 5,
+            game.dictionary.arcane_hunger: 5,
         }
 
         self.weights = {
-            'healing': 0.1,
-            'regen': 0.1,
-            'increase_souls': 0.2,
-            'speed': 0.2,
-            'increase_strength': 0.2,
-            'invisibility': 0.2,
-            'silence': 0.2,
-            'fire_resistance': 0.1,
-            'frozen_resistance': 0.1,
-            'poison_resistance': 0.1,
-            'vampiric': 0.1,
-            'arcane_hunger': 0.1,
+            game.dictionary.healing: 0.1,
+            game.dictionary.regen: 0.1,
+            game.dictionary.increase_souls: 0.2,
+            game.dictionary.speed: 0.2,
+            game.dictionary.increase_strength: 0.2,
+            game.dictionary.invisibility: 0.2,
+            game.dictionary.silence: 0.2,
+            game.dictionary.fire_resistance: 0.1,
+            game.dictionary.frozen_resistance: 0.1,
+            game.dictionary.poison_resistance: 0.1,
+            game.dictionary.vampiric: 0.1,
+            game.dictionary.arcane_hunger: 0.1,
         }
 
 
@@ -69,8 +69,8 @@ class Potion_Handler(Loot_Types_Handler):
             return weights
         
         soul_increase =( max_amount - player.souls) / 400
-        weights['increase_souls'] += soul_increase 
-        weights['arcane_hunger'] += soul_increase
+        weights[self.game.dictionary.increase_souls] += soul_increase 
+        weights[self.game.dictionary.arcane_hunger] += soul_increase
 
         return weights
 
@@ -83,9 +83,9 @@ class Potion_Handler(Loot_Types_Handler):
         
 
         player_health_missing /= 400
-        weights['healing'] += player_health_missing
-        weights['regen'] += player_health_missing
-        weights['vampiric'] += player_health_missing
+        weights[self.game.dictionary.healing] += player_health_missing
+        weights[self.game.dictionary.regen] += player_health_missing
+        weights[self.game.dictionary.vampiric] += player_health_missing
 
         return weights
     
@@ -107,7 +107,7 @@ class Potion_Handler(Loot_Types_Handler):
 
 
     def Spawn_Potions(self, name, pos_x, pos_y, amount, data=None):
-        name = name.replace("_potion", "")
+        name = name.replace("_", self.game.dictionary.potion, "")
         # potion_class = self.potion_map.get(name)
 
         # If none matched, return False

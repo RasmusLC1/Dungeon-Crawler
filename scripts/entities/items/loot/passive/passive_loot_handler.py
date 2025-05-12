@@ -12,28 +12,28 @@ class Passive_Loot_Handler(Loot_Types_Handler):
         super().__init__(game)
 
         self.loot_map = {
-            'lantern': Lantern,
-            'echo_sigil': Echo_Sigil,
+            game.dictionary.lantern: Lantern,
+            game.dictionary.echo_sigil: Echo_Sigil,
         }
 
         self.special_type = [
-            'lantern',
-            'echo_sigil',
+            game.dictionary.lantern,
+            game.dictionary.echo_sigil,
         ]
 
 
 
         self.types = [
-            'lantern',
-            'anchor_stone',
-            'magnet',
-            'strength_totem',
-            'power_totem',
-            'muffled_boots',
-            'halo',
-            'faith_pendant',
-            'lucky_charm',
-            'echo_sigil',
+            game.dictionary.lantern,
+            game.dictionary.anchor_stone,
+            game.dictionary.magnet,
+            game.dictionary.strength_totem,
+            game.dictionary.power_totem,
+            game.dictionary.muffled_boots,
+            game.dictionary.halo,
+            game.dictionary.faith_pendant,
+            game.dictionary.lucky_charm,
+            game.dictionary.echo_sigil,
         ]
 
 

@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.magic_attacks.poison.poison_plume import Poi
 
 class Poison_Plume_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.Get_Poison_Plume_Rune, pos, 2, 30)
+        super().__init__(game, game.dictionary.poison_plume_rune, pos, 2, 30)
         self.clicked = False
         self.poison_plume = Poison_Plume(self.game.player)
 

@@ -4,7 +4,7 @@ import pygame
 
 class Key_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.Get_Key_Rune, pos, 0, 50)
+        super().__init__(game, game.dictionary.key_rune, pos, 0, 50)
         self.animation_time_max = 5
         self.animation_size_max = 10
 

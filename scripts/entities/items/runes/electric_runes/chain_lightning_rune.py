@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.magic_attacks.electric.chain_lightning impor
 
 class Chain_Lightning_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.Get_Chain_Lightning_Rune, pos, 5, 40)
+        super().__init__(game, game.dictionary.chain_lightning_rune, pos, 5, 40)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

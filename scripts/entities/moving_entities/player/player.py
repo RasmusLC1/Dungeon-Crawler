@@ -48,7 +48,7 @@ class Player(Moving_Entity):
 
     def Save_Data(self):
         super().Save_Data()
-        self.saved_data[self.game.dictionary.Get_Souls] = self.souls
+        self.saved_data[self.game.dictionary.souls] = self.souls
         self.saved_data['max_speed'] = self.max_speed
         self.saved_data['last_shrine_visited'] = self.last_shrine_visited 
 
@@ -59,7 +59,7 @@ class Player(Moving_Entity):
     def Load_Data(self, data):
 
         super().Load_Data(data)
-        self.souls = data[self.game.dictionary.Get_Souls]
+        self.souls = data[self.game.dictionary.souls]
         self.max_speed = data['max_speed']
         self.last_shrine_visited = data['last_shrine_visited']
 
@@ -232,7 +232,7 @@ class Player(Moving_Entity):
         if self.damage_cooldown:
             self.Lightup(entity_image)
             scroll_up_effect = 20 - self.damage_cooldown
-            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), self.game.dictionary.Get_Player_Damage_Font)
+            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), self.game.dictionary.player_damage_font)
         if not "up" in self.animation_handler.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 

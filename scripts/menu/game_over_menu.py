@@ -32,6 +32,6 @@ class Game_Over_Menu(Menu):
     
     def Render(self, surf):
         super().Render(surf)
-        self.game.default_font.Render_Word(surf, "Game Over", self.game_over_pos, self.game.dictionary.Get_Player_Damage_Font)
+        self.game.default_font.Render_Word(surf, "Game Over", self.game_over_pos, self.game.dictionary.player_damage_font)
         self.game.mixed_symbols.Render_Mixed_Text(surf, f"{self.game.player.souls} soul", self.soul_pos)
         self.game.mixed_symbols.Render_Mixed_Text(surf, f"{self.game.inventory.item_inventory.Check_Gold_In_Inventory()} gold", self.gold_pos)

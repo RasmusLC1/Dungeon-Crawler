@@ -58,49 +58,53 @@ class Loot_Handler():
         ]
 
         self.loot_types_weights = {
-            "key" : 0.05,
-            "bomb" : 0.2,
-            "utility" : 0.1,
-            "passive" : 0.05,
-            "revive" : 0.02,
-            "potion" : 0.3,
+            self.game.dictionary.key : 0.05,
+            self.game.dictionary.bomb : 0.2,
+            self.game.dictionary.utility : 0.1,
+            self.game.dictionary.passive : 0.05,
+            self.game.dictionary.revive : 0.02,
+            self.game.dictionary.potion : 0.3,
         }
 
         self.loot_types_keys = [
-            "key",
-            "bomb",
-            "utility",
-            "passive",
-            "revive",
-            "potion",
+            self.game.dictionary.key,
+            self.game.dictionary.bomb,
+            self.game.dictionary.utility,
+            self.game.dictionary.passive,
+            self.game.dictionary.revive,
+            self.game.dictionary.potion,
         ]
 
         self.loot_types_dic = {
-            'key' : self.key_loot_handler,
-            'bomb' : self.bomb_loot_handler,
-            'utility' : self.utility_loot_handler,
-            'passive' : self.passive_loot_handler,
-            'revive' : self.revive_loot_handler,
-            'potion' : self.potion_loot_handler,
+            self.game.dictionary.key : self.key_loot_handler,
+            self.game.dictionary.bomb : self.bomb_loot_handler,
+            self.game.dictionary.utility : self.utility_loot_handler,
+            self.game.dictionary.passive : self.passive_loot_handler,
+            self.game.dictionary.revive : self.revive_loot_handler,
+            self.game.dictionary.potion : self.potion_loot_handler,
         }
 
         self.loot_map = {
-            'skeleton_key': Skeleton_Key,
-            'blood_key': Blood_Key,
-            'soul_key': Soul_Key,
-            'cursed_key': Cursed_Key,
-            'lockpick': Lockpick,
-            'bomb': Bomb,
-            'echo_bell': Echo_Bell,
-            'faded_hourglass' : Faded_Hourglass,
-            'ethereal_chains' : Ethereal_Chains,
-            'shadow_cloak': Shadow_Cloak,
-            'recall_scroll': Recall_Scroll,
-            'lantern': Lantern,
-            'phoenix_feather': Phoenix_Feather,
-            'light_pendant': Light_Pendant,
-            'echo_sigil': Echo_Sigil,
-            'potion': Potion,
+            self.game.dictionary.skeleton_key : Skeleton_Key,
+            self.game.dictionary.blood_key : Blood_Key,
+            self.game.dictionary.soul_key : Soul_Key,
+            self.game.dictionary.cursed_key : Cursed_Key,
+            self.game.dictionary.lockpick : Lockpick,
+            self.game.dictionary.bomb: Bomb,
+            
+            self.game.dictionary.echo_bell : Echo_Bell,
+            self.game.dictionary.faded_hourglass : Faded_Hourglass,
+            self.game.dictionary.ethereal_chains : Ethereal_Chains,
+            self.game.dictionary.shadow_cloak : Shadow_Cloak,
+            self.game.dictionary.recall_scroll : Recall_Scroll,
+
+            self.game.dictionary.lantern : Lantern,
+
+            self.game.dictionary.phoenix_feather : Phoenix_Feather,
+            self.game.dictionary.light_pendant : Light_Pendant,
+
+            self.game.dictionary.echo_sigil : Echo_Sigil,
+            self.game.dictionary.potion: Potion,
         }
 
 
@@ -153,15 +157,15 @@ class Loot_Handler():
             if not hasattr(item, 'loot_type'):
                 continue
 
-            if item.loot_type == 'key':
+            if item.loot_type == self.game.dictionary.key:
                 key_amount += 1
-            elif item.loot_type == 'revive':
+            elif item.loot_type == self.game.dictionary.revive:
                 revive_amount += 1
         
         if revive_amount > 0:
-            weights['revive'] /= 10
+            weights[self.game.dictionary.revive] /= 10
         if key_amount == 0:
-            weights['key'] = 0.5
+            weights[self.game.dictionary.key] = 0.5
 
         return weights
 

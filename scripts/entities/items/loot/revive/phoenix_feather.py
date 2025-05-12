@@ -4,7 +4,7 @@ import random
 
 class Phoenix_Feather(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'phoenix_feather', pos, (16, 16), 10, 'revive')
+        super().__init__(game, self.game.dictionary.phoenix_feather, pos, (16, 16), 10, self.game.dictionary.revive)
 
     def Revive(self):
         self.game.particle_handler.Activate_Particles(20, 'gold', self.game.player.rect().center, frame=random.randint(40, 60))

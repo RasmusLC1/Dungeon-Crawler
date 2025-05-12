@@ -2,7 +2,7 @@ from scripts.entities.items.loot.interactive_loot import Interactive_Loot
 
 class Key(Interactive_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 64, (16, 16), 'key', 1)
+        super().__init__(game, type, pos, 64, (16, 16), game.dictionary.key, 1)
 
 
     # The update function in the inventory

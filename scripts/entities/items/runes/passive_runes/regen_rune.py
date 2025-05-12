@@ -4,6 +4,6 @@ import pygame
 
 class Regen_Rune(Passive_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.Get_Regen_Rune, pos, 2, 1000, 30)
+        super().__init__(game, game.dictionary.regen_rune, pos, 2, 1000, 30)
 
     

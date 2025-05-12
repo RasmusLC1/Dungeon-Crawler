@@ -10,11 +10,11 @@ class Bomb_Loot_Handler(Loot_Types_Handler):
  
 
         self.types = [
-            'fire_bomb',
-            'frozen_bomb',
-            'electric_bomb',
-            'poison_bomb',
-            'vampiric_bomb',
+            game.dictionary.fire_bomb,
+            game.dictionary.frozen_bomb,
+            game.dictionary.electric_bomb,
+            game.dictionary.poison_bomb,
+            game.dictionary.vampiric_bomb,
         ]
 
     def Loot_Spawner(self, pos):

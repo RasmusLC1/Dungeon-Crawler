@@ -2,7 +2,7 @@ from scripts.entities.items.loot.loot import Loot
 
 class Lantern(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, 'lantern', pos, (16, 16), 10, 'passive')
+        super().__init__(game, game.dictionary.lantern, pos, (16, 16), 10, game.dictionary.passive)
         self.light_source = self.game.light_handler.Add_Light(self.pos, 9, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
 

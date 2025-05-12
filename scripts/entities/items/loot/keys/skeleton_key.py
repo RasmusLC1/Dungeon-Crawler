@@ -3,7 +3,7 @@ import pygame
 
 class Skeleton_Key(Key):
     def __init__(self, game, pos):
-        super().__init__(game, 'skeleton_key', pos)
+        super().__init__(game, game.dictionary.skeleton_key, pos)
         self.radius = 50
         self.description = 'Opens door\nquitely'
 

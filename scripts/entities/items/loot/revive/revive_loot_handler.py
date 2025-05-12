@@ -9,15 +9,15 @@ class Revive_Loot_Handler(Loot_Types_Handler):
  
 
         self.loot_map = {
-            'phoenix_feather': Phoenix_Feather,
-            'light_pendant': Light_Pendant,
+            self.game.dictionary.phoenix_feather: Phoenix_Feather,
+            self.game.dictionary.light_pendant: Light_Pendant,
         }
 
  
 
         self.types = [
-            'phoenix_feather',
-            'light_pendant',
+            self.game.dictionary.phoenix_feather,
+            self.game.dictionary.light_pendant,
         ]
 
 
