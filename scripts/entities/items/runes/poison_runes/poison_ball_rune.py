@@ -5,7 +5,7 @@ import pygame
 
 class Poison_Ball_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'poison_ball_rune', pos, 1, 20)
+        super().__init__(game, game.dictionary.Get_Poison_Ball_Rune, pos, 1, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

@@ -13,16 +13,16 @@ class Health_Bar:
 
         # Use dictionary for easy lookup
         self.health_bars = {
-            1: self.game.assets['healthbar_1'],
-            2: self.game.assets['healthbar_2'],
-            3: self.game.assets['healthbar_3'],
-            4: self.game.assets['healthbar_4'],
-            5: self.game.assets['healthbar_5'],
-            6: self.game.assets['healthbar_6'],
-            7: self.game.assets['healthbar_7'],
-            8: self.game.assets['healthbar_8'],
-            9: self.game.assets['healthbar_9'],
-            10: self.game.assets['healthbar_10'],
+            1: self.game.assets[self.game.dictionary.Get_Healthbar_1],
+            2: self.game.assets[self.game.dictionary.Get_Healthbar_2],
+            3: self.game.assets[self.game.dictionary.Get_Healthbar_3],
+            4: self.game.assets[self.game.dictionary.Get_Healthbar_4],
+            5: self.game.assets[self.game.dictionary.Get_Healthbar_5],
+            6: self.game.assets[self.game.dictionary.Get_Healthbar_6],
+            7: self.game.assets[self.game.dictionary.Get_Healthbar_7],
+            8: self.game.assets[self.game.dictionary.Get_Healthbar_8],
+            9: self.game.assets[self.game.dictionary.Get_Healthbar_9],
+            10: self.game.assets[self.game.dictionary.Get_Healthbar_10],
         }
 
         self.current_health = -999 # Set the player's initial health to -999 to trigger an update 

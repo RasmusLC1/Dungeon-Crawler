@@ -3,7 +3,7 @@ import pygame
 class Symbols():
     def __init__(self, game):
         self.game = game
-        self.symbols = self.game.assets['symbols']
+        self.symbols = self.game.assets[game.dictionary.Get_Symbols]
         # Use dictionary for O(1) lookup time, using enumerate to number them
         self.symbols_lookup = {
             symbol: index for index, symbol in enumerate([

@@ -5,7 +5,7 @@ import pygame
 
 class Soul_Pit_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'soul_pit_rune', pos, 2, 30)
+        super().__init__(game, game.dictionary.Get_Soul_Pit_Rune, pos, 2, 30)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

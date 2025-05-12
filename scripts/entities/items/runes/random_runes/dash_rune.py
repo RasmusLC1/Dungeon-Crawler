@@ -4,7 +4,7 @@ import pygame
 
 class Dash_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'dash_rune', pos, 10, 10)
+        super().__init__(game, game.dictionary.Get_Dash_Rune, pos, 10, 10)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False

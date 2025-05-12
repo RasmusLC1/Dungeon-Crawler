@@ -60,7 +60,6 @@ class Inventory_Handler():
                 print("FAILED TO LOAD ITEM: ", item.type, inventory_slot)
             
             # self.weapon_inventory.Set_Active_Inventory_Slot()
-        self.rune_inventory.Add_Active_Runes()
 
         # self.weapon_inventory.Set_Active_Inventory_Slot(self.inventory[0])
 

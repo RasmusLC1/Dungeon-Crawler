@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.magic_attacks.poison.poison_cloud import Poi
 
 class Poison_Cloud_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'poison_cloud_rune', pos, 10, 30)
+        super().__init__(game, game.dictionary.Get_Poison_Cloud_Rune, pos, 10, 30)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False

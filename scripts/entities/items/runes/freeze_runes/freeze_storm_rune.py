@@ -4,7 +4,7 @@ import math
 
 class Freeze_Storm_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, 'freeze_storm_rune', pos, 1, 30)
+        super().__init__(game, game.dictionary.Get_Freeze_Storm_Rune, pos, 1, 30)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False
