@@ -34,7 +34,7 @@ class Item_Handler():
             pos = item_data['pos']
             amount = item_data['amount']
             item = None
-            if item_data['sub_category'] == 'weapon':
+            if item_data['sub_category'] == self.game.keys.weapon:
                 item = self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'potion':
                 item = self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
@@ -142,7 +142,7 @@ class Item_Handler():
             
             if not item.entity:
                 return
-            if item.shoot_speed and item.entity.category == 'enemy' and not item.delete_countdown:
+            if item.shoot_speed and item.entity.category == self.game.keys.enemy and not item.delete_countdown:
                 item.Set_Delete_Countdown(10)
                 return
         try:

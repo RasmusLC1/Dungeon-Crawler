@@ -237,7 +237,7 @@ class Graphics_Loader:
 
     def Asset_Weapons_List(self):
         Weapons_assets = {
-            self.keys.Sword: get_tiles_from_sheet('weapons/sword/sword.png', 3, 0, 0, 0, 32, 32),
+            self.keys.sword: get_tiles_from_sheet('weapons/sword/sword.png', 3, 0, 0, 0, 32, 32),
             self.keys.sword_attack_cut: get_tiles_from_sheet('weapons/sword/sword.png', 3, 0, 0, 0, 32, 32),
             self.keys.sword_attack_stab: get_tiles_from_sheet('weapons/sword/sword_attack.png', 3, 0, 0, 0, 32, 32),
             

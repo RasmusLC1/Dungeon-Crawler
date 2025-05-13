@@ -24,20 +24,20 @@ class Weapon_Handler():
 
         # Map weapon names to their classes
         self.weapon_map = {
-            'sword': Sword,
-            'halberd': Halberd,
-            'hatchet': Hatchet,
-            'hammer': Hammer,
-            'warhammer': Warhammer,
-            'battle_axe': Battle_Axe,
-            'shield': Shield,
-            'spear': Spear,
-            'torch': Torch,
-            'sceptre': Sceptre,
-            'bell': Bell,
-            'scythe': Scythe,
-            'bow': Bow,
-            'crossbow': Crossbow,
+            game.keys.sword: Sword,
+            game.keys.halberd : Halberd,
+            game.keys.hatchet : Hatchet,
+            game.keys.hammer : Hammer,
+            game.keys.warhammer : Warhammer,
+            game.keys.battle_axe : Battle_Axe,
+            game.keys.shield : Shield,
+            game.keys.spear : Spear,
+            game.keys.torch : Torch,
+            game.keys.sceptre : Sceptre,
+            game.keys.bell : Bell,
+            game.keys.scythe : Scythe,
+            game.keys.bow : Bow,
+            game.keys.crossbow : Crossbow,
         }
 
         self.random_weapon_map = {
@@ -59,7 +59,7 @@ class Weapon_Handler():
 
     def Weapon_Spawner(self, name, pos_x, pos_y, amount=0, data=None):
         # Handle special cases first
-        if 'particle' in name:
+        if self.game.keys.particle in name:
             return True  # or your specific logic for particles
 
         if 'arrow' in name:

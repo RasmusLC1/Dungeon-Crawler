@@ -19,7 +19,7 @@ class Symbols():
                 'arcane_conduit', 'magnet', 'arcane_hunger', 
                 'invulnerable', 'snare', 'thorns',
                 'electric_resistance',
-                'chain', 'enemy', 'curse',
+                'chain', self.game.keys.enemy, 'curse',
                 'weakness', 'vulnerable', 'luck',
                 'anchor', 'blood_tomb', 'halo',
                 'demonic_bargain', 'temptress_embrace',

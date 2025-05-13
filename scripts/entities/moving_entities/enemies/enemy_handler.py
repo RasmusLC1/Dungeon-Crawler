@@ -46,7 +46,7 @@ class Enemy_Handler():
             try:
                 type = item_data['type']
                 pos = item_data['pos']
-                if item_data['category'] == 'enemy':
+                if item_data['category'] == self.game.keys.enemy:
 
                     self.Enemy_Spawner(type, pos, item_data)
                     continue
@@ -280,7 +280,7 @@ class Enemy_Handler():
 
     def Find_Nearby_Enemies(self, entity, max_distance):
         if max_distance <= 5:
-            return self.game.tilemap.Search_Nearby_Tiles(max_distance, entity.pos, 'enemy', entity.ID)
+            return self.game.tilemap.Search_Nearby_Tiles(max_distance, entity.pos, self.game.keys.enemy, entity.ID)
         else:
             return self.Find_Nearby_Enemies_Long_Distance(entity, max_distance)
     

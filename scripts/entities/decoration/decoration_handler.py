@@ -61,7 +61,7 @@ class Decoration_Handler():
             radius = random.randint(5, 7)
             self.Decoration_Spawner('boss_room', boss_room.pos, radius=radius, level=temp_level)
 
-        for weapon in self.game.tilemap.extract([('Weapon', 0)]):
+        for weapon in self.game.tilemap.extract([(self.game.keys.weapon, 0)]):
             self.game.item_handler.weapon_handler.Spawn_Random_Weapon(weapon.pos)
 
     def Set_Chest_Version(self, depth):

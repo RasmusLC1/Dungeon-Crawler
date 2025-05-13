@@ -30,5 +30,5 @@ class Radius_Effect_Loot(Interactive_Loot):
     
     # Seperate find enemies close to the mouse
     def Find_Nearby_Entities_Mouse(self):
-        self.nearby_entities = self.game.tilemap.Search_Nearby_Tiles(self.radius, self.game.mouse.mpos, 'enemy', self.ID)
+        self.nearby_entities = self.game.tilemap.Search_Nearby_Tiles(self.radius, self.game.mouse.mpos, self.game.keys.enemy, self.ID)
 

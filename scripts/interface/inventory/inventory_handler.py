@@ -156,7 +156,7 @@ class Inventory_Handler():
     # TODO: fix with UPDATE
     def Item_Double_Click(self):
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
-            if not self.clicked_inventory_slot.item.sub_category == 'weapon':
+            if not self.clicked_inventory_slot.item.sub_category == self.game.keys.weapon:
                 return False
             
             # Transfer to the current active inventory_slot
@@ -262,7 +262,7 @@ class Inventory_Handler():
         
         self.clicked_inventory_slot.Set_Active(False)
 
-        if self.clicked_inventory_slot.type == 'weapon':
+        if self.clicked_inventory_slot.type == self.game.keys.weapon:
             self.game.player.Remove_Active_Weapon()
 
         self.clicked_inventory_slot.item = None

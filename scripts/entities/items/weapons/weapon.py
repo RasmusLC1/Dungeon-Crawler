@@ -6,7 +6,7 @@ import random
 
 class Weapon(Item):
     def __init__(self, game, pos, type, damage, speed, range, max_charge_time, weapon_class, effect = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
-        super().__init__(game, type, 'weapon', pos, size, 1, add_to_tile)
+        super().__init__(game, type, game.keys.weapon, pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = 10 - speed # Speed of the weapon
         self.range = range # Range of the weapon
@@ -66,7 +66,7 @@ class Weapon(Item):
 
     def Save_Data(self):
         if self.entity:
-            if self.entity.category == 'enemy':
+            if self.entity.category == self.game.keys.enemy:
                 return
         super().Save_Data()
         
@@ -161,7 +161,7 @@ class Weapon(Item):
         
 
     def Set_Rotation(self):
-        if self.entity.category == 'enemy':
+        if self.entity.category == self.game.keys.enemy:
             self.Point_Towards_Mouse_Enemy()
         else:
             self.Point_Towards_Mouse_Player() 
@@ -226,7 +226,7 @@ class Weapon(Item):
    
     def Charge_Player_Or_Enemy(self):
         try:
-            if 'enemy' == self.entity.category:
+            if self.game.keys.enemy == self.entity.category:
                 self.Set_Charging_Enemy()
             
             elif 'player' == self.entity.type:
@@ -422,7 +422,7 @@ class Weapon(Item):
 
    # Check if enemy has hit the player
     def Player_Collision(self, weapon_rect):
-        if self.entity.category != 'enemy':
+        if self.entity.category != self.game.keys.enemy:
             return None
         
         player = self.game.player
@@ -683,7 +683,7 @@ class Weapon(Item):
     # Prevent textbox when carried by enemy
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if self.entity:
-            if self.entity.category == 'enemy':
+            if self.entity.category == self.game.keys.enemy:
                 return
         return super().Update_Text_Box(hitbox_1, hitbox_2)
 

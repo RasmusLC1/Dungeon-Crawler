@@ -13,6 +13,6 @@ class Weapon_Spawner():
             if map[spawner_x][spawner_y] != FLOOR:
                 continue
             
-            offgrid_tiles.append({'type': 'Weapon', 'variant': 0, 'pos': (spawner_x * tile_size, spawner_y * tile_size)})
+            offgrid_tiles.append({'type': self.game.keys.weapon, 'variant': 0, 'pos': (spawner_x * tile_size, spawner_y * tile_size)})
             loot += 1
 
