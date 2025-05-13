@@ -5,7 +5,7 @@ import pygame
 
 class Electric_Ball_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.electric_ball_rune, pos, 1, 25)
+        super().__init__(game, game.keys.electric_ball_rune, pos, 1, 25)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

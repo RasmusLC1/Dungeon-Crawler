@@ -143,7 +143,7 @@ class Inventory_Slot():
         self.game.default_font.Render_Word(surf, 
             str(self.item.amount) + '/' + str(self.item.max_amount), 
             (self.pos[0] + x_offset, self.pos[1] + 25),
-            self.game.dictionary.small_font
+            self.game.keys.small_font
         )
 
     # Render the keyboard shortcut

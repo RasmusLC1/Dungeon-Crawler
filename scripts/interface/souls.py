@@ -38,5 +38,5 @@ class Souls:
         self.game.default_font.Render_Word(surf, str(self.game.player.souls), (new_x, self.pos_y))
 
 
-        scaled_soul_image = pygame.transform.scale(self.game.assets[self.game.dictionary.souls][self.animation], (16, 16))
+        scaled_soul_image = pygame.transform.scale(self.game.assets[self.game.keys.souls][self.animation], (16, 16))
         surf.blit(scaled_soul_image, (self.pos_x + 30, self.pos_y))

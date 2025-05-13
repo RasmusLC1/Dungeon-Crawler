@@ -4,8 +4,8 @@ import math
 
 class Bomb(Radius_Effect_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 192, game.dictionary.bomb, 4, 1)
-        effect = self.type.replace('_' + game.dictionary.bomb, '')
+        super().__init__(game, type, pos, 192, game.keys.bomb, 4, 1)
+        effect = self.type.replace('_' + game.keys.bomb, '')
         self.description = effect + ' explosion\nwhen trown'
         
 

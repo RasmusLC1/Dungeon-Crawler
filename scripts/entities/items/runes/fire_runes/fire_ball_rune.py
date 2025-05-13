@@ -5,7 +5,7 @@ import pygame
 
 class Fire_Ball_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.fire_ball_rune, pos, 5, 40)
+        super().__init__(game, game.keys.fire_ball_rune, pos, 5, 40)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

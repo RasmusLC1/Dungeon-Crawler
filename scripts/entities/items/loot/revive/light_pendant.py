@@ -4,7 +4,7 @@ import random
 
 class Light_Pendant(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, self.game.dictionary.phoenix_feather, pos, (16, 16), 10, self.game.dictionary.revive)
+        super().__init__(game, self.game.keys.phoenix_feather, pos, (16, 16), 10, self.game.keys.revive)
         self.description = f"Revive for\n{self.game.player.max_health * 2} soul"
 
 

@@ -4,7 +4,7 @@ import pygame
 
 class Magnet_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.magnet_rune, pos, 1, 0)
+        super().__init__(game, game.keys.magnet_rune, pos, 1, 0)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

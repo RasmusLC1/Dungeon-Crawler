@@ -58,53 +58,53 @@ class Loot_Handler():
         ]
 
         self.loot_types_weights = {
-            self.game.dictionary.key : 0.05,
-            self.game.dictionary.bomb : 0.2,
-            self.game.dictionary.utility : 0.1,
-            self.game.dictionary.passive : 0.05,
-            self.game.dictionary.revive : 0.02,
-            self.game.dictionary.potion : 0.3,
+            self.game.keys.key : 0.05,
+            self.game.keys.bomb : 0.2,
+            self.game.keys.utility : 0.1,
+            self.game.keys.passive : 0.05,
+            self.game.keys.revive : 0.02,
+            self.game.keys.potion : 0.3,
         }
 
         self.loot_types_keys = [
-            self.game.dictionary.key,
-            self.game.dictionary.bomb,
-            self.game.dictionary.utility,
-            self.game.dictionary.passive,
-            self.game.dictionary.revive,
-            self.game.dictionary.potion,
+            self.game.keys.key,
+            self.game.keys.bomb,
+            self.game.keys.utility,
+            self.game.keys.passive,
+            self.game.keys.revive,
+            self.game.keys.potion,
         ]
 
         self.loot_types_dic = {
-            self.game.dictionary.key : self.key_loot_handler,
-            self.game.dictionary.bomb : self.bomb_loot_handler,
-            self.game.dictionary.utility : self.utility_loot_handler,
-            self.game.dictionary.passive : self.passive_loot_handler,
-            self.game.dictionary.revive : self.revive_loot_handler,
-            self.game.dictionary.potion : self.potion_loot_handler,
+            self.game.keys.key : self.key_loot_handler,
+            self.game.keys.bomb : self.bomb_loot_handler,
+            self.game.keys.utility : self.utility_loot_handler,
+            self.game.keys.passive : self.passive_loot_handler,
+            self.game.keys.revive : self.revive_loot_handler,
+            self.game.keys.potion : self.potion_loot_handler,
         }
 
         self.loot_map = {
-            self.game.dictionary.skeleton_key : Skeleton_Key,
-            self.game.dictionary.blood_key : Blood_Key,
-            self.game.dictionary.soul_key : Soul_Key,
-            self.game.dictionary.cursed_key : Cursed_Key,
-            self.game.dictionary.lockpick : Lockpick,
-            self.game.dictionary.bomb: Bomb,
+            self.game.keys.skeleton_key : Skeleton_Key,
+            self.game.keys.blood_key : Blood_Key,
+            self.game.keys.soul_key : Soul_Key,
+            self.game.keys.cursed_key : Cursed_Key,
+            self.game.keys.lockpick : Lockpick,
+            self.game.keys.bomb: Bomb,
             
-            self.game.dictionary.echo_bell : Echo_Bell,
-            self.game.dictionary.faded_hourglass : Faded_Hourglass,
-            self.game.dictionary.ethereal_chains : Ethereal_Chains,
-            self.game.dictionary.shadow_cloak : Shadow_Cloak,
-            self.game.dictionary.recall_scroll : Recall_Scroll,
+            self.game.keys.echo_bell : Echo_Bell,
+            self.game.keys.faded_hourglass : Faded_Hourglass,
+            self.game.keys.ethereal_chains : Ethereal_Chains,
+            self.game.keys.shadow_cloak : Shadow_Cloak,
+            self.game.keys.recall_scroll : Recall_Scroll,
 
-            self.game.dictionary.lantern : Lantern,
+            self.game.keys.lantern : Lantern,
 
-            self.game.dictionary.phoenix_feather : Phoenix_Feather,
-            self.game.dictionary.light_pendant : Light_Pendant,
+            self.game.keys.phoenix_feather : Phoenix_Feather,
+            self.game.keys.light_pendant : Light_Pendant,
 
-            self.game.dictionary.echo_sigil : Echo_Sigil,
-            self.game.dictionary.potion: Potion,
+            self.game.keys.echo_sigil : Echo_Sigil,
+            self.game.keys.potion: Potion,
         }
 
 
@@ -157,15 +157,15 @@ class Loot_Handler():
             if not hasattr(item, 'loot_type'):
                 continue
 
-            if item.loot_type == self.game.dictionary.key:
+            if item.loot_type == self.game.keys.key:
                 key_amount += 1
-            elif item.loot_type == self.game.dictionary.revive:
+            elif item.loot_type == self.game.keys.revive:
                 revive_amount += 1
         
         if revive_amount > 0:
-            weights[self.game.dictionary.revive] /= 10
+            weights[self.game.keys.revive] /= 10
         if key_amount == 0:
-            weights[self.game.dictionary.key] = 0.5
+            weights[self.game.keys.key] = 0.5
 
         return weights
 

@@ -14,19 +14,19 @@ class Key_Loot_Handler(Loot_Types_Handler):
 
 
         self.loot_map = {
-            game.dictionary.skeleton_key: Skeleton_Key,
-            game.dictionary.blood_key: Blood_Key,
-            game.dictionary.soul_key: Soul_Key,
-            game.dictionary.cursed_key: Cursed_Key,
-            game.dictionary.lockpick: Lockpick,
+            game.keys.skeleton_key: Skeleton_Key,
+            game.keys.blood_key: Blood_Key,
+            game.keys.soul_key: Soul_Key,
+            game.keys.cursed_key: Cursed_Key,
+            game.keys.lockpick: Lockpick,
         }
 
         self.types = [
-            game.dictionary.skeleton_key,
-            game.dictionary.blood_key,
-            game.dictionary.soul_key,
-            game.dictionary.cursed_key,
-            game.dictionary.lockpick,
+            game.keys.skeleton_key,
+            game.keys.blood_key,
+            game.keys.soul_key,
+            game.keys.cursed_key,
+            game.keys.lockpick,
         ]
 
 

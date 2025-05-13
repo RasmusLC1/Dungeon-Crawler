@@ -12,19 +12,19 @@ class Utility_Loot_Handler(Loot_Types_Handler):
 
 
         self.loot_map = {
-            self.game.dictionary.echo_bell: Echo_Bell,
-            self.game.dictionary.faded_hourglass : Faded_Hourglass,
-            self.game.dictionary.ethereal_chains : Ethereal_Chains,
-            self.game.dictionary.shadow_cloak: Shadow_Cloak,
-            self.game.dictionary.recall_scroll: Recall_Scroll,
+            self.game.keys.echo_bell: Echo_Bell,
+            self.game.keys.faded_hourglass : Faded_Hourglass,
+            self.game.keys.ethereal_chains : Ethereal_Chains,
+            self.game.keys.shadow_cloak: Shadow_Cloak,
+            self.game.keys.recall_scroll: Recall_Scroll,
         }
 
         self.types = [
-            self.game.dictionary.echo_bell,
-            self.game.dictionary.faded_hourglass,
-            self.game.dictionary.ethereal_chains,
-            self.game.dictionary.shadow_cloak,
-            self.game.dictionary.recall_scroll
+            self.game.keys.echo_bell,
+            self.game.keys.faded_hourglass,
+            self.game.keys.ethereal_chains,
+            self.game.keys.shadow_cloak,
+            self.game.keys.recall_scroll
         ]
 
 

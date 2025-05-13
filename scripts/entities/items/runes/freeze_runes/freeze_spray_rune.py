@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.magic_attacks.ice.ice_shooter import Ice_Sho
 
 class Freeze_Spray_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.freeze_spray_rune, pos, 1, 20)
+        super().__init__(game, game.keys.freeze_spray_rune, pos, 1, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.ice_shooter = Ice_Shooter(self.game)

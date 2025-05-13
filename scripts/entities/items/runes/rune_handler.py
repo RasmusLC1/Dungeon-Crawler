@@ -94,55 +94,55 @@ class Rune_Handler():
 
     def Rune_Spawner(self):
         self.runes = {
-        self.game.dictionary.dash_rune : Dash_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.key_rune : Key_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.regen_rune : Regen_Rune(self.game, (9999, 9999)),
+        self.game.keys.dash_rune : Dash_Rune(self.game, (9999, 9999)),
+        self.game.keys.key_rune : Key_Rune(self.game, (9999, 9999)),
+        self.game.keys.regen_rune : Regen_Rune(self.game, (9999, 9999)),
 
-        self.game.dictionary.healing_rune : Healing_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.invisibility_rune : Invisibility_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.invulnerable_rune: Invulnerable_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.resistance_rune : Resistance_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.silence_rune : Silence_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.speed_rune : Speed_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.increase_strength_rune : Strength_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.vampiric_rune : Vampiric_Rune(self.game, (9999, 9999)),
+        self.game.keys.healing_rune : Healing_Rune(self.game, (9999, 9999)),
+        self.game.keys.invisibility_rune : Invisibility_Rune(self.game, (9999, 9999)),
+        self.game.keys.invulnerable_rune: Invulnerable_Rune(self.game, (9999, 9999)),
+        self.game.keys.resistance_rune : Resistance_Rune(self.game, (9999, 9999)),
+        self.game.keys.silence_rune : Silence_Rune(self.game, (9999, 9999)),
+        self.game.keys.speed_rune : Speed_Rune(self.game, (9999, 9999)),
+        self.game.keys.increase_strength_rune : Strength_Rune(self.game, (9999, 9999)),
+        self.game.keys.vampiric_rune : Vampiric_Rune(self.game, (9999, 9999)),
 
-        self.game.dictionary.arcane_conduit_rune : Arcane_Conduit_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.arcane_hunger_rune : Arcane_Hunger_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.light_rune : Light_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.magnet_rune : Magnet_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.shield_rune : Shield_Rune(self.game, (9999, 9999)),
+        self.game.keys.arcane_conduit_rune : Arcane_Conduit_Rune(self.game, (9999, 9999)),
+        self.game.keys.arcane_hunger_rune : Arcane_Hunger_Rune(self.game, (9999, 9999)),
+        self.game.keys.light_rune : Light_Rune(self.game, (9999, 9999)),
+        self.game.keys.magnet_rune : Magnet_Rune(self.game, (9999, 9999)),
+        self.game.keys.shield_rune : Shield_Rune(self.game, (9999, 9999)),
 
-        self.game.dictionary.fire_resistance_rune : Fire_Resistance_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.fire_cirlce_rune : Fire_Circle_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.fire_ball_rune : Fire_Ball_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.fire_spray_rune : Fire_Spray_Rune(self.game, (9999, 9999)),
+        self.game.keys.fire_resistance_rune : Fire_Resistance_Rune(self.game, (9999, 9999)),
+        self.game.keys.fire_cirlce_rune : Fire_Circle_Rune(self.game, (9999, 9999)),
+        self.game.keys.fire_ball_rune : Fire_Ball_Rune(self.game, (9999, 9999)),
+        self.game.keys.fire_spray_rune : Fire_Spray_Rune(self.game, (9999, 9999)),
         
-        self.game.dictionary.freeze_circle_rune : Freeze_Circle_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.freeze_storm_rune : Freeze_Storm_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.freeze_spray_rune : Freeze_Spray_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.freeze_ball_rune : Freeze_Ball_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.frozen_resistance_rune : Frozen_Resistance_Rune(self.game, (9999, 9999)),
+        self.game.keys.freeze_circle_rune : Freeze_Circle_Rune(self.game, (9999, 9999)),
+        self.game.keys.freeze_storm_rune : Freeze_Storm_Rune(self.game, (9999, 9999)),
+        self.game.keys.freeze_spray_rune : Freeze_Spray_Rune(self.game, (9999, 9999)),
+        self.game.keys.freeze_ball_rune : Freeze_Ball_Rune(self.game, (9999, 9999)),
+        self.game.keys.frozen_resistance_rune : Frozen_Resistance_Rune(self.game, (9999, 9999)),
         
-        self.game.dictionary.poison_resistance_rune : Poison_Resistance_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.poison_ball_rune : Poison_Ball_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.poison_cloud_rune : Poison_Cloud_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.poison_plume_rune : Poison_Plume_Rune(self.game, (9999, 9999)),
+        self.game.keys.poison_resistance_rune : Poison_Resistance_Rune(self.game, (9999, 9999)),
+        self.game.keys.poison_ball_rune : Poison_Ball_Rune(self.game, (9999, 9999)),
+        self.game.keys.poison_cloud_rune : Poison_Cloud_Rune(self.game, (9999, 9999)),
+        self.game.keys.poison_plume_rune : Poison_Plume_Rune(self.game, (9999, 9999)),
 
-        self.game.dictionary.electric_ball_rune : Electric_Ball_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.electric_spray_rune : Electric_Spray_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.chain_lightning_rune : Chain_Lightning_Rune(self.game, (9999, 9999)),
+        self.game.keys.electric_ball_rune : Electric_Ball_Rune(self.game, (9999, 9999)),
+        self.game.keys.electric_spray_rune : Electric_Spray_Rune(self.game, (9999, 9999)),
+        self.game.keys.chain_lightning_rune : Chain_Lightning_Rune(self.game, (9999, 9999)),
 
-        self.game.dictionary.soul_reap_rune : Soul_Reap_Rune(self.game, (9999, 9999)),
-        self.game.dictionary.soul_pit_rune : Soul_Pit_Rune(self.game, (9999, 9999)),
+        self.game.keys.soul_reap_rune : Soul_Reap_Rune(self.game, (9999, 9999)),
+        self.game.keys.soul_pit_rune : Soul_Pit_Rune(self.game, (9999, 9999)),
 
         }
 
 
     def Add_Runes_To_Inventory_TEST(self):
-        self.Add_Rune_To_Rune_Inventory(self.game.dictionary.key_rune)
-        self.Add_Rune_To_Rune_Inventory(self.game.dictionary.freeze_spray_rune )
-        self.Add_Rune_To_Rune_Inventory(self.game.dictionary.dash_rune)
+        self.Add_Rune_To_Rune_Inventory(self.game.keys.key_rune)
+        self.Add_Rune_To_Rune_Inventory(self.game.keys.freeze_spray_rune )
+        self.Add_Rune_To_Rune_Inventory(self.game.keys.dash_rune)
 
     def Clear_Runes(self):
         self.runes.clear()

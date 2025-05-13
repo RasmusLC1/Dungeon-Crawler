@@ -4,7 +4,7 @@ import random
 
 class Cursed_Key(Key):
     def __init__(self, game, pos):
-        super().__init__(game, game.dictionary.cursed_key, pos)
+        super().__init__(game, game.keys.cursed_key, pos)
         self.description = 'Open any\ndoor and\nbe cursed'
         self.curse_generator = Effect_Curse()
 

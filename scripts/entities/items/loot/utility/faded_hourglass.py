@@ -4,7 +4,7 @@ import random
 class Faded_Hourglass(Radius_Effect_Loot):
     def __init__(self, game, pos):
         amount = random.randint(2, 4)
-        super().__init__(game, game.dictionary.faded_hourglass, pos, 320, game.dictionary.utility, 4, amount)
+        super().__init__(game, game.keys.faded_hourglass, pos, 320, game.keys.utility, 4, amount)
         self.Set_Description()
         self.max_amount = 5
         self.slowdown_triggered = 0

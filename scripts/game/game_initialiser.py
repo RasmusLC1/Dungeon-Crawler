@@ -17,7 +17,7 @@ from scripts.input.keyboard import Keyboard_Handler
 from scripts.input.mouse import Mouse_Handler
 from scripts.engine.a_star import A_Star
 from scripts.menu.menu_handler import Menu_Handler
-from scripts.engine.assets.dictionary import Dictionary
+from scripts.engine.assets.keys import Dictionary
 
 
 
@@ -40,7 +40,7 @@ class Game_Initialiser():
         
         self.game.movement = [False, False, False, False]
 
-        self.game.dictionary = Dictionary()
+        self.game.keys = Dictionary()
         self.game.assets = {}
         Graphics_Loader.Run_All(self.game)
         Audio_Loader.Run_All(self.game)

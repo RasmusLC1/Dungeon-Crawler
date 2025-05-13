@@ -2,7 +2,7 @@ class Interactable_Object():
     def __init__(self, game):
         self.game = game
         self.active = False
-        self.sprite = self.game.assets[game.dictionary.floating_E][0]
+        self.sprite = self.game.assets[game.keys.floating_E][0]
 
 
     def Set_Active(self, state):
