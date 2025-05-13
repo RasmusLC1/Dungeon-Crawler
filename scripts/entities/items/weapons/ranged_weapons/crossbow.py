@@ -7,7 +7,7 @@ import pygame
 
 class Crossbow(Ranged_Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, 'crossbow', 6, 8, 10, 60)
+        super().__init__(game, pos, game.keys.crossbow, 6, 8, 10, 60)
         self.max_animation = 8
         self.attack_animation_max = 2
         self.attack_animation_counter = 0
@@ -19,7 +19,7 @@ class Crossbow(Ranged_Weapon):
         if not self.entity:
             return
         
-        if self.entity.category == "enemy":
+        if self.entity.category == self.game.keys.enemy:
             self.Enemy_Shooting()
             return
 

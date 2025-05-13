@@ -4,7 +4,7 @@ import pygame
 
 class Electric_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, entity, 'electric_ball', damage, speed, 2, 'electric', 200, special_attack, direction)
+        super().__init__(game, pos, entity, game.keys.electric_ball, damage, speed, 2, game.keys.electric, 200, special_attack, direction)
         
         self.light_source = self.game.light_handler.Add_Light(self.pos, 3, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)

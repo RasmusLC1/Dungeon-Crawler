@@ -9,18 +9,18 @@ import math
 
 class Bomb(Projectile):
     def __init__(self, game, pos, shoot_distance):
-        super().__init__(game, pos, 'fire_bomb', 0, 1, 2, 2, 40, 'bomb', 'blunt', shoot_distance, 'cut', (20, 20), False)
+        super().__init__(game, pos, game.keys.fire_bomb, 0, 1, 2, 2, 40, game.keys.bomb, game.keys.blunt, shoot_distance, game.keys.cut, (20, 20), False)
         self.target = None
         self.distance_to_target = 99999
         self.disabled = True
 
 
         self.explosions = {
-            'fire_bomb' : Fire_Explosion,
-            'frozen_bomb' : Ice_Explosion,
-            'electric_bomb' :  Electric_Explosion,
-            'poison_bomb' :  Poison_Explosion,
-            'vampiric_bomb' : Soul_Pit,
+            game.keys.fire_bomb : Fire_Explosion,
+            game.keys.frozen_bomb : Ice_Explosion,
+            game.keys.electric_bomb :  Electric_Explosion,
+            game.keys.poison_bomb :  Poison_Explosion,
+            game.keys.vampiric_bomb : Soul_Pit,
         }
 
     def Set_Type(self, type):

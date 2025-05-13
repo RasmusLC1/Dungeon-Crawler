@@ -4,7 +4,7 @@ import math
 
 class Soul_Pit(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
-        super().__init__(game, 'soul_pit', 'vampiric', pos, power, 5, 5, 5, entity)
+        super().__init__(game, game.keys.soul_pit, game.keys.vampiric, pos, power, 5, 5, 5, entity)
         # extend duration, lower damage and increase range
         self.delete_countdown *= 3
         self.damage = max(1, self.damage // 10)

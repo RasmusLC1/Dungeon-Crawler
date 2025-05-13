@@ -4,7 +4,7 @@ import math
 
 class Elemental_Explosion(Item):
     def __init__(self, game, type, effect, pos, power, effect_strength, max_animation, animation_cooldown_max, entity = None):
-        super().__init__(game, type, 'magic_attack', pos, (game.tilemap.tile_size, game.tilemap.tile_size))
+        super().__init__(game, type, game.keys.magic_attack, pos, (game.tilemap.tile_size, game.tilemap.tile_size))
         self.animation = 0
         self.animation_cooldown = 0
         self.max_animation = max_animation

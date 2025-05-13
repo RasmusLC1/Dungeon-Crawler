@@ -62,7 +62,7 @@ class Weapon_Handler():
         if self.game.keys.particle in name:
             return True  # or your specific logic for particles
 
-        if 'arrow' in name:
+        if self.game.keys.arrow in name:
             weapon = Arrow(self.game, (pos_x, pos_y), amount)
         else:
             # Lookup the class; return False if not found

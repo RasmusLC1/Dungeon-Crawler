@@ -4,7 +4,7 @@ import math
 
 class Battle_Axe(Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, 'battle_axe', 1, 2, 3, 70, 'two_handed_melee')
+        super().__init__(game, pos, game.keys.battle_axe, 1, 2, 3, 70, 'two_handed_melee')
         self.max_animation = 4
         self.attack_animation_max = 14
         self.special_attack_effect_animation_max = 8
@@ -47,7 +47,7 @@ class Battle_Axe(Weapon):
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 4)
     
     def Reset_Special_Attack(self):
-        self.attack_type = 'cut'
+        self.attack_type = self.game.keys.cut
         self.spin_countdown = 0
         
         return super().Reset_Special_Attack()

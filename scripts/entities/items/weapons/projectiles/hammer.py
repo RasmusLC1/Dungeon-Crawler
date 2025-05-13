@@ -2,7 +2,7 @@ from scripts.entities.items.weapons.projectiles.projectile import Projectile
 
 class Hammer(Projectile):
     def __init__(self, game, pos, damage_type = 'blunt'):
-        super().__init__(game, pos, 'hammer', 5, 2, 5, 4, 40, 'one_handed_melee', damage_type, 20, 'cut')
+        super().__init__(game, pos, game.keys.hammer, 5, 2, 5, 4, 40, 'one_handed_melee', damage_type, 20, game.keys.cut)
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0

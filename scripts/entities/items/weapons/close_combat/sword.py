@@ -16,14 +16,14 @@ class Sword(Weapon):
         
         
     def Set_Attack_Type(self):
-        if self.attack_type == 'cut': # Handle Slashing
+        if self.attack_type == self.game.keys.cut: # Handle Slashing
             self.Slash_Attack()
         else: # Handle Stabbing
             self.Stabbing_Attack() 
 
 
     def Set_Attack(self):
-        self.attack_type = random.choice(['cut', 'stab']) # Set either cut or stab
+        self.attack_type = random.choice([self.game.keys.cut, self.game.keys.stab]) # Set either cut or stab
         return super().Set_Attack()
 
 

@@ -4,7 +4,7 @@ from scripts.entities.items.weapons.weapon import Weapon
 
 class Warhammer(Weapon):
     def __init__(self, game, pos, damage_type = 'blunt'):
-        super().__init__(game, pos, 'warhammer', 9, 2, 6, 80, 'two_handed_melee', damage_type)
+        super().__init__(game, pos, game.keys.warhammer, 9, 2, 6, 80, 'two_handed_melee', damage_type)
         self.max_animation = 5
         self.attack_animation_max = 5
         self.special_attack_effect_animation_max = 5
@@ -32,7 +32,7 @@ class Warhammer(Weapon):
         # Stun nearby enemies
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3)
         for enemy in self.nearby_enemies:
-            enemy.Set_Effect('snare', self.max_charge_time * 2)
+            enemy.Set_Effect(self.game.keys.snare, self.max_charge_time * 2)
             self.Entity_Hit(enemy)
 
         self.damage = damage_holder # Reset Damage
@@ -42,7 +42,7 @@ class Warhammer(Weapon):
         
     def Smash_Attack_Effect(self):
         self.Update_Special_Attack_Effect_Animation()
-        effect_type = self.effect + '_' + self.attack_type + '_effect'
+        effect_type = self.effect + '_' + self.attack_type + '_' + self.game.keys.effect
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         pos_x = self.entity.pos[0] - self.game.render_scroll[0] - 10
         pos_y = self.entity.pos[1] - self.game.render_scroll[1] - 10
@@ -51,10 +51,10 @@ class Warhammer(Weapon):
 
 
     def Set_Special_Attack(self, offset=...):
-        self.attack_type = 'smash'
+        self.attack_type = self.game.keys.smash
         super().Set_Special_Attack(offset)
         self.Set_Special_Attack_Effect_Animation_Time()
     
     def Reset_Special_Attack(self):
-        self.attack_type = 'cut'
+        self.attack_type = self.game.keys.cut
         return super().Reset_Special_Attack()

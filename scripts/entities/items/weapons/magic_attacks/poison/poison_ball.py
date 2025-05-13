@@ -4,7 +4,7 @@ import pygame
 
 class Poison_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, entity, 'poison_ball', damage, speed, 2, 'poison', 200, special_attack, direction)
+        super().__init__(game, pos, entity, game.keys.poison_ball, damage, speed, 2, game.keys.poison, 200, special_attack, direction)
         
 
 

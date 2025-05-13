@@ -80,7 +80,7 @@ class Dungeon_Generator():
         self.Update_A_Star_Map()
 
 
-        Weapon_Spawner.Spawn_Weapons(self.cellular_automata.map, map_id, self.tile_size, size_x, size_y, self.tilemap.offgrid_tiles, )
+        Weapon_Spawner.Spawn_Weapons(self.cellular_automata.map, map_id, self.tile_size, size_x, size_y, self.tilemap.offgrid_tiles, self.game.keys)
 
         Level_Structure.Level_Structure(self.cellular_automata.map, self.tile_size, size_x, size_y, self.tilemap)
 

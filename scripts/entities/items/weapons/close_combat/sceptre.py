@@ -2,7 +2,7 @@ from scripts.entities.items.weapons.weapon import Weapon
 
 class Sceptre(Weapon):
     def __init__(self, game, pos, damage_type = 'blunt'):
-        super().__init__(game, pos, 'sceptre', 3, 2, 3, 100, 'one_handed_melee', damage_type)
+        super().__init__(game, pos, game.keys.sceptre, 3, 2, 3, 100, 'one_handed_melee', damage_type)
         self.max_animation = 6
         self.attack_animation_max = 8
         self.heal_cooldown = 0
@@ -29,6 +29,6 @@ class Sceptre(Weapon):
     
     # Initialise the charge logic
     def Heal_Entity(self):
-        self.entity.effects.Set_Effect('healing', 5)
+        self.entity.effects.Set_Effect(self.game.keys.healing, 5)
         self.heal_cooldown = 2000
         self.special_attack = 0

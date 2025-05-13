@@ -4,7 +4,7 @@ import pygame
 
 class Spear(Projectile):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'spear', 5, 4, 6, 8, 50, 'two_handed_melee', damage_type, 30, 'stab')
+        super().__init__(game, pos, game.keys.spear, 5, 4, 6, 8, 50, 'two_handed_melee', damage_type, 30, game.keys.stab)
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0

@@ -19,4 +19,4 @@ class Chain_Lightning(Electric_Particle):
     def Electrocute_Nearby_Enemies(self):
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, 4)
         for enemy in self.nearby_enemies:
-            enemy.Set_Effect("electric", 3)
+            enemy.Set_Effect(self.game.keys.electric, 3)

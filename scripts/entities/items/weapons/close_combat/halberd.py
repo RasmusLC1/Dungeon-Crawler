@@ -3,7 +3,7 @@ import random
 
 class Halberd(Weapon):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, 'halberd', 3, 2, 8, 50, 'two_handed_melee', damage_type)
+        super().__init__(game, pos, game.keys.halberd, 3, 2, 8, 50, 'two_handed_melee', damage_type)
         self.max_animation = 3
         self.attack_animation_max = 3 
 
@@ -16,7 +16,7 @@ class Halberd(Weapon):
         
         
     def Set_Attack_Type(self):
-        if self.attack_type == 'cut': # Handle Slashing
+        if self.attack_type == self.game.keys.cut: # Handle Slashing
             self.Slash_Attack()
         else: # Handle Stabbing
             self.Stabbing_Attack() 
@@ -24,7 +24,7 @@ class Halberd(Weapon):
   
 
     def Set_Attack(self):
-        self.attack_type = random.choice(['cut', 'stab']) # Set either cut or stab
+        self.attack_type = random.choice([self.game.keys.cut, self.game.keys.stab]) # Set either cut or stab
         return super().Set_Attack()
 
 

@@ -4,7 +4,7 @@ import pygame
 
 class Ice_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, entity, 'ice_ball', damage, speed, 2, 'frozen', 200, special_attack, direction)
+        super().__init__(game, pos, entity, game.keys.ice_ball, damage, speed, 2, game.keys.frozen, 200, special_attack, direction)
         
 
 

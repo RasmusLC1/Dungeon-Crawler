@@ -921,6 +921,46 @@ class Dictionary():
     
     @property
     def enemy(self): return 'enemy'
+
+    @property
+    def player(self): return 'player'
     
     @property
     def particle(self): return 'particle'
+
+    @property
+    def effect(self): return 'effect'
+    
+
+    # Spawning keys
+    @property
+    def type(self): return 'type'
+    
+    @property
+    def variant(self): return 'variant'
+    
+    @property
+    def pos(self): return 'pos'
+    
+
+    # Weapon effects
+    @property
+    def blunt(self): return 'blunt'
+    
+    @property
+    def slash(self): return 'slash'
+
+    @property
+    def cut(self): return 'cut'
+
+    @property
+    def snare(self): return 'snare'
+    
+    @property
+    def stab(self): return 'stab'
+
+    @property
+    def magic_attack(self): return 'magic_attack'
+
+    @property
+    def smash(self): return 'smash'

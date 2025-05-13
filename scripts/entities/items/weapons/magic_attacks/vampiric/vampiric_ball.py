@@ -4,7 +4,7 @@ import pygame
 
 class Vampiric_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, entity, 'vampiric_ball', damage, speed, 2, 'vampiric', 200, special_attack, direction)
+        super().__init__(game, pos, entity, game.keys.vampiric_ball, damage, speed, 2, game.keys.vampiric, 200, special_attack, direction)
 
 
     def Reset_Shot(self):

@@ -2,7 +2,7 @@ from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_explosi
 
 class Poison_Explosion(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
-        super().__init__(game, 'poison_explosion', 'poison', pos, power, 6, 5, 5, entity)
+        super().__init__(game, game.keys.poison_explosion, game.keys.poison, pos, power, 6, 5, 5, entity)
         self.poison_cooldown = 0
         self.poison_cooldown_max = 10
 
@@ -13,7 +13,7 @@ class Poison_Explosion(Elemental_Explosion):
         
         self.poison_cooldown = 0
         for entity in self.nearby_entities:
-            entity.effects.Set_Effect("poison", 1)
+            entity.effects.Set_Effect(self.effect, 1)
 
     def Update_Animation(self):
         self.Poison_Entities()

@@ -7,7 +7,7 @@ import random
 
 class Ice_Storm(PhysicsEntity):
     def __init__(self, game, entity, duration):
-        super().__init__(game, 'ice_storm', 'magic_attack', entity.pos, (32,32))
+        super().__init__(game, game.keys.ice_storm, game.keys.magic_attack, entity.pos, (32,32))
         self.entity = entity
         self.ice_cooldown = 0
         self.duration = 0

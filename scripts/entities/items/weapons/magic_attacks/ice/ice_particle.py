@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.magic_attacks.base_attacks.particle import P
 
 class Ice_Particle(Particle):
     def __init__(self, game, pos, shoot_distance):
-        super().__init__(game, pos, 'ice_particle_attack', 2, 1.2, 240, 100, 'frozen', shoot_distance)
+        super().__init__(game, pos, game.keys.ice_particle_attack, 2, 1.2, 240, 100, game.keys.frozen, shoot_distance)
    
 
     def Set_Enabled(self, pos, speed, special_attack, direction, entity, delete_countdown):

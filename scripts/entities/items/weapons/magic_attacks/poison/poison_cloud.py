@@ -2,7 +2,7 @@ from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_explosi
 
 class Poison_Cloud(Elemental_Explosion):
     def __init__(self, game, pos, power, entity):
-        super().__init__(game, 'poison_cloud', 'poison', pos, power, 4, 3, 30, entity)
+        super().__init__(game, game.keys.poison_cloud, game.keys.poison, pos, power, 4, 3, 30, entity)
         self.poison_cooldown = 0
         self.poison_cooldown_max = 10
         self.delete_countdown = self.max_animation * self.animation_cooldown_max * max(self.power // 2, 1)
@@ -14,7 +14,7 @@ class Poison_Cloud(Elemental_Explosion):
             return
         self.poison_cooldown = 0
         for entity in self.nearby_entities:
-            entity.effects.Set_Effect("poison", 1)
+            entity.effects.Set_Effect(self.effect, 1)
 
 
 

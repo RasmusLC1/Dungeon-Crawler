@@ -3,7 +3,7 @@ from scripts.entities.items.weapons.ranged_weapons.ranged_weapon import Ranged_W
 
 class Bow(Ranged_Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, 'bow', 4, 8, 10, 40)
+        super().__init__(game, pos, game.keys.bow, 4, 8, 10, 40)
         self.max_animation = 0
         self.attack_animation_max = 2
         self.attack_animation_counter = 0
@@ -15,7 +15,7 @@ class Bow(Ranged_Weapon):
     def Set_Weapon_Charge(self, offset):
         if not self.entity:
             return
-        if self.entity.category == "enemy":
+        if self.entity.category == self.game.keys.enemy:
             self.Enemy_Shooting()
             return
 
