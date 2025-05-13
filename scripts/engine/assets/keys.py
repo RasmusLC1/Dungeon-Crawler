@@ -1,568 +1,568 @@
 class Dictionary():
     @property
-    def Floor(self): return "floor"
+    def floor(self): return "floor"
     
     @property
-    def Wall_Top(self): return "wall_top"
+    def wall_top(self): return "wall_top"
     
     @property
-    def Wall_Left(self): return "wall_left"
+    def wall_left(self): return "wall_left"
     
     @property
-    def Wall_Right(self): return "wall_right"
+    def wall_right(self): return "wall_right"
     
     @property
-    def Wall_Middle(self): return "wall_middle"
+    def wall_middle(self): return "wall_middle"
     
     @property
-    def Wall_Bottom(self): return "wall_bottom"
+    def wall_bottom(self): return "wall_bottom"
     
     @property
-    def Wall_Bottom_Corner(self): return "wall_bottom_corner"
+    def wall_bottom_corner(self): return "wall_bottom_corner"
 
     @property
     def Spike_Trap(self): return "spike_trap"
     
     @property
-    def Spike_Poison_Trap(self): return "spike_poison_trap"
+    def spike_poison_trap(self): return "spike_poison_trap"
     
     @property
-    def Pit_Trap(self): return "Pit_trap"
+    def pit_trap(self): return "Pit_trap"
     
     @property
-    def Fire_Trap(self): return "Fire_trap"
+    def fire_trap(self): return "fire_trap"
     
     @property
-    def Spider_Web_Trap(self): return "spider_web"
+    def spider_web(self): return "spider_web"
     
     @property
-    def Poison_Plume_Trap(self): return "poison_plume"
+    def poison_plume(self): return "poison_plume"
 
     # Particles
     @property
-    def Dash_Particle(self): return "dash_particle"
+    def dash_particle(self): return "dash_particle"
     
     @property
-    def Fire_Particle(self): return "fire_particle"
+    def fire_particle(self): return "fire_particle"
     
     @property
-    def Spark_Particle(self): return "spark_particle"
+    def spark_particle(self): return "spark_particle"
     
     @property
-    def Blood_Particle(self): return "blood_particle"
+    def blood_particle(self): return "blood_particle"
     
     @property
-    def Bone_Particle(self): return "bone_particle"
+    def bone_particle(self): return "bone_particle"
     
     @property
-    def Electric_Particle(self): return "electric_particle"
+    def electric_particle(self): return "electric_particle"
     
     @property
-    def Frost_Particle(self): return "frost_particle"
+    def frost_particle(self): return "frost_particle"
     
     @property
-    def Gold_Particle(self): return "gold_particle"
+    def gold_particle(self): return "gold_particle"
     
     @property
-    def Poison_Particle(self): return "poison_particle"
+    def poison_particle(self): return "poison_particle"
     
     @property
-    def Vampire_Particle(self): return "vampire_particle"
+    def vampire_particle(self): return "vampire_particle"
     
     @property
-    def Soul_Particle(self): return "soul_particle"
+    def soul_particle(self): return "soul_particle"
     
     @property
-    def Player_Particle(self): return "player_particle"
+    def player_particle(self): return "player_particle"
 
     # Effects
     @property
-    def Heart(self): return "heart"
+    def heart(self): return "heart"
     
     @property
-    def Coin(self): return "coin"
+    def coin(self): return "coin"
     
     @property
-    def Fire_Effect(self): return "fire"
+    def fire(self): return "fire"
     
     @property
-    def Poison_Effect(self): return "poison"
+    def poison(self): return "poison"
     
     @property
-    def Frozen_Effect(self): return "frozen"
+    def frozen(self): return "frozen"
     
     @property
-    def Wet_Effect(self): return "wet"
+    def wet(self): return "wet"
     
     @property
-    def Regen_Effect(self): return "regen"
+    def regen(self): return "regen"
     
     @property
-    def Electric_Effect(self): return "electric"
+    def electric(self): return "electric"
     
     @property
-    def Invincible_Effect(self): return "invincible"
+    def invincible(self): return "invincible"
 
     # Magic Attack Assets
     @property
-    def Fire_Particle_Attack(self): return "fire_particle_attack"
+    def fire_particle_attack(self): return "fire_particle_attack"
     
     @property
-    def Fire_Ball(self): return "fire_ball"
+    def fire_ball(self): return "fire_ball"
     
     @property
-    def Fire_Explosion(self): return "fire_explosion"
+    def fire_explosion(self): return "fire_explosion"
 
     @property
-    def Ice_Particle_Attack(self): return "ice_particle_attack"
+    def ice_particle_attack(self): return "ice_particle_attack"
     
     @property
-    def Ice_Ball(self): return "ice_ball"
+    def ice_ball(self): return "ice_ball"
     
     @property
-    def Ice_Explosion(self): return "ice_explosion"
+    def ice_explosion(self): return "ice_explosion"
     
     @property
-    def Ice_Storm(self): return "ice_storm"
+    def ice_storm(self): return "ice_storm"
 
     @property
-    def Poison_Particle_Attack(self): return "poison_particle_attack"
+    def poison_particle_attack(self): return "poison_particle_attack"
     
     @property
-    def Poison_Ball(self): return "poison_ball"
+    def poison_ball(self): return "poison_ball"
     
     @property
-    def Poison_Explosion(self): return "poison_explosion"
+    def poison_explosion(self): return "poison_explosion"
     
     @property
-    def Poison_Cloud(self): return "poison_cloud"
+    def poison_cloud(self): return "poison_cloud"
 
     @property
-    def Electric_Particle_Attack(self): return "electric_particle_attack"
+    def electric_particle_attack(self): return "electric_particle_attack"
     
     @property
-    def Electric_Ball(self): return "electric_ball"
+    def electric_ball(self): return "electric_ball"
     
     @property
-    def Electric_Explosion(self): return "electric_explosion"
+    def electric_explosion(self): return "electric_explosion"
 
     @property
-    def Soul_Reap(self): return "soul_reap"
+    def soul_reap(self): return "soul_reap"
     
     @property
-    def Vampiric_Ball(self): return "vampiric_ball"
+    def vampiric_ball(self): return "vampiric_ball"
     
     @property
-    def Soul_Pit(self): return "soul_pit"
+    def soul_pit(self): return "soul_pit"
 
     # Player Assets
     @property
-    def Player_Idle_Down(self): return "player_idle_down"
+    def player_idle_down(self): return "player_idle_down"
     
     @property
-    def Player_Idle_Up(self): return "player_idle_up"
+    def player_idle_up(self): return "player_idle_up"
     
     @property
-    def Player_Standing_Still_Down(self): return "player_standing_still_down"
+    def player_standing_still_down(self): return "player_standing_still_down"
     
     @property
-    def Player_Standing_Still_Up(self): return "player_standing_still_up"
+    def player_standing_still_up(self): return "player_standing_still_up"
     
     @property
-    def Player_Running_Down(self): return "player_running_down"
+    def player_running_down(self): return "player_running_down"
     
     @property
-    def Player_Running_Up(self): return "player_running_up"
+    def player_running_up(self): return "player_running_up"
     
     @property
-    def Player_Attack(self): return "player_attack"
+    def player_attack(self): return "player_attack"
 
     # Skeleton Warrior Assets
     @property
-    def Skeleton_Warrior_1(self): return "skeleton_warrior_1"
+    def skeleton_warrior_1(self): return "skeleton_warrior_1"
     
     @property
-    def Skeleton_Warrior_1_Attack(self): return "skeleton_warrior_1_attack"
+    def skeleton_warrior_1_attack(self): return "skeleton_warrior_1_attack"
     
     @property
-    def Skeleton_Warrior_2(self): return "skeleton_warrior_2"
+    def skeleton_warrior_2(self): return "skeleton_warrior_2"
     
     @property
-    def Skeleton_Warrior_2_Attack(self): return "skeleton_warrior_2_attack"
+    def skeleton_warrior_2_attack(self): return "skeleton_warrior_2_attack"
     
     @property
-    def Skeleton_Warrior_3(self): return "skeleton_warrior_3"
+    def skeleton_warrior_3(self): return "skeleton_warrior_3"
     
     @property
-    def Skeleton_Warrior_3_Attack(self): return "skeleton_warrior_3_attack"
+    def skeleton_warrior_3_attack(self): return "skeleton_warrior_3_attack"
 
     # Skeleton Ranger Assets
     @property
-    def Skeleton_Ranger_1(self): return "skeleton_ranger_1"
+    def skeleton_ranger_1(self): return "skeleton_ranger_1"
     
     @property
-    def Skeleton_Ranger_1_Attack(self): return "skeleton_ranger_1_attack"
+    def skeleton_ranger_1_attack(self): return "skeleton_ranger_1_attack"
     
     @property
-    def Skeleton_Ranger_2(self): return "skeleton_ranger_2"
+    def skeleton_ranger_2(self): return "skeleton_ranger_2"
     
     @property
-    def Skeleton_Ranger_2_Attack(self): return "skeleton_ranger_2_attack"
+    def skeleton_ranger_2_attack(self): return "skeleton_ranger_2_attack"
     
     @property
-    def Skeleton_Ranger_3(self): return "skeleton_ranger_3"
+    def skeleton_ranger_3(self): return "skeleton_ranger_3"
     
     @property
-    def Skeleton_Ranger_3_Attack(self): return "skeleton_ranger_3_attack"
+    def skeleton_ranger_3_attack(self): return "skeleton_ranger_3_attack"
 
     # Skeleton Cleric Assets
     @property
-    def Skeleton_Cleric_1(self): return "skeleton_cleric_1"
+    def skeleton_cleric_1(self): return "skeleton_cleric_1"
     
     @property
-    def Skeleton_Cleric_1_Attack(self): return "skeleton_cleric_1_attack"
+    def skeleton_cleric_1_attack(self): return "skeleton_cleric_1_attack"
 
     # Skeleton Bell Tollers
     @property
-    def Skeleton_Bell_Toller_1(self): return "skeleton_bell_toller_1"
+    def skeleton_bell_toller_1(self): return "skeleton_bell_toller_1"
     
     @property
-    def Skeleton_Bell_Toller_1_Attack(self): return "skeleton_bell_toller_1_attack"
+    def skeleton_bell_toller_1_attack(self): return "skeleton_bell_toller_1_attack"
 
     # Skeleton Undertaker
     @property
-    def Skeleton_Undertaker_1(self): return "skeleton_undertaker_1"
+    def skeleton_undertaker_1(self): return "skeleton_undertaker_1"
     
     @property
-    def Skeleton_Undertaker_1_Attack(self): return "skeleton_undertaker_1_attack"
+    def skeleton_undertaker_1_attack(self): return "skeleton_undertaker_1_attack"
 
     # Fire Spirit
     @property
-    def Fire_Spirit_Idle(self): return "fire_spirit_idle"
+    def fire_spirit_idle(self): return "fire_spirit_idle"
     
     @property
-    def Fire_Spirit_Running(self): return "fire_spirit_running"
+    def fire_spirit_running(self): return "fire_spirit_running"
     
     @property
-    def Fire_Spirit_Attack(self): return "fire_spirit_attack"
+    def fire_spirit_attack(self): return "fire_spirit_attack"
 
     # Ice Spirit
     @property
-    def Ice_Spirit(self): return "ice_spirit"
+    def ice_spirit(self): return "ice_spirit"
     
     @property
-    def Ice_Spirit_Attack(self): return "ice_spirit_attack"
+    def ice_spirit_attack(self): return "ice_spirit_attack"
 
     # Wight King
     @property
-    def Wight_King(self): return "wight_king"
+    def wight_king(self): return "wight_king"
     
     @property
-    def Wight_King_Attack(self): return "wight_king_attack"
+    def wight_king_attack(self): return "wight_king_attack"
 
     # Spider
     @property
-    def Spider_Idle(self): return "spider_idle"
+    def spider_idle(self): return "spider_idle"
     
     @property
-    def Spider_Running(self): return "spider_running"
+    def spider_running(self): return "spider_running"
     
     @property
-    def Friendly_Spider_Idle(self): return "friendly_spider_idle"
+    def friendly_spider_idle(self): return "friendly_spider_idle"
     
     @property
-    def Friendly_Spider_Running(self): return "friendly_spider_running"
+    def friendly_spider_running(self): return "friendly_spider_running"
     
     @property
-    def Spider_Attack(self): return "spider_attack"
+    def spider_attack(self): return "spider_attack"
     
     @property
-    def Spider_Jumping(self): return "spider_jumping"
+    def spider_jumping(self): return "spider_jumping"
     
     @property
-    def Spider_On_Back(self): return "spider_on_back"
+    def spider_on_back(self): return "spider_on_back"
 
     # Enemy Symbols
     @property
-    def Exclamation_Mark(self): return "exclamation_mark"
+    def exclamation_mark(self): return "exclamation_mark"
     
     @property
-    def Health_Bar(self): return "health_bar"
+    def health_bar(self): return "health_bar"
 
     # Weapon Assets
     @property
     def Sword(self): return "sword"
 
     @property
-    def Sword_Attack_Cut(self): return "sword_attack_cut"
+    def sword_attack_cut(self): return "sword_attack_cut"
 
     @property
-    def Sword_Attack_Stab(self): return "sword_attack_stab"
+    def sword_attack_stab(self): return "sword_attack_stab"
 
     @property
-    def Torch(self): return "torch"
+    def torch(self): return "torch"
 
     @property
-    def Torch_Attack_Cut(self): return "torch_attack_cut"
+    def torch_attack_cut(self): return "torch_attack_cut"
 
     @property
-    def Spear(self): return "spear"
+    def spear(self): return "spear"
 
     @property
-    def Spear_Attack_Stab(self): return "spear_attack_stab"
+    def spear_attack_stab(self): return "spear_attack_stab"
 
     @property
-    def Bow(self): return "bow"
+    def bow(self): return "bow"
 
     @property
-    def Bow_Attack(self): return "bow_attack"
+    def bow_attack(self): return "bow_attack"
 
     @property
-    def Arrow(self): return "arrow"
+    def arrow(self): return "arrow"
 
     @property
-    def Arrow_Attack(self): return "arrow_attack"
+    def arrow_attack(self): return "arrow_attack"
 
     @property
-    def Shield(self): return "shield"
+    def shield(self): return "shield"
 
     @property
-    def Shield_Attack(self): return "shield_attack"
+    def shield_attack(self): return "shield_attack"
 
     @property
-    def Halberd(self): return "halberd"
+    def halberd(self): return "halberd"
 
     @property
-    def Halberd_Attack_Stab(self): return "halberd_attack_stab"
+    def halberd_attack_stab(self): return "halberd_attack_stab"
 
     @property
-    def Halberd_Attack_Cut(self): return "halberd_attack_cut"
+    def halberd_attack_cut(self): return "halberd_attack_cut"
 
     @property
-    def Battle_Axe(self): return "battle_axe"
+    def battle_axe(self): return "battle_axe"
 
     @property
-    def Battle_Axe_Attack_Cut(self): return "battle_axe_attack_cut"
+    def battle_axe_attack_cut(self): return "battle_axe_attack_cut"
 
     @property
-    def Hammer(self): return "hammer"
+    def hammer(self): return "hammer"
 
     @property
-    def Hammer_Attack_Cut(self): return "hammer_attack_cut"
+    def hammer_attack_cut(self): return "hammer_attack_cut"
 
     @property
-    def Hatchet(self): return "hatchet"
+    def hatchet(self): return "hatchet"
 
     @property
-    def Hatchet_Attack_Cut(self): return "hatchet_attack_cut"
+    def hatchet_attack_cut(self): return "hatchet_attack_cut"
 
     @property
-    def Warhammer(self): return "warhammer"
+    def warhammer(self): return "warhammer"
 
     @property
-    def Warhammer_Attack_Cut(self): return "warhammer_attack_cut"
+    def warhammer_attack_cut(self): return "warhammer_attack_cut"
 
     @property
-    def Crossbow(self): return "crossbow"
+    def crossbow(self): return "crossbow"
 
     @property
-    def Crossbow_Attack(self): return "crossbow_attack"
+    def crossbow_attack(self): return "crossbow_attack"
 
     @property
-    def Bell(self): return "bell"
+    def bell(self): return "bell"
 
     @property
-    def Bell_Attack_Cut(self): return "bell_attack_cut"
+    def bell_attack_cut(self): return "bell_attack_cut"
 
     @property
-    def Sceptre(self): return "sceptre"
+    def sceptre(self): return "sceptre"
 
     @property
-    def Sceptre_Attack_Cut(self): return "sceptre_attack_cut"
+    def sceptre_attack_cut(self): return "sceptre_attack_cut"
 
     @property
-    def Scythe(self): return "scythe"
+    def scythe(self): return "scythe"
 
     @property
-    def Scythe_Attack_Cut(self): return "scythe_attack_cut"
+    def scythe_attack_cut(self): return "scythe_attack_cut"
 
 
     # Weapon Effects
     @property
-    def Slash_Cut_Effect(self): return "slash_cut_effect"
+    def slash_cut_effect(self): return "slash_cut_effect"
 
     @property
-    def Slash_Stab_Effect(self): return "slash_stab_effect"
+    def slash_stab_effect(self): return "slash_stab_effect"
 
     @property
-    def Slash_Spin_Effect(self): return "slash_spin_effect"
+    def slash_spin_effect(self): return "slash_spin_effect"
 
     @property
-    def Slash_Smash_Effect(self): return "slash_smash_effect"
+    def slash_smash_effect(self): return "slash_smash_effect"
 
     @property
-    def Slash_Charge_Effect(self): return "slash_charge_effect"
+    def slash_charge_effect(self): return "slash_charge_effect"
 
     @property
-    def Blunt_Cut_Effect(self): return "blunt_cut_effect"
+    def blunt_cut_effect(self): return "blunt_cut_effect"
 
     @property
-    def Blunt_Stab_Effect(self): return "blunt_stab_effect"
+    def blunt_stab_effect(self): return "blunt_stab_effect"
 
     @property
-    def Blunt_Spin_Effect(self): return "blunt_spin_effect"
+    def blunt_spin_effect(self): return "blunt_spin_effect"
 
     @property
-    def Blunt_Smash_Effect(self): return "blunt_smash_effect"
+    def blunt_smash_effect(self): return "blunt_smash_effect"
 
     @property
-    def Blunt_Charge_Effect(self): return "blunt_charge_effect"
+    def blunt_charge_effect(self): return "blunt_charge_effect"
 
     @property
-    def Electric_Cut_Effect(self): return "electric_cut_effect"
+    def electric_cut_effect(self): return "electric_cut_effect"
 
     @property
-    def Electric_Stab_Effect(self): return "electric_stab_effect"
+    def electric_stab_effect(self): return "electric_stab_effect"
 
     @property
-    def Electric_Spin_Effect(self): return "electric_spin_effect"
+    def electric_spin_effect(self): return "electric_spin_effect"
 
     @property
-    def Electric_Smash_Effect(self): return "electric_smash_effect"
+    def electric_smash_effect(self): return "electric_smash_effect"
 
     @property
-    def Electric_Charge_Effect(self): return "electric_charge_effect"
+    def electric_charge_effect(self): return "electric_charge_effect"
 
     @property
-    def Fire_Cut_Effect(self): return "fire_cut_effect"
+    def fire_cut_effect(self): return "fire_cut_effect"
 
     @property
-    def Fire_Stab_Effect(self): return "fire_stab_effect"
+    def fire_stab_effect(self): return "fire_stab_effect"
 
     @property
-    def Fire_Spin_Effect(self): return "fire_spin_effect"
+    def fire_spin_effect(self): return "fire_spin_effect"
 
     @property
-    def Fire_Smash_Effect(self): return "fire_smash_effect"
+    def fire_smash_effect(self): return "fire_smash_effect"
 
     @property
-    def Fire_Charge_Effect(self): return "fire_charge_effect"
+    def fire_charge_effect(self): return "fire_charge_effect"
 
     @property
-    def Frozen_Cut_Effect(self): return "frozen_cut_effect"
+    def frozen_cut_effect(self): return "frozen_cut_effect"
 
     @property
-    def Frozen_Stab_Effect(self): return "frozen_stab_effect"
+    def frozen_stab_effect(self): return "frozen_stab_effect"
 
     @property
-    def Frozen_Spin_Effect(self): return "frozen_spin_effect"
+    def frozen_spin_effect(self): return "frozen_spin_effect"
 
     @property
-    def Frozen_Smash_Effect(self): return "frozen_smash_effect"
+    def frozen_smash_effect(self): return "frozen_smash_effect"
 
     @property
-    def Frozen_Charge_Effect(self): return "frozen_charge_effect"
+    def frozen_charge_effect(self): return "frozen_charge_effect"
 
     @property
-    def Poison_Cut_Effect(self): return "poison_cut_effect"
+    def poison_cut_effect(self): return "poison_cut_effect"
 
     @property
-    def Poison_Stab_Effect(self): return "poison_stab_effect"
+    def poison_stab_effect(self): return "poison_stab_effect"
 
     @property
-    def Poison_Spin_Effect(self): return "poison_spin_effect"
+    def poison_spin_effect(self): return "poison_spin_effect"
 
     @property
-    def Poison_Smash_Effect(self): return "poison_smash_effect"
+    def poison_smash_effect(self): return "poison_smash_effect"
 
     @property
-    def Poison_Charge_Effect(self): return "poison_charge_effect"
+    def poison_charge_effect(self): return "poison_charge_effect"
 
     @property
-    def Regen_Cut_Effect(self): return "regen_cut_effect"
+    def regen_cut_effect(self): return "regen_cut_effect"
 
     @property
-    def Regen_Stab_Effect(self): return "regen_stab_effect"
+    def regen_stab_effect(self): return "regen_stab_effect"
 
     @property
-    def Regen_Spin_Effect(self): return "regen_spin_effect"
+    def regen_spin_effect(self): return "regen_spin_effect"
 
     @property
-    def Regen_Smash_Effect(self): return "regen_smash_effect"
+    def regen_smash_effect(self): return "regen_smash_effect"
 
     @property
-    def Regen_Charge_Effect(self): return "regen_charge_effect"
+    def regen_charge_effect(self): return "regen_charge_effect"
 
     @property
-    def Vampiric_Cut_Effect(self): return "vampiric_cut_effect"
+    def vampiric_cut_effect(self): return "vampiric_cut_effect"
 
     @property
-    def Vampiric_Stab_Effect(self): return "vampiric_stab_effect"
+    def vampiric_stab_effect(self): return "vampiric_stab_effect"
 
     @property
-    def Vampiric_Spin_Effect(self): return "vampiric_spin_effect"
+    def vampiric_spin_effect(self): return "vampiric_spin_effect"
 
     @property
-    def Vampiric_Smash_Effect(self): return "vampiric_smash_effect"
+    def vampiric_smash_effect(self): return "vampiric_smash_effect"
 
     @property
-    def Vampiric_Charge_Effect(self): return "vampiric_charge_effect"
+    def vampiric_charge_effect(self): return "vampiric_charge_effect"
 
     # Inventory Assets
     @property
-    def Sword_Shield(self): return "sword_shield"
+    def sword_shield(self): return "sword_shield"
 
     @property
-    def Duel_Wield(self): return "duel_wield"
+    def duel_wield(self): return "duel_wield"
 
     @property
-    def Bow_Arrow(self): return "bow_arrow"
+    def bow_arrow(self): return "bow_arrow"
 
     @property
-    def Left_Right(self): return "left_right"
+    def left_right(self): return "left_right"
 
     @property
-    def Rune_Background(self): return "rune_background"
+    def rune_background(self): return "rune_background"
 
 
     # Interactive Objects
     @property
-    def Chest(self): return "chest"
+    def chest(self): return "chest"
 
     @property
-    def Door_Basic(self): return "door_basic"
+    def door_basic(self): return "door_basic"
 
     @property
-    def Rune_Shrine(self): return "rune_shrine"
+    def rune_shrine(self): return "rune_shrine"
 
     @property
-    def Portal_Shrine(self): return "portal_shrine"
+    def portal_shrine(self): return "portal_shrine"
 
     @property
-    def Bones(self): return "bones"
+    def bones(self): return "bones"
 
 
     # Environment Assets
     @property
-    def Lava_Env(self): return "Lava_env"
+    def lava_env(self): return "Lava_env"
 
     @property
-    def Shawlow_Water_Env(self): return "shallow_water_env"
+    def shallow_water_env(self): return "shallow_water_env"
 
     @property
-    def Medium_Water_Env(self): return "medium_water_env"
+    def medium_water_env(self): return "medium_water_env"
 
     @property
-    def Deep_Water_Env(self): return "deep_water_env"
+    def deep_water_env(self): return "deep_water_env"
 
     @property
-    def Shawlow_Ice_Env(self): return "shallow_ice_env"
+    def shallow_ice_env(self): return "shallow_ice_env"
 
     @property
-    def Medium_Ice_Env(self): return "medium_ice_env"
+    def medium_ice_env(self): return "medium_ice_env"
 
     @property
-    def Deep_Ice_Env(self): return "deep_ice_env"
+    def deep_ice_env(self): return "deep_ice_env"
 
 
     # Decoration Assets (Empty in your case, but if you have any)
