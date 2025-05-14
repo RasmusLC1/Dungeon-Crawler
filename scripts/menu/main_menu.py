@@ -1,6 +1,5 @@
-import pygame
-from scripts.menu.button import Button
 from scripts.menu.menu import Menu
+from scripts.engine.assets.keys import keys
 
 
 class Main_Menu(Menu):

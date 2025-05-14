@@ -1,5 +1,5 @@
 from scripts.menu.button import Button
-import math
+from scripts.engine.assets.keys import keys
 
 class Portal_Button(Button):
     def __init__(self, game, pos, size, effect, text, color = (0, 0, 0)) -> None:

@@ -2,6 +2,7 @@ from scripts.entities.moving_entities.enemies.skeleton.skeleton import Skeleton
 from scripts.entities.items.weapons.close_combat.sword import Sword
 from scripts.entities.items.weapons.projectiles.spear import Spear
 from scripts.entities.moving_entities.enemies.skeleton.wight_king.wight_king_intent import Wight_King_Intent_Manager
+from scripts.engine.assets.keys import keys
 
 import random
 

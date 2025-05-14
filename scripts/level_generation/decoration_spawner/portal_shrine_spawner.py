@@ -1,4 +1,5 @@
 import random
+from scripts.engine.assets.keys import keys
 
 class Portal_Shrine_Spawner():
 

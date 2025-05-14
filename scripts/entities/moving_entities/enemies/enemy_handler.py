@@ -8,9 +8,9 @@ from scripts.entities.moving_entities.enemies.fire_spirit import Fire_Spirit
 from scripts.entities.moving_entities.enemies.ice_spirit import Ice_Spirit
 from scripts.entities.moving_entities.enemies.spider.spider import Spider
 from scripts.entities.moving_entities.enemies.skeleton.wight_king.wight_king import Wight_King
+from scripts.engine.assets.keys import keys
 
 import random
-import math
 
 class Enemy_Handler():
     def __init__(self, game):

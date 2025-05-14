@@ -1,5 +1,5 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
+from scripts.engine.assets.keys import keys
 
 # Power effect is added to the rune's power in the rune itself
 class Power(Effect):

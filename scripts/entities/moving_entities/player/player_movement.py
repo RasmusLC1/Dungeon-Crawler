@@ -1,7 +1,6 @@
 import pygame
 import random
-import math
-from scripts.engine.particles.particle import Particle
+from scripts.engine.assets.keys import keys
 
 
 class Player_Movement():

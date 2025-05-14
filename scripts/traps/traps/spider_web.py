@@ -1,8 +1,5 @@
 from scripts.traps.trap import Trap
-import random
-import math
-import pygame
-
+from scripts.engine.assets.keys import keys
 
 class Spider_Web(Trap):
     def __init__(self, game, pos, size, type, speed = 0, direction = (0, 0), duration = 0, entity = None):

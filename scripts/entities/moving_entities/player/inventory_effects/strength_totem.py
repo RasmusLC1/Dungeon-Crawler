@@ -1,4 +1,6 @@
 from scripts.entities.moving_entities.player.inventory_effects.inventory_effect import Inventory_Effect
+from scripts.engine.assets.keys import keys
+
 class Strength_Totem(Inventory_Effect):
     def __init__(self, entity):
         super().__init__(entity, "strength_totem")

@@ -1,4 +1,5 @@
 from scripts.traps.trap import Trap
+from scripts.engine.assets.keys import keys
 
 import random
 

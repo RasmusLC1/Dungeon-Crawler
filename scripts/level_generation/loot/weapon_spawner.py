@@ -1,10 +1,11 @@
 from scripts.level_generation.dungeon_enum_keys import *
 import random
+from scripts.engine.assets.keys import keys
 
 class Weapon_Spawner():
 
     @staticmethod
-    def Spawn_Weapons(map, level, tile_size, size_x, size_y, offgrid_tiles, keys):
+    def Spawn_Weapons(map, level, tile_size, size_x, size_y, offgrid_tiles):
         loot_amount = random.randint(10 + level * 2, 20 + level * 2)
         loot = 0 
         while loot < loot_amount:

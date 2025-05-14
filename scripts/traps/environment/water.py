@@ -1,8 +1,6 @@
 from scripts.traps.trap import Trap
-
+from scripts.engine.assets.keys import keys
 import random
-import math
-import pygame
 
 class Water(Trap):
     def __init__(self, game, pos, size, type):

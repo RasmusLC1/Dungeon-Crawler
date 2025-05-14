@@ -1,5 +1,5 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
+from scripts.engine.assets.keys import keys
 
 # Immune to damage but cannot move
 class Player_Movement_Invunerable(Effect):

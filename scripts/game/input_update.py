@@ -1,5 +1,5 @@
 import pygame
-import sys
+from scripts.engine.assets.keys import keys
 
 
 class Input_Update():

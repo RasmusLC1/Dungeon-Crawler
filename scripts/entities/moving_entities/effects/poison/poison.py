@@ -1,5 +1,5 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import random
+from scripts.engine.assets.keys import keys
 
 # Long lasting damage and weakens the entity
 class Poison(Effect):

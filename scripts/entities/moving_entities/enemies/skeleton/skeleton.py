@@ -1,5 +1,6 @@
 from scripts.entities.moving_entities.enemies.enemy import Enemy
 import random
+from scripts.engine.assets.keys import keys
 
 class Skeleton(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina, max_weapon_charge, size = (32, 32)):

@@ -1,7 +1,7 @@
 import random
 import math
 import pygame
-from scripts.engine.particles.particle import Particle
+from scripts.engine.assets.keys import keys
 
 class Dash():
     def __init__(self, game, entity):

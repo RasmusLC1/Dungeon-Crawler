@@ -1,5 +1,5 @@
 from scripts.entities.textbox.textbox import Text_Box
-import pygame
+from scripts.engine.assets.keys import keys
 
 class Effect_Textbox(Text_Box):
 

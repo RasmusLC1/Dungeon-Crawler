@@ -1,5 +1,6 @@
 import pygame
 from scripts.menu.button import Button
+from scripts.engine.assets.keys import keys
 
 class Menu():
     def __init__(self, game) -> None:

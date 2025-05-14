@@ -1,6 +1,5 @@
 from scripts.entities.moving_entities.effects.effect import Effect
-import pygame
-import random
+from scripts.engine.assets.keys import keys
 
 # Increase entity's strength
 class Weakness(Effect):

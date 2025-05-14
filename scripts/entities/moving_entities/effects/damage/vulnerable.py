@@ -1,4 +1,5 @@
 from scripts.entities.moving_entities.effects.effect import Effect
+from scripts.engine.assets.keys import keys
 
 # Take extra damage
 class Vulnerable(Effect):

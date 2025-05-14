@@ -1,7 +1,6 @@
 from scripts.traps.trap import Trap
+from scripts.engine.assets.keys import keys
 
-import random
-import math
 import pygame
 
 class Spike_Pit(Trap):

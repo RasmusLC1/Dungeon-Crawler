@@ -1,5 +1,6 @@
 from scripts.entities.moving_entities.effects.effect import Effect
 import random
+from scripts.engine.assets.keys import keys
 
 # Low damage and slowdown of entity
 class Frozen(Effect):

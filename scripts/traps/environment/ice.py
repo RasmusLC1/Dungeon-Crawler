@@ -1,8 +1,8 @@
 from scripts.traps.trap import Trap
 
 import random
-import math
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Ice(Trap):
     def __init__(self, game, pos, size, type):

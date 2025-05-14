@@ -1,5 +1,5 @@
-import pygame
 from scripts.menu.menu import Menu
+from scripts.engine.assets.keys import keys
 
 class Pause_Menu(Menu):
     def __init__(self, game) -> None:

@@ -1,5 +1,6 @@
 from scripts.entities.items.weapons.projectiles.spider_web_projectile import Spider_Web_Projectile
 import pygame
+from scripts.engine.assets.keys import keys
 
 class Shoot_Spiderweb():
     def __init__(self, game):

@@ -1,8 +1,7 @@
 from scripts.entities.moving_entities.enemies.skeleton.skeleton import Skeleton
 from scripts.entities.items.weapons.ranged_weapons.bow import Bow
+from scripts.engine.assets.keys import keys
 
-
-import pygame
 import random
 
 

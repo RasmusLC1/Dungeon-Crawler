@@ -1,3 +1,5 @@
+from scripts.engine.assets.keys import keys
+
 class Logic_Update():
     def __init__(self, game) -> None:
         self.game = game

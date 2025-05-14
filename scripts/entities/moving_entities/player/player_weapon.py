@@ -1,5 +1,4 @@
-from copy import copy
-import pygame
+from scripts.engine.assets.keys import keys
 
 
 class Player_Weapon_Handler():

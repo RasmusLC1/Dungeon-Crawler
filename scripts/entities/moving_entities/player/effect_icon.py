@@ -1,5 +1,6 @@
 from scripts.entities.textbox.effect_textbox import Effect_Textbox
 import pygame
+from scripts.engine.assets.keys import keys
 
 # Effect icons are only used by the player for UI
 # active check handled by if they have an effect

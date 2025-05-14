@@ -1,3 +1,4 @@
+from scripts.engine.assets.keys import keys
 
 class Inventory_Effect():
 

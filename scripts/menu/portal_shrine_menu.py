@@ -1,7 +1,7 @@
-import pygame
-import math
 from scripts.menu.portal_button import Portal_Button
 from scripts.menu.menu import Menu
+from scripts.engine.assets.keys import keys
+
 
 class Portal_Shrine_Menu(Menu):
     def __init__(self, game) -> None:

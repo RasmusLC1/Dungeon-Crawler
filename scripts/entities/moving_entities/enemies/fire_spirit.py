@@ -1,9 +1,6 @@
 from scripts.entities.moving_entities.enemies.enemy import Enemy
-from scripts.entities.items.weapons.magic_attacks.fire.fire_particle import Fire_Particle
 from scripts.entities.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
-
-
-import math
+from scripts.engine.assets.keys import keys
 
 
 class Fire_Spirit(Enemy):

@@ -1,5 +1,7 @@
 from scripts.menu.button import Button
 import math
+from scripts.engine.assets.keys import keys
+
 
 class Rune_Button(Button):
     def __init__(self, game, pos, size, text, effect, color = (0, 0, 0)) -> None:

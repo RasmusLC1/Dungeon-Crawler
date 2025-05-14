@@ -14,6 +14,7 @@ from scripts.level_generation.decoration_spawner.chest_spawner import Chest_Spaw
 from scripts.level_generation.loot.weapon_spawner import Weapon_Spawner
 from scripts.level_generation.dungeon_enum_keys import *
 import os
+from scripts.engine.assets.keys import keys
 
 # TODO:  shrines, entrance and exit, keys 
 
@@ -80,7 +81,7 @@ class Dungeon_Generator():
         self.Update_A_Star_Map()
 
 
-        Weapon_Spawner.Spawn_Weapons(self.cellular_automata.map, map_id, self.tile_size, size_x, size_y, self.tilemap.offgrid_tiles, self.game.keys)
+        Weapon_Spawner.Spawn_Weapons(self.cellular_automata.map, map_id, self.tile_size, size_x, size_y, self.tilemap.offgrid_tiles)
 
         Level_Structure.Level_Structure(self.cellular_automata.map, self.tile_size, size_x, size_y, self.tilemap)
 
