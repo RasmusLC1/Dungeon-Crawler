@@ -6,7 +6,7 @@ from scripts.engine.assets.keys import keys
 
 class Chest(Decoration):
     def __init__(self, game, pos, version) -> None:
-        super().__init__(game, 'chest', pos, (32, 32), True, 5)
+        super().__init__(game, keys.chest, pos, (32, 32), True, 5)
         self.version = version
         self.loot_type = 0
         self.empty = False

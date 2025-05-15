@@ -44,8 +44,8 @@ class Enemy_Handler():
             if not item_data:
                 continue
             try:
-                type = item_data['type']
-                pos = item_data['pos']
+                type = item_data[keys.type]
+                pos = item_data[keys.pos]
                 if item_data['category'] == keys.enemy:
 
                     self.Enemy_Spawner(type, pos, item_data)
@@ -62,7 +62,7 @@ class Enemy_Handler():
 
     
     def Initialise(self):
-        spawners = self.game.tilemap.extract([('spawners', 1)])
+        spawners = self.game.tilemap.extract([(keys.spawners, 1)])
         spawners_length = len(spawners)
         for i in range(50):
             # Spawn enemy at a random location

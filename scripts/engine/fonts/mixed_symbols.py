@@ -19,21 +19,21 @@ class Mixed_Symbols():
             
             if part == '\n':  # Handle newline separately
                 if current_text:
-                    elements.append({'type': 'text', 'content': current_text})
+                    elements.append({keys.type: 'text', 'content': current_text})
                     current_text = ''
-                elements.append({'type': 'newline', 'content': part})
+                elements.append({keys.type: 'newline', 'content': part})
             elif part.isspace():  # Handle spaces by appending to current_text
                 current_text += part
             elif self.symbols.Check_If_Symbol_Exist(part.lower()):  # Check for symbols
                 if current_text:
-                    elements.append({'type': 'text', 'content': current_text})
+                    elements.append({keys.type: 'text', 'content': current_text})
                     current_text = ''
-                elements.append({'type': 'symbol', 'content': part})
+                elements.append({keys.type: 'symbol', 'content': part})
             else:  # Otherwise, it's regular text
                 current_text += part
 
         if current_text:
-            elements.append({'type': 'text', 'content': current_text})
+            elements.append({keys.type: 'text', 'content': current_text})
 
         return elements
 
@@ -41,14 +41,14 @@ class Mixed_Symbols():
         elements = self.parse_mixed_elements(input_str)
         current_x, current_y = pos
         for element in elements:
-            if element['type'] == 'text':
+            if element[keys.type] == 'text':
                 self.font.Render_Word(surf, element['content'], (current_x, current_y), self.font)
                 # Update x position based on number of characters (14 pixels per character)
                 current_x += 14 * len(element['content'])
-            elif element['type'] == 'symbol':
+            elif element[keys.type] == 'symbol':
                 # Render the symbol and update x position
                 self.symbols.Render_Symbol(surf, element['content'], (current_x, current_y), scale)
                 current_x += 16 * scale  # Assuming each symbol is 16 pixels wide, scaled
-            elif element['type'] == 'newline':  # Handle newlines properly
+            elif element[keys.type] == 'newline':  # Handle newlines properly
                 current_y += 16  # Adjust line height for the next line of text
                 current_x = pos[0]  # Reset x position for the new line

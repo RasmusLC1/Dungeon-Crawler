@@ -51,7 +51,7 @@ class Skeleton_Undertaker(Skeleton):
             return
         # self.bones_search_cooldown = random.randint(900, 1100)
         self.bones_search_cooldown = random.randint(100, 200)
-        nearby_bones = self.game.tilemap.Search_Nearby_Tiles_For_Type(5, self.pos, 'bones', self.ID)
+        nearby_bones = self.game.tilemap.Search_Nearby_Tiles_For_Type(5, self.pos, keys.bones, self.ID)
         if not nearby_bones:
             return
             

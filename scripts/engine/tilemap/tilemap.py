@@ -46,9 +46,9 @@ class Tilemap:
         offgrid_tiles = map_data['offgrid']
 
         for tile_values in offgrid_tiles:
-            type = tile_values['type']
-            variant = tile_values['variant']
-            pos = (tile_values['pos'][0], tile_values['pos'][1])
+            type = tile_values[keys.type]
+            variant = tile_values[keys.variant]
+            pos = (tile_values[keys.pos][0], tile_values[keys.pos][1])
             
             tile = Tile(self.game, type, variant, pos, self.tile_size, 0, 0, False)
             self.offgrid_tiles.append(tile)
@@ -58,8 +58,8 @@ class Tilemap:
 
     def Generate_Tile(self, tile_key, tilemap):
         tile_values = tilemap[tile_key]
-        type = tile_values['type']
-        variant = tile_values['variant']
+        type = tile_values[keys.type]
+        variant = tile_values[keys.variant]
         pos = tuple(map(int, tile_key.split(';')))
         active = tile_values['active']
         light_level = tile_values['light']

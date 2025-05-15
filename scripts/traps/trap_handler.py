@@ -31,8 +31,8 @@ class Trap_Handler:
             if not item_data:
                 continue
 
-            type = item_data['type']
-            pos = item_data['pos']
+            type = item_data[keys.type]
+            pos = item_data[keys.pos]
             size = item_data['size']
             try: 
                 self.Trap_Spawner(pos, size, type, item_data)
@@ -72,35 +72,35 @@ class Trap_Handler:
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
-        for trap in self.game.tilemap.extract([('Lava_env', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.lava_env, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
-        for trap in self.game.tilemap.extract([('shallow_water_env', 0)].copy(), True):
-            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
-            self.Trap_Spawner(trap.pos, size, trap.type)
-
-
-        for trap in self.game.tilemap.extract([('medium_water_env', 0)].copy(), True):
-            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
-            self.Trap_Spawner(trap.pos, size, trap.type)
-
-        for trap in self.game.tilemap.extract([('deep_water_env', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.shallow_water_env, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
 
-        for trap in self.game.tilemap.extract([('shallow_ice_env', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.medium_water_env, 0)].copy(), True):
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
+
+        for trap in self.game.tilemap.extract([(keys.deep_water_env, 0)].copy(), True):
+            size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
+            self.Trap_Spawner(trap.pos, size, trap.type)
+
+
+        for trap in self.game.tilemap.extract([(keys.shallow_ice_env, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
 
 
-        for trap in self.game.tilemap.extract([('medium_ice_env', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.medium_ice_env, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
-        for trap in self.game.tilemap.extract([('deep_ice_env', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.deep_ice_env, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
@@ -127,7 +127,7 @@ class Trap_Handler:
         elif keys.pit_trap == type:
             trap = self.Spawn_Spike_Pit(pos, size, type)
 
-        elif 'Lava_env' == type:
+        elif keys.lava_env == type:
             trap = self.Spawn_Lava(pos, size, type)
 
         elif 'ice' in type:

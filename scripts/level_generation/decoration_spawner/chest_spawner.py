@@ -18,5 +18,5 @@ class Chest_Spawner():
             path = A_Star_Search(spawner_x, spawner_y)
             
             if path:
-                offgrid_tiles.append({'type': 'chest', 'variant': 0, 'pos': (spawner_x * tile_size, spawner_y * tile_size)})
+                offgrid_tiles.append({keys.type: keys.chest, keys.variant: 0, keys.pos: (spawner_x * tile_size, spawner_y * tile_size)})
                 loot += 1

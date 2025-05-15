@@ -31,15 +31,15 @@ class Item_Handler():
 
     def Load_Item_From_Data(self, item_data):
         try:
-            type = item_data['type']
-            pos = item_data['pos']
+            type = item_data[keys.type]
+            pos = item_data[keys.pos]
             amount = item_data['amount']
             item = None
             if item_data['sub_category'] == keys.weapon:
                 item = self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == 'potion':
                 item = self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
-            elif item_data['sub_category'] == 'loot':
+            elif item_data['sub_category'] == keys.loot:
                 item = self.loot_handler.Spawn_Loot_Type(type, pos, item_data)
             elif item_data['sub_category'] == 'rune':
                 item = self.game.rune_handler.Load_Data(item_data)

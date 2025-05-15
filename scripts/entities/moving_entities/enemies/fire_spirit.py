@@ -76,7 +76,7 @@ class Fire_Spirit(Enemy):
             nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, 200)
             for trap in nearby_traps:
 
-                if trap.type == 'Lava_env':
+                if trap.type == keys.lava_env:
                     self.Set_Destination(trap.pos)
                     self.Find_New_Path()
                     self.locked_on_target = True

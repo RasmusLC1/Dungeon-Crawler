@@ -25,11 +25,11 @@ class Ice(Trap):
                 self.entities.remove(entity)
                 continue
 
-            if self.type == 'shallow_ice_env':
+            if self.type == keys.shallow_ice_env:
                 entity.On_Ice(20)
-            elif self.type == 'medium_ice_env':
+            elif self.type == keys.medium_ice_env:
                 entity.On_Ice(20)
-            elif self.type == 'deep_ice_env':
+            elif self.type == keys.deep_ice_env:
                 entity.On_Ice(20)
 
 

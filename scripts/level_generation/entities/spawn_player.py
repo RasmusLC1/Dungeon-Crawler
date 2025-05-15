@@ -10,9 +10,9 @@ class Spawn_Player():
             for x in range(player_spawn[0] - 5, player_spawn[0] + 5):
                 random_variant = random.randint(0, 10)
 
-                tilemap.tilemap[str(x) + ';' + str(y)] = {'type': keys.floor, 'variant': random_variant, 'pos': (x, y), 'active': 0, 'light': 0}
+                tilemap.tilemap[str(x) + ';' + str(y)] = {keys.type: keys.floor, keys.variant: random_variant, keys.pos: (x, y), 'active': 0, 'light': 0}
         
-        tilemap.offgrid_tiles.append({'type': 'spawners', 'variant': 0, 'pos': (player_spawn[0] * tile_size, player_spawn[1] * tile_size)})
+        tilemap.offgrid_tiles.append({keys.type: keys.spawners, keys.variant: 0, keys.pos: (player_spawn[0] * tile_size, player_spawn[1] * tile_size)})
 
         # tilemap.offgrid_tiles.append({"type": "torch", "variant": 0, "pos": [player_spawn[0] * tile_size - 50, player_spawn[1] * tile_size]})
         tilemap.offgrid_tiles.append({"type": "chest", "variant": 0, "pos": [player_spawn[0] * tile_size, player_spawn[1] * tile_size]})

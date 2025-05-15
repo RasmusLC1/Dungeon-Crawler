@@ -8,7 +8,7 @@ class Item_Inventory(Base_Inventory):
         for i in range(9):
             (x, y) = self.Set_Inventory_Slot_Pos(i)
             inventory_slot = Inventory_Slot(self.game, (x, y), keys.item, self.size, None, i, str(i + 1))
-            inventory_slot.Set_White_List([keys.weapon, 'potion', 'loot'])
+            inventory_slot.Set_White_List([keys.weapon, 'potion', keys.loot])
             self.Add_Inventory_Slot(inventory_slot)
 
     def Set_Inventory_Slot_Pos(self, index):
@@ -91,7 +91,7 @@ class Item_Inventory(Base_Inventory):
             item = inventory_slot.item
             if not item:
                 continue
-            if item.sub_category == 'loot':
+            if item.sub_category == keys.loot:
                     loot_items.append(item)
 
         return loot_items

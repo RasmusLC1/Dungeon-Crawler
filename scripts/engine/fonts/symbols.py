@@ -20,7 +20,7 @@ class Symbols():
                 keys.arcane_conduit, keys.magnet, keys.arcane_hunger, 
                 keys.invulnerable, keys.snare, keys.thorns,
                 keys.electric_resistance,
-                'chain', keys.enemy, 'curse',
+                'chain', keys.enemy, keys.curse,
                 keys.weakness, 'vulnerable', 'luck',
                 'anchor', keys.blood_tomb, keys.halo,
                 keys.demonic_bargain, keys.temptress_embrace,

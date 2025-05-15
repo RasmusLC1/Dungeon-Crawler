@@ -4,7 +4,7 @@ from scripts.engine.assets.keys import keys
 
 class Rune_Shrine(Decoration):
     def __init__(self, game, pos) -> None:
-        super().__init__(game, 'rune_shrine', pos, (64, 64))
+        super().__init__(game, keys.rune_shrine, pos, (64, 64))
         self.is_open = False
         self.animation = 0
         self.animation_cooldown = 0

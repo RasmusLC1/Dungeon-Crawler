@@ -88,7 +88,7 @@ class Moving_Entity(PhysicsEntity):
 
     def Save_Data(self):
         super().Save_Data()
-        self.saved_data['type'] = self.type
+        self.saved_data[keys.type] = self.type
         self.saved_data['health'] = self.health
         self.saved_data['max_health'] = self.max_health
         self.saved_data['strength'] = self.strength
@@ -103,7 +103,7 @@ class Moving_Entity(PhysicsEntity):
 
     def Load_Data(self, data):
         super().Load_Data(data)
-        self.type = data['type']
+        self.type = data[keys.type]
         self.health = data['health']
         self.max_health = data['max_health']
         self.strength = data['strength']

@@ -24,7 +24,7 @@ class Echo_Sigil(Loot):
         inventory_loot = self.game.inventory.item_inventory.Find_Loot()
 
         for item in inventory_loot:
-            if item.sub_category != 'loot':
+            if item.sub_category != keys.loot:
                 print("WRONG Item type added to Echo Sigil", item)
                 continue
             if item.ID in self.loot_IDs:

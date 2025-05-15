@@ -137,22 +137,16 @@ class keys():
     # Player Assets
     
     player_idle_down = "player_idle_down"
-    
-    
+  
     player_idle_up = "player_idle_up"
-    
-    
+
     player_standing_still_down = "player_standing_still_down"
-    
-    
+  
     player_standing_still_up = "player_standing_still_up"
-    
-    
+
     player_running_down = "player_running_down"
     
-    
     player_running_up = "player_running_up"
-    
     
     player_attack = "player_attack"
 
@@ -166,22 +160,15 @@ class keys():
     
     jump = "jump"
     
-
-
     skeleton_warrior_1 = "skeleton_warrior_1"
-    
     
     skeleton_warrior_1_attack = "skeleton_warrior_1_attack"
     
-    
     skeleton_warrior_2 = "skeleton_warrior_2"
-    
     
     skeleton_warrior_2_attack = "skeleton_warrior_2_attack"
     
-    
     skeleton_warrior_3 = "skeleton_warrior_3"
-    
     
     skeleton_warrior_3_attack = "skeleton_warrior_3_attack"
 
@@ -547,7 +534,7 @@ class keys():
 
     # Environment Assets
     
-    lava_env = "Lava_env"
+    lava_env = "lava_env"
 
     
     shallow_water_env = "shallow_water_env"
@@ -857,50 +844,38 @@ class keys():
     
     key = "key"
 
-    
-    
     bomb = "bomb"
-    
     
     utility = "utility"
     
-    
     passive = "passive"
-    
     
     revive = "revive"
     
-    
+    loot = "loot"
+
+    curse = "curse"
+
     potion = "potion"
-    
     
     weapon = "weapon"
     
-    
     enemy = "enemy"
 
-    
     player = "player"
     
-    
     particle = "particle"
-
     
     effect = "effect"
 
     item = "item"
-    
 
     # Spawning keys
-    
     type = "type"
-    
     
     variant = "variant"
     
-    
     pos = "pos"
-    
 
     # Weapon effects
     
@@ -912,19 +887,13 @@ class keys():
     
     cut = "cut"
 
-    
-    
     stab = "stab"
 
-    
     magic_attack = "magic_attack"
 
-    
     smash = "smash"
 
-
     # Effects
-
     invulnerable = "invulnerable"
 
     invincible = "invincible"
@@ -988,3 +957,12 @@ class keys():
     electric = "electric"
 
     electric_resistance = "electric_resistance"
+
+    # level construction keys
+    spawners = "spawners"
+
+    type = "type"
+
+    variant = "variant"
+
+    pos = "pos"

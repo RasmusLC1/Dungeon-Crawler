@@ -2,7 +2,7 @@ import math
 import pygame
 from scripts.engine.assets.keys import keys
 
-not_rendered_tiles = ['door_basic']
+not_rendered_tiles = [keys.door_basic]
 
 # Use dictionary keyed to pos in tilemap
 class Tile():

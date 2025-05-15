@@ -52,7 +52,7 @@ class Inventory_Slot():
             return
         if self.item.sub_category == keys.weapon:
             return
-        if self.item.sub_category == 'loot':
+        if self.item.sub_category == keys.loot:
             self.item.Update_In_Inventory()
         
         if not self.item:

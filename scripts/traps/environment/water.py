@@ -31,11 +31,11 @@ class Water(Trap):
 
     
     def Set_Slowdown_Amount(self):
-        if self.type == 'shallow_water_env':
+        if self.type == keys.shallow_water_env:
             self.slow_amount = 2
-        elif self.type == 'medium_water_env':
+        elif self.type == keys.medium_water_env:
             self.slow_amount = 4
-        elif self.type == 'deep_water_env':
+        elif self.type == keys.deep_water_env:
             self.slow_amount = 8
 
 

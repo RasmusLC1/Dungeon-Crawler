@@ -17,19 +17,19 @@ class Decoration_Handler():
         self.saved_data = {}
 
         self.spawn_methods = {
-            'door_basic': self.Spawn_Door,
-            'chest': self.Spawn_Chest,
-            'rune_shrine': self.Spawn_Rune_Shrine,
-            'portal_shrine': self.Spawn_Portal_Shrine,
-            'door_basic': self.Spawn_Door,
-            'bones': self.Spawn_Bones,
+            keys.door_basic: self.Spawn_Door,
+            keys.chest: self.Spawn_Chest,
+            keys.rune_shrine: self.Spawn_Rune_Shrine,
+            keys.portal_shrine: self.Spawn_Portal_Shrine,
+            keys.door_basic: self.Spawn_Door,
+            keys.bones: self.Spawn_Bones,
             'boss_room': self.Spawn_Boss_Room
         }
 
         self.opening_methods = {
-            'chest': self.Open_Chest,
-            'rune_shrine': self.Open_Shrine,
-            'portal_shrine': self.Open_Shrine,
+            keys.chest: self.Open_Chest,
+            keys.rune_shrine: self.Open_Shrine,
+            keys.portal_shrine: self.Open_Shrine,
         }
 
 
@@ -40,22 +40,22 @@ class Decoration_Handler():
 
     def Initialise(self, depth=0):
         # door initialisation
-        for door in self.game.tilemap.extract([('door_basic', 0)].copy(), True):
+        for door in self.game.tilemap.extract([(keys.door_basic, 0)].copy(), True):
             size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
-            self.Decoration_Spawner('door_basic', door.pos, size=size)
+            self.Decoration_Spawner(keys.door_basic, door.pos, size=size)
 
-        for chest in self.game.tilemap.extract([('chest', 0)]):
+        for chest in self.game.tilemap.extract([(keys.chest, 0)]):
             version = self.Set_Chest_Version(depth)
-            self.Decoration_Spawner('chest', chest.pos, version=version)
+            self.Decoration_Spawner(keys.chest, chest.pos, version=version)
 
-        for shrine in self.game.tilemap.extract([('rune_shrine', 0)]):
-            self.Decoration_Spawner('rune_shrine', shrine.pos)
+        for shrine in self.game.tilemap.extract([(keys.rune_shrine, 0)]):
+            self.Decoration_Spawner(keys.rune_shrine, shrine.pos)
 
-        for shrine in self.game.tilemap.extract([('portal_shrine', 0)]):
-            self.Decoration_Spawner('portal_shrine', shrine.pos)
+        for shrine in self.game.tilemap.extract([(keys.portal_shrine, 0)]):
+            self.Decoration_Spawner(keys.portal_shrine, shrine.pos)
 
-        for bones in self.game.tilemap.extract([('Bones', 0)]):
-            self.Decoration_Spawner('bones', bones.pos)
+        for bones in self.game.tilemap.extract([(keys.bones, 0)]):
+            self.Decoration_Spawner(keys.bones, bones.pos)
 
         for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
             temp_level = 3
@@ -84,8 +84,8 @@ class Decoration_Handler():
             if not item_data:
                 continue
             try:
-                type = item_data['type']
-                pos = item_data['pos']
+                type = item_data[keys.type]
+                pos = item_data[keys.pos]
                 size = item_data.get('size')
                 version = item_data.get('version')
                 radius = item_data.get('radius')
@@ -107,7 +107,7 @@ class Decoration_Handler():
         return decoration
 
     def Spawn_Door(self, pos, size, version=None, radius=None, level=None):
-        door = Door(self.game, 'door_basic', pos, size)
+        door = Door(self.game, keys.door_basic, pos, size)
         self.decorations.append(door)
         return door
 
@@ -172,7 +172,7 @@ class Decoration_Handler():
 
     def Open_Decoration(self, decorations):      
         for decoration in decorations:
-            if decoration.type == 'bones':
+            if decoration.type == keys.bones:
                 decorations.remove(decoration)
         if not decorations:
             return False
