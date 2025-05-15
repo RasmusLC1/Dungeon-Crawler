@@ -13,7 +13,7 @@ class Fire_Trap(Trap):
         if self.Cooldown > 0:
             self.Cooldown -= 1
         
-        if entity.category == 'item':
+        if entity.category == keys.item:
             return
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 7 and self.animation < 11:

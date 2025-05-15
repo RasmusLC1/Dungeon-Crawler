@@ -10,7 +10,7 @@ class Poison_Plume(Trap):
 
     def Update(self, entity):
 
-        if entity.category == 'item':
+        if entity.category == keys.item:
             return
 
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 3:

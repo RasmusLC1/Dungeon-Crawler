@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Thorns(Effect):
     def __init__(self, entity):
         description = 'Reflects damage\nback to\nattackers'
-        super().__init__(entity, 'thorns', 0, 0, (150, 200), description)
+        super().__init__(entity, keys.thorns, 0, 0, (150, 200), description)
         self.type = 'slash'
 
 

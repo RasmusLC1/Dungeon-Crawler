@@ -6,7 +6,7 @@ from scripts.engine.assets.keys import keys
 class Snare(Effect):
     def __init__(self, entity):
         description = 'Prevents movement'
-        super().__init__(entity, 'snare', 0, 0, (50, 70), description)
+        super().__init__(entity, keys.snare, 0, 0, (50, 70), description)
 
     
     # Set effect so that it picks the highest effect time, but does not stack them

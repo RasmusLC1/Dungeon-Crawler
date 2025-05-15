@@ -4,7 +4,7 @@ from scripts.engine.assets.keys import keys
 # Immune to damage but cannot move
 class Player_Movement_Invunerable(Effect):
     def __init__(self, entity):
-        super().__init__(entity, "invulnerable", 0, 0, (30, 50), '')
+        super().__init__(entity, keys.invulnerable, 0, 0, (30, 50), '')
         self.entity_health_holder = entity.health
 
     

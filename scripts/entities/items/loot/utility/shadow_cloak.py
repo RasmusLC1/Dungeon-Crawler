@@ -37,7 +37,7 @@ class Shadow_Cloak(Utility_Loot):
     
     # Effect of opening door on key
     def Activate_Invisibility(self):
-        self.game.player.Set_Effect('invisibility', 5)
+        self.game.player.Set_Effect(keys.invisibility, 5)
         self.Reset_Cloak()
 
     def Render_Line(self, surf, offset, alpha):

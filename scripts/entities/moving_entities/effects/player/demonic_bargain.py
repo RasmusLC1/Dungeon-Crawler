@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Demonic_Bargain(Effect):
     def __init__(self, entity):
         description = 'Doubles strength,\nprevents healing'
-        super().__init__(entity, 'demonic_bargain', 0, 0, (120, 160), description)
+        super().__init__(entity, keys.demonic_bargain, 0, 0, (120, 160), description)
 
     def Update_Effect(self):
         if not self.effect:

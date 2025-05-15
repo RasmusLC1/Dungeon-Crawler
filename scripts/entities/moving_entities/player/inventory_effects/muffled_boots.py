@@ -6,11 +6,11 @@ class Muffled_Boots(Inventory_Effect):
         super().__init__(entity, "muffled_boots")
 
     def Enable(self):
-        self.player.Set_Effect('silence', 2, True)
+        self.player.Set_Effect(keys.silence, 2, True)
 
 
     def Disable(self):
-        self.player.Remove_Effect('silence', 2)
+        self.player.Remove_Effect(keys.silence, 2)
     
     def Set_Decription(self):
         self.description = 'reduces noise'

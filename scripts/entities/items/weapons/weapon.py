@@ -72,7 +72,7 @@ class Weapon(Item):
         super().Save_Data()
         
         self.saved_data['damage'] = self.damage
-        self.saved_data['speed'] = self.speed
+        self.saved_data[keys.speed] = self.speed
         self.saved_data['range'] = self.range
         self.saved_data['effect'] = self.effect
         self.saved_data['in_inventory'] = self.in_inventory
@@ -87,7 +87,7 @@ class Weapon(Item):
     def Load_Data(self, data):
         super().Load_Data(data)
         self.damage = data['damage']
-        self.speed = data['speed']
+        self.speed = data[keys.speed]
         self.range = data['range']
         self.effect = data['effect']
         self.in_inventory = data['in_inventory']
@@ -337,14 +337,14 @@ class Weapon(Item):
     
     def Check_Effects(self, damage, entity):
         # Check if weapon is vampiric first, to avoid double healing
-        if self.effect == "vampiric":
-            self.entity.Set_Effect("healing", damage // 2)
+        if self.effect == keys.vampiric:
+            self.entity.Set_Effect(keys.healing, damage // 2)
             return
         
 
         if self.entity.effects.vampiric:
             if self.entity.effects.vampiric.effect:
-                self.entity.Set_Effect("healing", damage // 2)
+                self.entity.Set_Effect(keys.healing, damage // 2)
 
 
         # Set special status effect of weapon if weapon has one

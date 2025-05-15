@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Invisibility(Effect):
     def __init__(self, entity):
         description = 'Invisible to\nother entities'
-        super().__init__(entity, "invisibility", 0, 0, (130, 160), description)
+        super().__init__(entity, keys.invisibility, 0, 0, (130, 160), description)
 
     def Update_Effect(self):
         if not self.effect:

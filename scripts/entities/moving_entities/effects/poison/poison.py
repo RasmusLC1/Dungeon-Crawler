@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Poison(Effect):
     def __init__(self, entity):
         description = 'poison Damage over time,\nreduces increase_strength'
-        super().__init__(entity, "poison", 2, 30, (50, 70), description)
+        super().__init__(entity, keys.poison, 2, 30, (50, 70), description)
         self.strength_holder = self.entity.strength
 
     

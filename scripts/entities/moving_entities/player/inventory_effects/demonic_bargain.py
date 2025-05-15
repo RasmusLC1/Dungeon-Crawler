@@ -3,14 +3,14 @@ from scripts.engine.assets.keys import keys
 
 class Demonic_Bargain(Inventory_Effect):
     def __init__(self, entity):
-        super().__init__(entity, "demonic_bargain")
+        super().__init__(entity, keys.demonic_bargain)
 
     def Enable(self):
-        self.player.Set_Effect('demonic_bargain', 1, True)
+        self.player.Set_Effect(keys.demonic_bargain, 1, True)
         
 
     def Disable(self):
-        self.player.Remove_Effect('demonic_bargain', 1)
+        self.player.Remove_Effect(keys.demonic_bargain, 1)
     
     def Set_Decription(self):
         self.description = 'Increases damage/nPrevents healing'

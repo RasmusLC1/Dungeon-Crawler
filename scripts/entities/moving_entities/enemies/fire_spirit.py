@@ -95,5 +95,5 @@ class Fire_Spirit(Enemy):
         self.animation_handler.Set_Animation('idle')
 
     def Set_On_Fire(self, fire_time):
-        self.effects.Set_Effect('healing', fire_time)
+        self.effects.Set_Effect(keys.healing, fire_time)
         return False

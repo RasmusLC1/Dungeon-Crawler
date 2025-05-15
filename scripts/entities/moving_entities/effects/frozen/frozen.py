@@ -6,7 +6,7 @@ from scripts.engine.assets.keys import keys
 class Frozen(Effect):
     def __init__(self, entity):
         description = 'Slows and damages\nover time'
-        super().__init__(entity, "frozen", 2, 30, (160, 200), description)
+        super().__init__(entity, keys.frozen, 2, 30, (160, 200), description)
 
     
     def Set_Effect(self, effect_time, permanent = False):

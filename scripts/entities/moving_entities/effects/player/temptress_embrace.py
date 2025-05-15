@@ -6,7 +6,7 @@ from scripts.engine.assets.keys import keys
 class Temptress_Embrace(Effect):
     def __init__(self, entity):
         description = 'Damage scales\nwith health lost'
-        super().__init__(entity, 'temptress_embrace', 0, 0, (120, 160), description)
+        super().__init__(entity, keys.temptress_embrace, 0, 0, (120, 160), description)
 
     def Update_Effect(self):
         if not self.effect:

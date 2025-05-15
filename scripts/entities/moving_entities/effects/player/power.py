@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Power(Effect):
     def __init__(self, entity):
         description = 'Increases Rune power'
-        super().__init__(entity, 'power', 0, 0, (120, 160), description)
+        super().__init__(entity, keys.power, 0, 0, (120, 160), description)
 
     def Set_Effect(self, effect_time, permanent=False):
         if not super().Set_Effect(effect_time, permanent):

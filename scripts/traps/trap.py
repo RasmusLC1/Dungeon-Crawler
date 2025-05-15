@@ -39,7 +39,7 @@ class Trap(PhysicsEntity):
         return True
 
     def Add_Entity_To_Trap(self, entity):
-        if entity.category == 'item':
+        if entity.category == keys.item:
             return False
         
         if entity in self.entities:

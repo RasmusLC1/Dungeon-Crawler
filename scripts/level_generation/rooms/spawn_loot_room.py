@@ -53,7 +53,7 @@ class Spawn_Loot_Room():
                     offgrid_tiles.append({'type': 'chest', 'variant': 0, 'pos': (x * tile_size, y * tile_size)})
                 elif spawn_loot == 1:
                     loot_count += 1
-                    offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * tile_size, y * tile_size]})
+                    offgrid_tiles.append({"type": keys.gold, "variant": 0, "pos": [x * tile_size, y * tile_size]})
 
         
         # Spawn a chest in case nothing else spawns as a backup

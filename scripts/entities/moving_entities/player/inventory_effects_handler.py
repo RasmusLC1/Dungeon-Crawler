@@ -30,8 +30,8 @@ class Inventory_Effects_Handler:
 
         # Instantiate effect objects with their name
         self.effects = {
-            "blood_tomb": Blood_Tomb(self.entity),
-            "magnet": Magnet(self.entity),
+            keys.blood_tomb: Blood_Tomb(self.entity),
+            keys.magnet: Magnet(self.entity),
             "compass": Compass(self.entity),
             "power_totem": Power_Totem(self.entity),
             "strength_totem": Strength_Totem(self.entity),
@@ -39,12 +39,12 @@ class Inventory_Effects_Handler:
             "faith_pendant": Faith_Pendant(self.entity),
             "anchor_stone": Anchor_Stone(self.entity),
             "muffled_boots": Muffled_Boots(self.entity),
-            "halo": Halo(self.entity),
+            keys.halo: Halo(self.entity),
             "black_coin": Black_Coin(self.entity),
             "vampire_locket": Vampire_Locket(self.entity),
             "blood_pact": Blood_Pact(self.entity),
-            "demonic_bargain": Demonic_Bargain(self.entity),
-            "temptress_embrace": Temptress_Embrace(self.entity, ),
+            keys.demonic_bargain: Demonic_Bargain(self.entity),
+            keys.temptress_embrace: Temptress_Embrace(self.entity, ),
             "cursed_dice": Cursed_Dice(self.entity, ),
             "eldritch_mirror": Eldritch_Mirror(self.entity),
             "forsaken_grimoire": Forsaken_Grimoire(self.entity),

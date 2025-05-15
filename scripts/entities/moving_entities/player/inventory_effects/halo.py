@@ -3,14 +3,14 @@ from scripts.engine.assets.keys import keys
 
 class Halo(Inventory_Effect):
     def __init__(self, entity):
-        super().__init__(entity, "halo")
+        super().__init__(entity, keys.halo)
 
     def Enable(self):
-        self.player.Set_Effect('halo', 1, True)
+        self.player.Set_Effect(keys.halo, 1, True)
         
 
     def Disable(self):
-        self.player.Remove_Effect('halo', 1)
+        self.player.Remove_Effect(keys.halo, 1)
 
 
     def Set_Decription(self):

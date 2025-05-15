@@ -7,8 +7,8 @@ class Effect_Curse():
         self.negative_effects = [keys.frozen,
                                  keys.fire,
                                  keys.poison, 
-                                 'snare', 
-                                'weakness',
+                                 keys.snare, 
+                                keys.weakness,
                                  keys.electric, 
                                  ]
 

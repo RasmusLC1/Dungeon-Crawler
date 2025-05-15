@@ -36,7 +36,7 @@ class Spike_Pit(Trap):
         # Trigger trap animation and snare
         if not self.animation:
             self.animation = 1
-            entity.Set_Effect('snare', 2)
+            entity.Set_Effect(keys.snare, 2)
         else:
             entity.Set_Effect('slow', self.slow_amount)
         return True

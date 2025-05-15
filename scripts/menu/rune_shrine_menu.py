@@ -31,7 +31,7 @@ class Rune_Shrine_Menu(Menu):
         button_size_x = 200
         button_size_y = 40
         self.Generate_Rune_Button((width - button_size_x // 2, 200), (button_size_x, button_size_y), keys.souls, keys.souls, (100, 100, 150))
-        self.Generate_Rune_Button((width - button_size_x // 2, 260), (button_size_x, button_size_y), 'Power', 'power', (140, 0, 0))
+        self.Generate_Rune_Button((width - button_size_x // 2, 260), (button_size_x, button_size_y), keys.power, keys.power, (140, 0, 0))
         self.Generate_Rune_Button((width - button_size_x // 2, 230), (button_size_x, button_size_y), 'Purchase', 'purchase', (140, 0, 0))
 
         
@@ -63,7 +63,7 @@ class Rune_Shrine_Menu(Menu):
             if self.active_rune.original_soul_cost == 0 and rune_button.effect == keys.souls:
                 continue
 
-            if self.active_rune.original_power == 0 and rune_button.effect == 'power':
+            if self.active_rune.original_power == 0 and rune_button.effect == keys.power:
                 continue
             
             self.Rune_Button_Press(rune_button)
@@ -226,7 +226,7 @@ class Rune_Shrine_Menu(Menu):
             if self.active_rune.original_soul_cost == 0 and rune_button.effect == keys.souls:
                 continue
 
-            if self.active_rune.original_power == 0 and rune_button.effect == 'power':
+            if self.active_rune.original_power == 0 and rune_button.effect == keys.power:
                 continue
 
             if rune_button.effect == 'purchase':

@@ -81,27 +81,6 @@ class keys():
     
     
     coin = "coin"
-    
-    
-    fire = "fire"
-    
-    
-    poison = "poison"
-    
-    
-    frozen = "frozen"
-    
-    
-    wet = "wet"
-    
-    
-    regen = "regen"
-    
-    
-    electric = "electric"
-    
-    
-    invincible = "invincible"
 
     # Magic Attack Assets
     
@@ -172,7 +151,7 @@ class keys():
     player_running_down = "player_running_down"
     
     
-    player_running_up = "keys.player_running_up"
+    player_running_up = "player_running_up"
     
     
     player_attack = "player_attack"
@@ -607,24 +586,10 @@ class keys():
     
     potion = "potion"
 
-
-    
-    healing = "healing"
-    
-    
-    invisibility = "invisibility"
     
     
     stamina = "stamina"
     
-    
-    increase_souls = "increase_souls"
-    
-    
-    arcane_hunger = "arcane_hunger"
-    
-    
-    speed = "speed"
     
     
     green = "green"
@@ -633,25 +598,7 @@ class keys():
     increase_strength = "increase_strength"
     
     
-    poison_resistance = "poison_resistance"
-    
-    
     purple = "purple"
-    
-    
-    frozen_resistance = "frozen_resistance"
-    
-    
-    silence = "silence"
-    
-    
-    regen = "regen"
-    
-    
-    vampiric = "vampiric"
-    
-    
-    fire_resistance = "fire_resistance"
     
     
     empty_bottle = "empty_bottle"
@@ -674,16 +621,10 @@ class keys():
     anchor_stone = "anchor_stone"
 
     
-    blood_tomb = "blood_tomb"
-
-    
     faith_pendant = "faith_pendant"
 
     
     lucky_charm = "lucky_charm"
-
-    
-    magnet = "magnet"
 
     
     power_totem = "power_totem"
@@ -691,17 +632,9 @@ class keys():
     
     strength_totem = "strength_totem"
 
-    
-    halo = "halo"
 
     
     muffled_boots = "muffled_boots"
-
-    
-    demonic_bargain = "demonic_bargain"
-
-    
-    temptress_embrace = "temptress_embrace"
 
     
     blood_coin = "blood_coin"
@@ -954,6 +887,8 @@ class keys():
 
     
     effect = "effect"
+
+    item = "item"
     
 
     # Spawning keys
@@ -978,8 +913,6 @@ class keys():
     cut = "cut"
 
     
-    snare = "snare"
-    
     
     stab = "stab"
 
@@ -988,3 +921,70 @@ class keys():
 
     
     smash = "smash"
+
+
+    # Effects
+
+    invulnerable = "invulnerable"
+
+    invincible = "invincible"
+    
+    thorns = "thorns"
+
+    healing = "healing"
+
+    regen = "regen"
+
+    vampiric = "vampiric"
+
+    anchor = "anchor"
+
+    slow = "slow_down"
+
+    snare = "snare"
+
+    speed = "speed"
+
+    blood_tomb = "blood_tomb"
+
+    demonic_bargain = "demonic_bargain"
+
+    halo = "halo"
+
+    magnet = "magnet"
+
+    power = "power"
+
+    silence = "silence"
+
+    temptress_embrace = "temptress_embrace"
+
+    poison_resistance = "poison_resistance"
+
+    poison = "poison"
+
+    arcane_conduit = "arcane_conduit"
+
+    arcane_hunger = "arcane_hunger"
+
+    increase_souls = "increase_souls"
+
+    wet = "wet"
+
+    weakness = "weakness"
+
+    resistance = "resistance"
+
+    invisibility = "invisibility"
+
+    frozen = "frozen"
+
+    frozen_resistance = "frozen_resistance"
+
+    fire = "fire"
+
+    fire_resistance = "fire_resistance"
+
+    electric = "electric"
+
+    electric_resistance = "electric_resistance"

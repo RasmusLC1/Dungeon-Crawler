@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Resistance(Effect):
     def __init__(self, entity):
         description = 'General damage\nresistance'
-        super().__init__(entity, "resistance", 0, 0, (200, 250), description)
+        super().__init__(entity, keys.resistance, 0, 0, (200, 250), description)
         self.entity_health_holder = entity.health
 
     

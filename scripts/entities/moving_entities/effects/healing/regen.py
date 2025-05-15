@@ -6,7 +6,7 @@ from scripts.engine.assets.keys import keys
 class Regen(Effect):
     def __init__(self, entity):
         description = 'Heals over time.\nBlocked by poison'
-        super().__init__(entity, "regen", 5, 30, (80, 100), description)
+        super().__init__(entity, keys.regen, 5, 30, (80, 100), description)
 
     
     #set Fire effect
@@ -24,6 +24,6 @@ class Regen(Effect):
         if self.entity.effects.poison.effect:
             return False
         
-        self.entity.effects.Set_Effect("healing", random.randint(3, 5))
+        self.entity.effects.Set_Effect(keys.healing, random.randint(3, 5))
         self.Effect_Animation_Cooldown()
         return True

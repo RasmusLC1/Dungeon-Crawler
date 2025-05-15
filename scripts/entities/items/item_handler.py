@@ -64,7 +64,7 @@ class Item_Handler():
             self.loot_handler.Spawn_Key(key.pos)
 
 
-        for gold in self.game.tilemap.extract([('gold', 0)].copy()):
+        for gold in self.game.tilemap.extract([(keys.gold, 0)].copy()):
             amount = random.randint(20, 30)
             self.loot_handler.Spawn_Gold(gold.pos[0], gold.pos[1], amount)
 
@@ -100,7 +100,7 @@ class Item_Handler():
     def Find_Nearby_Item(self, entity_pos, max_distance):
         nearby_items = []
         if max_distance <= 5:
-            nearby_items = self.game.tilemap.Search_Nearby_Tiles(max_distance, entity_pos, 'item')
+            nearby_items = self.game.tilemap.Search_Nearby_Tiles(max_distance, entity_pos, keys.item)
         else:
             nearby_items = self.Search_For_Nearby_Items(entity_pos, max_distance)
         

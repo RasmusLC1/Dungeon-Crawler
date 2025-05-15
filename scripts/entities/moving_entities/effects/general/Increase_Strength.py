@@ -22,3 +22,5 @@ class Increase_Strength(Effect):
         self.Update_Cooldown()
 
         return True
+
+

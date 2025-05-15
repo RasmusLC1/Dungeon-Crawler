@@ -13,7 +13,7 @@ class Rune_Button(Button):
             amount = -1 * math.ceil(rune.original_soul_cost / 10)
             return rune.Modify_Souls_Cost(amount)
 
-        elif self.effect == 'power':
+        elif self.effect == keys.power:
             amount = math.ceil(rune.original_power / 10)
             return rune.Modify_Power(amount)
         

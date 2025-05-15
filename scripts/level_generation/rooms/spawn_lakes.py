@@ -29,7 +29,7 @@ class Spawn_Lakes():
                     if cellular_automata.map[x][y] == FLOOR:
                         spawn_loot = random.randint(0, 3)
                         if spawn_loot == 1:
-                            offgrid_tiles.append({"type": 'gold', "variant": 0, "pos": [x * 32, y * 32]})
+                            offgrid_tiles.append({"type": keys.gold, "variant": 0, "pos": [x * 32, y * 32]})
 
                     i += 1
                 j += 1

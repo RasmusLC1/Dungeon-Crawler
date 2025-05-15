@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Healing(Effect):
     def __init__(self, entity):
         description = 'One time healing.\nBlocked by poison'
-        super().__init__(entity, 'healing', 0, 0, (0,0), description)
+        super().__init__(entity, keys.healing, 0, 0, (0,0), description)
 
     
     def Set_Effect(self, effect_time, permanent = False):

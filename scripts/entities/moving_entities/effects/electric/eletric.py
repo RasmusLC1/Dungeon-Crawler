@@ -36,7 +36,7 @@ class Electric(Effect):
             for enemy in self.entity.nearby_enemies:
                 if enemy.Set_Effect(self.effect_type, effect):
                     # Simulate the electricity moving to the next target and prevent infinite loops
-                    self.entity.Set_Effect('electric_resistance', 2) 
+                    self.entity.Set_Effect(keys.electric_resistance, 2) 
                     return True
                 
 

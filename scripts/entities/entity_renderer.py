@@ -42,7 +42,7 @@ class Entity_Renderer():
             if not entity.render:
                 continue
 
-            if entity.category == 'item':
+            if entity.category == keys.item:
                 entity.Update_Animation()
             
             entity.Render(surf, offset)
@@ -54,7 +54,7 @@ class Entity_Renderer():
 
     
     def Render_Tool_Tip(self, surf, offset, nearest_interactable_object_found, entity):
-        if entity.category == "item" and not entity.picked_up or entity.category == "decoration" and entity.type in self.game.decoration_handler.opening_methods:
+        if entity.category == keys.item and not entity.picked_up or entity.category == "decoration" and entity.type in self.game.decoration_handler.opening_methods:
             distance = math.sqrt((entity.pos[0] - self.game.player.pos[0]) ** 2 + (entity.pos[1] - self.game.player.pos[1]) ** 2)
             if distance < 40:
                 self.game.interactable_object.Render(surf, offset, entity)

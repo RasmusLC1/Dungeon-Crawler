@@ -3,7 +3,7 @@ from scripts.engine.assets.keys import keys
 
 class Magnet(Inventory_Effect):
     def __init__(self, entity):
-        super().__init__(entity, "magnet")
+        super().__init__(entity, keys.magnet)
 
     def Enable(self):
         self.player.Set_Effect(self.effect, 4, True)

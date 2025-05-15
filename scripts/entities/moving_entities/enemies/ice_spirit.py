@@ -22,8 +22,8 @@ class Ice_Spirit(Enemy):
         super().Update(tilemap, movement)
 
         if self.effects.frozen.effect:
-            self.Set_Effect('healing', self.effects.frozen.effect)
-            self.Set_Effect('frozen_resistance', 2)
+            self.Set_Effect(keys.healing, self.effects.frozen.effect)
+            self.Set_Effect(keys.frozen_resistance, 2)
         
 
         if self.distance_to_player <= 200:

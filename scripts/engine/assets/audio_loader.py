@@ -106,17 +106,17 @@ class Audio_Loader:
     
     def Effect_Effects(self):
         weapon_effects ={
-            'healing' : pygame.mixer.Sound('data/sounds/effects/healing.wav'),
+            keys.healing : pygame.mixer.Sound('data/sounds/effects/healing.wav'),
             # 'slow' : pygame.mixer.Sound('data/sounds/effects/slow.wav'),
-            'speed' : pygame.mixer.Sound('data/sounds/effects/speed.wav'),
+            keys.speed : pygame.mixer.Sound('data/sounds/effects/speed.wav'),
             'generic_effect' : pygame.mixer.Sound('data/sounds/effects/general_effect.wav'),
         }
 
         self.sfx.update(weapon_effects)
 
-        self.sfx['healing'].set_volume(0.2)
+        self.sfx[keys.healing].set_volume(0.2)
         # self.sfx['slow'].set_volume(0.1)
-        self.sfx['speed'].set_volume(0.3)
+        self.sfx[keys.speed].set_volume(0.3)
         self.sfx['generic_effect'].set_volume(0.2)
 
     
