@@ -1,10 +1,10 @@
 from scripts.entities.items.runes.rune import Rune
+from scripts.engine.assets.keys import keys
 
-import pygame
 
 class Light_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.light_rune, pos, 7, 0)
+        super().__init__(game, keys.light_rune, pos, 7, 0)
 
     def Update(self):
         super().Update()

@@ -1,10 +1,11 @@
 from scripts.entities.items.loot.loot import Loot
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Phoenix_Feather(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, self.game.keys.phoenix_feather, pos, (16, 16), 10, self.game.keys.revive)
+        super().__init__(game, keys.phoenix_feather, pos, (16, 16), 10, keys.revive)
 
     def Revive(self):
         self.game.particle_handler.Activate_Particles(20, 'gold', self.game.player.rect().center, frame=random.randint(40, 60))

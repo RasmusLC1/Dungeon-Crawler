@@ -2,6 +2,7 @@ from scripts.entities.items.loot.bombs.bomb import Bomb
 from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
 
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Bomb_Loot_Handler(Loot_Types_Handler):
@@ -10,11 +11,11 @@ class Bomb_Loot_Handler(Loot_Types_Handler):
  
 
         self.types = [
-            game.keys.fire_bomb,
-            game.keys.frozen_bomb,
-            game.keys.electric_bomb,
-            game.keys.poison_bomb,
-            game.keys.vampiric_bomb,
+            keys.fire_bomb,
+            keys.frozen_bomb,
+            keys.electric_bomb,
+            keys.poison_bomb,
+            keys.vampiric_bomb,
         ]
 
     def Loot_Spawner(self, pos):

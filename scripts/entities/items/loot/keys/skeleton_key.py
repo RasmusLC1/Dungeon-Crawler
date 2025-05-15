@@ -1,9 +1,10 @@
 from scripts.entities.items.loot.keys.key import Key
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Skeleton_Key(Key):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.skeleton_key, pos)
+        super().__init__(game, keys.skeleton_key, pos)
         self.radius = 50
         self.description = 'Opens door\nquitely'
 

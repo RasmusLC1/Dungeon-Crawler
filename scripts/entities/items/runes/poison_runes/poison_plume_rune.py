@@ -1,9 +1,10 @@
 from scripts.entities.items.runes.rune import Rune
 from scripts.entities.items.weapons.magic_attacks.poison.poison_plume import Poison_Plume
+from scripts.engine.assets.keys import keys
 
 class Poison_Plume_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.poison_plume_rune, pos, 2, 30)
+        super().__init__(game, keys.poison_plume_rune, pos, 2, 30)
         self.clicked = False
         self.poison_plume = Poison_Plume(self.game.player)
 

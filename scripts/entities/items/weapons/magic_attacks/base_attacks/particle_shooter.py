@@ -1,4 +1,5 @@
-import math
+from scripts.engine.assets.keys import keys
+
 
 class Particle_Shooter():
     def __init__(self, game):

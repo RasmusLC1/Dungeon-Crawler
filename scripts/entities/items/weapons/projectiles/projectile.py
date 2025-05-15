@@ -1,6 +1,6 @@
 from scripts.entities.items.weapons.weapon import Weapon
-import math
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Projectile(Weapon):
     def __init__(self, game, pos, type, damage, ranged_damage, speed, range, max_charge_time, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
@@ -36,7 +36,7 @@ class Projectile(Weapon):
         if not self.entity:
             return
         
-        if self.entity.category == self.game.keys.player:
+        if self.entity.category == keys.player:
             self.Point_Towards_Mouse_Player()
         else:
             self.Point_Towards_Mouse_Enemy()
@@ -55,7 +55,7 @@ class Projectile(Weapon):
             self.shoot_distance = self.shoot_distance_holder
             self.shoot_speed = speed * 2
             self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * self.shoot_speed)
-            if self.entity.category == self.game.keys.enemy:
+            if self.entity.category == keys.enemy:
                 self.nearby_enemies.append(self.game.player)
 
             return True
@@ -145,7 +145,7 @@ class Projectile(Weapon):
         self.entity_strength = entity.strength
 
 
-        if entity.category == self.game.keys.player:
+        if entity.category == keys.player:
             entity.Remove_Active_Weapon()
             self.entity = entity
             self.game.inventory.Remove_Item(self)

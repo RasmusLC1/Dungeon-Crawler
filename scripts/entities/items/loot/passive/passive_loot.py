@@ -1,4 +1,5 @@
 from scripts.entities.items.loot.loot import Loot
+from scripts.engine.assets.keys import keys
 
 # Generic passive loot that changes depending on the type, simplified to one
 # class since it uses effects

@@ -16,8 +16,8 @@ class Weapon_Inventory(Base_Inventory):
     def Setup(self):
         for i in range(2):
             (x, y) = self.Set_Inventory_Slot_Pos(i)
-            inventory_slot = Weapon_Inventory_Slot(self.game, (x, y), self.game.keys.weapon, self.size, None, i + 12, str(10))
-            inventory_slot.Set_White_List([self.game.keys.weapon])
+            inventory_slot = Weapon_Inventory_Slot(self.game, (x, y), keys.weapon, self.size, None, i + 12, str(10))
+            inventory_slot.Set_White_List([keys.weapon])
             self.Add_Inventory_Slot(inventory_slot)
             self.Initalise_Active_Inventory_Slot(inventory_slot)
     

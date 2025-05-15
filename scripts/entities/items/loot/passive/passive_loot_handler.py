@@ -5,6 +5,7 @@ from scripts.entities.items.loot.passive.echo_sigil import Echo_Sigil
 from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
 
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Passive_Loot_Handler(Loot_Types_Handler):
@@ -12,28 +13,28 @@ class Passive_Loot_Handler(Loot_Types_Handler):
         super().__init__(game)
 
         self.loot_map = {
-            game.keys.lantern: Lantern,
-            game.keys.echo_sigil: Echo_Sigil,
+            keys.lantern: Lantern,
+            keys.echo_sigil: Echo_Sigil,
         }
 
         self.special_type = [
-            game.keys.lantern,
-            game.keys.echo_sigil,
+            keys.lantern,
+            keys.echo_sigil,
         ]
 
 
 
         self.types = [
-            game.keys.lantern,
-            game.keys.anchor_stone,
-            game.keys.magnet,
-            game.keys.strength_totem,
-            game.keys.power_totem,
-            game.keys.muffled_boots,
-            game.keys.halo,
-            game.keys.faith_pendant,
-            game.keys.lucky_charm,
-            game.keys.echo_sigil,
+            keys.lantern,
+            keys.anchor_stone,
+            keys.magnet,
+            keys.strength_totem,
+            keys.power_totem,
+            keys.muffled_boots,
+            keys.halo,
+            keys.faith_pendant,
+            keys.lucky_charm,
+            keys.echo_sigil,
         ]
 
 

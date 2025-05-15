@@ -1,6 +1,6 @@
 from scripts.entities.items.weapons.magic_attacks.electric.electric_particle import Electric_Particle
-import pygame
-import math
+from scripts.engine.assets.keys import keys
+
 class Chain_Lightning(Electric_Particle):
     def __init__(self, game, pos, entity, damage, speed, shoot_distance, special_attack, direction, effect):
         super().__init__(game, pos, shoot_distance)
@@ -19,4 +19,4 @@ class Chain_Lightning(Electric_Particle):
     def Electrocute_Nearby_Enemies(self):
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self, 4)
         for enemy in self.nearby_enemies:
-            enemy.Set_Effect(self.game.keys.electric, 3)
+            enemy.Set_Effect(keys.electric, 3)

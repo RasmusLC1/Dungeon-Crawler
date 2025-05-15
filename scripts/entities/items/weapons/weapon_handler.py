@@ -15,6 +15,7 @@ from scripts.entities.items.weapons.projectiles.arrow import Arrow
 from scripts.entities.items.weapons.ranged_weapons.bow import Bow
 from scripts.entities.items.weapons.ranged_weapons.crossbow import Crossbow
 from scripts.entities.items.weapons.shields.shield import Shield
+from scripts.engine.assets.keys import keys
 
 import random
 
@@ -24,20 +25,20 @@ class Weapon_Handler():
 
         # Map weapon names to their classes
         self.weapon_map = {
-            game.keys.sword: Sword,
-            game.keys.halberd : Halberd,
-            game.keys.hatchet : Hatchet,
-            game.keys.hammer : Hammer,
-            game.keys.warhammer : Warhammer,
-            game.keys.battle_axe : Battle_Axe,
-            game.keys.shield : Shield,
-            game.keys.spear : Spear,
-            game.keys.torch : Torch,
-            game.keys.sceptre : Sceptre,
-            game.keys.bell : Bell,
-            game.keys.scythe : Scythe,
-            game.keys.bow : Bow,
-            game.keys.crossbow : Crossbow,
+            keys.sword: Sword,
+            keys.halberd : Halberd,
+            keys.hatchet : Hatchet,
+            keys.hammer : Hammer,
+            keys.warhammer : Warhammer,
+            keys.battle_axe : Battle_Axe,
+            keys.shield : Shield,
+            keys.spear : Spear,
+            keys.torch : Torch,
+            keys.sceptre : Sceptre,
+            keys.bell : Bell,
+            keys.scythe : Scythe,
+            keys.bow : Bow,
+            keys.crossbow : Crossbow,
         }
 
         self.random_weapon_map = {
@@ -59,10 +60,10 @@ class Weapon_Handler():
 
     def Weapon_Spawner(self, name, pos_x, pos_y, amount=0, data=None):
         # Handle special cases first
-        if self.game.keys.particle in name:
+        if keys.particle in name:
             return True  # or your specific logic for particles
 
-        if self.game.keys.arrow in name:
+        if keys.arrow in name:
             weapon = Arrow(self.game, (pos_x, pos_y), amount)
         else:
             # Lookup the class; return False if not found

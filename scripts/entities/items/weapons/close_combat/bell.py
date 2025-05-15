@@ -1,8 +1,9 @@
 from scripts.entities.items.weapons.weapon import Weapon
+from scripts.engine.assets.keys import keys
 
 class Bell(Weapon):
     def __init__(self, game, pos, damage_type = 'blunt'):
-        super().__init__(game, pos, game.keys.bell, 4, 2, 3, 50, 'one_handed_melee', damage_type)
+        super().__init__(game, pos, keys.bell, 4, 2, 3, 50, 'one_handed_melee', damage_type)
         self.max_animation = 7
         self.attack_animation_max = 8
 

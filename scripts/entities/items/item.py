@@ -2,6 +2,7 @@ import random
 import math
 import pygame
 from scripts.entities.entities import PhysicsEntity
+from scripts.engine.assets.keys import keys
 
 class Item(PhysicsEntity):
     def __init__(self, game, type, sub_category, pos, size, amount = 1, add_to_tile = True, value = 100):

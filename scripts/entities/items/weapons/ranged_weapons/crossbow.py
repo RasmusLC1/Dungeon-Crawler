@@ -1,13 +1,13 @@
 from scripts.entities.items.weapons.weapon import Weapon
 from scripts.entities.items.weapons.projectiles.arrow import Arrow
 from scripts.entities.items.weapons.ranged_weapons.ranged_weapon import Ranged_Weapon
-import math
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 
 class Crossbow(Ranged_Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, game.keys.crossbow, 6, 8, 10, 60)
+        super().__init__(game, pos, keys.crossbow, 6, 8, 10, 60)
         self.max_animation = 8
         self.attack_animation_max = 2
         self.attack_animation_counter = 0
@@ -19,7 +19,7 @@ class Crossbow(Ranged_Weapon):
         if not self.entity:
             return
         
-        if self.entity.category == self.game.keys.enemy:
+        if self.entity.category == keys.enemy:
             self.Enemy_Shooting()
             return
 

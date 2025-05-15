@@ -1,12 +1,10 @@
 from scripts.entities.items.weapons.weapon import Weapon
+from scripts.engine.assets.keys import keys
 
-
-import math
-import pygame
 
 class Shield(Weapon):
     def __init__(self, game, pos, damage_type = 'block'):
-        super().__init__(game, pos, game.keys.shield, 2, 5, 2, game.keys.shield, damage_type)
+        super().__init__(game, pos, keys.shield, 2, 5, 2, keys.shield, damage_type)
         # self.charging = 0 # Charging value will be alligned with the entity's
         self.blocking = 0
 

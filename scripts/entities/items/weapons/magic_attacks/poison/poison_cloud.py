@@ -1,8 +1,9 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_explosion import Elemental_Explosion
+from scripts.engine.assets.keys import keys
 
 class Poison_Cloud(Elemental_Explosion):
     def __init__(self, game, pos, power, entity):
-        super().__init__(game, game.keys.poison_cloud, game.keys.poison, pos, power, 4, 3, 30, entity)
+        super().__init__(game, keys.poison_cloud, keys.poison, pos, power, 4, 3, 30, entity)
         self.poison_cooldown = 0
         self.poison_cooldown_max = 10
         self.delete_countdown = self.max_animation * self.animation_cooldown_max * max(self.power // 2, 1)

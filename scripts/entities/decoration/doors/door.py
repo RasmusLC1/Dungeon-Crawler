@@ -1,6 +1,6 @@
 from scripts.entities.decoration.decoration import Decoration
-import pygame
-import traceback
+from scripts.engine.assets.keys import keys
+
 
 class Door(Decoration):
     def __init__(self, game, type, pos, size) -> None:

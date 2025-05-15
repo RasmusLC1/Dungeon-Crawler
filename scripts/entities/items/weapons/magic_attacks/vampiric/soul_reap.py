@@ -1,8 +1,9 @@
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
+from scripts.engine.assets.keys import keys
 
 class Soul_Reap(Projectile):
     def __init__(self, game, pos, damage, speed, shoot_distance, special_attack, direction, entity):
-        super().__init__(game, pos, game.keys.soul_reap, 0, damage, speed, 1, 100, game.keys.particle, game.keys.vampiric, shoot_distance, game.keys.cut, (32, 32), False)
+        super().__init__(game, pos, keys.soul_reap, 0, damage, speed, 1, 100, keys.particle, keys.vampiric, shoot_distance, keys.cut, (32, 32), False)
         self.special_attack = special_attack
         self.entity = entity
         self.direction = direction  # Store the direction vector

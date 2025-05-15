@@ -3,10 +3,11 @@ from scripts.entities.textbox.weapon_textbox import Weapon_Textbox
 import pygame
 import math
 import random
+from scripts.engine.assets.keys import keys
 
 class Weapon(Item):
     def __init__(self, game, pos, type, damage, speed, range, max_charge_time, weapon_class, effect = 'slash', attack_type = 'cut', size = (32, 32), add_to_tile = True):
-        super().__init__(game, type, game.keys.weapon, pos, size, 1, add_to_tile)
+        super().__init__(game, type, keys.weapon, pos, size, 1, add_to_tile)
         self.damage = damage # The damage the wepaon does
         self.speed = 10 - speed # Speed of the weapon
         self.range = range # Range of the weapon
@@ -66,7 +67,7 @@ class Weapon(Item):
 
     def Save_Data(self):
         if self.entity:
-            if self.entity.category == self.game.keys.enemy:
+            if self.entity.category == keys.enemy:
                 return
         super().Save_Data()
         
@@ -136,7 +137,7 @@ class Weapon(Item):
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
         self.nearby_decoration = self.game.decoration_handler.Find_Nearby_Decorations(self.entity.pos, 3)
 
-        if self.entity.category == self.game.keys.enemy:
+        if self.entity.category == keys.enemy:
             self.nearby_enemies.append(self.game.player)
         self.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
@@ -161,7 +162,7 @@ class Weapon(Item):
         
 
     def Set_Rotation(self):
-        if self.entity.category == self.game.keys.enemy:
+        if self.entity.category == keys.enemy:
             self.Point_Towards_Mouse_Enemy()
         else:
             self.Point_Towards_Mouse_Player() 
@@ -226,10 +227,10 @@ class Weapon(Item):
    
     def Charge_Player_Or_Enemy(self):
         try:
-            if self.game.keys.enemy == self.entity.category:
+            if keys.enemy == self.entity.category:
                 self.Set_Charging_Enemy()
             
-            elif self.game.keys.player == self.entity.type:
+            elif keys.player == self.entity.type:
                 self.Set_Charging_Player()
         except TypeError as e:
             print(f"Entity neither enemy nor player: {e}")
@@ -406,7 +407,7 @@ class Weapon(Item):
 
     # Point the weapon towards the mouse
     def Point_Towards_Mouse_Player(self):
-        if self.entity.category != self.game.keys.player:
+        if self.entity.category != keys.player:
             return
         # Get the direction using attack_direction
         dx = self.game.mouse.mpos[0] - self.entity.pos[0]
@@ -422,7 +423,7 @@ class Weapon(Item):
 
    # Check if enemy has hit the player
     def Player_Collision(self, weapon_rect):
-        if self.entity.category != self.game.keys.enemy:
+        if self.entity.category != keys.enemy:
             return None
         
         player = self.game.player
@@ -561,7 +562,7 @@ class Weapon(Item):
         if not self.attacking:
             return
         pos = self.Attack_Effect_Position(offset)
-        effect_type = self.effect + '_' + self.attack_type + '_' + self.game.keys.effect
+        effect_type = self.effect + '_' + self.attack_type + '_' + keys.effect
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         # attack_effect.set_alpha()
         attack_effect = pygame.transform.rotate(attack_effect, self.rotate)
@@ -603,7 +604,7 @@ class Weapon(Item):
             return
         if not self.entity:
             return
-        if not self.entity.type == self.game.keys.player:
+        if not self.entity.type == keys.player:
             return
         self.Charge_Effect_Update()
         charge_effect_animation = self.game.assets[self.charge_effect][self.charge_effect_animation].convert_alpha()
@@ -683,7 +684,7 @@ class Weapon(Item):
     # Prevent textbox when carried by enemy
     def Update_Text_Box(self, hitbox_1, hitbox_2):
         if self.entity:
-            if self.entity.category == self.game.keys.enemy:
+            if self.entity.category == keys.enemy:
                 return
         return super().Update_Text_Box(hitbox_1, hitbox_2)
 

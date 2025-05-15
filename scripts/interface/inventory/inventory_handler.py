@@ -17,7 +17,7 @@ class Inventory_Handler():
         self.item_inventory = Item_Inventory(game, self.inventory)
         self.weapon_inventory = Weapon_Inventory(game, self.inventory)
         self.rune_inventory = Rune_Inventory(game, self.inventory)
-        self.keyboard_inventory = Keyboard_Inventory(game, self.inventory)
+        self.keyboard_handler = Keyboard_Inventory(game, self.inventory)
         self.saved_data = {}
         
     
@@ -84,7 +84,7 @@ class Inventory_Handler():
             
             
         self.Item_Click()
-        self.keyboard_inventory.Key_Board_Input()
+        self.keyboard_handler.Key_Board_Input()
         return
 
     def Update_Runes(self):
@@ -156,7 +156,7 @@ class Inventory_Handler():
     # TODO: fix with UPDATE
     def Item_Double_Click(self):
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
-            if not self.clicked_inventory_slot.item.sub_category == self.game.keys.weapon:
+            if not self.clicked_inventory_slot.item.sub_category == keys.weapon:
                 return False
             
             # Transfer to the current active inventory_slot
@@ -262,7 +262,7 @@ class Inventory_Handler():
         
         self.clicked_inventory_slot.Set_Active(False)
 
-        if self.clicked_inventory_slot.type == self.game.keys.weapon:
+        if self.clicked_inventory_slot.type == keys.weapon:
             self.game.player.Remove_Active_Weapon()
 
         self.clicked_inventory_slot.item = None

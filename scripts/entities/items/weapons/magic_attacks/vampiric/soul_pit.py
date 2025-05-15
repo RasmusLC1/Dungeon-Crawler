@@ -1,10 +1,11 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_explosion import Elemental_Explosion
 import pygame
-import math
+from scripts.engine.assets.keys import keys
+
 
 class Soul_Pit(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
-        super().__init__(game, game.keys.soul_pit, game.keys.vampiric, pos, power, 5, 5, 5, entity)
+        super().__init__(game, keys.soul_pit, keys.vampiric, pos, power, 5, 5, 5, entity)
         # extend duration, lower damage and increase range
         self.delete_countdown *= 3
         self.damage = max(1, self.damage // 10)

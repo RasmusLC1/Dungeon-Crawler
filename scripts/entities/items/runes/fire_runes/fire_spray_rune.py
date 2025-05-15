@@ -1,9 +1,10 @@
 from scripts.entities.items.runes.projectile_rune import Projectile_Rune
 from scripts.entities.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
+from scripts.engine.assets.keys import keys
 
 class Fire_Spray_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.fire_spray_rune, pos, 1, 20)
+        super().__init__(game, keys.fire_spray_rune, pos, 1, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.fire_shooter = Flame_Thrower(self.game)

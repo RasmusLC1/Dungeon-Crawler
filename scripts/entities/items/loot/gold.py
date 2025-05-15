@@ -1,5 +1,6 @@
 from scripts.entities.items.loot.loot import Loot
 import random
+from scripts.engine.assets.keys import keys
 
 class Gold(Loot):
     def __init__(self, game, pos, amount):

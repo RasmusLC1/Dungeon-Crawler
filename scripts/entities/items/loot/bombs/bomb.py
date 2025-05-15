@@ -1,11 +1,11 @@
 from scripts.entities.items.loot.radius_effect_loot import Radius_Effect_Loot
-import pygame
-import math
+from scripts.engine.assets.keys import keys
+
 
 class Bomb(Radius_Effect_Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, 192, game.keys.bomb, 4, 1)
-        effect = self.type.replace('_' + game.keys.bomb, '')
+        super().__init__(game, type, pos, 192, keys.bomb, 4, 1)
+        effect = self.type.replace('_' + keys.bomb, '')
         self.description = effect + ' explosion\nwhen trown'
         
 

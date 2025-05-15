@@ -1,10 +1,11 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_ball import Elemental_Ball
 from scripts.entities.items.weapons.magic_attacks.ice.ice_explosion import Ice_Explosion
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Ice_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, entity, game.keys.ice_ball, damage, speed, 2, game.keys.frozen, 200, special_attack, direction)
+        super().__init__(game, pos, entity, keys.ice_ball, damage, speed, 2, keys.frozen, 200, special_attack, direction)
         
 
 

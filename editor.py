@@ -126,7 +126,7 @@ class Editor:
                     if event.button == 3:
                         self.right_clicking = False
                         
-                if event.type == pygame.KEYDOWN:
+                if event.type == pykeysDOWN:
                     if event.key == pygame.K_a:
                         self.movement[0] = True
                     if event.key == pygame.K_d:
@@ -142,7 +142,7 @@ class Editor:
                         self.tilemap.save('map.json')
                     if event.key == pygame.K_LSHIFT:
                         self.shift = True
-                if event.type == pygame.KEYUP:
+                if event.type == pykeysUP:
                     if event.key == pygame.K_a:
                         self.movement[0] = False
                     if event.key == pygame.K_d:

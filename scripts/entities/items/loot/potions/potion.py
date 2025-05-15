@@ -1,10 +1,10 @@
 from scripts.entities.items.item import Item
 from scripts.entities.textbox.potion_textbox import Potion_Textbox
-
+from scripts.engine.assets.keys import keys
 
 class Potion(Item):
     def __init__(self, game, type, pos, amount, strength):
-        super().__init__(game, type, game.keys.potion, pos, (16, 16), amount)
+        super().__init__(game, type, keys.potion, pos, (16, 16), amount)
         self.Update()
         self.max_amount = 3
         self.max_animation = 4

@@ -1,9 +1,10 @@
 from scripts.entities.items.loot.keys.key import Key
 import random
+from scripts.engine.assets.keys import keys
 
 class Lockpick(Key):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.lockpick, pos)
+        super().__init__(game, keys.lockpick, pos)
         self.description = '1/3 chance\nto persist'
         self.amount = 1
         self.max_amount = 3

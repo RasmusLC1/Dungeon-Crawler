@@ -1,9 +1,10 @@
 from scripts.entities.items.loot.loot import Loot
 import pygame
+from scripts.engine.assets.keys import keys
 
 class Echo_Sigil(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.echo_sigil, pos, (16, 16), 10, game.keys.passive)
+        super().__init__(game, keys.echo_sigil, pos, (16, 16), 10, keys.passive)
         self.update_cooldown = 0
         self.loot_IDs = []
         self.description = 'Grants\nextra use\nto items\n'

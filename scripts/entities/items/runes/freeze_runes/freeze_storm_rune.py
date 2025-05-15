@@ -1,10 +1,11 @@
 from scripts.entities.items.runes.rune import Rune
 from scripts.entities.items.weapons.magic_attacks.ice.ice_storm import Ice_Storm
-import math
+from scripts.engine.assets.keys import keys
+
 
 class Freeze_Storm_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.freeze_storm_rune, pos, 1, 30)
+        super().__init__(game, keys.freeze_storm_rune, pos, 1, 30)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False

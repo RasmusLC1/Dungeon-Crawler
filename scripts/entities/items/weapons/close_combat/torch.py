@@ -1,11 +1,12 @@
 from scripts.entities.items.weapons.weapon import Weapon
 from scripts.entities.items.weapons.magic_attacks.fire.flame_thrower import Flame_Thrower
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Torch(Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, game.keys.torch, 1, 2, 3, 100, 'one_handed_melee', game.keys.fire)
+        super().__init__(game, pos, keys.torch, 1, 2, 3, 100, 'one_handed_melee', keys.fire)
         self.max_animation = 5
         self.attack_animation_max = 5
         self.animation_cooldown_max = 20
@@ -25,7 +26,7 @@ class Torch(Weapon):
     def Spawn_Fire_Particle(self):
         if not self.fire_particle_cooldown:
             self.fire_particle_cooldown = random.randint(30, 100)
-            self.game.particle_handler.Activate_Particles(random.randint(1, 2), self.game.keys.fire, self.rect().center, frame=random.randint(80, 90))
+            self.game.particle_handler.Activate_Particles(random.randint(1, 2), keys.fire, self.rect().center, frame=random.randint(80, 90))
 
             return
         

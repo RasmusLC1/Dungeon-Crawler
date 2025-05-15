@@ -50,7 +50,7 @@ class Inventory_Slot():
     def Update_Item(self):
         if not self.item:
             return
-        if self.item.sub_category == self.game.keys.weapon:
+        if self.item.sub_category == keys.weapon:
             return
         if self.item.sub_category == 'loot':
             self.item.Update_In_Inventory()
@@ -144,7 +144,7 @@ class Inventory_Slot():
         self.game.default_font.Render_Word(surf, 
             str(self.item.amount) + '/' + str(self.item.max_amount), 
             (self.pos[0] + x_offset, self.pos[1] + 25),
-            self.game.keys.small_font
+            keys.small_font
         )
 
     # Render the keyboard shortcut

@@ -1,9 +1,10 @@
 from scripts.entities.items.weapons.weapon import Weapon
 from scripts.entities.items.weapons.magic_attacks.vampiric.soul_reap_shooter import Soul_Reap_Shooter
+from scripts.engine.assets.keys import keys
 
 class Scythe(Weapon):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, game.keys.scythe, 4, 2, 6, 100, 'two_handed_melee', damage_type)
+        super().__init__(game, pos, keys.scythe, 4, 2, 6, 100, 'two_handed_melee', damage_type)
         self.max_animation = 7
         self.attack_animation_max = 9
 

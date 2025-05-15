@@ -4,6 +4,7 @@ from scripts.entities.items.loot.utility.faded_hourglass import Faded_Hourglass
 from scripts.entities.items.loot.utility.ethereal_chains import Ethereal_Chains
 from scripts.entities.items.loot.utility.recall_scroll import Recall_Scroll
 from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
+from scripts.engine.assets.keys import keys
 
 
 class Utility_Loot_Handler(Loot_Types_Handler):
@@ -12,19 +13,19 @@ class Utility_Loot_Handler(Loot_Types_Handler):
 
 
         self.loot_map = {
-            self.game.keys.echo_bell: Echo_Bell,
-            self.game.keys.faded_hourglass : Faded_Hourglass,
-            self.game.keys.ethereal_chains : Ethereal_Chains,
-            self.game.keys.shadow_cloak: Shadow_Cloak,
-            self.game.keys.recall_scroll: Recall_Scroll,
+            keys.echo_bell: Echo_Bell,
+            keys.faded_hourglass : Faded_Hourglass,
+            keys.ethereal_chains : Ethereal_Chains,
+            keys.shadow_cloak: Shadow_Cloak,
+            keys.recall_scroll: Recall_Scroll,
         }
 
         self.types = [
-            self.game.keys.echo_bell,
-            self.game.keys.faded_hourglass,
-            self.game.keys.ethereal_chains,
-            self.game.keys.shadow_cloak,
-            self.game.keys.recall_scroll
+            keys.echo_bell,
+            keys.faded_hourglass,
+            keys.ethereal_chains,
+            keys.shadow_cloak,
+            keys.recall_scroll
         ]
 
 

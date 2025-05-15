@@ -1,7 +1,6 @@
 from scripts.entities.decoration.decoration import Decoration
 import random
-
-import math
+from scripts.engine.assets.keys import keys
 
 class Portal_Shrine(Decoration):
     def __init__(self, game, pos) -> None:

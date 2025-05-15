@@ -9,7 +9,7 @@ class Rune_Button(Button):
         self.effect = effect
 
     def Activate(self, rune):
-        if self.effect == self.game.keys.souls:
+        if self.effect == keys.souls:
             amount = -1 * math.ceil(rune.original_soul_cost / 10)
             return rune.Modify_Souls_Cost(amount)
 

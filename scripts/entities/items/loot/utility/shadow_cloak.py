@@ -1,10 +1,11 @@
 from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
 import random
+from scripts.engine.assets.keys import keys
 
 class Shadow_Cloak(Utility_Loot):
     def __init__(self, game, pos):
         amount = random.randint(1, 2)
-        super().__init__(game, game.keys.shadow_cloak, pos, 320, amount)
+        super().__init__(game, keys.shadow_cloak, pos, 320, amount)
         self.max_amount = 3
         self.Set_Description()
 

@@ -1,8 +1,9 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_explosion import Elemental_Explosion
+from scripts.engine.assets.keys import keys
 
 class Poison_Explosion(Elemental_Explosion):
     def __init__(self, game, pos, power, entity = None):
-        super().__init__(game, game.keys.poison_explosion, game.keys.poison, pos, power, 6, 5, 5, entity)
+        super().__init__(game, keys.poison_explosion, keys.poison, pos, power, 6, 5, 5, entity)
         self.poison_cooldown = 0
         self.poison_cooldown_max = 10
 

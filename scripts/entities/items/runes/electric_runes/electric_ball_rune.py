@@ -1,11 +1,11 @@
 from scripts.entities.items.runes.projectile_rune import Projectile_Rune
 from scripts.entities.items.weapons.magic_attacks.electric.electric_ball import Electric_Ball
-import math
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Electric_Ball_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.electric_ball_rune, pos, 1, 25)
+        super().__init__(game, keys.electric_ball_rune, pos, 1, 25)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

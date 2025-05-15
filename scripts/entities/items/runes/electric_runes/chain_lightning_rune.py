@@ -1,9 +1,10 @@
 from scripts.entities.items.runes.projectile_rune import Projectile_Rune
 from scripts.entities.items.weapons.magic_attacks.electric.chain_lightning import Chain_Lightning
+from scripts.engine.assets.keys import keys
 
 class Chain_Lightning_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.chain_lightning_rune, pos, 5, 40)
+        super().__init__(game, keys.chain_lightning_rune, pos, 5, 40)
         self.animation_time_max = 30
         self.animation_size_max = 15
 

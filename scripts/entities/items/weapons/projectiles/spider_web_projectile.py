@@ -1,9 +1,9 @@
-from scripts.traps.trap import Trap
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
+from scripts.engine.assets.keys import keys
 
 class Spider_Web_Projectile(Projectile):
     def __init__(self, game, pos, type, damage, speed, shoot_distance, weapon_class, special_attack, direction, entity):
-        super().__init__(game, pos, type, 0, damage, speed, 2, 40, weapon_class, game.keys.blunt, shoot_distance, game.keys.cut, (5, 5), False)
+        super().__init__(game, pos, type, 0, damage, speed, 2, 40, weapon_class, keys.blunt, shoot_distance, keys.cut, (5, 5), False)
         self.special_attack = special_attack
         self.entity = entity
         self.attack_direction = direction  # Store the direction vector
@@ -31,7 +31,7 @@ class Spider_Web_Projectile(Projectile):
     def Entity_Collision_Detection(self, entity):
         # entity = self.Attack_Collision_Check_Projectile()
         if entity:
-            entity.Set_Effect(self.game.keys.snare, 3)
+            entity.Set_Effect(keys.snare, 3)
             self.animation = self.attack_animation_max
             self.pos = entity.pos
             return True

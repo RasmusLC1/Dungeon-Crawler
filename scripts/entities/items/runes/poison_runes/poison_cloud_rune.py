@@ -1,9 +1,10 @@
 from scripts.entities.items.runes.rune import Rune
 from scripts.entities.items.weapons.magic_attacks.poison.poison_cloud import Poison_Cloud
+from scripts.engine.assets.keys import keys
 
 class Poison_Cloud_Rune(Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.poison_cloud_rune, pos, 10, 30)
+        super().__init__(game, keys.poison_cloud_rune, pos, 10, 30)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.clicked = False

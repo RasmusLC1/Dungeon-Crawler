@@ -1,6 +1,7 @@
 import pygame
 import random
 from scripts.entities.decoration.decoration import Decoration
+from scripts.engine.assets.keys import keys
 
 
 class Chest(Decoration):

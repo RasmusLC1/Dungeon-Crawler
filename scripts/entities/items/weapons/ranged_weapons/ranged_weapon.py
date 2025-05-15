@@ -1,8 +1,7 @@
 from scripts.entities.items.weapons.weapon import Weapon
 from scripts.entities.items.weapons.projectiles.arrow import Arrow
-import math
-import pygame
-import inspect
+from scripts.engine.assets.keys import keys
+
 
 # Parent class for ranged weapons
 class Ranged_Weapon(Weapon):

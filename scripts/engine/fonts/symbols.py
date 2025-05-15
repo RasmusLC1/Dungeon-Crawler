@@ -1,9 +1,10 @@
 import pygame
+from scripts.engine.assets.keys import keys
 
 class Symbols():
     def __init__(self, game):
         self.game = game
-        self.symbols = self.game.assets[game.keys.symbols]
+        self.symbols = self.game.assets[keys.symbols]
         # Use dictionary for O(1) lookup time, using enumerate to number them
         self.symbols_lookup = {
             symbol: index for index, symbol in enumerate([
@@ -19,7 +20,7 @@ class Symbols():
                 'arcane_conduit', 'magnet', 'arcane_hunger', 
                 'invulnerable', 'snare', 'thorns',
                 'electric_resistance',
-                'chain', self.game.keys.enemy, 'curse',
+                'chain', keys.enemy, 'curse',
                 'weakness', 'vulnerable', 'luck',
                 'anchor', 'blood_tomb', 'halo',
                 'demonic_bargain', 'temptress_embrace',

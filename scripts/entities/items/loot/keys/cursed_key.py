@@ -1,10 +1,11 @@
 from scripts.entities.items.loot.keys.key import Key
 from  scripts.entities.items.loot.curse.effect_curse import Effect_Curse
 import random
+from scripts.engine.assets.keys import keys
 
 class Cursed_Key(Key):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.cursed_key, pos)
+        super().__init__(game, keys.cursed_key, pos)
         self.description = 'Open any\ndoor and\nbe cursed'
         self.curse_generator = Effect_Curse()
 

@@ -6,21 +6,22 @@ from scripts.entities.items.weapons.magic_attacks.poison.poison_explosion import
 from scripts.entities.items.weapons.magic_attacks.vampiric.soul_pit import Soul_Pit
 from scripts.entities.items.weapons.magic_attacks.electric.electric_explosion import Electric_Explosion
 import math
+from scripts.engine.assets.keys import keys
 
 class Bomb(Projectile):
     def __init__(self, game, pos, shoot_distance):
-        super().__init__(game, pos, game.keys.fire_bomb, 0, 1, 2, 2, 40, game.keys.bomb, game.keys.blunt, shoot_distance, game.keys.cut, (20, 20), False)
+        super().__init__(game, pos, keys.fire_bomb, 0, 1, 2, 2, 40, keys.bomb, keys.blunt, shoot_distance, keys.cut, (20, 20), False)
         self.target = None
         self.distance_to_target = 99999
         self.disabled = True
 
 
         self.explosions = {
-            game.keys.fire_bomb : Fire_Explosion,
-            game.keys.frozen_bomb : Ice_Explosion,
-            game.keys.electric_bomb :  Electric_Explosion,
-            game.keys.poison_bomb :  Poison_Explosion,
-            game.keys.vampiric_bomb : Soul_Pit,
+            keys.fire_bomb : Fire_Explosion,
+            keys.frozen_bomb : Ice_Explosion,
+            keys.electric_bomb :  Electric_Explosion,
+            keys.poison_bomb :  Poison_Explosion,
+            keys.vampiric_bomb : Soul_Pit,
         }
 
     def Set_Type(self, type):

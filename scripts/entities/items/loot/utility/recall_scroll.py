@@ -1,8 +1,9 @@
 from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
+from scripts.engine.assets.keys import keys
 
 class Recall_Scroll(Utility_Loot):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.recall_scroll, pos, 320, 1)
+        super().__init__(game, keys.recall_scroll, pos, 320, 1)
         self.max_amount = 3
         self.Set_Description()
 

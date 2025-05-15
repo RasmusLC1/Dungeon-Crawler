@@ -2,54 +2,55 @@ from scripts.entities.items.loot.potions.potion import Potion
 from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
 
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Potion_Handler(Loot_Types_Handler):
     def __init__(self, game):
         super().__init__(game)
         self.potions = [
-            game.keys.healing,
-            game.keys.regen,
-            game.keys.vampiric,
-            game.keys.increase_souls,
-            game.keys.speed,
-            game.keys.increase_strength,
-            game.keys.invisibility,
-            game.keys.silence,
-            game.keys.fire_resistance,
-            game.keys.frozen_resistance,
-            game.keys.poison_resistance,
-            game.keys.arcane_hunger,
+            keys.healing,
+            keys.regen,
+            keys.vampiric,
+            keys.increase_souls,
+            keys.speed,
+            keys.increase_strength,
+            keys.invisibility,
+            keys.silence,
+            keys.fire_resistance,
+            keys.frozen_resistance,
+            keys.poison_resistance,
+            keys.arcane_hunger,
         ]
 
         self.strength = {
-            game.keys.healing: 20,
-            game.keys.regen: 4,
-            game.keys.increase_souls: 20,
-            game.keys.speed: 4,
-            game.keys.increase_strength: 4,
-            game.keys.invisibility: 3,
-            game.keys.silence: 3,
-            game.keys.fire_resistance: 6,
-            game.keys.frozen_resistance: 6,
-            game.keys.poison_resistance: 6,
-            game.keys.vampiric: 5,
-            game.keys.arcane_hunger: 5,
+            keys.healing: 20,
+            keys.regen: 4,
+            keys.increase_souls: 20,
+            keys.speed: 4,
+            keys.increase_strength: 4,
+            keys.invisibility: 3,
+            keys.silence: 3,
+            keys.fire_resistance: 6,
+            keys.frozen_resistance: 6,
+            keys.poison_resistance: 6,
+            keys.vampiric: 5,
+            keys.arcane_hunger: 5,
         }
 
         self.weights = {
-            game.keys.healing: 0.1,
-            game.keys.regen: 0.1,
-            game.keys.increase_souls: 0.2,
-            game.keys.speed: 0.2,
-            game.keys.increase_strength: 0.2,
-            game.keys.invisibility: 0.2,
-            game.keys.silence: 0.2,
-            game.keys.fire_resistance: 0.1,
-            game.keys.frozen_resistance: 0.1,
-            game.keys.poison_resistance: 0.1,
-            game.keys.vampiric: 0.1,
-            game.keys.arcane_hunger: 0.1,
+            keys.healing: 0.1,
+            keys.regen: 0.1,
+            keys.increase_souls: 0.2,
+            keys.speed: 0.2,
+            keys.increase_strength: 0.2,
+            keys.invisibility: 0.2,
+            keys.silence: 0.2,
+            keys.fire_resistance: 0.1,
+            keys.frozen_resistance: 0.1,
+            keys.poison_resistance: 0.1,
+            keys.vampiric: 0.1,
+            keys.arcane_hunger: 0.1,
         }
 
 
@@ -69,8 +70,8 @@ class Potion_Handler(Loot_Types_Handler):
             return weights
         
         soul_increase =( max_amount - player.souls) / 400
-        weights[self.game.keys.increase_souls] += soul_increase 
-        weights[self.game.keys.arcane_hunger] += soul_increase
+        weights[keys.increase_souls] += soul_increase 
+        weights[keys.arcane_hunger] += soul_increase
 
         return weights
 
@@ -83,9 +84,9 @@ class Potion_Handler(Loot_Types_Handler):
         
 
         player_health_missing /= 400
-        weights[self.game.keys.healing] += player_health_missing
-        weights[self.game.keys.regen] += player_health_missing
-        weights[self.game.keys.vampiric] += player_health_missing
+        weights[keys.healing] += player_health_missing
+        weights[keys.regen] += player_health_missing
+        weights[keys.vampiric] += player_health_missing
 
         return weights
     
@@ -107,7 +108,7 @@ class Potion_Handler(Loot_Types_Handler):
 
 
     def Spawn_Potions(self, name, pos_x, pos_y, amount, data=None):
-        name = name.replace("_", self.game.keys.potion, "")
+        name = name.replace("_", keys.potion, "")
         # potion_class = self.potion_map.get(name)
 
         # If none matched, return False

@@ -1,5 +1,6 @@
 from scripts.entities.decoration.decoration import Decoration
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Bones(Decoration):
     def __init__(self, game, pos, entity_type) -> None:

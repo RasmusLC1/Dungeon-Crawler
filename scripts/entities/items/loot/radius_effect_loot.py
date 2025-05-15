@@ -1,5 +1,6 @@
 from scripts.entities.items.loot.interactive_loot import Interactive_Loot
 import pygame
+from scripts.engine.assets.keys import keys
 
 class Radius_Effect_Loot(Interactive_Loot):
     def __init__(self, game, type, pos, max_distance, loot_type, radius, amount):
@@ -30,5 +31,5 @@ class Radius_Effect_Loot(Interactive_Loot):
     
     # Seperate find enemies close to the mouse
     def Find_Nearby_Entities_Mouse(self):
-        self.nearby_entities = self.game.tilemap.Search_Nearby_Tiles(self.radius, self.game.mouse.mpos, self.game.keys.enemy, self.ID)
+        self.nearby_entities = self.game.tilemap.Search_Nearby_Tiles(self.radius, self.game.mouse.mpos, keys.enemy, self.ID)
 

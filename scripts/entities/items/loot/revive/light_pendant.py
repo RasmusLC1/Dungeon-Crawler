@@ -1,10 +1,11 @@
 from scripts.entities.items.loot.loot import Loot
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Light_Pendant(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, self.game.keys.phoenix_feather, pos, (16, 16), 10, self.game.keys.revive)
+        super().__init__(game, keys.phoenix_feather, pos, (16, 16), 10, keys.revive)
         self.description = f"Revive for\n{self.game.player.max_health * 2} soul"
 
 

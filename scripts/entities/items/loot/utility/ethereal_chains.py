@@ -1,11 +1,12 @@
 from scripts.entities.items.loot.radius_effect_loot import Radius_Effect_Loot
 import random
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Ethereal_Chains(Radius_Effect_Loot):
     def __init__(self, game, pos):
         amount = random.randint(2, 4)
-        super().__init__(game, game.keys.ethereal_chains, pos, 150, game.keys.utility, 3, amount)
+        super().__init__(game, keys.ethereal_chains, pos, 150, keys.utility, 3, amount)
         self.Set_Description()
         self.max_amount = 5
         

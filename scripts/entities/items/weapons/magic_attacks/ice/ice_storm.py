@@ -3,11 +3,12 @@ from scripts.entities.items.weapons.magic_attacks.ice.ice_shooter import Ice_Sho
 from scripts.entities.entities import PhysicsEntity
 import math
 import random
+from scripts.engine.assets.keys import keys
 
 
 class Ice_Storm(PhysicsEntity):
     def __init__(self, game, entity, duration):
-        super().__init__(game, game.keys.ice_storm, game.keys.magic_attack, entity.pos, (32,32))
+        super().__init__(game, keys.ice_storm, keys.magic_attack, entity.pos, (32,32))
         self.entity = entity
         self.ice_cooldown = 0
         self.duration = 0

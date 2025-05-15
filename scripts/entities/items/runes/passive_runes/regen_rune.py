@@ -1,9 +1,9 @@
 from scripts.entities.items.runes.passive_runes.passive_rune import Passive_Rune
+from scripts.engine.assets.keys import keys
 
-import pygame
 
 class Regen_Rune(Passive_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.regen_rune, pos, 2, 1000, 30)
+        super().__init__(game, keys.regen_rune, pos, 2, 1000, 30)
 
     

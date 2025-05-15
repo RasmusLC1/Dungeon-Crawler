@@ -1,9 +1,10 @@
 from scripts.entities.items.runes.projectile_rune import Projectile_Rune
 from scripts.entities.items.weapons.magic_attacks.electric.electric_shooter import Electric_Shooter
+from scripts.engine.assets.keys import keys
 
 class Electric_Spray_Rune(Projectile_Rune):
     def __init__(self, game, pos):
-        super().__init__(game, game.keys.electric_spray_rune, pos, 4, 20)
+        super().__init__(game, keys.electric_spray_rune, pos, 4, 20)
         self.animation_time_max = 30
         self.animation_size_max = 15
         self.electric_shooter = Electric_Shooter(self.game)

@@ -1,9 +1,10 @@
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
 import pygame
+from scripts.engine.assets.keys import keys
 
 class Elemental_Ball(Projectile):
     def __init__(self, game, pos, entity, type, damage, speed, range, damage_type, shoot_distance, special_attack, direction):
-        super().__init__(game, pos, type, 0, damage, speed, range, 100, game.keys.magic_projectile, damage_type, shoot_distance, game.keys.cut, (16, 16), False)
+        super().__init__(game, pos, type, 0, damage, speed, range, 100, keys.magic_projectile, damage_type, shoot_distance, keys.cut, (16, 16), False)
         self.special_attack = special_attack
         
         self.entity = entity

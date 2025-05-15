@@ -1,9 +1,10 @@
 from scripts.entities.items.weapons.weapon import Weapon
 import random
+from scripts.engine.assets.keys import keys
 
 class Sword(Weapon):
     def __init__(self, game, pos, effect = 'slash'):
-        super().__init__(game, pos, game.keys.sword, 3, 6, 5, 50, 'one_handed_melee', effect)
+        super().__init__(game, pos, keys.sword, 3, 6, 5, 50, 'one_handed_melee', effect)
         self.max_animation = 3
         self.attack_animation_max = 3 
 
@@ -16,14 +17,14 @@ class Sword(Weapon):
         
         
     def Set_Attack_Type(self):
-        if self.attack_type == self.game.keys.cut: # Handle Slashing
+        if self.attack_type == keys.cut: # Handle Slashing
             self.Slash_Attack()
         else: # Handle Stabbing
             self.Stabbing_Attack() 
 
 
     def Set_Attack(self):
-        self.attack_type = random.choice([self.game.keys.cut, self.game.keys.stab]) # Set either cut or stab
+        self.attack_type = random.choice([keys.cut, keys.stab]) # Set either cut or stab
         return super().Set_Attack()
 
 

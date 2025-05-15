@@ -1,10 +1,11 @@
 from scripts.entities.items.loot.utility.utility_loot import Utility_Loot
 import random
+from scripts.engine.assets.keys import keys
 
 class Echo_Bell(Utility_Loot):
     def __init__(self, game, pos):
         amount = random.randint(2, 4)
-        super().__init__(game, game.keys.echo_bell, pos, 320, amount)
+        super().__init__(game, keys.echo_bell, pos, 320, amount)
         self.Set_Description()
         self.max_amount = 5
     

@@ -1,10 +1,10 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.elemental_ball import Elemental_Ball
 from scripts.entities.items.weapons.magic_attacks.fire.fire_explosion import Fire_Explosion
-import pygame
+from scripts.engine.assets.keys import keys
 
 class Fire_Ball(Elemental_Ball):
     def __init__(self, game, pos, entity, damage, speed, special_attack, direction):
-        super().__init__(game, pos, entity, game.keys.fire_ball, damage, speed, 2, game.keys.fire, 200, special_attack, direction)
+        super().__init__(game, pos, entity, keys.fire_ball, damage, speed, 2, keys.fire, 200, special_attack, direction)
         
         self.light_source = self.game.light_handler.Add_Light(self.pos, 5, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)

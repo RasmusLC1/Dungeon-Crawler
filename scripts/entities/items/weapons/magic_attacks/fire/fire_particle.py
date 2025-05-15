@@ -1,6 +1,7 @@
 from scripts.entities.items.weapons.magic_attacks.base_attacks.particle import Particle
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Fire_Particle(Particle):
     def __init__(self, game, pos, shoot_distance):
-        super().__init__(game, pos, game.keys.fire_particle_attack, 2, 1, 2, 100, game.keys.fire, shoot_distance)
+        super().__init__(game, pos, keys.fire_particle_attack, 2, 1, 2, 100, keys.fire, shoot_distance)

@@ -1,8 +1,4 @@
-
-from scripts.entities.items.loot.passive.lantern import Lantern
-from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
-from scripts.entities.items.loot.passive.echo_sigil import Echo_Sigil
-
+from scripts.engine.assets.keys import keys
 import random
 
 

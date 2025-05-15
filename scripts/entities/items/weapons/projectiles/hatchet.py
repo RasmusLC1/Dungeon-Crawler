@@ -1,10 +1,10 @@
 from scripts.entities.items.weapons.projectiles.projectile import Projectile
-import math
-import pygame
+from scripts.engine.assets.keys import keys
+
 
 class Hatchet(Projectile):
     def __init__(self, game, pos, damage_type = 'slash'):
-        super().__init__(game, pos, game.keys.hatchet, 5, 3, 3, 4, 40, 'one_handed_melee', damage_type, 20, game.keys.cut)
+        super().__init__(game, pos, keys.hatchet, 5, 3, 3, 4, 40, 'one_handed_melee', damage_type, 20, keys.cut)
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0

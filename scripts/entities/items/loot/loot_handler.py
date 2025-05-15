@@ -29,6 +29,7 @@ from scripts.entities.items.loot.revive.revive_loot_handler import Revive_Loot_H
 
 from scripts.entities.items.loot.potions.potion_handler import Potion_Handler
 from scripts.entities.items.loot.potions.potion import Potion
+from scripts.engine.assets.keys import keys
 
 
 
@@ -58,53 +59,53 @@ class Loot_Handler():
         ]
 
         self.loot_types_weights = {
-            self.game.keys.key : 0.05,
-            self.game.keys.bomb : 0.2,
-            self.game.keys.utility : 0.1,
-            self.game.keys.passive : 0.05,
-            self.game.keys.revive : 0.02,
-            self.game.keys.potion : 0.3,
+            keys.key : 0.05,
+            keys.bomb : 0.2,
+            keys.utility : 0.1,
+            keys.passive : 0.05,
+            keys.revive : 0.02,
+            keys.potion : 0.3,
         }
 
         self.loot_types_keys = [
-            self.game.keys.key,
-            self.game.keys.bomb,
-            self.game.keys.utility,
-            self.game.keys.passive,
-            self.game.keys.revive,
-            self.game.keys.potion,
+            keys.key,
+            keys.bomb,
+            keys.utility,
+            keys.passive,
+            keys.revive,
+            keys.potion,
         ]
 
         self.loot_types_dic = {
-            self.game.keys.key : self.key_loot_handler,
-            self.game.keys.bomb : self.bomb_loot_handler,
-            self.game.keys.utility : self.utility_loot_handler,
-            self.game.keys.passive : self.passive_loot_handler,
-            self.game.keys.revive : self.revive_loot_handler,
-            self.game.keys.potion : self.potion_loot_handler,
+            keys.key : self.key_loot_handler,
+            keys.bomb : self.bomb_loot_handler,
+            keys.utility : self.utility_loot_handler,
+            keys.passive : self.passive_loot_handler,
+            keys.revive : self.revive_loot_handler,
+            keys.potion : self.potion_loot_handler,
         }
 
         self.loot_map = {
-            self.game.keys.skeleton_key : Skeleton_Key,
-            self.game.keys.blood_key : Blood_Key,
-            self.game.keys.soul_key : Soul_Key,
-            self.game.keys.cursed_key : Cursed_Key,
-            self.game.keys.lockpick : Lockpick,
-            self.game.keys.bomb: Bomb,
+            keys.skeleton_key : Skeleton_Key,
+            keys.blood_key : Blood_Key,
+            keys.soul_key : Soul_Key,
+            keys.cursed_key : Cursed_Key,
+            keys.lockpick : Lockpick,
+            keys.bomb: Bomb,
             
-            self.game.keys.echo_bell : Echo_Bell,
-            self.game.keys.faded_hourglass : Faded_Hourglass,
-            self.game.keys.ethereal_chains : Ethereal_Chains,
-            self.game.keys.shadow_cloak : Shadow_Cloak,
-            self.game.keys.recall_scroll : Recall_Scroll,
+            keys.echo_bell : Echo_Bell,
+            keys.faded_hourglass : Faded_Hourglass,
+            keys.ethereal_chains : Ethereal_Chains,
+            keys.shadow_cloak : Shadow_Cloak,
+            keys.recall_scroll : Recall_Scroll,
 
-            self.game.keys.lantern : Lantern,
+            keys.lantern : Lantern,
 
-            self.game.keys.phoenix_feather : Phoenix_Feather,
-            self.game.keys.light_pendant : Light_Pendant,
+            keys.phoenix_feather : Phoenix_Feather,
+            keys.light_pendant : Light_Pendant,
 
-            self.game.keys.echo_sigil : Echo_Sigil,
-            self.game.keys.potion: Potion,
+            keys.echo_sigil : Echo_Sigil,
+            keys.potion: Potion,
         }
 
 
@@ -157,15 +158,15 @@ class Loot_Handler():
             if not hasattr(item, 'loot_type'):
                 continue
 
-            if item.loot_type == self.game.keys.key:
+            if item.loot_type == keys.key:
                 key_amount += 1
-            elif item.loot_type == self.game.keys.revive:
+            elif item.loot_type == keys.revive:
                 revive_amount += 1
         
         if revive_amount > 0:
-            weights[self.game.keys.revive] /= 10
+            weights[keys.revive] /= 10
         if key_amount == 0:
-            weights[self.game.keys.key] = 0.5
+            weights[keys.key] = 0.5
 
         return weights
 
@@ -183,6 +184,7 @@ class Loot_Handler():
 
     def Spawn_Key(self, pos):
         return self.key_loot_handler.Loot_Spawner(pos)
+
 
     def Spawn_Loot_Type(self, type, pos, data = None):
         loot_handler = self.loot_types_dic.get(type)
