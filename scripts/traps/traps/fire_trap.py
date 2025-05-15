@@ -20,7 +20,7 @@ class Fire_Trap(Trap):
             if entity.effects.invulnerable.effect:
                 return
                 
-            entity.Set_Effect('fire', 3)
+            entity.Set_Effect(keys.fire, 3)
             self.Cooldown = 100
                 
     def Animation_Update(self):

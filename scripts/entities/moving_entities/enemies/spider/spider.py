@@ -11,7 +11,7 @@ class Spider(Enemy):
     def __init__(self, game, pos, type, health, strength, max_speed, agility, intelligence, stamina):
         super().__init__(game, pos, type, health, strength, max_speed, agility, intelligence, stamina, 60, 'dweller')
 
-        self.animation = 'spider_idle'
+        self.animation = keys.spider + '_' + 'idle'
 
         self.path_finding_strategy = 'standard'
         self.intent_manager.Set_Intent(['medium_range', 'keep_position', 'shoot_spiderweb', 'direct', 'jump_attack', 'long_range'])
@@ -43,7 +43,7 @@ class Spider(Enemy):
             return
 
         if self.charge and self.distance_to_player <= 50:
-            self.animation_handler.Set_Animation('attack')
+            self.animation_handler.Set_Animation(keys.attack)
             return
 
         
@@ -66,7 +66,7 @@ class Spider(Enemy):
             return
         if self.distance_to_player < 40:
             self.game.player.Damage_Taken(self.strength)
-            self.game.player.Set_Effect('poison', 4)
+            self.game.player.Set_Effect(keys.poison, 4)
             self.Set_Attack_Cooldown(60)
             return True
         

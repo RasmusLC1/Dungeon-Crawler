@@ -8,7 +8,7 @@ import random
 class Skeleton_Bell_Toller(Skeleton):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 1))
-        super().__init__(game, pos, 'skeleton_bell_toller_' + type, health, strength, max_speed, agility, intelligence, stamina, 80)
+        super().__init__(game, pos, keys.skeleton_bell_toller + '_' + type, health, strength, max_speed, agility, intelligence, stamina, 80)
         self.Equip_Weapon(Bell(self.game, self.pos))
         self.bell_ringing_cooldown = 0
         self.intent_manager.Set_Intent(['direct', 'attack', 'attack', 'medium_range'])

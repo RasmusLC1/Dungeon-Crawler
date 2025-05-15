@@ -1,966 +1,990 @@
 class keys():
     
-    floor = 'floor'
+    floor = "floor"
     
     
-    wall_top = 'wall_top'
+    wall_top = "wall_top"
     
     
-    wall_left = 'wall_left'
+    wall_left = "wall_left"
     
     
-    wall_right = 'wall_right'
+    wall_right = "wall_right"
     
     
-    wall_middle = 'wall_middle'
+    wall_middle = "wall_middle"
     
     
-    wall_bottom = 'wall_bottom'
+    wall_bottom = "wall_bottom"
     
     
-    wall_bottom_corner = 'wall_bottom_corner'
+    wall_bottom_corner = "wall_bottom_corner"
 
     
-    Spike_Trap = 'spike_trap'
+    spike_trap = "spike_trap"
     
     
-    spike_poison_trap = 'spike_poison_trap'
+    spike_poison_trap = "spike_poison_trap"
     
     
-    pit_trap = 'Pit_trap'
+    pit_trap = "pit_trap"
     
     
-    fire_trap = 'fire_trap'
+    fire_trap = "fire_trap"
     
     
-    spider_web = 'spider_web'
+    spider_web = "spider_web"
     
     
-    poison_plume = 'poison_plume'
+    poison_plume = "poison_plume"
 
     # Particles
     
-    dash_particle = 'dash_particle'
+    dash_particle = "dash_particle"
     
     
-    fire_particle = 'fire_particle'
+    fire_particle = "fire_particle"
     
     
-    spark_particle = 'spark_particle'
+    spark_particle = "spark_particle"
     
     
-    blood_particle = 'blood_particle'
+    blood_particle = "blood_particle"
     
     
-    bone_particle = 'bone_particle'
+    bone_particle = "bone_particle"
     
     
-    electric_particle = 'electric_particle'
+    electric_particle = "electric_particle"
     
     
-    frost_particle = 'frost_particle'
+    frost_particle = "frost_particle"
     
     
-    gold_particle = 'gold_particle'
+    gold_particle = "gold_particle"
     
     
-    poison_particle = 'poison_particle'
+    poison_particle = "poison_particle"
     
     
-    vampire_particle = 'vampire_particle'
+    vampire_particle = "vampire_particle"
     
     
-    soul_particle = 'soul_particle'
+    soul_particle = "soul_particle"
     
     
-    player_particle = 'player_particle'
+    player_particle = "player_particle"
 
     # Effects
     
-    heart = 'heart'
+    heart = "heart"
     
     
-    coin = 'coin'
+    coin = "coin"
     
     
-    fire = 'fire'
+    fire = "fire"
     
     
-    poison = 'poison'
+    poison = "poison"
     
     
-    frozen = 'frozen'
+    frozen = "frozen"
     
     
-    wet = 'wet'
+    wet = "wet"
     
     
-    regen = 'regen'
+    regen = "regen"
     
     
-    electric = 'electric'
+    electric = "electric"
     
     
-    invincible = 'invincible'
+    invincible = "invincible"
 
     # Magic Attack Assets
     
-    fire_particle_attack = 'fire_particle_attack'
+    fire_particle_attack = "fire_particle_attack"
     
     
-    fire_ball = 'fire_ball'
+    fire_ball = "fire_ball"
     
     
-    fire_explosion = 'fire_explosion'
+    fire_explosion = "fire_explosion"
 
     
-    ice_particle_attack = 'ice_particle_attack'
+    ice_particle_attack = "ice_particle_attack"
     
     
-    ice_ball = 'ice_ball'
+    ice_ball = "ice_ball"
     
     
-    ice_explosion = 'ice_explosion'
+    ice_explosion = "ice_explosion"
     
     
-    ice_storm = 'ice_storm'
+    ice_storm = "ice_storm"
 
     
-    poison_particle_attack = 'poison_particle_attack'
+    poison_particle_attack = "poison_particle_attack"
     
     
-    poison_ball = 'poison_ball'
+    poison_ball = "poison_ball"
     
     
-    poison_explosion = 'poison_explosion'
+    poison_explosion = "poison_explosion"
     
     
-    poison_cloud = 'poison_cloud'
+    poison_cloud = "poison_cloud"
 
     
-    electric_particle_attack = 'electric_particle_attack'
+    electric_particle_attack = "electric_particle_attack"
     
     
-    electric_ball = 'electric_ball'
+    electric_ball = "electric_ball"
     
     
-    electric_explosion = 'electric_explosion'
+    electric_explosion = "electric_explosion"
 
     
-    soul_reap = 'soul_reap'
+    soul_reap = "soul_reap"
     
     
-    vampiric_ball = 'vampiric_ball'
+    vampiric_ball = "vampiric_ball"
     
     
-    soul_pit = 'soul_pit'
+    soul_pit = "soul_pit"
 
     # Player Assets
     
-    player_idle_down = 'player_idle_down'
+    player_idle_down = "player_idle_down"
     
     
-    player_idle_up = 'player_idle_up'
+    player_idle_up = "player_idle_up"
     
     
-    player_standing_still_down = 'player_standing_still_down'
+    player_standing_still_down = "player_standing_still_down"
     
     
-    player_standing_still_up = 'player_standing_still_up'
+    player_standing_still_up = "player_standing_still_up"
     
     
-    player_running_down = 'player_running_down'
+    player_running_down = "player_running_down"
     
     
-    player_running_up = 'player_running_up'
+    player_running_up = "keys.player_running_up"
     
     
-    player_attack = 'player_attack'
+    player_attack = "player_attack"
 
     # Skeleton Warrior Assets
     
-    skeleton_warrior_1 = 'skeleton_warrior_1'
+    skeleton_warrior = "skeleton_warrior"
+
+    attack = "attack"
+
+    idle = "idle"
+    
+    jump = "jump"
+    
+
+
+    skeleton_warrior_1 = "skeleton_warrior_1"
     
     
-    skeleton_warrior_1_attack = 'skeleton_warrior_1_attack'
+    skeleton_warrior_1_attack = "skeleton_warrior_1_attack"
     
     
-    skeleton_warrior_2 = 'skeleton_warrior_2'
+    skeleton_warrior_2 = "skeleton_warrior_2"
     
     
-    skeleton_warrior_2_attack = 'skeleton_warrior_2_attack'
+    skeleton_warrior_2_attack = "skeleton_warrior_2_attack"
     
     
-    skeleton_warrior_3 = 'skeleton_warrior_3'
+    skeleton_warrior_3 = "skeleton_warrior_3"
     
     
-    skeleton_warrior_3_attack = 'skeleton_warrior_3_attack'
+    skeleton_warrior_3_attack = "skeleton_warrior_3_attack"
 
     # Skeleton Ranger Assets
     
-    skeleton_ranger_1 = 'skeleton_ranger_1'
+    skeleton_ranger = "skeleton_ranger"
+
+    skeleton_ranger_1 = "skeleton_ranger_1"
     
     
-    skeleton_ranger_1_attack = 'skeleton_ranger_1_attack'
+    skeleton_ranger_1_attack = "skeleton_ranger_1_attack"
     
     
-    skeleton_ranger_2 = 'skeleton_ranger_2'
+    skeleton_ranger_2 = "skeleton_ranger_2"
     
     
-    skeleton_ranger_2_attack = 'skeleton_ranger_2_attack'
+    skeleton_ranger_2_attack = "skeleton_ranger_2_attack"
     
     
-    skeleton_ranger_3 = 'skeleton_ranger_3'
+    skeleton_ranger_3 = "skeleton_ranger_3"
     
     
-    skeleton_ranger_3_attack = 'skeleton_ranger_3_attack'
+    skeleton_ranger_3_attack = "skeleton_ranger_3_attack"
 
     # Skeleton Cleric Assets
     
-    skeleton_cleric_1 = 'skeleton_cleric_1'
+    skeleton_cleric = "skeleton_cleric"
+
+    skeleton_cleric_1 = "skeleton_cleric_1"
     
     
-    skeleton_cleric_1_attack = 'skeleton_cleric_1_attack'
+    skeleton_cleric_1_attack = "skeleton_cleric_1_attack"
 
     # Skeleton Bell Tollers
     
-    skeleton_bell_toller_1 = 'skeleton_bell_toller_1'
+    skeleton_bell_toller = "skeleton_bell_toller"
+
+    skeleton_bell_toller_1 = "skeleton_bell_toller_1"
     
     
-    skeleton_bell_toller_1_attack = 'skeleton_bell_toller_1_attack'
+    skeleton_bell_toller_1_attack = "skeleton_bell_toller_1_attack"
 
     # Skeleton Undertaker
     
-    skeleton_undertaker_1 = 'skeleton_undertaker_1'
+    skeleton_undertaker = "skeleton_undertaker"
+
+
+    skeleton_undertaker_1 = "skeleton_undertaker_1"
     
     
-    skeleton_undertaker_1_attack = 'skeleton_undertaker_1_attack'
+    skeleton_undertaker_1_attack = "skeleton_undertaker_1_attack"
 
     # Fire Spirit
     
-    fire_spirit_idle = 'fire_spirit_idle'
+    fire_spirit = "fire_spirit"
+
+
+    fire_spirit_idle = "fire_spirit_idle"
     
     
-    fire_spirit_running = 'fire_spirit_running'
+    fire_spirit_running = "fire_spirit_running"
     
     
-    fire_spirit_attack = 'fire_spirit_attack'
+    fire_spirit_attack = "fire_spirit_attack"
 
     # Ice Spirit
     
-    ice_spirit = 'ice_spirit'
+    ice_spirit = "ice_spirit"
     
     
-    ice_spirit_attack = 'ice_spirit_attack'
+    ice_spirit_attack = "ice_spirit_attack"
 
     # Wight King
     
-    wight_king = 'wight_king'
+    wight_king = "wight_king"
     
     
-    wight_king_attack = 'wight_king_attack'
+    wight_king_attack = "wight_king_attack"
 
     # Spider
     
-    spider_idle = 'spider_idle'
+    spider = "spider"
+
+    spider_idle = "spider_idle"
     
     
-    spider_running = 'spider_running'
+    spider_running = "spider_running"
     
     
-    friendly_spider_idle = 'friendly_spider_idle'
+    friendly_spider_idle = "friendly_spider_idle"
     
     
-    friendly_spider_running = 'friendly_spider_running'
+    friendly_spider_running = "friendly_spider_running"
     
     
-    spider_attack = 'spider_attack'
+    spider_attack = "spider_attack"
     
     
-    spider_jumping = 'spider_jumping'
+    spider_jumping = "spider_jumping"
     
     
-    spider_on_back = 'spider_on_back'
+    spider_on_back = "spider_on_back"
 
     # Enemy Symbols
     
-    exclamation_mark = 'exclamation_mark'
+    exclamation_mark = "exclamation_mark"
     
     
-    health_bar = 'health_bar'
+    health_bar = "health_bar"
 
     # Weapon Assets
     
-    sword = 'sword'
+    sword = "sword"
 
     
-    sword_attack_cut = 'sword_attack_cut'
+    sword_attack_cut = "sword_attack_cut"
 
     
-    sword_attack_stab = 'sword_attack_stab'
+    sword_attack_stab = "sword_attack_stab"
 
     
-    torch = 'torch'
+    torch = "torch"
 
     
-    torch_attack_cut = 'torch_attack_cut'
+    torch_attack_cut = "torch_attack_cut"
 
     
-    spear = 'spear'
+    spear = "spear"
 
     
-    spear_attack_stab = 'spear_attack_stab'
+    spear_attack_stab = "spear_attack_stab"
 
     
-    bow = 'bow'
+    bow = "bow"
 
     
-    bow_attack = 'bow_attack'
+    bow_attack = "bow_attack"
 
     
-    arrow = 'arrow'
+    arrow = "arrow"
 
     
-    arrow_attack = 'arrow_attack'
+    arrow_attack = "arrow_attack"
 
     
-    shield = 'shield'
+    shield = "shield"
 
     
-    shield_attack = 'shield_attack'
+    shield_attack = "shield_attack"
 
     
-    halberd = 'halberd'
+    halberd = "halberd"
 
     
-    halberd_attack_stab = 'halberd_attack_stab'
+    halberd_attack_stab = "halberd_attack_stab"
 
     
-    halberd_attack_cut = 'halberd_attack_cut'
+    halberd_attack_cut = "halberd_attack_cut"
 
     
-    battle_axe = 'battle_axe'
+    battle_axe = "battle_axe"
 
     
-    battle_axe_attack_cut = 'battle_axe_attack_cut'
+    battle_axe_attack_cut = "battle_axe_attack_cut"
 
     
-    hammer = 'hammer'
+    hammer = "hammer"
 
     
-    hammer_attack_cut = 'hammer_attack_cut'
+    hammer_attack_cut = "hammer_attack_cut"
 
     
-    hatchet = 'hatchet'
+    hatchet = "hatchet"
 
     
-    hatchet_attack_cut = 'hatchet_attack_cut'
+    hatchet_attack_cut = "hatchet_attack_cut"
 
     
-    warhammer = 'warhammer'
+    warhammer = "warhammer"
 
     
-    warhammer_attack_cut = 'warhammer_attack_cut'
+    warhammer_attack_cut = "warhammer_attack_cut"
 
     
-    crossbow = 'crossbow'
+    crossbow = "crossbow"
 
     
-    crossbow_attack = 'crossbow_attack'
+    crossbow_attack = "crossbow_attack"
 
     
-    bell = 'bell'
+    bell = "bell"
 
     
-    bell_attack_cut = 'bell_attack_cut'
+    bell_attack_cut = "bell_attack_cut"
 
     
-    sceptre = 'sceptre'
+    sceptre = "sceptre"
 
     
-    sceptre_attack_cut = 'sceptre_attack_cut'
+    sceptre_attack_cut = "sceptre_attack_cut"
 
     
-    scythe = 'scythe'
+    scythe = "scythe"
 
     
-    scythe_attack_cut = 'scythe_attack_cut'
+    scythe_attack_cut = "scythe_attack_cut"
 
 
     # Weapon Effects
     
-    slash_cut_effect = 'slash_cut_effect'
+    slash_cut_effect = "slash_cut_effect"
 
     
-    slash_stab_effect = 'slash_stab_effect'
+    slash_stab_effect = "slash_stab_effect"
 
     
-    slash_spin_effect = 'slash_spin_effect'
+    slash_spin_effect = "slash_spin_effect"
 
     
-    slash_smash_effect = 'slash_smash_effect'
+    slash_smash_effect = "slash_smash_effect"
 
     
-    slash_charge_effect = 'slash_charge_effect'
+    slash_charge_effect = "slash_charge_effect"
 
     
-    blunt_cut_effect = 'blunt_cut_effect'
+    blunt_cut_effect = "blunt_cut_effect"
 
     
-    blunt_stab_effect = 'blunt_stab_effect'
+    blunt_stab_effect = "blunt_stab_effect"
 
     
-    blunt_spin_effect = 'blunt_spin_effect'
+    blunt_spin_effect = "blunt_spin_effect"
 
     
-    blunt_smash_effect = 'blunt_smash_effect'
+    blunt_smash_effect = "blunt_smash_effect"
 
     
-    blunt_charge_effect = 'blunt_charge_effect'
+    blunt_charge_effect = "blunt_charge_effect"
 
     
-    electric_cut_effect = 'electric_cut_effect'
+    electric_cut_effect = "electric_cut_effect"
 
     
-    electric_stab_effect = 'electric_stab_effect'
+    electric_stab_effect = "electric_stab_effect"
 
     
-    electric_spin_effect = 'electric_spin_effect'
+    electric_spin_effect = "electric_spin_effect"
 
     
-    electric_smash_effect = 'electric_smash_effect'
+    electric_smash_effect = "electric_smash_effect"
 
     
-    electric_charge_effect = 'electric_charge_effect'
+    electric_charge_effect = "electric_charge_effect"
 
     
-    fire_cut_effect = 'fire_cut_effect'
+    fire_cut_effect = "fire_cut_effect"
 
     
-    fire_stab_effect = 'fire_stab_effect'
+    fire_stab_effect = "fire_stab_effect"
 
     
-    fire_spin_effect = 'fire_spin_effect'
+    fire_spin_effect = "fire_spin_effect"
 
     
-    fire_smash_effect = 'fire_smash_effect'
+    fire_smash_effect = "fire_smash_effect"
 
     
-    fire_charge_effect = 'fire_charge_effect'
+    fire_charge_effect = "fire_charge_effect"
 
     
-    frozen_cut_effect = 'frozen_cut_effect'
+    frozen_cut_effect = "frozen_cut_effect"
 
     
-    frozen_stab_effect = 'frozen_stab_effect'
+    frozen_stab_effect = "frozen_stab_effect"
 
     
-    frozen_spin_effect = 'frozen_spin_effect'
+    frozen_spin_effect = "frozen_spin_effect"
 
     
-    frozen_smash_effect = 'frozen_smash_effect'
+    frozen_smash_effect = "frozen_smash_effect"
 
     
-    frozen_charge_effect = 'frozen_charge_effect'
+    frozen_charge_effect = "frozen_charge_effect"
 
     
-    poison_cut_effect = 'poison_cut_effect'
+    poison_cut_effect = "poison_cut_effect"
 
     
-    poison_stab_effect = 'poison_stab_effect'
+    poison_stab_effect = "poison_stab_effect"
 
     
-    poison_spin_effect = 'poison_spin_effect'
+    poison_spin_effect = "poison_spin_effect"
 
     
-    poison_smash_effect = 'poison_smash_effect'
+    poison_smash_effect = "poison_smash_effect"
 
     
-    poison_charge_effect = 'poison_charge_effect'
+    poison_charge_effect = "poison_charge_effect"
 
     
-    regen_cut_effect = 'regen_cut_effect'
+    regen_cut_effect = "regen_cut_effect"
 
     
-    regen_stab_effect = 'regen_stab_effect'
+    regen_stab_effect = "regen_stab_effect"
 
     
-    regen_spin_effect = 'regen_spin_effect'
+    regen_spin_effect = "regen_spin_effect"
 
     
-    regen_smash_effect = 'regen_smash_effect'
+    regen_smash_effect = "regen_smash_effect"
 
     
-    regen_charge_effect = 'regen_charge_effect'
+    regen_charge_effect = "regen_charge_effect"
 
     
-    vampiric_cut_effect = 'vampiric_cut_effect'
+    vampiric_cut_effect = "vampiric_cut_effect"
 
     
-    vampiric_stab_effect = 'vampiric_stab_effect'
+    vampiric_stab_effect = "vampiric_stab_effect"
 
     
-    vampiric_spin_effect = 'vampiric_spin_effect'
+    vampiric_spin_effect = "vampiric_spin_effect"
 
     
-    vampiric_smash_effect = 'vampiric_smash_effect'
+    vampiric_smash_effect = "vampiric_smash_effect"
 
     
-    vampiric_charge_effect = 'vampiric_charge_effect'
+    vampiric_charge_effect = "vampiric_charge_effect"
 
     # Inventory Assets
     
-    sword_shield = 'sword_shield'
+    sword_shield = "sword_shield"
 
     
-    duel_wield = 'duel_wield'
+    duel_wield = "duel_wield"
 
     
-    bow_arrow = 'bow_arrow'
+    bow_arrow = "bow_arrow"
 
     
-    left_right = 'left_right'
+    left_right = "left_right"
 
     
-    rune_background = 'rune_background'
+    rune_background = "rune_background"
 
 
     # Interactive Objects
     
-    chest = 'chest'
+    chest = "chest"
 
     
-    door_basic = 'door_basic'
+    door_basic = "door_basic"
 
     
-    rune_shrine = 'rune_shrine'
+    rune_shrine = "rune_shrine"
 
     
-    portal_shrine = 'portal_shrine'
+    portal_shrine = "portal_shrine"
 
     
-    bones = 'bones'
+    bones = "bones"
 
 
     # Environment Assets
     
-    lava_env = 'Lava_env'
+    lava_env = "Lava_env"
 
     
-    shallow_water_env = 'shallow_water_env'
+    shallow_water_env = "shallow_water_env"
 
     
-    medium_water_env = 'medium_water_env'
+    medium_water_env = "medium_water_env"
 
     
-    deep_water_env = 'deep_water_env'
+    deep_water_env = "deep_water_env"
 
     
-    shallow_ice_env = 'shallow_ice_env'
+    shallow_ice_env = "shallow_ice_env"
 
     
-    medium_ice_env = 'medium_ice_env'
+    medium_ice_env = "medium_ice_env"
 
     
-    deep_ice_env = 'deep_ice_env'
+    deep_ice_env = "deep_ice_env"
 
 
     # Decoration Assets (Empty in your case, but if you have any)
     
-    Decoration_Assets = 'decoration_assets'
+    Decoration_Assets = "decoration_assets"
 
 
     # Potion Assets
     
-    full = 'full'
+    full = "full"
 
     
-    half = 'half'
+    half = "half"
 
     
-    low = 'low'
+    low = "low"
 
     
-    potion = 'potion'
+    potion = "potion"
 
 
     
-    healing = 'healing'
+    healing = "healing"
     
     
-    invisibility = 'invisibility'
+    invisibility = "invisibility"
     
     
-    stamina = 'stamina'
+    stamina = "stamina"
     
     
-    increase_souls = 'increase_souls'
+    increase_souls = "increase_souls"
     
     
-    arcane_hunger = 'arcane_hunger'
+    arcane_hunger = "arcane_hunger"
     
     
-    speed = 'speed'
+    speed = "speed"
     
     
-    green = 'green'
+    green = "green"
     
     
-    increase_strength = 'increase_strength'
+    increase_strength = "increase_strength"
     
     
-    poison_resistance = 'poison_resistance'
+    poison_resistance = "poison_resistance"
     
     
-    purple = 'purple'
+    purple = "purple"
     
     
-    frozen_resistance = 'frozen_resistance'
+    frozen_resistance = "frozen_resistance"
     
     
-    silence = 'silence'
+    silence = "silence"
     
     
-    regen = 'regen'
+    regen = "regen"
     
     
-    vampiric = 'vampiric'
+    vampiric = "vampiric"
     
     
-    fire_resistance = 'fire_resistance'
+    fire_resistance = "fire_resistance"
     
     
-    empty_bottle = 'empty_bottle'
+    empty_bottle = "empty_bottle"
 
 
     # Loot Assets
     
-    gold = 'gold'
+    gold = "gold"
 
     
-    echo_bell = 'echo_bell'
+    echo_bell = "echo_bell"
 
     
-    shadow_cloak = 'shadow_cloak'
+    shadow_cloak = "shadow_cloak"
 
     
-    lantern = 'lantern'
+    lantern = "lantern"
 
     
-    anchor_stone = 'anchor_stone'
+    anchor_stone = "anchor_stone"
 
     
-    blood_tomb = 'blood_tomb'
+    blood_tomb = "blood_tomb"
 
     
-    faith_pendant = 'faith_pendant'
+    faith_pendant = "faith_pendant"
 
     
-    lucky_charm = 'lucky_charm'
+    lucky_charm = "lucky_charm"
 
     
-    magnet = 'magnet'
+    magnet = "magnet"
 
     
-    power_totem = 'power_totem'
+    power_totem = "power_totem"
 
     
-    strength_totem = 'strength_totem'
+    strength_totem = "strength_totem"
 
     
-    halo = 'halo'
+    halo = "halo"
 
     
-    muffled_boots = 'muffled_boots'
+    muffled_boots = "muffled_boots"
 
     
-    demonic_bargain = 'demonic_bargain'
+    demonic_bargain = "demonic_bargain"
 
     
-    temptress_embrace = 'temptress_embrace'
+    temptress_embrace = "temptress_embrace"
 
     
-    blood_coin = 'blood_coin'
+    blood_coin = "blood_coin"
 
     
-    blood_pact = 'blood_pact'
+    blood_pact = "blood_pact"
 
     
-    phoenix_feather = 'phoenix_feather'
+    phoenix_feather = "phoenix_feather"
 
     
-    light_pendant = 'light_pendant'
+    light_pendant = "light_pendant"
 
     
-    faded_hourglass = 'faded_hourglass'
+    faded_hourglass = "faded_hourglass"
 
     
-    ethereal_chains = 'ethereal_chains'
+    ethereal_chains = "ethereal_chains"
 
     
-    recall_scroll = 'recall_scroll'
+    recall_scroll = "recall_scroll"
 
     
-    echo_sigil = 'echo_sigil'
+    echo_sigil = "echo_sigil"
 
     
-    lockpick = 'lockpick'
+    lockpick = "lockpick"
 
     
-    blood_key = 'blood_key'
+    blood_key = "blood_key"
 
     
-    skeleton_key = 'skeleton_key'
+    skeleton_key = "skeleton_key"
 
     
-    soul_key = 'soul_key'
+    soul_key = "soul_key"
 
     
-    cursed_key = 'cursed_key'
+    cursed_key = "cursed_key"
 
     
-    fire_bomb = 'fire_bomb'
+    fire_bomb = "fire_bomb"
 
     
-    frozen_bomb = 'frozen_bomb'
+    frozen_bomb = "frozen_bomb"
 
     
-    electric_bomb = 'electric_bomb'
+    electric_bomb = "electric_bomb"
 
     
-    poison_bomb = 'poison_bomb'
+    poison_bomb = "poison_bomb"
 
     
-    vampiric_bomb = 'vampiric_bomb'
+    vampiric_bomb = "vampiric_bomb"
 
     
-    healing_rune = 'healing_rune'
+    healing_rune = "healing_rune"
     
 
     
-    regen_rune = 'regen_rune'
+    regen_rune = "regen_rune"
 
     
-    dash_rune = 'dash_rune'
+    dash_rune = "dash_rune"
 
     
-    arcane_conduit_rune = 'arcane_conduit_rune'
+    arcane_conduit_rune = "arcane_conduit_rune"
 
     
-    fire_cirlce_rune = 'fire_cirlce_rune'
+    fire_cirlce_rune = "fire_cirlce_rune"
 
     
-    fire_resistance_rune = 'fire_resistance_rune'
+    fire_resistance_rune = "fire_resistance_rune"
 
     
-    fire_shield_rune = 'fire_shield_rune'
+    fire_shield_rune = "fire_shield_rune"
 
     
-    fire_spray_rune = 'fire_spray_rune'
+    fire_spray_rune = "fire_spray_rune"
 
     
-    fire_ball_rune = 'fire_ball_rune'
+    fire_ball_rune = "fire_ball_rune"
 
     
-    freeze_circle_rune = 'freeze_circle_rune'
+    freeze_circle_rune = "freeze_circle_rune"
 
     
-    frozen_resistance_rune = 'frozen_resistance_rune'
+    frozen_resistance_rune = "frozen_resistance_rune"
 
     
-    freeze_storm_rune = 'freeze_storm_rune'
+    freeze_storm_rune = "freeze_storm_rune"
 
     
-    freeze_spray_rune = 'freeze_spray_rune'
+    freeze_spray_rune = "freeze_spray_rune"
 
     
-    freeze_ball_rune = 'freeze_ball_rune'
+    freeze_ball_rune = "freeze_ball_rune"
 
     
-    poison_resistance_rune = 'poison_resistance_rune'
+    poison_resistance_rune = "poison_resistance_rune"
 
     
-    poison_ball_rune = 'poison_ball_rune'
+    poison_ball_rune = "poison_ball_rune"
 
     
-    poison_cloud_rune = 'poison_cloud_rune'
+    poison_cloud_rune = "poison_cloud_rune"
 
     
-    poison_plume_rune = 'poison_plume_rune'
+    poison_plume_rune = "poison_plume_rune"
 
     
-    electric_resistance_rune = 'electric_resistance_rune'
+    electric_resistance_rune = "electric_resistance_rune"
 
     
-    electric_ball_rune = 'electric_ball_rune'
+    electric_ball_rune = "electric_ball_rune"
 
     
-    electric_spray_rune = 'electric_spray_rune'
+    electric_spray_rune = "electric_spray_rune"
 
     
-    chain_lightning_rune = 'chain_lightning_rune'
+    chain_lightning_rune = "chain_lightning_rune"
 
     
-    soul_reap_rune = 'soul_reap_rune'
+    soul_reap_rune = "soul_reap_rune"
 
     
-    soul_pit_rune = 'soul_pit_rune'
+    soul_pit_rune = "soul_pit_rune"
 
     
-    invisibility_rune = 'invisibility_rune'
+    invisibility_rune = "invisibility_rune"
 
     
-    key_rune = 'key_rune'
+    key_rune = "key_rune"
 
     
-    light_rune = 'light_rune'
+    light_rune = "light_rune"
 
     
-    resistance_rune = 'resistance_rune'
+    resistance_rune = "resistance_rune"
 
     
-    shield_rune = 'shield_rune'
+    shield_rune = "shield_rune"
 
     
-    silence_rune = 'silence_rune'
+    silence_rune = "silence_rune"
 
     
-    speed_rune = 'speed_rune'
+    speed_rune = "speed_rune"
 
     
-    increase_strength_rune = 'increase_strength_rune'
+    increase_strength_rune = "increase_strength_rune"
 
     
-    vampiric_rune = 'vampiric_rune'
+    vampiric_rune = "vampiric_rune"
 
     
-    arcane_hunger_rune = 'arcane_hunger_rune'
+    arcane_hunger_rune = "arcane_hunger_rune"
 
     
-    magnet_rune = 'magnet_rune'
+    magnet_rune = "magnet_rune"
 
     
-    invulnerable_rune = 'invulnerable_rune'
+    invulnerable_rune = "invulnerable_rune"
 
     
-    font = 'font'
+    font = "font"
 
     
-    player_damage_font = 'player_damage_font'
+    player_damage_font = "player_damage_font"
 
     
-    small_font = 'small_font'
+    small_font = "small_font"
 
     
-    floating_E = 'floating_e'
+    floating_E = "floating_e"
 
     
-    symbols = 'symbols'
+    symbols = "symbols"
 
     
-    souls = 'souls'
+    souls = "souls"
 
     
-    healthbar_1 = 'healthbar_1'
+    healthbar_1 = "healthbar_1"
 
     
-    healthbar_2 = 'healthbar_2'
+    healthbar_2 = "healthbar_2"
 
     
-    healthbar_3 = 'healthbar_3'
+    healthbar_3 = "healthbar_3"
 
     
-    healthbar_4 = 'healthbar_4'
+    healthbar_4 = "healthbar_4"
 
     
-    healthbar_5 = 'healthbar_5'
+    healthbar_5 = "healthbar_5"
 
     
-    healthbar_6 = 'healthbar_6'
+    healthbar_6 = "healthbar_6"
 
     
-    healthbar_7 = 'healthbar_7'
+    healthbar_7 = "healthbar_7"
 
     
-    healthbar_8 = 'healthbar_8'
+    healthbar_8 = "healthbar_8"
 
     
-    healthbar_9 = 'healthbar_9'
+    healthbar_9 = "healthbar_9"
 
     
-    healthbar_10 = 'healthbar_10'
+    healthbar_10 = "healthbar_10"
 
     
-    loading_bar = 'loading_bar'
+    loading_bar = "loading_bar"
 
     
-    radius_tooltip = 'radius'
+    radius_tooltip = "radius"
 
     # Types
     
-    key = 'key'
+    key = "key"
 
     
     
-    bomb = 'bomb'
+    bomb = "bomb"
     
     
-    utility = 'utility'
+    utility = "utility"
     
     
-    passive = 'passive'
+    passive = "passive"
     
     
-    revive = 'revive'
+    revive = "revive"
     
     
-    potion = 'potion'
+    potion = "potion"
     
     
-    weapon = 'weapon'
+    weapon = "weapon"
     
     
-    enemy = 'enemy'
+    enemy = "enemy"
 
     
-    player = 'player'
+    player = "player"
     
     
-    particle = 'particle'
+    particle = "particle"
 
     
-    effect = 'effect'
+    effect = "effect"
     
 
     # Spawning keys
     
-    type = 'type'
+    type = "type"
     
     
-    variant = 'variant'
+    variant = "variant"
     
     
-    pos = 'pos'
+    pos = "pos"
     
 
     # Weapon effects
     
-    blunt = 'blunt'
+    blunt = "blunt"
     
     
-    slash = 'slash'
+    slash = "slash"
 
     
-    cut = 'cut'
+    cut = "cut"
 
     
-    snare = 'snare'
+    snare = "snare"
     
     
-    stab = 'stab'
+    stab = "stab"
 
     
-    magic_attack = 'magic_attack'
+    magic_attack = "magic_attack"
 
     
-    smash = 'smash'
+    smash = "smash"

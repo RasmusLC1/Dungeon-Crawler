@@ -6,8 +6,8 @@ class Wight_King_Intent_Manager(Intent_Manager):
     def __init__(self, game, entity):
         super().__init__(game, entity)
         self.dash = Dash(game, entity)
-        self.actions["dash"] = self.Handle_Dash
-        self.base_cooldown["dash"] = 0
+        self.actions['dash'] = self.Handle_Dash
+        self.base_cooldown['dash'] = 0
 
 
     def Handle_Dash(self):

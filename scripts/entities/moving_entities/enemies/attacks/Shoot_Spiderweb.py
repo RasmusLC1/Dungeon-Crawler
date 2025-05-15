@@ -21,7 +21,7 @@ class Shoot_Spiderweb():
 
         spider_web = Spider_Web_Projectile(self.game,
                                     entity.rect(),
-                                    'spider_web',
+                                    keys.spider_web,
                                     damage,
                                     speed,
                                     max_range,

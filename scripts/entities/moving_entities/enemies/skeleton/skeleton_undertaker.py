@@ -8,7 +8,7 @@ import random
 class Skeleton_Undertaker(Skeleton):
     def __init__(self, game, pos, health, strength, max_speed, agility, intelligence, stamina):
         type = str(random.randint(1, 1))
-        super().__init__(game, pos, 'skeleton_undertaker_' + type, health, strength, max_speed, agility, intelligence, stamina, 50)
+        super().__init__(game, pos, keys.skeleton_undertaker + '_' + type, health, strength, max_speed, agility, intelligence, stamina, 50)
         self.Equip_Weapon(Scythe(self.game, self.pos))
         self.bones_search_cooldown = 0
         self.target_bones_collision_cooldown = 0

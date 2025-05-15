@@ -120,7 +120,7 @@ class A_Star:
                 tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
 
                 # Just an example condition for passable
-                if tile_type and (tile_type == 'floor' or 'ice_env' in tile_type or 'water_env' in tile_type):
+                if tile_type and (tile_type == keys.floor or 'ice_env' in tile_type or 'water_env' in tile_type):
                     self.standard_map[map_x][map_y] = 0
 
     def Build_IgnoreLava_Map(self, game):
@@ -135,7 +135,7 @@ class A_Star:
             map_y = y - self.min_y
             if 0 <= map_x < self.width and 0 <= map_y < self.height:
                 tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
-                if tile_type and (tile_type == 'floor' or 'Lava' in tile_type or 'Fire' in tile_type):
+                if tile_type and (tile_type == keys.floor or 'Lava' in tile_type or keys.fire in tile_type):
                     self.ignore_lava_map[map_x][map_y] = 0
 
     # ========== UTILITY CHECKS ==========

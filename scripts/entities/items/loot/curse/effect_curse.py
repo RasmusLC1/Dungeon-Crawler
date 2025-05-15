@@ -4,12 +4,12 @@ from scripts.engine.assets.keys import keys
 class Effect_Curse():
 
     def __init__(self):
-        self.negative_effects = ['frozen',
-                                 'fire',
-                                 'poison', 
+        self.negative_effects = [keys.frozen,
+                                 keys.fire,
+                                 keys.poison, 
                                  'snare', 
-                                'weakness'
-                                 'electric', 
+                                'weakness',
+                                 keys.electric, 
                                  ]
 
     def Set_Random_Negative_Effect(self):

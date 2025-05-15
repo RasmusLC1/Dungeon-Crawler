@@ -9,8 +9,8 @@ import copy
 
 # Tiles that are checked for physics
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
-PHYSICS_TILES = {'wall', 'wall_left', 'wall_right', 'wall_middle', 'wall_top', 'wall_bottom'}
-FLOOR_TTLES = {'floor'}
+PHYSICS_TILES = {'wall', keys.wall_left, keys.wall_right, keys.wall_middle, keys.wall_top, keys.wall_bottom}
+FLOOR_TTLES = {keys.floor}
 
 class Tilemap:
     def __init__(self, game, tile_size=32) -> None:
@@ -267,7 +267,7 @@ class Tilemap:
         tile = self.Current_Tile_Type(pos)
         if not tile:
             return False
-        if tile.type == 'floor':
+        if tile.type == keys.floor:
             return True
         else:
             return False

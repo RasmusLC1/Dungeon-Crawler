@@ -1,5 +1,6 @@
 import pygame
 from scripts.engine.utility.utils import load_image, load_images, Animation, get_tiles_from_sheet
+from scripts.engine.assets.keys import keys
 
 class Audio_Loader:
     def Run_All(self):
@@ -53,32 +54,32 @@ class Audio_Loader:
 
     def Magic_Effects(self):
         weapon_effects ={
-            'electric_ball' : pygame.mixer.Sound('data/sounds/magic/electric/electric_ball.wav'),
-            'electric_explosion' : pygame.mixer.Sound('data/sounds/magic/electric/electric_explosion.wav'),
-            'fire_ball' : pygame.mixer.Sound('data/sounds/magic/fire/fire_ball.wav'),
-            'fire_explosion' : pygame.mixer.Sound('data/sounds/magic/fire/fire_explosion.wav'),
-            'fire_particle' : pygame.mixer.Sound('data/sounds/magic/fire/fire_particle.wav'),
+            keys.electric_ball : pygame.mixer.Sound('data/sounds/magic/electric/electric_ball.wav'),
+            keys.electric_explosion : pygame.mixer.Sound('data/sounds/magic/electric/electric_explosion.wav'),
+            keys.fire_ball : pygame.mixer.Sound('data/sounds/magic/fire/fire_ball.wav'),
+            keys.fire_explosion : pygame.mixer.Sound('data/sounds/magic/fire/fire_explosion.wav'),
+            keys.fire_particle : pygame.mixer.Sound('data/sounds/magic/fire/fire_particle.wav'),
             'frozen_explosion' : pygame.mixer.Sound('data/sounds/magic/frozen/frozen_explosion.wav'),
             'frozen_projectile' : pygame.mixer.Sound('data/sounds/magic/frozen/frozen_projectile.wav'),
-            'poison_cloud' : pygame.mixer.Sound('data/sounds/magic/poison/poison_cloud.wav'),
+            keys.poison_cloud : pygame.mixer.Sound('data/sounds/magic/poison/poison_cloud.wav'),
             'poison_plume' : pygame.mixer.Sound('data/sounds/magic/poison/poison_plume.wav'),
-            'vampiric_ball' : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_ball.wav'),
+            keys.vampiric_ball : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_ball.wav'),
             'vampiric_explosion' : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_explosion.wav'),
             'vampiric_projectile' : pygame.mixer.Sound('data/sounds/magic/vampiric/vampiric_projectile.wav'),
         }
 
         self.sfx.update(weapon_effects)
 
-        self.sfx['electric_ball'].set_volume(0.2)
-        self.sfx['electric_explosion'].set_volume(0.3)
-        self.sfx['fire_ball'].set_volume(0.4)
-        self.sfx['fire_explosion'].set_volume(0.2)
-        self.sfx['fire_particle'].set_volume(0.3)
+        self.sfx[keys.electric_ball].set_volume(0.2)
+        self.sfx[keys.electric_explosion].set_volume(0.3)
+        self.sfx[keys.fire_ball].set_volume(0.4)
+        self.sfx[keys.fire_explosion].set_volume(0.2)
+        self.sfx[keys.fire_particle].set_volume(0.3)
         self.sfx['frozen_explosion'].set_volume(0.2)
         self.sfx['frozen_projectile'].set_volume(0.2)
-        self.sfx['poison_cloud'].set_volume(0.2)
+        self.sfx[keys.poison_cloud].set_volume(0.2)
         self.sfx['poison_plume'].set_volume(0.2)
-        self.sfx['vampiric_ball'].set_volume(0.2)
+        self.sfx[keys.vampiric_ball].set_volume(0.2)
         self.sfx['vampiric_explosion'].set_volume(0.2)
         self.sfx['vampiric_projectile'].set_volume(0.2)
 

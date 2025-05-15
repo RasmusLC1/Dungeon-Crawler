@@ -36,7 +36,7 @@ class Lava(Trap):
                 return
             if entity.effects.wet.effect:
                 entity.effects.wet.Decrease_Effect()
-            if not entity.Set_Effect('fire', 3):
+            if not entity.Set_Effect(keys.fire, 3):
                 return
             entity.Damage_Taken(5)
 
@@ -64,7 +64,7 @@ class Lava(Trap):
     def Spawn_Fire_Particle(self):
         if not self.fire_particle_cooldown:
             self.fire_particle_cooldown = random.randint(70, 150)
-            self.game.particle_handler.Activate_Particles(random.randint(1, 2), 'fire', self.rect().center, frame=random.randint(50, 100))
+            self.game.particle_handler.Activate_Particles(random.randint(1, 2), keys.fire, self.rect().center, frame=random.randint(50, 100))
 
             return
         

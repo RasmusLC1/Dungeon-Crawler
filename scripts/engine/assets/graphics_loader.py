@@ -58,7 +58,7 @@ class Graphics_Loader:
     def Asset_Trap_List(self):
         white = (255,255,255)
         trap_assets = {
-            keys.Spike_Trap : get_tiles_from_sheet('traps/spike_trap.png', 6, 0, 0, 0, 32, 32, white),
+            keys.spike_trap : get_tiles_from_sheet('traps/spike_trap.png', 6, 0, 0, 0, 32, 32, white),
             keys.spike_poison_trap : get_tiles_from_sheet('traps/Spike_Trap_poison.png', 13, 0, 0, 0, 32, 32, white),
             keys.pit_trap : get_tiles_from_sheet('traps/Pit_Trap_Spikes.png', 1, 0, 0, 0, 32, 32, white),
             keys.fire_trap : get_tiles_from_sheet('traps/Fire_Trap.png', 13, 0, 0, 0, 32, 20, white),

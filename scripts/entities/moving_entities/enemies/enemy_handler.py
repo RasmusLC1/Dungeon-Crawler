@@ -22,15 +22,15 @@ class Enemy_Handler():
         self.saved_data = {}
 
         self.spawn_methods = {
-            'skeleton_warrior': self.Spawn_Skeleton_Warrior,
-            'skeleton_ranger': self.Spawn_Skeleton_Ranger,
-            'fire_spirit': self.Spawn_Fire_Spirit,
-            'ice_spirit': self.Spawn_Ice_Spirit,
-            'spider': self.Spawn_Spider,
-            'wight_king': self.Spawn_Wight_King,
-            'skeleton_bell_toller': self.Spawn_Skeleton_Bell_Toller,
-            'skeleton_cleric': self.Spawn_Skeleton_Cleric,
-            'skeleton_undertaker': self.Spawn_Skeleton_Undertaker
+            keys.skeleton_warrior: self.Spawn_Skeleton_Warrior,
+            keys.skeleton_ranger : self.Spawn_Skeleton_Ranger,
+            keys.fire_spirit : self.Spawn_Fire_Spirit,
+            keys.ice_spirit : self.Spawn_Ice_Spirit,
+            keys.spider : self.Spawn_Spider,
+            keys.wight_king : self.Spawn_Wight_King,
+            keys.skeleton_bell_toller : self.Spawn_Skeleton_Bell_Toller,
+            keys.skeleton_cleric : self.Spawn_Skeleton_Cleric,
+            keys.skeleton_undertaker : self.Spawn_Skeleton_Undertaker
         }
 
 
@@ -69,15 +69,15 @@ class Enemy_Handler():
             spawner_index = random.randint(0, spawners_length - 1)
             spawner = spawners[spawner_index]
             enemy_types = {
-                'skeleton_warrior': 0.39,
-                'skeleton_ranger': 0.2,
-                'fire_spirit': 0.05,
-                'ice_spirit': 0.05,
-                'spider': 0.1,
-                'skeleton_bell_toller': 0.1,
-                'skeleton_cleric': 0.05,
-                'skeleton_undertaker': 0.05,
-                'wight_king': 0.01,
+                keys.skeleton_warrior: 0.39,
+                keys.skeleton_ranger: 0.2,
+                keys.fire_spirit: 0.05,
+                keys.ice_spirit: 0.05,
+                keys.spider: 0.1,
+                keys.skeleton_bell_toller: 0.1,
+                keys.skeleton_cleric: 0.05,
+                keys.skeleton_undertaker: 0.05,
+                keys.wight_king: 0.01,
             }
 
             type = random.choices(list(enemy_types.keys()), weights=enemy_types.values())[0]
@@ -204,7 +204,7 @@ class Enemy_Handler():
         stamina = 2
         return Fire_Spirit(self.game,
                             pos, 
-                            'fire_spirit',
+                            keys.fire_spirit,
                             health,
                             strength,
                             speed,
@@ -222,7 +222,7 @@ class Enemy_Handler():
         stamina = 2
         return Ice_Spirit(self.game,
                         pos, 
-                        'ice_spirit',
+                        keys.ice_spirit,
                         health,
                         strength,
                         speed,
@@ -240,7 +240,7 @@ class Enemy_Handler():
         stamina = 2
         return Spider(self.game,
                     pos, 
-                    'spider',
+                    keys.spider,
                     health,
                     strength,
                     speed,

@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Electric(Effect):
     def __init__(self, entity):
         description = 'Damage and snare,\nspreads to nearby\nenemy, increased\nby wet'
-        super().__init__(entity, 'electric', 5, 10, (70, 100), description)
+        super().__init__(entity, keys.electric, 5, 10, (70, 100), description)
 
     
     #set Fire effect

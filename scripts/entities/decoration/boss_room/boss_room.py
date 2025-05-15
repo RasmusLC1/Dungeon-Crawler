@@ -96,19 +96,19 @@ class Boss_Room():
     def Close_Room(self):
         x = self.pos[0] // self.game.tilemap.tile_size
         y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.Add_Tile('wall_left', 0, (x - self.radius, y), True, 0, 0)
-        self.game.tilemap.Add_Tile('wall_right', 0, (x + self.radius, y), True, 0, 0)
-        self.game.tilemap.Add_Tile('wall_top', 0, (x, y - self.radius), True, 0, 0)
-        self.game.tilemap.Add_Tile('wall_bottom', 0, (x, y + self.radius), True, 0, 0)
+        self.game.tilemap.Add_Tile(keys.wall_left, 0, (x - self.radius, y), True, 0, 0)
+        self.game.tilemap.Add_Tile(keys.wall_right, 0, (x + self.radius, y), True, 0, 0)
+        self.game.tilemap.Add_Tile(keys.wall_top, 0, (x, y - self.radius), True, 0, 0)
+        self.game.tilemap.Add_Tile(keys.wall_bottom, 0, (x, y + self.radius), True, 0, 0)
 
     # Open room by removing walls after player defeats boss
     def Open_Room(self):
         x = self.pos[0] // self.game.tilemap.tile_size
         y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x - self.radius, y), False, 0, 0)
-        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x + self.radius, y), False, 0, 0)
-        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x, y - self.radius), False, 0, 0)
-        self.game.tilemap.Add_Tile('floor', random.randint(0, 10), (x, y + self.radius), False, 0, 0)
+        self.game.tilemap.Add_Tile(keys.floor, random.randint(0, 10), (x - self.radius, y), False, 0, 0)
+        self.game.tilemap.Add_Tile(keys.floor, random.randint(0, 10), (x + self.radius, y), False, 0, 0)
+        self.game.tilemap.Add_Tile(keys.floor, random.randint(0, 10), (x, y - self.radius), False, 0, 0)
+        self.game.tilemap.Add_Tile(keys.floor, random.randint(0, 10), (x, y + self.radius), False, 0, 0)
 
 
 

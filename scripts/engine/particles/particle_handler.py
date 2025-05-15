@@ -12,7 +12,7 @@ class Particle_Handler:
 
          self.particle_movement_patterns = {
              'dash' : Particle_Patterns.Dash_Particle,
-             'fire' : Particle_Patterns.Fire_Particle,
+             keys.fire : Particle_Patterns.Fire_Particle,
              'spark' : Particle_Patterns.Spark_Particle,
              'blood' : Particle_Patterns.Spark_Particle,
              'gold' : Particle_Patterns.Spark_Particle,

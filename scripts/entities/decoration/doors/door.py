@@ -8,7 +8,7 @@ class Door(Decoration):
         self.is_open = False
         self.high_light_cooldown = 0
         self.game.tilemap.Set_Physics(self.tile, True)
-        self.game.tilemap.Update_Tile_Type(self.tile, 'floor')
+        self.game.tilemap.Update_Tile_Type(self.tile, keys.floor)
 
     def Save_Data(self):
         super().Save_Data()

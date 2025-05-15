@@ -47,12 +47,12 @@ class Trap_Handler:
 
     def Initialise(self):
         # Spike initialisation
-        for trap in self.game.tilemap.extract([('spike_trap', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.spike_trap, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
             
         # Spike initialisation
-        for trap in self.game.tilemap.extract([('spike_poison_trap', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.spike_poison_trap, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
@@ -68,7 +68,7 @@ class Trap_Handler:
             self.Trap_Spawner(trap.pos, (16, 16), trap.type)
 
         # Spike pit initialisation
-        for trap in self.game.tilemap.extract([('Pit_trap', 0)].copy(), True):
+        for trap in self.game.tilemap.extract([(keys.pit_trap, 0)].copy(), True):
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
@@ -104,18 +104,18 @@ class Trap_Handler:
             size = (self.game.assets[trap.type][0].get_width(), self.game.assets[trap.type][0].get_height())
             self.Trap_Spawner(trap.pos, size, trap.type)
 
-        for trap in self.game.tilemap.extract([('Fire_trap', 0)].copy()):
+        for trap in self.game.tilemap.extract([(keys.fire_trap, 0)].copy()):
             self.Trap_Spawner(trap.pos, (16, 16), trap.type)
 
-        for trap in self.game.tilemap.extract([('spider_web', 3)].copy()):
+        for trap in self.game.tilemap.extract([(keys.spider_web, 3)].copy()):
             self.Trap_Spawner(trap.pos, (16, 16), trap.type)
 
     def Trap_Spawner(self, pos, size, type, data = None):
         trap = None
-        if 'spike_trap' == type:
+        if keys.spike_trap == type:
             trap = self.Spawn_Spike_Trap(pos, size, type)
 
-        elif type == 'spike_poison_trap':
+        elif type == keys.spike_poison_trap:
             trap = self.Spawn_Spike_Poisoned(pos, size, type)
 
         elif type == 'TopPush_trap':
@@ -124,7 +124,7 @@ class Trap_Handler:
         elif 'Bear_trap' == type:
             trap = self.Spawn_Bear_Trap(pos, size, type)
 
-        elif 'Pit_trap' == type:
+        elif keys.pit_trap == type:
             trap = self.Spawn_Spike_Pit(pos, size, type)
 
         elif 'Lava_env' == type:
@@ -136,10 +136,10 @@ class Trap_Handler:
         elif 'water' in type:
             trap = self.Spawn_Water(pos, size, type)
 
-        elif type == 'Fire_trap':
+        elif type == keys.fire_trap:
             trap = self.Spawn_Fire_Trap(pos, size, type)
 
-        elif type == 'spider_web':
+        elif type == keys.spider_web:
             trap = self.Spawn_Spider_Web(pos, size, type)
         else:
             print(type)

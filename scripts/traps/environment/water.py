@@ -27,7 +27,7 @@ class Water(Trap):
                 continue
 
             entity.Set_Effect('slow', self.slow_amount)
-            entity.Set_Effect('wet', 2)
+            entity.Set_Effect(keys.wet, 2)
 
     
     def Set_Slowdown_Amount(self):
