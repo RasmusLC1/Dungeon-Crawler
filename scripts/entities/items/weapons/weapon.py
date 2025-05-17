@@ -454,7 +454,7 @@ class Weapon(Item):
         return True
     
     def Spawn_Spark(self):
-        self.game.particle_handler.Activate_Particles(random.randint(2, 5), 'spark', self.rect().center, random.randint(20, 30))
+        self.game.particle_handler.Activate_Particles(random.randint(2, 5), keys.spark_particle, self.rect().center, random.randint(20, 30))
 
     # Handle deletion of items when enemies drop weapons, don't want them to linger forever
     def Update_Delete_Countdown(self):

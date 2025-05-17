@@ -11,15 +11,16 @@ class Particle_Handler:
          self.Spawn_Particles(2000)
 
          self.particle_movement_patterns = {
-             'dash' : Particle_Patterns.Dash_Particle,
-             keys.fire : Particle_Patterns.Fire_Particle,
-             'spark' : Particle_Patterns.Spark_Particle,
-             'blood' : Particle_Patterns.Spark_Particle,
-             keys.gold : Particle_Patterns.Spark_Particle,
-             'bone' : Particle_Patterns.Spark_Particle,
-             'soul' : Particle_Patterns.Soul_Particle,
-             'vampire' : Particle_Patterns.Vampire_Particle,
-             'player' : Particle_Patterns.Player_Particle,
+             keys.dash_particle : Particle_Patterns.Dash_Particle,
+             keys.fire_particle : Particle_Patterns.Fire_Particle,
+             keys.spark_particle : Particle_Patterns.Spark_Particle,
+             keys.blood_particle : Particle_Patterns.Spark_Particle,
+             keys.gold_particle : Particle_Patterns.Spark_Particle,
+             keys.loot_particle : Particle_Patterns.Spark_Particle,
+             keys.bone_particle : Particle_Patterns.Spark_Particle,
+             keys.soul_particle : Particle_Patterns.Soul_Particle,
+             keys.vampire_particle : Particle_Patterns.Vampire_Particle,
+             keys.player_particle : Particle_Patterns.Player_Particle,
          }
          
 
@@ -51,7 +52,7 @@ class Particle_Handler:
 
             # Activate particle and add to active particles
             particle.Set_Active(type, pos, velocity, frame)
-            particle.Set_Image(self.game.assets[type + '_particle'][particle.animation])
+            particle.Set_Image(self.game.assets[type][particle.animation])
             self.active_particles.append(particle)
 
 

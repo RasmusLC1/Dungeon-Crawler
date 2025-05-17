@@ -16,8 +16,8 @@ class Particle_Patterns():
         return velocity
     
     @staticmethod
+    # Constrain most of the motion to upward directions with slight spread
     def Fire_Particle():
-        # Constrain most of the motion to upward directions with slight spread
         base_angle = math.pi/2  # Straight up (90 degrees)
         angle_variation = math.pi/8  # 22.5 degrees spread in each direction
         angle = base_angle + random.uniform(-angle_variation, angle_variation)
@@ -31,7 +31,7 @@ class Particle_Patterns():
         return velocity
     
 
-    # Shoot the particles straight
+    # Shoot the particles out straight
     @staticmethod
     def Spark_Particle():
         velocity = np.array([random.uniform(-1, 1), random.uniform(-1, 1)])

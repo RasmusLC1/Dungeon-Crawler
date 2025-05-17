@@ -68,8 +68,12 @@ class Item_Handler():
             amount = random.randint(20, 30)
             self.loot_handler.Spawn_Gold(gold.pos[0], gold.pos[1], amount)
 
-    def Spawn_Weapon(self, type, pos, amount = 0):
-        self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount)
+    def Spawn_Weapon(self, pos, type = None, amount = 0):
+        if type:
+            self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount)
+        else:
+            self.weapon_handler.Spawn_Random_Weapon(pos)
+
 
 
 

@@ -26,7 +26,7 @@ class Torch(Weapon):
     def Spawn_Fire_Particle(self):
         if not self.fire_particle_cooldown:
             self.fire_particle_cooldown = random.randint(30, 100)
-            self.game.particle_handler.Activate_Particles(random.randint(1, 2), keys.fire, self.rect().center, frame=random.randint(80, 90))
+            self.game.particle_handler.Activate_Particles(random.randint(1, 2), keys.fire_particle, self.rect().center, frame=random.randint(80, 90))
 
             return
         

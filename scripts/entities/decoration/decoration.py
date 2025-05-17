@@ -1,7 +1,7 @@
 import pygame
 from scripts.entities.entities import PhysicsEntity
 from scripts.engine.assets.keys import keys
-
+import random
 
 
 class Decoration(PhysicsEntity):
@@ -12,6 +12,7 @@ class Decoration(PhysicsEntity):
         self.animation = 0
         self.destructable = destructable
         self.health = health
+        self.destroyed = False
         self.Set_Sprite()
 
 
@@ -40,12 +41,17 @@ class Decoration(PhysicsEntity):
             damage *= 2
 
         self.health -= damage
-        print("CHEST HIT", self.health)
         if self.health <= 0:
             self.Destroyed()
         
     def Destroyed(self):
-        pass
+        if self.health > 0 or self.destroyed:
+            return False
+        self.game.decoration_handler.Remove_Decoration(self)
+        self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+        self.game.particle_handler.Activate_Particles(random.randint(10, 15), keys.loot_particle, self.rect().center, frame=random.randint(30, 50))
+        self.destroyed = True
+        return True
         
 
 

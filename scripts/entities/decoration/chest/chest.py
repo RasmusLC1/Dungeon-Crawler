@@ -55,13 +55,12 @@ class Chest(Decoration):
 
 
     def Destroyed(self):
-        if self.health > 0:
-            return
-        self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
-        self.game.decoration_handler.Remove_Decoration(self)
+        if not super().Destroyed():
+            return False
         self.game.sound_handler.Play_Sound('chest_break', 0.2)
 
         self.Drop_Loot()
+        return True
 
 
     def Reduce_Active(self):

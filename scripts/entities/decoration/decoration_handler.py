@@ -1,5 +1,6 @@
 from scripts.entities.decoration.bones.bones import Bones
 from scripts.entities.decoration.chest.chest import Chest
+from scripts.entities.decoration.chest.weapon_rack import Weapon_rack
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
@@ -23,6 +24,7 @@ class Decoration_Handler():
             keys.portal_shrine: self.Spawn_Portal_Shrine,
             keys.door_basic: self.Spawn_Door,
             keys.bones: self.Spawn_Bones,
+            keys.weapon_rack: self.Spawn_Weapon_Rack,
             'boss_room': self.Spawn_Boss_Room
         }
 
@@ -57,10 +59,14 @@ class Decoration_Handler():
         for bones in self.game.tilemap.extract([(keys.bones, 0)]):
             self.Decoration_Spawner(keys.bones, bones.pos)
 
+        #TODO: Update the temp level with real level
         for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
             temp_level = 3
             radius = random.randint(5, 7)
             self.Decoration_Spawner('boss_room', boss_room.pos, radius=radius, level=temp_level)
+
+        for weapon_Rack in self.game.tilemap.extract([(keys.weapon_rack, 0)]):
+            self.Decoration_Spawner(keys.weapon_rack, weapon_Rack.pos)
 
         for weapon in self.game.tilemap.extract([(keys.weapon, 0)]):
             self.game.item_handler.weapon_handler.Spawn_Random_Weapon(weapon.pos)
@@ -115,6 +121,11 @@ class Decoration_Handler():
         chest = Chest(self.game, pos, version)  
         self.decorations.append(chest)
         return chest
+    
+    def Spawn_Weapon_Rack(self, pos, size=None, version=None, radius=None, level=None):
+        weapon_rack = Weapon_rack(self.game, pos)  
+        self.decorations.append(weapon_rack)
+        return weapon_rack
 
     def Spawn_Rune_Shrine(self, pos, size=None, version=None, radius=None, level=None):
         shrine = Rune_Shrine(self.game, pos)

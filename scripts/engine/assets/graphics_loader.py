@@ -82,6 +82,7 @@ class Graphics_Loader:
             keys.vampire_particle : get_tiles_from_sheet('particles/general/vampire.png', 5, 0, 0, 0, 3, 3),
             keys.soul_particle : get_tiles_from_sheet('particles/general/soul.png', 5, 0, 0, 0, 3, 3),
             keys.player_particle : get_tiles_from_sheet('particles/general/player.png', 5, 0, 0, 0, 3, 3),
+            keys.loot_particle : get_tiles_from_sheet('particles/general/loot.png', 5, 0, 0, 0, 3, 3),
         }
         self.assets.update(effect_assets)
 
@@ -358,6 +359,7 @@ class Graphics_Loader:
             keys.rune_shrine: get_tiles_from_sheet('decoration/shrine/rune_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.portal_shrine: get_tiles_from_sheet('decoration/shrine/portal_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.bones: get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
+            keys.weapon_rack: get_tiles_from_sheet('decoration/environment/weapon_rack.png', 0, 0, 0, 0, 32, 32),
         }
         self.assets.update(Objects_assets)
 

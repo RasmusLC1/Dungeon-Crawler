@@ -5,14 +5,14 @@ class Noise_Map():
         pass
     
     # Takes from starting x/y to the given size and inserts 2 values into the table
-    def Generate_Map(self, floor_density, map, value_1, value_2, size_x, size_y):
+    def Generate_Map(self, floor_density, map, floor_val, wall_val, size_x, size_y):
         for y in range(size_y):
             for x in range(size_x):
                 value = random.randint(0, 100)
                 if value > floor_density:
-                    map[x][y] = value_1  # Floor
+                    map[x][y] = floor_val  # Floor
                 else:
-                    map[x][y] = value_2  # Wall
+                    map[x][y] = wall_val  # Wall
 
     
 

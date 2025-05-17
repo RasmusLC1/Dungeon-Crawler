@@ -112,7 +112,7 @@ class Player(Moving_Entity):
         
         self.souls_to_remove = max(0, self.souls_to_remove - 1)
         self.souls = max(0, self.souls - 1)
-        self.game.particle_handler.Activate_Particles(1, 'soul', self.rect().center, frame=random.randint(20, 30))
+        self.game.particle_handler.Activate_Particles(1, keys.soul_particle, self.rect().center, frame=random.randint(20, 30))
 
 
     def Entity_Collision_Detection(self, tilemap):
@@ -212,7 +212,7 @@ class Player(Moving_Entity):
     def Spawn_Particles(self):
         if not self.player_particle_cooldown:
             self.player_particle_cooldown = random.randint(20, 30)
-            self.game.particle_handler.Activate_Particles(random.randint(1, 3), 'player', self.rect().center, frame=random.randint(50, 70))
+            self.game.particle_handler.Activate_Particles(random.randint(1, 3), keys.player_particle, self.rect().center, frame=random.randint(50, 70))
 
             return
         

@@ -49,7 +49,7 @@ class Skeleton(Enemy):
         return True
     
     def Spawn_Damaged_Particles(self):
-        self.game.particle_handler.Activate_Particles(10, 'bone', self.rect().center, frame=random.randint(10, 30))
+        self.game.particle_handler.Activate_Particles(10, keys.bone_particle, self.rect().center, frame=random.randint(10, 30))
 
     
     def Update_Active_Weapon(self, offset=(0, 0)):

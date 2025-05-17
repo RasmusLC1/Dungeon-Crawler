@@ -88,6 +88,9 @@ class Enemy_Handler():
 
     
     def Enemy_Spawner(self, type, pos, data=None):
+        if not type:
+            print("FAIL")
+            return 
         # Strip off trailing "_number" if present
         base_type = type
         parts = type.split('_')

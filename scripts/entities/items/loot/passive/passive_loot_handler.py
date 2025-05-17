@@ -23,7 +23,6 @@ class Passive_Loot_Handler(Loot_Types_Handler):
         ]
 
 
-
         self.types = [
             keys.lantern,
             keys.anchor_stone,

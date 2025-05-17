@@ -75,6 +75,8 @@ class keys():
     
     player_particle = "player_particle"
 
+    loot_particle = "loot_particle"
+
     # Effects
     
     heart = "heart"
@@ -545,6 +547,9 @@ class keys():
     
     deep_water_env = "deep_water_env"
 
+    ice_env = 'ice_env'
+
+    water_env = 'water_env'
     
     shallow_ice_env = "shallow_ice_env"
 
@@ -558,6 +563,8 @@ class keys():
     # Decoration Assets (Empty in your case, but if you have any)
     
     Decoration_Assets = "decoration_assets"
+
+    weapon_rack = 'weapon_rack'
 
 
     # Potion Assets
@@ -966,3 +973,17 @@ class keys():
     variant = "variant"
 
     pos = "pos"
+
+
+    # Astar levels
+    
+    standard = 'standard'
+    
+    ignore_lava = 'ignore_lava'
+    
+    custom = 'custom'
+    
+    standard = 'standard'
+    
+
+    

@@ -74,11 +74,11 @@ class A_Star:
 
     def Set_Map(self, which_map):
         """Select which map array (standard, ignore_lava, custom) to use for pathfinding."""
-        if which_map == 'standard':
+        if which_map == keys.standard:
             self.map = self.standard_map
-        elif which_map == 'ignore_lava':
+        elif which_map == keys.ignore_lava:
             self.map = self.ignore_lava_map
-        elif which_map == 'custom':
+        elif which_map == keys.custom:
             self.map = self.custom_map
         else:
             self.map = self.standard_map  # fallback
@@ -120,7 +120,7 @@ class A_Star:
                 tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
 
                 # Just an example condition for passable
-                if tile_type and (tile_type == keys.floor or 'ice_env' in tile_type or 'water_env' in tile_type):
+                if tile_type and (tile_type == keys.floor or keys.ice_env in tile_type or keys.water_env in tile_type):
                     self.standard_map[map_x][map_y] = 0
 
     def Build_IgnoreLava_Map(self, game):
@@ -135,7 +135,7 @@ class A_Star:
             map_y = y - self.min_y
             if 0 <= map_x < self.width and 0 <= map_y < self.height:
                 tile_type = game.tilemap.Current_Tile_Type_Without_Offset((x, y))
-                if tile_type and (tile_type == keys.floor or 'Lava' in tile_type or keys.fire in tile_type):
+                if tile_type and (tile_type == keys.floor or keys.lava_env in tile_type or keys.fire in tile_type):
                     self.ignore_lava_map[map_x][map_y] = 0
 
     # ========== UTILITY CHECKS ==========
@@ -258,7 +258,7 @@ class A_Star:
         return []
 
 
-    def a_star_search_no_diagonals(self, start, goal, which_map='standard'):
+    def a_star_search_no_diagonals(self, start, goal, which_map=keys.standard):
         """
         A* search with only 4-directional movement (up, down, left, right).
         start, goal are (x, y) in map coordinates.
