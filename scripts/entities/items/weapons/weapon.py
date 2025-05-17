@@ -42,6 +42,7 @@ class Weapon(Item):
         self.is_charging = False  # Tracks if the player is charging
         self.special_attack = 0 # special attack counter
         self.special_attack_active = False # Check if weapon is special attacking
+        self.entities_hit = [] # Index of entities hit by weapon in attack
 
         self.charge_effect = self.effect + '_charge_effect'
         self.charge_effect_animation = 0
@@ -111,15 +112,27 @@ class Weapon(Item):
         self.Set_Flip_X()
         return True
 
+    def Reset_Entities_Hit(self):
+        self.entities_hit.clear()
 
     # Update the attack logic
     def Update_Attack(self):
         if not self.attacking:
             return False
+
+        entity = self.Player_Attack_Collision_Check()
+        if entity:
+            self.entities_hit.append(entity)
+
+        self.attacking -= 1
+
         self.Update_Attack_Animation()
         self.Update_Attack_Effect_Animation()
-        self.Player_Attack_Collision_Check()
         self.Attack_Align_Weapon()
+
+        if not self.attacking:
+            self.Reset_Entities_Hit()
+
         if not self.entity:
             return False
         self.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
@@ -268,6 +281,9 @@ class Weapon(Item):
             # Check if the enemy is on damage cooldown
             if enemy.damage_cooldown:
                 continue
+            # Prevent from hitting enemy multiple times
+            if enemy in self.entities_hit:
+                continue
             # Check for collision with enemy
             if self.attack_hitbox.colliderect(enemy.rect()):
                 self.Entity_Hit(enemy)
@@ -280,6 +296,9 @@ class Weapon(Item):
         for decoration in self.nearby_decoration:
             # Check if the decoration can be damaged
             if not decoration.destructable:
+                continue
+            # Prevent from hitting decoration multiple times
+            if decoration in self.entities_hit:
                 continue
             # Check for collision with enemy
             if self.attack_hitbox.colliderect(decoration.rect()):
@@ -360,7 +379,6 @@ class Weapon(Item):
             return
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack_' + self.attack_type
-        self.attacking -= 1
         self.attack_animation_counter += 1
         if self.attack_animation_counter >= self.attack_animation_time:
             self.attack_animation_counter = 0

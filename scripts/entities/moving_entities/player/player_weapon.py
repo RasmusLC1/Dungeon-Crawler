@@ -17,7 +17,7 @@ class Player_Weapon_Handler():
 
 
     def Update(self, offset = (0, 0)):
-        self.Update_Left_Weapon(offset)
+        self.Update_Weapon(offset)
 
     def Set_Active_Weapon(self, weapon):  
           
@@ -31,8 +31,7 @@ class Player_Weapon_Handler():
     
 
     # Function to update the player's weapons
-    # Each weapon needs it own method to handle it's cooldown
-    def Update_Left_Weapon(self, offset=(0, 0)):
+    def Update_Weapon(self, offset=(0, 0)):
 
         if not self.active_weapon_left:
             return
@@ -66,75 +65,6 @@ class Player_Weapon_Handler():
 
         return
     
-    def Update_Right_Weapon(self, offset=(0, 0)):
-        # Return if there's no weapon
-        if not self.active_weapon_right:
-            return
-        # Update the weapon position and logic
-        if self.inventory_interaction:
-            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
-            self.active_weapon_right.Reset_Charge()
-            return
-
-        self.active_weapon_right.Set_Equipped_Position(self.player.direction_y_holder)
-        
-        if self.attack_lock:
-            return
-        self.active_weapon_right.Update(offset)
-        if not self.active_weapon_right:
-            return
-        self.active_weapon_right.Update_Attack()
-        self.player.Attacking(self.active_weapon_right, offset)
-        
-        # Handle weapon cooldown
-        if self.right_weapon_cooldown:
-            self.right_weapon_cooldown -= 1
-            return
-        
-        # Return if mouse has not been clicked
-        if not self.game.mouse.right_click:
-            return
-        # Attack with weapon
-        cooldown = self.Weapon_Attack(self.active_weapon_right)
-        
-        self.right_weapon_cooldown = max(self.right_weapon_cooldown, cooldown)
-
-    
-    def Update_Bow(self, offset=(0, 0)):
-        # Return if there's no weapon
-        if not self.active_bow:
-            return
-        # Update the weapon position and logic
-
-        if self.inventory_interaction:
-            self.Set_Inventory_Interaction(self.inventory_interaction - 1)
-            self.active_bow.Reset_Charge()
-            return
-
-        self.active_bow.Set_Equipped_Position(self.player.direction_y_holder)
-
-        if self.attack_lock:
-            return
-        self.active_bow.Update(offset)
-        if not self.active_bow:
-            return
-        
-        self.active_bow.Update_Attack()
-        self.player.Attacking(self.active_bow, offset)
-        
-        # Handle weapon cooldown
-        if self.bow_cooldown:
-            self.bow_cooldown -= 1
-            return
-        
-        # Return if mouse has not been clicked
-        if not self.game.mouse.right_click:
-            return
-        # Attack with weapon
-        cooldown = self.Weapon_Attack(self.active_bow)
-        
-        self.bow_cooldown = max(self.bow_cooldown, cooldown)
-
     
     # Activate weapon attack, return cooldown time
     def Weapon_Attack(self, weapon):

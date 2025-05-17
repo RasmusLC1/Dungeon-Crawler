@@ -58,6 +58,15 @@ class Loot_Handler():
             self.potion_loot_handler,
         ]
 
+        self.loot_types_dic = {
+            keys.key : self.key_loot_handler,
+            keys.bomb : self.bomb_loot_handler,
+            keys.utility : self.utility_loot_handler,
+            keys.passive : self.passive_loot_handler,
+            keys.revive : self.revive_loot_handler,
+            keys.potion : self.potion_loot_handler,
+        }
+
         self.loot_types_weights = {
             keys.key : 0.05,
             keys.bomb : 0.2,
@@ -76,14 +85,7 @@ class Loot_Handler():
             keys.potion,
         ]
 
-        self.loot_types_dic = {
-            keys.key : self.key_loot_handler,
-            keys.bomb : self.bomb_loot_handler,
-            keys.utility : self.utility_loot_handler,
-            keys.passive : self.passive_loot_handler,
-            keys.revive : self.revive_loot_handler,
-            keys.potion : self.potion_loot_handler,
-        }
+
 
         self.loot_map = {
             keys.skeleton_key : Skeleton_Key,
@@ -176,6 +178,16 @@ class Loot_Handler():
         weights_dict = self.Adjust_Weights()
         weight_values = [weights_dict[loot_types_keys] for loot_types_keys in self.loot_types_keys]
         loot_handler = random.choices(self.loot_types, weight_values, k=1)[0]
+        loot = loot_handler.Loot_Spawner(pos)
+        if not loot:
+            return
+
+        self.game.item_handler.Add_Item(loot)
+
+    def Spawn_Loot_From_Table(self, pos, loot_types, loot_weights):
+        weight_values = [loot_weights[loot_type] for loot_type in loot_types]
+        loot_type = random.choices(loot_types, weight_values, k=1)[0]
+        loot_handler = self.loot_types_dic[loot_type]
         loot = loot_handler.Loot_Spawner(pos)
         if not loot:
             return
