@@ -34,13 +34,15 @@ class Chest(Loot_Container):
                            keys.bomb,
                            keys.potion,
                            keys.revive,
-                           keys.utility]
+                           keys.utility,
+                           keys.curse]
         
         self.loot_weights = {keys.passive : 0.05,
                              keys.key : 0.1,
                              keys.bomb : 0.2,
                              keys.potion : 0.3,
                              keys.revive : 0.05,
-                             keys.utility : 0.2}
+                             keys.utility : 0.2,
+                             keys.curse : 10}
 
 

@@ -474,6 +474,7 @@ class Graphics_Loader:
             keys.muffled_boots: get_tiles_from_sheet('items/passive/muffled_boots.png', 0, 0, 0, 0, 32, 32),
             keys.demonic_bargain: get_tiles_from_sheet('items/cursed/demonic_bargain.png', 0, 0, 0, 0, 32, 32),
             keys.temptress_embrace: get_tiles_from_sheet('items/cursed/temptress_embrace.png', 0, 0, 0, 0, 32, 32),
+            keys.black_coin: get_tiles_from_sheet('items/cursed/black_coin.png', 0, 0, 0, 0, 32, 32),
             keys.blood_coin: get_tiles_from_sheet('items/revive/blood_coin.png', 0, 0, 0, 0, 32, 32),
             keys.blood_pact: get_tiles_from_sheet('items/revive/blood_pact.png', 0, 0, 0, 0, 32, 32),
             keys.phoenix_feather: get_tiles_from_sheet('items/revive/phoenix_feather.png', 0, 0, 0, 0, 32, 32),

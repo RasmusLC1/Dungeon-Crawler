@@ -936,6 +936,8 @@ class keys():
 
     demonic_bargain = "demonic_bargain"
 
+    black_coin = "black_coin"
+
     halo = "halo"
 
     magnet = "magnet"

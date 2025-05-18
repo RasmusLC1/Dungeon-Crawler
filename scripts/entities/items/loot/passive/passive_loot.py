@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 # class since it uses effects
 class Passive_Loot(Loot):
     def __init__(self, game, type, pos):
-        super().__init__(game, type, pos, (16, 16), 10, 'passive')
+        super().__init__(game, type, pos, (16, 16), 10, keys.passive)
 
     def Pick_Up(self):
         if not super().Pick_Up():

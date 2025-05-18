@@ -36,8 +36,6 @@ class Echo_Sigil(Loot):
                 item.Increase_Amount(1)
             self.loot_IDs.append(item.ID)
 
-
-    # TODO: MAKE a red overlay for item
     # # Render item with fadeout if it's in an illegal position
     def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
          # Copy image and set alpha
