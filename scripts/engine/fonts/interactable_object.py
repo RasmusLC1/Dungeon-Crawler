@@ -12,6 +12,9 @@ class Interactable_Object():
         self.active = state
 
     def Render(self, surf, offset, entity):
+        if entity.sub_category == keys.loot_container:
+            if entity.empty == True:
+                return
         surf.blit(self.sprite, (entity.pos[0] + entity.size[0] // 4 - offset[0], entity.pos[1] - offset[1] - entity.size[0] // 2))
 
     

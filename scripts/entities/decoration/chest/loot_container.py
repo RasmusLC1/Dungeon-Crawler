@@ -15,6 +15,7 @@ class Loot_Container(Decoration):
         self.loot_types = []
         self.loot_weights = {}
         self.Set_Loot_Types()
+        self.sub_category = keys.loot_container
 
     def Save_Data(self):
         super().Save_Data()

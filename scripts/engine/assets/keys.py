@@ -566,6 +566,10 @@ class keys():
 
     weapon_rack = 'weapon_rack'
 
+    loot_container = "loot_container"
+
+    vase = "vase"
+
 
     # Potion Assets
     
@@ -967,8 +971,6 @@ class keys():
 
     # level construction keys
     spawners = "spawners"
-
-    type = "type"
 
     variant = "variant"
 

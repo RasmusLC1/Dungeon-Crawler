@@ -11,6 +11,7 @@ from scripts.level_generation.entities.spawn_player import Spawn_Player
 from scripts.level_generation.entities.spawn_enemy import Spawn_Enemy
 from scripts.level_generation.decoration_spawner.trap_spawner import Trap_Spawner
 from scripts.level_generation.decoration_spawner.chest_spawner import Chest_Spawner
+from scripts.level_generation.decoration_spawner.vase_spawner import Vase_Spawner
 from scripts.level_generation.loot.weapon_spawner import Weapon_Spawner
 from scripts.level_generation.dungeon_enum_keys import *
 import os
@@ -75,6 +76,8 @@ class Dungeon_Generator():
         self.Update_Load_Menu(5)
         
         Chest_Spawner.Spawn_Chest(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
+        
+        Vase_Spawner.Spawn_Vase(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
         Portal_Shrine_Spawner.Spawn_Portal_Shrine(size_x, size_y, self.A_Star_Search, self.tilemap.offgrid_tiles)
 

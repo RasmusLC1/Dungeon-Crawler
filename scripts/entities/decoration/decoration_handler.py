@@ -1,6 +1,7 @@
 from scripts.entities.decoration.bones.bones import Bones
 from scripts.entities.decoration.chest.chest import Chest
 from scripts.entities.decoration.chest.weapon_rack import Weapon_rack
+from scripts.entities.decoration.chest.vase import Vase
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
@@ -20,6 +21,7 @@ class Decoration_Handler():
         self.spawn_methods = {
             keys.door_basic: self.Spawn_Door,
             keys.chest: self.Spawn_Chest,
+            keys.vase: self.Spawn_Vase,
             keys.rune_shrine: self.Spawn_Rune_Shrine,
             keys.portal_shrine: self.Spawn_Portal_Shrine,
             keys.door_basic: self.Spawn_Door,
@@ -30,6 +32,7 @@ class Decoration_Handler():
 
         self.opening_methods = {
             keys.chest: self.Open_Chest,
+            keys.vase: self.Open_Chest,
             keys.rune_shrine: self.Open_Shrine,
             keys.portal_shrine: self.Open_Shrine,
         }
@@ -49,6 +52,9 @@ class Decoration_Handler():
         for chest in self.game.tilemap.extract([(keys.chest, 0)]):
             version = self.Set_Chest_Version(depth)
             self.Decoration_Spawner(keys.chest, chest.pos, version=version)
+
+        for vase in self.game.tilemap.extract([(keys.vase, 0)]):
+            self.Decoration_Spawner(keys.vase, vase.pos)
 
         for shrine in self.game.tilemap.extract([(keys.rune_shrine, 0)]):
             self.Decoration_Spawner(keys.rune_shrine, shrine.pos)
@@ -121,6 +127,11 @@ class Decoration_Handler():
         chest = Chest(self.game, pos, version)  
         self.decorations.append(chest)
         return chest
+    
+    def Spawn_Vase(self, pos, size=None, version=None, radius=None, level=None):
+        vase = Vase(self.game, pos)  
+        self.decorations.append(vase)
+        return vase
     
     def Spawn_Weapon_Rack(self, pos, size=None, version=None, radius=None, level=None):
         weapon_rack = Weapon_rack(self.game, pos)  

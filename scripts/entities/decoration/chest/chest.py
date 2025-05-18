@@ -1,6 +1,3 @@
-import pygame
-import random
-from scripts.entities.decoration.decoration import Decoration
 from scripts.entities.decoration.chest.loot_container import Loot_Container
 from scripts.engine.assets.keys import keys
 

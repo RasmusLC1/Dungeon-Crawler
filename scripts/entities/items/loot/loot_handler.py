@@ -187,6 +187,12 @@ class Loot_Handler():
     def Spawn_Loot_From_Table(self, pos, loot_types, loot_weights):
         weight_values = [loot_weights[loot_type] for loot_type in loot_types]
         loot_type = random.choices(loot_types, weight_values, k=1)[0]
+
+        # TODO: Rework how gold is spawned
+        if loot_type == keys.gold:
+            amount = random.randint(20, 40)
+            self.Spawn_Gold(pos, amount)
+            return
         loot_handler = self.loot_types_dic[loot_type]
         loot = loot_handler.Loot_Spawner(pos)
         if not loot:
@@ -209,8 +215,8 @@ class Loot_Handler():
         return self.Load_Data(loot, data)
     
 
-    def Spawn_Gold(self, pos_x, pos_y, amount, type = None, data = None):
-        gold = Gold(self.game, (pos_x, pos_y), amount)
+    def Spawn_Gold(self, pos, amount, type = None, data = None):
+        gold = Gold(self.game, pos, amount)
 
         return self.Load_Data(gold, data)
 
