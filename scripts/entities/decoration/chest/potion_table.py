@@ -15,7 +15,7 @@ class Potion_Table(Loot_Container):
                            keys.recipe_scroll,]
         
         self.loot_weights = {keys.potion : 0.8,
-                             keys.recipe_scroll : 0.7,
+                             keys.recipe_scroll : 0.1,
                              }
 
     def Drop_Loot(self):

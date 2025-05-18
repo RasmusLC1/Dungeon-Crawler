@@ -7,7 +7,7 @@ class Potion_Table_Spawner():
 
     @staticmethod
     def Spawn_Potion_Table(map, level, size_x, size_y, tile_size, offgrid_tiles, A_Star_Search):
-        loot_amount = random.randint(100 + level * 3, 200 + level * 3)
+        loot_amount = random.randint(2 + level, 3 + level)
         loot = 0 
         path = []
         while loot < loot_amount:
