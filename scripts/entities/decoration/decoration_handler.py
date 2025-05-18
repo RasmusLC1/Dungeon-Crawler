@@ -2,6 +2,7 @@ from scripts.entities.decoration.bones.bones import Bones
 from scripts.entities.decoration.chest.chest import Chest
 from scripts.entities.decoration.chest.weapon_rack import Weapon_rack
 from scripts.entities.decoration.chest.vase import Vase
+from scripts.entities.decoration.chest.potion_table import Potion_Table
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
@@ -22,6 +23,7 @@ class Decoration_Handler():
             keys.door_basic: self.Spawn_Door,
             keys.chest: self.Spawn_Chest,
             keys.vase: self.Spawn_Vase,
+            keys.potion_table: self.Spawn_Potion_Table,
             keys.rune_shrine: self.Spawn_Rune_Shrine,
             keys.portal_shrine: self.Spawn_Portal_Shrine,
             keys.door_basic: self.Spawn_Door,
@@ -33,6 +35,7 @@ class Decoration_Handler():
         self.opening_methods = {
             keys.chest: self.Open_Chest,
             keys.vase: self.Open_Chest,
+            keys.potion_table: self.Open_Chest,
             keys.rune_shrine: self.Open_Shrine,
             keys.portal_shrine: self.Open_Shrine,
         }
@@ -55,6 +58,9 @@ class Decoration_Handler():
 
         for vase in self.game.tilemap.extract([(keys.vase, 0)]):
             self.Decoration_Spawner(keys.vase, vase.pos)
+
+        for potion_table in self.game.tilemap.extract([(keys.potion_table, 0)]):
+            self.Decoration_Spawner(keys.potion_table, potion_table.pos)
 
         for shrine in self.game.tilemap.extract([(keys.rune_shrine, 0)]):
             self.Decoration_Spawner(keys.rune_shrine, shrine.pos)
@@ -132,6 +138,11 @@ class Decoration_Handler():
         vase = Vase(self.game, pos)  
         self.decorations.append(vase)
         return vase
+    
+    def Spawn_Potion_Table(self, pos, size=None, version=None, radius=None, level=None):
+        potion_table = Potion_Table(self.game, pos)  
+        self.decorations.append(potion_table)
+        return potion_table
     
     def Spawn_Weapon_Rack(self, pos, size=None, version=None, radius=None, level=None):
         weapon_rack = Weapon_rack(self.game, pos)  

@@ -360,7 +360,7 @@ class Graphics_Loader:
             keys.vase + '_3': get_tiles_from_sheet('decoration/vase/vase_3.png', 0, 0, 0, 0, 32, 32),
             keys.vase + '_4': get_tiles_from_sheet('decoration/vase/vase_4.png', 0, 0, 0, 0, 32, 32),
             keys.vase + '_5': get_tiles_from_sheet('decoration/vase/vase_5.png', 0, 0, 0, 0, 32, 32),
-            keys.potion_table: get_tiles_from_sheet('decoration/tables/potion_table.png', 0, 0, 0, 0, 32, 32),
+            keys.potion_table: get_tiles_from_sheet('decoration/tables/potion_table.png', 0, 0, 0, 0, 64, 64),
             keys.door_basic: get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 32, 32),
             keys.rune_shrine: get_tiles_from_sheet('decoration/shrine/rune_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.portal_shrine: get_tiles_from_sheet('decoration/shrine/portal_shrine.png', 3, 0, 0, 0, 64, 64),
