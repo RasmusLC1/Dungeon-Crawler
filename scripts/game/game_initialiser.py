@@ -28,7 +28,6 @@ class Game_Initialiser():
         self.game = game
 
     def Initialise_Game(self):
-        pygame.init()
         self.game.render_scale = 2
         
         self.game.screen_width = 1500
@@ -46,8 +45,6 @@ class Game_Initialiser():
 
         self.initialise_Engine()
 
-        
-        
 
         self.game.level = 1
         self.game.scroll = [0, 0]

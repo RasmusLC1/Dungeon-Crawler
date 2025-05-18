@@ -117,7 +117,6 @@ class Potion_Handler(Loot_Types_Handler):
 
         # Instantiate the matched potion class
         potion = Potion(self.game, name, (pos_x, pos_y), amount, self.strength[name])
-
         # Load any saved data if present
         if data:
             potion.Load_Data(data)

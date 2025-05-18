@@ -6,6 +6,7 @@ from scripts.game.save_load_manager import Save_Load_Manager
 
 class Game:
     def __init__(self):
+        pygame.init()
         self.save_load_manager = Save_Load_Manager(self, ".data", "save_data")
         
 

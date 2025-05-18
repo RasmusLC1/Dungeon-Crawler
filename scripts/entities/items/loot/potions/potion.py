@@ -1,10 +1,10 @@
-from scripts.entities.items.item import Item
+from scripts.entities.items.loot.loot import Loot
 from scripts.entities.textbox.potion_textbox import Potion_Textbox
 from scripts.engine.assets.keys import keys
 
-class Potion(Item):
+class Potion(Loot):
     def __init__(self, game, type, pos, amount, strength):
-        super().__init__(game, type, keys.potion, pos, (16, 16), amount)
+        super().__init__(game, type, pos, (16, 16), 5, keys.potion, amount)
         self.Update()
         self.max_amount = 3
         self.max_animation = 4
@@ -15,6 +15,7 @@ class Potion(Item):
     
 
     def Save_Data(self):
+
         super().Save_Data()
         self.saved_data['effect'] = self.effect
         self.saved_data['strength'] = self.strength
@@ -35,6 +36,8 @@ class Potion(Item):
         self.Update_Sub_Type()
         super().Set_Sprite()
 
+    def Increase_Strength(self):
+        self.strength += 1
     
     def Update_Sub_Type(self):
         if self.amount == 1:

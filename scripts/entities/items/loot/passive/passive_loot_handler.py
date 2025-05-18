@@ -2,6 +2,7 @@
 from scripts.entities.items.loot.passive.lantern import Lantern
 from scripts.entities.items.loot.passive.passive_loot import Passive_Loot
 from scripts.entities.items.loot.passive.echo_sigil import Echo_Sigil
+from scripts.entities.items.loot.passive.recipe_scroll import Recipe_Scroll
 from scripts.entities.items.loot.loot_types_handler import Loot_Types_Handler
 
 import random
@@ -15,11 +16,13 @@ class Passive_Loot_Handler(Loot_Types_Handler):
         self.loot_map = {
             keys.lantern: Lantern,
             keys.echo_sigil: Echo_Sigil,
+            keys.recipe_scroll: Recipe_Scroll,
         }
 
         self.special_type = [
             keys.lantern,
             keys.echo_sigil,
+            keys.recipe_scroll,
         ]
 
 
@@ -34,6 +37,7 @@ class Passive_Loot_Handler(Loot_Types_Handler):
             keys.faith_pendant,
             keys.lucky_charm,
             keys.echo_sigil,
+            keys.recipe_scroll,
         ]
 
 

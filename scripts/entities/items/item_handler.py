@@ -37,10 +37,12 @@ class Item_Handler():
             item = None
             if item_data['sub_category'] == keys.weapon:
                 item = self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
-            elif item_data['sub_category'] == 'potion':
-                item = self.potion_handler.Spawn_Potions(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == keys.loot:
-                item = self.loot_handler.Spawn_Loot_Type(type, pos, item_data)
+                loot_type = item_data[keys.loot_type]
+                if loot_type == keys.gold:
+                    item = self.loot_handler.Spawn_Gold(pos, item_data['amount'], item_data)
+                else:
+                    item = self.loot_handler.Spawn_Loot_Type(loot_type, pos, item_data)
             elif item_data['sub_category'] == 'rune':
                 item = self.game.rune_handler.Load_Data(item_data)
             else:

@@ -18,9 +18,3 @@ class Input_Update():
                 if event.type == pygame.VIDEORESIZE:
 
                     self.game.camera_update.Enable_Full_Screen(event)
-
-    
-    
-
-    
-    

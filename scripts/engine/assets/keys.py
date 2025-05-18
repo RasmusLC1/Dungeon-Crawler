@@ -570,6 +570,9 @@ class keys():
 
     vase = "vase"
 
+    potion_table = "potion_table"
+
+
 
     # Potion Assets
     
@@ -639,6 +642,8 @@ class keys():
 
     
     blood_pact = "blood_pact"
+
+    recipe_scroll = "recipe_scroll"
 
     
     phoenix_feather = "phoenix_feather"
@@ -864,6 +869,8 @@ class keys():
     revive = "revive"
     
     loot = "loot"
+
+    loot_type = "loot_type"
 
     curse = "curse"
 

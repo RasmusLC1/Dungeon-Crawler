@@ -39,6 +39,7 @@ class Decoration(PhysicsEntity):
         # Double damage for blunt weapons
         if effect == 'blunt':
             damage *= 2
+        self.game.particle_handler.Activate_Particles(random.randint(2, 4), keys.loot_particle, self.rect().center, frame=random.randint(10, 20))
 
         self.health = max(0, self.health - damage)
         if self.health <= 0:
@@ -50,7 +51,7 @@ class Decoration(PhysicsEntity):
         self.game.decoration_handler.Remove_Decoration(self)
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
         self.game.sound_handler.Play_Sound('chest_break', 0.2)
-        self.game.particle_handler.Activate_Particles(random.randint(10, 15), keys.loot_particle, self.rect().center, frame=random.randint(30, 50))
+        self.game.particle_handler.Activate_Particles(random.randint(10, 15), keys.loot_particle, self.rect().center, frame=random.randint(20, 30))
         return True
         
 

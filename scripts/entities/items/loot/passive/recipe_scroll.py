@@ -2,12 +2,12 @@ from scripts.entities.items.loot.loot import Loot
 import pygame
 from scripts.engine.assets.keys import keys
 
-class Echo_Sigil(Loot):
+class Recipe_Scroll(Loot):
     def __init__(self, game, pos):
-        super().__init__(game, keys.echo_sigil, pos, (16, 16), 10, keys.passive)
+        super().__init__(game, keys.recipe_scroll, pos, (16, 16), 10, keys.passive)
         self.update_cooldown = 0
-        self.loot_IDs = []
-        self.description = 'Grants\nextra use\nto items\n'
+        self.potion_IDs = []
+        self.description = 'Improves\nefficiency\nof potions'
 
 
     def Update(self):
@@ -25,16 +25,17 @@ class Echo_Sigil(Loot):
 
         for item in inventory_loot:
             if item.sub_category != keys.loot:
-                print("WRONG Item type added to Echo Sigil", item)
+                print("WRONG Item type added to Recipe Scroll", item)
                 continue
-            if item.ID in self.loot_IDs:
+            if item.ID in self.potion_IDs:
                 continue
             
-            # Increase amount for multi use utility items by checking amount since
-            # utility items shouldn't have more than 10 uses
-            if item.max_amount > 1 and item.max_amount < 10:
-                item.Increase_Amount(1)
-            self.loot_IDs.append(item.ID)
+            if item.loot_type != keys.potion:
+                continue
+
+            # Item is verified to be a potion
+            item.Increase_Strength() 
+            self.potion_IDs.append(item.ID)
 
 
     # TODO: MAKE a red overlay for item

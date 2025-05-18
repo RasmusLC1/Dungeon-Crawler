@@ -111,24 +111,6 @@ class Loot_Handler():
         }
 
 
-
-    # Responsible initalising loot and finding the correct type
-    def Loot_Loader(self, type, pos_x, pos_y, amount, data):
-        # Handle when there's no data
-        if not data:
-            self.Loot_Spawner(type, pos_x, pos_y, amount)
-            return
-        
-        loot_type = data.get('loot_type')
-
-        if not loot_type:
-            return
-        
-        # Match statement for loot type handling
-        return self.Loot_Spawner(loot_type, pos_x, pos_y, amount, data)
-
-
-
     # Spawn specific loot
     def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
         loot_class = self.loot_map.get(type)
@@ -184,24 +166,10 @@ class Loot_Handler():
 
         self.game.item_handler.Add_Item(loot)
 
-    def Spawn_Loot_From_Table(self, pos, loot_types, loot_weights):
-        weight_values = [loot_weights[loot_type] for loot_type in loot_types]
-        loot_type = random.choices(loot_types, weight_values, k=1)[0]
-
-        # TODO: Rework how gold is spawned
-        if loot_type == keys.gold:
-            amount = random.randint(20, 40)
-            self.Spawn_Gold(pos, amount)
-            return
-        loot_handler = self.loot_types_dic[loot_type]
-        loot = loot_handler.Loot_Spawner(pos)
-        if not loot:
-            return
-
-        self.game.item_handler.Add_Item(loot)
 
     def Spawn_Key(self, pos):
         return self.key_loot_handler.Loot_Spawner(pos)
+
 
 
     def Spawn_Loot_Type(self, type, pos, data = None):
