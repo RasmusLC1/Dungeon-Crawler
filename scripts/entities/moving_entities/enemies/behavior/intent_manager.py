@@ -85,7 +85,7 @@ class Intent_Manager():
         max_cooldown = self.base_cooldown.get(self.intent[self.intent_index], self.intent_cooldown_max)
         if not max_cooldown:
             return
-        self.intent_cooldown = random.randint(max_cooldown, int(round(max_cooldown * 1.3)))
+        self.intent_cooldown = random.randint(max_cooldown, (max_cooldown +  max_cooldown // 3))
 
     # Return false on when cooldown is active
     def Update_Intent_Cooldown(self):

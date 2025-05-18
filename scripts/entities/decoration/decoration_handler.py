@@ -6,6 +6,7 @@ from scripts.entities.decoration.chest.potion_table import Potion_Table
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
+from scripts.entities.decoration.shrine.soul_well import Soul_Well
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
 import random
 import math
@@ -26,6 +27,7 @@ class Decoration_Handler():
             keys.potion_table: self.Spawn_Potion_Table,
             keys.rune_shrine: self.Spawn_Rune_Shrine,
             keys.portal_shrine: self.Spawn_Portal_Shrine,
+            keys.soul_well: self.Spawn_Soul_Well,
             keys.door_basic: self.Spawn_Door,
             keys.bones: self.Spawn_Bones,
             keys.weapon_rack: self.Spawn_Weapon_Rack,
@@ -67,6 +69,9 @@ class Decoration_Handler():
 
         for shrine in self.game.tilemap.extract([(keys.portal_shrine, 0)]):
             self.Decoration_Spawner(keys.portal_shrine, shrine.pos)
+
+        for soul_well in self.game.tilemap.extract([(keys.soul_well, 0)]):
+            self.Decoration_Spawner(keys.soul_well, soul_well.pos)
 
         for bones in self.game.tilemap.extract([(keys.bones, 0)]):
             self.Decoration_Spawner(keys.bones, bones.pos)
@@ -158,6 +163,11 @@ class Decoration_Handler():
         shrine = Portal_Shrine(self.game, pos)
         self.decorations.append(shrine)
         return shrine
+    
+    def Spawn_Soul_Well(self, pos, size=None, version=None, radius=None, level=None):
+        soul_well = Soul_Well(self.game, pos)
+        self.decorations.append(soul_well)
+        return soul_well
 
     def Spawn_Bones(self, pos, size=None, version=None, radius=None, level=None):
         bones = Bones(self.game, pos, None)  

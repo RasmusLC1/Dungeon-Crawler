@@ -1,11 +1,12 @@
-import random
 from scripts.level_generation.dungeon_enum_keys import *
 from scripts.engine.assets.keys import keys
 
-class Portal_Shrine_Spawner():
+import random
+class Soul_Well_Spawner():
+
 
     @staticmethod
-    def Spawn_Portal_Shrine(size_x, size_y, A_Star_Search, offgrid_tiles):
+    def Spawn_Soul_Well(map, level, size_x, size_y, tile_size, offgrid_tiles, A_Star_Search):
         loot_amount = random.randint(2, 3)
         loot = 0 
         path = []
@@ -17,6 +18,5 @@ class Portal_Shrine_Spawner():
             path = A_Star_Search(spawner_x, spawner_y)
             
             if path:
-                offgrid_tiles.append({"type": "portal_shrine", "variant": 0, "pos": [spawner_x, spawner_y]})
-
+                offgrid_tiles.append({keys.type: keys.soul_well, keys.variant: 0, keys.pos: (spawner_x * tile_size, spawner_y * tile_size)})
                 loot += 1

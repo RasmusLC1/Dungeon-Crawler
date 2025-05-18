@@ -570,6 +570,8 @@ class keys():
 
     vase = "vase"
 
+    soul_well = "soul_well"
+
     potion_table = "potion_table"
 
 
