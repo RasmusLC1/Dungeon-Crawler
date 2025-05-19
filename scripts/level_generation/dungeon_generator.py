@@ -96,7 +96,7 @@ class Dungeon_Generator():
         
         Potion_Table_Spawner.Spawn_Potion_Table(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
-        Portal_Shrine_Spawner.Spawn_Portal_Shrine(size_x, size_y, self.A_Star_Search, self.tilemap.offgrid_tiles)
+        Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, size_x, size_y, self.A_Star_Search, self.tilemap.offgrid_tiles)
         
         Soul_Well_Spawner.Spawn_Soul_Well(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 

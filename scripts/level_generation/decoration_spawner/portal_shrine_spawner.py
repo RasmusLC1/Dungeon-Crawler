@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Portal_Shrine_Spawner():
 
     @staticmethod
-    def Spawn_Portal_Shrine(size_x, size_y, A_Star_Search, offgrid_tiles):
+    def Spawn_Portal_Shrine(map, size_x, size_y, A_Star_Search, offgrid_tiles):
         loot_amount = random.randint(2, 3)
         loot = 0 
         path = []
