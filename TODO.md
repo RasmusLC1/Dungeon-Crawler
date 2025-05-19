@@ -6,19 +6,17 @@ Save it in a seperate class that accepts an increment from dungeon generator
 
 
 # Dungeon Crawler Gameplay Ideas
-    Can find weapons, armor and magic tombes to learn runes
+    Can find weapons, magic items and runes
     There are layers to the dungeon, each layer have one exit and different staircases down to a new random dungeon. You cannot go up through the original entrance again
-    Clank system that spawns enemies using a director similar to left4dead
+    Clatter system that spawns enemies using a director similar to left4dead
     Each dungeon layer get's progressively harder, but main challenge is to conserve resources to proceed further down
     Each section has at least 1 random combat from a pool of possible mobs based on enviorement, freeze section as freeze enemies
     Each layer draws a random theme, fire for example, then it draws from the tech theme for example
-    Pokemon style resistances and effectivness in a rock paper scissor style
-    You can drop loot to flee combat, to distract enemies
-    Take contracts to complete achievements, example kill 5 ice demons
     Noice attracts enemies
 
 # Gameplay Loop
-    Collect gold and artifcats in dungeon to buy items, upgrades, heaaling etc
+    Choose between 2 modes, descend or endless. Decent takes you through 7 layers of the dungeon to a final boss
+    Collect gold and artifcats in dungeon to buy items, upgrades, healing etc
     Lower levels have better rewards
     To get to lower levels you need to pay a soul cost on each floor
     Each time you complete a floor the next one becomes more difficult
@@ -32,8 +30,7 @@ Save it in a seperate class that accepts an increment from dungeon generator
             Spawns boss mob when player is x from center
             Spawns Shrine when boss mob is defeated
         
-    Game ends when you die, you can buy resurrection tombs to prevent this, but it will be money you could spend on other upgrades instead
-        Each resurrection tomb gets more expensive
+    Game ends when you die, you can find resurrection items in the dungeon, but they are rare or high risk
         
 
 # Engine Features:
@@ -51,22 +48,19 @@ Save it in a seperate class that accepts an increment from dungeon generator
     # Particle Engine
     Sound engine
     Minimap, adjust rendering scale for minimap and only display tiles that has been in raycaster
+    Threat metre, a skull that fills up or something. If player generates clatter it has a chance to increase. It will also have a chance to decrease if player is quiet for longer periods of time
 
 # Gameplay
     # Player can hold weapons
     # Attack
     # Defend
     X chance to get a shop each floor, spawns similar to boss room
-    In shop you can buy/trash cards, upgrade weapons, buy items, heal, etc
-    Each floor you add a new curse to your card deck, trashing curses cost 3X as much gold 
+    In shop you can upgrade weapons, buy items, heal, etc
     Get points upon death based on level depth, gold and relics
 
 # Shop
 Buy and sell items to help complete levels
 Upgrade weapons
-Buy and trash cards, when buying a card it is added to discard pile
-Cards can be upgraded
-Create color coded backgrounds based on level, render image and text on top
 
 
 # Weapons:
