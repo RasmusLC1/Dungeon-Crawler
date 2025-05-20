@@ -572,6 +572,9 @@ class keys():
 
     soul_well = "soul_well"
 
+    teleportation_circle = "teleportation_circle"
+
+
     potion_table = "potion_table"
 
 

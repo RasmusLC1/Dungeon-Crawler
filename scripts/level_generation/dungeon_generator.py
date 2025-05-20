@@ -14,6 +14,7 @@ from scripts.level_generation.decoration_spawner.chest_spawner import Chest_Spaw
 from scripts.level_generation.decoration_spawner.vase_spawner import Vase_Spawner
 from scripts.level_generation.decoration_spawner.potion_table import Potion_Table_Spawner
 from scripts.level_generation.decoration_spawner.soul_well_spawner import Soul_Well_Spawner
+from scripts.level_generation.decoration_spawner.teleport_circle import Teleportation_Circle_Spawner
 from scripts.level_generation.loot.weapon_spawner import Weapon_Spawner
 from scripts.level_generation.dungeon_enum_keys import *
 import os
@@ -99,6 +100,8 @@ class Dungeon_Generator():
         Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, size_x, size_y, self.A_Star_Search, self.tilemap.offgrid_tiles)
         
         Soul_Well_Spawner.Spawn_Soul_Well(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
+
+        Teleportation_Circle_Spawner.Spawn_Soul_Well(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
 
     def Update_Load_Menu(self, value):

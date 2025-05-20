@@ -3,6 +3,8 @@ import random
 from scripts.engine.assets.keys import keys
 import math
 
+activation_radius = 200
+
 class Soul_Well(Decoration):
     def __init__(self, game, pos) -> None:
         super().__init__(game, keys.soul_well, pos, (64, 64))
@@ -14,6 +16,7 @@ class Soul_Well(Decoration):
 
 
     def Update(self):
+        self.Update_Animation()
         self.Check_For_Gold_Collision()
         return super().Update()
 
@@ -22,7 +25,7 @@ class Soul_Well(Decoration):
         # use the logic animation_cooldown as it basically needs the same
         if self.animation_cooldown:
             return
-        if self.distance_to_player > 200:
+        if self.distance_to_player > activation_radius:
             return
         
         self.animation += 1
@@ -45,8 +48,8 @@ class Soul_Well(Decoration):
     def Check_Player_Dis(self):
         player_pos = self.game.player.pos
         self.distance_to_player = math.sqrt((player_pos[0] - self.pos[0]) ** 2 + (player_pos[1] - self.pos[1]) ** 2)
-        if self.distance_to_player > 200:
-            self.animation_animation_cooldown = self.distance_to_player * 2
+        if self.distance_to_player > activation_radius:
+            self.animation_cooldown = self.distance_to_player * 2
             return False
         
         return True
@@ -63,11 +66,7 @@ class Soul_Well(Decoration):
         for item in nearby_items:
             if not item.type == keys.gold:
                 continue
-            self.game.player.Increase_Souls(item.amount)
+            self.game.player.Increase_Souls(item.amount * 2)
             self.game.item_handler.Remove_Item(item, True)
             self.game.particle_handler.Activate_Particles(random.randint(8, 12), keys.soul_particle, self.rect().center, frame=random.randint(50, 70))
 
-
-    def Render(self, surf, offset=...):
-        super().Render(surf, offset)
-        self.Update_Animation()
