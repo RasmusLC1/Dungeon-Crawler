@@ -61,7 +61,8 @@ class Soul_Well(Decoration):
         if not self.Check_Player_Dis():
             return
         
-        nearby_items = self.game.item_handler.Find_Nearby_Item(self.pos, 2)
+        nearby_items = self.game.item_handler.Find_Nearby_Item(self.pos, 3)
+        gold_found = False
 
         for item in nearby_items:
             if not item.type == keys.gold:
@@ -69,4 +70,10 @@ class Soul_Well(Decoration):
             self.game.player.Increase_Souls(item.amount * 2)
             self.game.item_handler.Remove_Item(item, True)
             self.game.particle_handler.Activate_Particles(random.randint(8, 12), keys.soul_particle, self.rect().center, frame=random.randint(50, 70))
+            
+            if not gold_found:
+                self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+                self.game.sound_handler.Play_Sound('soul_well', 0.6)
+
+                gold_found = True
 

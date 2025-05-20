@@ -18,6 +18,8 @@ class Audio_Loader:
             'chest_break' : pygame.mixer.Sound('data/sounds/decorations/chest/chest_break.wav'),
             'vase_break' : pygame.mixer.Sound('data/sounds/decorations/chest/vase_break.wav'),
             'door_open' : pygame.mixer.Sound('data/sounds/decorations/door_open.wav'),
+            'soul_well' : pygame.mixer.Sound('data/sounds/decorations/soul_well.wav'),
+            'teleportation' : pygame.mixer.Sound('data/sounds/decorations/teleportation.wav'),
             'boss_spawning' : pygame.mixer.Sound('data/sounds/decorations/shrine/boss_spawning.wav'),
         }
         self.sfx.update(chest_effects)
@@ -25,6 +27,8 @@ class Audio_Loader:
         self.sfx['chest_break'].set_volume(0.2)
         self.sfx['vase_break'].set_volume(0.2)
         self.sfx['door_open'].set_volume(0.4)
+        self.sfx['teleportation'].set_volume(0.4)
+        self.sfx['soul_well'].set_volume(0.6)
         self.sfx['boss_spawning'].set_volume(0.4)
 
     def Weapons_Effects(self):

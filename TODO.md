@@ -291,7 +291,7 @@ Upgrade weapons
 
 # Decorations
     - Braziers with fire, lights up area, can be extinguished/ignited
-    - Pots and urns that can be smashed to get loot, generates clatter
+    - # Pots and urns that can be smashed to get loot, generates clatter
     - Small rocks strewn around
     - Dust particles on the screen
     - Sarcophagi that can be opened for loot, but chance to spawn enemy
@@ -299,10 +299,10 @@ Upgrade weapons
     - Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
     - Chest, standard loot, safe but multiple tiers that can determine the loot table
     - Movable statues, can hide secrets, requires high strength to move and generates clatter
-    - Weapon racks, contains weapons
+    - # Weapon racks, contains weapons
     - Libraries, with bookshelfs, sometimes contain runes and scrolls
-    - Laboratory, contains potions
-    - Soul well, harvest souls but can summon/attract enemies
+    - # Laboratory, contains potions
+    - # Soul well, harvest souls but can summon/attract enemies
     - False walls, can be destroyed to reveal treasure rooms
     - Teleportation Circles, linked to each other, can be used to traverse the dungeon
     - # Teleport shrine, pay souls to teleport to a lower dungeon

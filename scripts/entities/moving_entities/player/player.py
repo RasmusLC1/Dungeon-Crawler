@@ -215,7 +215,6 @@ class Player(Moving_Entity):
             self.game.particle_handler.Activate_Particles(random.randint(1, 3), keys.player_particle, self.rect().center, frame=random.randint(50, 70))
 
             return
-        
         self.player_particle_cooldown -= 1
         return
 

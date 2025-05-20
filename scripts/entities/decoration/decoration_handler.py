@@ -8,6 +8,7 @@ from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
 from scripts.entities.decoration.shrine.soul_well import Soul_Well
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
+from scripts.entities.decoration.interactive.teleportation_circle import Teleportation_Circle
 import random
 import math
 from scripts.engine.assets.keys import keys
@@ -16,6 +17,7 @@ class Decoration_Handler():
     def __init__(self, game) -> None:
         self.game = game       
         self.decorations = []
+        self.teleportation_circles = []
         self.bones = []
         self.nearby_decoration_cooldown = 0
         self.saved_data = {}
@@ -31,16 +33,18 @@ class Decoration_Handler():
             keys.door_basic: self.Spawn_Door,
             keys.bones: self.Spawn_Bones,
             keys.weapon_rack: self.Spawn_Weapon_Rack,
+            keys.teleportation_circle: self.Spawn_Teleportation_Circle,
             'boss_room': self.Spawn_Boss_Room
         }
 
-        self.opening_methods = {
-            keys.chest: self.Open_Chest,
-            keys.vase: self.Open_Chest,
-            keys.potion_table: self.Open_Chest,
-            keys.rune_shrine: self.Open_Shrine,
-            keys.portal_shrine: self.Open_Shrine,
-        }
+        self.opening_methods = [
+            keys.chest,
+            keys.vase,
+            keys.potion_table,
+            keys.rune_shrine,
+            keys.portal_shrine,
+            keys.teleportation_circle
+        ]
 
 
 
@@ -72,6 +76,10 @@ class Decoration_Handler():
 
         for soul_well in self.game.tilemap.extract([(keys.soul_well, 0)]):
             self.Decoration_Spawner(keys.soul_well, soul_well.pos)
+
+        for teleportation_circle in self.game.tilemap.extract([(keys.teleportation_circle, 0)]):
+            self.Decoration_Spawner(keys.teleportation_circle, teleportation_circle.pos)
+        self.Link_Teleportation_Circles()
 
         for bones in self.game.tilemap.extract([(keys.bones, 0)]):
             self.Decoration_Spawner(keys.bones, bones.pos)
@@ -159,6 +167,11 @@ class Decoration_Handler():
         self.decorations.append(shrine)
         return shrine
     
+    def Spawn_Rune_Shrine(self, pos, size=None, version=None, radius=None, level=None):
+        shrine = Rune_Shrine(self.game, pos)
+        self.decorations.append(shrine)
+        return shrine
+    
     def Spawn_Portal_Shrine(self, pos, size=None, version=None, radius=None, level=None):
         shrine = Portal_Shrine(self.game, pos)
         self.decorations.append(shrine)
@@ -168,6 +181,12 @@ class Decoration_Handler():
         soul_well = Soul_Well(self.game, pos)
         self.decorations.append(soul_well)
         return soul_well
+    
+    def Spawn_Teleportation_Circle(self, pos, size=None, version=None, radius=None, level=None):
+        teleportation_circle = Teleportation_Circle(self.game, pos)
+        self.decorations.append(teleportation_circle)
+        self.teleportation_circles.append(teleportation_circle)
+        return teleportation_circle
 
     def Spawn_Bones(self, pos, size=None, version=None, radius=None, level=None):
         bones = Bones(self.game, pos, None)  
@@ -222,17 +241,8 @@ class Decoration_Handler():
         player_pos = self.game.player.pos
         decorations.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
         decoration = decorations[0]
-        decoration_opener = self.opening_methods.get(decoration.type)
-        if not decoration_opener:
-            return
-        decoration_opener(decoration)
-
-    def Open_Chest(self, decoration):
         decoration.Open()
 
-
-    def Open_Shrine(self, decoration):
-        decoration.Open()
 
     def Sort_Decorations(self, decorations):
         player_pos = self.game.player.pos
@@ -255,3 +265,14 @@ class Decoration_Handler():
     def Remove_Bones(self, bones):
         self.bones.remove(bones)
         return
+    
+
+    def Link_Teleportation_Circles(self):
+        teleport_circles = self.teleportation_circles.copy()
+        random.shuffle(teleport_circles)  # Randomly pair circles
+
+        for i in range(0, len(teleport_circles) - 1, 2):
+            a = teleport_circles[i]
+            b = teleport_circles[i + 1]
+            a.Set_Linked_Portal(b)
+            b.Set_Linked_Portal(a)

@@ -22,7 +22,6 @@ class Teleportation_Circle_Spawner():
     
     def Spawn_Single_Circle(map, size_x, size_y, tile_size, offgrid_tiles, A_Star_Search):
         path = []
-        key = {keys.type: keys.teleportation_circle, keys.variant: 0, keys.pos: (spawner_x * tile_size, spawner_y * tile_size)}
         spawner_x = random.randint(1, size_x - 2)
         spawner_y = random.randint(1, size_y - 2)
         if map[spawner_x][spawner_y] != FLOOR:
@@ -30,7 +29,7 @@ class Teleportation_Circle_Spawner():
         path = A_Star_Search(spawner_x, spawner_y)
         
         if path:
-            loot += 1
+            key = {keys.type: keys.teleportation_circle, keys.variant: 0, keys.pos: (spawner_x * tile_size, spawner_y * tile_size)}
             return key
         
         return None

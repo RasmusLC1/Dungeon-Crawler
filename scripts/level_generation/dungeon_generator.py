@@ -101,7 +101,7 @@ class Dungeon_Generator():
         
         Soul_Well_Spawner.Spawn_Soul_Well(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
-        Teleportation_Circle_Spawner.Spawn_Soul_Well(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
+        Teleportation_Circle_Spawner.Spawn_Teleport_Circle(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
 
     def Update_Load_Menu(self, value):
