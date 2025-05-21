@@ -8,8 +8,6 @@ class Chest(Loot_Container):
         super().__init__(game, keys.chest, pos, True, 5)
         self.version = version
 
-
-
     def Save_Data(self):
         super().Save_Data()
         self.saved_data['version'] = self.version
@@ -43,6 +41,6 @@ class Chest(Loot_Container):
                              keys.potion : 0.3,
                              keys.revive : 0.05,
                              keys.utility : 0.2,
-                             keys.curse : 10}
+                             keys.curse : 0.1}
 
 

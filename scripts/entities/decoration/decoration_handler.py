@@ -2,6 +2,7 @@ from scripts.entities.decoration.bones.bones import Bones
 from scripts.entities.decoration.chest.chest import Chest
 from scripts.entities.decoration.chest.weapon_rack import Weapon_rack
 from scripts.entities.decoration.chest.vase import Vase
+from scripts.entities.decoration.chest.effigy_tomb import Effigy_Tomb
 from scripts.entities.decoration.chest.potion_table import Potion_Table
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
@@ -26,6 +27,7 @@ class Decoration_Handler():
             keys.door_basic: self.Spawn_Door,
             keys.chest: self.Spawn_Chest,
             keys.vase: self.Spawn_Vase,
+            keys.effigy_tomb: self.Spawn_Effigy_Tomb,
             keys.potion_table: self.Spawn_Potion_Table,
             keys.rune_shrine: self.Spawn_Rune_Shrine,
             keys.portal_shrine: self.Spawn_Portal_Shrine,
@@ -43,7 +45,8 @@ class Decoration_Handler():
             keys.potion_table,
             keys.rune_shrine,
             keys.portal_shrine,
-            keys.teleportation_circle
+            keys.teleportation_circle,
+            keys.effigy_tomb
         ]
 
 
@@ -76,6 +79,9 @@ class Decoration_Handler():
 
         for soul_well in self.game.tilemap.extract([(keys.soul_well, 0)]):
             self.Decoration_Spawner(keys.soul_well, soul_well.pos)
+
+        for effigy_tomb in self.game.tilemap.extract([(keys.effigy_tomb, 0)]):
+            self.Decoration_Spawner(keys.effigy_tomb, effigy_tomb.pos)
 
         for teleportation_circle in self.game.tilemap.extract([(keys.teleportation_circle, 0)]):
             self.Decoration_Spawner(keys.teleportation_circle, teleportation_circle.pos)
@@ -152,6 +158,11 @@ class Decoration_Handler():
         self.decorations.append(vase)
         return vase
     
+    def Spawn_Effigy_Tomb(self, pos, size=None, version=None, radius=None, level=None):
+        effigy_tomb = Effigy_Tomb(self.game, pos)  
+        self.decorations.append(effigy_tomb)
+        return effigy_tomb
+
     def Spawn_Potion_Table(self, pos, size=None, version=None, radius=None, level=None):
         potion_table = Potion_Table(self.game, pos)  
         self.decorations.append(potion_table)

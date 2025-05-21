@@ -21,6 +21,7 @@ class Audio_Loader:
             'soul_well' : pygame.mixer.Sound('data/sounds/decorations/soul_well.wav'),
             'teleportation' : pygame.mixer.Sound('data/sounds/decorations/teleportation.wav'),
             'boss_spawning' : pygame.mixer.Sound('data/sounds/decorations/shrine/boss_spawning.wav'),
+            'tomb_lid' : pygame.mixer.Sound('data/sounds/decorations/chest/tomb_lid.wav'),
         }
         self.sfx.update(chest_effects)
         self.sfx['chest_open'].set_volume(0.1)
@@ -30,6 +31,7 @@ class Audio_Loader:
         self.sfx['teleportation'].set_volume(0.4)
         self.sfx['soul_well'].set_volume(0.6)
         self.sfx['boss_spawning'].set_volume(0.4)
+        self.sfx['tomb_lid'].set_volume(0.4)
 
     def Weapons_Effects(self):
         weapon_effects ={

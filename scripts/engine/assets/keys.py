@@ -577,6 +577,8 @@ class keys():
 
     potion_table = "potion_table"
 
+    effigy_tomb = "effigy_tomb"
+
 
 
     # Potion Assets

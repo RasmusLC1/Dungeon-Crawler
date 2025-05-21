@@ -368,6 +368,7 @@ class Graphics_Loader:
             keys.teleportation_circle: get_tiles_from_sheet('decoration/interactive/teleportation_circle.png', 0, 0, 0, 0, 32, 32),
             keys.bones: get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
             keys.weapon_rack: get_tiles_from_sheet('decoration/environment/weapon_rack.png', 0, 0, 0, 0, 32, 32),
+            keys.effigy_tomb: get_tiles_from_sheet('decoration/loot_containers/effigy_tomb.png', 1, 0, 0, 0, 32, 64),
         }
         self.assets.update(Objects_assets)
 

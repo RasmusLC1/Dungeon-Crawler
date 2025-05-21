@@ -15,6 +15,7 @@ from scripts.level_generation.decoration_spawner.vase_spawner import Vase_Spawne
 from scripts.level_generation.decoration_spawner.potion_table import Potion_Table_Spawner
 from scripts.level_generation.decoration_spawner.soul_well_spawner import Soul_Well_Spawner
 from scripts.level_generation.decoration_spawner.teleport_circle import Teleportation_Circle_Spawner
+from scripts.level_generation.decoration_spawner.effigy_tomb_spawner import Effigy_Tomb_Spawner
 from scripts.level_generation.loot.weapon_spawner import Weapon_Spawner
 from scripts.level_generation.dungeon_enum_keys import *
 import os
@@ -102,6 +103,8 @@ class Dungeon_Generator():
         Soul_Well_Spawner.Spawn_Soul_Well(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
         Teleportation_Circle_Spawner.Spawn_Teleport_Circle(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
+        
+        Effigy_Tomb_Spawner.Spawn_Effigy_Tomb(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
 
     def Update_Load_Menu(self, value):
