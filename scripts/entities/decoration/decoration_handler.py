@@ -9,6 +9,7 @@ from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
 from scripts.entities.decoration.shrine.soul_well import Soul_Well
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
+from scripts.entities.decoration.light_sources.brazier import Brazier
 from scripts.entities.decoration.interactive.teleportation_circle import Teleportation_Circle
 import random
 import math
@@ -36,6 +37,7 @@ class Decoration_Handler():
             keys.bones: self.Spawn_Bones,
             keys.weapon_rack: self.Spawn_Weapon_Rack,
             keys.teleportation_circle: self.Spawn_Teleportation_Circle,
+            keys.brazier: self.Spawn_Brazer,
             'boss_room': self.Spawn_Boss_Room
         }
 
@@ -46,8 +48,17 @@ class Decoration_Handler():
             keys.rune_shrine,
             keys.portal_shrine,
             keys.teleportation_circle,
-            keys.effigy_tomb
+            keys.effigy_tomb,
+            keys.brazier,
         ]
+
+        self.light_sources = {
+            keys.torch : 0.1,
+            keys.brazier : 10.2,
+
+        }
+
+
 
 
 
@@ -86,6 +97,9 @@ class Decoration_Handler():
         for teleportation_circle in self.game.tilemap.extract([(keys.teleportation_circle, 0)]):
             self.Decoration_Spawner(keys.teleportation_circle, teleportation_circle.pos)
         self.Link_Teleportation_Circles()
+
+        for light_source in self.game.tilemap.extract([(keys.light_source, 0)]):
+            self.Select_Light_Source(light_source.pos)
 
         for bones in self.game.tilemap.extract([(keys.bones, 0)]):
             self.Decoration_Spawner(keys.bones, bones.pos)
@@ -208,6 +222,31 @@ class Decoration_Handler():
         boss_room = Boss_Room(self.game, pos, radius, level)
         self.decorations.append(boss_room)
         return boss_room
+    
+    def Select_Light_Source(self, pos):
+            
+            type = random.choices(
+                population=list(self.light_sources.keys()),
+                weights=list(self.light_sources.values()),
+                k=1
+            )[0]
+
+            if type == keys.torch:
+                self.game.item_handler.weapon_handler.Weapon_Spawner(keys.torch, pos[0], pos[1])
+            else:
+                spawn_function = self.spawn_methods.get(type)
+                if not spawn_function:
+                    print(f"Warning: Decoration type '{type}' not recognized. Decoration_Handler Decoration_Spawner")
+                    return None
+
+                decoration = spawn_function(pos)
+                return decoration
+    
+    def Spawn_Brazer(self, pos):
+        brazier = Brazier(self.game, pos)
+        self.decorations.append(brazier)
+        return brazier
+
 
     def Update(self):
         self.Check_Keyboard_Input()

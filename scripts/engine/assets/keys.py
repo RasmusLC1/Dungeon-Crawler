@@ -579,6 +579,8 @@ class keys():
 
     effigy_tomb = "effigy_tomb"
 
+    brazier = "brazier"
+
 
 
     # Potion Assets
@@ -876,6 +878,8 @@ class keys():
     revive = "revive"
     
     loot = "loot"
+
+    light_source = "light_source"
 
     loot_type = "loot_type"
 

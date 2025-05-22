@@ -9,10 +9,9 @@ class Torch(Weapon):
         super().__init__(game, pos, keys.torch, 1, 2, 3, 100, 'one_handed_melee', keys.fire)
         self.max_animation = 5
         self.attack_animation_max = 5
-        self.animation_cooldown_max = 20
+        self.animation_cooldown_max = 40
         self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
-        self.fire_particle_cooldown = 0
         self.flame_thrower = Flame_Thrower(self.game)
 
 
@@ -24,14 +23,8 @@ class Torch(Weapon):
 
 
     def Spawn_Fire_Particle(self):
-        if not self.fire_particle_cooldown:
-            self.fire_particle_cooldown = random.randint(30, 100)
-            self.game.particle_handler.Activate_Particles(random.randint(1, 2), keys.fire_particle, self.rect().center, frame=random.randint(80, 90))
+        self.game.particle_handler.Activate_Particles(random.randint(1, 3), keys.fire_particle, self.rect().center, frame=random.randint(80, 90))
 
-            return
-        
-        self.fire_particle_cooldown -= 1
-        return
     
     def Set_Attack(self):
         if not super().Set_Attack():
@@ -41,12 +34,14 @@ class Torch(Weapon):
 
 
     def Update_Animation(self):
-        self.Spawn_Fire_Particle()
         if self.animation_cooldown:
             self.animation_cooldown -= 1
         else:
-            self.animation_cooldown = self.animation_cooldown_max
+            self.animation_cooldown = random.randint(self.animation_cooldown_max - 10, self.animation_cooldown_max)
+            self.Spawn_Fire_Particle()
+
             self.animation = random.randint(0,self.max_animation)
+            self.Set_Entity_Image()
 
     def Special_Attack(self):
         if self.special_attack <= 0 or not self.equipped:

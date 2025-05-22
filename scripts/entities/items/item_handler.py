@@ -59,8 +59,6 @@ class Item_Handler():
         self.saved_data.clear()
 
     def Initialise(self):
-        for torch in self.game.tilemap.extract([('torch', 0)].copy()):
-            self.weapon_handler.Weapon_Spawner('torch', torch.pos[0], torch.pos[1])
         
         for key in self.game.tilemap.extract([('key', 0)].copy()):
             self.loot_handler.Spawn_Key(key.pos)

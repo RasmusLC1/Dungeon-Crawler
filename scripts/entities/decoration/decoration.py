@@ -12,6 +12,7 @@ class Decoration(PhysicsEntity):
         self.animation = 0
         self.destructable = destructable
         self.health = health
+        self.empty = False
         # self.destroyed = False # Flag to prevent 
         self.Set_Sprite()
 
@@ -67,6 +68,7 @@ class Decoration(PhysicsEntity):
             self.render_needs_update = True
             self.Update_Dark_Surface()
             if not self.rendered_image:
+                self.Set_Sprite()
                 print(vars(self))
                 return
         

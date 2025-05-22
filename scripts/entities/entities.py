@@ -176,7 +176,7 @@ class PhysicsEntity:
             self.rendered_image.blit(dark_surface_head, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
             self.render_needs_update = False
         except Exception as e:
-            print("Error in Updating dark surface entity: ", e, dark_surface_head, self.light_level, alpha_value, )
+            print("Error in Updating dark surface entity: ", e, dark_surface_head, self.light_level, alpha_value, self.type)
 
 
     def Lightup(self, entity_image):

@@ -294,7 +294,7 @@ Upgrade weapons
     - # Pots and urns that can be smashed to get loot, generates clatter
     - Small rocks strewn around
     - Dust particles on the screen
-    - Sarcophagi that can be opened for loot, but chance to spawn enemy
+    - # effogy tombs that can be opened for loot, but chance to spawn enemy
     - Sacrifice shrine, sacrifice items of x value for bonus
     - Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
     - Chest, standard loot, safe but multiple tiers that can determine the loot table
@@ -304,7 +304,7 @@ Upgrade weapons
     - # Laboratory, contains potions
     - # Soul well, harvest souls but can summon/attract enemies
     - False walls, can be destroyed to reveal treasure rooms
-    - Teleportation Circles, linked to each other, can be used to traverse the dungeon
+    - # Teleportation Circles, linked to each other, can be used to traverse the dungeon
     - # Teleport shrine, pay souls to teleport to a lower dungeon
     - # Rune shrine, pay souls to aquire new runes
     - Weapon shrine, pay souls to bind gems to weapons for bonuses
