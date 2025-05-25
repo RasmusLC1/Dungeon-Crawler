@@ -5,7 +5,7 @@ from scripts.engine.assets.keys import keys
 class Slow(Effect):
     def __init__(self, entity):
         description = 'Reduces speed'
-        super().__init__(entity, 'slow', 0, 0, (5,10), description)
+        super().__init__(entity, keys.slow, 0, 0, (5,10), description)
 
     
     #set Fire effect

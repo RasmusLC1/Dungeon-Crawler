@@ -2,16 +2,28 @@ from scripts.entities.decoration.decoration import Decoration
 import random
 from scripts.engine.assets.keys import keys
 
-activation_radius = 200
-
 class Brazier(Decoration):
     def __init__(self, game, pos) -> None:
-        super().__init__(game, keys.brazier, pos, (32, 32))
+        self.version = random.randint(1, 2)
+        super().__init__(game, keys.brazier + '_' + str(self.version), pos, (32, 32))
+        self.animation = 1
         self.max_animation = 5
         self.animation_cooldown = 0
         self.animation_cooldown_max = 50
         self.Add_Light()
-        self.animation = 1
+
+    def Save_Data(self):
+        self.type = keys.brazier # Set brazier to default version to make loading easier
+        super().Save_Data()
+        self.saved_data['version'] = self.version
+
+
+    def Load_Data(self, data):
+        super().Load_Data(data)
+        self.version = data['version']
+        self.type = keys.brazier + '_' + str(self.version)
+        self.Set_Sprite()
+    
 
     def Update(self):
         if self.animation > 0: # animation 0 is off
@@ -29,11 +41,16 @@ class Brazier(Decoration):
         if self.animation > 0:
             self.animation = 0
             self.game.light_handler.Remove_Light(self.light_source)
+            self.light_source = None
             self.Set_Sprite()
         else:
+            if self.light_source:
+                print("BRAZIER Lightsource error", vars(self))
+                return False
             self.Add_Light()
             self.Set_Animation()
-
+            
+        return True
 
         
     def Update_Animation(self):

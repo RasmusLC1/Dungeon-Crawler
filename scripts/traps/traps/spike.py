@@ -22,7 +22,7 @@ class Spike(Trap):
     def Add_Entity_To_Trap(self, entity):
         if not super().Add_Entity_To_Trap(entity):
             return False
-        entity.Set_Effect('slow', self.slow_amount)
+        entity.Set_Effect(keys.slow, self.slow_amount)
         return True
 
         
@@ -30,7 +30,7 @@ class Spike(Trap):
         for entity in self.entities:
             if not self.rect().colliderect(entity.rect()):
                 self.entities.remove(entity)
-                entity.Remove_Effect('slow', self.slow_amount)
+                entity.Remove_Effect(keys.slow, self.slow_amount)
 
                 continue
 

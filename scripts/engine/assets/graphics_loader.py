@@ -369,7 +369,8 @@ class Graphics_Loader:
             keys.bones: get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
             keys.weapon_rack: get_tiles_from_sheet('decoration/environment/weapon_rack.png', 0, 0, 0, 0, 32, 32),
             keys.effigy_tomb: get_tiles_from_sheet('decoration/loot_containers/effigy_tomb.png', 1, 0, 0, 0, 32, 64),
-            keys.brazier: get_tiles_from_sheet('decoration/light_sources/brazier.png', 5, 0, 0, 0, 32, 32),
+            keys.brazier + '_1': get_tiles_from_sheet('decoration/light_sources/brazier_1.png', 5, 0, 0, 0, 32, 32),
+            keys.brazier + '_2': get_tiles_from_sheet('decoration/light_sources/brazier_2.png', 5, 0, 0, 0, 32, 32),
         }
         self.assets.update(Objects_assets)
 

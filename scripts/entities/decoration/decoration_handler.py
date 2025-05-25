@@ -54,7 +54,7 @@ class Decoration_Handler():
 
         self.light_sources = {
             keys.torch : 0.1,
-            keys.brazier : 10.2,
+            keys.brazier : 0.3,
 
         }
 
@@ -242,8 +242,8 @@ class Decoration_Handler():
                 decoration = spawn_function(pos)
                 return decoration
     
-    def Spawn_Brazer(self, pos):
-        brazier = Brazier(self.game, pos)
+    def Spawn_Brazer(self, pos, size=None, version=None, radius=None, level=None):
+        brazier = Brazier(self.game, pos) 
         self.decorations.append(brazier)
         return brazier
 

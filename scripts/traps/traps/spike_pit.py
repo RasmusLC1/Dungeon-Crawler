@@ -23,7 +23,7 @@ class Spike_Pit(Trap):
         for entity in self.entities:
             if not self.rect().colliderect(entity.rect()):
                 self.entities.remove(entity)
-                entity.Remove_Effect('slow', self.slow_amount)
+                entity.Remove_Effect(keys.slow, self.slow_amount)
                 continue
 
             if entity.effects.invulnerable.effect:
@@ -38,7 +38,7 @@ class Spike_Pit(Trap):
             self.animation = 1
             entity.Set_Effect(keys.snare, 2)
         else:
-            entity.Set_Effect('slow', self.slow_amount)
+            entity.Set_Effect(keys.slow, self.slow_amount)
         return True
 
     def rect(self):

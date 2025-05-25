@@ -26,7 +26,7 @@ class Water(Trap):
                 self.entities.remove(entity)
                 continue
 
-            entity.Set_Effect('slow', self.slow_amount)
+            entity.Set_Effect(keys.slow, self.slow_amount)
             entity.Set_Effect(keys.wet, 2)
 
     
