@@ -2,6 +2,7 @@ from scripts.engine.utility.helper_functions import Helper_Functions
 from scripts.engine.tilemap.tile import Tile
 from scripts.engine.assets.keys import keys
 
+import random
 import json
 import pygame
 import math
@@ -325,6 +326,26 @@ class Tilemap:
 
     def Set_Light_Level(self, tile, new_light_level):
         tile.Set_Light_Level(new_light_level)
+
+    def Get_Random_Tile_With_Path_To_Player(self):
+        tiles = []
+        for tile in self.tilemap.values():
+            if not tile.type == keys.floor:
+                continue
+
+            tiles.append(tile)
+
+        tile_found = False
+        random_tile = None
+        player = self.game.player
+        while not tile_found:
+            random_tile = random.choice(tiles)
+            path = self.game.a_star.a_star_search(random_tile.pos, player.pos)
+            
+            if path:
+                tile_found = True
+
+        return random_tile
 
     def Clear_Tilemap(self):
         self.tilemap.clear()

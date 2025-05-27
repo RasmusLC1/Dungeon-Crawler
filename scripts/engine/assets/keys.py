@@ -530,6 +530,8 @@ class keys():
     
     portal_shrine = "portal_shrine"
 
+    hunter_shrine = "hunter_shrine"
+
     
     bones = "bones"
 
@@ -547,9 +549,9 @@ class keys():
     
     deep_water_env = "deep_water_env"
 
-    ice_env = 'ice_env'
+    ice_env = "ice_env"
 
-    water_env = 'water_env'
+    water_env = "water_env"
     
     shallow_ice_env = "shallow_ice_env"
 
@@ -564,7 +566,7 @@ class keys():
     
     Decoration_Assets = "decoration_assets"
 
-    weapon_rack = 'weapon_rack'
+    weapon_rack = "weapon_rack"
 
     loot_container = "loot_container"
 
@@ -618,6 +620,7 @@ class keys():
     
     gold = "gold"
 
+    hunter_treasure = "hunter_treasure"
     
     echo_bell = "echo_bell"
 
@@ -999,13 +1002,13 @@ class keys():
 
     # Astar levels
     
-    standard = 'standard'
+    standard = "standard"
     
-    ignore_lava = 'ignore_lava'
+    ignore_lava = "ignore_lava"
     
-    custom = 'custom'
+    custom = "custom"
     
-    standard = 'standard'
+    standard = "standard"
     
 
     

@@ -282,23 +282,24 @@ Upgrade weapons
     # Spike traps, that move up and harm you when they're extended
     # Spike traps poison, that move up and harm you when they're extended, poision effect
     # Fire traps, sets you on fire
-    # Pushing trap, pushes entities when triggered
-    Pressure plates, Trigger nearby linked object when pressed
-    Explosive traps, area of effect damage
-    # Bear trap, snares the entity for a period of time
     # Lava, sets on fire and slows down entity, heavy damage
     # Water, slows down entities
+    # Ice decreases friction and accelaration
+    Pressure plates that trigger effects
+    Arrow traps - shoots arrows, triggered by pressure plates
+    Loose rocks, generates clatter when stepped on
+    
+
 
 # Decorations
-    - Braziers with fire, lights up area, can be extinguished/ignited
+    - # Braziers with fire, lights up area, can be extinguished/ignited
     - # Pots and urns that can be smashed to get loot, generates clatter
     - Small rocks strewn around
     - Dust particles on the screen
     - # effogy tombs that can be opened for loot, but chance to spawn enemy
     - Sacrifice shrine, sacrifice items of x value for bonus
     - Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
-    - Chest, standard loot, safe but multiple tiers that can determine the loot table
-    - Movable statues, can hide secrets, requires high strength to move and generates clatter
+    - # Chest, standard loot, safe but multiple tiers that can determine the loot table
     - # Weapon racks, contains weapons
     - Libraries, with bookshelfs, sometimes contain runes and scrolls
     - # Laboratory, contains potions
@@ -339,7 +340,7 @@ Upgrade weapons
     Crypt Horror, boss, high damage and health, slow
     Ghost, pathfinds directly to the target, phasing through walls, high damage, medium speed and low health
     Wraith, pathfinds directly to the target, phasing through walls, low damage but steals soul, medium speed and low health
-    Lich, casts doom on player, debuffing him and slowly drains health until Acolyte is killed
+    Lich, casts doom on player, debuffing him and slowly drains health until Lich is killed
 
 
 ## Dungeon Dwellers
@@ -366,6 +367,11 @@ Upgrade weapons
     Minotaur, boss mob, charges and breaks envoirement, high damage, low defence
     Hydra, boss mob, splits head when a head is killed, needs to be attacked from behind or killed with enviorement damage
     Clicker, blind but good hearing, loud because of clicks
+    Echo stalker, becomes visible for a time when clatter is generated
+    Shard Wraith, teleports close to player when clatter is generated
+    Crystal golemn, slow and shoots crystal shards (similar to freeze shards)
+    Crystal Scarab, basic enemy that swarms player
+    Aurora Wisp, acts as light source, but might explode when clatter is triggered
 
 
 

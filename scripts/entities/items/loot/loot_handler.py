@@ -1,37 +1,16 @@
 from scripts.entities.items.loot.gold import Gold
-from scripts.entities.items.loot.keys.skeleton_key import Skeleton_Key
-from scripts.entities.items.loot.keys.blood_key import Blood_Key
-from scripts.entities.items.loot.keys.soul_key import Soul_Key
-from scripts.entities.items.loot.keys.cursed_key import Cursed_Key
-from scripts.entities.items.loot.keys.lockpick import Lockpick
+from scripts.entities.items.loot.hunter_treasure import Hunter_Treasure
+
 from scripts.entities.items.loot.keys.key_loot_handler import Key_Loot_Handler
 
-
-from scripts.entities.items.loot.bombs.bomb import Bomb
 from scripts.entities.items.loot.bombs.bomb_loot_handler import Bomb_Loot_Handler
-
-
-from scripts.entities.items.loot.utility.echo_bell import Echo_Bell
-from scripts.entities.items.loot.utility.shadow_cloak import Shadow_Cloak
-from scripts.entities.items.loot.utility.faded_hourglass import Faded_Hourglass
-from scripts.entities.items.loot.utility.ethereal_chains import Ethereal_Chains
-from scripts.entities.items.loot.utility.recall_scroll import Recall_Scroll
 from scripts.entities.items.loot.utility.utility_loot_handler import Utility_Loot_Handler
-
-
-from scripts.entities.items.loot.passive.lantern import Lantern
-from scripts.entities.items.loot.passive.echo_sigil import Echo_Sigil
 from scripts.entities.items.loot.passive.passive_loot_handler import Passive_Loot_Handler
-
-from scripts.entities.items.loot.revive.phoenix_feather import Phoenix_Feather
-from scripts.entities.items.loot.revive.light_pendant import Light_Pendant
 from scripts.entities.items.loot.revive.revive_loot_handler import Revive_Loot_Handler
-
 from scripts.entities.items.loot.curse.cursed_loot_handler import Cursed_Loot_Handler
 
 
 from scripts.entities.items.loot.potions.potion_handler import Potion_Handler
-from scripts.entities.items.loot.potions.potion import Potion
 from scripts.engine.assets.keys import keys
 
 
@@ -189,6 +168,10 @@ class Loot_Handler():
 
         return self.Load_Data(loot, data)
     
+    def Spawn_Hunter_Treasure(self, pos, data = None):
+        hunter_treasure = Hunter_Treasure(self.game, pos)
+
+        return self.Load_Data(hunter_treasure, data)
 
     def Spawn_Gold(self, pos, amount, type = None, data = None):
         gold = Gold(self.game, pos, amount)
