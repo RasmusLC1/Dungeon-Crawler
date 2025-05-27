@@ -334,14 +334,14 @@ class Tilemap:
                 continue
 
             tiles.append(tile)
-
         tile_found = False
         random_tile = None
         player = self.game.player
         while not tile_found:
             random_tile = random.choice(tiles)
-            path = self.game.a_star.a_star_search(random_tile.pos, player.pos)
-            
+            tile_pos = (random_tile.pos[0] - self.game.a_star.min_x, random_tile.pos[1] - self.game.a_star.min_y)
+            player_pos = (round(player.pos[0] // self.game.tilemap.tile_size) - self.game.a_star.min_x, round(player.pos[1] // self.game.tilemap.tile_size) - self.game.a_star.min_y)
+            path = self.game.a_star.a_star_search(tile_pos, player_pos)
             if path:
                 tile_found = True
 

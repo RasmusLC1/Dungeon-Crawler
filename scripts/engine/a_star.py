@@ -177,7 +177,7 @@ class A_Star:
         return path
 
     # ========== A* IMPLEMENTATION ==========
-
+    # Accepts coordinates in tile size, so downscaled to 1 : 16 scale
     def a_star_search(self, start, goal, which_map='standard'):
         """
         start, goal are (x, y) in map coordinates.

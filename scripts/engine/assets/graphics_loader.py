@@ -365,6 +365,7 @@ class Graphics_Loader:
             keys.door_basic: get_tiles_from_sheet('decoration/door/door_closed.png', 0, 0, 0, 0, 32, 32),
             keys.rune_shrine: get_tiles_from_sheet('decoration/shrine/rune_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.portal_shrine: get_tiles_from_sheet('decoration/shrine/portal_shrine.png', 3, 0, 0, 0, 64, 64),
+            keys.hunter_shrine: get_tiles_from_sheet('decoration/shrine/hunter_shrine.png', 2, 0, 0, 0, 64, 64),
             keys.teleportation_circle: get_tiles_from_sheet('decoration/interactive/teleportation_circle.png', 0, 0, 0, 0, 32, 32),
             keys.bones: get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
             keys.weapon_rack: get_tiles_from_sheet('decoration/environment/weapon_rack.png', 0, 0, 0, 0, 32, 32),
@@ -465,6 +466,7 @@ class Graphics_Loader:
     def Asset_Loot(self):
         loot = {
             keys.gold: get_tiles_from_sheet('items/valuables/gold_coins.png', 3, 0, 0, 0, 16, 16),
+            keys.hunter_treasure: get_tiles_from_sheet('items/valuables/hunter_treasure.png', 0, 0, 0, 0, 32, 32),
             keys.echo_bell: get_tiles_from_sheet('items/utility/echo_bell.png', 0, 0, 0, 0, 32, 32),
             keys.shadow_cloak: get_tiles_from_sheet('items/utility/shadow_cloak.png', 0, 0, 0, 0, 32, 32),
             keys.lantern: get_tiles_from_sheet('items/passive/lantern.png', 0, 0, 0, 0, 32, 32),

@@ -217,6 +217,8 @@ class Item(PhysicsEntity):
         self.Update_Dark_Surface()
         
         # Render the item
+        if not self.rendered_image:
+            self.Set_Sprite()
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 

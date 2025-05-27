@@ -43,17 +43,7 @@ class Decoration_Handler():
             'boss_room': self.Spawn_Boss_Room
         }
 
-        self.opening_methods = [
-            keys.chest,
-            keys.vase,
-            keys.potion_table,
-            keys.rune_shrine,
-            keys.portal_shrine,
-            keys.hunter_shrine,
-            keys.teleportation_circle,
-            keys.effigy_tomb,
-            keys.brazier,
-        ]
+
 
         self.light_sources = {
             keys.torch : 0.1,

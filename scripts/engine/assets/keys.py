@@ -886,6 +886,8 @@ class keys():
 
     loot_type = "loot_type"
 
+    decoration = "decoration"
+
     curse = "curse"
 
     potion = "potion"
