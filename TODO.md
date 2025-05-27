@@ -388,7 +388,7 @@ Upgrade weapons
     Gravebloom, hiding somewhere on the map. Needs to be killed to prevent enemies respawning
     Rot king, can snare player and spawns sporelings
 
-## Coatl’s Lair
+## Serpents Lair
     Serpent Warriors, basic enemies that are decently strong individually
     Chameleons scouts, shoots poisoned darts, slightly transparent and difficult to spot
     Skink fanatics, high damage low health that charges the player aggressively
@@ -400,6 +400,19 @@ Upgrade weapons
     Embermaw, boss shoots fire from the front and has ball tail in back that can attack player, high defence and damage, but low movement 
     Great Python, constricts the player for a time allowing other enemies to attack
     Venomscale Lurker, posioned attack that jumps at player
+
+## Titan Forge
+    Magma warden, Molthen armor, high health and damage, but low speeds, sets player on fire if contact
+    # Fire spirit, high speeds shoot flamethrower at close range and retreats
+    Ash wraith, invisible until close then ignites and attacks player. High speed and damage, very fragile
+    Ironbound demon, wraps player in chains to temporarily snare, low speed and damage, but high health
+    Forge demon, revives fallen enemies
+    Ember swarm, small enemies that swarm the player and do little damage, but dangerous in swarm
+    Molten slug, immortal enemy that moves very slowly but very high damage if it touches player
+    Phoenix, explodes when killed and revives itself. High speed, low damage and health
+    Lava Lurker, hides in lava pools and jumps on the player, high damage and speed, but low health
+    Ashen Tyrant , shoots burning chains out to attack player. Chains deal damage and pulls the player into lava traps.
+    Forgeheart Titan, boss, shoots fireballs, high health and low speed. Area of effect attacks
 
 
     Rats swarm attack, easy to kill, little damage
