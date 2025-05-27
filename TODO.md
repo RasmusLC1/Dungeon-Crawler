@@ -325,7 +325,11 @@ Upgrade weapons
     - Ranged, shoots the player from range 
     - Melee, attacks the player up close
 
-## Undead Tribe
+
+## Ancient Tomb Enemies
+### Specialty
+    Basic dungeon, used as introduction
+### Enemies
     # Skeleton Warrior, basic warrior uses standard weapons
     # Skeleton scout, uses ranged weapons
     # Skeleton Cleric, heals undead in the area but does no damage
@@ -342,26 +346,11 @@ Upgrade weapons
     Wraith, pathfinds directly to the target, phasing through walls, low damage but steals soul, medium speed and low health
     Lich, casts doom on player, debuffing him and slowly drains health until Lich is killed
 
-
-## Dungeon Dwellers
-    Undead tribe
-    Kobold, different variaties can steal different items from player, soul, loot, potions etc
-    # Spider, shoots spiderweb that snares you, less damage -> Upgrades to Big Spider
-    Mimic chest that spawns skeleton when opened
-    Medusa, laser eyes and can freeze the player
-
-
-## Ancient Tomb Enemies
-    Big spider, boss mob, spawns smaller spiders and jumps at you, more damage
-    # Skeletons take more damage from blunt weapons, make more noise from rattle  -> Upgrades to Wight Lord
-    Ghost, can go through walls, low health high damage, need special effect to damage -> Upgrades to Reaper
-    Reaper, elite melee enemy with scythe sweep attack
-    Wolves, fast and high damage  -> Upgrades to WereWolf
-    WereWolf, Elite enemy high mass fast, high damage
-    Gargoyle, sentry that waits for players and blends into the envoirement
-    Eyes of Evil, floating eyes that shoot at range, Snare
-
-## Crystal Caverns enemies
+## Crystal Caverns
+### Specialty
+    Crystal Growth, walls occasionally dissapear or spawn changing the structure of the dungeon. Spawned walls can be broken
+    Weapon gems spawn more often
+### Enemies
     # Spider, shoots spiderweb that snares you, less damage
     Crystal Elemental, high health and strength, shoots crystal
     Minotaur, boss mob, charges and breaks envoirement, high damage, low defence
@@ -372,10 +361,14 @@ Upgrade weapons
     Crystal golemn, slow and shoots crystal shards (similar to freeze shards)
     Crystal Scarab, basic enemy that swarms player
     Aurora Wisp, acts as light source, but might explode when clatter is triggered
-    Scrying eye, shoots electric projetiles and fast but very low health
+    Medusa, shoots electric projetiles and fast but very low health
     Mirror crystal, reflects projectiles back at source by inverting angle
 
 ## Mycelium Depths enemies
+### Specialty
+    Mycelium network, clank is disabled. Instead enemies are aggroed by attacks or stepping on spore traps
+    Potions spawn more often
+### Enemies
     Fungal burrower, digs under the maps and attacks player from underground
     Unstable spore, charges and explodes if it touches the player with a short delay
     Sporeling, fast and small spores that attacks player
@@ -389,6 +382,10 @@ Upgrade weapons
     Rot king, can snare player and spawns sporelings
 
 ## Serpents Lair
+### Specialty
+    Quatlz curse, player will slowly get more and more curse the longer they stay.
+    Cursed items spawn more often
+### Enemies
     Serpent Warriors, basic enemies that are decently strong individually
     Chameleons scouts, shoots poisoned darts, slightly transparent and difficult to spot
     Skink fanatics, high damage low health that charges the player aggressively
@@ -402,6 +399,11 @@ Upgrade weapons
     Venomscale Lurker, posioned attack that jumps at player
 
 ## Titan Forge
+### Specialty
+    Ash storms, lowers visibility for a period of time at random
+    Utility items spawn more often
+    Better opportunity to upgrade weapons
+### Enemies
     Magma warden, Molthen armor, high health and damage, but low speeds, sets player on fire if contact
     # Fire spirit, high speeds shoot flamethrower at close range and retreats
     Ash wraith, invisible until close then ignites and attacks player. High speed and damage, very fragile
@@ -414,16 +416,23 @@ Upgrade weapons
     Ashen Tyrant , shoots burning chains out to attack player. Chains deal damage and pulls the player into lava traps.
     Forgeheart Titan, boss, shoots fireballs, high health and low speed. Area of effect attacks
 
+# Glacial Caverns
+### Specialty
+    Player needs to seek out heat sources to prevent freezing to death
+    Runes spawn more often
+### Enemies
+    Ice spirit, shoots freeze projectiles
+    Shard golemn, explodes when killed, slow and high health, but low damage
+    Glacial spider, hides in snow and shoots freeze projectiles and inflict frost on bites
+    Yeti, mid speed, damage and health melee attack
+    Frost warden, high defence and slow. Inflict slow in a radius around it
+    Frost wolf, attacks in packs, weak individually, howls to attract others when one spots player
+    Femir, wolf monsters with clubs. Medium damage and health, but high speed
+    Shaman, summons blizzards
+    Ice demon, boss, lowers temperature in area and causes player to freeze faster. High health and damage, but slow
+    Leshy, boss, snares player with roots and shoots projectiles. Can teleport away when damage threshold is reached
 
-    Rats swarm attack, easy to kill, little damage
-    Sniffer, Good smells, but bad hearing, attracted to blood and destroyed potions
-    Slime, splits into smaller slimes when health is low
-    Ushabity, boss mob, sentry that waits for the player and attacks, high damage and defence
-    Living plant, waits for the player and tries to ambush them, also attacks normal enemies, basically a trap
-    Armadillos that dig and pop out of the ground to surprise you
-    Goblins swarm attack, cowardly
-    # Elementals, rock, ice, fire, electric, metal
-    Lurker in the dark, lowers light level around it, tries to sneak attack, vulnable to light
+
 
 # Biomes:
     Desert Biome, Water does not exist, enemies are vulnerable to fire, high gold in urns, 
