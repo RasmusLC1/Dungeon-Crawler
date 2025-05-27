@@ -368,11 +368,38 @@ Upgrade weapons
     Hydra, boss mob, splits head when a head is killed, needs to be attacked from behind or killed with enviorement damage
     Clicker, blind but good hearing, loud because of clicks
     Echo stalker, becomes visible for a time when clatter is generated
-    Shard Wraith, teleports close to player when clatter is generated
+    Shard Wraith, teleports close to clatter source when clatter is generated
     Crystal golemn, slow and shoots crystal shards (similar to freeze shards)
     Crystal Scarab, basic enemy that swarms player
     Aurora Wisp, acts as light source, but might explode when clatter is triggered
+    Scrying eye, shoots electric projetiles and fast but very low health
+    Mirror crystal, reflects projectiles back at source by inverting angle
 
+## Mycelium Depths enemies
+    Fungal burrower, digs under the maps and attacks player from underground
+    Unstable spore, charges and explodes if it touches the player with a short delay
+    Sporeling, fast and small spores that attacks player
+    Fungal brute, strong and slow mushroom creature, weak to fire
+    Spore spitter, ranged enemy that shoots spores
+    Poisioned spores, spawns poison plumes
+    Glowcap Stalker, pretends to be a decorative mushroom and attacks when player is close, emits light
+    Mycelium roots, snares the player
+    Vitalcap, heals nearby enemies
+    Gravebloom, hiding somewhere on the map. Needs to be killed to prevent enemies respawning
+    Rot king, can snare player and spawns sporelings
+
+## Coatl’s Lair
+    Serpent Warriors, basic enemies that are decently strong individually
+    Chameleons scouts, shoots poisoned darts, slightly transparent and difficult to spot
+    Skink fanatics, high damage low health that charges the player aggressively
+    Salamander hunters, shoots fire projectiles and high mobility, hunts in packs
+    Temple guards, large crocodiles with high defence that aim to hold player in place
+    Komodo priests, increases strength of nearby enemies
+    Quetzalcoatl shaman, heals nearby enemies
+    Ancient Tyrant, bos box t-rex, high damage and speed but low defence
+    Embermaw, boss shoots fire from the front and has ball tail in back that can attack player, high defence and damage, but low movement 
+    Great Python, constricts the player for a time allowing other enemies to attack
+    Venomscale Lurker, posioned attack that jumps at player
 
 
     Rats swarm attack, easy to kill, little damage
