@@ -5,14 +5,14 @@ from scripts.engine.assets.keys import keys
 class Audio_Loader:
     def Run_All(self):
         self.sfx = {}
-        Audio_Loader.Chest_Effects(self)
+        Audio_Loader.Decoration_Effects(self)
         Audio_Loader.Weapons_Effects(self)
         Audio_Loader.Magic_Effects(self)
         Audio_Loader.Loot_Effects(self)
         Audio_Loader.Effect_Effects(self)
 
 
-    def Chest_Effects(self):
+    def Decoration_Effects(self):
         chest_effects ={
             'chest_open' : pygame.mixer.Sound('data/sounds/decorations/chest/chest_open.wav'),
             'chest_break' : pygame.mixer.Sound('data/sounds/decorations/chest/chest_break.wav'),
@@ -22,6 +22,8 @@ class Audio_Loader:
             'teleportation' : pygame.mixer.Sound('data/sounds/decorations/teleportation.wav'),
             'boss_spawning' : pygame.mixer.Sound('data/sounds/decorations/shrine/boss_spawning.wav'),
             'tomb_lid' : pygame.mixer.Sound('data/sounds/decorations/chest/tomb_lid.wav'),
+            'collapse' : pygame.mixer.Sound('data/sounds/decorations/collapse.wav'),
+            'hunter_shrine_activation' : pygame.mixer.Sound('data/sounds/decorations/shrine/hunter_shrine_activation.wav'),
         }
         self.sfx.update(chest_effects)
         self.sfx['chest_open'].set_volume(0.1)
@@ -32,6 +34,8 @@ class Audio_Loader:
         self.sfx['soul_well'].set_volume(0.6)
         self.sfx['boss_spawning'].set_volume(0.4)
         self.sfx['tomb_lid'].set_volume(0.4)
+        self.sfx['collapse'].set_volume(0.4)
+        self.sfx['hunter_shrine_activation'].set_volume(0.4)
 
     def Weapons_Effects(self):
         weapon_effects ={

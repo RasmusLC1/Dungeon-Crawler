@@ -51,6 +51,8 @@ class Decoration_Handler():
 
         }
 
+        self.item_sacrifice = []
+
 
 
 
@@ -60,6 +62,13 @@ class Decoration_Handler():
         self.saved_data.clear()
 
     def Initialise(self, depth=0):
+        
+        self.Find_Decorations_In_Tilemap(depth)
+        self.Link_Teleportation_Circles()
+        self.Set_Item_Sacrifice_Decorations()
+
+    
+    def Find_Decorations_In_Tilemap(self, depth):
         # door initialisation
         for door in self.game.tilemap.extract([(keys.door_basic, 0)].copy(), True):
             size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
@@ -92,7 +101,6 @@ class Decoration_Handler():
 
         for teleportation_circle in self.game.tilemap.extract([(keys.teleportation_circle, 0)]):
             self.Decoration_Spawner(keys.teleportation_circle, teleportation_circle.pos)
-        self.Link_Teleportation_Circles()
 
         for light_source in self.game.tilemap.extract([(keys.light_source, 0)]):
             self.Select_Light_Source(light_source.pos)
@@ -111,6 +119,18 @@ class Decoration_Handler():
 
         for weapon in self.game.tilemap.extract([(keys.weapon, 0)]):
             self.game.item_handler.weapon_handler.Spawn_Random_Weapon(weapon.pos)
+
+
+    def Set_Item_Sacrifice_Decorations(self):
+        item_sacrifice_decorations = [
+            keys.soul_well,
+            keys.hunter_shrine,
+            keys.sacrifice_shrine,
+        ]
+
+        for decoration in self.decorations:
+            if decoration.type in item_sacrifice_decorations:
+                self.item_sacrifice.append(decoration)
 
     def Set_Chest_Version(self, depth):
         i = 0
@@ -267,6 +287,7 @@ class Decoration_Handler():
         self.Open_Decoration(nearby_decorations)
         return True
 
+    
     def Find_Nearby_Decorations(self, player_pos, max_distance):
         nearby_decorations = []
         if max_distance <= 5:
@@ -327,3 +348,12 @@ class Decoration_Handler():
             b = teleport_circles[i + 1]
             a.Set_Linked_Portal(b)
             b.Set_Linked_Portal(a)
+
+    
+    def Check_Item_Collision(self, item):
+        for decoration in self.item_sacrifice:
+            if decoration.rect().colliderect(item.rect()):
+                return decoration.Spawn_Reward(item)
+                 
+            
+        return False

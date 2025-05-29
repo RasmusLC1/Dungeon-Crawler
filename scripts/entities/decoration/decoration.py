@@ -22,6 +22,10 @@ class Decoration(PhysicsEntity):
 
     def Open(self, generate_clatter = False):
         pass
+
+    def Set_Animation(self, animation_state):
+        self.animation = animation_state
+        self.Set_Entity_Image()
     
     # Setting the initial sprite type from assets, only called during initial setup
     def Set_Sprite(self):
@@ -55,7 +59,8 @@ class Decoration(PhysicsEntity):
         self.game.particle_handler.Activate_Particles(random.randint(10, 15), keys.loot_particle, self.rect().center, frame=random.randint(20, 30))
         return True
         
-
+    def Spawn_Reward(self, item):
+        pass
 
     def Render(self, surf, offset = (0,0)):
         if not self.Update_Light_Level():

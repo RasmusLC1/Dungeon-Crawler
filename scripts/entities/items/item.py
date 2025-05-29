@@ -95,14 +95,13 @@ class Item(PhysicsEntity):
 
          
 
-    # TODO: Might crash, need to update traps or remove damage
+    # Returns false if the item was deleted in the process of palcedown
     def Place_Down(self):
-        # nearby_traps = self.game.trap_handler.Find_Nearby_Traps(self, 3)
-        # for trap in nearby_traps:
-        #     trap.Update(self)
-        self.Set_Tile()
         self.picked_up = False
         self.in_inventory = False
+        if self.game.decoration_handler.Check_Item_Collision(self):
+            return False
+        self.Set_Tile()
         self.game.sound_handler.Play_Sound('item_placedown', 0.2)
         return True
 
@@ -219,6 +218,9 @@ class Item(PhysicsEntity):
         # Render the item
         if not self.rendered_image:
             self.Set_Sprite()
+            if not self.rendered_image:
+                print(self.type, vars(self))
+                return
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
 

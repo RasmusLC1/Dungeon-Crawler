@@ -39,16 +39,15 @@ class Brazier(Decoration):
     # Turn off the fire
     def Open(self, generate_clatter=False):
         if self.animation > 0:
-            self.animation = 0
+            self.Set_Animation(0)
             self.game.light_handler.Remove_Light(self.light_source)
             self.light_source = None
-            self.Set_Sprite()
         else:
             if self.light_source:
                 print("BRAZIER Lightsource error", vars(self))
                 return False
             self.Add_Light()
-            self.Set_Animation()
+            self.Animate()
             
         return True
 
@@ -57,14 +56,13 @@ class Brazier(Decoration):
         if self.animation_cooldown:
             self.animation_cooldown -= 1
         else:
-            self.Set_Animation()
+            self.Animate()
 
-    def Set_Animation(self):
+    def Animate(self):
         self.Spawn_Fire_Particle()
 
         self.animation_cooldown = random.randint(self.animation_cooldown_max - 10, self.animation_cooldown_max)
-        self.animation = random.randint(1,self.max_animation)
-        self.Set_Sprite()
+        self.Set_Animation(random.randint(1,self.max_animation))
 
 
     def Spawn_Fire_Particle(self):

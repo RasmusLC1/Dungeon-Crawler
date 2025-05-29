@@ -576,6 +576,8 @@ class keys():
 
     teleportation_circle = "teleportation_circle"
 
+    sacrifice_shrine = "sacrifice_shrine"
+
 
     potion_table = "potion_table"
 
