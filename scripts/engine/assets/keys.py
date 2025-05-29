@@ -586,7 +586,6 @@ class keys():
     brazier = "brazier"
 
 
-
     # Potion Assets
     
     full = "full"
@@ -875,6 +874,8 @@ class keys():
     key = "key"
 
     bomb = "bomb"
+
+    valuable = "valuable"
     
     utility = "utility"
     

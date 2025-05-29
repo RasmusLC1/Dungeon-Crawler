@@ -1,7 +1,5 @@
-from scripts.entities.items.loot.gold import Gold
-from scripts.entities.items.loot.hunter_treasure import Hunter_Treasure
-
 from scripts.entities.items.loot.keys.key_loot_handler import Key_Loot_Handler
+from scripts.entities.items.loot.valueable.valueable_loot_handler import Valuable_Loot_Handler
 
 from scripts.entities.items.loot.bombs.bomb_loot_handler import Bomb_Loot_Handler
 from scripts.entities.items.loot.utility.utility_loot_handler import Utility_Loot_Handler
@@ -31,6 +29,7 @@ class Loot_Handler():
         self.revive_loot_handler = Revive_Loot_Handler(game) 
         self.potion_loot_handler = Potion_Handler(game) 
         self.cursed_loot_handler = Cursed_Loot_Handler(game) 
+        self.valueable_loot_handler = Valuable_Loot_Handler(game) 
 
         self.loot_types = [
             self.key_loot_handler,
@@ -39,6 +38,7 @@ class Loot_Handler():
             self.passive_loot_handler,
             self.revive_loot_handler,
             self.potion_loot_handler,
+            self.valueable_loot_handler,
         ]
 
         self.loot_types_dic = {
@@ -49,6 +49,7 @@ class Loot_Handler():
             keys.revive : self.revive_loot_handler,
             keys.potion : self.potion_loot_handler,
             keys.curse : self.cursed_loot_handler,
+            keys.valuable : self.valueable_loot_handler,
         }
 
         self.loot_types_weights = {
@@ -69,44 +70,9 @@ class Loot_Handler():
             keys.revive,
             keys.potion,
             keys.curse,
+            keys.valuable,
         ]
 
-
-
-    #     self.loot_map = {
-    #         keys.skeleton_key : Skeleton_Key,
-    #         keys.blood_key : Blood_Key,
-    #         keys.soul_key : Soul_Key,
-    #         keys.cursed_key : Cursed_Key,
-    #         keys.lockpick : Lockpick,
-    #         keys.bomb: Bomb,
-            
-    #         keys.echo_bell : Echo_Bell,
-    #         keys.faded_hourglass : Faded_Hourglass,
-    #         keys.ethereal_chains : Ethereal_Chains,
-    #         keys.shadow_cloak : Shadow_Cloak,
-    #         keys.recall_scroll : Recall_Scroll,
-
-    #         keys.lantern : Lantern,
-
-    #         keys.phoenix_feather : Phoenix_Feather,
-    #         keys.light_pendant : Light_Pendant,
-
-    #         keys.echo_sigil : Echo_Sigil,
-    #         keys.potion: Potion,
-    #     }
-
-
-    # # Spawn specific loot
-    # def Loot_Spawner(self, type, pos_x, pos_y, amount = 0, data = None):
-    #     loot_class = self.loot_map.get(type)
-    #     if not loot_class:
-    #         return None
-        
-
-    #     loot = loot_class(self.game, (pos_x, pos_y))
-
-    #     return self.Load_Data(loot, data)
     
     # Responsible for loading the data and adding the item to the itemhandler
     def Load_Data(self, loot, data = None):
@@ -156,27 +122,22 @@ class Loot_Handler():
     def Spawn_Key(self, pos):
         return self.key_loot_handler.Loot_Spawner(pos)
 
+    def Spawn_Gold(self, pos, amount):
+        return self.valueable_loot_handler.Spawn_Gold(pos, amount)
 
-
-    def Spawn_Loot_Type(self, type, pos, data = None):
-        loot_handler = self.loot_types_dic.get(type)
-
+    def Spawn_Loot_Type(self, loot_type, pos, data = None):
+        loot_handler = self.loot_types_dic.get(loot_type)
         if not loot_handler:
             return None
         
-        loot = loot_handler.Loot_Spawner(pos)
+        type = None
+        if data:
+            type = data[keys.type]
+
+        loot = loot_handler.Loot_Spawner(pos, type)
 
         return self.Load_Data(loot, data)
     
-    def Spawn_Hunter_Treasure(self, pos, data = None):
-        hunter_treasure = Hunter_Treasure(self.game, pos)
-
-        return self.Load_Data(hunter_treasure, data)
-
-    def Spawn_Gold(self, pos, amount, type = None, data = None):
-        gold = Gold(self.game, pos, amount)
-
-        return self.Load_Data(gold, data)
 
 
 

@@ -50,7 +50,7 @@ class Hunter_Shrine(Decoration):
                 print("TILE NOT FOUND, HUNTER SHRINE")
                 continue
             tile_pos = tile.pos[0] * tile_size, tile.pos[1] * tile_size
-            treasure = self.game.item_handler.loot_handler.Spawn_Hunter_Treasure(tile_pos)
+            treasure = self.game.item_handler.loot_handler.valueable_loot_handler.Spawn_Hunter_Treasure(tile_pos)
             if not treasure:
                 print("Treasure not spawned, HUNTER SHRINE")
                 return
@@ -59,14 +59,23 @@ class Hunter_Shrine(Decoration):
 
 
     def Spawn_Reward(self, item):
+        print(item.type, self.animation)
         if not self.animation == 1:
             return False
         if item.type != keys.hunter_treasure:
             return False
+        
+
         self.Set_Animation(2)
         self.game.item_handler.Remove_Item(item, True)
         reward, amount = random.choice(list(self.rewards.items()))
+        
         self.game.player.Set_Effect(reward, amount, True)
         self.game.sound_handler.Play_Sound('collapse', 0.4)
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
+
+        for treasure in self.treasures:
+            self.treasures.remove(treasure)
+            self.game.item_handler.Remove_Item(treasure, True)
+
         return True

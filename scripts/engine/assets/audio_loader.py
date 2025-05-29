@@ -24,6 +24,9 @@ class Audio_Loader:
             'tomb_lid' : pygame.mixer.Sound('data/sounds/decorations/chest/tomb_lid.wav'),
             'collapse' : pygame.mixer.Sound('data/sounds/decorations/collapse.wav'),
             'hunter_shrine_activation' : pygame.mixer.Sound('data/sounds/decorations/shrine/hunter_shrine_activation.wav'),
+            'good_reward' : pygame.mixer.Sound('data/sounds/decorations/shrine/good_reward.wav'),
+            'mid_reward' : pygame.mixer.Sound('data/sounds/decorations/shrine/mid_reward.wav'),
+            'bad_reward' : pygame.mixer.Sound('data/sounds/decorations/shrine/bad_reward.wav'),
         }
         self.sfx.update(chest_effects)
         self.sfx['chest_open'].set_volume(0.1)
@@ -36,6 +39,9 @@ class Audio_Loader:
         self.sfx['tomb_lid'].set_volume(0.4)
         self.sfx['collapse'].set_volume(0.4)
         self.sfx['hunter_shrine_activation'].set_volume(0.4)
+        self.sfx['good_reward'].set_volume(0.4)
+        self.sfx['mid_reward'].set_volume(0.4)
+        self.sfx['bad_reward'].set_volume(0.4)
 
     def Weapons_Effects(self):
         weapon_effects ={

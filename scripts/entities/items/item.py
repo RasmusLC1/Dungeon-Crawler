@@ -51,6 +51,7 @@ class Item(PhysicsEntity):
         self.inventory_type = data['inventory_type']
         self.amount = data['amount']
         self.inventory_index = data['inventory_index']
+        self.Update_Description()
         
     def Update(self):
         self.Update_Activate_Cooldown()

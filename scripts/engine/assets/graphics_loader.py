@@ -366,6 +366,7 @@ class Graphics_Loader:
             keys.rune_shrine: get_tiles_from_sheet('decoration/shrine/rune_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.portal_shrine: get_tiles_from_sheet('decoration/shrine/portal_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.hunter_shrine: get_tiles_from_sheet('decoration/shrine/hunter_shrine.png', 2, 0, 0, 0, 64, 64),
+            keys.sacrifice_shrine: get_tiles_from_sheet('decoration/shrine/sacrifice_shrine.png', 3, 0, 0, 0, 64, 64),
             keys.teleportation_circle: get_tiles_from_sheet('decoration/interactive/teleportation_circle.png', 0, 0, 0, 0, 32, 32),
             keys.bones: get_tiles_from_sheet('decoration/environment/bones.png', 0, 0, 0, 0, 32, 32),
             keys.weapon_rack: get_tiles_from_sheet('decoration/environment/weapon_rack.png', 0, 0, 0, 0, 32, 32),

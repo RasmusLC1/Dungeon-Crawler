@@ -8,6 +8,7 @@ from scripts.level_generation.rooms.spawn_loot_room import Spawn_Loot_Room
 from scripts.level_generation.rooms.spawn_lakes import Spawn_Lakes
 from scripts.level_generation.decoration_spawner.portal_shrine_spawner import Portal_Shrine_Spawner
 from scripts.level_generation.decoration_spawner.hunter_shrine_spawner import Hunter_Shrine_Spawner
+from scripts.level_generation.decoration_spawner.sacrifice_shrine_spawner import Sacrifice_Shrine_Spawner
 from scripts.level_generation.entities.spawn_player import Spawn_Player
 from scripts.level_generation.entities.spawn_enemy import Spawn_Enemy
 from scripts.level_generation.decoration_spawner.trap_spawner import Trap_Spawner
@@ -102,6 +103,8 @@ class Dungeon_Generator():
         Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.A_Star_Search, self.tilemap.offgrid_tiles)
         
         Hunter_Shrine_Spawner.Spawn_Hunter_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
+        
+        Sacrifice_Shrine_Spawner.Spawn_Sacrifice_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
         Soul_Well_Spawner.Spawn_Soul_Well(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 

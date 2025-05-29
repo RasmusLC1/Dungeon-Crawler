@@ -17,6 +17,16 @@ class Decoration(PhysicsEntity):
         self.Set_Sprite()
 
 
+    def Save_Data(self):
+        self.saved_data['animation'] = self.animation
+        self.saved_data['empty'] = self.empty
+        return super().Save_Data()
+
+    def Load_Data(self, data):
+        self.Set_Animation(data['animation'])
+        self.empty = data['empty']
+        return super().Load_Data(data)
+
     def Update_Animation(self):
         pass
 

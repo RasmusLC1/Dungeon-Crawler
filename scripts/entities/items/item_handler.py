@@ -39,10 +39,7 @@ class Item_Handler():
                 item = self.weapon_handler.Weapon_Spawner(type, pos[0], pos[1], amount, item_data)
             elif item_data['sub_category'] == keys.loot:
                 loot_type = item_data[keys.loot_type]
-                if loot_type == keys.gold:
-                    item = self.loot_handler.Spawn_Gold(pos, item_data['amount'], item_data)
-                else:
-                    item = self.loot_handler.Spawn_Loot_Type(loot_type, pos, item_data)
+                item = self.loot_handler.Spawn_Loot_Type(loot_type, pos, item_data)
             elif item_data['sub_category'] == 'rune':
                 item = self.game.rune_handler.Load_Data(item_data)
             else:
@@ -61,12 +58,16 @@ class Item_Handler():
     def Initialise(self):
         
         for key in self.game.tilemap.extract([('key', 0)].copy()):
-            self.loot_handler.Spawn_Key(key.pos)
+            key = self.loot_handler.Spawn_Key(key.pos)
+            if key:
+                self.Add_Item(key)
 
 
         for gold in self.game.tilemap.extract([(keys.gold, 0)].copy()):
             amount = random.randint(20, 30)
-            self.loot_handler.Spawn_Gold(gold.pos, amount)
+            gold = self.loot_handler.Spawn_Gold(gold.pos, amount)
+            if gold:
+                self.Add_Item(gold)
 
     def Spawn_Weapon(self, pos, type = None, amount = 0):
         if type:
