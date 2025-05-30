@@ -885,6 +885,8 @@ class keys():
     
     loot = "loot"
 
+    rune = "rune"
+
     light_source = "light_source"
 
     loot_type = "loot_type"

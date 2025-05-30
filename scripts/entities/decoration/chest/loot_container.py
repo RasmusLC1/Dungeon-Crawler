@@ -49,10 +49,7 @@ class Loot_Container(Decoration):
         return (rand_pos_x, rand_pos_y)
 
     def Spawn_Loot(self, loot_type, pos):
-        if loot_type == keys.gold:
-            self.Spawn_Gold(pos)
-        else:
-            self.game.item_handler.loot_handler.Spawn_Loot_Type(loot_type, pos)
+        self.game.item_handler.loot_handler.Spawn_Loot_Type(loot_type, pos)
 
     def Set_Loot_Types(self):
         pass

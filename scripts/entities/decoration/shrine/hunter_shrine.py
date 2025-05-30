@@ -37,6 +37,7 @@ class Hunter_Shrine(Decoration):
         self.Set_Animation(1)
         self.Set_Sprite()
         self.Spawn_Treasure()
+        self.game.player.Set_Last_Shrine(self)
         return True
 
     
@@ -59,12 +60,12 @@ class Hunter_Shrine(Decoration):
 
 
     def Spawn_Reward(self, item):
-        print(item.type, self.animation)
         if not self.animation == 1:
             return False
         if item.type != keys.hunter_treasure:
             return False
         
+        self.game.player.Set_Last_Shrine(self)
 
         self.Set_Animation(2)
         self.game.item_handler.Remove_Item(item, True)
@@ -74,7 +75,7 @@ class Hunter_Shrine(Decoration):
         self.game.sound_handler.Play_Sound('collapse', 0.4)
         self.game.clatter.Generate_Clatter(self.pos, 1000) # Generate clatter to alert nearby enemies
 
-        for treasure in self.treasures:
+        for treasure in list(self.treasures):
             self.treasures.remove(treasure)
             self.game.item_handler.Remove_Item(treasure, True)
 

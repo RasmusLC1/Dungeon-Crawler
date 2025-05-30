@@ -9,6 +9,7 @@ from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
 from scripts.entities.decoration.shrine.soul_well import Soul_Well
 from scripts.entities.decoration.shrine.hunter_shrine import Hunter_Shrine
+from scripts.entities.decoration.shrine.sacrifice_shrine import Sacrifice_Shrine
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
 from scripts.entities.decoration.light_sources.brazier import Brazier
 from scripts.entities.decoration.interactive.teleportation_circle import Teleportation_Circle
@@ -34,6 +35,7 @@ class Decoration_Handler():
             keys.rune_shrine: self.Spawn_Rune_Shrine,
             keys.portal_shrine: self.Spawn_Portal_Shrine,
             keys.hunter_shrine: self.Spawn_Hunter_Shrine,
+            keys.sacrifice_shrine: self.Spawn_Sacrifice_Shrine,
             keys.soul_well: self.Spawn_Soul_Well,
             keys.door_basic: self.Spawn_Door,
             keys.bones: self.Spawn_Bones,
@@ -92,6 +94,9 @@ class Decoration_Handler():
 
         for shrine in self.game.tilemap.extract([(keys.hunter_shrine, 0)]):
             self.Decoration_Spawner(keys.hunter_shrine, shrine.pos)
+
+        for shrine in self.game.tilemap.extract([(keys.sacrifice_shrine, 0)]):
+            self.Decoration_Spawner(keys.sacrifice_shrine, shrine.pos)
 
         for soul_well in self.game.tilemap.extract([(keys.soul_well, 0)]):
             self.Decoration_Spawner(keys.soul_well, soul_well.pos)
@@ -210,6 +215,11 @@ class Decoration_Handler():
     
     def Spawn_Hunter_Shrine(self, pos, size=None, version=None, radius=None, level=None):
         shrine = Hunter_Shrine(self.game, pos)
+        self.decorations.append(shrine)
+        return shrine
+    
+    def Spawn_Sacrifice_Shrine(self, pos, size=None, version=None, radius=None, level=None):
+        shrine = Sacrifice_Shrine(self.game, pos)
         self.decorations.append(shrine)
         return shrine
 

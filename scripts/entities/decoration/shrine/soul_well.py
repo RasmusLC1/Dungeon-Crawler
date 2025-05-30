@@ -40,9 +40,8 @@ class Soul_Well(Decoration):
 
 
     def Spawn_Reward(self, item):
-        if not item.type == keys.gold:
-                return False
-        self.game.player.Increase_Souls(item.amount * 2)
+        self.game.player.Set_Last_Shrine(self)
+        self.game.player.Increase_Souls(item.amount * item.value * 2)
         self.game.item_handler.Remove_Item(item, True)
         self.game.particle_handler.Activate_Particles(random.randint(8, 12), keys.soul_particle, self.rect().center, frame=random.randint(50, 70))
         

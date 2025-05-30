@@ -297,8 +297,8 @@ Upgrade weapons
     - Small rocks strewn around
     - Dust particles on the screen
     - # effogy tombs that can be opened for loot, but chance to spawn enemy
-    - Sacrifice shrine, sacrifice items of x value for bonus
-    - Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
+    - # Sacrifice shrine, sacrifice items of x value for bonus
+    - # Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
     - # Chest, standard loot, safe but multiple tiers that can determine the loot table
     - # Weapon racks, contains weapons
     - Libraries, with bookshelfs, sometimes contain runes and scrolls

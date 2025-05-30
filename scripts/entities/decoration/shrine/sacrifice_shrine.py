@@ -99,7 +99,7 @@ class Sacrifice_Shrine(Decoration):
     
     # Bad rewards are temporary bad effects
     def Get_Bad_Reward(self):
-        self.rewards = {
+        rewards = {
             keys.poison : 4,
             keys.fire : 4,
             keys.frozen : 4,
@@ -112,13 +112,13 @@ class Sacrifice_Shrine(Decoration):
 
         self.game.sound_handler.Play_Sound('bad_reward', 0.4)
 
-        reward, amount = random.choice(list(self.rewards.items()))
+        reward, amount = random.choice(list(rewards.items()))
         self.game.player.Set_Effect(reward, amount)
         return
 
     # Mid rewards are not permanent
     def Get_Mid_Reward(self):
-        self.rewards = {
+        rewards = {
             keys.healing: 20,
             keys.vampiric: 5,
             keys.regen: 3,
@@ -131,13 +131,13 @@ class Sacrifice_Shrine(Decoration):
 
         self.game.sound_handler.Play_Sound('mid_reward', 0.4)
         
-        reward, amount = random.choice(list(self.rewards.items()))
+        reward, amount = random.choice(list(rewards.items()))
         self.game.player.Set_Effect(reward, amount)
         return
     
     # Good rewards are permanent but lower
     def Get_Good_Reward(self):
-        self.rewards = {
+        rewards = {
             keys.vampiric: 3,
             keys.regen: 1,
             keys.thorns: 3,
@@ -155,5 +155,6 @@ class Sacrifice_Shrine(Decoration):
 
         self.game.sound_handler.Play_Sound('good_reward', 0.4)
         
-        reward, amount = random.choice(list(self.rewards.items()))
-        return reward, amount
+        reward, amount = random.choice(list(rewards.items()))
+        self.game.player.Set_Effect(reward, amount)
+        return

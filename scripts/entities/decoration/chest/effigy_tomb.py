@@ -16,8 +16,8 @@ class Effigy_Tomb(Loot_Container):
         self.game.sound_handler.Play_Sound('tomb_lid', 0.3)
 
         self.game.clatter.Generate_Clatter(self.pos, 500) # Generate clatter to alert nearby enemies
-        self.animation += 1
-        self.Set_Entity_Image()
+        self.Set_Animation(1)
+        return True
 
     def Drop_Loot(self):
         weight_values = [self.loot_weights[loot_type] for loot_type in self.loot_types]
@@ -40,7 +40,7 @@ class Effigy_Tomb(Loot_Container):
                            keys.revive,
                            keys.curse]
         
-        self.loot_weights = {keys.enemy : 10.5,
+        self.loot_weights = {keys.enemy : 0.5,
                              keys.revive : 0.2,
                              keys.curse : 0.3}
         
