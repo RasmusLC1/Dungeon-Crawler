@@ -5,10 +5,10 @@ import math
 import random
 
 tile_size = 32
-class Spawn_Loot_Room():
+class Spawn_Library():
 
     @staticmethod
-    def Spawn_Loot_Room(map, size_x, size_y, level, player_spawn, A_Star_Search, offgrid_tiles):
+    def Spawn_Library(map, size_x, size_y, level, player_spawn, A_Star_Search, offgrid_tiles):
 
         success = 0
         fail = 0
@@ -25,37 +25,34 @@ class Spawn_Loot_Room():
             distance = math.sqrt((player_spawn[0] - start_x) ** 2 + (player_spawn[1] - start_y) ** 2)
             if distance < 20:
                 continue
-
             
-            
-            if not Rectangle_Room.Room_Structure_Rectangle(map, start_x, start_y, room_size_x, room_size_y, A_Star_Search):
+            door_location = Rectangle_Room.Room_Structure_Rectangle(map, start_x, start_y, room_size_x, room_size_y, A_Star_Search)
+            print("LIBARY", door_location)
+            if not door_location:
                 fail += 1
                 if fail >= 10 + level:
                     return False
                 continue
 
 
-            Spawn_Loot_Room.Spawn_Loot_In_Loot_Room(start_x, start_y, room_size_x, room_size_y, offgrid_tiles)
+            Spawn_Library.Spawn_Loot_In_Loot_Room(start_x, start_y, room_size_x, room_size_y, offgrid_tiles, door_location)
             success += 1
         
         
         return True
     
     @staticmethod
-    def Spawn_Loot_In_Loot_Room(start_x, start_y, size_x, size_y, offgrid_tiles):
+    def Spawn_Loot_In_Loot_Room(start_x, start_y, size_x, size_y, offgrid_tiles, door_location):
         loot_count = 0
+        table_spawned = False
         for y in range(start_y + 1, start_y + size_y - 1):
             for x in range(start_x + 1, start_x + size_x -1):
-                spawn_loot = random.randint(0, 3 + loot_count)
-                if spawn_loot == 0:
+                spawn_loot = random.randint(0, loot_count)
+                if spawn_loot == 0: # guranteed to spawn at least one bookshelf since count starts at 0
                     loot_count += 1
-                    offgrid_tiles.append({keys.type: keys.chest, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})
-                elif spawn_loot == 1:
-                    loot_count += 1
-                    offgrid_tiles.append({"type": keys.gold, "variant": 0, "pos": [x * tile_size, y * tile_size]})
-
-        
-        # Spawn a chest in case nothing else spawns as a backup
-        if not loot_count:
-            offgrid_tiles.append({keys.type: keys.chest, keys.variant: 0, keys.pos: (start_x + size_x // 2 * tile_size, start_y + size_y // 2 * tile_size)})
-
+                    offgrid_tiles.append({keys.type: keys.bookshelf, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})
+                
+                # For libraries with 4 or more bookshelfs chance to spawn a potion table
+                elif spawn_loot == 4 and not table_spawned:
+                    table_spawned = True
+                    offgrid_tiles.append({keys.type: keys.potion_table, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})

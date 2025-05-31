@@ -7,6 +7,7 @@ class Bones(Decoration):
         super().__init__(game, "bones", pos, (32, 32))
         self.entity_type = entity_type
         self.activated = False
+        self.empty = True
 
     def Save_Data(self):
         super().Save_Data()

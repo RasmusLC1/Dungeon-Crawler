@@ -7,21 +7,10 @@ from scripts.engine.assets.keys import keys
 
 class Vase(Loot_Container):
     def __init__(self, game, pos) -> None:
-        self.version = random.randint(1, 5)
-        super().__init__(game, keys.vase + '_' + str(self.version), pos, True, 5)
-
-    # Ensure the correct version of the vase is saved and loaded
-    def Save_Data(self):
-        super().Save_Data()
-        self.saved_data[keys.type] = keys.vase
-        self.saved_data['version'] = self.version
-        
-
-    def Load_Data(self, data):
-        super().Load_Data(data)
-        self.version = data['version']
-        self.type = keys.vase + '_' + str(self.version)
-        self.Set_Sprite() # Initialise sprite again with correct type
+        super().__init__(game, keys.vase, pos, True, 5)
+        self.animation = random.randint(0, 4)
+        self.Set_Sprite()
+        self.empty = True
 
     def Open(self):
         return

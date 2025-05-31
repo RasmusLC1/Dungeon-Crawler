@@ -42,27 +42,27 @@ class Rectangle_Room():
                     continue
                 
                 map[start_x][y_mid] = DOOR
-                return True
+                return (start_x, y_mid)
 
             elif door_array[i] == 2: # Right wall
                 path = a_star(start_x + size_x, y_mid)
                 if not path:
                     continue
                 map[start_x + size_x - 1][y_mid] = DOOR
-                return True
+                return (start_x + size_x - 1, y_mid)
 
             elif door_array[i] == DOOR: # Top
                 path = a_star(x_mid, start_y - 1)
                 if not path:
                     continue
                 map[x_mid][start_y] = DOOR
-                return True
+                return (x_mid, start_y)
 
             elif door_array[i] == 4: # Bottom
                 path = a_star(x_mid, start_y + size_y)
                 if not path:
                     continue
                 map[x_mid][start_y + size_y - 1] = DOOR
-                return True
+                return (x_mid, start_y + size_y - 1)
 
-        return False
+        return None

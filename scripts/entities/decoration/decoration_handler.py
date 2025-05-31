@@ -13,6 +13,7 @@ from scripts.entities.decoration.shrine.sacrifice_shrine import Sacrifice_Shrine
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
 from scripts.entities.decoration.light_sources.brazier import Brazier
 from scripts.entities.decoration.interactive.teleportation_circle import Teleportation_Circle
+from scripts.entities.decoration.chest.bookshelf import Bookshelf
 import random
 import math
 from scripts.engine.assets.keys import keys
@@ -40,6 +41,7 @@ class Decoration_Handler():
             keys.door_basic: self.Spawn_Door,
             keys.bones: self.Spawn_Bones,
             keys.weapon_rack: self.Spawn_Weapon_Rack,
+            keys.bookshelf: self.Spawn_Bookshelf,
             keys.teleportation_circle: self.Spawn_Teleportation_Circle,
             keys.brazier: self.Spawn_Brazer,
             'boss_room': self.Spawn_Boss_Room
@@ -103,6 +105,9 @@ class Decoration_Handler():
 
         for effigy_tomb in self.game.tilemap.extract([(keys.effigy_tomb, 0)]):
             self.Decoration_Spawner(keys.effigy_tomb, effigy_tomb.pos)
+
+        for bookshelf in self.game.tilemap.extract([(keys.bookshelf, 0)]):
+            self.Decoration_Spawner(keys.bookshelf, bookshelf.pos)
 
         for teleportation_circle in self.game.tilemap.extract([(keys.teleportation_circle, 0)]):
             self.Decoration_Spawner(keys.teleportation_circle, teleportation_circle.pos)
@@ -202,6 +207,11 @@ class Decoration_Handler():
         potion_table = Potion_Table(self.game, pos)  
         self.decorations.append(potion_table)
         return potion_table
+    
+    def Spawn_Bookshelf(self, pos, size=None, version=None, radius=None, level=None):
+        bookshelf = Bookshelf(self.game, pos)  
+        self.decorations.append(bookshelf)
+        return bookshelf
     
     def Spawn_Weapon_Rack(self, pos, size=None, version=None, radius=None, level=None):
         weapon_rack = Weapon_rack(self.game, pos)  
@@ -353,7 +363,7 @@ class Decoration_Handler():
         teleport_circles = self.teleportation_circles.copy()
         random.shuffle(teleport_circles)  # Randomly pair circles
 
-        for i in range(0, len(teleport_circles) - 1, 2):
+        for i in range(0, len(teleport_circles), 2):
             a = teleport_circles[i]
             b = teleport_circles[i + 1]
             a.Set_Linked_Portal(b)

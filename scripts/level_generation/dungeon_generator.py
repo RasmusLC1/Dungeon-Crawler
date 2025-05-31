@@ -5,6 +5,7 @@ from scripts.engine.a_star import A_Star
 from scripts.level_generation.room_generation.level_structure import Level_Structure
 from scripts.level_generation.rooms.spawn_boss_room import Spawn_Boss_Room
 from scripts.level_generation.rooms.spawn_loot_room import Spawn_Loot_Room
+from scripts.level_generation.rooms.spawn_library import Spawn_Library
 from scripts.level_generation.rooms.spawn_lakes import Spawn_Lakes
 from scripts.level_generation.decoration_spawner.portal_shrine_spawner import Portal_Shrine_Spawner
 from scripts.level_generation.decoration_spawner.hunter_shrine_spawner import Hunter_Shrine_Spawner
@@ -68,6 +69,10 @@ class Dungeon_Generator():
             self.Generate_Map(map_id)
             return
         
+        if not Spawn_Library.Spawn_Library(self.cellular_automata.map, size_x, size_y, map_id, self.player_spawn, self.A_Star_Search, self.tilemap.offgrid_tiles):
+            self.Generate_Map(map_id)
+            return
+
         self.Update_A_Star_Map()
 
         self.Update_Load_Menu(4)
@@ -101,7 +106,7 @@ class Dungeon_Generator():
         
         Potion_Table_Spawner.Spawn_Potion_Table(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
-        Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.A_Star_Search, self.tilemap.offgrid_tiles)
+        Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, self.player_spawn, size_x, size_y, self.tile_size, self.A_Star_Search, self.tilemap.offgrid_tiles)
         
         Hunter_Shrine_Spawner.Spawn_Hunter_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
         
