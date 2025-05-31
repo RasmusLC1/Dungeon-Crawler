@@ -27,7 +27,6 @@ class Spawn_Library():
                 continue
             
             door_location = Rectangle_Room.Room_Structure_Rectangle(map, start_x, start_y, room_size_x, room_size_y, A_Star_Search)
-            print("LIBARY", door_location)
             if not door_location:
                 fail += 1
                 if fail >= 10 + level:
@@ -53,13 +52,14 @@ class Spawn_Library():
                 if x == door_location[0]:
                     continue
                 spawn_loot = random.randint(0, loot_count)
-                print(spawn_loot, loot_count)
                 if spawn_loot == 0: # guranteed to spawn at least one bookshelf since count starts at 0
                     loot_count += 1
                     offgrid_tiles.append({keys.type: keys.bookshelf, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})
+                    continue
                 
-                # For libraries with 4 or more bookshelfs chance to spawn a potion table
-                elif spawn_loot == 4 and not table_spawned:
+                # Spawn a single table
+                if not table_spawned:
                     table_spawned = True
                     loot_count += 1
                     offgrid_tiles.append({keys.type: keys.potion_table, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})
+                    continue

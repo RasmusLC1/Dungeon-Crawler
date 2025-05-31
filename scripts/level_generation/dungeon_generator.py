@@ -104,8 +104,6 @@ class Dungeon_Generator():
         
         Vase_Spawner.Spawn_Vase(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
         
-        Potion_Table_Spawner.Spawn_Potion_Table(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
-
         Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, self.player_spawn, size_x, size_y, self.tile_size, self.A_Star_Search, self.tilemap.offgrid_tiles)
         
         Hunter_Shrine_Spawner.Spawn_Hunter_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)

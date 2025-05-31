@@ -175,9 +175,6 @@ class Item_Handler():
             return False
         player_pos = self.game.player.pos
         nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
-        nearby_item = nearby_items[0]
-        if not self.game.player.rect().colliderect(nearby_item.rect()):
-            return False
         nearby_items[0].Pick_Up()
         return True
     

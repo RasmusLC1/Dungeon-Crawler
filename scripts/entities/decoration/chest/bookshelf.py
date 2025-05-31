@@ -16,6 +16,7 @@ class Bookshelf(Loot_Container):
                            keys.temptress_embrace,
                            keys.demonic_bargain,
                            keys.blood_tomb,
+                           keys.recipe_scroll,
                            key_empty
                            ]
         
@@ -23,17 +24,28 @@ class Bookshelf(Loot_Container):
                              keys.temptress_embrace: 0.1,
                              keys.demonic_bargain: 0.1,
                              keys.blood_tomb: 0.1,
+                             keys.recipe_scroll: 0.1,
                              keys.rune: 0.2,
-                             key_empty : 0.5
+                             key_empty : 2
                              }
+        
+        self.loot_categories = {
+            keys.recipe_scroll : keys.curse,
+            keys.temptress_embrace : keys.curse,
+            keys.demonic_bargain : keys.curse,
+            keys.blood_tomb : keys.curse,
+            keys.recipe_scroll : keys.passive,
+        } 
 
     def Spawn_Loot(self, loot_type, pos):
+        print(loot_type)
         if loot_type == key_empty:
             return
         elif loot_type == keys.rune:
             self.Open_Rune_Menu()
         else:
-            self.game.item_handler.loot_handler.Spawn_Loot_Type(loot_type, pos)
+            loot_category = self.loot_categories[loot_type]
+            self.game.item_handler.loot_handler.Spawn_Loot_Type(loot_category, pos, None, loot_type)
         return
 
     def Open_Rune_Menu(self):
