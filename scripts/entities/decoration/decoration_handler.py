@@ -363,11 +363,16 @@ class Decoration_Handler():
         teleport_circles = self.teleportation_circles.copy()
         random.shuffle(teleport_circles)  # Randomly pair circles
 
-        for i in range(0, len(teleport_circles), 2):
+        for i in range(0, len(teleport_circles) - 1, 2):
             a = teleport_circles[i]
             b = teleport_circles[i + 1]
             a.Set_Linked_Portal(b)
             b.Set_Linked_Portal(a)
+
+        for teleport_circle in teleport_circles:
+            if not teleport_circle.linked_portal:
+                self.Remove_Decoration(teleport_circle)
+                teleport_circles.remove(teleport_circle)
 
     
     def Check_Item_Collision(self, item):

@@ -7,7 +7,7 @@ key_empty = 'empty'
 class Bookshelf(Loot_Container):
     def __init__(self, game, pos) -> None:
         self.enemies = {}
-        super().__init__(game, keys.effigy_tomb, pos, False, 99, (32, 64))
+        super().__init__(game, keys.bookshelf, pos, False, 99, (32, 32))
         self.tile.Set_Physics(True) # Bookshelf is impassible
 
 
@@ -24,7 +24,7 @@ class Bookshelf(Loot_Container):
                              keys.demonic_bargain: 0.1,
                              keys.blood_tomb: 0.1,
                              keys.rune: 0.2,
-                             key_empty : 3
+                             key_empty : 0.5
                              }
 
     def Spawn_Loot(self, loot_type, pos):

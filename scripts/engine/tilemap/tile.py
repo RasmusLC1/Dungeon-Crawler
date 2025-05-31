@@ -6,7 +6,7 @@ not_rendered_tiles = [keys.door_basic]
 
 # Use dictionary keyed to pos in tilemap
 class Tile():
-    def __init__(self, game, type, variant, pos, size, active, light_level, physics) -> None:
+    def __init__(self, game, type, variant, pos, size, active, light_level, physics, translucent) -> None:
         self.game = game
         self.type = type
         self.variant = variant
@@ -16,6 +16,7 @@ class Tile():
         self.light_level = light_level
         self.max_light = 0  # Cache the max light contribution
         self.physics = physics
+        self.translucent = translucent
         self.next_to_Wall = False
         self.entities = {}
         self.update_entity_cooldown = 0
@@ -92,6 +93,8 @@ class Tile():
     def Set_Physics(self, state):
         self.physics = state
     
+    def Set_Translucent(self, state):
+        self.translucent = state
 
     def Add_Light_Contribution(self, light_id, contribution):
         # Add/update light contribution

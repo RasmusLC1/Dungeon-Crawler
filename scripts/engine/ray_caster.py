@@ -64,7 +64,7 @@ class Ray_Caster():
                 print(tile)
                 return False
             
-            if tile.physics:
+            if not tile.translucent:
                 return False
             
             

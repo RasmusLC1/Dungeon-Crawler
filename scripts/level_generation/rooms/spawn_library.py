@@ -13,11 +13,11 @@ class Spawn_Library():
         success = 0
         fail = 0
 
-        rooms = random.randint(10, 15)
+        rooms = random.randint(5, 8)
 
         while success <= rooms:
-            room_size_x = random.randint(4, 6)
-            room_size_y = random.randint(4, 6)
+            room_size_x = random.randint(6, 8)
+            room_size_y = random.randint(6, 8)
             start_x = random.randint(room_size_x + 4, size_x - room_size_x)
             start_y = random.randint(room_size_y + 4, size_y - room_size_y)
 
@@ -46,8 +46,14 @@ class Spawn_Library():
         loot_count = 0
         table_spawned = False
         for y in range(start_y + 1, start_y + size_y - 1):
+            # Prevent bookhelfs from spawning on same x and y axis as the door
+            if y == door_location[1]:
+                continue
             for x in range(start_x + 1, start_x + size_x -1):
+                if x == door_location[0]:
+                    continue
                 spawn_loot = random.randint(0, loot_count)
+                print(spawn_loot, loot_count)
                 if spawn_loot == 0: # guranteed to spawn at least one bookshelf since count starts at 0
                     loot_count += 1
                     offgrid_tiles.append({keys.type: keys.bookshelf, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})
@@ -55,4 +61,5 @@ class Spawn_Library():
                 # For libraries with 4 or more bookshelfs chance to spawn a potion table
                 elif spawn_loot == 4 and not table_spawned:
                     table_spawned = True
+                    loot_count += 1
                     offgrid_tiles.append({keys.type: keys.potion_table, keys.variant: 0, keys.pos: (x * tile_size, y * tile_size)})

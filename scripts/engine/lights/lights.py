@@ -32,7 +32,7 @@ class Light():
     def Check_Base_Tile(self, tile):
         if not tile:
             return False
-        if tile.physics:
+        if not tile.translucent:
             return False
         return True
     

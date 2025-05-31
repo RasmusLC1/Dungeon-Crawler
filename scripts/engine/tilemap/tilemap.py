@@ -51,7 +51,7 @@ class Tilemap:
             variant = tile_values[keys.variant]
             pos = (tile_values[keys.pos][0], tile_values[keys.pos][1])
             
-            tile = Tile(self.game, type, variant, pos, self.tile_size, 0, 0, False)
+            tile = Tile(self.game, type, variant, pos, self.tile_size, 0, 0, False, True)
             self.offgrid_tiles.append(tile)
 
         self.Check_Next_To_Wall()
@@ -65,10 +65,12 @@ class Tilemap:
         active = tile_values['active']
         light_level = tile_values['light']
         physics = False
+        translucent = True
         if 'wall' in type:
             physics = True
+            translucent = False
 
-        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
+        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics, translucent)
         self.tilemap[tile_key] = tile
         self.min_x = min(self.min_x, pos[0])
         self.max_x = max(self.max_x, pos[0])
@@ -227,8 +229,8 @@ class Tilemap:
         else:
             return None
     
-    def Add_Tile(self, type, variant, pos, physics, active = 0, light_level = 0):
-        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics)
+    def Add_Tile(self, type, variant, pos, physics, active = 0, light_level = 0, translucent = True):
+        tile = Tile(self.game, type, variant, pos, self.tile_size, active, light_level, physics, translucent)
         tile_key = ';'.join(map(str, pos))
         self.game.ray_caster.Remove_Tile(self.tilemap[tile_key]) # Remove old tile from renderer 
         self.tilemap[tile_key] = None
@@ -319,9 +321,6 @@ class Tilemap:
         for tile_key in self.tilemap:
             self.tilemap[tile_key].Render_All()
             self.game.ray_caster.Add_Tile(self.tilemap[tile_key])
-
-    def Set_Physics(self, tile, state):
-        tile.Set_Physics(state)
 
 
     def Set_Light_Level(self, tile, new_light_level):

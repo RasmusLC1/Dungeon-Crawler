@@ -7,12 +7,13 @@ class Door(Decoration):
         super().__init__(game, type, pos, size)
         self.is_open = False
         self.high_light_cooldown = 0
-        self.game.tilemap.Set_Physics(self.tile, True)
+        self.tile.Set_Physics(True)
+        self.tile.Set_Translucent(False)
         self.game.tilemap.Update_Tile_Type(self.tile, keys.floor)
 
     def Save_Data(self):
         super().Save_Data()
-        self.game.tilemap.Set_Physics(self.tile, True)
+        self.tile.Set_Physics(True)
         self.game.tilemap.Update_Tile_Type(self.tile, keys.door_basic)
         self.saved_data['is_open'] = self.is_open
 
@@ -36,9 +37,7 @@ class Door(Decoration):
     # TODO: IMPLEMENT walls that can be walked through, I.E walls without physics in tilemap
     def Open(self, generate_clatter = True):
         self.is_open = True
-        x = self.pos[0] // self.game.tilemap.tile_size
-        y = self.pos[1] // self.game.tilemap.tile_size
-        self.game.tilemap.Set_Physics(self.tile, False)
+        self.tile.Set_Physics(False)
 
         self.render = False
         self.game.decoration_handler.Remove_Decoration(self)
