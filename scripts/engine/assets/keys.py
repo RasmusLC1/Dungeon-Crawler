@@ -521,6 +521,8 @@ class keys():
     
     chest = "chest"
 
+    bookshelf = "bookshelf"
+
     
     door_basic = "door_basic"
 

@@ -74,7 +74,6 @@ class State_Machine():
         # Reset player health and souls
         self.game.player.Set_Souls(player_souls)
         self.game.player.Set_Health(player_health)
-        self.game.inventory.Equip_Weapon()
 
         self.Set_State('run_game')
 

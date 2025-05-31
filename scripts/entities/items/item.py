@@ -27,6 +27,7 @@ class Item(PhysicsEntity):
         self.value = value # Placeholder gold value
         self.is_projectile = False
         self.Set_Sprite()
+        self.broken_rendering_counter = 0 # Counter if it hits 10, delete item since something is wrong
         if add_to_tile:
             self.game.tilemap.Add_Entity_To_Tile(self.tile, self)
 
@@ -221,6 +222,9 @@ class Item(PhysicsEntity):
             self.Set_Sprite()
             if not self.rendered_image:
                 print(self.type, vars(self))
+                self.broken_rendering_counter += 1
+                if self.broken_rendering_counter >= 10:
+                      self.Delete_Item()
                 return
         surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 

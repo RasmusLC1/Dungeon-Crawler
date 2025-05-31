@@ -54,12 +54,7 @@ class Sacrifice_Shrine(Decoration):
 
 
     def Spawn_Reward(self, item):
-        if not self.animation == 1:
-            return False
-        if item.type != keys.hunter_treasure:
-            return False
-
-
+        print(item.type)
         value = self.Calculate_Reward(item)
 
         if value == RewardType.BAD:
@@ -75,31 +70,47 @@ class Sacrifice_Shrine(Decoration):
     
     def Calculate_Reward(self, item):
         value = item.amount * item.value
-        norm = min(value / 100, 1.0)  # Normalize to 0-1
 
-        # New weights:
-        negative_chance = max(0.8 - 0.8 * norm, 0)  # From 0.8 (low) to 0 (high)
-        mid_chance = 0.2 - 0.1 * norm               # From 0.2 (low) to 0.1 (high)
-        good_chance = 0.0 + 0.9 * norm              # From 0 (low) to 0.9 (high)
-
-        # Normalize (in case of slight float errors)
-        total = negative_chance + mid_chance + good_chance
-        negative_chance /= total
-        mid_chance /= total
-        good_chance /= total
-
-        # Roll
-        r = random.random()
-        if r < negative_chance:
-            return RewardType.BAD
-        elif r < negative_chance + mid_chance:
-            return RewardType.MID
-        else:
+        # At 100 gold or more, guaranteed GOOD reward
+        if value >= 100:
             return RewardType.GOOD
+        
+        # At 50 gold or more, no BAD rewards
+        elif value >= 50:
+            # Linearly increase chance of GOOD reward from 50 to 100
+            norm = (value - 50) / 50  # 0 at 50, 1 at 100
+            good_chance = 0.5 + 0.5 * norm  # From 0.5 to 1.0
+            mid_chance = 1.0 - good_chance  # From 0.5 to 0.0
+            r = random.random()
+            if r < mid_chance:
+                return RewardType.MID
+            else:
+                return RewardType.GOOD
+        
+        # Below 50 gold, bad possible
+        else:
+            norm = value / 50  # 0 to 1
+            bad_chance = 0.8 - 0.8 * norm  # From 0.8 to 0
+            mid_chance = 0.2 - 0.1 * norm  # From 0.2 to 0.1
+            good_chance = 0.0 + 0.9 * norm  # From 0 to 0.9
+
+            total = bad_chance + mid_chance + good_chance
+            bad_chance /= total
+            mid_chance /= total
+            good_chance /= total
+
+            r = random.random()
+            if r < bad_chance:
+                return RewardType.BAD
+            elif r < bad_chance + mid_chance:
+                return RewardType.MID
+            else:
+                return RewardType.GOOD
+
     
     # Bad rewards are temporary bad effects
     def Get_Bad_Reward(self):
-        rewards = {
+        self.rewards = {
             keys.poison : 4,
             keys.fire : 4,
             keys.frozen : 4,
@@ -112,13 +123,13 @@ class Sacrifice_Shrine(Decoration):
 
         self.game.sound_handler.Play_Sound('bad_reward', 0.4)
 
-        reward, amount = random.choice(list(rewards.items()))
+        reward, amount = random.choice(list(self.rewards.items()))
         self.game.player.Set_Effect(reward, amount)
         return
 
     # Mid rewards are not permanent
     def Get_Mid_Reward(self):
-        rewards = {
+        self.rewards = {
             keys.healing: 20,
             keys.vampiric: 5,
             keys.regen: 3,
@@ -131,13 +142,13 @@ class Sacrifice_Shrine(Decoration):
 
         self.game.sound_handler.Play_Sound('mid_reward', 0.4)
         
-        reward, amount = random.choice(list(rewards.items()))
+        reward, amount = random.choice(list(self.rewards.items()))
         self.game.player.Set_Effect(reward, amount)
         return
     
     # Good rewards are permanent but lower
     def Get_Good_Reward(self):
-        rewards = {
+        self.rewards = {
             keys.vampiric: 3,
             keys.regen: 1,
             keys.thorns: 3,
@@ -155,6 +166,6 @@ class Sacrifice_Shrine(Decoration):
 
         self.game.sound_handler.Play_Sound('good_reward', 0.4)
         
-        reward, amount = random.choice(list(rewards.items()))
-        self.game.player.Set_Effect(reward, amount)
+        reward, amount = random.choice(list(self.rewards.items()))
+        self.game.player.Set_Effect(reward, amount, True)
         return
