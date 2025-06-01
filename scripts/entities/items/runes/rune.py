@@ -154,10 +154,6 @@ class Rune(Item):
     def Increase_Animation_Size(self):
         self.animation_size = min(self.animation_size + 1, self.animation_size_max)
 
-    # Always return False as runes cannot be placed down
-    def Move_Legal(self, mouse_pos, player_pos, tilemap, offset=...):
-        return False
-
 
     def Update_Animation(self):
         if self.animation_time:
@@ -183,8 +179,25 @@ class Rune(Item):
         inversed_animation_size = (20 - self.animation_size) / 10 + 1
         
         self.game.symbols.Render_Symbol(surf, self.effect,  (self.player.pos[0] - offset[0] + 8 - inversed_animation_size, self.player.pos[1] - offset[1] - inversed_animation_size), inversed_animation_size)
-        
 
+    def Place_Down(self):
+        self.game.rune_handler.Remove_Rune_From_Active_Runes(self)
+        self.Delete_Item()
+
+
+    def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
+         # Copy image and set alpha
+        entity_image = self.entity_image.copy()
+        # entity_image.set_alpha(255)
+
+        # Create red overlay
+        red_overlay = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA)
+        red_overlay.fill((255, 0, 0, 100))  # Red with transparency
+
+        # Blit entity and red overlay
+        pos = (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1])
+        surf.blit(entity_image, pos)
+        surf.blit(red_overlay, pos)
 
     def Menu_Rect(self):
         return pygame.Rect(self.menu_pos[0], self.menu_pos[1], (self.size[0] * 1.5), (self.size[1] * 1.5))

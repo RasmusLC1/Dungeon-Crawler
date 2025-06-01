@@ -38,8 +38,6 @@ class Cursed_Loot(Loot):
         pos = (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1])
         surf.blit(entity_image, pos)
         surf.blit(red_overlay, pos)
-        # Render on Mouse position as the item position is not being updated
-        # surf.blit(self.entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
 
     def Place_Down(self):
         self.Delete_Item()

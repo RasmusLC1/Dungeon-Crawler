@@ -56,14 +56,12 @@ class Item_Handler():
         self.saved_data.clear()
 
     def Initialise(self):
-        
-        for key in self.game.tilemap.extract([('key', 0)].copy()):
-            key = self.loot_handler.Spawn_Key(key.pos)
-            if key:
-                self.Add_Item(key)
-
-
         for gold in self.game.tilemap.extract([(keys.gold, 0)].copy()):
+            
+            # TODO: REMOVE TEMP FUNCTION Temp holding function
+            self.game.rune_handler.Spawn_Rune_Floor(keys.key_rune, gold.pos)
+            continue
+
             amount = random.randint(20, 30)
             gold = self.loot_handler.Spawn_Gold(gold.pos, amount)
             if gold:
@@ -167,16 +165,16 @@ class Item_Handler():
     
     def Pick_Up_Items(self, distance) -> bool:
         nearby_items = self.Find_Nearby_Item(self.game.player.pos, distance)
-        # Remove items that have been picked up already
+        # Remove items that have been picked up already, prevents inventory problems
         for item in nearby_items:
             if item.picked_up:
                 nearby_items.remove(item)
         if not nearby_items:
-            return False
+            return None
         player_pos = self.game.player.pos
         nearby_items.sort(key=lambda decoration: math.sqrt((player_pos[0] - decoration.pos[0]) ** 2 + (player_pos[1] - decoration.pos[1]) ** 2))
-        nearby_items[0].Pick_Up()
-        return True
+        return nearby_items[0].Pick_Up()
+        
     
     def Pick_Up_All_Nearby_Items(self, distance) -> bool:
         nearby_items = self.Find_Nearby_Item(self.game.player.pos, distance)

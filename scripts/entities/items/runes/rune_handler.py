@@ -54,29 +54,27 @@ class Rune_Handler():
         self.active_runes = []
         self.saved_data = {}
         self.runes = {}
+        self.Rune_Spawner()
     
 
     def Save_Rune_Data(self):
-        for rune in self.runes.values():
+        for rune in self.active_runes:
             self.saved_data[rune.type] = rune.Save_Data()
 
         return self.saved_data
     
     
     def Load_Data(self, data):
-        if not self.runes:
-            self.Rune_Spawner()
-            
         if not data:
             return None
         
-        type = data.get("type")
+        type = data.get(keys.type)
 
         if not type:
             return None
-        rune = self.runes.get(type)
-        
+        rune = self.Add_Rune_To_Rune_Inventory(type)
         if not rune:
+            print("ERROR LOADING RUNE RUNEHANDLER", rune, type)
             return None
         
         rune.Load_Data(data)
@@ -90,59 +88,58 @@ class Rune_Handler():
             rune.Update()
     
     def Initialise_Runes(self):
-        self.Rune_Spawner()
         self.Add_Runes_To_Inventory_TEST()
 
     def Rune_Spawner(self):
         self.runes = {
-        keys.dash_rune : Dash_Rune(self.game, (9999, 9999)),
-        keys.key_rune : Key_Rune(self.game, (9999, 9999)),
-        keys.regen_rune : Regen_Rune(self.game, (9999, 9999)),
+            keys.dash_rune : Dash_Rune,
+            keys.key_rune : Key_Rune,
+            keys.regen_rune : Regen_Rune,
 
-        keys.healing_rune : Healing_Rune(self.game, (9999, 9999)),
-        keys.invisibility_rune : Invisibility_Rune(self.game, (9999, 9999)),
-        keys.invulnerable_rune: Invulnerable_Rune(self.game, (9999, 9999)),
-        keys.resistance_rune : Resistance_Rune(self.game, (9999, 9999)),
-        keys.silence_rune : Silence_Rune(self.game, (9999, 9999)),
-        keys.speed_rune : Speed_Rune(self.game, (9999, 9999)),
-        keys.increase_strength_rune : Strength_Rune(self.game, (9999, 9999)),
-        keys.vampiric_rune : Vampiric_Rune(self.game, (9999, 9999)),
+            keys.healing_rune : Healing_Rune,
+            keys.invisibility_rune : Invisibility_Rune,
+            keys.invulnerable_rune: Invulnerable_Rune,
+            keys.resistance_rune : Resistance_Rune,
+            keys.silence_rune : Silence_Rune,
+            keys.speed_rune : Speed_Rune,
+            keys.increase_strength_rune : Strength_Rune,
+            keys.vampiric_rune : Vampiric_Rune,
 
-        keys.arcane_conduit_rune : Arcane_Conduit_Rune(self.game, (9999, 9999)),
-        keys.arcane_hunger_rune : Arcane_Hunger_Rune(self.game, (9999, 9999)),
-        keys.light_rune : Light_Rune(self.game, (9999, 9999)),
-        keys.magnet_rune : Magnet_Rune(self.game, (9999, 9999)),
-        keys.shield_rune : Shield_Rune(self.game, (9999, 9999)),
+            keys.arcane_conduit_rune : Arcane_Conduit_Rune,
+            keys.arcane_hunger_rune : Arcane_Hunger_Rune,
+            keys.light_rune : Light_Rune,
+            keys.magnet_rune : Magnet_Rune,
+            keys.shield_rune : Shield_Rune,
 
-        keys.fire_resistance_rune : Fire_Resistance_Rune(self.game, (9999, 9999)),
-        keys.fire_cirlce_rune : Fire_Circle_Rune(self.game, (9999, 9999)),
-        keys.fire_ball_rune : Fire_Ball_Rune(self.game, (9999, 9999)),
-        keys.fire_spray_rune : Fire_Spray_Rune(self.game, (9999, 9999)),
-        
-        keys.freeze_circle_rune : Freeze_Circle_Rune(self.game, (9999, 9999)),
-        keys.freeze_storm_rune : Freeze_Storm_Rune(self.game, (9999, 9999)),
-        keys.freeze_spray_rune : Freeze_Spray_Rune(self.game, (9999, 9999)),
-        keys.freeze_ball_rune : Freeze_Ball_Rune(self.game, (9999, 9999)),
-        keys.frozen_resistance_rune : Frozen_Resistance_Rune(self.game, (9999, 9999)),
-        
-        keys.poison_resistance_rune : Poison_Resistance_Rune(self.game, (9999, 9999)),
-        keys.poison_ball_rune : Poison_Ball_Rune(self.game, (9999, 9999)),
-        keys.poison_cloud_rune : Poison_Cloud_Rune(self.game, (9999, 9999)),
-        keys.poison_plume_rune : Poison_Plume_Rune(self.game, (9999, 9999)),
+            keys.fire_resistance_rune : Fire_Resistance_Rune,
+            keys.fire_cirlce_rune : Fire_Circle_Rune,
+            keys.fire_ball_rune : Fire_Ball_Rune,
+            keys.fire_spray_rune : Fire_Spray_Rune,
+            
+            keys.freeze_circle_rune : Freeze_Circle_Rune,
+            keys.freeze_storm_rune : Freeze_Storm_Rune,
+            keys.freeze_spray_rune : Freeze_Spray_Rune,
+            keys.freeze_ball_rune : Freeze_Ball_Rune,
+            keys.frozen_resistance_rune : Frozen_Resistance_Rune,
+            
+            keys.poison_resistance_rune : Poison_Resistance_Rune,
+            keys.poison_ball_rune : Poison_Ball_Rune,
+            keys.poison_cloud_rune : Poison_Cloud_Rune,
+            keys.poison_plume_rune : Poison_Plume_Rune,
 
-        keys.electric_ball_rune : Electric_Ball_Rune(self.game, (9999, 9999)),
-        keys.electric_spray_rune : Electric_Spray_Rune(self.game, (9999, 9999)),
-        keys.chain_lightning_rune : Chain_Lightning_Rune(self.game, (9999, 9999)),
+            keys.electric_ball_rune : Electric_Ball_Rune,
+            keys.electric_spray_rune : Electric_Spray_Rune,
+            keys.chain_lightning_rune : Chain_Lightning_Rune,
 
-        keys.soul_reap_rune : Soul_Reap_Rune(self.game, (9999, 9999)),
-        keys.soul_pit_rune : Soul_Pit_Rune(self.game, (9999, 9999)),
+            keys.soul_reap_rune : Soul_Reap_Rune,
+            keys.soul_pit_rune : Soul_Pit_Rune,
 
         }
 
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory(keys.key_rune)
-        self.Add_Rune_To_Rune_Inventory(keys.freeze_spray_rune )
+        self.Add_Rune_To_Rune_Inventory(keys.healing_rune)
         self.Add_Rune_To_Rune_Inventory(keys.dash_rune)
 
     def Clear_Runes(self):
@@ -162,17 +159,32 @@ class Rune_Handler():
         self.game.item_handler.Remove_Item(old_rune)
 
 
+    def Spawn_Rune_Floor(self, rune_type, pos):
+        rune_class = self.runes.get(rune_type)
+        if not rune_class:
+            print(rune_type, rune_class)
+            return
+        
+        rune = rune_class(self.game, pos)
+        self.game.item_handler.Add_Item(rune)
+
+
 
 
     # Add runes to Active Inventory
     def Add_Rune_To_Rune_Inventory(self, rune_type):
-        rune = self.runes[rune_type]
+        rune_class = self.runes.get(rune_type)
+        if not rune_class:
+            print(rune_type)
+            return None
+        
+        rune = rune_class(self.game, (999, 999))
         rune.active = True
         self.active_runes.append(rune)
         self.game.inventory.Add_Rune(rune)
 
         self.game.item_handler.Add_Item(rune)
-        return
+        return rune
 
     # Only one of each rune, so easy filter by rune_type return when found
     def Remove_Rune_From_Inventory(self, rune_type):
@@ -184,6 +196,12 @@ class Rune_Handler():
         self.game.item_handler.Remove_Item(rune)
 
         return True
+    
+    def Remove_Rune_From_Active_Runes(self, rune):
+        if not rune in self.active_runes:
+            print(self.active_runes)
+            return
+        self.active_runes.remove(rune)
     
     def Get_Rune(self, type):
         return self.runes[type]
@@ -198,6 +216,7 @@ class Rune_Handler():
                 nearby_runes.append(rune)
 
         return nearby_runes
+        
 
 
     def Render_Animation(self, surf, offset = (0, 0)):
