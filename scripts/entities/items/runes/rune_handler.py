@@ -139,8 +139,9 @@ class Rune_Handler():
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory(keys.key_rune)
-        self.Add_Rune_To_Rune_Inventory(keys.healing_rune)
+        self.Add_Rune_To_Rune_Inventory(keys.fire_spray_rune)
         self.Add_Rune_To_Rune_Inventory(keys.dash_rune)
+
 
     def Clear_Runes(self):
         self.runes.clear()
@@ -167,6 +168,7 @@ class Rune_Handler():
         
         rune = rune_class(self.game, pos)
         self.game.item_handler.Add_Item(rune)
+        rune.Set_Tile()
 
 
 
@@ -181,9 +183,8 @@ class Rune_Handler():
         rune = rune_class(self.game, (999, 999))
         rune.active = True
         self.active_runes.append(rune)
-        self.game.inventory.Add_Rune(rune)
-
         self.game.item_handler.Add_Item(rune)
+        rune.Pick_Up()
         return rune
 
     # Only one of each rune, so easy filter by rune_type return when found

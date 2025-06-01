@@ -40,7 +40,7 @@ class Item_Handler():
             elif item_data['sub_category'] == keys.loot:
                 loot_type = item_data[keys.loot_type]
                 item = self.loot_handler.Spawn_Loot_Type(loot_type, pos, item_data)
-            elif item_data['sub_category'] == 'rune':
+            elif item_data['sub_category'] == keys.rune:
                 item = self.game.rune_handler.Load_Data(item_data)
             else:
                 return None
@@ -57,11 +57,6 @@ class Item_Handler():
 
     def Initialise(self):
         for gold in self.game.tilemap.extract([(keys.gold, 0)].copy()):
-            
-            # TODO: REMOVE TEMP FUNCTION Temp holding function
-            self.game.rune_handler.Spawn_Rune_Floor(keys.key_rune, gold.pos)
-            continue
-
             amount = random.randint(20, 30)
             gold = self.loot_handler.Spawn_Gold(gold.pos, amount)
             if gold:

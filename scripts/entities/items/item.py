@@ -198,7 +198,6 @@ class Item(PhysicsEntity):
         self.game.item_handler.Remove_Item(self, True)
     
     def Render(self, surf, offset=(0, 0)):
-        
         if self.picked_up:
             self.Render_Inventory(surf, offset)
         else:

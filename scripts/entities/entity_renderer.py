@@ -44,7 +44,6 @@ class Entity_Renderer():
 
             if entity.category == keys.item:
                 entity.Update_Animation()
-            
             entity.Render(surf, offset)
 
             if nearest_interactable_object_found:

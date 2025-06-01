@@ -189,7 +189,10 @@ class Inventory_Handler():
 
     # Add item to the inventory
     def Add_Item(self, item):
-        return self.item_inventory.Add_Item(item)
+        if item.sub_category == keys.rune:
+            return self.rune_inventory.Add_Item(item)
+        else:
+            return self.item_inventory.Add_Item(item)
 
     def Add_Rune(self, rune):
         self.rune_inventory.Add_Item(rune)

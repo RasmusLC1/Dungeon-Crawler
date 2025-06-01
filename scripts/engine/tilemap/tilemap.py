@@ -189,9 +189,15 @@ class Tilemap:
 
     # Add an remove entities from tiles dynamically as needed
     def Remove_Entity_From_Tile(self, tile, entity_ID):
+        if not tile:
+            print("Error removing entity from  tile")
+            return
         tile.Clear_Entity(entity_ID)
 
     def Add_Entity_To_Tile(self, tile, entity):
+        if not tile:
+            print("Error adding entity to  tile", entity.type)
+            return
         tile.Add_Entity(entity)
 
     # Get the position of tiles in the tilemap

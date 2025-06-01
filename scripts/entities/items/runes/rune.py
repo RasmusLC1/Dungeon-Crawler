@@ -25,7 +25,7 @@ class Rune(Item):
         self.active = False
         self.effect = self.type.replace('_rune', '')
         self.render = True
-        self.picked_up = True
+        # self.picked_up = True
         self.cost_to_buy = soul_cost // 2 * power // 2
         self.activate_cooldown = 0
         self.activate_cooldown_max = 200
@@ -161,7 +161,7 @@ class Rune(Item):
             self.Increase_Animation_Size()
     
     # Defualt the Render function to render in inventory
-    def Render(self, surf, offset=(0, 0)):
+    def Render_Inventory(self, surf, offset=(0, 0)):
         item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], self.size)  
         surf.blit(item_image, (self.pos[0] - 3, self.pos[1] - 3))
 

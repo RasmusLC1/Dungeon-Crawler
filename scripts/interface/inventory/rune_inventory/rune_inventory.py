@@ -49,7 +49,6 @@ class Rune_Inventory(Base_Inventory):
                 continue
             if not inventory_slot.Add_Item(item):
                 continue
-            
             self.game.item_handler.Remove_Item(item)
             
             inventory_slot.item.Update()
