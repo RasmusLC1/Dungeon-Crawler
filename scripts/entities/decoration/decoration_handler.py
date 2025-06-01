@@ -1,9 +1,9 @@
 from scripts.entities.decoration.bones.bones import Bones
-from scripts.entities.decoration.chest.chest import Chest
-from scripts.entities.decoration.chest.weapon_rack import Weapon_rack
-from scripts.entities.decoration.chest.vase import Vase
-from scripts.entities.decoration.chest.effigy_tomb import Effigy_Tomb
-from scripts.entities.decoration.chest.potion_table import Potion_Table
+from scripts.entities.decoration.loot_container.chest import Chest
+from scripts.entities.decoration.loot_container.weapon_rack import Weapon_rack
+from scripts.entities.decoration.loot_container.vase import Vase
+from scripts.entities.decoration.loot_container.effigy_tomb import Effigy_Tomb
+from scripts.entities.decoration.loot_container.potion_table import Potion_Table
 from scripts.entities.decoration.doors.door import Door
 from scripts.entities.decoration.shrine.rune_shrine import Rune_Shrine
 from scripts.entities.decoration.shrine.portal_shrine import Portal_Shrine
@@ -13,7 +13,7 @@ from scripts.entities.decoration.shrine.sacrifice_shrine import Sacrifice_Shrine
 from scripts.entities.decoration.boss_room.boss_room import Boss_Room
 from scripts.entities.decoration.light_sources.brazier import Brazier
 from scripts.entities.decoration.interactive.teleportation_circle import Teleportation_Circle
-from scripts.entities.decoration.chest.bookshelf import Bookshelf
+from scripts.entities.decoration.loot_container.bookshelf import Bookshelf
 import random
 import math
 from scripts.engine.assets.keys import keys

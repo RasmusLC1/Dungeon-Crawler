@@ -26,7 +26,6 @@ class State_Machine():
             'return_main_menu' : lambda: self.Main_Menu(True),
             'pause_menu' : self.Pause_Menu,
             'rune_shrine_menu' : self.Rune_Shrine_Menu,
-            'rune_bookshelf_menu' : self.Rune_Bookshelf_Menu,
             'portal_shrine_menu' : self.Portal_Shrine_Menu,
             'exit_game' : lambda: self.Exit_Game(False),
             'exit_game_save' : lambda: self.Exit_Game(True),
@@ -97,13 +96,6 @@ class State_Machine():
     def Game_Over_Menu(self):
         self.game.menu_handler.Select_Menu('game_over_menu')
     
-    
-    def Rune_Bookshelf_Menu(self):
-        self.game.menu_handler.Select_Menu('rune_bookshelf_menu')
-
-        # Reset the buy menu if exited
-        if self.game_state != 'rune_bookshelf_menu':
-            self.game.menu_handler.rune_shrine_menu.Reset_Rune_Bought()
 
 
     def Rune_Shrine_Menu(self):

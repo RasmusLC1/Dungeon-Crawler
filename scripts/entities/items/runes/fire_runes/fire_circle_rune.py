@@ -1,6 +1,8 @@
 from scripts.entities.items.runes.rune import Rune
 from scripts.engine.assets.keys import keys
 
+
+# TODO: FINISH th erune
 class Fire_Circle_Rune(Rune):
     def __init__(self, game, pos):
         super().__init__(game, keys.fire_cirlce_rune, pos, 10, 10)

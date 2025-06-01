@@ -13,7 +13,7 @@ class Spawn_Library():
         success = 0
         fail = 0
 
-        rooms = random.randint(5, 8)
+        rooms = random.randint(10, 20)
 
         while success <= rooms:
             room_size_x = random.randint(6, 8)

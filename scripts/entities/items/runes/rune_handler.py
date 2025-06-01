@@ -33,8 +33,6 @@ from scripts.entities.items.runes.electric_runes.chain_lightning_rune import Cha
 from scripts.entities.items.runes.vampiric_runes.soul_reap_rune import Soul_Reap_Rune
 from scripts.entities.items.runes.vampiric_runes.soul_pit_rune import Soul_Pit_Rune
 
-
-
 from scripts.entities.items.runes.passive_runes.regen_rune import Regen_Rune
 
 
@@ -136,6 +134,26 @@ class Rune_Handler():
 
         }
 
+        self.damage_runes = [
+            # keys.fire_cirlce_rune,
+            keys.fire_ball_rune,
+            keys.fire_spray_rune,
+            # keys.freeze_circle_rune,
+            keys.freeze_storm_rune,
+            keys.freeze_spray_rune,
+            keys.freeze_ball_rune,
+            keys.poison_resistance_rune,
+            keys.poison_ball_rune,
+            keys.poison_cloud_rune,
+            keys.poison_plume_rune,
+            keys.electric_ball_rune,
+            keys.electric_spray_rune,
+            keys.chain_lightning_rune,
+            keys.soul_reap_rune,
+            keys.soul_pit_rune,
+        ]
+
+
 
     def Add_Runes_To_Inventory_TEST(self):
         self.Add_Rune_To_Rune_Inventory(keys.key_rune)
@@ -218,7 +236,18 @@ class Rune_Handler():
 
         return nearby_runes
         
-
+    def Check_If_Player_Has_Damage_Runes(self):
+        for rune in self.active_runes:
+            if rune.type in self.damage_runes:
+                return True
+            
+        return False
+    
+    def Check_If_Rune_Is_Active(self, new_rune_type):
+        for active_rune in self.active_runes:
+            if active_rune.type == new_rune_type:
+                return True
+        return False
 
     def Render_Animation(self, surf, offset = (0, 0)):
         for rune in self.active_runes:
