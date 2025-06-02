@@ -70,17 +70,14 @@ class Bookshelf(Loot_Container):
 
         if not rune_type:
             print("UNIQUE RUNE NOT FOUND BOOKSHELF")
-            return False
+            return self.Select_Available_Rune(keys.recipe_scroll, self.Get_Pos())
         
         self.Spawn_Rune(rune_type)
         return True
 
         
     def Spawn_Rune(self, rune_type):
-        rand_pos_x = self.pos[0] + random.randint(-100, 100)/10
-        rand_pos_y = self.pos[1] + random.randint(-100, 100)/10
-
-        self.game.rune_handler.Spawn_Rune_Floor(rune_type, (rand_pos_x, rand_pos_y))
+        self.game.rune_handler.Spawn_Rune_Floor(rune_type, self.Get_Pos())
         return
     
 

@@ -63,6 +63,9 @@ Buy and sell items to help complete levels
 Upgrade weapons
 
 
+# Atmosphere
+     dynamic sound elements: distant whispers, creaky floorboards, enemy sounds.
+
 # Weapons:
     # Implement better animations, bright arcs for where the damage area is
     # Torch, emits light and be be used to set enemies on fire, relatively low damage
@@ -301,7 +304,7 @@ Upgrade weapons
     - # Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
     - # Chest, standard loot, safe but multiple tiers that can determine the loot table
     - # Weapon racks, contains weapons
-    - Libraries, with bookshelfs, sometimes contain runes and scrolls
+    - # Libraries, with bookshelfs, sometimes contain runes and scrolls
     - # Laboratory, contains potions
     - # Soul well, harvest souls but can summon/attract enemies
     - False walls, can be destroyed to reveal treasure rooms
