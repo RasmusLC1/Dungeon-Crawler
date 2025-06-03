@@ -38,7 +38,6 @@ class Bookshelf(Loot_Container):
         } 
 
     def Spawn_Loot(self, loot_type, pos):
-        print(loot_type)
         if loot_type == key_empty:
             return
         elif loot_type == keys.rune:
@@ -84,7 +83,7 @@ class Bookshelf(Loot_Container):
     def Adjust_Rune_Weight(self):
         runes = {
             keys.dash_rune : 0.2,
-            keys.key_rune : 0.2,
+            keys.key_rune : 0.1,
             keys.regen_rune : 0.1,
 
             keys.healing_rune : 0.2,
@@ -98,7 +97,6 @@ class Bookshelf(Loot_Container):
             keys.magnet_rune : 0.2,
 
             keys.fire_resistance_rune : 0.2,
-            keys.fire_cirlce_rune : 0.1,
             keys.fire_spray_rune : 0.1,
             
             keys.freeze_storm_rune : 0.1,
@@ -117,7 +115,6 @@ class Bookshelf(Loot_Container):
 
         damage_runes = [
             keys.fire_resistance_rune,
-            keys.fire_cirlce_rune,
             keys.fire_spray_rune,
             keys.freeze_storm_rune,
             keys.freeze_spray_rune,

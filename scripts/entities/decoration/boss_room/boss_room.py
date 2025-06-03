@@ -6,7 +6,7 @@ from scripts.engine.assets.keys import keys
 
 
 class Boss_Room():
-    def __init__(self, game, pos, radius, level) -> None:
+    def __init__(self, game, pos, level) -> None:
         self.game = game
         self.type = 'boss_room'
         self.category = 'boss_room'
@@ -15,8 +15,8 @@ class Boss_Room():
 
         self.pos = pos
         self.boss = None
-        self.radius = radius
-        self.level = level
+        self.radius = random.randint(4, 6)
+        self.level = 1
         self.shrine = None
         self.distance_cooldown = 0
         self.activated = False

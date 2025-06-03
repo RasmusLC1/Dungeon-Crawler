@@ -16,4 +16,4 @@ class Torch_Spawner():
                 if distance < 8:
                     return
             torches.append((i, j))
-            offgrid_tiles.append({"type": keys.light_source, "variant": 0, "pos": [i * tile_size, j * tile_size]})
+            offgrid_tiles.append({keys.type: keys.light_source, keys.variant: 0, "pos": [i * tile_size, j * tile_size]})

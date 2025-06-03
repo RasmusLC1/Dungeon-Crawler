@@ -97,6 +97,15 @@ class Tilemap:
                     del self.tilemap[loc]
         
         return matches
+    
+    # Gets list of decorations and extracts them
+    def Extract_Decorations(self, decoration_types):
+        decorations = []
+        for tile in self.offgrid_tiles:
+            if (tile.type) in decoration_types:
+                decorations.append(copy.copy(tile))
+        
+        return decorations
 
     # Runs one time when loading, but expensive to compute
     def Check_Next_To_Wall(self):

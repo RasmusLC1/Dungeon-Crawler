@@ -1,6 +1,7 @@
 from scripts.entities.decoration.bones.bones import Bones
 from scripts.entities.decoration.loot_container.chest import Chest
 from scripts.entities.decoration.loot_container.weapon_rack import Weapon_rack
+from scripts.entities.decoration.loot_container.plinth import Plinth
 from scripts.entities.decoration.loot_container.vase import Vase
 from scripts.entities.decoration.loot_container.effigy_tomb import Effigy_Tomb
 from scripts.entities.decoration.loot_container.potion_table import Potion_Table
@@ -41,9 +42,11 @@ class Decoration_Handler():
             keys.door_basic: self.Spawn_Door,
             keys.bones: self.Spawn_Bones,
             keys.weapon_rack: self.Spawn_Weapon_Rack,
+            keys.plinth: self.Spawn_Plinth,
             keys.bookshelf: self.Spawn_Bookshelf,
             keys.teleportation_circle: self.Spawn_Teleportation_Circle,
             keys.brazier: self.Spawn_Brazer,
+            keys.light_source : self.Select_Light_Source,
             'boss_room': self.Spawn_Boss_Room
         }
 
@@ -78,57 +81,9 @@ class Decoration_Handler():
             size = (self.game.assets[door.type][0].get_width(), self.game.assets[door.type][0].get_height())
             self.Decoration_Spawner(keys.door_basic, door.pos, size=size)
 
-        for chest in self.game.tilemap.extract([(keys.chest, 0)]):
-            version = self.Set_Chest_Version(depth)
-            self.Decoration_Spawner(keys.chest, chest.pos, version=version)
-
-        for vase in self.game.tilemap.extract([(keys.vase, 0)]):
-            self.Decoration_Spawner(keys.vase, vase.pos)
-
-        for potion_table in self.game.tilemap.extract([(keys.potion_table, 0)]):
-            self.Decoration_Spawner(keys.potion_table, potion_table.pos)
-
-        for shrine in self.game.tilemap.extract([(keys.rune_shrine, 0)]):
-            self.Decoration_Spawner(keys.rune_shrine, shrine.pos)
-
-        for shrine in self.game.tilemap.extract([(keys.portal_shrine, 0)]):
-            self.Decoration_Spawner(keys.portal_shrine, shrine.pos)
-
-        for shrine in self.game.tilemap.extract([(keys.hunter_shrine, 0)]):
-            self.Decoration_Spawner(keys.hunter_shrine, shrine.pos)
-
-        for shrine in self.game.tilemap.extract([(keys.sacrifice_shrine, 0)]):
-            self.Decoration_Spawner(keys.sacrifice_shrine, shrine.pos)
-
-        for soul_well in self.game.tilemap.extract([(keys.soul_well, 0)]):
-            self.Decoration_Spawner(keys.soul_well, soul_well.pos)
-
-        for effigy_tomb in self.game.tilemap.extract([(keys.effigy_tomb, 0)]):
-            self.Decoration_Spawner(keys.effigy_tomb, effigy_tomb.pos)
-
-        for bookshelf in self.game.tilemap.extract([(keys.bookshelf, 0)]):
-            self.Decoration_Spawner(keys.bookshelf, bookshelf.pos)
-
-        for teleportation_circle in self.game.tilemap.extract([(keys.teleportation_circle, 0)]):
-            self.Decoration_Spawner(keys.teleportation_circle, teleportation_circle.pos)
-
-        for light_source in self.game.tilemap.extract([(keys.light_source, 0)]):
-            self.Select_Light_Source(light_source.pos)
-
-        for bones in self.game.tilemap.extract([(keys.bones, 0)]):
-            self.Decoration_Spawner(keys.bones, bones.pos)
-
-        #TODO: Update the temp level with real level
-        for boss_room in self.game.tilemap.extract([('Boss_Room', 0)]):
-            temp_level = 3
-            radius = random.randint(5, 7)
-            self.Decoration_Spawner('boss_room', boss_room.pos, radius=radius, level=temp_level)
-
-        for weapon_Rack in self.game.tilemap.extract([(keys.weapon_rack, 0)]):
-            self.Decoration_Spawner(keys.weapon_rack, weapon_Rack.pos)
-
-        for weapon in self.game.tilemap.extract([(keys.weapon, 0)]):
-            self.game.item_handler.weapon_handler.Spawn_Random_Weapon(weapon.pos)
+        keys_array = list(self.spawn_methods.keys())
+        for decoration in self.game.tilemap.Extract_Decorations(keys_array):
+            self.Decoration_Spawner(decoration.type, decoration.pos)
 
 
     def Set_Item_Sacrifice_Decorations(self):
@@ -142,7 +97,7 @@ class Decoration_Handler():
             if decoration.type in item_sacrifice_decorations:
                 self.item_sacrifice.append(decoration)
 
-    def Set_Chest_Version(self, depth):
+    def Set_Chest_Version(self, depth = 1):
         i = 0
         while i < 9:
             version = i
@@ -176,7 +131,6 @@ class Decoration_Handler():
         if not spawn_function:
             print(f"Warning: Decoration type '{type}' not recognized. Decoration_Handler Decoration_Spawner")
             return None
-
         decoration = spawn_function(pos, size, version, radius, level)
         if decoration:
             if data:
@@ -217,6 +171,11 @@ class Decoration_Handler():
         weapon_rack = Weapon_rack(self.game, pos)  
         self.decorations.append(weapon_rack)
         return weapon_rack
+    
+    def Spawn_Plinth(self, pos, size=None, version=None, radius=None, level=None):
+        plinth = Plinth(self.game, pos)  
+        self.decorations.append(plinth)
+        return plinth
 
     def Spawn_Rune_Shrine(self, pos, size=None, version=None, radius=None, level=None):
         shrine = Rune_Shrine(self.game, pos)
@@ -264,8 +223,8 @@ class Decoration_Handler():
         self.decorations.append(boss_room)
         return boss_room
     
-    def Select_Light_Source(self, pos):
-            
+    def Select_Light_Source(self, pos, size=None, version=None, radius=None, level=None):
+            # Type needs to be reset
             type = random.choices(
                 population=list(self.light_sources.keys()),
                 weights=list(self.light_sources.values()),

@@ -570,6 +570,8 @@ class keys():
 
     weapon_rack = "weapon_rack"
 
+    plinth = "plinth"
+
     loot_container = "loot_container"
 
     vase = "vase"
