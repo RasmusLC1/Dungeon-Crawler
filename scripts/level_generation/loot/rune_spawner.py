@@ -6,7 +6,7 @@ class Rune_Spawner():
 
     @staticmethod
     def Spawn_Runes(map, level, tile_size, size_x, size_y, offgrid_tiles):
-        loot_amount = random.randint(100 - level * 2, 200 - level)
+        loot_amount = random.randint(max(0, 3 - level), max(0, 5 - level))
         loot = 0 
         while loot < loot_amount:
             spawner_x = random.randint(1, size_x - 2)

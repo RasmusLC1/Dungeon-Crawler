@@ -20,6 +20,7 @@ from scripts.level_generation.decoration_spawner.soul_well_spawner import Soul_W
 from scripts.level_generation.decoration_spawner.teleport_circle import Teleportation_Circle_Spawner
 from scripts.level_generation.decoration_spawner.effigy_tomb_spawner import Effigy_Tomb_Spawner
 from scripts.level_generation.loot.weapon_spawner import Weapon_Spawner
+from scripts.level_generation.loot.rune_spawner import Rune_Spawner
 from scripts.level_generation.dungeon_enum_keys import *
 import os
 import random
@@ -93,6 +94,8 @@ class Dungeon_Generator():
 
 
         Weapon_Spawner.Spawn_Weapons(self.cellular_automata.map, map_id, self.tile_size, size_x, size_y, self.tilemap.offgrid_tiles)
+
+        Rune_Spawner.Spawn_Runes(self.cellular_automata.map, map_id, self.tile_size, size_x, size_y, self.tilemap.offgrid_tiles)
 
         Level_Structure.Level_Structure(self.cellular_automata.map, self.tile_size, size_x, size_y, self.tilemap)
 

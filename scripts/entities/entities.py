@@ -88,6 +88,10 @@ class PhysicsEntity:
 
     def Set_Effect(self, effect, duration, permanent = False):
         pass
+
+    def Set_Size(self, size):
+        self.size = size
+        self.Set_Sprite() # Image needs to be resized
     
     def Set_Tile(self):
         tile_key = str(int(self.pos[0]) // self.game.tilemap.tile_size) + ';' + str(int(self.pos[1]) // self.game.tilemap.tile_size)

@@ -8,7 +8,7 @@ from scripts.engine.assets.keys import keys
 
 class Rune(Item):
     def __init__(self, game, type, pos, power, soul_cost):
-        super().__init__(game,  type, keys.rune, pos, (32, 32), 1, False)
+        super().__init__(game,  type, keys.rune, pos, (24, 24), 1, False)
         self.player = self.game.player
         self.menu_pos = pos
         self.max_amount = 1
@@ -201,3 +201,24 @@ class Rune(Item):
 
     def Menu_Rect(self):
         return pygame.Rect(self.menu_pos[0], self.menu_pos[1], (self.size[0] * 1.5), (self.size[1] * 1.5))
+
+
+    def Render_Floor(self, surf, offset=(0, 0)):
+        
+        if not self.Update_Light_Level():
+            return
+        
+        self.Update_Dark_Surface()
+        
+        # Render the item
+        if not self.rendered_image:
+            self.Set_Sprite()
+            if not self.rendered_image:
+                print(self.type, vars(self))
+                self.broken_rendering_counter += 1
+                if self.broken_rendering_counter >= 10:
+                      self.Delete_Item()
+                return
+        # Hack to render the runes above the plinth they're sitting on. Runes should
+        # rarely be on floor, so it shouldn't affect other visuals
+        surf.blit(self.rendered_image, (self.pos[0] - offset[0], self.pos[1] - offset[1] - 10)) 

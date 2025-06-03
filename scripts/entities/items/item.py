@@ -15,6 +15,8 @@ class Item(PhysicsEntity):
         self.move_inventory_slot = False # Check for if the item is being moved to a new inventory slot
         self.inventory_type = None
         self.inventory_index = None
+        self.floor_size = size # Used to upscale item for inventory
+        self.inventory_size = (32,32) # Used to upscale item for inventory
         self.activate_cooldown = 0
         self.animation_cooldown = 0
         self.animation_cooldown_max = 50
@@ -92,6 +94,8 @@ class Item(PhysicsEntity):
 
         self.game.sound_handler.Play_Sound('item_pickup', 0.4)
 
+        self.Set_Size(self.inventory_size) # Standard loot size in inventory
+
         return self.game.player
         
 
@@ -104,6 +108,7 @@ class Item(PhysicsEntity):
         if self.game.decoration_handler.Check_Item_Collision(self):
             return False
         self.Set_Tile()
+        self.Set_Size(self.floor_size) # Standard loot size on floor
         self.game.sound_handler.Play_Sound('item_placedown', 0.2)
         return True
 

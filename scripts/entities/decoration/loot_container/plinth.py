@@ -4,7 +4,7 @@ import random
 
 class Plinth(Decoration):
     def __init__(self, game, pos):
-        super().__init__(game, keys.weapon_rack, pos, (32, 32), True, 20)
+        super().__init__(game, keys.plinth, pos, (32, 32), True, 20)
         self.Spawn_Rune()
         
 
@@ -32,5 +32,5 @@ class Plinth(Decoration):
                     weights=list(runes.values()),
                     k=1
                 )[0]
-        self.game.rune_handler.Spawn_Rune_Floor(rune_type, self.Get_Pos())
+        self.game.rune_handler.Spawn_Rune_Floor(rune_type, (self.pos[0] + 3, self.pos[1]))
 
