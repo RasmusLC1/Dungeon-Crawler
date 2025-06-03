@@ -118,6 +118,7 @@ class Inventory_Slot():
         if not self.item:
             return
         
+        # Renders the item cooldown
         if self.item.clicked:
             self.item.Render_Active(surf, self.game.render_scroll)
 

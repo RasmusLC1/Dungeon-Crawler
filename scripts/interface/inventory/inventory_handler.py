@@ -233,7 +233,6 @@ class Inventory_Handler():
 
     # Move the item around
     def Drag_Item(self, offset):
-        self.active_item.Render(self.game.display, offset)
         self.active_item.Move(self.game.mouse.mpos)
 
         if not self.game.mouse.left_click:

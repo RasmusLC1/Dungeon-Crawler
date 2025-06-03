@@ -27,7 +27,7 @@ class Cursed_Loot(Loot):
       # # Render item with fadeout if it's in an illegal position
     def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
          # Copy image and set alpha
-        entity_image = self.entity_image.copy()
+        entity_image =  pygame.transform.scale(self.entity_image.copy(), self.floor_size)
         # entity_image.set_alpha(255)
 
         # Create red overlay

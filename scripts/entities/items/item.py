@@ -236,8 +236,11 @@ class Item(PhysicsEntity):
     # Render item with fadeout if it's in an illegal position
     def Render_Out_Of_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
         # Calculate distance between player and mouse
+
         distance = max(20, 100 - self.Distance(player_pos, mouse_pos))
-        entity_image = self.entity_image.copy()
+        
+        entity_image =  pygame.transform.scale(self.entity_image.copy(), self.floor_size)
+        
         entity_image.set_alpha(distance)
 
         # Render on Mouse position as the item position is not being updated
@@ -246,9 +249,10 @@ class Item(PhysicsEntity):
     
     # Render item with fadeout if it's in an illegal position
     def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
-
+        entity_image =  pygame.transform.scale(self.entity_image.copy(), self.floor_size)
+        
         # Render on Mouse position as the item position is not being updated
-        surf.blit(self.entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
+        surf.blit(entity_image, (mouse_pos[0] - offset[0], mouse_pos[1] - offset[1]))
     
     # Used to render effect when active
     def Render_Active(self, surf, offset = (0,0)):

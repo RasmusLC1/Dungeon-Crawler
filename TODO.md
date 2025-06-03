@@ -67,6 +67,9 @@ Upgrade weapons
      dynamic sound elements: distant whispers, creaky floorboards, enemy sounds.
 
 # Weapons:
+    Weapons have health, forcing players to either repair them with ingots at weapon shrines or to get new weapons 
+    Weapons have a pool of damage stats, so for instance a sword might have a dictionary with fire, frozen, sharpness and the damage value of each effect
+    Weapons can be upgraded with gems
     # Implement better animations, bright arcs for where the damage area is
     # Torch, emits light and be be used to set enemies on fire, relatively low damage
     # Sword, best damage, little utility
@@ -157,6 +160,12 @@ Upgrade weapons
         Forsaken Grimoire – Increases rune power but randomly casts negative effects on the player
         Cracked Talisman – Grants resistance to elemental damage but causes physical damage to double
         Echoing Skull – Reveals hidden secrets in the dungeon but whispers eerie sounds, attracting enemies
+
+    ## Gems
+        Different gems that gives attributes to weapons, also valuable to sell
+
+    ## Ingots
+        Can be used to repair weapons, also have high value at market
 
     ## Potions
         # Based on player effects
@@ -304,6 +313,7 @@ Upgrade weapons
     - # Hunter shrine, find specific item and sacrifice it for bonus. Opening the shrine spawns that item somewhere on the map and checks pathfinding to player
     - # Chest, standard loot, safe but multiple tiers that can determine the loot table
     - # Weapon racks, contains weapons
+    - # Plinths, contains runes
     - # Libraries, with bookshelfs, sometimes contain runes and scrolls
     - # Laboratory, contains potions
     - # Soul well, harvest souls but can summon/attract enemies

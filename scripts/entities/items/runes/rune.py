@@ -187,8 +187,7 @@ class Rune(Item):
 
     def Render_In_Bounds(self, player_pos, mouse_pos, surf, offset = (0,0)):
          # Copy image and set alpha
-        entity_image = self.entity_image.copy()
-        # entity_image.set_alpha(255)
+        entity_image =  pygame.transform.scale(self.entity_image.copy(), self.floor_size)
 
         # Create red overlay
         red_overlay = pygame.Surface(entity_image.get_size(), pygame.SRCALPHA)
