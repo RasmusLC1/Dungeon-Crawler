@@ -163,9 +163,35 @@ Upgrade weapons
 
     ## Gems
         Different gems that gives attributes to weapons, also valuable to sell
+        fire - Set fire effect on weapon
+        freeze - Set freeze effect on weapon
+        poison - Set poison effect on weapon
+        vampiric - Set vampiric effect on weapon
+        electric - Set electric effect on weapon
+        Arcane hunger - Set Arcane hunger effect on weapon
+        blunt - Set blunt damage on weapon
+        sharpness - Set sharpness damage on weapon
+        halo - Grants wielder a chance to protect from damage
+        power - Increases rune power while equipped
+        range - Increases weapon range
+        resistance - Chance for weapon not to take damage
+        speed - Increases weapon attack speed
+        strength - Increases wielders strength
+        terror - Chance for enemies to run away
+        vulnerable - Entities hit take extra damage
+        weakness - entities hit gets weakness
+        wet - Set wet effect on weapon, can combo with electric, water and fire (steam)
+        durability - Increases weapon health
+        multishot - Fires two arrows at a time
 
     ## Ingots
-        Can be used to repair weapons, also have high value at market
+        Can be used to repair items and add upgrades, also have high value at market depending on rarety
+        Steel ingot - repairs weapons
+        Jade ingot - repairs runes
+        copper ingot - repairs items
+        Gold ingot - can add gem slots
+        Silver ingot - can upgrade rune power
+
 
     ## Potions
         # Based on player effects
@@ -321,7 +347,20 @@ Upgrade weapons
     - # Teleportation Circles, linked to each other, can be used to traverse the dungeon
     - # Teleport shrine, pay souls to teleport to a lower dungeon
     - # Rune shrine, pay souls to aquire new runes
-    - Weapon shrine, pay souls to bind gems to weapons for bonuses
+    - Weapon shrine, pay souls to bind gems to weapons for bonuses increased bonuses
+    - Fragile walls, can be broken by hitting with blunt weapons, acts as doors
+    - Levers that spawn items, open doors etc when activated
+    - Pressure plates, need to be held down to work, can be done with items. Works similar to levers
+    - Shops where you can buy different items for gold, maybe a little kobold with a shop. Opens a menu, you can sell loot for gold and use gold to buy random selection of items
+
+
+# Rooms:
+    # Treasure room, contains loot
+    # Library, contains bookshelves and potion tables
+    Trapped room, contains traps but more valuable loot
+    # Boss room, spawns a boss that then spawns a weapon or rune shrine when killed
+    Lakes, can be any kind of elements
+
 
 
 # Enemies:
