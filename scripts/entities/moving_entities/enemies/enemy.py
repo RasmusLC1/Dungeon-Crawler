@@ -233,7 +233,7 @@ class Enemy(Moving_Entity):
         tile.Clear_Entity(self.active_weapon.ID)
         
         self.active_weapon.pos = self.pos.copy()
-        self.active_weapon.Set_Equip(False)
+        self.active_weapon.Unequip()
         self.active_weapon.Place_Down()
         self.game.item_handler.Add_Item(self.active_weapon)
         self.active_weapon.Set_Tile()

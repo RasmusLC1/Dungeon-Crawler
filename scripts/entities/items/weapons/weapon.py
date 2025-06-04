@@ -1,6 +1,8 @@
 from scripts.entities.items.item import Item
 from scripts.entities.items.weapons.weapon_charge_effect import Weapon_Charge_Effect
 from scripts.entities.items.weapons.weapon_attack_effect import Weapon_Attack_Effect
+from scripts.entities.items.weapons.player_weapon_attack import Player_Weapon_Attack
+from scripts.entities.items.weapons.enemy_weapon_attack import Enemy_Weapon_Attack
 from scripts.entities.textbox.weapon_textbox import Weapon_Textbox
 import pygame
 import math
@@ -45,11 +47,11 @@ class Weapon(Item):
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
 
         self.delete_timer = 0 # time before weapon is deleted
-        self.wall_hit = False # Used to generate sparks on contact with wall
 
         self.attack_hitbox_size = (5, 5)
         self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
         self.text_box = Weapon_Textbox(self)
+        self.entity_attack_type = None # Used to determine if the weapon is being used by enemy or player
         self.weapon_charge_effect = Weapon_Charge_Effect(game, self)
         self.weapon_attack_effect = Weapon_Attack_Effect(game, self)
         self.description = (
@@ -105,50 +107,59 @@ class Weapon(Item):
         self.Set_Flip_X()
         return True
 
-    def Reset_Entities_Hit(self):
-        self.entities_hit.clear()
+    def Reset_Attack_Animation(self):
+        self.sub_type = self.type
+        self.attack_animation = 0
+        self.animation = 0
+        self.rotate = 0
+        self.entity.Reset_Max_Speed()
+        self.weapon_attack_effect.Reset_Attack_Effect_Animation()
 
     # Update the attack logic
     def Update_Attack(self):
-        if not self.attacking:
+        if not self.entity_attack_type:
             return False
-
-        entity = self.Player_Attack_Collision_Check()
-        if entity:
-            self.entities_hit.append(entity)
-
-        self.attacking -= 1
-
+        
+        self.entity_attack_type.Update_Attack()
         self.Update_Attack_Animation()
         self.weapon_attack_effect.Update_Attack_Effect_Animation()
         self.Attack_Align_Weapon()
 
-        if not self.attacking:
-            self.Reset_Entities_Hit()
-
-        if not self.entity:
-            return False
-        self.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
-        return True
-
     # Initialise the attack and reset attack values
     def Set_Attack(self):
-        if not self.Check_Entity_Cooldown():
+        if not self.entity_attack_type:
             return False
-        # Compute attack each time to account for changing entity agility level
-        self.attacking = max(int((self.speed * 30) // self.entity.agility), self.attack_animation_max) 
-        self.enemy_hit = False  # Reset at the start of a new attack
-        self.attack_animation_time = int(self.attacking / self.attack_animation_max)
-        self.charge_time = 0  # Reset charge time
-        self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 3) # Find nearby enemies to attack
-        self.nearby_decoration = self.game.decoration_handler.Find_Nearby_Decorations(self.entity.pos, 3)
+        if not self.entity_attack_type.Set_Attack():
+            return False
+        
+        self.Set_Attack_Animation_Time(int(self.attacking / self.attack_animation_max))
+        self.Set_Charge_Time(0)  # Reset charge time
+        
+        self.Handle_Attack_Animation()
+        return True
 
-        if self.entity.category == keys.enemy:
-            self.nearby_enemies.append(self.game.player)
+    
+    def Check_Tile(self, new_pos):
+        tile_key = str(int(new_pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(new_pos[1] // self.game.tilemap.tile_size))
+        tile = self.game.tilemap.Current_Tile(tile_key)
+        if not tile:
+            return True
+        if 'wall' in tile.type:
+            target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
+            self.game.clatter.Generate_Clatter(target_position, 400)
+            self.Spawn_Spark()
+            return False
+        
+        return True
+    
+
+    def Handle_Attack_Animation(self):
         self.weapon_attack_effect.Set_Attack_Effect_Animation_Time()
         self.Set_Rotation()
         self.rotate += 90
-        return True
+
+    def Set_Attack_Animation_Time(self, state):
+        self.attack_animation_time = state
 
 
     def Set_Enemy_Attack(self):
@@ -241,64 +252,6 @@ class Weapon(Item):
         except TypeError as e:
             print(f"Entity neither enemy nor player: {e}")
     
-    
-    # Return False if entity weapon cooldown is not off
-    def Check_Entity_Cooldown(self):
-        if self.entity.left_weapon_cooldown:
-            return False
-        return True
-        
-    # Check for collision on attack
-    def Player_Attack_Collision_Check(self):
-        # Check if the weapon has already hit an enemy this attack
-        if self.enemy_hit:
-            return None
-        
-        self.Set_Attack_Hitbox()
-
-        self.Check_Tile(self.attack_hitbox.center)
-
-        # Handle enemy attack collision check for player
-        player_collision_result = self.Player_Collision(self.attack_hitbox)
-        if player_collision_result:
-            return player_collision_result
-
-        enemy_hit = self.Enemy_Collision()        
-        if enemy_hit:
-            return enemy_hit
-        return self.Decoration_Collision()
-
-    
-    def Enemy_Collision(self):
-        for enemy in self.nearby_enemies:
-            # Check if the enemy is on damage cooldown
-            if enemy.damage_cooldown:
-                continue
-            # Prevent from hitting enemy multiple times
-            if enemy in self.entities_hit:
-                continue
-            # Check for collision with enemy
-            if self.attack_hitbox.colliderect(enemy.rect()):
-                self.Entity_Hit(enemy)
-                # Return enemy in case further effects need to be added such as knockback
-                return enemy
-            
-        return None
-    
-    def Decoration_Collision(self):
-        for decoration in self.nearby_decoration:
-            # Check if the decoration can be damaged
-            if not decoration.destructable:
-                continue
-            # Prevent from hitting decoration multiple times
-            if decoration in self.entities_hit:
-                continue
-            # Check for collision with enemy
-            if self.attack_hitbox.colliderect(decoration.rect()):
-                decoration.Damage_Taken(self.Calculate_Damage(), self.effect)
-                return decoration
-        
-        return None
 
 
      # Initialise special attack
@@ -328,7 +281,6 @@ class Weapon(Item):
 
     def Calculate_Damage(self):
         return self.entity.strength * self.damage
-
     
 
     # Damage Entity
@@ -363,12 +315,14 @@ class Weapon(Item):
         if self.effect:
             entity.Set_Effect(self.effect, 3)
     
-
     
     # Update attack animation logic
     def Update_Attack_Animation(self):
+        if not self.entity_attack_type:
+            print("ATTACK TYPE MISSING WEAPON ", self.entity.type)
+            return
         
-        if self.Reset_Attack():
+        if self.entity_attack_type.Reset_Attack():
             return
         self.animation = self.attack_animation
         self.sub_type = self.type + '_attack_' + self.attack_type
@@ -380,21 +334,6 @@ class Weapon(Item):
                 self.attack_animation = 0
         return
     
-    def Reset_Attack(self):
-        if not self.attacking <= 1:
-            return False
-        
-        self.sub_type = self.type
-        self.attacking = 0
-        self.attack_animation = 0
-        self.animation = 0
-        self.rotate = 0
-        self.entity.Reset_Max_Speed()
-        self.weapon_attack_effect.Reset_Attack_Effect_Animation()
-        self.wall_hit = False
-
-        return True
-        
 
     # Set the attack direction   
     def Set_Block_Direction(self):
@@ -432,40 +371,6 @@ class Weapon(Item):
         else:
             self.flip_x = False
 
-   # Check if enemy has hit the player
-    def Player_Collision(self, weapon_rect):
-        if self.entity.category != keys.enemy:
-            return None
-        
-        player = self.game.player
-        if weapon_rect.colliderect(player.rect()):
-            self.Entity_Hit(player)
-            return self.game.player
-        else:
-            return None
-    
-    #TODO: Make a formula for better computing clatter distance
-    # Return False on collision
-    def Check_Tile(self, new_pos):
-        # Check if wall has already been hit
-        if self.wall_hit:
-            return True
-        
-        tile_key = str(int(new_pos[0] // self.game.tilemap.tile_size)) + ';' + str(int(new_pos[1] // self.game.tilemap.tile_size))
-        tile = self.game.tilemap.Current_Tile(tile_key)
-        if not tile:
-            return True
-        if 'wall' in tile.type:
-            target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
-            self.game.clatter.Generate_Clatter(target_position, 400)
-            self.Spawn_Spark()
-            self.wall_hit = True
-            return False
-        
-        return True
-    
-    def Spawn_Spark(self):
-        self.game.particle_handler.Activate_Particles(random.randint(2, 5), keys.spark_particle, self.rect().center, random.randint(20, 30))
 
     # Handle deletion of items when enemies drop weapons, don't want them to linger forever
     def Update_Delete_Countdown(self):
@@ -485,18 +390,22 @@ class Weapon(Item):
         self.charge_time = 0
         return
 
-    
-    # Compute the hitbox for the weapon when attacking
-    def Set_Attack_Hitbox(self):
-        if not self.entity:
-            return
-        pos_x = self.entity.rect().center[0] - 2 + self.entity.attack_direction[0] * self.game.tilemap.tile_size
-        pos_y = self.entity.rect().center[1] - 2 + self.entity.attack_direction[1] * self.game.tilemap.tile_size
-        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0] * self.range, self.attack_hitbox_size[1] * self.range)
-
-
+  
     def Set_Entity(self, entity):
         self.entity = entity
+        if not entity:
+            return
+        
+        self.Set_Entity_Attack_Type(entity.type)
+        
+    
+    def Set_Entity_Attack_Type(self, type):
+        if type == keys.player:
+            self.entity_attack_type = Player_Weapon_Attack(self.game, self)
+        else:
+            self.entity_attack_type = Enemy_Weapon_Attack(self.game, self)
+
+
    
     # TODO: Write charge logic for enemy
     def Set_Charging_Enemy(self):
@@ -505,6 +414,8 @@ class Weapon(Item):
     def Set_Damage(self, damage):
         self.damage = damage
 
+    def Set_Charge_Time(self, state):
+        self.charge_time = state
 
     def Special_Attack(self):
         pass
@@ -585,7 +496,8 @@ class Weapon(Item):
         return super().Update_Text_Box(hitbox_1, hitbox_2)
 
 
-    def Set_Equip(self, state):
+    def Set_Equip(self, state, entity):
+        self.Set_Entity(entity)
         self.equipped = state
         if state:
             self.render = False
@@ -605,10 +517,8 @@ class Weapon(Item):
         return super().Place_Down()
 
     def Equip(self):
-        self.Set_Equip(True)
-        self.Set_Entity(self.game.player)
+        self.Set_Equip(True, self.game.player)
         self.game.player.Set_Active_Weapon(self)
 
     def Unequip(self):
-        self.Set_Equip(False)
-        self.Set_Entity(None)
+        self.Set_Equip(False, None)

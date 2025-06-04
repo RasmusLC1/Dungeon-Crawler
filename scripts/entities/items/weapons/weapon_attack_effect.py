@@ -1,4 +1,3 @@
-
 import pygame
 from scripts.engine.assets.keys import keys
 
@@ -35,7 +34,7 @@ class Weapon_Attack_Effect():
 
 
     def Set_Attack_Effect_Animation_Time(self):
-        self.attack_effect_animation_time = self.weapon.attacking / self.attack_effect_animation_max
+        self.attack_effect_animation_time = self.weapon.entity_attack_type.attacking / self.attack_effect_animation_max
 
     def Set_Special_Attack_Effect_Animation_Time(self):
         self.attack_effect_animation_time = self.weapon.special_attack / self.special_attack_effect_animation_max
@@ -68,7 +67,7 @@ class Weapon_Attack_Effect():
    
     # Handle rendering the weapons attack effect
     def Render_Attack_Effect(self, surf, offset):
-        if not self.weapon.attacking:
+        if not self.weapon.entity_attack_type.attacking:
             return
         pos = self.Attack_Effect_Position(offset)
         effect_type = self.weapon.effect + '_' + self.weapon.attack_type + '_' + keys.effect
