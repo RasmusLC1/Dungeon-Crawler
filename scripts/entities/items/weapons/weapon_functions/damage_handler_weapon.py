@@ -1,11 +1,9 @@
-import pygame
 from scripts.engine.assets.keys import keys
 
 class Damage_Handler_Weapon():
-    def __init__(self, game, weapon, damage):
-        self.game = game
+    def __init__(self, weapon, damage):
         self.weapon = weapon
-        self.damage = self.Set_Damage(damage) # The damage the wepaon does
+        self.Set_Damage(damage) # The damage the wepaon does
 
 
     def Entity_Hit(self, entity):
@@ -26,9 +24,9 @@ class Damage_Handler_Weapon():
 
     def Check_Effects(self, damage, entity):
         weapon_entity = self.weapon.entity
-
+        weapon_effect = self.weapon.effect
         # Check if weapon is vampiric first, to avoid double healing
-        if self.effect == keys.vampiric:
+        if weapon_effect == keys.vampiric:
             weapon_entity.Set_Effect(keys.healing, damage // 2)
             return
         
@@ -39,8 +37,8 @@ class Damage_Handler_Weapon():
 
 
         # Set special status effect of weapon if weapon has one
-        if self.effect:
-            entity.Set_Effect(self.effect, 3)
+        if weapon_effect:
+            entity.Set_Effect(weapon_effect, 3)
 
     def Calculate_Damage(self):
         return self.weapon.entity.strength * self.damage

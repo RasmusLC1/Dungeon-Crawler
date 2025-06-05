@@ -4,6 +4,7 @@ from scripts.entities.items.weapons.weapon_functions.attack_effect_weapon import
 from scripts.entities.items.weapons.weapon_functions.player_weapon_attack import Player_Weapon_Attack
 from scripts.entities.items.weapons.weapon_functions.enemy_weapon_attack import Enemy_Weapon_Attack
 from scripts.entities.items.weapons.weapon_functions.damage_handler_weapon import Damage_Handler_Weapon
+from scripts.entities.items.weapons.weapon_functions.animation_weapon import Animation_Weapon
 from scripts.entities.textbox.weapon_textbox import Weapon_Textbox
 import pygame
 import math
@@ -54,7 +55,8 @@ class Weapon(Item):
         self.entity_attack_type = None # Used to determine if the weapon is being used by enemy or player
         self.charge_effect_handler = Charge_Effect_Weapon(game, self)
         self.attack_effect_handler = Attack_Effect_Weapon(game, self)
-        self.damage_handler = Damage_Handler_Weapon(game, self, damage)
+        self.damage_handler = Damage_Handler_Weapon(self, damage)
+        self.animation_handler = Animation_Weapon(game, self)
         self.description = (
                             f"{self.effect} {self.damage_handler.damage}\n"
                             f"speed {self.speed}\n"
@@ -98,7 +100,7 @@ class Weapon(Item):
     # General Update function, handles setting the attack and general logic
     def Update(self, offset = (0,0)):
         super().Update()
-        self.Update_Animation()
+        self.animation_handler.Update_Animation()
         self.Special_Attack()
         self.Update_Delete_Countdown()
         if not self.entity:
@@ -115,7 +117,7 @@ class Weapon(Item):
             return False
         
         self.entity_attack_type.Update_Attack()
-        self.Update_Attack_Animation()
+        self.animation_handler.Update_Attack_Animation()
         self.attack_effect_handler.Update_Attack_Effect_Animation()
         self.Attack_Align_Weapon()
 
@@ -128,7 +130,7 @@ class Weapon(Item):
             return False
         
         # Handle animations internally in weapon
-        self.Set_Attack_Animation_Time(int(self.attacking / self.attack_animation_max))
+        self.animation_handler.Set_Attack_Animation_Time(int(self.attacking / self.attack_animation_max))
         self.Set_Charge_Time(0)  # Reset charge time
         
         self.Handle_Attack_Animation()
@@ -163,24 +165,13 @@ class Weapon(Item):
         self.attack_effect_handler.Reset_Attack_Effect_Animation()
 
 
-    def Set_Attack_Animation_Time(self, state):
-        self.attack_animation_time = state
-
-
     def Set_Rotation(self):
         if self.entity.category == keys.enemy:
             self.Point_Towards_Mouse_Enemy()
         else:
             self.Point_Towards_Mouse_Player() 
 
-    def Update_Animation(self):
-        if not self.equipped:
-            return
-        if self.animation_cooldown:
-            self.animation_cooldown -= 1
-        else:
-            self.animation_cooldown = self.animation_cooldown_max
-            self.animation = random.randint(0,self.max_animation)
+  
 
     # Handle weapon charging
     def Set_Weapon_Charge(self, offset = (0, 0)):
@@ -369,25 +360,6 @@ class Weapon(Item):
 
     def Stabbing_Attack(self):
         pass
-
-        # Update attack animation logic
-    def Update_Attack_Animation(self):
-        if not self.entity_attack_type:
-            print("ATTACK TYPE MISSING WEAPON ", self.entity.type)
-            return
-        
-        if self.entity_attack_type.Reset_Attack():
-            return
-        self.animation = self.attack_animation
-        self.sub_type = self.type + '_attack_' + self.attack_type
-        self.attack_animation_counter += 1
-        if self.attack_animation_counter >= self.attack_animation_time:
-            self.attack_animation_counter = 0
-            self.attack_animation += 1
-            if self.attack_animation > self.attack_animation_max:
-                self.attack_animation = 0
-        return
-    
     
     # Render the weapon in player's hand and rotate towards target
     def Render_Equipped(self, surf, offset=(0, 0)):
