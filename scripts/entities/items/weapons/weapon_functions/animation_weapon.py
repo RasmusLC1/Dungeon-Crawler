@@ -4,17 +4,20 @@ import random
 
 
 class Animation_Weapon():
-    def __init__(self, game, weapon):
+    def __init__(self, game, weapon, attack_animation_max):
         self.game = game
         self.weapon = weapon
         self.animation_cooldown = self.weapon.animation_cooldown
         self.animation_cooldown_max = self.weapon.animation_cooldown_max
         self.max_animation = self.weapon.max_animation
         self.attack_type = self.weapon.attack_type
-        self.attack_animation = self.weapon.attack_animation
-        self.attack_animation_time = self.weapon.attack_animation_time
-        self.attack_animation_max = self.weapon.attack_animation_max
-        self.attack_animation_counter = self.weapon.attack_animation_counter
+
+
+        self.attack_animation = 0 # Current attack animation
+        self.attack_animation_max = attack_animation_max # Maximum amount of attack animations
+        self.attack_animation_time = 0 # Time to shift to new animation
+        self.attack_animation_counter = 0 # Animation countdown that ticks up to time
+
 
 
     def Update_Animation(self):
@@ -44,5 +47,8 @@ class Animation_Weapon():
         return
     
     
-    def Set_Attack_Animation_Time(self, state):
-        self.attack_animation_time = state
+    def Reset_Animation(self):
+        self.attack_animation = 0
+
+    def Set_Attack_Animation_Time(self):
+        self.attack_animation_time = int(self.weapon.attacking / self.attack_animation_max)

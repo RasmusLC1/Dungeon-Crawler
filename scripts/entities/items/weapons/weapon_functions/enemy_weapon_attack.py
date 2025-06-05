@@ -33,16 +33,6 @@ class Enemy_Weapon_Attack():
             return
         self.weapon.Entity_Hit(self.game.player)
 
-
-    # Compute the hitbox for the weapon when attacking
-    def Set_Attack_Hitbox(self):
-        if not self.player:
-            return
-        pos_x = self.player.rect().center[0] - 2 + self.player.attack_direction[0] * self.game.tilemap.tile_size
-        pos_y = self.player.rect().center[1] - 2 + self.player.attack_direction[1] * self.game.tilemap.tile_size
-        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.weapon.attack_hitbox_size[0] * self.range, self.weapon.attack_hitbox_size[1] * self.range)
-
-
     def Reset_Attack(self):
         if not self.attacking <= 1:
             return False

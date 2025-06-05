@@ -8,7 +8,7 @@ class Damage_Handler_Weapon():
 
     def Entity_Hit(self, entity):
         weapon_entity = self.weapon.entity
-        if not weapon_entity or entity:
+        if not weapon_entity or not entity:
             return
         damage = self.Calculate_Damage()
         entity.Damage_Taken(damage, weapon_entity.attack_direction)

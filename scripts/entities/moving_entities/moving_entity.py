@@ -58,11 +58,11 @@ class Moving_Entity(PhysicsEntity):
         self.max_health = self.health
         
         # Movement variables
-        self.friction = self.game.tilemap.tile_size / self.game.render_scale # Friction, set to the renderscale
+        self.friction = 0.8 # Friction, set to the renderscale
         self.friction_holder = self.friction # Holder for friction to reset it
-        self.acceleration = agility / 40 * self.game.render_scale
+        self.acceleration = agility / 5 * self.game.render_scale
         self.acceleration_holder = self.acceleration # accelarition holder to reset it
-        self.max_speed = max_speed * self.game.render_scale + agility / 10 # Max speed of the entity
+        self.max_speed = max_speed * self.game.render_scale + agility # Max speed of the entity
         self.max_speed_holder = self.max_speed # Max speed holder to reset it
 
 
@@ -133,6 +133,7 @@ class Moving_Entity(PhysicsEntity):
         self.Movement(movement, tilemap)
         self.Update_Tile()
     
+
     def Update_Movement(self, movement):
         # Apply acceleration to velocity based on input
         self.velocity[0] += movement[0] * self.acceleration
@@ -141,25 +142,50 @@ class Moving_Entity(PhysicsEntity):
         # Clamp the velocity to max speed
         self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
         self.velocity[1] = max(-self.max_speed, min(self.velocity[1], self.max_speed))
-
-        # Apply friction when there's no input
-        if movement[0] == 0:
-            if self.velocity[0] > 0:
-                self.velocity[0] = max(self.velocity[0] - self.friction, 0)
-            else:
-                self.velocity[0] = min(self.velocity[0] + self.friction, 0)
         
-        if movement[1] == 0:
-            if self.velocity[1] > 0:
-                self.velocity[1] = max(self.velocity[1] - self.friction, 0)
-            else:
-                self.velocity[1] = min(self.velocity[1] + self.friction, 0)
+        # Apply friction and elimnates fricting
+        if abs(self.velocity[0]) > 0.1:
+            self.velocity[0] *= self.friction
+        else:
+            self.velocity[0] = 0
+        if abs(self.velocity[1]) > 0.1:
+            self.velocity[1] *= self.friction
+        else:
+            self.velocity[1] = 0
 
         self.direction_x = movement[0]
         self.direction_y = movement[1]
 
         # Calculate frame movement based on updated velocity
-        self.Set_Frame_movement((self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale))
+        self.Set_Frame_movement((
+            self.velocity[0] / self.game.render_scale,
+            self.velocity[1] / self.game.render_scale
+        ))
+
+
+    # def Update_Movement(self, movement):
+    #     # Apply acceleration to velocity based on input
+    #     self.velocity[0] += movement[0] * self.acceleration
+    #     self.velocity[1] += movement[1] * self.acceleration
+
+    #     # Clamp the velocity to max speed
+    #     self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
+    #     self.velocity[1] = max(-self.max_speed, min(self.velocity[1], self.max_speed))
+        
+    #     self.velocity[0] *= 0.85 if abs(self.velocity[0]) > 0.1 else 0
+    #     self.velocity[1] *= 0.85 if abs(self.velocity[1]) > 0.1 else 0
+        
+    #     # Avoids sliding
+    #     if abs(self.velocity[0]) < 0.05:
+    #         self.velocity[0] = 0
+    #     if abs(self.velocity[1]) < 0.05:
+    #         self.velocity[1] = 0
+
+    #     self.direction_x = movement[0]
+    #     self.direction_y = movement[1]
+
+    #     # Calculate frame movement based on updated velocity
+    #     self.Set_Frame_movement((self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale))
 
     # Movement handling
     def Movement(self, movement, tilemap):

@@ -8,7 +8,8 @@ class Player_Weapon_Attack():
         self.weapon = weapon
         
         self.attacking = 0
-        self.enemy_hit = False
+        self.attack_hitbox_size = (10, 10)
+        self.attack_hitbox = pygame.Rect(self.weapon.pos[0], self.weapon.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
 
         self.entities_hit = [] # Enemies which have been hit by an attack
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
@@ -21,14 +22,8 @@ class Player_Weapon_Attack():
             return False
 
         entity = self.Attack_Collision_Check()
-        if entity:
-            self.entities_hit.append(entity)
 
         self.attacking -= 1
-
-        if not self.attacking:
-            self.Reset_Entities_Hit()
-
         self.player.Reduce_Movement(4) # Reduce movement to a quarter when attacking
         return True
     
@@ -38,20 +33,15 @@ class Player_Weapon_Attack():
     def Set_Attack(self):
         if not self.Check_Entity_Cooldown():
             return False
+        self.Reset_Entities_Hit()
         
         # Compute attack each time to account for changing player agility level
         self.attacking = max(int((self.weapon.speed * 30) // self.player.agility), self.weapon.attack_animation_max) 
-        self.enemy_hit = False  # Reset at the start of a new attack
-        
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.player, 3) # Find nearby enemies to attack
         self.nearby_decoration = self.game.decoration_handler.Find_Nearby_Decorations(self.player.pos, 3)
         return True
     
     def Attack_Collision_Check(self):
-        # Check if the weapon has already hit an enemy this attack
-        if self.enemy_hit:
-            return None
-        
         self.Set_Attack_Hitbox()
 
         if not self.weapon.Check_Tile(self.attack_hitbox.center):
@@ -72,8 +62,11 @@ class Player_Weapon_Attack():
             if enemy in self.entities_hit:
                 continue
             # Check for collision with enemy
+            # print(self.attack_hitbox.size, self.attack_hitbox.colliderect(enemy.rect()))
             if self.attack_hitbox.colliderect(enemy.rect()):
                 self.weapon.Entity_Hit(enemy)
+                self.entities_hit.append(enemy)
+
                 # Return enemy in case further effects need to be added such as knockback
                 return enemy
             
@@ -113,12 +106,11 @@ class Player_Weapon_Attack():
     def Set_Attack_Hitbox(self):
         if not self.player:
             return
-        pos_x = self.player.rect().center[0] - 2 + self.player.attack_direction[0] * self.game.tilemap.tile_size
-        pos_y = self.player.rect().center[1] - 2 + self.player.attack_direction[1] * self.game.tilemap.tile_size
-        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.weapon.attack_hitbox_size[0] * self.weapon.range, self.weapon.attack_hitbox_size[1] * self.weapon.range)
-
+            
+        pos_x = self.weapon.rect().center[0] - 2 + self.player.attack_direction[0] * self.game.tilemap.tile_size
+        pos_y = self.weapon.rect().center[1] - 2 + self.player.attack_direction[1] * self.game.tilemap.tile_size
+        self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.attack_hitbox_size[0] * self.weapon.range, self.attack_hitbox_size[1] * self.weapon.range)
         
-
     
     def Reset_Entities_Hit(self):
         self.entities_hit.clear()

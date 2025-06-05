@@ -25,10 +25,8 @@ class Weapon(Item):
         self.max_animation = 0 # Max amount of animations
 
         self.flip_x = False
-        self.attack_animation = 0 # Current attack animation
-        self.attack_animation_max = 1 # Maximum amount of attack animations
-        self.attack_animation_time = 0 # Time to shift to new animation
-        self.attack_animation_counter = 0 # Animation countdown that ticks up to time
+
+        self.wall_hit = False
         
 
         self.enemy_hit = False # Prevent double damage on attacks
@@ -49,14 +47,12 @@ class Weapon(Item):
 
         self.delete_timer = 0 # time before weapon is deleted
 
-        self.attack_hitbox_size = (5, 5)
-        self.attack_hitbox = pygame.Rect(self.pos[0], self.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
         self.text_box = Weapon_Textbox(self)
         self.entity_attack_type = None # Used to determine if the weapon is being used by enemy or player
         self.charge_effect_handler = Charge_Effect_Weapon(game, self)
         self.attack_effect_handler = Attack_Effect_Weapon(game, self)
         self.damage_handler = Damage_Handler_Weapon(self, damage)
-        self.animation_handler = Animation_Weapon(game, self)
+        self.animation_handler = Animation_Weapon(game, self, 1)
         self.description = (
                             f"{self.effect} {self.damage_handler.damage}\n"
                             f"speed {self.speed}\n"
@@ -130,9 +126,9 @@ class Weapon(Item):
             return False
         
         # Handle animations internally in weapon
-        self.animation_handler.Set_Attack_Animation_Time(int(self.attacking / self.attack_animation_max))
+        self.animation_handler.Set_Attack_Animation_Time()
         self.Set_Charge_Time(0)  # Reset charge time
-        
+        self.wall_hit = False
         self.Handle_Attack_Animation()
         return True
 
@@ -143,6 +139,7 @@ class Weapon(Item):
         if not tile:
             return True
         if 'wall' in tile.type:
+            self.wall_hit = True
             target_position = (self.pos[0] - self.game.tilemap.tile_size * self.entity.attack_direction[0], self.pos[1] - self.game.tilemap.tile_size * self.entity.attack_direction[1])
             self.game.clatter.Generate_Clatter(target_position, 400)
             self.Spawn_Spark()
@@ -158,10 +155,11 @@ class Weapon(Item):
 
     def Reset_Attack_Animation(self):
         self.sub_type = self.type
-        self.attack_animation = 0
+        
         self.animation = 0
         self.rotate = 0
         self.entity.Reset_Max_Speed()
+        self.animation_handler.Reset_Animation()
         self.attack_effect_handler.Reset_Attack_Effect_Animation()
 
 
@@ -268,7 +266,6 @@ class Weapon(Item):
     # Set the attack direction   
     def Set_Block_Direction(self):
         self.entity.Attack_Direction_Handler(self.game.render_scroll)
-        self.entity.attack_direction = self.entity.attack_direction
         if not self.entity.attack_direction[0] or not self.entity.attack_direction[1]:
             return
         # self.entity.attack_direction = pygame.math.Vector2(self.entity.attack_direction[0], self.entity.attack_direction[1])
