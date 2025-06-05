@@ -9,7 +9,7 @@ class Spear(Projectile):
         self.distance_from_player = 0
         
     
-
+    # TODO: ITEM IS NOT REMOVED FROM INVENTORY SLOT
     def Shoot(self):
         self.Initialise_Shooting(self.entity_strength)
 

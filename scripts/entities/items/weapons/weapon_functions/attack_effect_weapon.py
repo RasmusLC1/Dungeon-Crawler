@@ -2,7 +2,7 @@ import pygame
 from scripts.engine.assets.keys import keys
 
 
-class Weapon_Attack_Effect():
+class Attack_Effect_Weapon():
     def __init__(self, game, weapon):
         self.game = game
         self.weapon = weapon

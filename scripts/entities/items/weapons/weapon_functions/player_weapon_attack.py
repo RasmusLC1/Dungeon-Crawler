@@ -89,7 +89,7 @@ class Player_Weapon_Attack():
                 continue
             # Check for collision with enemy
             if self.attack_hitbox.colliderect(decoration.rect()):
-                decoration.Damage_Taken(self.weapon.Calculate_Damage(), self.weapon.effect)
+                decoration.Damage_Taken(self.weapon.damage_handler.Calculate_Damage(), self.weapon.effect)
                 return decoration
         
         return None
@@ -118,8 +118,6 @@ class Player_Weapon_Attack():
         self.attack_hitbox = pygame.Rect(pos_x, pos_y, self.weapon.attack_hitbox_size[0] * self.weapon.range, self.weapon.attack_hitbox_size[1] * self.weapon.range)
 
         
-    def Spawn_Spark(self):
-        self.game.particle_handler.Activate_Particles(random.randint(2, 5), keys.spark_particle, self.weapon.rect().center, random.randint(20, 30))
 
     
     def Reset_Entities_Hit(self):

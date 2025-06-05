@@ -10,12 +10,15 @@ class Portal_Shrine_Spawner():
         loot = 0 
         path = []
         count = 0
+        print("SPAWN PORTAL")
         while loot < loot_amount:
 
             spawner_x = random.randint(1, size_x - 2)
             spawner_y = random.randint(1, size_y - 2)
             # Ensure that the room is far enough away from the player
             distance = math.sqrt((player_spawn[0] - spawner_x) ** 2 + (player_spawn[1] - spawner_y) ** 2)
+            if count > 100:
+                return False
             count += 1
             if distance < 70:
                 continue
@@ -27,3 +30,5 @@ class Portal_Shrine_Spawner():
                 offgrid_tiles.append({keys.type: keys.portal_shrine, keys.variant: 0, keys.pos: (spawner_x * tile_size, spawner_y * tile_size)})
 
                 loot += 1
+
+        return True

@@ -44,7 +44,7 @@ class Battle_Axe(Weapon):
     def Set_Special_Attack(self, offset=...):
         self.attack_type = 'spin'
         super().Set_Special_Attack(offset)
-        self.weapon_attack_effect.Set_Special_Attack_Effect_Animation_Time()
+        self.attack_effect_handler.Set_Special_Attack_Effect_Animation_Time()
         self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, 4)
     
     def Reset_Special_Attack(self):
@@ -54,9 +54,9 @@ class Battle_Axe(Weapon):
         return super().Reset_Special_Attack()
 
     def Spin_Attack_Effect(self):
-        self.weapon_attack_effect.Update_Special_Attack_Effect_Animation()
+        self.attack_effect_handler.Update_Special_Attack_Effect_Animation()
         effect_type = self.effect + '_' + self.attack_type + '_effect'
-        attack_effect = self.game.assets[effect_type][self.weapon_attack_effect.attack_effect_animation]
+        attack_effect = self.game.assets[effect_type][self.attack_effect_handler.attack_effect_animation]
         pos_x = self.entity.pos[0] - self.game.render_scroll[0] - 10
         pos_y = self.entity.pos[1] - self.game.render_scroll[1] - 10
         self.game.display.blit(attack_effect, (pos_x, pos_y))

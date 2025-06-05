@@ -1,7 +1,7 @@
 from scripts.engine.assets.keys import keys
 
 # Responsible for showing the special attack charge of the weapon
-class Weapon_Charge_Effect():
+class Charge_Effect_Weapon():
     def __init__(self, game, weapon):
         self.game = game
         self.weapon = weapon

@@ -86,9 +86,12 @@ class Dungeon_Generator():
         if not Spawn_Enemy.Enemy_Spawner(self.cellular_automata.map, self.tile_size, size_x, size_y, self.A_Star_Search, self.tilemap.offgrid_tiles):
             self.Generate_Map(map_id)
             return
+        
         self.Update_Load_Menu(5)
         
-        self.Spawn_Decoration(map_id, size_x, size_y)
+        if not self.Spawn_Decoration(map_id, size_x, size_y):
+            self.Generate_Map(map_id)
+            return
 
         self.Update_A_Star_Map()
 
@@ -107,7 +110,8 @@ class Dungeon_Generator():
         
         Vase_Spawner.Spawn_Vase(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
         
-        Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, self.player_spawn, size_x, size_y, self.tile_size, self.A_Star_Search, self.tilemap.offgrid_tiles)
+        if not Portal_Shrine_Spawner.Spawn_Portal_Shrine(self.cellular_automata.map, self.player_spawn, size_x, size_y, self.tile_size, self.A_Star_Search, self.tilemap.offgrid_tiles):
+            return False
         
         Hunter_Shrine_Spawner.Spawn_Hunter_Shrine(self.cellular_automata.map, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
         
@@ -120,6 +124,8 @@ class Dungeon_Generator():
         Effigy_Tomb_Spawner.Spawn_Effigy_Tomb(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
 
         Effigy_Tomb_Spawner.Spawn_Effigy_Tomb(self.cellular_automata.map, map_id, size_x, size_y, self.tile_size, self.tilemap.offgrid_tiles, self.A_Star_Search)
+
+        return True
 
 
     def Update_Load_Menu(self, value):
