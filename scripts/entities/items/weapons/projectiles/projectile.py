@@ -4,8 +4,8 @@ from scripts.engine.assets.keys import keys
 
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, ranged_damage, speed, range, max_charge_time, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
-        super().__init__(game, pos, type, damage, speed, range, max_charge_time, weapon_class,  damage_type, attack_type, size, add_to_tile)
+    def __init__(self, game, pos, type, damage, ranged_damage, speed, range, max_charge_time, weapon_class, effect, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+        super().__init__(game, pos, type, damage, speed, range, max_charge_time, weapon_class,  effect, attack_type, size, add_to_tile)
         self.speed = speed
         self.shoot_speed = 0
         self.shoot_distance = shoot_distance
@@ -14,7 +14,7 @@ class Projectile(Weapon):
         self.entity_strength = 0
         self.attack_direction = (0, 0)
         self.is_projectile = True
-        self.damage_handler = Ranged_Damage_Handler_Weapon(self, damage, ranged_damage)
+        self.damage_handler = Ranged_Damage_Handler_Weapon(self, effect, damage, ranged_damage)
 
 
     def Save_Data(self):

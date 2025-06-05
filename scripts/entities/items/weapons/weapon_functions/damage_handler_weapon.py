@@ -1,47 +1,48 @@
 from scripts.engine.assets.keys import keys
 
 class Damage_Handler_Weapon():
-    def __init__(self, weapon, damage):
+    def __init__(self, weapon, effect, damage):
         self.weapon = weapon
-        self.Set_Damage(damage) # The damage the wepaon does
+        self.damage = {}
+        self.Set_Damage(effect, damage) # The damage the wepaon does
 
-
+    
     def Entity_Hit(self, entity):
         weapon_entity = self.weapon.entity
         if not weapon_entity or not entity:
             return
-        damage = self.Calculate_Damage()
-        entity.Damage_Taken(damage, weapon_entity.attack_direction)
+        for damage_type in self.damage:
+            damage = self.Calculate_Damage(damage_type)
+            entity.Damage_Taken(damage, weapon_entity.attack_direction)
 
-        if entity.effects.thorns.effect:
-            weapon_entity.Damage_Taken(entity.effects.thorns.effect, weapon_entity.attack_direction)
+            if entity.effects.thorns.effect:
+                weapon_entity.Damage_Taken(entity.effects.thorns.effect, weapon_entity.attack_direction)
 
-        if not weapon_entity:
-            return
-        
-        self.Check_Effects(damage, entity)
+            self.Check_Effects(damage_type, entity)
 
-    def Check_Effects(self, damage, entity):
+    def Check_Effects(self, damage_type, entity):
+        damage = self.damage[damage_type]
         weapon_entity = self.weapon.entity
-        weapon_effect = self.weapon.effect
         # Check if weapon is vampiric first, to avoid double healing
-        if weapon_effect == keys.vampiric:
+        if damage_type == keys.vampiric or weapon_entity.effects.vampiric:
             weapon_entity.Set_Effect(keys.healing, damage // 2)
             return
-        
-
-        if weapon_entity.effects.vampiric:
-            if weapon_entity.effects.vampiric.effect:
-                weapon_entity.Set_Effect(keys.healing, damage // 2)
-
-
         # Set special status effect of weapon if weapon has one
-        if weapon_effect:
-            entity.Set_Effect(weapon_effect, 3)
+        entity.Set_Effect(damage_type, max(1, round(damage // 10)))
 
-    def Calculate_Damage(self):
-        return self.weapon.entity.strength * self.damage
+    def Calculate_Damage(self, damage_type):
+        return self.weapon.entity.strength * self.damage[damage_type]
     
-    def Set_Damage(self, damage):
-        self.damage = damage
+    def Get_Damage(self):
+        return sum(self.damage.values())
+
+    def Set_Damage(self, damage_type, damage):
+        if damage_type in self.damage:
+            self.damage[damage_type] += damage
+        else:
+            self.damage[damage_type] = damage
+
+    # Iterate over the damage dictionary once and get the first key
+    def Get_First_Effect(self):
+        return next(iter(self.damage), None)
     

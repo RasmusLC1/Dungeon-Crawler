@@ -17,7 +17,6 @@ class Weapon(Item):
         self.speed = 10 - speed # Speed of the weapon
         self.range = range # Range of the weapon
         self.entity = None # Entity that holds the weapon
-        self.effect = effect # Special effects, like poision, ice, fire etc
         self.attack_type = attack_type # Different kinds of attacks, like cutting and stabbing
         self.in_inventory = False # Is the weapon in an inventory
         self.equipped = False # Is the weapon currently equipped and can be used to attack
@@ -48,12 +47,12 @@ class Weapon(Item):
 
         self.text_box = Weapon_Textbox(self)
         self.entity_attack_type = None # Used to determine if the weapon is being used by enemy or player
+        self.damage_handler = Damage_Handler_Weapon(self, effect, damage)
         self.charge_effect_handler = Charge_Effect_Weapon(game, self)
         self.attack_effect_handler = Attack_Effect_Weapon(game, self)
-        self.damage_handler = Damage_Handler_Weapon(self, damage)
         self.animation_handler = Animation_Weapon(game, self, 1)
         self.description = (
-                            f"{self.effect} {self.damage_handler.damage}\n"
+                            f"Damage {self.damage_handler.Get_Damage()}\n"
                             f"speed {self.speed}\n"
                             f"range {self.range}\n"
                             f"gold {self.value}\n"
@@ -68,7 +67,6 @@ class Weapon(Item):
         self.saved_data['damage'] = self.damage_handler.damage
         self.saved_data[keys.speed] = self.speed
         self.saved_data['range'] = self.range
-        self.saved_data['effect'] = self.effect
         self.saved_data['in_inventory'] = self.in_inventory
         self.saved_data['equipped'] = self.equipped
         self.saved_data['rotate'] = self.rotate
@@ -79,10 +77,8 @@ class Weapon(Item):
     
     def Load_Data(self, data):
         super().Load_Data(data)
-        self.damage_handler.Set_Damage(data['damage'])
         self.speed = data[keys.speed]
         self.range = data['range']
-        self.effect = data['effect']
         self.in_inventory = data['in_inventory']
         self.equipped = data['equipped']
         self.rotate = data['rotate']
@@ -295,6 +291,8 @@ class Weapon(Item):
         else:
             self.flip_x = False
 
+    def Get_First_Effect(self):
+        return self.damage_handler.Get_First_Effect()
 
     # Handle deletion of items when enemies drop weapons, don't want them to linger forever
     def Update_Delete_Countdown(self):

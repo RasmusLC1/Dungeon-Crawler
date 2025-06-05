@@ -2,8 +2,8 @@ from scripts.engine.assets.keys import keys
 from scripts.entities.items.weapons.weapon_functions.damage_handler_weapon import Damage_Handler_Weapon
 
 class Ranged_Damage_Handler_Weapon(Damage_Handler_Weapon):
-    def __init__(self, weapon, damage, ranged_damage):
-        super().__init__(weapon, damage)
+    def __init__(self, weapon, effect, damage, ranged_damage):
+        super().__init__(weapon, effect, damage)
         self.ranged_damage = ranged_damage
         self.nearby_enemies = []
 

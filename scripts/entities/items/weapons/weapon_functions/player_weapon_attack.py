@@ -82,7 +82,7 @@ class Player_Weapon_Attack():
                 continue
             # Check for collision with enemy
             if self.attack_hitbox.colliderect(decoration.rect()):
-                decoration.Damage_Taken(self.weapon.damage_handler.Calculate_Damage(), self.weapon.effect)
+                decoration.Damage_Taken(self.weapon.damage_handler.Calculate_Damage(), self.weapon.weapon_handler.Get_Damage())
                 return decoration
         
         return None

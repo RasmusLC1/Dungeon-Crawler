@@ -70,7 +70,7 @@ class Attack_Effect_Weapon():
         if not self.weapon.entity_attack_type.attacking:
             return
         pos = self.Attack_Effect_Position(offset)
-        effect_type = self.weapon.effect + '_' + self.weapon.attack_type + '_' + keys.effect
+        effect_type = self.weapon.Get_First_Effect() + '_' + self.weapon.attack_type + '_' + keys.effect
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         # attack_effect.set_alpha()
         attack_effect = pygame.transform.rotate(attack_effect, self.weapon.rotate)

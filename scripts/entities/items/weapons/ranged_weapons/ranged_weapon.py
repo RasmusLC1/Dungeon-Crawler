@@ -79,7 +79,8 @@ class Ranged_Weapon(Weapon):
         if not self.arrow:
             return
         arrow_speed = 3
-        self.arrow.damage_handler.Set_Damage(self.damage_handler.damage * 5)
+        # TODO: Make function that marge their damage
+        self.arrow.damage_handler.Set_Damage(self.Get_First_Effect(), self.damage_handler.Get_Damage() * 5)
         self.arrow.Set_Speed(arrow_speed)
         self.game.item_handler.Add_Item(self.arrow)
 
