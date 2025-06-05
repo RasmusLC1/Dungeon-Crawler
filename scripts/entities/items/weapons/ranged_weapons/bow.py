@@ -60,8 +60,8 @@ class Bow(Ranged_Weapon):
         self.attack_animation_counter += 1
         self.Update_Attack_Animation()
 
-        if self.attack_animation_time <= self.attack_animation_counter:
+        if self.animation_handler.attack_animation_time <= self.attack_animation_counter:
             self.attack_animation_counter = 0
-            self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
+            self.animation_handler.attack_animation = min(self.attack_animation_max, self.animation_handler.attack_animation + 1)
         return False
 

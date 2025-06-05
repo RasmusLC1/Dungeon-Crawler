@@ -29,7 +29,6 @@ class Weapon(Item):
         self.wall_hit = False
         
 
-        self.enemy_hit = False # Prevent double damage on attacks
         self.rotate = 0 # Rotation value of weapon
         self.nearby_enemies = [] # Nearby enemies that the weapon can interact with
         self.nearby_decoration = [] # Nearby decoration that the weapon can interact with
@@ -72,7 +71,6 @@ class Weapon(Item):
         self.saved_data['effect'] = self.effect
         self.saved_data['in_inventory'] = self.in_inventory
         self.saved_data['equipped'] = self.equipped
-        self.saved_data['enemy_hit'] = self.enemy_hit
         self.saved_data['rotate'] = self.rotate
         self.saved_data['attacking'] = self.attacking
         self.saved_data['special_attack'] = self.special_attack
@@ -87,7 +85,6 @@ class Weapon(Item):
         self.effect = data['effect']
         self.in_inventory = data['in_inventory']
         self.equipped = data['equipped']
-        self.enemy_hit = data['enemy_hit']
         self.rotate = data['rotate']
         self.attacking = data['attacking']
         self.special_attack = data['special_attack']
@@ -408,7 +405,6 @@ class Weapon(Item):
         self.in_inventory = True
         self.picked_up = True
         self.rotate = 0
-        self.enemy_hit = False
         self.light_level = 10
     
     # Prevent textbox when carried by enemy

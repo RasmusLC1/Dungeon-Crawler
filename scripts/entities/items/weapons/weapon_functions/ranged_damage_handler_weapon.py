@@ -30,7 +30,6 @@ class Ranged_Damage_Handler_Weapon(Damage_Handler_Weapon):
             return
         damage = self.Calculate_Ranged_Damage()
         entity.Damage_Taken(damage, weapon_entity.attack_direction)
-        self.enemy_hit = True
 
         if entity.effects.thorns.effect:
             weapon_entity.Damage_Taken(entity.effects.thorns.effect, weapon_entity.attack_direction)

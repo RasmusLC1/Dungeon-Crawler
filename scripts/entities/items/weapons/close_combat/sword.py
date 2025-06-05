@@ -52,7 +52,6 @@ class Sword(Weapon):
         new_x_pos = self.entity.pos[0] + self.entity.attack_direction[0] * 20
         new_y_pos = self.entity.pos[1] + self.entity.attack_direction[1] * 20
         self.Move((new_x_pos, new_y_pos))
-        self.enemy_hit = False
         self.Player_Attack_Collision_Check()
         return True
     

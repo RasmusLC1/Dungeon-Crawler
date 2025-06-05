@@ -7,7 +7,6 @@ class Enemy_Weapon_Attack():
         self.weapon = weapon
         
         self.attacking = 0
-        self.enemy_hit = False
 
 
     # Update the attack logic
@@ -28,7 +27,6 @@ class Enemy_Weapon_Attack():
         entity = self.weapon.entity
         self.attacking = max(int((self.weapon.speed * 30) // entity.agility), self.weapon.attack_animation_max) 
         self.attack_animation_time = int(self.attacking / self.weapon.attack_animation_max)
-        self.enemy_hit = True # Set enemy hit to true to prevent collision detection
         if entity.distance_to_player > self.game.tilemap.tile_size * 1.5:
             return
         self.weapon.Entity_Hit(self.game.player)

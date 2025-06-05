@@ -34,7 +34,7 @@ class Ranged_Weapon(Weapon):
 
     def Update_Attack_Animation(self):
         self.sub_type = self.type + '_attack'
-        self.animation = self.attack_animation
+        self.animation = self.animation_handler.attack_animation
         self.Set_Block_Direction()
         self.Set_Rotation()
         self.Set_Attack_Position()
@@ -90,7 +90,7 @@ class Ranged_Weapon(Weapon):
             self.is_charging = 0
             self.animation = 0
             self.attack_animation_counter = 0
-            self.attack_animation = 0
+            self.animation_handler.Reset_Animation()
             self.arrow = None
 
     def Find_Arrow(self):
