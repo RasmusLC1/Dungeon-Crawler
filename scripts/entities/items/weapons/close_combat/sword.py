@@ -3,7 +3,7 @@ import random
 from scripts.engine.assets.keys import keys
 
 class Sword(Weapon):
-    def __init__(self, game, pos, effect = 'slash'):
+    def __init__(self, game, pos, effect = keys.slash):
         super().__init__(game, pos, keys.sword, 3, 6, 5, 50, 'one_handed_melee', effect)
         self.max_animation = 3
         self.attack_animation_max = 3 

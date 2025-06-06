@@ -1,6 +1,5 @@
 import pygame
 from scripts.engine.assets.keys import keys
-import random
 
 class Player_Weapon_Attack():
     def __init__(self, game, weapon):

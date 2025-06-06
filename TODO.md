@@ -170,7 +170,7 @@ Upgrade weapons
         electric - Set electric effect on weapon
         Arcane hunger - Set Arcane hunger effect on weapon
         blunt - Set blunt damage on weapon
-        sharpness - Set sharpness damage on weapon
+        slash - Set slash damage on weapon
         halo - Grants wielder a chance to protect from damage
         power - Increases rune power while equipped
         range - Increases weapon range

@@ -380,6 +380,10 @@ class keys():
 
 
     # Weapon Effects
+
+    range = "range"
+
+    strength = "strength"
     
     slash_cut_effect = "slash_cut_effect"
 
@@ -927,6 +931,8 @@ class keys():
     
     slash = "slash"
 
+    durability = "durability"
+
     
     cut = "cut"
 
@@ -964,6 +970,10 @@ class keys():
     black_coin = "black_coin"
 
     halo = "halo"
+
+    vulnerable = "vulnerable"
+
+    terror = "terror"
 
     magnet = "magnet"
 

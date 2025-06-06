@@ -5,6 +5,7 @@ from scripts.entities.items.weapons.weapon_functions.player_weapon_attack import
 from scripts.entities.items.weapons.weapon_functions.enemy_weapon_attack import Enemy_Weapon_Attack
 from scripts.entities.items.weapons.weapon_functions.damage_handler_weapon import Damage_Handler_Weapon
 from scripts.entities.items.weapons.weapon_functions.animation_weapon import Animation_Weapon
+from scripts.entities.items.weapons.weapon_functions.gem_handler import Gem_Handler
 from scripts.entities.textbox.weapon_textbox import Weapon_Textbox
 import pygame
 import math
@@ -51,6 +52,7 @@ class Weapon(Item):
         self.charge_effect_handler = Charge_Effect_Weapon(game, self)
         self.attack_effect_handler = Attack_Effect_Weapon(game, self)
         self.animation_handler = Animation_Weapon(game, self, 1)
+        self.gem_handler = Gem_Handler(self)
         self.description = (
                             f"Damage {self.damage_handler.Get_Damage()}\n"
                             f"speed {self.speed}\n"
@@ -305,6 +307,9 @@ class Weapon(Item):
 
     def Set_Delete_Countdown(self, delete_countdown = 2000):
         self.delete_countdown = delete_countdown
+
+    def Set_Damage(self, damage_type, damage):
+        self.damage_handler.Set_Damage(damage_type, damage)
 
     # Reset the attack charge
     def Reset_Charge(self):
