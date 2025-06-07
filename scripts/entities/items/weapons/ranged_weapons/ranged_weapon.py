@@ -55,7 +55,7 @@ class Ranged_Weapon(Weapon):
         self.Move((new_x_pos, new_y_pos))
 
 
-    # Charging the crossbow
+    # TODO: Charging the crossbow
     def Set_Weapon_Charge(self, offset):
         print("IMPLEMENT SET WEAPON CHARGE")
         return
@@ -80,7 +80,7 @@ class Ranged_Weapon(Weapon):
             return
         arrow_speed = 3
         # TODO: Make function that marge their damage
-        self.arrow.damage_handler.Set_Damage(self.Get_First_Effect(), self.damage_handler.Get_Damage() * 5)
+        self.arrow.damage_handler.Set_Damage_Multiplier(self.damage_handler.Get_Damage())
         self.arrow.Set_Speed(arrow_speed)
         self.game.item_handler.Add_Item(self.arrow)
 
@@ -140,9 +140,30 @@ class Ranged_Weapon(Weapon):
         else:
             return False
         
+
+    def Enemy_Shooting(self):
+        if not self.entity.charge:
+            return False
+
+        if self.is_charging > self.max_charge_time:
+            self.is_charging = 120
+            self.Spawn_Arrow()
+            self.arrow.Set_Delete_Countdown(50)
+            self.arrow.pickup_allowed = False
+            self.Shoot_Arrow()
+            self.Reset_Bow()
+            return True
+        
+        self.is_charging = self.entity.charge
+        self.attack_animation_counter += 1
+        self.Update_Attack_Animation()
+
+        self.animation_handler.Enemy_Shooting_Animation()
+        return False
+        
     def Render_Equipped(self, surf, offset=(0, 0)):
         super().Render_Equipped(surf, offset)
         if not self.entity:
             return
-        if self.entity.type == 'player' and self.arrow or self.entity.active > 20 and self.arrow:
+        if self.entity.type == keys.player and self.arrow or self.entity.active > 20 and self.arrow:
                 self.arrow.Render_Equipped(surf, offset)

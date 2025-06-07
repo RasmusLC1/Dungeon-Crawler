@@ -10,7 +10,7 @@ from scripts.engine.assets.keys import keys
 
 class Bomb(Projectile):
     def __init__(self, game, pos, shoot_distance):
-        super().__init__(game, pos, keys.fire_bomb, 0, 1, 2, 2, 40, keys.bomb, keys.blunt, shoot_distance, keys.cut, (20, 20), False)
+        super().__init__(game, pos, keys.fire_bomb, 1, 2, 2, 40, keys.bomb, keys.blunt, shoot_distance, keys.cut, (20, 20), False)
         self.target = None
         self.distance_to_target = 99999
         self.disabled = True

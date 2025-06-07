@@ -3,7 +3,7 @@ from scripts.engine.assets.keys import keys
 
 class Hammer(Projectile):
     def __init__(self, game, pos, damage_type = 'blunt'):
-        super().__init__(game, pos, keys.hammer, 5, 2, 5, 4, 40, 'one_handed_melee', damage_type, 20, keys.cut)
+        super().__init__(game, pos, keys.hammer, 5, 5, 4, 40, 'one_handed_melee', damage_type, 20, keys.cut)
         self.max_animation = 3
         self.attack_animation_max = 3
         self.distance_from_player = 0

@@ -46,6 +46,10 @@ class Animation_Weapon():
                 self.attack_animation = 0
         return
     
+    def Enemy_Shooting_Animation(self):
+        if self.attack_animation_time <= self.attack_animation_counter:
+            self.attack_animation_counter = 0
+            self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
     
     def Reset_Animation(self):
         self.attack_animation = 0
