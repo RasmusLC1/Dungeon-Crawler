@@ -13,31 +13,44 @@ class Valuable_Loot_Handler(Loot_Types_Handler):
 
 
         self.loot_map = {
-            keys.gold: Gold,
-            keys.gem: Gem,
-            keys.hunter_treasure: Hunter_Treasure,
+            keys.gold: self.Spawn_Gold,
+            keys.gem: self.Spawn_Gem,
         }
 
 
 
-    def Spawn_Gold(self, pos, amount):
+    def Spawn_Gold(self, pos, amount = None):
+        # TEMP holder value
+        if not amount:
+            amount = 40
         loot = Gold(self.game, pos, amount)
         return loot
 
+    def Spawn_Gem(self, pos, amount):
+        # TEMP holder value
+        if not amount:
+            amount = 40
+        loot = Gem(self.game, pos, amount)
+        return loot
 
     def Spawn_Hunter_Treasure(self, pos):
         loot = Hunter_Treasure(self.game, pos)
         self.game.item_handler.Add_Item(loot)
         return loot
     
-    def Loot_Spawner(self, pos, type = None):
+    def Loot_Spawner(self, pos, type = None, amount = None):
         if not type:
             type = random.choice(self.types)
+
+        # Handle hunter treasure seperately
+        if type == keys.hunter_treasure:
+            self.Spawn_Hunter_Treasure(pos)
+            return
+        
         loot_class = self.loot_map.get(type)
         if not loot_class:
             return None
         
-
-        loot = loot_class(self.game, pos)
+        loot = loot_class(pos, amount)
 
         return loot

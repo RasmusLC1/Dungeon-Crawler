@@ -59,7 +59,7 @@ class Loot_Container(Decoration):
 
     def Spawn_Gold(self, pos):
         amount = random.randint(self.gold_range[0], self.gold_range[1])
-        self.game.item_handler.loot_handler.Spawn_Gold(pos, amount)
+        self.game.item_handler.loot_handler.Spawn_Loot_Type(keys.valuable, pos, None, keys.gold, amount)
 
     
     def Destroyed(self):
