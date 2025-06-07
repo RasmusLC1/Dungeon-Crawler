@@ -493,6 +493,31 @@ class Graphics_Loader:
         }
         self.assets.update(loot)
 
+    def Asset_Gems(self):
+        loot = {
+            keys.arcane_hunger_gem: get_tiles_from_sheet('items/gems/arcane_hunger.png', 0, 0, 0, 0, 32, 32),
+            keys.blunt_gem: get_tiles_from_sheet('items/gems/blunt.png', 0, 0, 0, 0, 32, 32),
+            keys.durability_gem: get_tiles_from_sheet('items/gems/durability.png', 0, 0, 0, 0, 32, 32),
+            keys.electric_gem: get_tiles_from_sheet('items/gems/electric.png', 0, 0, 0, 0, 32, 32),
+            keys.fire_gem: get_tiles_from_sheet('items/gems/fire.png', 0, 0, 0, 0, 32, 32),
+            keys.frozen_gem: get_tiles_from_sheet('items/gems/freeze.png', 0, 0, 0, 0, 32, 32),
+            keys.halo_gem: get_tiles_from_sheet('items/gems/halo.png', 0, 0, 0, 0, 32, 32),
+            keys.multishot_gem: get_tiles_from_sheet('items/gems/multishot.png', 0, 0, 0, 0, 32, 32),
+            keys.poison_gem: get_tiles_from_sheet('items/gems/poison.png', 0, 0, 0, 0, 32, 32),
+            keys.power_gem: get_tiles_from_sheet('items/gems/power.png', 0, 0, 0, 0, 32, 32),
+            keys.range_gem: get_tiles_from_sheet('items/gems/range.png', 0, 0, 0, 0, 32, 32),
+            keys.toughness_gem: get_tiles_from_sheet('items/gems/toughness.png', 0, 0, 0, 0, 32, 32),
+            keys.sharpness_gem: get_tiles_from_sheet('items/gems/sharpness.png', 0, 0, 0, 0, 32, 32),
+            keys.speed_gem: get_tiles_from_sheet('items/gems/speed.png', 0, 0, 0, 0, 32, 32),
+            keys.strength_gem: get_tiles_from_sheet('items/gems/strength.png', 0, 0, 0, 0, 32, 32),
+            keys.terror_gem: get_tiles_from_sheet('items/gems/terror.png', 0, 0, 0, 0, 32, 32),
+            keys.vampiric_gem: get_tiles_from_sheet('items/gems/vampiric.png', 0, 0, 0, 0, 32, 32),
+            keys.vulnerable_gem: get_tiles_from_sheet('items/gems/vulnerable.png', 0, 0, 0, 0, 32, 32),
+            keys.weakness_gem: get_tiles_from_sheet('items/gems/weakness.png', 0, 0, 0, 0, 32, 32),
+            keys.wet_gem: get_tiles_from_sheet('items/gems/wet.png', 0, 0, 0, 0, 32, 32),
+            keys.lockpick_gem: get_tiles_from_sheet('items/gems/blunt.png', 0, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(loot)
 
     def Asset_Keys(self):
         loot = {

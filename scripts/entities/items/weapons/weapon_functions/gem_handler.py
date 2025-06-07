@@ -12,7 +12,7 @@ class Gem_Handler():
             return False
         self.gems.append(gem)
         
-        self.weapon.Set_Damage(gem.effect, gem.damage)
+        self.weapon.Set_Damage(gem.effect, gem.amount)
         return True
     
     def Remove_Gem(self, gem_id):

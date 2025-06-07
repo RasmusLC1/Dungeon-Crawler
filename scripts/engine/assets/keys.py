@@ -714,6 +714,51 @@ class keys():
     
     vampiric_bomb = "vampiric_bomb"
 
+    # Gems
+    arcane_hunger_gem = "arcane_hunger_gem"
+
+    blunt_gem = "blunt_gem"
+
+    durability_gem = "durability_gem"
+
+    electric_gem = "electric_gem"
+
+    fire_gem = "fire_gem"
+
+    frozen_gem = "frozen_gem"
+
+    halo_gem = "halo_gem"
+
+    multishot_gem = "multishot_gem"
+
+    poison_gem = "poison_gem"
+
+    power_gem = "power_gem"
+
+    range_gem = "range_gem"
+
+    toughness_gem = "toughness_gem"
+
+    sharpness_gem = "sharpness_gem"
+
+    speed_gem = "speed_gem"
+
+    strength_gem = "strength_gem"
+
+    terror_gem = "terror_gem"
+
+    vampiric_gem = "vampiric_gem"
+
+    vulnerable_gem = "vulnerable_gem"
+
+    weakness_gem = "weakness_gem"
+
+    wet_gem = "wet_gem"
+    
+    lockpick_gem = "lockpick_gem"
+
+
+    # Runes
     
     healing_rune = "healing_rune"
     

@@ -3,7 +3,7 @@ from scripts.engine.assets.keys import keys
 class Damage_Handler_Weapon():
     def __init__(self, weapon, effect, damage):
         self.weapon = weapon
-        self.damage = {}
+        self.damage = {} # Damage dictionary allows many damage types on same weapon
         self.Set_Damage(effect, damage) # The damage the wepaon does
 
     
