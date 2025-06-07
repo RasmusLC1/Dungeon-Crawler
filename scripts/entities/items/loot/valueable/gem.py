@@ -1,7 +1,7 @@
 from scripts.entities.items.loot.loot import Loot
 from scripts.engine.assets.keys import keys
 
-class Gem_Loot(Loot):
+class Gem(Loot):
     def __init__(self, game, type, pos, amount, effect):
         super().__init__(game, type, pos, (16, 16), 1, keys.valuable, amount)
         self.max_amount = 100 # Amount acts as damage, each extra amount = 1 damage

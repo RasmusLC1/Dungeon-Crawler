@@ -8,12 +8,11 @@ class Loot_Types_Handler():
 
         self.loot_map = {}
 
-        self.types = []
 
 
     def Loot_Spawner(self, pos, type = None):
         if not type:
-            type = random.choice(self.types)
+            type = random.choice(list(self.loot_map.keys()))
         loot_class = self.loot_map.get(type)
         if not loot_class:
             return None

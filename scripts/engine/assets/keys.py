@@ -715,6 +715,9 @@ class keys():
     vampiric_bomb = "vampiric_bomb"
 
     # Gems
+
+    gem = "gem"
+
     arcane_hunger_gem = "arcane_hunger_gem"
 
     blunt_gem = "blunt_gem"
@@ -754,7 +757,7 @@ class keys():
     weakness_gem = "weakness_gem"
 
     wet_gem = "wet_gem"
-    
+
     lockpick_gem = "lockpick_gem"
 
 

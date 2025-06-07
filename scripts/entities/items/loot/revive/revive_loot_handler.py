@@ -16,12 +16,5 @@ class Revive_Loot_Handler(Loot_Types_Handler):
 
  
 
-        self.types = [
-            keys.phoenix_feather,
-            keys.light_pendant,
-        ]
-
-
-
 
 

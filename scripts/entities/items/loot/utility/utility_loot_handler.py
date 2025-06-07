@@ -20,13 +20,5 @@ class Utility_Loot_Handler(Loot_Types_Handler):
             keys.recall_scroll: Recall_Scroll,
         }
 
-        self.types = [
-            keys.echo_bell,
-            keys.faded_hourglass,
-            keys.ethereal_chains,
-            keys.shadow_cloak,
-            keys.recall_scroll
-        ]
-
-
+ 
 
