@@ -11,17 +11,16 @@ class Potion_Table(Loot_Container):
 
 
     def Set_Loot_Types(self):
-        self.loot_types = [keys.potion,
-                           keys.recipe_scroll,]
-        
+
         self.loot_weights = {keys.potion : 0.8,
                              keys.recipe_scroll : 0.1,
                              }
 
     def Drop_Loot(self):
+        loot_types = list(self.loot_weights.keys())
         for i in range(3):
-            weight_values = [self.loot_weights[loot_type] for loot_type in self.loot_types]
-            loot_type = random.choices(self.loot_types, weight_values, k=1)[0]
+            weight_values = [self.loot_weights[loot_type] for loot_type in loot_types]
+            loot_type = random.choices(loot_types, weight_values, k=1)[0]
             pos = self.Get_Pos()
             if loot_type == keys.potion:
                 self.Spawn_Loot(loot_type, pos)

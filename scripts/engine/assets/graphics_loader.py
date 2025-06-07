@@ -30,9 +30,11 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
         Graphics_Loader.Asset_Keys(self)
+        Graphics_Loader.Asset_Gems(self)
         Graphics_Loader.Asset_Bombs(self)
         Graphics_Loader.Asset_Rune(self)
         Graphics_Loader.Asset_Menu(self)
+        
         Graphics_Loader.Asset_Health_Bar(self)
         Graphics_Loader.Asset_Particles_List(self)
         Graphics_Loader.Asset_Tooltips(self)

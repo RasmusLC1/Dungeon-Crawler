@@ -57,8 +57,7 @@ class Item_Handler():
 
     def Initialise(self):
         for gold in self.game.tilemap.extract([(keys.gold, 0)].copy()):
-            amount = random.randint(20, 30)
-            gold = self.loot_handler.Spawn_Loot_Type(keys.valuable, gold.pos, None, keys.gold, amount)
+            gold = self.loot_handler.Spawn_Loot_Type(keys.valuable, gold.pos, None, keys.gold)
             if gold:
                 self.Add_Item(gold)
 
