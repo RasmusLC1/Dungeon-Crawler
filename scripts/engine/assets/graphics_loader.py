@@ -509,7 +509,7 @@ class Graphics_Loader:
             keys.power_gem: get_tiles_from_sheet('items/gems/power.png', 0, 0, 0, 0, 32, 32),
             keys.range_gem: get_tiles_from_sheet('items/gems/range.png', 0, 0, 0, 0, 32, 32),
             keys.toughness_gem: get_tiles_from_sheet('items/gems/toughness.png', 0, 0, 0, 0, 32, 32),
-            keys.sharpness_gem: get_tiles_from_sheet('items/gems/sharpness.png', 0, 0, 0, 0, 32, 32),
+            keys.slash_gem: get_tiles_from_sheet('items/gems/sharpness.png', 0, 0, 0, 0, 32, 32),
             keys.speed_gem: get_tiles_from_sheet('items/gems/speed.png', 0, 0, 0, 0, 32, 32),
             keys.strength_gem: get_tiles_from_sheet('items/gems/strength.png', 0, 0, 0, 0, 32, 32),
             keys.terror_gem: get_tiles_from_sheet('items/gems/terror.png', 0, 0, 0, 0, 32, 32),

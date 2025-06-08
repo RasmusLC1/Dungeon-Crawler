@@ -16,8 +16,8 @@ class Gem_Handler():
             keys.strength,
         ]
 
-    def Add_Gems(self, gem):
-        if self.gems.count() > self.max_gems:
+    def Add_Gem(self, gem):
+        if len(self.gems) >= self.max_gems:
             return False
         
         if not self.Set_Effect(gem):
@@ -25,7 +25,6 @@ class Gem_Handler():
         
         self.gems.append(gem)
         
-        self.weapon.Set_Damage(gem.effect, gem.amount)
         return True
     
     # Finds and calls the various effect functions
@@ -75,8 +74,16 @@ class Gem_Handler():
     
     # Set entity effect if player has weapon equipped. Only works for player
     def Set_Entity_Effect_Gem(self, gem):
-        if not self.game.player.weapon_handler.Check_If_Weapon_Is_Equipped(self.weapon):
-            return True
+        entity = self.weapon.entity
+
+        if not entity:
+            return False
+        
+        if not entity.type == keys.player:
+            return False
+        
+        if not entity.weapon_handler.Check_If_Weapon_Is_Equipped(self.weapon):
+            return False
         
         self.weapon.entity.Set_Effect(gem.effect, self.Get_Effect_Amount(gem), True)
         return True

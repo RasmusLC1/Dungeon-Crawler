@@ -742,7 +742,7 @@ class keys():
 
     toughness_gem = "toughness_gem"
 
-    sharpness_gem = "sharpness_gem"
+    slash_gem = "slash_gem"
 
     speed_gem = "speed_gem"
 

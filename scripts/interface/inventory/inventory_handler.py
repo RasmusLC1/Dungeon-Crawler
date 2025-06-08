@@ -315,20 +315,30 @@ class Inventory_Handler():
         return True
 
 
+    # item_being_moved is the active item
+    # receiving_inventory_slot is the inventory slot that item_being_moved is
+    # being moved to
     def Swap_Item(self, receiving_inventory_slot, item_being_moved):
         if not receiving_inventory_slot.item:
             return False
         
 
         item_holder = receiving_inventory_slot.item  # Store item to be swapped
+
+        if self.Add_Gem_To_Weapon(item_holder, item_being_moved):
+
+            return True
+
         self.clicked_inventory_slot.Reset_Inventory_Slot()
         receiving_inventory_slot.Reset_Inventory_Slot()
+        # Check if the items being moved are gems and weapons
 
         # Move original item to active inventory slot
         self.clicked_inventory_slot.Add_Item(item_holder)
 
         self.clicked_inventory_slot = None  # Clear clicked slot
 
+        
         # Move active item into the new slot
         receiving_inventory_slot.Add_Item(item_being_moved)
 
@@ -339,7 +349,21 @@ class Inventory_Handler():
         return True
 
 
+    def Add_Gem_To_Weapon(self, weapon, gem):
+        if gem.type != keys.gem:
+            return False
 
+        if weapon.sub_category != keys.weapon:
+            return False
+
+        if not weapon.Add_Gem(gem):
+            return False
+        
+        # Reset the gem inventory slot
+        self.clicked_inventory_slot.Reset_Inventory_Slot()
+        self.clicked_inventory_slot = None  # Clear clicked slot
+        self.active_item = None  # Clear active item
+        return True
 
     def Active_Item(self, offset=(0, 0)):
         if not self.active_item:

@@ -464,6 +464,9 @@ class Weapon(Item):
     def Spawn_Spark(self):
         self.game.particle_handler.Activate_Particles(random.randint(2, 5), keys.spark_particle, self.rect().center, random.randint(20, 30))
 
+    def Add_Gem(self, gem):
+        return self.gem_handler.Add_Gem(gem)
+
     # Set the player effects for gem
     def Activate_Gem_Effect(self):
         self.gem_handler.Set_Entity_Effect_Gems()
