@@ -18,7 +18,7 @@ class Enemy_Weapon_Attack():
 
 
         self.weapon.entity.Reduce_Movement(4) # Reduce movement to a quarter when attacking
-        return True
+        return False
     
     # Initialise the attack and reset attack values
     def Set_Attack(self):

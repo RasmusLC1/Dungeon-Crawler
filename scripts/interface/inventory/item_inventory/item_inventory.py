@@ -26,12 +26,7 @@ class Item_Inventory(Base_Inventory):
                     
         return self.Add_Item_To_Inventory_Slot(item)
 
-    def Remove_Item(self, item):
-        inventory_slot = self.Find_Item_Inventory_Slot_ID(item.ID)
-        if not inventory_slot:
-            return False
-        
-        self.Remove_Item_From_Inventory(inventory_slot)
+    
 
     # Merges items into existing slots if possible
     def Add_Item_To_Inventory_Slot_Merge(self, item):

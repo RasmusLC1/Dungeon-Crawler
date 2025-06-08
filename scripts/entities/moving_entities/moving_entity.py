@@ -83,6 +83,8 @@ class Moving_Entity(PhysicsEntity):
         
         self.damage_text = ''
 
+        self.Set_Sprite()
+
 
 
 

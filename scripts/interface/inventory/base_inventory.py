@@ -61,6 +61,13 @@ class Base_Inventory():
         # Clear the inventory slot
         inventory_slot.Remove_Item()
 
+    def Remove_Item(self, item):
+        inventory_slot = self.Find_Item_Inventory_Slot_ID(item.ID)
+        if not inventory_slot:
+            return False
+        
+        self.Remove_Item_From_Inventory(inventory_slot)
+
 
     def Add_Inventory_Slot(self, inventory_slot):
         self.shared_inventory.append(inventory_slot)

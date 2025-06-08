@@ -111,6 +111,8 @@ class Inventory_Handler():
 
     def Remove_Item(self, item):
         self.item_inventory.Remove_Item(item)
+        self.weapon_inventory.Remove_Item(item)
+        self.rune_inventory.Remove_Item(item)
 
     # Activates when mouse has been held down for 10 ticks and
     # the inventory slot is not active anymore 

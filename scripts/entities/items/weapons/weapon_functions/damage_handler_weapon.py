@@ -20,6 +20,16 @@ class Damage_Handler_Weapon():
 
             self.Check_Effects(damage_type, entity)
 
+    def Decoration_Hit(self, decoration):
+        weapon_entity = self.weapon.entity
+        if not weapon_entity or not decoration:
+            return
+        
+        for damage_type in self.damage:
+            damage = self.Calculate_Damage(damage_type)
+            decoration.Damage_Taken(damage, damage_type)
+
+
     def Check_Effects(self, damage_type, entity):
         damage = self.damage[damage_type]
         weapon_entity = self.weapon.entity

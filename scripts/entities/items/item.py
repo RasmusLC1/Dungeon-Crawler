@@ -197,6 +197,7 @@ class Item(PhysicsEntity):
     
     def Delete_Item(self):
         self.game.item_handler.Remove_Item(self, True)
+        self.game.inventory.Remove_Item(self)
         
     # Destroy item when damaged
     def Damage_Taken(self, damage):

@@ -50,6 +50,9 @@ class Player_Weapon_Handler():
             return
         
         self.active_weapon_left.Update_Attack()
+        
+        if not self.active_weapon_left:
+            return
         self.player.Attacking(self.active_weapon_left, offset)
 
         
@@ -85,6 +88,16 @@ class Player_Weapon_Handler():
             self.active_weapon_left = None
             self.left_weapon_cooldown = 0
             self.player.attacking = 0
+
+    def Check_If_Weapon_Should_Be_Removed(self, weapon):
+        if not self.active_weapon_left:
+            return False
+        
+        if self.active_weapon_left.ID != weapon.ID:
+            return False
+        
+        self.Remove_Active_Weapon()
+        return True
 
 
     def Render_Weapons(self, surf, offset):

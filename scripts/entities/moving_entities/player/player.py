@@ -120,7 +120,7 @@ class Player(Moving_Entity):
             return None
         return super().Entity_Collision_Detection(tilemap)
     
-    def Remove_Active_Weapon(self, ):
+    def Remove_Active_Weapon(self):
         self.weapon_handler.Remove_Active_Weapon()
 
     def Attack_Direction_Handler(self, offset = (0,0)):
@@ -134,6 +134,9 @@ class Player(Moving_Entity):
         self.health = health
 
     def Attacking(self, weapon, offset=(0, 0)):
+        if not weapon:
+            return
+        
         if weapon.attacking and not self.attacking:
             self.Attack_Direction_Handler(offset)
 

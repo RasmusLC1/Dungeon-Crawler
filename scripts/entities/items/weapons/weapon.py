@@ -41,6 +41,9 @@ class Weapon(Item):
         self.special_attack_active = False # Check if weapon is special attacking
         self.entities_hit = [] # Index of entities hit by weapon in attack
 
+        # TODO: calculate better durability value
+        self.durability = 200 # Durability is decreased by one every time an attack hits
+
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
 
@@ -107,7 +110,9 @@ class Weapon(Item):
         if not self.entity_attack_type:
             return False
         
-        self.entity_attack_type.Update_Attack()
+        if self.entity_attack_type.Update_Attack():
+            self.Delete_Item()
+            return
         self.animation_handler.Update_Attack_Animation()
         self.attack_effect_handler.Update_Attack_Effect_Animation()
         self.Attack_Align_Weapon()
@@ -256,6 +261,9 @@ class Weapon(Item):
     def Entity_Hit(self, entity):
         return self.damage_handler.Entity_Hit(entity)
     
+    def Decoration_Hit(self, decoration):
+        return self.damage_handler.Decoration_Hit(decoration)
+
 
 
     # Set the attack direction   
@@ -317,7 +325,7 @@ class Weapon(Item):
         self.charge_time = 0
         return
 
-  
+    
     def Set_Entity(self, entity):
         self.entity = entity
         if not entity:
@@ -332,6 +340,11 @@ class Weapon(Item):
         else:
             self.entity_attack_type = Enemy_Weapon_Attack(self.game, self)
 
+    def Delete_Item(self):
+        self.gem_handler.Remove_Entity_Effect_Gems()
+        if self.entity and self.entity.type == keys.player:
+            self.game.player.weapon_handler.Check_If_Weapon_Should_Be_Removed(self)
+        return super().Delete_Item()
 
    
     # TODO: Write charge logic for enemy
@@ -448,3 +461,22 @@ class Weapon(Item):
 
     def Spawn_Spark(self):
         self.game.particle_handler.Activate_Particles(random.randint(2, 5), keys.spark_particle, self.rect().center, random.randint(20, 30))
+
+
+    def Increase_Range(self, amount):
+        self.range += amount
+
+    def Increase_Speed(self, amount):
+        self.range += amount
+
+    def Increase_Durability(self, amount):
+        self.durability += amount
+
+    def Decrease_Range(self, amount):
+        self.range -= amount
+
+    def Decrease_Speed(self, amount):
+        self.range -= amount
+
+    def Decrease_Durability(self, amount):
+        self.durability -= amount

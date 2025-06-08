@@ -6,6 +6,7 @@ class Player_Weapon_Attack():
         self.game = game
         self.weapon = weapon
         
+        self.ready_to_delete = False
         self.attacking = 0
         self.attack_hitbox_size = (10, 10)
         self.attack_hitbox = pygame.Rect(self.weapon.pos[0], self.weapon.pos[1], self.attack_hitbox_size[0], self.attack_hitbox_size[1])
@@ -21,10 +22,9 @@ class Player_Weapon_Attack():
             return False
 
         entity = self.Attack_Collision_Check()
-
         self.attacking -= 1
         self.player.Reduce_Movement(4) # Reduce movement to a quarter when attacking
-        return True
+        return self.ready_to_delete
     
 
 
@@ -66,11 +66,24 @@ class Player_Weapon_Attack():
                 self.weapon.Entity_Hit(enemy)
                 self.entities_hit.append(enemy)
 
+                self.Check_Durability(1)
+                
+
                 # Return enemy in case further effects need to be added such as knockback
                 return enemy
             
         return None
     
+    def Check_Durability(self, damage):
+        self.weapon.Decrease_Durability(damage)
+
+        if self.weapon.durability <= 0:
+            self.game.sound_handler.Play_Sound('weapon_break', 0.5)
+
+            self.ready_to_delete = True
+
+        return
+
     def Decoration_Collision(self):
         for decoration in self.nearby_decoration:
             # Check if the decoration can be damaged
@@ -81,7 +94,9 @@ class Player_Weapon_Attack():
                 continue
             # Check for collision with enemy
             if self.attack_hitbox.colliderect(decoration.rect()):
-                decoration.Damage_Taken(self.weapon.damage_handler.Calculate_Damage(), self.weapon.weapon_handler.Get_Damage())
+                self.weapon.Decoration_Hit(decoration)
+                self.Check_Durability(2)
+                self.entities_hit.append(decoration)
                 return decoration
         
         return None
