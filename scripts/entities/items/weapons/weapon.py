@@ -451,8 +451,10 @@ class Weapon(Item):
         self.entity = None
         return super().Place_Down()
 
+    # Only used for Player Weapons
     def Equip(self):
         self.Set_Equip(True, self.game.player)
+        self.Activate_Gem_Effect()
         self.game.player.Set_Active_Weapon(self)
 
     def Unequip(self):
@@ -462,6 +464,13 @@ class Weapon(Item):
     def Spawn_Spark(self):
         self.game.particle_handler.Activate_Particles(random.randint(2, 5), keys.spark_particle, self.rect().center, random.randint(20, 30))
 
+    # Set the player effects for gem
+    def Activate_Gem_Effect(self):
+        self.gem_handler.Set_Entity_Effect_Gems()
+
+    # Disable the player effects for gem
+    def Disable_Gem_Effect(self):
+        self.gem_handler.Remove_Entity_Effect_Gems()
 
     def Increase_Range(self, amount):
         self.range += amount

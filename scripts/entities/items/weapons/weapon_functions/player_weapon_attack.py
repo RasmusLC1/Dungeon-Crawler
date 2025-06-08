@@ -74,12 +74,12 @@ class Player_Weapon_Attack():
             
         return None
     
+    # Subtracts durability and sets flag for if the weapon needs to be deleted
     def Check_Durability(self, damage):
         self.weapon.Decrease_Durability(damage)
 
         if self.weapon.durability <= 0:
             self.game.sound_handler.Play_Sound('weapon_break', 0.5)
-
             self.ready_to_delete = True
 
         return
