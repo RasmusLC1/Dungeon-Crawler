@@ -205,14 +205,15 @@ class Item(PhysicsEntity):
     
     def Render(self, surf, offset=(0, 0)):
         if self.picked_up:
-            self.Render_Inventory(surf, offset)
-        else:
-            self.Render_Floor(surf, offset)
+            return
+        self.Render_Floor(surf, offset)
+    
 
 
     # Render legal position
-    def Render_Inventory(self, surf, offset=(0, 0)):
-        surf.blit(self.entity_image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+    def Render_Inventory(self, surf, pos, size):
+        item_image = pygame.transform.scale(self.entity_image, size)
+        surf.blit(item_image, pos)
         
 
     def Render_Floor(self, surf, offset=(0, 0)):

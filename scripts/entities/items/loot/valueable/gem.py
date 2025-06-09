@@ -9,3 +9,6 @@ class Gem(Valuable):
         self.max_amount = 100 # Amount acts as damage, each extra amount = 1 damage
         self.effect = effect
         self.description = f"Add {self.effect, str(self.amount)}\nto weapon\ngold {self.amount * self.value}\n"
+
+
+    

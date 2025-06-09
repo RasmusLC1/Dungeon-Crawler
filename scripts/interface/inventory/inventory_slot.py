@@ -123,9 +123,7 @@ class Inventory_Slot():
             self.item.Render_Active(surf, self.game.render_scroll)
 
         if self.item and not self.active:
-            item_image = pygame.transform.scale(self.item.entity_image, self.size)
-            
-            surf.blit(item_image, self.pos)
+            self.item.Render_Inventory(surf, self.pos, self.size)
         else:
 
             return

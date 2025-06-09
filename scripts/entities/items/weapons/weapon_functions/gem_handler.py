@@ -121,3 +121,15 @@ class Gem_Handler():
 
 
     
+    def Render_Gems_Inventory(self, surf, pos, size):
+        x_offset = 0
+        render_scale = 8
+        gem_pos_y = pos[1] + size[0] - render_scale
+        for gem in self.gems:
+            gem_pos_x = pos[0] + x_offset
+            gem.Render_Inventory(surf, (gem_pos_x, gem_pos_y), (render_scale, render_scale))
+
+            x_offset += render_scale
+
+            if x_offset > size[0]:
+                return

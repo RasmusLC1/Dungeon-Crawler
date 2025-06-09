@@ -414,6 +414,10 @@ class Weapon(Item):
 
         self.rendered_image.blit(dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
+
+    def Render_Inventory(self, surf, pos, size):
+        self.gem_handler.Render_Gems_Inventory(surf, pos, size)
+        return super().Render_Inventory(surf, pos, size)
     
     # Used to reset weapon when equipped by enemy
     def Pickup_Reset_Weapon(self, entity):
