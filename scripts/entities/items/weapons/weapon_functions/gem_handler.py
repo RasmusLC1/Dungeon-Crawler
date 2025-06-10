@@ -18,6 +18,7 @@ class Gem_Handler():
         ]
 
     def Add_Gem(self, gem):
+        print(len(self.gems), self.max_gems)
         if len(self.gems) >= self.max_gems:
             return False
         
