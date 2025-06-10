@@ -299,12 +299,13 @@ class Inventory_Handler():
                 if inventory_slot.active:
                     return False
 
-                if {inventory_slot.item.sub_category == keys.weapon:
-                    self.active_item.type == keys.gem}:
-                        if self.Add_Gem_To_Weapon(inventory_slot.item, self.active_item):
-                            return True
-                        else:
-                            return False
+                if inventory_slot.item and self.active_item:
+                    if {inventory_slot.item.sub_category == keys.weapon:
+                        self.active_item.type == keys.gem}:
+                            if self.Add_Gem_To_Weapon(inventory_slot.item, self.active_item):
+                                return True
+                            else:
+                                return False
 
                 if self.Swap_Item(inventory_slot, self.active_item):
                     return True

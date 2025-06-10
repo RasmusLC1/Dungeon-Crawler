@@ -14,13 +14,13 @@ class Ranged_Damage_Handler_Weapon(Damage_Handler_Weapon):
         if not weapon_entity:
             return
         for damage_type in self.damage:
+            effect = self.Check_Effects(damage_type)
             damage = self.Calculate_Ranged_Damage(damage_type)
 
-            entity.Damage_Taken(damage, weapon_entity.attack_direction)
+            entity.Damage_Taken(damage, effect, weapon_entity.attack_direction)
             if entity.effects.thorns.effect:
                 weapon_entity.Damage_Taken(entity.effects.thorns.effect, weapon_entity.attack_direction)
 
-            self.Check_Effects(damage_type, entity)
         
 
 

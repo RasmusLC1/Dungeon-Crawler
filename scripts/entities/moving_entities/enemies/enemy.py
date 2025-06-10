@@ -186,12 +186,12 @@ class Enemy(Moving_Entity):
     def Set_Locked_On_Target(self, value):
         self.locked_on_target = value
         
-    def Damage_Taken(self, damage, direction = (0, 0)):
+    def Damage_Taken(self, damage, effect = None, direction = (0, 0)):
         # No damage done simply return
+        self.Spawn_Damaged_Particles()
         if not super().Damage_Taken(damage, direction):
             return
         
-        self.Spawn_Damaged_Particles()
         self.Delete()
 
     

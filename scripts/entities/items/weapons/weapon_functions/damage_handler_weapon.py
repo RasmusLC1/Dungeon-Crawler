@@ -13,12 +13,12 @@ class Damage_Handler_Weapon():
             return
         for damage_type in self.damage:
             damage = self.Calculate_Damage(damage_type)
-            entity.Damage_Taken(damage, weapon_entity.attack_direction)
+            effect = self.Check_Effects(damage_type)
+            entity.Damage_Taken(damage, effect, weapon_entity.attack_direction)
 
             if entity.effects.thorns.effect:
                 weapon_entity.Damage_Taken(entity.effects.thorns.effect, weapon_entity.attack_direction)
 
-            self.Check_Effects(damage_type, entity)
 
     def Decoration_Hit(self, decoration):
         weapon_entity = self.weapon.entity
@@ -30,15 +30,18 @@ class Damage_Handler_Weapon():
             decoration.Damage_Taken(damage, damage_type)
 
 
-    def Check_Effects(self, damage_type, entity):
+    def Check_Effects(self, damage_type):
         damage = self.damage[damage_type]
         weapon_entity = self.weapon.entity
         # Check if weapon is vampiric first, to avoid double healing
-        if damage_type == keys.vampiric or weapon_entity.effects.vampiric:
+        if damage_type == keys.vampiric or weapon_entity.effects.vampiric.effect:
             weapon_entity.Set_Effect(keys.healing, damage // 2)
-            return
+            return (keys.vampiric, 0) # Return vampiric with strength 0 so it's not set
+        
         # Set special status effect of weapon if weapon has one
-        entity.Set_Effect(damage_type, max(1, round(damage // 10)))
+        strength =  max(1, round(damage // 10))
+
+        return (damage_type, strength)
 
     def Calculate_Damage(self, damage_type):
         return self.weapon.entity.strength * self.damage[damage_type]

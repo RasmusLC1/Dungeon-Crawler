@@ -41,7 +41,7 @@ class Valuable_Loot_Handler(Loot_Types_Handler):
             keys.power : 8,
             keys.range : 5,
             keys.speed : 5,
-            keys.strength : 4,
+            keys.increase_strength : 4,
             keys.terror : 8,
             keys.vulnerable : 6,
             keys.weakness : 5,
