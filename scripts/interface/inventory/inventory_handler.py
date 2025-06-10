@@ -168,6 +168,7 @@ class Inventory_Handler():
             if not active_inventory_slot:
                 return False
             
+                      
             if self.Swap_Item(active_inventory_slot, self.clicked_inventory_slot.item):
                 self.Set_Clicked_Inventory_Slot()
                 return True
@@ -298,6 +299,13 @@ class Inventory_Handler():
                 if inventory_slot.active:
                     return False
 
+                if {inventory_slot.item.sub_category == keys.weapon:
+                    self.active_item.type == keys.gem}:
+                        if self.Add_Gem_To_Weapon(inventory_slot.item, self.active_item):
+                            return True
+                        else:
+                            return False
+
                 if self.Swap_Item(inventory_slot, self.active_item):
                     return True
 
@@ -338,9 +346,7 @@ class Inventory_Handler():
 
         item_holder = receiving_inventory_slot.item  # Store item to be swapped
 
-        if self.Add_Gem_To_Weapon(item_holder, item_being_moved):
-            return True
-
+        
         self.clicked_inventory_slot.Reset_Inventory_Slot()
         receiving_inventory_slot.Reset_Inventory_Slot()
         # Check if the items being moved are gems and weapons
