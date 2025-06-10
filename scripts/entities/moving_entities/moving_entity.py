@@ -1,6 +1,7 @@
 import math
 import pygame
 import random
+from scripts.entities.moving_entities.moving_entity_functions.damage_text_handler import Damage_Text_Handler
 from scripts.entities.moving_entities.effects.effects_handler import Status_Effect_Handler
 from scripts.entities.moving_entities.animation.animation_handler import Animation_Handler
 from scripts.entities.entities import PhysicsEntity
@@ -34,9 +35,7 @@ class Moving_Entity(PhysicsEntity):
         self.attack_direction = (0,0)
         self.target = (0,0)
         
-        self.damage_text_cooldown = 0
-        self.damage_text_cooldown_started = False
-        self.damage_text_offset = 0
+
         self.damage_cooldown = 0
         self.damage_cooldown_max = 40
         
@@ -85,7 +84,7 @@ class Moving_Entity(PhysicsEntity):
         self.effects = self._effect_handler(self)
         self.animation_handler = self._animation_handler(self)
         
-        self.damage_text_queue = []
+        self.damage_text_handler = Damage_Text_Handler(self.game)
 
         self.Set_Sprite()
 
@@ -138,6 +137,7 @@ class Moving_Entity(PhysicsEntity):
 
         self.Movement(movement, tilemap)
         self.Update_Tile()
+        self.damage_text_handler.Update()
     
 
     def Update_Movement(self, movement):
@@ -349,7 +349,7 @@ class Moving_Entity(PhysicsEntity):
         if self.Check_Blocking_Direction(direction):
             return False
 
-        self.damage_text_queue.append(str(damage))
+        self.damage_text_handler.Spawn_Damage_Text(self.pos, str(damage))
 
         self.damage_cooldown = self.damage_cooldown_max
         self.Set_Health(self.health - damage)
@@ -549,41 +549,9 @@ class Moving_Entity(PhysicsEntity):
         return True
     
     def Render_Damage(self, surf, offset):
-        if not self.Damage_Text_Cooldown_Handler():
-            return
         self.Lightup(self.rendered_image)
-        scroll_up_effect = self.damage_text_offset - self.damage_text_cooldown // 4
-        self.game.default_font.Render_Word(surf, self.damage_text_queue[0], (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
+        self.damage_text_handler.Render(surf, offset)
 
-
-    def Damage_Text_Cooldown_Handler(self):
-        if not self.damage_text_queue:
-            return False
-        
-        if not self.damage_text_cooldown_started:
-            self.Set_Damage_Text_Cooldown()
-            self.damage_text_cooldown_started = True
-            
-            return True
-
-        if self.damage_text_cooldown:
-            self.damage_text_cooldown -= 1
-            return True
-        
-        # Scale the length of the cooldown with the number of damage effects in the queue
-        self.damage_text_queue.pop(0)
-
-        if not self.damage_text_queue:
-            self.damage_text_cooldown_started = False
-            return False
-        
-        self.Set_Damage_Text_Cooldown()
-        
-        return True
-    
-    def Set_Damage_Text_Cooldown(self):
-        self.damage_text_offset = random.randint(15, 25)
-        self.damage_text_cooldown = random.randint(max(5, 30 - len(self.damage_text_queue) * 5),max(5, 40 - len(self.damage_text_queue) * 5))
 
     def Lightup(self, entity_image):
         if self.damage_cooldown < self.damage_cooldown_max - 10:
