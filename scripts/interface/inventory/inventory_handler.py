@@ -155,15 +155,17 @@ class Inventory_Handler():
         return
     
     # Handle double clicking behaviour, return True if valid double click
-    # TODO: fix with UPDATE
     def Item_Double_Click(self):
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
             if not self.clicked_inventory_slot.item.sub_category == keys.weapon:
                 return False
             
-            # Transfer to the current active inventory_slot
-            active_inventory_slot = self.weapon_inventory.active_inventory_slot
+            # Transfer to the next available inventory slot
+            active_inventory_slot = self.Get_Double_Click_Inventory_Slot()
 
+            if not active_inventory_slot:
+                return False
+            
             if self.Swap_Item(active_inventory_slot, self.clicked_inventory_slot.item):
                 self.clicked_inventory_slot = None
                 return True
@@ -181,6 +183,15 @@ class Inventory_Handler():
         self.active_item = None
         self.clicked_inventory_slot = None
         return False
+
+    # Gets the next avaiable inventory slot for either weapon or item inventory
+    def Get_Double_Click_Inventory_Slot(self):
+            if self.clicked_inventory_slot.type == keys.weapon:
+                return self.item_inventory.Get_Next_Avaiable_Inventory_Slot()
+            elif self.clicked_inventory_slot.type == keys.item:
+                return self.weapon_inventory.Get_Next_Avaiable_Inventory_Slot()
+
+            return None
 
     # Finds the first empty inventory slot
     def Find_Available_Inventory_Slot(self):

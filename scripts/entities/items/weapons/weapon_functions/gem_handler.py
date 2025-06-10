@@ -8,7 +8,8 @@ class Gem_Handler():
         self.weapon = weapon
         self.gems = []
         self.max_gems = 3
-
+        self.effects_active = False # Flag to prevent duplication of player effects
+        self.entity = None
         self.gem_entity_effects = [
             keys.arcane_hunger,
             keys.halo,
@@ -63,7 +64,7 @@ class Gem_Handler():
         return True
     
     def Get_Effect_Amount(self, gem):
-        return round(gem.amount // 10)
+        return max(1, round(gem.amount // 10))
 
     def Set_Entity_Effect(self, gem):
         if not self.weapon.entity.type == keys.player:
@@ -96,18 +97,27 @@ class Gem_Handler():
 
     # TODO: REMOVE THE EFFECT from SET_EFFECT
     def Remove_Entity_Effect_Gems(self):
+        if not self.effects_active:
+            return
+        self.effects_active = False
         for gem in self.gems:
             if not gem.effect in self.gem_entity_effects:
                 continue
             
-            self.weapon.entity.Remove_Effect(gem.effect, self.Get_Effect_Amount(gem))
+            self.entity.Remove_Effect(gem.effect, self.Get_Effect_Amount(gem))
+        
+        self.entity = None
 
     def Set_Entity_Effect_Gems(self):
+        if self.effects_active:
+            return
+        
+        self.entity = self.weapon.entity
+        self.effects_active = True
         for gem in self.gems:
             if not gem.effect in self.gem_entity_effects:
                 continue
-            
-            self.weapon.entity.Set_Effect(gem.effect, self.Get_Effect_Amount(gem), True)
+            self.weapon.entity.Set_Effect(gem.effect, min(10, self.Get_Effect_Amount(gem)), True)
 
     def Increase_Max_Gems(self):
         self.max_gems += 1

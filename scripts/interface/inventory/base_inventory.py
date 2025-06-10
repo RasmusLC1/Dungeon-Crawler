@@ -79,6 +79,14 @@ class Base_Inventory():
         
         self.Remove_Item_From_Inventory(inventory_slot)
 
+    def Get_Next_Avaiable_Inventory_Slot(self):
+        for inventory_slot in self.inventory:
+            if inventory_slot.item:
+                continue
+            return inventory_slot
+        
+        return None
+
 
     def Add_Inventory_Slot(self, inventory_slot):
         self.shared_inventory.append(inventory_slot)
