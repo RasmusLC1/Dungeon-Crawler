@@ -8,8 +8,6 @@ class Player_Weapon_Handler():
         self.active_weapon = None
         self.left_weapon_cooldown = 0
         self.right_weapon_cooldown = 0
-        self.active_bow = None
-        self.bow_cooldown = 0
         self.inventory_interaction = 0
         self.attack_lock = False
 
@@ -100,6 +98,8 @@ class Player_Weapon_Handler():
         return True
 
     def Check_If_Weapon_Is_Equipped(self, weapon):
+        if not self.active_weapon:
+            return False
         return self.active_weapon.ID == weapon.ID
         
 

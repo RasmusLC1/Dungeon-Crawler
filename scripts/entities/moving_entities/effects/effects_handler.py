@@ -192,7 +192,8 @@ class Status_Effect_Handler:
         try:
             remove_effect_succes = effect.Remove_Effect(reduce_permanent)
             if remove_effect_succes:
-                self.active_effects.remove(effect)
+                if effect in self.active_effects:
+                    self.active_effects.remove(effect)
             return remove_effect_succes 
         
         except Exception as e:

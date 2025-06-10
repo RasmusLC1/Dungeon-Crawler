@@ -20,10 +20,10 @@ class Gem_Handler():
         if len(self.gems) >= self.max_gems:
             return False
         
-        if not self.Set_Effect(gem):
-            return False
-        
         self.gems.append(gem)
+
+        self.Set_Effect(gem)
+        
         
         return True
     
@@ -52,8 +52,8 @@ class Gem_Handler():
         }
 
         gem_function = gem_effects.get(gem.effect)
-
         if not gem_function:
+            print(gem.sub_type, gem.effect)
             return False
         
         return gem_function(gem)
@@ -74,15 +74,9 @@ class Gem_Handler():
     
     # Set entity effect if player has weapon equipped. Only works for player
     def Set_Entity_Effect_Gem(self, gem):
-        entity = self.weapon.entity
-
-        if not entity:
-            return False
+        player = self.weapon.game.player
         
-        if not entity.type == keys.player:
-            return False
-        
-        if not entity.weapon_handler.Check_If_Weapon_Is_Equipped(self.weapon):
+        if not player.weapon_handler.Check_If_Weapon_Is_Equipped(self.weapon):
             return False
         
         self.weapon.entity.Set_Effect(gem.effect, self.Get_Effect_Amount(gem), True)
@@ -90,12 +84,15 @@ class Gem_Handler():
 
     def Increase_Durability(self, gem):
         self.weapon.Increase_Durability(gem.amount)
+        return True
 
     def Increase_Range(self, gem):
         self.weapon.Increase_Range(gem.amount)
+        return True
     
     def Increase_Speed(self, gem):
         self.weapon.Increase_Speed(gem.amount)
+        return True
 
     # TODO: REMOVE THE EFFECT from SET_EFFECT
     def Remove_Entity_Effect_Gems(self):
