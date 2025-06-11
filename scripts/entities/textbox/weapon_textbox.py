@@ -4,8 +4,10 @@ from scripts.entities.textbox.textbox import Text_Box
 class Weapon_Textbox(Text_Box):
 
     def Set_Y_Size(self):
-        self.y_size = 100
+        self.y_size = 120
 
+    def Set_X_Size(self, entity_name):
+        self.x_size = 150
 
     def Set_Text_Box_pos(self, offset):
         text_box_pos = (0,0)

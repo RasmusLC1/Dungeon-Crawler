@@ -42,7 +42,9 @@ class Weapon(Item):
         self.entities_hit = [] # Index of entities hit by weapon in attack
 
         # TODO: calculate better durability value
-        self.durability = 200 # Durability is decreased by one every time an attack hits
+        self.max_durability = 200 # max Durability 
+        self.last_durability_step = self.max_durability # Used for tracking decrements accurately so it does not skip a percentage
+        self.durability = self.max_durability # Durability is decreased by one every time an attack hits
 
         self.weapon_cooldown = 0
         self.weapon_cooldown_max = 50 # How fast the weapon can attack
@@ -56,12 +58,7 @@ class Weapon(Item):
         self.attack_effect_handler = Attack_Effect_Weapon(game, self)
         self.animation_handler = Animation_Weapon(game, self, 1)
         self.gem_handler = Gem_Handler(self)
-        self.description = (
-                            f"Damage {self.damage_handler.Get_Damage()}\n"
-                            f"speed {self.speed}\n"
-                            f"range {self.range}\n"
-                            f"gold {self.value}\n"
-                        )
+        self.Set_Description()
 
     def Save_Data(self):
         if self.entity:
@@ -264,7 +261,14 @@ class Weapon(Item):
     def Decoration_Hit(self, decoration):
         return self.damage_handler.Decoration_Hit(decoration)
 
-
+    def Set_Description(self):
+        self.description = (
+                            f"Damage {self.damage_handler.Get_Damage()}\n"
+                            f"speed {self.speed}\n"
+                            f"range {self.range}\n"
+                            f"Dur {self.range}\n"
+                            f"gold {self.value}\n"
+                        )
 
     # Set the attack direction   
     def Set_Block_Direction(self):
@@ -483,16 +487,36 @@ class Weapon(Item):
         self.range += amount
 
     def Increase_Speed(self, amount):
+        self.Set_Description()
         self.range += amount
 
     def Increase_Durability(self, amount):
+        self.Set_Description()
+        self.max_durability += amount
         self.durability += amount
 
     def Decrease_Range(self, amount):
         self.range -= amount
 
     def Decrease_Speed(self, amount):
+        self.Set_Description()
         self.range -= amount
 
     def Decrease_Durability(self, amount):
+        self.Set_Description()
         self.durability -= amount
+
+        current_step = int((self.durability / self.max_durability) * 10)
+
+        while self.last_durability_step > current_step:
+            self.Decrease_Value(self.value // 10)
+            self.last_durability_step -= 1
+
+
+    def Increase_Value(self, value):
+        self.Set_Description()
+        self.value += value
+
+    def Decrease_Value(self, value):
+        self.Set_Description()
+        self.value -= value
