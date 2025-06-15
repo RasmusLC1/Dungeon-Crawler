@@ -380,6 +380,10 @@ class keys():
 
 
     # Weapon Effects
+
+    range = "range"
+
+    strength = "strength"
     
     slash_cut_effect = "slash_cut_effect"
 
@@ -710,6 +714,54 @@ class keys():
     
     vampiric_bomb = "vampiric_bomb"
 
+    # Gems
+
+    gem = "gem"
+
+    arcane_hunger_gem = "arcane_hunger_gem"
+
+    blunt_gem = "blunt_gem"
+
+    durability_gem = "durability_gem"
+
+    electric_gem = "electric_gem"
+
+    fire_gem = "fire_gem"
+
+    frozen_gem = "frozen_gem"
+
+    halo_gem = "halo_gem"
+
+    multishot_gem = "multishot_gem"
+
+    poison_gem = "poison_gem"
+
+    power_gem = "power_gem"
+
+    range_gem = "range_gem"
+
+    toughness_gem = "toughness_gem"
+
+    slash_gem = "slash_gem"
+
+    speed_gem = "speed_gem"
+
+    strength_gem = "increase_strength_gem"
+
+    terror_gem = "terror_gem"
+
+    vampiric_gem = "vampiric_gem"
+
+    vulnerable_gem = "vulnerable_gem"
+
+    weakness_gem = "weakness_gem"
+
+    wet_gem = "wet_gem"
+
+    lockpick_gem = "lockpick_gem"
+
+
+    # Runes
     
     healing_rune = "healing_rune"
     
@@ -820,21 +872,54 @@ class keys():
     invulnerable_rune = "invulnerable_rune"
 
     
+    # FONTS
     font = "font"
 
-    
-    player_damage_font = "player_damage_font"
+    textbox_headline = "textbox_headline"
 
+    font_slash = "font_slash"
+
+    font_blunt = "font_blunt"
+
+    font_electric = "font_electric"
+
+    font_fire = "font_fire"
+
+    font_frozen = "font_frozen"
+
+    font_poison = "font_poison"
+
+    font_vampiric = "font_vampiric"
+
+    font_wet = "font_wet"
     
-    small_font = "small_font"
+    font_small = "font_small"
+
+    font_small_slash = "font_small_slash" # Slash uses the default font
+
+    font_small_blunt = "font_small_blunt"
+
+    font_small_electric = "font_small_electric"
+
+    font_small_fire = "font_small_fire"
+
+    font_small_frozen = "font_small_frozen"
+    
+    font_small_poison = "font_small_poison"
+
+    font_small_vampiric = "font_small_vampiric"
+
+    font_small_wet = "font_small_wet"
+
+    player_damage_font = "player_damage_font"
 
     
     floating_E = "floating_e"
 
-    
+
+    # SYMBOLS    
     symbols = "symbols"
 
-    
     souls = "souls"
 
     
@@ -927,6 +1012,8 @@ class keys():
     
     slash = "slash"
 
+    durability = "durability"
+
     
     cut = "cut"
 
@@ -964,6 +1051,10 @@ class keys():
     black_coin = "black_coin"
 
     halo = "halo"
+
+    vulnerable = "vulnerable"
+
+    terror = "terror"
 
     magnet = "magnet"
 

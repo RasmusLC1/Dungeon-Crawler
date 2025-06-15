@@ -31,7 +31,7 @@ class Skeleton(Enemy):
             return False
         
         self.Set_Target(self.game.player.pos)
-        self.active_weapon.Set_Enemy_Attack()
+        self.active_weapon.Set_Attack()
         self.Reset_Charge()
         return True
 
@@ -40,7 +40,7 @@ class Skeleton(Enemy):
             return False
 
         weapon.Pickup_Reset_Weapon(self)
-        weapon.Set_Equip(True)
+        weapon.Set_Equip(True, self)
         self.Set_Active_Weapon(weapon)
         
 

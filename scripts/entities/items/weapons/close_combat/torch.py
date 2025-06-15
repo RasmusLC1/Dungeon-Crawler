@@ -53,8 +53,8 @@ class Torch(Weapon):
     def Set_Special_Attack(self, offset = (0,0)):
         super().Set_Special_Attack(offset)
 
-    def Set_Equip(self, state):
-        super().Set_Equip(state)
+    def Set_Equip(self, state, entity):
+        super().Set_Equip(state, entity)
 
         if state:
             self.game.player.Update_Light_Source(12)

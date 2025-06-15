@@ -11,7 +11,8 @@ class Inventory_Handler():
         self.active_item = None
         self.item_clicked = 0
         self.click_cooldown = 0
-        self.clicked_inventory_slot = None
+        self.Set_Clicked_Inventory_Slot()
+        self.clicked_inventory_slot_lock = False
         self.inventory = [] # General shared inventory
 
         self.item_inventory = Item_Inventory(game, self.inventory)
@@ -111,6 +112,8 @@ class Inventory_Handler():
 
     def Remove_Item(self, item):
         self.item_inventory.Remove_Item(item)
+        self.weapon_inventory.Remove_Item(item)
+        self.rune_inventory.Remove_Item(item)
 
     # Activates when mouse has been held down for 10 ticks and
     # the inventory slot is not active anymore 
@@ -127,7 +130,8 @@ class Inventory_Handler():
     # Check for collision with inventory slot, if no collision return False
     def Inventory_Slot_Collision_Click(self, inventory_slot):
         if inventory_slot.rect().colliderect(self.game.mouse.rect_click()):
-            self.clicked_inventory_slot = inventory_slot
+            self.Set_Clicked_Inventory_Slot(inventory_slot)
+            self.clicked_inventory_slot_lock = True
             self.item_clicked += 1
             return True
         
@@ -153,17 +157,20 @@ class Inventory_Handler():
         return
     
     # Handle double clicking behaviour, return True if valid double click
-    # TODO: fix with UPDATE
     def Item_Double_Click(self):
         if self.game.mouse.double_click and self.clicked_inventory_slot.item:
             if not self.clicked_inventory_slot.item.sub_category == keys.weapon:
                 return False
             
-            # Transfer to the current active inventory_slot
-            active_inventory_slot = self.weapon_inventory.active_inventory_slot
+            # Transfer to the next available inventory slot
+            active_inventory_slot = self.Get_Double_Click_Inventory_Slot()
 
+            if not active_inventory_slot:
+                return False
+            
+                      
             if self.Swap_Item(active_inventory_slot, self.clicked_inventory_slot.item):
-                self.clicked_inventory_slot = None
+                self.Set_Clicked_Inventory_Slot()
                 return True
 
             if self.Move_Item(self.clicked_inventory_slot.item, active_inventory_slot):
@@ -171,14 +178,23 @@ class Inventory_Handler():
                 for inventory_slot in self.inventory:
                     if not inventory_slot.item:
                         continue
-                self.clicked_inventory_slot = None
+                self.Set_Clicked_Inventory_Slot()
                 return True
-            self.clicked_inventory_slot = None
+            self.Set_Clicked_Inventory_Slot()
             return True
         
         self.active_item = None
-        self.clicked_inventory_slot = None
+        self.Set_Clicked_Inventory_Slot()
         return False
+
+    # Gets the next avaiable inventory slot for either weapon or item inventory
+    def Get_Double_Click_Inventory_Slot(self):
+            if self.clicked_inventory_slot.type == keys.weapon:
+                return self.item_inventory.Get_Next_Avaiable_Inventory_Slot()
+            elif self.clicked_inventory_slot.type == keys.item:
+                return self.weapon_inventory.Get_Next_Avaiable_Inventory_Slot()
+
+            return None
 
     # Finds the first empty inventory slot
     def Find_Available_Inventory_Slot(self):
@@ -212,7 +228,7 @@ class Inventory_Handler():
 
         self.clicked_inventory_slot.item.Activate()
         self.clicked_inventory_slot.Update()
-        self.clicked_inventory_slot = None
+        self.Set_Clicked_Inventory_Slot()
         self.game.mouse.Set_Inventory_Clicked(10)
         return True
 
@@ -226,7 +242,7 @@ class Inventory_Handler():
                 self.Move_Item(self.active_item, self.clicked_inventory_slot)
                 # inventory_slot = self.item_inventory.Find_Item_Inventory_Slot_ID(self.active_item.ID)
                 self.active_item = None
-                self.clicked_inventory_slot = None
+                self.Set_Clicked_Inventory_Slot()
             else:
                 print("Error: Slot already occupied when trying to return item.")
         return
@@ -268,7 +284,7 @@ class Inventory_Handler():
             self.game.player.Remove_Active_Weapon()
 
         self.clicked_inventory_slot.item = None
-        self.clicked_inventory_slot = None
+        self.Set_Clicked_Inventory_Slot()
 
 
     def Move_Item_To_New_Slot(self, offset):
@@ -282,6 +298,14 @@ class Inventory_Handler():
             if inventory_slot.rect().colliderect(self.game.mouse.rect_pos(offset)):
                 if inventory_slot.active:
                     return False
+
+                if inventory_slot.item and self.active_item:
+                    if {inventory_slot.item.sub_category == keys.weapon:
+                        self.active_item.type == keys.gem}:
+                            if self.Add_Gem_To_Weapon(inventory_slot.item, self.active_item):
+                                return True
+                            else:
+                                return False
 
                 if self.Swap_Item(inventory_slot, self.active_item):
                     return True
@@ -313,20 +337,27 @@ class Inventory_Handler():
         return True
 
 
+    # item_being_moved is the active item
+    # receiving_inventory_slot is the inventory slot that item_being_moved is
+    # being moved to
     def Swap_Item(self, receiving_inventory_slot, item_being_moved):
         if not receiving_inventory_slot.item:
             return False
         
 
         item_holder = receiving_inventory_slot.item  # Store item to be swapped
+
+        
         self.clicked_inventory_slot.Reset_Inventory_Slot()
         receiving_inventory_slot.Reset_Inventory_Slot()
+        # Check if the items being moved are gems and weapons
 
         # Move original item to active inventory slot
         self.clicked_inventory_slot.Add_Item(item_holder)
 
-        self.clicked_inventory_slot = None  # Clear clicked slot
+        self.Set_Clicked_Inventory_Slot()  # Clear clicked slot
 
+        
         # Move active item into the new slot
         receiving_inventory_slot.Add_Item(item_being_moved)
 
@@ -337,7 +368,21 @@ class Inventory_Handler():
         return True
 
 
+    def Add_Gem_To_Weapon(self, weapon, gem):
+        if gem.type != keys.gem:
+            return False
 
+        if weapon.sub_category != keys.weapon:
+            return False
+
+        if not weapon.Add_Gem(gem):
+            return False
+        
+        # Reset the gem inventory slot
+        self.clicked_inventory_slot.Reset_Inventory_Slot()
+        self.Set_Clicked_Inventory_Slot()  # Clear clicked slot
+        self.active_item = None  # Clear active item
+        return True
 
     def Active_Item(self, offset=(0, 0)):
         if not self.active_item:
@@ -364,6 +409,15 @@ class Inventory_Handler():
             self.active_item.Render_In_Bounds(
                 self.game.player.pos, self.game.mouse.mpos, self.game.display, offset
             )
+
+    def Set_Clicked_Inventory_Slot(self, inventory_slot = None):
+        if inventory_slot:
+            self.clicked_inventory_slot_lock = True
+        else:
+            self.clicked_inventory_slot_lock = False
+
+        self.clicked_inventory_slot = inventory_slot
+        
 
 
     def Overflow(self, item):

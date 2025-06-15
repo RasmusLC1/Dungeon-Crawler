@@ -12,15 +12,6 @@ class Bookshelf(Loot_Container):
 
 
     def Set_Loot_Types(self):
-        self.loot_types = [keys.recipe_scroll,
-                           keys.temptress_embrace,
-                           keys.demonic_bargain,
-                           keys.blood_tomb,
-                           keys.recipe_scroll,
-                           keys.rune,
-                           key_empty
-                           ]
-        
         self.loot_weights = {keys.recipe_scroll : 0.1,
                              keys.temptress_embrace: 0.1,
                              keys.demonic_bargain: 0.1,

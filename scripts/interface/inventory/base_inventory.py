@@ -15,15 +15,26 @@ class Base_Inventory():
         return self.inventory.pop(type, None) is not None # Remove the index
 
 
+    def Find_Inventory_Slots_With_Sub_Type(self, sub_type):
+        inventory_slots_with_item_type = []
+        for inventory_slot in self.inventory:
+            if not inventory_slot.item:
+                continue
+            if sub_type == inventory_slot.item.sub_type:
+                inventory_slots_with_item_type.append(inventory_slot)
+            
+        return inventory_slots_with_item_type
+    
     def Find_Inventory_Slots_With_Type(self, type):
         inventory_slots_with_item_type = []
         for inventory_slot in self.inventory:
             if not inventory_slot.item:
                 continue
-            if type in inventory_slot.item.type:
+            if type == inventory_slot.item.type:
                 inventory_slots_with_item_type.append(inventory_slot)
             
         return inventory_slots_with_item_type
+        
         
     def Append_Inventory(self, inventory_slot):
         pass
@@ -60,6 +71,21 @@ class Base_Inventory():
         
         # Clear the inventory slot
         inventory_slot.Remove_Item()
+
+    def Remove_Item(self, item):
+        inventory_slot = self.Find_Item_Inventory_Slot_ID(item.ID)
+        if not inventory_slot:
+            return False
+        
+        self.Remove_Item_From_Inventory(inventory_slot)
+
+    def Get_Next_Avaiable_Inventory_Slot(self):
+        for inventory_slot in self.inventory:
+            if inventory_slot.item:
+                continue
+            return inventory_slot
+        
+        return None
 
 
     def Add_Inventory_Slot(self, inventory_slot):

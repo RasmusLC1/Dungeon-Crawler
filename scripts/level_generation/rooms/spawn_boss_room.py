@@ -21,6 +21,7 @@ class Spawn_Boss_Room():
             start_y = random.randint(radius * 2, size_y - radius * 2)
             
             distance_to_player = math.sqrt((player_pos[0] - start_x) ** 2 + (player_pos[1] - start_y) ** 2)
+            fail += 1
             if distance_to_player < 50:
                 continue
             path = []
@@ -28,7 +29,6 @@ class Spawn_Boss_Room():
             if path:
                 break
 
-            fail += 1
 
 
         Circle_Room.Room_Structure_Circle(map, start_x, start_y, radius)

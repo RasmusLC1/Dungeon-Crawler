@@ -20,13 +20,3 @@ class Key_Loot_Handler(Loot_Types_Handler):
             keys.cursed_key: Cursed_Key,
             keys.lockpick: Lockpick,
         }
-
-        self.types = [
-            keys.skeleton_key,
-            keys.blood_key,
-            keys.soul_key,
-            keys.cursed_key,
-            keys.lockpick,
-        ]
-
-

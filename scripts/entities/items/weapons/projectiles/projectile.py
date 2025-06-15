@@ -1,19 +1,20 @@
 from scripts.entities.items.weapons.weapon import Weapon
+from scripts.entities.items.weapons.weapon_functions.ranged_damage_handler_weapon import Ranged_Damage_Handler_Weapon
 from scripts.engine.assets.keys import keys
 
 
 class Projectile(Weapon):
-    def __init__(self, game, pos, type, damage, ranged_damage, speed, range, max_charge_time, weapon_class, damage_type, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
-        super().__init__(game, pos, type, damage, speed, range, max_charge_time, weapon_class,  damage_type, attack_type, size, add_to_tile)
+    def __init__(self, game, pos, type, damage, speed, range, max_charge_time, weapon_class, effect, shoot_distance, attack_type = 'cut', size = (32, 32), add_to_tile = True):
+        super().__init__(game, pos, type, damage, speed, range, max_charge_time, weapon_class,  effect, attack_type, size, add_to_tile)
         self.speed = speed
         self.shoot_speed = 0
-        self.ranged_damage = ranged_damage
         self.shoot_distance = shoot_distance
         self.pickup_allowed = True
         self.shoot_distance_holder = shoot_distance
         self.entity_strength = 0
         self.attack_direction = (0, 0)
         self.is_projectile = True
+        self.damage_handler = Ranged_Damage_Handler_Weapon(self, effect, damage)
 
 
     def Save_Data(self):
@@ -54,9 +55,7 @@ class Projectile(Weapon):
 
             self.shoot_distance = self.shoot_distance_holder
             self.shoot_speed = speed * 2
-            self.nearby_enemies = self.game.enemy_handler.Find_Nearby_Enemies(self.entity, self.shoot_distance * self.shoot_speed)
-            if self.entity.category == keys.enemy:
-                self.nearby_enemies.append(self.game.player)
+            self.damage_handler.Find_Nearby_Enemies()
 
             return True
         return False
@@ -79,7 +78,7 @@ class Projectile(Weapon):
         self.Move((dir_x, dir_y))
         entity_hit = None
         # Check for collision with enemy
-        entity_hit = self.Attack_Collision_Check_Projectile()
+        entity_hit = self.damage_handler.Attack_Collision_Check_Projectile()
         if entity_hit:
             self.Reset_Shot()
             return entity_hit
@@ -97,39 +96,7 @@ class Projectile(Weapon):
         self.Set_Entity(None)
         return True
 
-    # Check for collision on attack
-    def Attack_Collision_Check_Projectile(self):
-        for entity in self.nearby_enemies:
-            # Check if the enemy is on damage cooldown
-            if entity.damage_cooldown:
-                continue
 
-            # Check for collision with enemy
-            if self.rect().colliderect(entity.rect()):
-                self.Entity_Hit_Ranged(entity)
-                # Return enemy in case further effects need to be added such as knockback
-                return entity
-            
-        return None
-    
-    # Damage Entity
-    def Entity_Hit_Ranged(self, entity):
-        if not self.entity:
-            return
-        damage = self.Calculate_Ranged_Damage()
-        entity.Damage_Taken(damage, self.entity.attack_direction)
-        self.enemy_hit = True
-
-        if entity.effects.thorns.effect:
-            self.entity.Damage_Taken(entity.effects.thorns.effect, self.entity.attack_direction)
-
-        if not self.entity:
-            return
-        
-        self.Check_Effects(damage, entity)
-
-    def Calculate_Ranged_Damage(self):
-        return self.ranged_damage * 5
 
     def Update_Shoot_Distance(self):
         if not self.shoot_distance:

@@ -14,6 +14,9 @@ class Cursed_Loot_Handler(Loot_Types_Handler):
 
         self.loot_map = {
             keys.black_coin: Black_Coin,
+            keys.temptress_embrace : Cursed_Loot,
+            keys.demonic_bargain : Cursed_Loot,
+            keys.blood_tomb : Cursed_Loot,
         }
 
         # Needs special spawning conditions
@@ -22,17 +25,10 @@ class Cursed_Loot_Handler(Loot_Types_Handler):
         ]
 
 
-        self.types = [
-            # keys.temptress_embrace,
-            # keys.demonic_bargain,
-            # keys.blood_tomb,
-            keys.black_coin,
-        ]
 
-
-    def Loot_Spawner(self, pos, type = None):
+    def Loot_Spawner(self, pos, type = None, amount = None):
         if not type:
-            type = random.choice(self.types)
+            type = random.choice(list(self.loot_map.keys()))
         loot = None
         if type in self.special_type: # Handle lantern seperately as it needs light updates
             loot_class = self.loot_map.get(type)

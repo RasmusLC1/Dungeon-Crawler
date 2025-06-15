@@ -161,11 +161,6 @@ class Rune(Item):
             self.Increase_Animation_Size()
     
     # Defualt the Render function to render in inventory
-    def Render_Inventory(self, surf, offset=(0, 0)):
-        item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], self.size)  
-        surf.blit(item_image, (self.pos[0] - 3, self.pos[1] - 3))
-
-    # Defualt the Render function to render in inventory
     def Render_Menu(self, surf, scale = 1.5):
         item_image = pygame.transform.scale(self.game.assets[self.type][self.animation], (self.size[0] * scale, self.size[1] * scale))  
         surf.blit(item_image, (self.menu_pos[0], self.menu_pos[1]))

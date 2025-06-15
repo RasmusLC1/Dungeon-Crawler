@@ -19,7 +19,7 @@ class Soul_Pit(Elemental_Explosion):
         if distance > self.damage:
             return
         damage = round(max(1, min(30, self.damage * 5 - distance)))
-        entity.Damage_Taken(damage, (0,0))
+        entity.Damage_Taken(damage, (self.effect_type, 0))
         if self.effect:
             entity.Set_Effect(self.effect, self.effect_strength)
 

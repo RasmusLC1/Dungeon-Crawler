@@ -9,7 +9,6 @@ class Game:
         pygame.init()
         self.save_load_manager = Save_Load_Manager(self, ".data", "save_data")
         
-
         self.state_machine = State_Machine(self)
         self.input_update = Input_Update(self)
         self.clock = pygame.time.Clock()

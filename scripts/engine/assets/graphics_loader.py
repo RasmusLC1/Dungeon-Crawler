@@ -30,9 +30,11 @@ class Graphics_Loader:
         Graphics_Loader.Asset_Font(self)
         Graphics_Loader.Asset_Loot(self)
         Graphics_Loader.Asset_Keys(self)
+        Graphics_Loader.Asset_Gems(self)
         Graphics_Loader.Asset_Bombs(self)
         Graphics_Loader.Asset_Rune(self)
         Graphics_Loader.Asset_Menu(self)
+        
         Graphics_Loader.Asset_Health_Bar(self)
         Graphics_Loader.Asset_Particles_List(self)
         Graphics_Loader.Asset_Tooltips(self)
@@ -493,6 +495,31 @@ class Graphics_Loader:
         }
         self.assets.update(loot)
 
+    def Asset_Gems(self):
+        loot = {
+            keys.arcane_hunger_gem: get_tiles_from_sheet('items/gems/arcane_hunger.png', 0, 0, 0, 0, 32, 32),
+            keys.blunt_gem: get_tiles_from_sheet('items/gems/blunt.png', 0, 0, 0, 0, 32, 32),
+            keys.durability_gem: get_tiles_from_sheet('items/gems/durability.png', 0, 0, 0, 0, 32, 32),
+            keys.electric_gem: get_tiles_from_sheet('items/gems/electric.png', 0, 0, 0, 0, 32, 32),
+            keys.fire_gem: get_tiles_from_sheet('items/gems/fire.png', 0, 0, 0, 0, 32, 32),
+            keys.frozen_gem: get_tiles_from_sheet('items/gems/freeze.png', 0, 0, 0, 0, 32, 32),
+            keys.halo_gem: get_tiles_from_sheet('items/gems/halo.png', 0, 0, 0, 0, 32, 32),
+            keys.multishot_gem: get_tiles_from_sheet('items/gems/multishot.png', 0, 0, 0, 0, 32, 32),
+            keys.poison_gem: get_tiles_from_sheet('items/gems/poison.png', 0, 0, 0, 0, 32, 32),
+            keys.power_gem: get_tiles_from_sheet('items/gems/power.png', 0, 0, 0, 0, 32, 32),
+            keys.range_gem: get_tiles_from_sheet('items/gems/range.png', 0, 0, 0, 0, 32, 32),
+            keys.toughness_gem: get_tiles_from_sheet('items/gems/toughness.png', 0, 0, 0, 0, 32, 32),
+            keys.slash_gem: get_tiles_from_sheet('items/gems/sharpness.png', 0, 0, 0, 0, 32, 32),
+            keys.speed_gem: get_tiles_from_sheet('items/gems/speed.png', 0, 0, 0, 0, 32, 32),
+            keys.strength_gem: get_tiles_from_sheet('items/gems/strength.png', 0, 0, 0, 0, 32, 32),
+            keys.terror_gem: get_tiles_from_sheet('items/gems/terror.png', 0, 0, 0, 0, 32, 32),
+            keys.vampiric_gem: get_tiles_from_sheet('items/gems/vampiric.png', 0, 0, 0, 0, 32, 32),
+            keys.vulnerable_gem: get_tiles_from_sheet('items/gems/vulnerable.png', 0, 0, 0, 0, 32, 32),
+            keys.weakness_gem: get_tiles_from_sheet('items/gems/weakness.png', 0, 0, 0, 0, 32, 32),
+            keys.wet_gem: get_tiles_from_sheet('items/gems/wet.png', 0, 0, 0, 0, 32, 32),
+            keys.lockpick_gem: get_tiles_from_sheet('items/gems/blunt.png', 0, 0, 0, 0, 32, 32),
+        }
+        self.assets.update(loot)
 
     def Asset_Keys(self):
         loot = {
@@ -564,9 +591,27 @@ class Graphics_Loader:
 
     def Asset_Font(self):
         font = {
-            keys.font: get_tiles_from_sheet('font/font.png', 7, 5, 0, 0, 16, 16),
             keys.player_damage_font: get_tiles_from_sheet('font/player_damage_font.png', 7, 5, 0, 0, 16, 16),
-            keys.small_font: get_tiles_from_sheet('font/small_font.png', 7, 5, 0, 0, 8, 8),
+            keys.font: get_tiles_from_sheet('font/font_default/font.png', 7, 5, 0, 0, 16, 16),
+            keys.font_slash: get_tiles_from_sheet('font/font_default/font.png', 7, 5, 0, 0, 16, 16),
+            keys.textbox_headline: get_tiles_from_sheet('font/textbox_headline.png', 7, 5, 0, 0, 12, 12),
+            keys.font_blunt: get_tiles_from_sheet('font/font_default/font_blunt.png', 7, 5, 0, 0, 16, 16),
+            keys.font_electric: get_tiles_from_sheet('font/font_default/font_electric.png', 7, 5, 0, 0, 16, 16),
+            keys.font_fire: get_tiles_from_sheet('font/font_default/font_fire.png', 7, 5, 0, 0, 16, 16),
+            keys.font_frozen: get_tiles_from_sheet('font/font_default/font_frozen.png', 7, 5, 0, 0, 16, 16),
+            keys.font_poison: get_tiles_from_sheet('font/font_default/font_poison.png', 7, 5, 0, 0, 16, 16),
+            keys.font_vampiric: get_tiles_from_sheet('font/font_default/font_vampiric.png', 7, 5, 0, 0, 16, 16),
+            keys.font_wet: get_tiles_from_sheet('font/font_default/font_wet.png', 7, 5, 0, 0, 16, 16),
+            keys.font_small: get_tiles_from_sheet('font/font_small/font_small.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_slash: get_tiles_from_sheet('font/font_small/font_small.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_fire: get_tiles_from_sheet('font/font_small/font_small_fire.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_frozen: get_tiles_from_sheet('font/font_small/font_small_frozen.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_poison: get_tiles_from_sheet('font/font_small/font_small_poison.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_blunt: get_tiles_from_sheet('font/font_small/font_small_blunt.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_electric: get_tiles_from_sheet('font/font_small/font_small_electric.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_vampiric: get_tiles_from_sheet('font/font_small/font_small_vampiric.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_wet: get_tiles_from_sheet('font/font_small/font_small_wet.png', 7, 5, 0, 0, 8, 8),
+            keys.font_small_blunt: get_tiles_from_sheet('font/font_small/font_small_blunt.png', 7, 5, 0, 0, 8, 8),
             keys.floating_E: get_tiles_from_sheet('font/floating_e.png', 1, 0, 0, 0, 16, 16),
             keys.symbols: get_tiles_from_sheet('font/symbols.png', 7, 5, 0, 0, 16, 16),
             keys.souls: get_tiles_from_sheet('font/souls.png', 3, 0, 0, 0, 32, 32),

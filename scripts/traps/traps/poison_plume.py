@@ -16,7 +16,7 @@ class Poison_Plume(Trap):
         if self.rect().colliderect(entity.rect()) and self.Cooldown == 0 and self.animation > 3:
             if entity.effects.invulnerable.effect:
                 return
-            entity.Damage_Taken(2)
+            entity.Damage_Taken(2, (keys.poison, 0))
             # entity.Set_Effect('slow_down', 4)
             
 

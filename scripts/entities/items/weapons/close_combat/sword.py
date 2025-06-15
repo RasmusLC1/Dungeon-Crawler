@@ -3,7 +3,7 @@ import random
 from scripts.engine.assets.keys import keys
 
 class Sword(Weapon):
-    def __init__(self, game, pos, effect = 'slash'):
+    def __init__(self, game, pos, effect = keys.slash):
         super().__init__(game, pos, keys.sword, 3, 6, 5, 50, 'one_handed_melee', effect)
         self.max_animation = 3
         self.attack_animation_max = 3 
@@ -52,8 +52,7 @@ class Sword(Weapon):
         new_x_pos = self.entity.pos[0] + self.entity.attack_direction[0] * 20
         new_y_pos = self.entity.pos[1] + self.entity.attack_direction[1] * 20
         self.Move((new_x_pos, new_y_pos))
-        self.enemy_hit = False
-        self.Player_Attack_Collision_Check()
+        # self.Player_Attack_Collision_Check()
         return True
     
     # Initialise the charge logic

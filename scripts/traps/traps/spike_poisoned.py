@@ -27,8 +27,7 @@ class Spike_Poisoned(Trap):
 
             if entity.effects.invulnerable.effect:
                 return
-            entity.Damage_Taken(2)
-            entity.Set_Effect(keys.poison, random.randint(3,5))
+            entity.Damage_Taken(2, (keys.poison, random.randint(3,5)))
 
 
     def Animation_Update(self):

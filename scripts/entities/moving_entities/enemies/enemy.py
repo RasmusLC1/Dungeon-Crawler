@@ -186,12 +186,12 @@ class Enemy(Moving_Entity):
     def Set_Locked_On_Target(self, value):
         self.locked_on_target = value
         
-    def Damage_Taken(self, damage, direction = (0, 0)):
+    def Damage_Taken(self, damage, effect = None, direction = (0, 0)):
         # No damage done simply return
-        if not super().Damage_Taken(damage, direction):
+        self.Spawn_Damaged_Particles()
+        if not super().Damage_Taken(damage, effect, direction):
             return
         
-        self.Spawn_Damaged_Particles()
         self.Delete()
 
     
@@ -233,7 +233,7 @@ class Enemy(Moving_Entity):
         tile.Clear_Entity(self.active_weapon.ID)
         
         self.active_weapon.pos = self.pos.copy()
-        self.active_weapon.Set_Equip(False)
+        self.active_weapon.Unequip()
         self.active_weapon.Place_Down()
         self.game.item_handler.Add_Item(self.active_weapon)
         self.active_weapon.Set_Tile()

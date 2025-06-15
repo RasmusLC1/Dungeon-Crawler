@@ -33,7 +33,7 @@ class Frozen(Effect):
         
         if self.Update_Cooldown():
             damage = random.randint(1, 2)
-            self.entity.Damage_Taken(damage)
+            self.entity.Damage_Taken(damage, (self.effect_type, 0))
         
         try:
             self.entity.max_speed = max(0.1, self.entity.max_speed / max( 1.1, self.effect // 2))

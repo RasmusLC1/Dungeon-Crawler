@@ -4,7 +4,7 @@ from scripts.engine.assets.keys import keys
 
 class Bow(Ranged_Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, keys.bow, 4, 8, 10, 40)
+        super().__init__(game, pos, keys.bow, 3, 8, 10, 50)
         self.max_animation = 0
         self.attack_animation_max = 2
         self.attack_animation_counter = 0
@@ -41,27 +41,3 @@ class Bow(Ranged_Weapon):
             return
         
         self.ready_to_shoot = True
-
-
-    def Enemy_Shooting(self):
-        if not self.entity.charge:
-            return False
-
-        if self.is_charging > 60:
-            self.is_charging = 120
-            self.Spawn_Arrow()
-            self.arrow.Set_Delete_Countdown(50)
-            self.arrow.pickup_allowed = False
-            self.Shoot_Arrow()
-            self.Reset_Bow()
-            return True
-        
-        self.is_charging = self.entity.charge
-        self.attack_animation_counter += 1
-        self.Update_Attack_Animation()
-
-        if self.attack_animation_time <= self.attack_animation_counter:
-            self.attack_animation_counter = 0
-            self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
-        return False
-

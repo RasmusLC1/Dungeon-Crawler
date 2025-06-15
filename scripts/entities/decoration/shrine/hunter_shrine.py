@@ -51,7 +51,7 @@ class Hunter_Shrine(Decoration):
                 print("TILE NOT FOUND, HUNTER SHRINE")
                 continue
             tile_pos = tile.pos[0] * tile_size, tile.pos[1] * tile_size
-            treasure = self.game.item_handler.loot_handler.valueable_loot_handler.Spawn_Hunter_Treasure(tile_pos)
+            treasure = self.game.item_handler.loot_handler.Spawn_Loot_Type(keys.valuable, tile_pos, None, keys.hunter_treasure)
             if not treasure:
                 print("Treasure not spawned, HUNTER SHRINE")
                 return

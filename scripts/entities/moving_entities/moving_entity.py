@@ -1,5 +1,7 @@
 import math
 import pygame
+import random
+from scripts.entities.moving_entities.moving_entity_functions.damage_text_handler import Damage_Text_Handler
 from scripts.entities.moving_entities.effects.effects_handler import Status_Effect_Handler
 from scripts.entities.moving_entities.animation.animation_handler import Animation_Handler
 from scripts.entities.entities import PhysicsEntity
@@ -33,6 +35,7 @@ class Moving_Entity(PhysicsEntity):
         self.attack_direction = (0,0)
         self.target = (0,0)
         
+
         self.damage_cooldown = 0
         self.damage_cooldown_max = 40
         
@@ -58,11 +61,11 @@ class Moving_Entity(PhysicsEntity):
         self.max_health = self.health
         
         # Movement variables
-        self.friction = self.game.tilemap.tile_size / self.game.render_scale # Friction, set to the renderscale
+        self.friction = 0.8 # Friction, set to the renderscale
         self.friction_holder = self.friction # Holder for friction to reset it
-        self.acceleration = agility / 40 * self.game.render_scale
+        self.acceleration = agility / 5 * self.game.render_scale
         self.acceleration_holder = self.acceleration # accelarition holder to reset it
-        self.max_speed = max_speed * self.game.render_scale + agility / 10 # Max speed of the entity
+        self.max_speed = max_speed * self.game.render_scale + agility # Max speed of the entity
         self.max_speed_holder = self.max_speed # Max speed holder to reset it
 
 
@@ -81,7 +84,9 @@ class Moving_Entity(PhysicsEntity):
         self.effects = self._effect_handler(self)
         self.animation_handler = self._animation_handler(self)
         
-        self.damage_text = ''
+        self.damage_text_handler = Damage_Text_Handler(self.game)
+
+        self.Set_Sprite()
 
 
 
@@ -132,7 +137,9 @@ class Moving_Entity(PhysicsEntity):
 
         self.Movement(movement, tilemap)
         self.Update_Tile()
+        self.damage_text_handler.Update()
     
+
     def Update_Movement(self, movement):
         # Apply acceleration to velocity based on input
         self.velocity[0] += movement[0] * self.acceleration
@@ -141,25 +148,50 @@ class Moving_Entity(PhysicsEntity):
         # Clamp the velocity to max speed
         self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
         self.velocity[1] = max(-self.max_speed, min(self.velocity[1], self.max_speed))
-
-        # Apply friction when there's no input
-        if movement[0] == 0:
-            if self.velocity[0] > 0:
-                self.velocity[0] = max(self.velocity[0] - self.friction, 0)
-            else:
-                self.velocity[0] = min(self.velocity[0] + self.friction, 0)
         
-        if movement[1] == 0:
-            if self.velocity[1] > 0:
-                self.velocity[1] = max(self.velocity[1] - self.friction, 0)
-            else:
-                self.velocity[1] = min(self.velocity[1] + self.friction, 0)
+        # Apply friction and elimnates fricting
+        if abs(self.velocity[0]) > 0.1:
+            self.velocity[0] *= self.friction
+        else:
+            self.velocity[0] = 0
+        if abs(self.velocity[1]) > 0.1:
+            self.velocity[1] *= self.friction
+        else:
+            self.velocity[1] = 0
 
         self.direction_x = movement[0]
         self.direction_y = movement[1]
 
         # Calculate frame movement based on updated velocity
-        self.Set_Frame_movement((self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale))
+        self.Set_Frame_movement((
+            self.velocity[0] / self.game.render_scale,
+            self.velocity[1] / self.game.render_scale
+        ))
+
+
+    # def Update_Movement(self, movement):
+    #     # Apply acceleration to velocity based on input
+    #     self.velocity[0] += movement[0] * self.acceleration
+    #     self.velocity[1] += movement[1] * self.acceleration
+
+    #     # Clamp the velocity to max speed
+    #     self.velocity[0] = max(-self.max_speed, min(self.velocity[0], self.max_speed))
+    #     self.velocity[1] = max(-self.max_speed, min(self.velocity[1], self.max_speed))
+        
+    #     self.velocity[0] *= 0.85 if abs(self.velocity[0]) > 0.1 else 0
+    #     self.velocity[1] *= 0.85 if abs(self.velocity[1]) > 0.1 else 0
+        
+    #     # Avoids sliding
+    #     if abs(self.velocity[0]) < 0.05:
+    #         self.velocity[0] = 0
+    #     if abs(self.velocity[1]) < 0.05:
+    #         self.velocity[1] = 0
+
+    #     self.direction_x = movement[0]
+    #     self.direction_y = movement[1]
+
+    #     # Calculate frame movement based on updated velocity
+    #     self.Set_Frame_movement((self.velocity[0] / self.game.render_scale, self.velocity[1] / self.game.render_scale))
 
     # Movement handling
     def Movement(self, movement, tilemap):
@@ -313,14 +345,11 @@ class Moving_Entity(PhysicsEntity):
             self.damage_cooldown -= 1
             
 
-    def Damage_Taken(self, damage, direction = (0, 0)):
-        if self.damage_cooldown:
-            return False
-                
+    def Damage_Taken(self, damage, effect = (keys.slash, 0), direction = (0, 0)):
         if self.Check_Blocking_Direction(direction):
             return False
 
-        self.damage_text = str(damage)
+        self.damage_text_handler.Spawn_Damage_Text(self.pos, effect[0], str(damage))
 
         self.damage_cooldown = self.damage_cooldown_max
         self.Set_Health(self.health - damage)
@@ -330,10 +359,16 @@ class Moving_Entity(PhysicsEntity):
         
         # Check if any active effects affect damage
         self.effects.Damage_Taken(damage)
+        
+        if effect[1] > 0 and not keys.vampiric in effect[0]:
+            self.effects.Set_Effect(effect[0], effect[1])
 
         self.Check_If_Dead()
+
         
         return True
+    
+
     
     def Check_If_Dead(self):
         if self.health > 0: # Entity alive
@@ -509,16 +544,16 @@ class Moving_Entity(PhysicsEntity):
         #Fire
         self.effects.Render_Effects(surf, offset)
 
-        if self.damage_cooldown:
-            self.Lightup(self.rendered_image)
-            scroll_up_effect = 20 - self.damage_cooldown
-            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
+        self.Render_Damage(surf, offset)
 
         surf.blit(pygame.transform.flip(self.rendered_image, self.flip[0], False), 
                 (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
         return True
     
-        
+    def Render_Damage(self, surf, offset):
+        self.Lightup(self.rendered_image)
+        self.damage_text_handler.Render(surf, offset)
+
 
     def Lightup(self, entity_image):
         if self.damage_cooldown < self.damage_cooldown_max - 10:

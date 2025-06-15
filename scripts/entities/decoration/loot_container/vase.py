@@ -16,11 +16,8 @@ class Vase(Loot_Container):
         return
 
     def Set_Loot_Types(self):
-        self.loot_types = [keys.gold,
-                           keys.key,
-                           keys.revive]
-        
-        self.loot_weights = {keys.gold : 0.8,
+
+        self.loot_weights = {keys.valuable : 0.8,
                              keys.key : 0.3,
                              keys.revive : 0.02}
 

@@ -38,7 +38,7 @@ class Skeleton_Ranger(Skeleton):
             return False
 
         self.Set_Target(self.game.player.pos)
-        if self.active_weapon.type == 'bow':
+        if self.active_weapon.type == keys.bow:
             self.charge += 1
             self.active_weapon.Set_Charging_Enemy()
             if self.active_weapon.Enemy_Shooting():

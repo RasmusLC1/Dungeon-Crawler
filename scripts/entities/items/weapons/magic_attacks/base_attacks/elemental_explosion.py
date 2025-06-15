@@ -39,7 +39,7 @@ class Elemental_Explosion(Item):
     def Compute_Damage(self, entity):
         distance = self.Distance(self.pos, entity.pos)
         damage = round(max(5, min(50, self.damage * 32 - distance)))
-        entity.Damage_Taken(damage, (0,0))
+        entity.Damage_Taken(damage, (self.effect_type, 0))
         if self.effect:
             entity.Set_Effect(self.effect, self.effect_strength)
 

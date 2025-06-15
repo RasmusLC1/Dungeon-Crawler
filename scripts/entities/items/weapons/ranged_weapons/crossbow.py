@@ -7,7 +7,7 @@ from scripts.engine.assets.keys import keys
 
 class Crossbow(Ranged_Weapon):
     def __init__(self, game, pos):
-        super().__init__(game, pos, keys.crossbow, 6, 8, 10, 60)
+        super().__init__(game, pos, keys.crossbow, 5, 8, 10, 80)
         self.max_animation = 8
         self.attack_animation_max = 2
         self.attack_animation_counter = 0
@@ -44,26 +44,6 @@ class Crossbow(Ranged_Weapon):
 
 
 
-    def Enemy_Shooting(self):
-        if not self.entity.charge:
-            return False
-
-        if self.is_charging > 80:
-            self.is_charging = 120
-            self.Spawn_Arrow()
-            self.arrow.Set_Delete_Countdown(50)
-            self.arrow.pickup_allowed = False
-            self.Shoot_Arrow()
-            self.Reset_Bow()
-            return True
-        
-        self.is_charging = self.entity.charge
-        self.attack_animation_counter += 1
-        self.Update_Attack_Animation()
-
-        if self.attack_animation_time <= self.attack_animation_counter:
-            self.attack_animation_counter = 0
-            self.attack_animation = min(self.attack_animation_max, self.attack_animation + 1)
-        return False
+    
 
 

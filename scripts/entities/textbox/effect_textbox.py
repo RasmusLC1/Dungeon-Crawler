@@ -16,7 +16,7 @@ class Effect_Textbox(Text_Box):
         return super().Set_Text_Box_Size(entity_name)
 
     def Set_Y_Size(self):
-        self.y_size = len(self.entity.effect.description) // 15 * 20
+        self.y_size = len(self.entity.effect.description) // 12 * 20
 
     def Render(self, surf, text_box_pos, offset = (0,0)):
    
@@ -24,8 +24,7 @@ class Effect_Textbox(Text_Box):
 
         
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
-        # self.entity.game.mixed_symbols.Render_Mixed_Text(surf, 'fire Damage over time Stopped by water', text_box_pos)
-        self.entity.game.mixed_symbols.Render_Mixed_Text(surf, self.entity.effect.description, text_box_pos)
+        self.entity.game.mixed_symbols.Render_Mixed_Text(surf, self.entity.effect.description, text_box_pos, 0.5)
 
 
 

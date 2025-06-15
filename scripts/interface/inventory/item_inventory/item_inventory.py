@@ -26,12 +26,7 @@ class Item_Inventory(Base_Inventory):
                     
         return self.Add_Item_To_Inventory_Slot(item)
 
-    def Remove_Item(self, item):
-        inventory_slot = self.Find_Item_Inventory_Slot_ID(item.ID)
-        if not inventory_slot:
-            return False
-        
-        self.Remove_Item_From_Inventory(inventory_slot)
+    
 
     # Merges items into existing slots if possible
     def Add_Item_To_Inventory_Slot_Merge(self, item):
@@ -39,7 +34,7 @@ class Item_Inventory(Base_Inventory):
             return False  # Can't merge single-stack items
         # Check if this item type is already in the inventory, return false
         # if not return False
-        inventory_slots_with_type = self.Find_Inventory_Slots_With_Type(item.type)
+        inventory_slots_with_type = self.Find_Inventory_Slots_With_Sub_Type(item.sub_type)
         if not inventory_slots_with_type:
             return False
 
@@ -111,7 +106,7 @@ class Item_Inventory(Base_Inventory):
         return False
     
     def Check_Gold_In_Inventory(self):
-        gold_inventory_slots = self.Find_Inventory_Slots_With_Type("gold")
+        gold_inventory_slots = self.Find_Inventory_Slots_With_Sub_Type("gold")
         if not gold_inventory_slots:
             return 0
         

@@ -17,6 +17,14 @@ class Passive_Loot_Handler(Loot_Types_Handler):
             keys.lantern: Lantern,
             keys.echo_sigil: Echo_Sigil,
             keys.recipe_scroll: Recipe_Scroll,
+            keys.anchor_stone : Passive_Loot,
+            keys.magnet : Passive_Loot,
+            keys.strength_totem : Passive_Loot,
+            keys.power_totem : Passive_Loot,
+            keys.muffled_boots : Passive_Loot,
+            keys.halo : Passive_Loot,
+            keys.faith_pendant : Passive_Loot,
+            keys.lucky_charm : Passive_Loot,
         }
 
         self.special_type = [
@@ -26,24 +34,9 @@ class Passive_Loot_Handler(Loot_Types_Handler):
         ]
 
 
-        self.types = [
-            keys.lantern,
-            keys.anchor_stone,
-            keys.magnet,
-            keys.strength_totem,
-            keys.power_totem,
-            keys.muffled_boots,
-            keys.halo,
-            keys.faith_pendant,
-            keys.lucky_charm,
-            keys.echo_sigil,
-            keys.recipe_scroll,
-        ]
-
-
-    def Loot_Spawner(self, pos, type = None):
+    def Loot_Spawner(self, pos, type = None, amount = None):
         if not type:
-            type = random.choice(self.types)
+            type = random.choice(list(self.loot_map.keys()))
         loot = None
         if type in self.special_type: # Handle lantern seperately as it needs light updates
             loot_class = self.loot_map.get(type)

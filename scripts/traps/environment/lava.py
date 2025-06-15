@@ -36,9 +36,7 @@ class Lava(Trap):
                 return
             if entity.effects.wet.effect:
                 entity.effects.wet.Decrease_Effect()
-            if not entity.Set_Effect(keys.fire, 3):
-                return
-            entity.Damage_Taken(5)
+            entity.Damage_Taken(5, (keys.fire, 3))
 
     def Add_Entity_To_Trap(self, entity):
         if not super().Add_Entity_To_Trap(entity):

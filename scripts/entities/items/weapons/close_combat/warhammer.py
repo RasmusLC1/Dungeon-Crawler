@@ -4,7 +4,7 @@ from scripts.engine.assets.keys import keys
 # TODO: Add particle effect on hammer
 
 class Warhammer(Weapon):
-    def __init__(self, game, pos, damage_type = 'blunt'):
+    def __init__(self, game, pos, damage_type = keys.blunt):
         super().__init__(game, pos, keys.warhammer, 9, 2, 6, 80, 'two_handed_melee', damage_type)
         self.max_animation = 5
         self.attack_animation_max = 5
@@ -42,8 +42,8 @@ class Warhammer(Weapon):
     
         
     def Smash_Attack_Effect(self):
-        self.weapon_attack_effect.Update_Special_Attack_Effect_Animation()
-        effect_type = self.effect + '_' + self.attack_type + '_' + keys.effect
+        self.attack_effect_handler.Update_Special_Attack_Effect_Animation()
+        effect_type = self.Get_First_Effect() + '_' + self.attack_type + '_' + keys.effect
         attack_effect = self.game.assets[effect_type][self.attack_effect_animation]
         pos_x = self.entity.pos[0] - self.game.render_scroll[0] - 10
         pos_y = self.entity.pos[1] - self.game.render_scroll[1] - 10
@@ -54,7 +54,7 @@ class Warhammer(Weapon):
     def Set_Special_Attack(self, offset=...):
         self.attack_type = keys.smash
         super().Set_Special_Attack(offset)
-        self.weapon_attack_effect.Set_Special_Attack_Effect_Animation_Time()
+        self.attack_effect_handler.Set_Special_Attack_Effect_Animation_Time()
     
     def Reset_Special_Attack(self):
         self.attack_type = keys.cut

@@ -120,7 +120,7 @@ class Player(Moving_Entity):
             return None
         return super().Entity_Collision_Detection(tilemap)
     
-    def Remove_Active_Weapon(self, ):
+    def Remove_Active_Weapon(self):
         self.weapon_handler.Remove_Active_Weapon()
 
     def Attack_Direction_Handler(self, offset = (0,0)):
@@ -134,6 +134,9 @@ class Player(Moving_Entity):
         self.health = health
 
     def Attacking(self, weapon, offset=(0, 0)):
+        if not weapon:
+            return
+        
         if weapon.attacking and not self.attacking:
             self.Attack_Direction_Handler(offset)
 
@@ -188,9 +191,6 @@ class Player(Moving_Entity):
 
     def Find_Nearby_Chests(self, range):
         self.nearby_chests = self.game.chest_handler.Find_Nearby_Chests(self.pos, range)
-
-    def Damage_Taken(self, damage, direction=...):
-        return super().Damage_Taken(damage, direction)
     
     def Check_If_Dead(self):
         # Check if the player can be revived
@@ -228,10 +228,7 @@ class Player(Moving_Entity):
         entity_image = self.animation_handler.entity_image.copy()
 
         entity_image.set_alpha(min(255, self.active))
-        if self.damage_cooldown:
-            self.Lightup(entity_image)
-            scroll_up_effect = 20 - self.damage_cooldown
-            self.game.default_font.Render_Word(surf, self.damage_text, (self.pos[0] - offset[0], self.pos[1] - scroll_up_effect - offset[1]), keys.player_damage_font)
+        self.Render_Damage(surf, offset)
         if not "up" in self.animation_handler.animation:
             surf.blit(pygame.transform.flip(entity_image, self.flip[0], False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 

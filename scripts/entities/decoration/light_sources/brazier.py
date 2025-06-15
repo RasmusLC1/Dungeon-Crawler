@@ -33,7 +33,7 @@ class Brazier(Decoration):
         return super().Update()
 
     def Add_Light(self):
-        self.light_source = self.game.light_handler.Add_Light(self.pos, 8, self.tile)
+        self.light_source = self.game.light_handler.Add_Light(self.pos, 10, self.tile)
         self.light_level = self.game.light_handler.Initialise_Light_Level(self.tile)
 
     # Turn off the fire

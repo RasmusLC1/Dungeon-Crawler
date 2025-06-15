@@ -20,8 +20,9 @@ class Effigy_Tomb(Loot_Container):
         return True
 
     def Drop_Loot(self):
-        weight_values = [self.loot_weights[loot_type] for loot_type in self.loot_types]
-        loot_type = random.choices(self.loot_types, weight_values, k=1)[0]
+        loot_types = list(self.loot_weights.keys())
+        weight_values = [self.loot_weights[loot_type] for loot_type in loot_types]
+        loot_type = random.choices(loot_types, weight_values, k=1)[0]
         if loot_type == keys.enemy:
             enemy_type = random.choices(
                 population=list(self.enemies.keys()),
@@ -36,10 +37,6 @@ class Effigy_Tomb(Loot_Container):
 
 
     def Set_Loot_Types(self):
-        self.loot_types = [keys.enemy,
-                           keys.revive,
-                           keys.curse]
-        
         self.loot_weights = {keys.enemy : 0.5,
                              keys.revive : 0.2,
                              keys.curse : 0.3}

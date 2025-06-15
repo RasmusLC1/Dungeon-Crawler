@@ -123,9 +123,7 @@ class Inventory_Slot():
             self.item.Render_Active(surf, self.game.render_scroll)
 
         if self.item and not self.active:
-            item_image = pygame.transform.scale(self.item.entity_image, self.size)
-            
-            surf.blit(item_image, self.pos)
+            self.item.Render_Inventory(surf, self.pos, self.size)
         else:
 
             return
@@ -145,7 +143,7 @@ class Inventory_Slot():
         self.game.default_font.Render_Word(surf, 
             str(self.item.amount) + '/' + str(self.item.max_amount), 
             (self.pos[0] + x_offset, self.pos[1] + 25),
-            keys.small_font
+            keys.font_small
         )
 
     # Render the keyboard shortcut

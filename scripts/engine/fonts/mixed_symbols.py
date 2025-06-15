@@ -37,18 +37,32 @@ class Mixed_Symbols():
 
         return elements
 
-    def Render_Mixed_Text(self, surf, input_str, pos, scale=1):
+    def Get_Font_Size(self, scale):
+        font_size = keys.font
+        if scale == 1:
+            font_size = keys.font # Set font size 
+        elif scale < 1:
+            font_size = keys.font_small
+        # elif scale > 1:
+        #     font_size = "large"
+        return font_size
+        
+
+    # 2 is default size
+    def Render_Mixed_Text(self, surf, input_str, pos, scale=1, font_style = None):
+        if not font_style:
+            font_style = self.Get_Font_Size(scale)
         elements = self.parse_mixed_elements(input_str)
         current_x, current_y = pos
         for element in elements:
             if element[keys.type] == 'text':
-                self.font.Render_Word(surf, element['content'], (current_x, current_y), self.font)
+                self.font.Render_Word(surf, element['content'], (current_x, current_y), font_style)
                 # Update x position based on number of characters (14 pixels per character)
-                current_x += 14 * len(element['content'])
+                current_x += 14 * len(element['content']) * scale
             elif element[keys.type] == 'symbol':
                 # Render the symbol and update x position
                 self.symbols.Render_Symbol(surf, element['content'], (current_x, current_y), scale)
                 current_x += 16 * scale  # Assuming each symbol is 16 pixels wide, scaled
             elif element[keys.type] == 'newline':  # Handle newlines properly
-                current_y += 16  # Adjust line height for the next line of text
+                current_y += 16 * scale  # Adjust line height for the next line of text
                 current_x = pos[0]  # Reset x position for the new line

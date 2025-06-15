@@ -12,9 +12,7 @@ class Loot_Container(Decoration):
         self.loot_amount = 0
         self.text_cooldown = 0
         self.text_animation = 0
-        self.loot_types = []
         self.loot_weights = {}
-        self.Set_Gold_Range()
         self.Set_Loot_Types()
         self.sub_category = keys.loot_container
 
@@ -38,8 +36,9 @@ class Loot_Container(Decoration):
         return True
 
     def Drop_Loot(self):
-        weight_values = [self.loot_weights[loot_type] for loot_type in self.loot_types]
-        loot_type = random.choices(self.loot_types, weight_values, k=1)[0]
+        loot_types = list(self.loot_weights.keys())
+        weight_values = [self.loot_weights[loot_type] for loot_type in loot_types]
+        loot_type = random.choices(loot_types, weight_values, k=1)[0]
         
         self.Spawn_Loot(loot_type, self.Get_Pos())
     
@@ -54,14 +53,6 @@ class Loot_Container(Decoration):
     def Set_Loot_Types(self):
         pass
 
-    def Set_Gold_Range(self):
-        self.gold_range = [10, 20]
-
-    def Spawn_Gold(self, pos):
-        amount = random.randint(self.gold_range[0], self.gold_range[1])
-        self.game.item_handler.loot_handler.Spawn_Gold(pos, amount)
-
-    
     def Destroyed(self):
         if not super().Destroyed():
             return False
