@@ -17,7 +17,7 @@ class Damage_Handler_Weapon():
             entity.Damage_Taken(damage, effect, weapon_entity.attack_direction)
 
             if entity.effects.thorns.effect:
-                weapon_entity.Damage_Taken(entity.effects.thorns.effect, weapon_entity.attack_direction)
+                weapon_entity.Damage_Taken(entity.effects.thorns.effect)
 
 
     def Decoration_Hit(self, decoration):
@@ -39,9 +39,9 @@ class Damage_Handler_Weapon():
             return (keys.vampiric, 0) # Return vampiric with strength 0 so it's not set
         
         # Set special status effect of weapon if weapon has one
-        strength =  max(1, round(damage // 10))
+        effect_strength =  max(1, round(damage))
 
-        return (damage_type, strength)
+        return (damage_type, effect_strength)
 
     def Calculate_Damage(self, damage_type):
         return self.weapon.entity.strength * self.damage[damage_type]

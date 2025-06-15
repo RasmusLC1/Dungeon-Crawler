@@ -43,7 +43,7 @@ class Poison(Effect):
         
 
         if self.Update_Cooldown():
-            self.entity.Damage_Taken(self.effect)
+            self.entity.Damage_Taken(self.effect, (self.effect_type, 0))
 
         self.Effect_Animation_Cooldown()
         return True

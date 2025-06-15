@@ -6,7 +6,7 @@ class Gem(Valuable):
         super().__init__(game, effect + '_' + keys.gem, pos, value)
         self.amount = amount
         self.type = keys.gem
-        self.max_amount = 100 # Amount acts as damage, each extra amount = 1 damage
+        self.max_amount = 10 # Amount acts as damage, each extra amount = 1 * strength damage
         self.effect = effect
         self.description = f"Add {self.effect, str(self.amount)}\nto weapon\ngold {self.amount * self.value}\n"
 

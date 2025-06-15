@@ -360,7 +360,7 @@ class Moving_Entity(PhysicsEntity):
         # Check if any active effects affect damage
         self.effects.Damage_Taken(damage)
         
-        if effect[1] > 0:
+        if effect[1] > 0 and not keys.vampiric in effect[0]:
             self.effects.Set_Effect(effect[0], effect[1])
 
         self.Check_If_Dead()

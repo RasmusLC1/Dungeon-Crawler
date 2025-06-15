@@ -64,7 +64,7 @@ class Gem_Handler():
         return True
     
     def Get_Effect_Amount(self, gem):
-        return max(1, round(gem.amount // 10))
+        return max(1, round(gem.amount))
 
     def Set_Entity_Effect(self, gem):
         if not self.weapon.entity.type == keys.player:

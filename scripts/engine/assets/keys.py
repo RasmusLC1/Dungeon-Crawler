@@ -746,7 +746,7 @@ class keys():
 
     speed_gem = "speed_gem"
 
-    strength_gem = "strength_gem"
+    strength_gem = "increase_strength_gem"
 
     terror_gem = "terror_gem"
 

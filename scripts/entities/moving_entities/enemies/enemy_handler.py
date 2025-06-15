@@ -83,7 +83,8 @@ class Enemy_Handler():
             type = random.choices(list(enemy_types.keys()), weights=enemy_types.values())[0]
 
             if type:
-                pos = spawner.pos
+                # Small random varience in spawning to prevent clumping together
+                pos = (spawner.pos[0] + random.randint(-10, 10), spawner.pos[1] + + random.randint(-10, 10))
                 self.Enemy_Spawner(type, pos)
 
     

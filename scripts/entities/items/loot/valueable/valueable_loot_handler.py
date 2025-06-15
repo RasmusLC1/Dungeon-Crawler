@@ -21,32 +21,32 @@ class Valuable_Loot_Handler(Loot_Types_Handler):
 
     def Spawn_Gold(self, pos, amount = None):
         if not amount:
-            amount = random.randint(5 * self.game.level, 10 * self.game.level)
+            amount = random.randint(10 * self.game.level, 10 * self.game.level)
 
         loot = Gold(self.game, pos, amount)
         return loot
 
     def Get_Gem_Effect(self):
         effects = {
-            keys.fire : 4,
-            keys.frozen : 4,
-            keys.electric : 4,
-            keys.poison : 4,
-            keys.electric : 4,
-            keys.vampiric : 6,
-            keys.arcane_hunger : 8,
-            keys.blunt : 3,
-            keys.slash : 3,
-            keys.halo : 7,
-            keys.power : 8,
-            keys.range : 5,
-            keys.speed : 5,
-            keys.increase_strength : 4,
-            keys.terror : 8,
-            keys.vulnerable : 6,
-            keys.weakness : 5,
-            keys.wet : 4,
-            keys.durability : 4,
+            keys.fire : 8,
+            keys.frozen : 8,
+            keys.electric : 8,
+            keys.poison : 8,
+            keys.electric : 8,
+            keys.vampiric : 12,
+            keys.arcane_hunger : 16,
+            keys.blunt : 6,
+            keys.slash : 6,
+            keys.halo : 14,
+            keys.power : 16,
+            keys.range : 10,
+            keys.speed : 10,
+            keys.increase_strength : 8,
+            keys.terror : 16,
+            keys.vulnerable : 12,
+            keys.weakness : 10,
+            keys.wet : 8,
+            keys.durability : 8,
         }
 
 
@@ -63,7 +63,7 @@ class Valuable_Loot_Handler(Loot_Types_Handler):
     
     def Spawn_Gem(self, pos, amount):
         if not amount:
-            amount = random.randint(1 * self.game.level, 5 * self.game.level)
+            amount = min(10, random.randint(self.game.level, self.game.level + 3))
         
         effect, value = self.Get_Gem_Effect()
         loot = Gem(self.game, pos, amount, effect, value)

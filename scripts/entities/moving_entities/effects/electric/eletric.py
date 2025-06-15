@@ -16,7 +16,7 @@ class Electric(Effect):
         if self.entity.effects.wet.effect:
             effect_time *= 2
 
-        self.entity.Damage_Taken(effect_time)
+        self.entity.Damage_Taken(effect_time, (self.effect_type, 0))
             
         return super().Set_Effect(effect_time, permanent)
     
