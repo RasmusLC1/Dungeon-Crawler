@@ -62,5 +62,5 @@ class Damage_Text_Handler():
                 self.active_damage_texts.remove(damage_text)
                 continue
             scroll_up_effect = damage_text.offset - damage_text.cooldown // 2
-            self.game.default_font.Render_Word(surf, damage_text.text, (damage_text.pos[0] - offset[0], damage_text.pos[1] - scroll_up_effect - offset[1]))
+            self.game.default_font.Render_Word(surf, damage_text.text, (damage_text.pos[0] - offset[0], damage_text.pos[1] - scroll_up_effect - offset[1]), damage_text.font_style)
             

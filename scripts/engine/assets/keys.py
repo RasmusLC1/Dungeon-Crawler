@@ -877,7 +877,7 @@ class keys():
 
     textbox_headline = "textbox_headline"
 
-    font_slash = "font"
+    font_slash = "font_slash"
 
     font_blunt = "font_blunt"
 
@@ -887,13 +887,15 @@ class keys():
 
     font_frozen = "font_frozen"
 
+    font_poison = "font_poison"
+
     font_vampiric = "font_vampiric"
 
     font_wet = "font_wet"
     
     font_small = "font_small"
 
-    font_small_slash = "font_small" # Slash uses the default font
+    font_small_slash = "font_small_slash" # Slash uses the default font
 
     font_small_blunt = "font_small_blunt"
 
@@ -902,6 +904,8 @@ class keys():
     font_small_fire = "font_small_fire"
 
     font_small_frozen = "font_small_frozen"
+    
+    font_small_poison = "font_small_poison"
 
     font_small_vampiric = "font_small_vampiric"
 

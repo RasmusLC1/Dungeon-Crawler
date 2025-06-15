@@ -1,5 +1,5 @@
 from scripts.engine.assets.keys import keys
-
+import inspect
 
 class Font():
     def __init__(self, game):
@@ -54,6 +54,11 @@ class Font():
         original_x, original_y = pos
         current_y = original_y
         font = self.Find_Font(font_style)
+        if not font:
+            caller_frame = inspect.stack()[1]
+            caller_name = caller_frame.function
+            print("RENDER WORD FAILED ", font_style, caller_name)
+            return
         size = self.Find_Font_Size(font_style)
 
         # Split by newline and then process each line
@@ -81,4 +86,4 @@ class Font():
                 surf.blit(font[font_position], (current_x, current_y))
                 current_x += x_increment  # Increment x position for next character
             except Exception as e:
-                print(f"WRONG SYMBOL FONT: {e}")
+                print(f"WRONG SYMBOL FONT: {e}", font)

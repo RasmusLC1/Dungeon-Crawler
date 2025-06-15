@@ -32,7 +32,7 @@ class Fire(Effect):
         
         if self.Update_Cooldown():
             damage = random.randint(2, 3)
-            self.entity.Damage_Taken(damage)
+            self.entity.Damage_Taken(damage, (self.effect_type, 0))
 
 
         self.Effect_Animation_Cooldown()

@@ -345,11 +345,11 @@ class Moving_Entity(PhysicsEntity):
             self.damage_cooldown -= 1
             
 
-    def Damage_Taken(self, damage, effect = None, direction = (0, 0)):
+    def Damage_Taken(self, damage, effect = (keys.slash, 0), direction = (0, 0)):
         if self.Check_Blocking_Direction(direction):
             return False
 
-        self.damage_text_handler.Spawn_Damage_Text(self.pos, effect, str(damage))
+        self.damage_text_handler.Spawn_Damage_Text(self.pos, effect[0], str(damage))
 
         self.damage_cooldown = self.damage_cooldown_max
         self.Set_Health(self.health - damage)
@@ -360,13 +360,15 @@ class Moving_Entity(PhysicsEntity):
         # Check if any active effects affect damage
         self.effects.Damage_Taken(damage)
         
-        if effect:
+        if effect[1] > 0:
             self.effects.Set_Effect(effect[0], effect[1])
 
         self.Check_If_Dead()
 
         
         return True
+    
+
     
     def Check_If_Dead(self):
         if self.health > 0: # Entity alive
