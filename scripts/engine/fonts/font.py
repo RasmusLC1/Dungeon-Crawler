@@ -6,7 +6,7 @@ class Font():
         self.game = game
         self.font = self.game.assets[keys.font]
         self.player_damage_font = self.game.assets[keys.player_damage_font]
-        self.small_font = self.game.assets[keys.small_font]
+        self.font_small = self.game.assets[keys.font_small]
 
         # Use dictionary for O(1) lookup time, using enumerate to number them
         self.font_lookup_table = {
@@ -31,20 +31,21 @@ class Font():
 
 
     def Find_Font(self, font_style):
-        font_styles = {
-        keys.font: self.font,
-        keys.player_damage_font: self.player_damage_font,
-        keys.small_font: self.small_font,
-        }
-        return font_styles.get(font_style, self.font)
+        try:
+            return self.game.assets[font_style]
+        except Exception as e:
+            print(f'WRONG FONT STYLE {e}', font_style)
 
     def Find_Font_Size(self, font_style):
-        font_styles = {
-        keys.font: (15, 16),
-        keys.player_damage_font: (15, 16),
-        keys.small_font: (7, 8),
-        }
-        return font_styles.get(font_style, (16, 16))
+        font_size = (15, 16)
+        if "small" in font_style.lower():
+            font_size = (7, 8)
+        elif "large" in font_style.lower():
+            font_size = (30, 32)
+        elif "headline" in font_style.lower():
+            font_size = (11, 12)
+
+        return font_size
 
     def Render_Word(self, surf, text, pos, font_style=None):
         # Initalise to default font if none found

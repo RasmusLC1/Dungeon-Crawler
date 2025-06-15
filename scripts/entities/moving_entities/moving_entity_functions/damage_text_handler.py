@@ -1,4 +1,3 @@
-import random
 from scripts.entities.moving_entities.moving_entity_functions.damage_text import Damage_Text
 class Damage_Text_Handler():
     def __init__(self, game):
@@ -14,14 +13,14 @@ class Damage_Text_Handler():
                 self.active_damage_texts.remove(damage_text)
 
             
-    def Spawn_Damage_Text(self, pos, text):
+    def Spawn_Damage_Text(self, pos, effect, text):
         damage_text = self.Find_Damage_Text()
 
         if not damage_text:
             damage_text = self.Create_Extra_Damage_Text()
 
         queue_length = len(self.active_damage_texts)
-        damage_text.Activate(pos, text, queue_length)
+        damage_text.Activate(pos, effect, text, queue_length)
         self.active_damage_texts.append(damage_text)
 
 
@@ -63,5 +62,5 @@ class Damage_Text_Handler():
                 self.active_damage_texts.remove(damage_text)
                 continue
             scroll_up_effect = damage_text.offset - damage_text.cooldown // 2
-            self.game.default_font.Render_Word(surf, damage_text.text, (damage_text.pos[0] - offset[0], damage_text.pos[1] - scroll_up_effect - offset[1]), scroll_up_effect * 10)
+            self.game.default_font.Render_Word(surf, damage_text.text, (damage_text.pos[0] - offset[0], damage_text.pos[1] - scroll_up_effect - offset[1]))
             

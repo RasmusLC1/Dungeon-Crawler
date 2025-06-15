@@ -349,7 +349,7 @@ class Moving_Entity(PhysicsEntity):
         if self.Check_Blocking_Direction(direction):
             return False
 
-        self.damage_text_handler.Spawn_Damage_Text(self.pos, str(damage))
+        self.damage_text_handler.Spawn_Damage_Text(self.pos, effect, str(damage))
 
         self.damage_cooldown = self.damage_cooldown_max
         self.Set_Health(self.health - damage)

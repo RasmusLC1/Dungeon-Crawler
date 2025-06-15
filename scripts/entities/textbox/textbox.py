@@ -45,11 +45,11 @@ class Text_Box():
     
     # Seperate function for size flexibility
     def Set_Y_Size(self):
-        self.y_size = 60
+        self.y_size = 40
 
     def Set_X_Size(self, entity_name):
         entity_name_len = len(entity_name)
-        self.x_size = 15 * entity_name_len 
+        self.x_size = 12 * entity_name_len 
 
 
 
@@ -73,9 +73,9 @@ class Text_Box():
         text_box_pos = self.Text_Box_Setup(surf, entity_name, offset)
         if not text_box_pos:
             return
-        self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos)
+        self.entity.game.default_font.Render_Word(surf, entity_name, text_box_pos, keys.textbox_headline)
 
         # Render the description of the entity
-        self.entity.game.mixed_symbols.Render_Mixed_Text(surf, self.entity.description, (text_box_pos[0], text_box_pos[1] + 20))
+        self.entity.game.mixed_symbols.Render_Mixed_Text(surf, self.entity.description, (text_box_pos[0], text_box_pos[1] + 20), 0.5)
 
         return 

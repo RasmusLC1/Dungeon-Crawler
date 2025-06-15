@@ -14,12 +14,14 @@ class Damage_Text():
     def Reset(self):
         self.text = None
         self.pos = None
+        self.effect = None
         self.offset = 0
         self.cooldown = 0
 
-    def Activate(self, pos, text, queue_length):
+    def Activate(self, pos, effect, text, queue_length):
+        self.effect = effect
         self.text = text
-        self.pos = (pos[0] + random.randint(-5, 5), pos[1] + random.randint(-5, 5))
+        self.pos = (pos[0] + random.randint(-10, 10), pos[1] + random.randint(-10, 10))
         self.Set_Cooldown(queue_length)
 
 

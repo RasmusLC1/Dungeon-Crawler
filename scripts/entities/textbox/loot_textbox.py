@@ -6,7 +6,7 @@ class Loot_Textbox(Text_Box):
 
     # Seperate function for size flexibility
     def Set_Y_Size(self):
-        self.y_size = 80
+        self.y_size = 60
 
     def Edit_Entity_Name(self):
         entity_name = self.entity.sub_type

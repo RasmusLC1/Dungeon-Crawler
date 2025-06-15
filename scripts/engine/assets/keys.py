@@ -872,21 +872,50 @@ class keys():
     invulnerable_rune = "invulnerable_rune"
 
     
+    # FONTS
     font = "font"
 
-    
-    player_damage_font = "player_damage_font"
+    textbox_headline = "textbox_headline"
 
+    font_slash = "font"
+
+    font_blunt = "font_blunt"
+
+    font_electric = "font_electric"
+
+    font_fire = "font_fire"
+
+    font_frozen = "font_frozen"
+
+    font_vampiric = "font_vampiric"
+
+    font_wet = "font_wet"
     
-    small_font = "small_font"
+    font_small = "font_small"
+
+    font_small_slash = "font_small" # Slash uses the default font
+
+    font_small_blunt = "font_small_blunt"
+
+    font_small_electric = "font_small_electric"
+
+    font_small_fire = "font_small_fire"
+
+    font_small_frozen = "font_small_frozen"
+
+    font_small_vampiric = "font_small_vampiric"
+
+    font_small_wet = "font_small_wet"
+
+    player_damage_font = "player_damage_font"
 
     
     floating_E = "floating_e"
 
-    
+
+    # SYMBOLS    
     symbols = "symbols"
 
-    
     souls = "souls"
 
     
